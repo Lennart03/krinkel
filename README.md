@@ -18,6 +18,6 @@
 
 ## Setup frontend project
 
-1. Goto Krinkel-Frontend\src\main\webapp
+1. Goto Krinkel-Frontend/
 2. Run "npm install"
 3. Run "gulp serve"
