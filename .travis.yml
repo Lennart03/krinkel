@@ -1,0 +1,10 @@
+language: java
+
+jdk:
+  - oraclejdk8
+
+script: "mvn test -DdatabaseEngine=h2"
+
+after_success:
+  - mvn -Pcobertura clean cobertura:cobertura
+  - mvn org.eluder.coveralls:coveralls-maven-plugin:report

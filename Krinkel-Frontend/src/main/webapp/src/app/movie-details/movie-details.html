@@ -1,0 +1,23 @@
+<div class="col s12 m12">
+  <h2 class="header">Horizontal Card</h2>
+  <div class="card horizontal">
+    <div class="card-image">
+      <img ng-src="{{$ctrl.movie.poster}}">
+    </div>
+    <div class="card-stacked">
+      <div class="card-content">
+        <p>
+          <br/> Title: {{$ctrl.movie.title}} <br/>
+          <br/> Year: {{$ctrl.movie.year}} <br/>
+          <br/> Runtime: {{$ctrl.movie.runtime}} <br/>
+          <br/> Plot: {{$ctrl.movie.plot}} <br/>
+          <br/> Rating: {{$ctrl.movie.rating}} <br/>
+          <br/>
+          <input type="checkbox" id="seen" ng-model="$ctrl.movie.seen" ng-click="$ctrl.change()"/>
+          <label for="seen">Seen</label>
+
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
