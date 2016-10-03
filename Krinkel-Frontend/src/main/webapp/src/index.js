@@ -8,3 +8,5 @@ import 'materialize-css/dist/js/materialize.min.js';
 import appModule from './app/app.module';
 
 angular.bootstrap(document, [appModule]);
+
+$('.button-collapse').sideNav();

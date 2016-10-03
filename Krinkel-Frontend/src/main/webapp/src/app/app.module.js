@@ -3,28 +3,26 @@ import 'angular';
 import 'angular-route';
 
 import {appConfig} from './app.config';
-import {MoviesService} from './shared/movies.service';
+import {KrinkelService} from './shared/krinkel.service';
 
-import {MovieCollectionComponent} from './shared/movie-collection/movie-collection.component'
-import {MovieHomepageComponent} from './movie-homepage/movie-homepage.component'
-import {MovieSearchComponent} from './movie-search/movie-search.component'
-import {MovieFavoritesComponent} from './movie-favorites/movie-favorites.component'
-import {MovieDetailsComponent} from './movie-details/movie-details.component'
-import {MovieLookupComponent} from './shared/movie-lookup/movie-lookup.component'
+//components
+import {WelcomeMessageComponent} from './shared/welcome-message/welcome-message.component'
+
+//pages
+import {KrinkelHomepageComponent} from './krinkel-homepage/krinkel-homepage.component'
+
 
 export default angular
   .module('contactsApp', ['ngRoute'])
   .config(appConfig)
   .constant('appVersion', 'BETA')
-  .constant('BASEURL', 'http://angularcoursebackend.azurewebsites.net/api/Movies')
+  .constant('BASEURL', 'http://localhost:8080')
   .run((appVersion)=> {
     console.log(`version: ${appVersion}`);
   })
-  .service('MoviesService', MoviesService)
-  .component('moviesLookup', MovieLookupComponent)
-  .component('moviesCollection', MovieCollectionComponent)
-  .component('moviesHomepage', MovieHomepageComponent)
-  .component('moviesSearch', MovieSearchComponent)
-  .component('moviesFavorites', MovieFavoritesComponent)
-  .component('moviesDetails', MovieDetailsComponent)
+  .service('KrinkelService', KrinkelService)
+  //global components
+  .component('welcomeMessage', WelcomeMessageComponent)
+  //pages
+  .component('krinkelHomepage', KrinkelHomepageComponent)
   .name;
