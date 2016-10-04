@@ -16,7 +16,7 @@ import {KrinkelLoginComponent} from './krinkel-login/krinkel-login.component'
 
 
 export default angular
-  .module('contactsApp', ['ngRoute', 'angularMaterializeDatePicker'])
+  .module('contactsApp', ['ngRoute'])
   .config(appConfig)
   .constant('appVersion', 'BETA')
   .constant('BASEURL', 'http://localhost:8080')

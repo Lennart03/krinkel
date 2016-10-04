@@ -1,9 +1,15 @@
 export class AuthService {
-  constructor() {
+  constructor($http, BASEURL) {
+    this.$http = $http;
+    this.BASEURL = BASEURL;
 
   }
-  setLoggedinUser(user){
-    this.user = user;
+
+  setLoggedinUser(user,password){
+
+    return this.$http.get(`${this.BASEURL}/api/users?user=${user}&password=${password}`).then((resp) => {
+      return resp.data;
+    });
   }
 
   getLoggedinUser(){
