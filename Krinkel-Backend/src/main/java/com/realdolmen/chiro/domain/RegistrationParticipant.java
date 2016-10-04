@@ -1,7 +1,6 @@
 package com.realdolmen.chiro.domain;
 
 import org.hibernate.validator.constraints.NotBlank;
-import org.springframework.beans.factory.annotation.Required;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -58,6 +57,25 @@ public class RegistrationParticipant {
     //todo validate;
     private String phoneNumber;
 
+    public RegistrationParticipant() {
+    }
+
+    public RegistrationParticipant(String adNumber, String firstName, String lastName, Date birthdate, String stamnumber, Gender gender, Function function, boolean buddy, List<Language> language, Eatinghabbit eatinghabbit, String remarksFood, boolean socialPromotion, String medicalRemarks, String remarks) {
+        this.adNumber = adNumber;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.birthdate = birthdate;
+        this.stamnumber = stamnumber;
+        this.gender = gender;
+        this.function = function;
+        this.buddy = buddy;
+        this.language = language;
+        this.eatinghabbit = eatinghabbit;
+        this.remarksFood = remarksFood;
+        this.socialPromotion = socialPromotion;
+        this.medicalRemarks = medicalRemarks;
+        this.remarks = remarks;
+    }
 
     public String getFirstName() {
         return firstName;
