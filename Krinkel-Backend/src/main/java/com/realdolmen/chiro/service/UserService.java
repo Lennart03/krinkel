@@ -17,7 +17,7 @@ public class UserService {
 
     public User getUser(String username, String passw) {
         User res = null;
-        for(User u: this.users){
+        for (User u : this.users) {
             if (username.equals(u.getUsername()))
                 if (passw.equals(u.getPassword()))
                     res = u;
