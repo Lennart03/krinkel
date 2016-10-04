@@ -20,6 +20,13 @@ public class Adress implements Serializable {
     @NotBlank
     private String city;
 
+    public Adress(String street, int houseNumber, int postalCode, String city) {
+        this.street = street;
+        this.houseNumber = houseNumber;
+        this.postalCode = postalCode;
+        this.city = city;
+    }
+
     public String getStreet() {
         return street;
     }

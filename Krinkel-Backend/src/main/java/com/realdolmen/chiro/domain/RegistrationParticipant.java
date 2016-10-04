@@ -55,6 +55,9 @@ public class RegistrationParticipant {
     private String medicalRemarks;
     private String remarks;
 
+    //todo validate;
+    private String phoneNumber;
+
 
     public String getFirstName() {
         return firstName;
@@ -182,6 +185,14 @@ public class RegistrationParticipant {
 
     public void setAdress(Adress adress) {
         this.adress = adress;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
     }
 }
 
