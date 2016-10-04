@@ -11,8 +11,8 @@ public class UserService {
     public ArrayList<User> users = new ArrayList();
 
     public UserService() {
-        users.add(new User("Ziggy", "test", "user", "ad1", "abcdefg", true));
-        users.add(new User("PJ", "password", "admin", "ad2", "hijklmnop", false));
+        users.add(new User("Ziggy", "test", "user", "ad1", "abcdefg", true, "AG0103"));
+        users.add(new User("PJ", "password", "admin", "ad2", "hijklmnop", false, "LEG0600"));
     }
 
     public User getUser(String username, String passw) {

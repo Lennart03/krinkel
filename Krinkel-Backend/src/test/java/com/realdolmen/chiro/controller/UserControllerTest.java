@@ -26,7 +26,7 @@ public class UserControllerTest {
 
     @Before
     public void init(){
-        u = new User("Ziggy", "test", "user", "ad1", "abcdefg", true);
+        u = new User("Ziggy", "test", "user", "ad1", "abcdefg", true, "AG0103");
     }
 
 
