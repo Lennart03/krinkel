@@ -1,0 +1,48 @@
+<div class="row">
+  <div class="col s12 m10   offset-m1">
+    <div class="container container-auth z-depth-2 grey lighten-4 col s12 m6 offset-m2">
+      <div class="logintabs">
+        <ul class="tabs">
+          <li class="tab"><a class="active" href="#login">Aanmelden</a></li>
+        </ul>
+      </div>
+
+      <!--Login Part-->
+      <div id="login" class="row login-custom-card col">
+
+        <form class="col s12">
+          <div class='row'>
+            <div class='col s12'>
+
+            </div>
+          </div>
+
+          <div class='row'>
+            <div class='input-field col s12 '>
+              <i class="material-icons prefix">person</i>
+              <input class='validate' type='email' name='email' id='email'
+                     ng-model="vm.login.user.email"/>
+              <label for='email'>E-mailadres</label>
+
+            </div>
+          </div>
+
+          <div class='row'>
+            <div class='input-field col s12'>
+              <i class="material-icons prefix">lock_outline</i>
+              <input class='validate' type='password' name='password' id='password'
+                     ng-model="vm.login.user.password"/>
+              <label for='password'>Wachtwoord</label>
+            </div>
+          </div>
+
+          <br/>
+          <div class='row'>
+            <button type='submit' name='btn_login' class='col s12 btn btn-large waves-effect'
+                    ng-click="vm.logIn()">Aanmelden</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
