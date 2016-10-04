@@ -3,6 +3,12 @@ export class KrinkelService {
     this.$http = $http;
     this.BASEURL = BASEURL;
   }
+
+  logIn(user, password) {
+    return this.$http.get(`${this.BASEURL}/api/users?user=${user}&password=${password}`).then((resp) => {
+      return resp.data;
+    });
+  }
   // getMovies(title) {
   //   return this.$http.get(`${this.BASEURL}/online?title=${title}`).then((resp) => {
   //     return resp.data;
