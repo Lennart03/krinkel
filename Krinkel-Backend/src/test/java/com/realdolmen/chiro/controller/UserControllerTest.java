@@ -24,7 +24,7 @@ public class UserControllerTest {
 
     @Test
     public void getUserReturnsUserGivenByUserService(){
-        User u = new User("Ziggy", "test");
+        User u = new User("Ziggy", "test", "user", "ad1", "abcdefg");
         Mockito.when(userService.getUser("Ziggy", "test")).thenReturn(u);
         Assert.assertSame(controller.getUser("Ziggy", "test"), u);
     }
