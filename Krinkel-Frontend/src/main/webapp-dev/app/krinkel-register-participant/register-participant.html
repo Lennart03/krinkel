@@ -1,22 +1,27 @@
-<p>
-    Let op: Als je je inschrijft, word je meteen naar een betaalpagina gestuurd. Hou dus je bankkaart bij de hand. Problemen
-    met online betalen? Laat het dan weten via inschrijvingen@krinkel.be.</p>
 <div class="row">
-    <form class="col s12">
+
+    <p class="flow-text"><i class="material-icons">info_outline</i> Let op: Als je je inschrijft, word je meteen naar een betaalpagina gestuurd.
+        Hou dus je bankkaart bij de hand. Problemen met online betalen? Laat het dan weten via inschrijvingen@krinkel.be.</p>
+</div>
+
+
+<div class="row">
+    <form class="col s12 m12" novalidate name="$ctrl.addForm" ng-submit="$ctrl.addPerson(newPerson)">
         <div class="row">
-            <div class="input-field col s6">
-                <input id="first_name" type="text" class="validate">
+            <div class="input-field col s12 m6">
+                <input id="first_name" type="text" class="validate" ng-model="newPerson.firstName" required>
                 <label for="first_name">Voornaam</label>
             </div>
-            <div class="input-field col s6">
-                <input id="last_name" type="text" class="validate">
+            <div class="input-field col s12 m6">
+                <input id="last_name" type="text" class="validate" ng-model="newPerson.lastName" required>
                 <label for="last_name">Achternaam</label>
             </div>
         </div>
         <div class="row">
-            <div class="input-field col s6">
+            <div class="input-field col s12 m6">
                 <label for="date_of_birth">Geboortedatum</label>
-                <input type="date" class="datepicker" id="date_of_birth/>
+                <input id="date_of_birth" type="date" class="datepicker" ng-model="newPerson.birthdate" required>
+
             </div>
         </div>
 
@@ -25,11 +30,11 @@
 
         <div class="row">
             <div class="input-field col s10">
-                <input id="street" type="text" class="validate">
+                <input id="street" type="text" class="validate" ng-model="newPerson.street" required>
                 <label for="street">Straat</label>
             </div>
             <div class="input-field col s2">
-                <input id="building" type="text" class="validate">
+                <input id="building" type="text" class="validate" ng-model="newPerson.building" required>
                 <label for="building">Huisnummer</label>
             </div>
         </div>
@@ -37,11 +42,11 @@
 
         <div class="row">
             <div class="input-field col s4">
-                <input id="postal_code" type="text" class="validate">
+                <input id="postal_code" type="text" class="validate" ng-model="newPerson.postalCode" required>
                 <label for="postal_code">Postcode</label>
             </div>
             <div class="input-field col s8">
-                <input id="city" type="text" class="validate">
+                <input id="city" type="text" class="validate" ng-model="newPerson.city" required>
                 <label for="city">Gemeente</label>
             </div>
         </div>
@@ -50,7 +55,7 @@
         <div class="row">
             <div class="input-field col s12">
                 <i class="material-icons prefix">phone</i>
-                <input id="phone" type="text" class="validate">
+                <input id="phone" type="text" class="validate" ng-model="newPerson.phone" required>
                 <label for="phone">Telefoon</label>
             </div>
         </div>
@@ -58,7 +63,7 @@
         <div class="row">
             <div class="input-field col s12">
                 <i class="material-icons prefix">email</i>
-                <input id="email" type="email" class="validate">
+                <input id="email" type="email" class="validate" ng-model="newPerson.email" required>
                 <label for="email">Email</label>
             </div>
         </div>
@@ -117,7 +122,7 @@
         <div class="row">
             <div class="col s12">
 
-                <p>
+                <div>
                     <input type="checkbox" id="buddy" />
                     <label for="buddy">Ik wil mee als buddy op de internattionale kampgrond en spreek vlot volgende talen:</label>
                     <!-- Modal Trigger -->
@@ -135,7 +140,7 @@
                         </div>
                     </div>
 
-                </p>
+                </div>
                 <p>
                     <input type="checkbox" class="filled-in" id="english" />
                     <label for="english">Engels</label>
@@ -169,18 +174,48 @@
                 </p>
             </div>
         </div>
+
         <div class="row">
-            <form class="col s12">
-                <div class="row">
-                    <div class="input-field col s12">
-                        <i class="material-icons prefix">mode_edit</i>
-                        <textarea id="icon_prefix2" class="materialize-textarea"></textarea>
-                        <label for="icon_prefix2">Opmerkingen maaltijd</label>
-                    </div>
-                </div>
-            </form>
+            <div class="input-field col s12">
+                <i class="material-icons prefix">mode_edit</i>
+                <textarea placeholder="Zijn er zaken waar we bij maaltijden aandacht aan moeten besteden? Geef hier aan of je bepaalde voedselallergieën hebt."
+                    id="dietary" class="materialize-textarea"></textarea>
+                <label for="dietary">Opmerkingen maaltijd</label>
+            </div>
         </div>
 
+        <div class="row">
+            <div class="col s12">
+                <p>
+                    <input type="checkbox" id="social_promotion" />
+                    <label for="social_promotion">Sociale promotie <a href="https://chiro.be/node/71622">(wat is dit?)</a></label>
+                </p>
+            </div>
+        </div>
+
+
+        <h2>Medische opmerkingen</h2>
+        <div class="row">
+            <div class="input-field col s12">
+                <i class="material-icons prefix">mode_edit</i>
+                <textarea id="medical" class="materialize-textarea"></textarea>
+                <label for="medical">Medische opmerkingen</label>
+            </div>
+        </div>
+
+
+        <h2>Andere opmerkingen</h2>
+        <div class="row">
+            <div class="input-field col s12">
+                <i class="material-icons prefix">mode_edit</i>
+                <textarea id="others" class="materialize-textarea"></textarea>
+                <label for="others">Andere opmerkingen</label>
+            </div>
+        </div>
+        <button class="btn waves-effect waves-light" type="submit" name="action" ng-disabled="$ctrl.addForm.$invalid">Volgende
+    <i class="material-icons right">send</i>
+  </button>
+        <p>{{ addForm.$error | json}}</p>
 
     </form>
 
