@@ -25,6 +25,9 @@ public class RegistrationParticipant {
     @Size(min=2)
     private String lastName;
 
+    @Embedded
+    private Adress adress;
+
     @Temporal(TemporalType.DATE)
     private Date birthdate;
 
@@ -171,6 +174,14 @@ public class RegistrationParticipant {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public Adress getAdress() {
+        return adress;
+    }
+
+    public void setAdress(Adress adress) {
+        this.adress = adress;
     }
 }
 

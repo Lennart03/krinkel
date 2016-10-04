@@ -6,5 +6,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 
 public interface RegistrationParticipantRepository extends JpaRepository<RegistrationParticipant, Long> {
-    List<RegistrationParticipant> findAllByAdNumber(String adNumber);
+    RegistrationParticipant findByAdNumber(String adNumber);
 }
