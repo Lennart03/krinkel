@@ -17,7 +17,7 @@ export class AuthService {
 
   getRegistrationStatus(){
     // return this.user.isRegistrated;
-    return true;
+    return false;
   }
 }
 

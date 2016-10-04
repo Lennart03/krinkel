@@ -15,7 +15,7 @@ import {KrinkelHomepageComponent} from './krinkel-homepage/krinkel-homepage.comp
 
 
 export default angular
-  .module('contactsApp', ['ngRoute'])
+  .module('contactsApp', ['ngRoute', 'angularMaterializeDatePicker'])
   .config(appConfig)
   .constant('appVersion', 'BETA')
   .constant('BASEURL', 'http://localhost:8080')

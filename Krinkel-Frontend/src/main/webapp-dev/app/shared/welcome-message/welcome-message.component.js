@@ -1,12 +1,19 @@
 /*@ngInject*/
 class WelcomeMessageController{
-  constructor($location){
+  constructor($location, AuthService){
     this.$location = $location;
+    this.AuthService = AuthService;
   }
 
   $onInit(){
     this.title = "Welcome to the Krinkel app!";
-    this.$location.path('/success');
+    if(this.AuthService.getRegistrationStatus()){
+      this.$location.path('/success');
+    }
+    $('.datepicker').pickadate({
+      selectMonths: true, // Creates a dropdown to control month
+      selectYears: 15 // Creates a dropdown of 15 years to control year
+    });
   }
 
 
@@ -17,4 +24,4 @@ export var WelcomeMessageComponent = {
   controller: WelcomeMessageController
 };
 
-WelcomeMessageComponent.$inject = ['$location'];
+WelcomeMessageComponent.$inject = ['$location', 'AuthService'];
