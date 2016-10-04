@@ -11,7 +11,7 @@ public class ChiroUserAdapter {
     public ArrayList<User> users = new ArrayList();
 
     public ChiroUserAdapter() {
-        users.add(new User("Ziggy", "test", "user", "ad1", "abcdefg", true, "AG0103"));
+        users.add(new User("Ziggy", "test", "user", "ad1", "abcdefg", false, "AG0103"));
         users.add(new User("PJ", "password", "admin", "ad2", "hijklmnop", false, "LEG0600"));
     }
 

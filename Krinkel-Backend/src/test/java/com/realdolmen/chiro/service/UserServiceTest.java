@@ -21,8 +21,8 @@ public class UserServiceTest {
     @InjectMocks
     private UserService service;
 
-//    @Mock
-//    private RegistrationParticipantRepository repository;
+    @Mock
+    private RegistrationParticipantRepository repository;
 
     @Mock
     private ChiroUserAdapter adapter;
@@ -30,7 +30,8 @@ public class UserServiceTest {
 
     @Before
     public void init() {
-        user = new User("Ziggy", "test", "user", "ad1", "abcdefg", true, "AG0103");
+        //create user that mockito can return
+        user = new User("Ziggy", "test", "user", "ad1", "abcdefg", false, "AG0103");
 
     }
 
@@ -46,13 +47,19 @@ public class UserServiceTest {
         Assert.assertNull(service.getUser("Ziggy", "password"));
     }
 
-//    @Test
-//    public void registeredIsSetToFalseWhenUserIsNotPresentInDatabase(){
-//        Mockito.when(repository.findByAdNumber("123")).thenReturn(null);
-//    }
-//
-//    @Test
-//    public void registeredIsSetToTrueWhenUserIsPresentInDatabase(){
-//        Mockito.when(repository.findByAdNumber("321")).thenReturn(new RegistrationParticipant());
-//    }
+    @Test
+    public void registeredIsSetToFalseWhenUserIsNotPresentInDatabase(){
+        Mockito.when(repository.findByAdNumber(user.getAdNumber())).thenReturn(null);
+        Mockito.when(adapter.getUser("Ziggy", "test")).thenReturn(user);
+        User u = service.getUser("Ziggy", "test");
+        Assert.assertFalse(u.getSubscribed());
+    }
+
+    @Test
+    public void registeredIsSetToTrueWhenUserIsPresentInDatabase(){
+        Mockito.when(repository.findByAdNumber(user.getAdNumber())).thenReturn(new RegistrationParticipant());
+        Mockito.when(adapter.getUser("Ziggy", "test")).thenReturn(user);
+        User u = service.getUser("Ziggy", "test");
+        Assert.assertTrue(u.getSubscribed());
+    }
 }
