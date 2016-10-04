@@ -33,7 +33,7 @@ public class RegistrationParticipantController {
      *    "remarks": null
      * }
      */
-    @RequestMapping(method = RequestMethod.POST, value="/api/participants")
+    @RequestMapping(method = RequestMethod.POST, value="/api/participants", consumes = "application/json")
     public ResponseEntity<?> save(@RequestBody RegistrationParticipant participant){
         RegistrationParticipant resultingParticipant = registrationParticipantService.save(participant);
         if(resultingParticipant == null){
@@ -42,5 +42,4 @@ public class RegistrationParticipantController {
         return new ResponseEntity<>(HttpStatus.CREATED);
 
     }
-
 }
