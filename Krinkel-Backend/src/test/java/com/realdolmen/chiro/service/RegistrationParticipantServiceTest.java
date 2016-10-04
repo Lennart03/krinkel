@@ -59,6 +59,8 @@ public class RegistrationParticipantServiceTest {
         Mockito.verify(repo).save(participant);
     }
 
+
+
     @Test
     public void saveShouldReturnNULLWhenExisting() {
         Mockito.when(repo.findByAdNumber("ADNUMMER")).thenReturn(null);
