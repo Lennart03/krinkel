@@ -25,6 +25,9 @@ public class RegistrationParticipant {
     @Size(min=2)
     private String lastName;
 
+    @Embedded
+    private Adress adress;
+
     @Temporal(TemporalType.DATE)
     private Date birthdate;
 
@@ -51,6 +54,9 @@ public class RegistrationParticipant {
     private boolean socialPromotion = false;
     private String medicalRemarks;
     private String remarks;
+
+    //todo validate;
+    private String phoneNumber;
 
 
     public String getFirstName() {
@@ -171,6 +177,22 @@ public class RegistrationParticipant {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public Adress getAdress() {
+        return adress;
+    }
+
+    public void setAdress(Adress adress) {
+        this.adress = adress;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
     }
 }
 

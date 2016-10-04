@@ -12,7 +12,7 @@ public class RegistrationParticipantService {
     private RegistrationParticipantRepository repository;
 
     public RegistrationParticipant save(RegistrationParticipant registration) {
-        if(repository.findAllByAdNumber(registration.getAdNumber()).size() == 0) {
+        if(repository.findByAdNumber(registration.getAdNumber()) == null) {
             return repository.save(registration);
         }
         return null;
