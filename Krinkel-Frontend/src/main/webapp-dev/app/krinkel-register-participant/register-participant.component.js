@@ -1,11 +1,13 @@
 class RegisterParticipantController {
 
+
+
     constructor($log) {
         this.$log = $log;
         this.phoneNumberPattern = /^((\+|00)32\s?|0)(\d\s?\d{3}|\d{2}\s?\d{2})(\s?\d{2}){2}|((\+|00)32\s?|0)4(60|[789]\d)(\s?\d{2}){3}$/;
     }
 
-        addPerson(newPerson) {
+    addPerson(newPerson) {
         var person = {
             name: {
                 first: newPerson.firstName,
@@ -27,12 +29,20 @@ class RegisterParticipantController {
         };
         this.$log.debug(person);
     }
+    $onInit() {
+        angular.element('.modal-trigger').leanModal();
+        angular.element('.datepicker').pickadate({
+            selectMonths: true, // Creates a dropdown to control month
+            selectYears: 15 // Creates a dropdown of 15 years to control year
+        });
+
+    }
 
 
 }
 
 
-export var RegisterParticipantComponent= {
+export var RegisterParticipantComponent = {
     template: require('./register-participant.html'),
     controller: RegisterParticipantController
 }
