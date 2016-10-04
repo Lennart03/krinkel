@@ -10,6 +10,7 @@ import {WelcomeMessageComponent} from './shared/welcome-message/welcome-message.
 
 //pages
 import {KrinkelHomepageComponent} from './krinkel-homepage/krinkel-homepage.component'
+import {KrinkelLoginComponent} from './krinkel-login/krinkel-login.component'
 
 
 export default angular
@@ -25,4 +26,5 @@ export default angular
   .component('welcomeMessage', WelcomeMessageComponent)
   //pages
   .component('krinkelHomepage', KrinkelHomepageComponent)
+  .component('krinkelLogin', KrinkelLoginComponent)
   .name;
