@@ -12,13 +12,13 @@
                 <i class="material-icons prefix">perm_identity</i>
                 <input id="first_name" name="firstName" type="text" class="validate" ng-minlength="1" ng-model="newPerson.firstName" required>
                 <label for="first_name">Voornaam</label>
-                <p ng-show="personForm.firstName.$invalid && personForm.firstName.$touched" class="error">Voornaam is verplicht</p>
+                <p ng-show="personForm.firstName.$invalid && personForm.firstName.$touched" class="error"><i class="material-icons">error_outline</i> Voornaam is verplicht</p>
             </div>
             <div class="input-field col s12 m6">
                 <i class="material-icons prefix">perm_identity</i>
                 <input id="last_name" name="lastName" type="text" class="validate" ng-model="newPerson.lastName" required>
                 <label for="last_name">Achternaam</label>
-                <p ng-show="personForm.lastName.$invalid && personForm.lastName.$touched" class="error">Achternaam is verplicht</p>
+                <p ng-show="personForm.lastName.$invalid && personForm.lastName.$touched" class="error"><i class="material-icons">error_outline</i> Achternaam is verplicht</p>
 
             </div>
         </div>
@@ -27,20 +27,32 @@
                 <i class="material-icons prefix">perm_identity</i>
                 <label for="date_of_birth">Geboortedatum</label>
                 <input id="date_of_birth" name="birthdate" type="date" class="datepicker" ng-model="newPerson.birthdate" required>
-                <p ng-show="personForm.birthdateemail.$invalid && personForm.birthdate.$touched" class="error">Geboortedatum is verplicht</p>
+                <p ng-show="personForm.birthdateemail.$invalid && personForm.birthdate.$touched" class="error"><i class="material-icons">error_outline</i> Geboortedatum is verplicht</p>
+            </div>
+            <div class="input-field col s12 m6">
+                <i class="material-icons prefix">perm_identity</i>
+
+                <select ng-model="newPerson.gender" required>
+                 <option value="" disabled selected>Geslacht</option>
+                 <option value="1">Vrouw</option>
+                <option value="2">Man</option>
+                 <option value="3">X</option>
+                 </select>
+                <label>Geslacht</label>
             </div>
         </div>
 
 
 
 
+
         <div class="row">
-            <div class="input-field col s12 m10" >
+            <div class="input-field col s12 m10">
                 <i class="material-icons prefix">home</i>
                 <input id="street" name="street" type="text" class="validate" ng-model="newPerson.street" required>
 
                 <label for="street">Straat</label>
-                <p ng-show="personForm.street.$invalid && personForm.street.$touched" class="error">Straatnaam is verplicht</p>
+                <p ng-show="personForm.street.$invalid && personForm.street.$touched" class="error"><i class="material-icons">error_outline</i> Straatnaam is verplicht</p>
 
             </div>
             <div class="input-field col s6 m2">
@@ -48,7 +60,7 @@
                 <input id="building" name="building" type="text" class="validate" ng-model="newPerson.building" required>
 
                 <label for="building">Huisnummer</label>
-                <p ng-show="personForm.building.$invalid && personForm.building.$touched" class="error">Huisnummer is verplicht</p>
+                <p ng-show="personForm.building.$invalid && personForm.building.$touched" class="error"><i class="material-icons">error_outline</i> Huisnummer is verplicht</p>
             </div>
         </div>
 
@@ -59,7 +71,7 @@
                 <input id="postal_code" name="postalCode" ng-minlength="4" type="text" class="validate" ng-model="newPerson.postalCode" required>
 
                 <label for="postal_code">Postcode</label>
-                <p ng-show="personForm.postalCode.$invalid && personForm.postalCode.$touched" class="error">Postcode is verplicht</p>
+                <p ng-show="personForm.postalCode.$invalid && personForm.postalCode.$touched" class="error"><i class="material-icons">error_outline</i> Postcode is verplicht</p>
 
             </div>
             <div class="input-field col m8 s12">
@@ -67,7 +79,7 @@
                 <input id="city" name="city" type="text" class="validate" ng-model="newPerson.city" required>
 
                 <label for="city">Gemeente</label>
-                <p ng-show="personForm.city.$invalid && personForm.city.$touched" class="error">Gemeente is verplicht</p>
+                <p ng-show="personForm.city.$invalid && personForm.city.$touched" class="error"><i class="material-icons">error_outline</i> Gemeente is verplicht</p>
 
             </div>
         </div>
@@ -79,7 +91,7 @@
                 <input id="phone" name="phone" type="number" class="validate" ng-pattern="$ctrl.phoneNumberPattern" ng-model="newPerson.phone"
                     required>
                 <label for="phone">Telefoon</label>
-                <p ng-show="personForm.phone.$invalid && personForm.phone.$touched" class="error">Telefoonnummer is verplicht</p>
+                <p ng-show="personForm.phone.$invalid && personForm.phone.$touched" class="error"><i class="material-icons">error_outline</i> Telefoonnummer is verplicht</p>
 
             </div>
         </div>
@@ -89,68 +101,42 @@
                 <i class="material-icons prefix">email</i>
                 <input id="email" name="email" type="email" class="validate" ng-model="newPerson.email" required>
                 <label for="email">Email</label>
-                <p ng-show="personForm.email.$invalid && personForm.email.$touched" class="error">Email is verplicht</p>
+                <p ng-show="personForm.email.$invalid && personForm.email.$touched" class="error"><i class="material-icons">error_outline</i> Email is verplicht</p>
 
             </div>
         </div>
 
-        <div class="row">
-            <div class="col s12">
-
-                <p>Ik ben: </p>
-                <p>
-                    <input class="with-gap" name="group1" type="radio" id="female" ng-model="newPerson.gender" required/>
-                    <label for="female">Vrouw</label>
-                </p>
-                <p>
-                    <input class="with-gap" name="group1" type="radio" id="male" ng-model="newPerson.gender" required/>
-                    <label for="male">Man</label>
-                </p>
-                <p>
-                    <input class="with-gap" name="group1" type="radio" id="x" ng-model="newPerson.gender" required/>
-                    <label for="x">X</label>
-                </p>
-            </div>
-        </div>
 
 
         <div class="row">
-            <div class="col s12">
+            <div class="input-field col s12 m6">
+                <i class="material-icons prefix">mood</i>
 
-                <p>In '16-17' was ik: </p>
-                <p>
-                    <input class="with-gap" name="group2" type="radio" id="aspi" ng-model="newPerson.rank" required/>
-                    <label for="aspi">aspi</label>
-                </p>
-                <p>
-                    <input class="with-gap" name="group2" type="radio" id="leader" ng-model="newPerson.rank" required/>
-                    <label for="leader">leid(st)er</label>
-                </p>
-                <p>
-                    <input class="with-gap" name="group2" type="radio" id="adult" ng-model="newPerson.rank" required/>
-                    <label for="adult">Volwassen begeleider</label>
-                </p>
+                <select ng-model="newPerson.rank" required>
+                 <option value="" disabled selected>In '16-17' was ik:</option>
+                 <option value="1">aspi</option>
+                <option value="2">leid(st)er</option>
+                 <option value="3">Volwassen begeleider</option>
+                 </select>
+                <label>In '16-17' was ik:</label>
+            </div>
+            <div class="input-field col s12 m6">
+                <i class="material-icons prefix">mood</i>
+                <input type="text" id="group" class="autocomplete" ng-model="newPerson.group" required>
+                <label for="group">Groep</label>
+
             </div>
         </div>
 
-
-        <div class="row">
-            <div class="col s12">
-                <div class="row">
-                    <div class="input-field col s12">
-                        <input type="text" id="group" class="autocomplete" ng-model="newPerson.group" required>
-                        <label for="group">Groep</label>
-                    </div>
-                </div>
-            </div>
-        </div>
 
         <div class="row">
             <div class="col s12">
 
                 <div>
+                    <i class="material-icons prefix">mood</i>
+
                     <input type="checkbox" id="buddy" />
-                    <label for="buddy">Ik wil mee als buddy op de internattionale kampgrond en spreek vlot volgende talen:</label>
+                    <label for="buddy">Ik wil mee als buddy op de internationale kampgrond en spreek vlot volgende talen:</label>
                     <!-- Modal Trigger -->
                     <a class="btn-floating waves-effect waves-light modal-trigger" href="#modal1"><i class="material-icons">help</i></a>
                     <!-- Modal Structure -->
@@ -167,25 +153,22 @@
                     </div>
 
                 </div>
-                <p>
-                    <input type="checkbox" class="filled-in" id="english" />
-                    <label for="english">Engels</label>
-                </p>
-                <p>
-                    <input type="checkbox" class="filled-in" id="french" />
-                    <label for="french">Frans</label>
-                </p>
-                <p>
-                    <input type="checkbox" class="filled-in" id="spanish" />
-                    <label for="spanish">Spaans</label>
-                </p>
+
+                <select multiple>
+      <option value="" disabled selected>Selecteer je talen</option>
+      <option value="1">Engels</option>
+      <option value="2">Frans</option>
+      <option value="3">Spaans</option>
+    </select>
+                <label>Materialize Multiple Select</label>
             </div>
         </div>
 
         <div class="row">
             <div class="col s12">
 
-                <p>Je eetgewoonten: </p>
+
+                <p><i class="small material-icons prefix">restaurant</i> Je eetgewoonten: </p>
                 <p>
                     <input class="with-gap" name="group2" type="radio" id="veg" ng-model="newPerson.dietary" required/>
                     <label for="veg">Ik ben vegetariër</label>
@@ -213,7 +196,7 @@
         <div class="row">
             <div class="col s12">
                 <p>
-                    <input type="checkbox" id="social_promotion" ng-model="newPerson.socialPromotion"/>
+                    <input type="checkbox" id="social_promotion" ng-model="newPerson.socialPromotion" />
                     <label for="social_promotion">Sociale promotie <a href="https://chiro.be/node/71622">(wat is dit?)</a></label>
                 </p>
             </div>
@@ -238,8 +221,12 @@
                 <label for="others">Andere opmerkingen</label>
             </div>
         </div>
-                <p>Iedereen heeft zijn eigen voorkeur, achtergrond, mogelijkheden en talenten en daar willen we op Krinkel zoveel mogelijk rekening mee houden. Want iedereen heeft het recht om dit fantastische bivak mee te maken. Ook mensen die tegen financiële, culturele, fysieke of andere drempels aanlopen.  Hier vind je meer uitleg. Heb je extra ondersteuning nodig tijdens de spelen, verplaatsingen of andere taken? Laat het hier dan zeker weten zodat we samen naar oplossingen kunnen zoeken.  Je kan ons ook contacteren op 03/231 07 95 of info@krinkel.be.</p>
-    
+        <p>Iedereen heeft zijn eigen voorkeur, achtergrond, mogelijkheden en talenten en daar willen we op Krinkel zoveel mogelijk
+            rekening mee houden. Want iedereen heeft het recht om dit fantastische bivak mee te maken. Ook mensen die tegen
+            financiële, culturele, fysieke of andere drempels aanlopen.  Hier vind je meer uitleg. Heb je extra ondersteuning
+            nodig tijdens de spelen, verplaatsingen of andere taken? Laat het hier dan zeker weten zodat we samen naar oplossingen
+            kunnen zoeken.  Je kan ons ook contacteren op 03/231 07 95 of info@krinkel.be.</p>
+
         <button class="btn waves-effect waves-light" type="submit" name="action" ng-disabled="personForm.$invalid">Volgende
     <i class="material-icons right">send</i>
   </button>
