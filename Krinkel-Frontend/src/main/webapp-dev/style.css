@@ -40,3 +40,7 @@ input.ng-dirty.ng-invalid {
 input.ng-dirty.ng-valid {
     border-bottom: 1px solid green; 
 }
+
+.error {
+  color: red;
+}

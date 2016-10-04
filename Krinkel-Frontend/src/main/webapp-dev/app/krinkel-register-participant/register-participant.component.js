@@ -2,6 +2,7 @@ class RegisterParticipantController {
 
     constructor($log) {
         this.$log = $log;
+        this.phoneNumberPattern = /^((\+|00)32\s?|0)(\d\s?\d{3}|\d{2}\s?\d{2})(\s?\d{2}){2}|((\+|00)32\s?|0)4(60|[789]\d)(\s?\d{2}){3}$/;
     }
 
         addPerson(newPerson) {
@@ -10,25 +11,21 @@ class RegisterParticipantController {
                 first: newPerson.firstName,
                 last: newPerson.lastName
             },
-            email: newPerson.email
+            street: newPerson.street,
+            building: newPerson.building,
+            postalCode: newPerson.postalCode,
+            city: newPerson.city,
+            phone: newPerson.phone,
+            gender: newPerson.gender,
+            rank: newPerson.rank,
+            group: newPerson.group,
+            dietary: newPerson.dietary,
+            dietaryText: newPerson.dietaryText,
+            socialPromotion: newPerson.socialPromotion,
+            medicalText: newPerson.medicalText,
+            otherText: newPerson.otherText
         };
         this.$log.debug(person);
-
-        newPerson.firstName = '';
-        newPerson.lastName = '';
-        newPerson.email = '';
-        newPerson.birthdate = '';
-        newPerson.street = '';
-        newPerson.building = '';
-        newPerson.postalCode = '';
-        newPerson.city = '';
-        newPerson.phone = '';
-        newPerson.email = '';
-        newPerson.gender = '';
-        newPerson = {};
-        this.addForm.$setPristine();
-
-
     }
 
 
