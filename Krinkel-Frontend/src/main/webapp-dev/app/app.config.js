@@ -10,6 +10,10 @@ export function appConfig($routeProvider, $locationProvider) {
       template: '<krinkel-login></krinkel-login>'
     });
 
+  $routeProvider.when('/success', {
+    template: '<success-message></success-message>'
+  });
+
   $routeProvider.otherwise({
     redirectTo: '/home'
   });
