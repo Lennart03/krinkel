@@ -10,7 +10,7 @@ import {WelcomeMessageComponent} from './shared/welcome-message/welcome-message.
 
 //pages
 import {KrinkelHomepageComponent} from './krinkel-homepage/krinkel-homepage.component'
-
+import {RegisterParticipantComponent} from './krinkel-register-participant/register-participant.component'
 
 export default angular
   .module('contactsApp', ['ngRoute'])
@@ -25,4 +25,5 @@ export default angular
   .component('welcomeMessage', WelcomeMessageComponent)
   //pages
   .component('krinkelHomepage', KrinkelHomepageComponent)
+  .component('registerParticipant', RegisterParticipantComponent)
   .name;

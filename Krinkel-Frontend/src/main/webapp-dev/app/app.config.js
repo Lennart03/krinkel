@@ -7,6 +7,11 @@ export function appConfig($routeProvider, $locationProvider) {
     template: '<krinkel-homepage></krinkel-homepage>'
   });
 
+  $routeProvider.when('/register-participant', {
+    template: '<register-participant></register-participant>'
+  });
+
+
   $routeProvider.otherwise({
     redirectTo: '/home'
   });
