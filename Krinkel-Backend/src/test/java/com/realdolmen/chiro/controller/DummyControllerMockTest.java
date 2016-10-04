@@ -1,10 +1,7 @@
 package com.realdolmen.chiro.controller;
 
 import com.realdolmen.chiro.Application;
-import com.realdolmen.chiro.domain.Eatinghabbit;
-import com.realdolmen.chiro.domain.Function;
-import com.realdolmen.chiro.domain.Gender;
-import com.realdolmen.chiro.domain.RegistrationParticipant;
+import com.realdolmen.chiro.domain.*;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -53,6 +50,8 @@ public class DummyControllerMockTest extends MockMvcTest{
                 "",
                 ""
         );
+
+        p.setAdress(new Adress());
         em.persist(p);
         id = p.getId();
     }
