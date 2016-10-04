@@ -1,0 +1,11 @@
+<ul id="slide-out" class="side-nav fixed">
+  <li class="logo"><a id="logo-container" href="/" class="brand-logo">
+    <object id="front-page-logo" type="image/svg+xml" data="res/logo.svg">Your browser does not support SVG</object></a></li>
+  <li ng-if="$ctrl.AuthService.getRegistrationStatus()"><a href="/register-participant">Schrijf je in</a></li>
+  <li><a href="/register-group">Schrijf je groep in</a></li>
+  <li><a href="/register-employee">Schrijf je in als medewerker</a></li>
+  <li ng-if="$ctrl.AuthService.getUserRole() === 'admin'"><a href="#">Overzicht inschrijvingen</a></li>
+  <li ng-if="$ctrl.AuthService.getUserRole() === 'admin'"><a href="#">Statistic's</a></li>
+</ul>
+
+

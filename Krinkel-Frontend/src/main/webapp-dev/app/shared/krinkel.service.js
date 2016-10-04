@@ -1,4 +1,4 @@
-export class MoviesService {
+export class KrinkelService {
   constructor($http, BASEURL) {
     this.$http = $http;
     this.BASEURL = BASEURL;
@@ -15,4 +15,4 @@ export class MoviesService {
   // }
 }
 
-MoviesService.$inject = ['$http', 'BASEURL'];
+KrinkelService.$inject = ['$http', 'BASEURL'];
