@@ -12,6 +12,7 @@ import {SuccessMessageComponent} from './shared/success-message/success-message.
 import {SideNavComponent} from './shared/sidenav/sidenav.component'
 //pages
 import {KrinkelHomepageComponent} from './krinkel-homepage/krinkel-homepage.component'
+import {KrinkelLoginComponent} from './krinkel-login/krinkel-login.component'
 
 
 export default angular
@@ -31,4 +32,5 @@ export default angular
   .component('successMessage',SuccessMessageComponent)
   //pages
   .component('krinkelHomepage', KrinkelHomepageComponent)
+  .component('krinkelLogin', KrinkelLoginComponent)
   .name;
