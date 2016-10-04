@@ -7,7 +7,6 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
@@ -25,25 +24,25 @@ public class UserControllerTest {
     private UserService userService;
 
     @Before
-    public void init(){
+    public void init() {
         u = new User("Ziggy", "test", "user", "ad1", "abcdefg", true, "AG0103");
     }
 
 
     @Test
-    public void getUserReturnsUserGivenByUserService(){
+    public void getUserReturnsUserGivenByUserService() {
         Mockito.when(userService.getUser("Ziggy", "test")).thenReturn(u);
         Assert.assertSame(controller.getUser("Ziggy", "test"), u);
     }
 
     @Test(expected = Throwable.class)
-    public void shouldThrowException(){
+    public void shouldThrowException() {
         Mockito.when(userService.getUser("Ziggy", "password")).thenReturn(null);
         controller.getUser("Ziggy", "password");
     }
 
     @Test
-    public void shouldNotThrowException(){
+    public void shouldNotThrowException() {
         Mockito.when(userService.getUser("Ziggy", "test")).thenReturn(u);
         controller.getUser("Ziggy", "test");
     }

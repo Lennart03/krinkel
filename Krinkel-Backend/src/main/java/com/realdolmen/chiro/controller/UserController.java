@@ -22,7 +22,7 @@ public class UserController {
 
     //package private to allow testing
     void validateUser(User u) {
-        if(u == null){
+        if (u == null) {
             throw new UserNotfoundException();
         }
     }
