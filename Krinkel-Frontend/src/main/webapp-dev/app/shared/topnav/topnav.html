@@ -1,0 +1,13 @@
+<header>
+  <nav>
+    <div class="nav-wrapper">
+      <a href="#" data-activates="slide-out" class="button-collapse"><i class="material-icons">menu</i></a>
+      <a href="/" class="brand-logo center">Krinkel app</a>
+      <ul class="right">
+        <li ng-if="$ctrl.AuthService.getLoggedinUser() != null"><a href="#">
+          <i class="material-icons">exit_to_app</i>
+        </a></li>
+      </ul>
+    </div>
+  </nav>
+</header>
