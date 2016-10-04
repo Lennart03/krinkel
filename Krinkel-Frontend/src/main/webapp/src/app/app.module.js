@@ -11,6 +11,7 @@ import {MovieSearchComponent} from './movie-search/movie-search.component'
 import {MovieFavoritesComponent} from './movie-favorites/movie-favorites.component'
 import {MovieDetailsComponent} from './movie-details/movie-details.component'
 import {MovieLookupComponent} from './shared/movie-lookup/movie-lookup.component'
+import {LoginComponent} from './krinkel-login/krinkel-login.component'
 
 export default angular
   .module('contactsApp', ['ngRoute'])
@@ -21,6 +22,7 @@ export default angular
     console.log(`version: ${appVersion}`);
   })
   .service('MoviesService', MoviesService)
+  .component('krinkelLogin', LoginComponent)
   .component('moviesLookup', MovieLookupComponent)
   .component('moviesCollection', MovieCollectionComponent)
   .component('moviesHomepage', MovieHomepageComponent)

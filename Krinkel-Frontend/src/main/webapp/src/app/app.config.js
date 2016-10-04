@@ -3,6 +3,10 @@ export function appConfig($routeProvider, $locationProvider) {
 
   $locationProvider.html5Mode(true);
 
+  $routeProvider.when('/login', {
+    template: '<krinkel-login></krinkel-login>'
+  });
+
   $routeProvider.when('/home', {
     template: '<movies-homepage></movies-homepage>'
   });
