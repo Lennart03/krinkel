@@ -4,20 +4,30 @@ export class AuthService {
 
   setLoggedinUser(user){
     this.user = user;
+    localStorage.setItem('user', JSON.stringify(user));
   }
 
   getLoggedinUser(){
+    this.getUserFromLocalStorage();
     return this.user;
   }
 
   getUserRole(){
-    //return this.user.role;
-    return 'admin';
+    this.getUserFromLocalStorage();
+    return this.user.role;
   }
 
   getRegistrationStatus(){
-    // return this.user.isRegistrated;
-    return false;
+    this.getUserFromLocalStorage();
+    return this.user.subscribed;
+  }
+
+  getUserFromLocalStorage(){
+    this.user = JSON.parse(localStorage.getItem('user'));
+  }
+
+  logoutUser(){
+    localStorage.clear();
   }
 }
 

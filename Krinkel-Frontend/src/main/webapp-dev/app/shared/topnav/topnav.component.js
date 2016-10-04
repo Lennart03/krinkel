@@ -1,12 +1,17 @@
 /*@ngInject*/
 class TopNavController{
-  constructor(AuthService){
+  constructor(AuthService, $location){
     this.AuthService = AuthService;
+    this.$location = $location;
   }
 
   $onInit(){
   }
 
+  logout(){
+    this.AuthService.logoutUser();
+    this.$location.path('/login')
+  }
 }
 
 export var TopNavComponent = {
@@ -14,4 +19,4 @@ export var TopNavComponent = {
   controller: TopNavController
 };
 
-TopNavComponent.$inject = ['AuthService'];
+TopNavComponent.$inject = ['AuthService','$location'];

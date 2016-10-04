@@ -12,12 +12,15 @@ class KrinkelLoginController {
 
   login(user, password) {
     console.debug(user + " " + password);
-    var user = this.KrinkelService.logIn(user, password).then((results) => {
-      // console.debug(results);
+    this.KrinkelService.logIn(user, password).then((results) => {
+      console.debug(results);
+      this.AuthService.setLoggedinUser(results);
+      this.$location.path('/home')
       return results;
+    }, (results) => {
+      Toast('blabla', 2000);
     });
-    this.AuthService.setLoggedinUser(user);
-    this.$location.path('/home')
+
   }
 }
 
