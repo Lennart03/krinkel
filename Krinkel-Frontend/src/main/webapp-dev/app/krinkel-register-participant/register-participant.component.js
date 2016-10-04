@@ -2,12 +2,13 @@ class RegisterParticipantController {
 
 
 
-    constructor($log) {
+    constructor($log, $window) {
         this.$log = $log;
+        this.$window = $window;
         this.phoneNumberPattern = /^((\+|00)32\s?|0)(\d\s?\d{3}|\d{2}\s?\d{2})(\s?\d{2}){2}|((\+|00)32\s?|0)4(60|[789]\d)(\s?\d{2}){3}$/;
     }
 
-    addPerson(newPerson) {
+    registerPerson(newPerson) {
         var person = {
             name: {
                 first: newPerson.firstName,
@@ -21,6 +22,8 @@ class RegisterParticipantController {
             gender: newPerson.gender,
             rank: newPerson.rank,
             group: newPerson.group,
+            buddy: newPerson.buddy,
+            languages: newPerson.languages,
             dietary: newPerson.dietary,
             dietaryText: newPerson.dietaryText,
             socialPromotion: newPerson.socialPromotion,
@@ -28,6 +31,7 @@ class RegisterParticipantController {
             otherText: newPerson.otherText
         };
         this.$log.debug(person);
+        this.$window.location.href = '/home';
     }
     $onInit() {
         angular.element('.modal-trigger').leanModal();
