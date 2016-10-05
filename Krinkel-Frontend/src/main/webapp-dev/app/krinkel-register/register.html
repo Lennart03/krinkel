@@ -1,6 +1,8 @@
 <div class="row">
 
-    <p class="flow-text"><i class="material-icons">info_outline</i> Let op: Als je je inschrijft, word je meteen naar
+
+    <p class="flow-text"><i class="material-icons">info_outline</i> Let op: Als je je inschrijft, word je meteen
+        naar
         een
         betaalpagina gestuurd.
         Hou dus je bankkaart bij de hand. Problemen met online betalen? Laat het dan weten via <a
@@ -12,6 +14,7 @@
     <form class="col s12 m12" novalidate name="personForm" ng-submit="$ctrl.registerPerson(newPerson)">
         <div class="row">
             <div class="input-field col s12 m6">
+
                 <i class="material-icons prefix">perm_identity</i>
                 <input id="first_name" name="firstName" type="text" class="validate" ng-minlength="1"
                        ng-model="newPerson.firstName" required>
@@ -52,12 +55,13 @@
 
         <div class="row">
             <div class="input-field col s12 m10">
-                <i class="material-icons prefix">home</i>
 
-                <label for="street">Straat</label>
-                <input  name="street" type="text" class="validate" id="street" ng-model="newPerson.street" class="validate" ng-autocomplete
-                        options="$ctrl.optionsStreet" details="$ctrl.details"  required/>
+                    <i class="material-icons prefix">home</i>
 
+                    <label for="street">Straat</label>
+                    <input name="street" type="text" class="validate" id="street" ng-model="newPerson.street"
+                           class="validate" ng-autocomplete
+                           options="$ctrl.optionsStreet" details="$ctrl.details" required placeholder="..."/>
 
 
                 <p ng-show="personForm.street.$invalid && personForm.street.$touched" class="error"><i
@@ -79,8 +83,9 @@
             <div class="input-field col m4 s12">
                 <i class="material-icons prefix">home</i>
 
-                <input ng-minlength="4" name="postalCode" type="text" class="validate" id="postal_code" ng-model="newPerson.postalCode" class="validate" ng-autocomplete
-                        options="$ctrl.optionsPostalCode" details="$ctrl.details"  required/>
+                <input ng-minlength="4" name="postalCode" type="text" class="validate" id="postal_code"
+                       ng-model="newPerson.postalCode" class="validate" ng-autocomplete
+                       options="$ctrl.optionsPostalCode" required placeholder="..."/>
 
                 <label for="postal_code">Postcode</label>
                 <p ng-show="personForm.postalCode.$invalid && personForm.postalCode.$touched" class="error"><i
@@ -88,8 +93,9 @@
             </div>
             <div class="input-field col m8 s12">
                 <i class="material-icons prefix">home</i>
-                <input  name="city" type="text" class="validate" id="city" ng-model="newPerson.city" class="validate" ng-autocomplete
-                         options="$ctrl.optionsStad" details="$ctrl.details"  required/>
+                <input name="city" type="text" class="validate" id="city" ng-model="newPerson.city" class="validate"
+                       ng-autocomplete
+                       options="$ctrl.optionsStad" details="$ctrl.details" required placeholder="..."/>
 
                 <label for="city">Gemeente</label>
                 <p ng-show="personForm.city.$invalid && personForm.city.$touched" class="error"><i
@@ -159,9 +165,11 @@
                     <div id="modal1" class="modal">
                         <div class="modal-content">
                             <h4>Wat is een <i>buddy</i></h4>
-                            <p> Als buddy zit je in een leefgroep met internationale deelnemers en andere buddy’s. Je
+                            <p> Als buddy zit je in een leefgroep met internationale deelnemers en andere buddy’s.
+                                Je
                                 verblijft
-                                ook op de internationale kampgrond. Je bent mee verantwoordelijk voor een vlotte Krinkel
+                                ook op de internationale kampgrond. Je bent mee verantwoordelijk voor een vlotte
+                                Krinkel
                                 voor internationale gasten.</p>
                         </div>
                         <div class="modal-footer">
@@ -298,7 +306,8 @@
                         <!--TODO: ng-disabled op input-->
                         <div class="input-field col s12 m6">
                             <input
-                                type="text" id="jobOther" class="autocomplete" ng-model="newPerson.jobOther" required>
+                                type="text" id="jobOther" class="autocomplete" ng-model="newPerson.jobOther"
+                                required>
                             <label for="group">Andere</label>
                         </div>
                     </label>
