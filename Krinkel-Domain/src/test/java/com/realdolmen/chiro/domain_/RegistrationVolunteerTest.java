@@ -1,6 +1,7 @@
 package com.realdolmen.chiro.domain_;
 
 import com.realdolmen.chiro.domain.*;
+import org.junit.Assert;
 import org.junit.Test;
 
 import javax.validation.ConstraintViolation;
@@ -21,6 +22,6 @@ public class RegistrationVolunteerTest extends BeanValidatorTest{
         );
 
         Set<ConstraintViolation<RegistrationVolunteer>> violations = validator().validate(volunteer);
-        assertTrue(violations.isEmpty());
+        Assert.assertTrue(violations.isEmpty());
     }
 }
