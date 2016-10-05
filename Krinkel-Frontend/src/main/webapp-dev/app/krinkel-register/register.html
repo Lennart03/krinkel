@@ -53,9 +53,13 @@
         <div class="row">
             <div class="input-field col s12 m10">
                 <i class="material-icons prefix">home</i>
-                <input id="street" name="street" type="text" class="validate" ng-model="newPerson.street" required>
 
                 <label for="street">Straat</label>
+                <input  name="street" type="text" class="validate" id="street" ng-model="newPerson.street" class="validate" ng-autocomplete
+                        options="$ctrl.optionsStreet" details="$ctrl.details"  required/>
+
+
+
                 <p ng-show="personForm.street.$invalid && personForm.street.$touched" class="error"><i
                     class="material-icons">error_outline</i>
                     Straatnaam is verplicht</p>
@@ -74,15 +78,19 @@
         <div class="row">
             <div class="input-field col m4 s12">
                 <i class="material-icons prefix">home</i>
-                <input id="postal_code" name="postalCode" ng-minlength="4" type="text" class="validate"
-                       ng-model="newPerson.postalCode" required>
+
+                <input ng-minlength="4" name="postalCode" type="text" class="validate" id="postal_code" ng-model="newPerson.postalCode" class="validate" ng-autocomplete
+                        options="$ctrl.optionsPostalCode" details="$ctrl.details"  required/>
+
                 <label for="postal_code">Postcode</label>
                 <p ng-show="personForm.postalCode.$invalid && personForm.postalCode.$touched" class="error"><i
                     class="material-icons">error_outline</i> Postcode is verplicht</p>
             </div>
             <div class="input-field col m8 s12">
                 <i class="material-icons prefix">home</i>
-                <input id="city" name="city" type="text" class="validate" ng-model="newPerson.city" required>
+                <input  name="city" type="text" class="validate" id="city" ng-model="newPerson.city" class="validate" ng-autocomplete
+                         options="$ctrl.optionsStad" details="$ctrl.details"  required/>
+
                 <label for="city">Gemeente</label>
                 <p ng-show="personForm.city.$invalid && personForm.city.$touched" class="error"><i
                     class="material-icons">error_outline</i>
@@ -141,7 +149,7 @@
             <div class="col s12">
                 <div>
                     <i class="small material-icons prefix">mood</i>
-                    <input type="checkbox" id="buddy" ng-model="newPerson.buddy" />
+                    <input type="checkbox" id="buddy" ng-model="newPerson.buddy"/>
                     <label for="buddy">Ik wil mee als buddy op de internationale kampgrond en spreek vlot volgende
                         talen: </label>
                     <!-- Modal Trigger -->

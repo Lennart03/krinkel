@@ -1,7 +1,7 @@
 /*@ngInject*/
 class RegisterController {
 
-    constructor(AuthService,$log, $window,$location) {
+    constructor(AuthService, $log, $window, $location) {
         this.AuthService = AuthService;
         this.$location = $location;
         this.$log = $log;
@@ -15,6 +15,27 @@ class RegisterController {
         if (this.AuthService.getLoggedinUser() == null) {
             this.$location.path('/login');
         }
+
+        this.optionsStreet = {
+            country: 'be',
+            types: 'address'
+
+
+        };
+
+        this.optionsStad = {
+            country: 'be',
+            types: '(cities)'
+        };
+
+        this.optionsPostalCode = {
+            country: 'be',
+            types: '(regions)'
+
+
+        };
+
+        this.details = '';
 
         angular.element('.modal-trigger').leanModal();
         angular.element('.datepicker').pickadate({
@@ -62,4 +83,4 @@ export var RegisterComponent = {
         type: '@'
     }
 }
-RegisterComponent.$inject = ['AuthService','$log', '$window','$location'];
+RegisterComponent.$inject = ['AuthService', '$log', '$window', '$location'];

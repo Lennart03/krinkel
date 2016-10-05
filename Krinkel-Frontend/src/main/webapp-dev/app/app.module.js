@@ -1,7 +1,7 @@
 import 'angular';
 
 import 'angular-route';
-
+import 'ng-autocomplete'
 import {appConfig} from './app.config';
 import {KrinkelService} from './shared/krinkel.service';
 import {AuthService} from './shared/auth.service';
@@ -19,7 +19,7 @@ import {KrinkelHomepageComponent} from './krinkel-homepage/krinkel-homepage.comp
 import {KrinkelLoginComponent} from './krinkel-login/krinkel-login.component';
 
 export default angular
-  .module('contactsApp', ['ngRoute'])
+  .module('contactsApp', ['ngRoute','ngAutocomplete'])
   .config(appConfig)
   .constant('appVersion', 'BETA')
   .constant('BASEURL', 'http://localhost:8080')
