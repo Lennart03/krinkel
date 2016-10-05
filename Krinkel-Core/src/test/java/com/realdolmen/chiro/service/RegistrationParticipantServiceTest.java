@@ -64,6 +64,6 @@ public class RegistrationParticipantServiceTest {
         Mockito.when(repo.findByAdNumber("ADNUMMER")).thenReturn(null);
         registrationParticipantService.save(participant);
         Assert.assertSame(null, registrationParticipantService.save(participant));
-        Mockito.verify(repo, times(2)).save(participant);
+        Mockito.verify(repo, Mockito.times(2)).save(participant);
     }
 }

@@ -46,6 +46,10 @@
             <groupId>com.realdolmen.chiro</groupId>
             <artifactId>Krinkel-Repository</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.realdolmen.chiro</groupId>
+            <artifactId>Krinkel-Core</artifactId>
+        </dependency>
 
     </dependencies>
 
