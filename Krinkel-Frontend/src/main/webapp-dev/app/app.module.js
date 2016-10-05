@@ -4,6 +4,7 @@ import 'angular-route';
 
 import {appConfig} from './app.config';
 import {KrinkelService} from './shared/krinkel.service';
+import {StorageService} from './shared/storage.service.js';
 
 //components
 import {WelcomeMessageComponent} from './shared/welcome-message/welcome-message.component'
@@ -21,6 +22,7 @@ export default angular
     console.log(`version: ${appVersion}`);
   })
   .service('KrinkelService', KrinkelService)
+  .service('StorageService', StorageService)
   //global components
   .component('welcomeMessage', WelcomeMessageComponent)
   //pages
