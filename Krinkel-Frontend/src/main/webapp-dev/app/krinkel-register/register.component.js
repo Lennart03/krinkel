@@ -1,11 +1,11 @@
-class RegisterParticipantController {
-
-
+class RegisterController {
 
     constructor($log, $window) {
         this.$log = $log;
         this.$window = $window;
         this.phoneNumberPattern = /^((\+|00)32\s?|0)(\d\s?\d{3}|\d{2}\s?\d{2})(\s?\d{2}){2}|((\+|00)32\s?|0)4(60|[789]\d)(\s?\d{2}){3}$/;
+        this.campgrounds = ['Antwerpen', 'Kempen', 'Mechelen', 'Limburg', 'Leuven', 'Brussel', 'West-Vlaanderen', 'Heuvelland', 'Roeland', 'Reinaert', 'Nationaal', 'Internationaal'];
+        angular.element('select').material_select();
     }
 
     registerPerson(newPerson) {
@@ -49,7 +49,11 @@ class RegisterParticipantController {
 }
 
 
-export var RegisterParticipantComponent = {
-    template: require('./register-participant.html'),
-    controller: RegisterParticipantController
+
+export var RegisterComponent = {
+    template: require('./register.html'),
+    controller: RegisterController,
+    bindings:{
+      type:'@'
+    }
 }

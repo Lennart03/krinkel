@@ -8,7 +8,11 @@ export function appConfig($routeProvider, $locationProvider) {
   });
 
   $routeProvider.when('/register-participant', {
-    template: '<register-participant></register-participant>'
+    template: '<register type="participant"></register>'
+  });
+
+  $routeProvider.when('/register-volunteer', {
+    template: '<register type="volunteer"></register>',
   });
 
 
