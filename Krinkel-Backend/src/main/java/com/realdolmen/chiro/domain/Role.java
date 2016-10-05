@@ -1,5 +1,5 @@
 package com.realdolmen.chiro.domain;
 
-public enum Function {
+public enum Role {
     ASPI, LEADER, MENTOR
 }

@@ -1,10 +1,9 @@
 package com.realdolmen.chiro.controller;
 
 import com.realdolmen.chiro.domain.Adress;
-import com.realdolmen.chiro.domain.Function;
+import com.realdolmen.chiro.domain.Role;
 import com.realdolmen.chiro.domain.Gender;
 import com.realdolmen.chiro.domain.RegistrationParticipant;
-import org.junit.Before;
 import org.junit.Test;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -28,7 +27,7 @@ public class RegistrationParticipantControllerTest {
         participant.setLastName("HANOT"+ random.nextInt());
         participant.setStamnumber("STAMNUMMER"+ random.nextInt());
         participant.setAdNumber("ADNUMMER"+ random.nextInt());
-        participant.setFunction(Function.MENTOR);
+        participant.setRole(Role.MENTOR);
         participant.setGender(Gender.X);
         participant.setBirthdate(new Date());
 
@@ -49,7 +48,7 @@ public class RegistrationParticipantControllerTest {
         participant.setLastName("HANOT"+ random.nextInt());
         participant.setStamnumber("STAMNUMMER"+ random.nextInt());
         participant.setAdNumber("ADNUMMER"+ random.nextInt());
-        participant.setFunction(Function.MENTOR);
+        participant.setRole(Role.MENTOR);
         participant.setGender(Gender.X);
         participant.setBirthdate(new Date());
 

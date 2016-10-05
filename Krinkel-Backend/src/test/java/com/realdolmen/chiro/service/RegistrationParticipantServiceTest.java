@@ -1,7 +1,7 @@
 package com.realdolmen.chiro.service;
 
 import com.realdolmen.chiro.domain.Adress;
-import com.realdolmen.chiro.domain.Function;
+import com.realdolmen.chiro.domain.Role;
 import com.realdolmen.chiro.domain.Gender;
 import com.realdolmen.chiro.domain.RegistrationParticipant;
 import com.realdolmen.chiro.repository.RegistrationParticipantRepository;
@@ -13,9 +13,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
-import org.springframework.core.io.support.ResourcePatternResolver;
 
-import java.util.ArrayList;
 import java.util.Date;
 
 import static org.mockito.Mockito.times;
@@ -39,7 +37,7 @@ public class RegistrationParticipantServiceTest {
         participant.setLastName("HANOT");
         participant.setStamnumber("STAMNUMMER");
         participant.setAdNumber("ADNUMMER");
-        participant.setFunction(Function.MENTOR);
+        participant.setRole(Role.MENTOR);
         participant.setGender(Gender.X);
         participant.setBirthdate(new Date());
 

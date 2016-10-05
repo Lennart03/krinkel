@@ -1,7 +1,7 @@
 package com.realdolmen.chiro.domain_;
 
 import com.realdolmen.chiro.domain.Eatinghabbit;
-import com.realdolmen.chiro.domain.Function;
+import com.realdolmen.chiro.domain.Role;
 import com.realdolmen.chiro.domain.Gender;
 import com.realdolmen.chiro.domain.RegistrationParticipant;
 import org.junit.Before;
@@ -27,14 +27,8 @@ public class RegistrationParticipantTest extends BeanValidatorTest{
                 new Date(),
                 "AG0104",
                 Gender.WOMAN,
-                Function.ASPI,
-                false,
-                null,
-                Eatinghabbit.VEGI,
-                "",
-                false,
-                "",
-                ""
+                Role.ASPI,
+                Eatinghabbit.VEGI
         );
     }
 

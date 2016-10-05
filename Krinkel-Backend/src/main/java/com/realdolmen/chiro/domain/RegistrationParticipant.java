@@ -10,6 +10,7 @@ import java.util.Date;
 import java.util.List;
 
 @Entity
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 public class RegistrationParticipant {
     @GeneratedValue @Id
     private Long id;
@@ -35,16 +36,16 @@ public class RegistrationParticipant {
 
     @Enumerated(EnumType.STRING)
     @NotNull
-    private Gender gender;
+    private Gender gender = Gender.X;
 
     @Enumerated(EnumType.STRING)
     @NotNull
-    private Function function;
+    private Role role;
 
     private boolean buddy = false;
 
     @ElementCollection
-    private List<Language> language=new ArrayList<Language>();
+    private List<Language> language=new ArrayList<>();
 
     @Enumerated(EnumType.STRING)
     private Eatinghabbit eatinghabbit;
@@ -60,21 +61,15 @@ public class RegistrationParticipant {
     public RegistrationParticipant() {
     }
 
-    public RegistrationParticipant(String adNumber, String firstName, String lastName, Date birthdate, String stamnumber, Gender gender, Function function, boolean buddy, List<Language> language, Eatinghabbit eatinghabbit, String remarksFood, boolean socialPromotion, String medicalRemarks, String remarks) {
+    public RegistrationParticipant(String adNumber, String firstName, String lastName, Date birthdate, String stamnumber, Gender gender, Role role, Eatinghabbit eatinghabbit) {
         this.adNumber = adNumber;
         this.firstName = firstName;
         this.lastName = lastName;
         this.birthdate = birthdate;
         this.stamnumber = stamnumber;
         this.gender = gender;
-        this.function = function;
-        this.buddy = buddy;
-        this.language = language;
+        this.role = role;
         this.eatinghabbit = eatinghabbit;
-        this.remarksFood = remarksFood;
-        this.socialPromotion = socialPromotion;
-        this.medicalRemarks = medicalRemarks;
-        this.remarks = remarks;
     }
 
     public String getFirstName() {
@@ -117,12 +112,12 @@ public class RegistrationParticipant {
         this.gender = gender;
     }
 
-    public Function getFunction() {
-        return function;
+    public Role getRole() {
+        return role;
     }
 
-    public void setFunction(Function function) {
-        this.function = function;
+    public void setRole(Role role) {
+        this.role = role;
     }
 
     public boolean isBuddy() {

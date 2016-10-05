@@ -1,14 +1,8 @@
 package com.realdolmen.chiro.controller;
 
-import com.realdolmen.chiro.Application;
 import com.realdolmen.chiro.domain.*;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.TestPropertySource;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
@@ -41,14 +35,8 @@ public class DummyControllerMockTest extends MockMvcTest{
                 new Date(),
                 "AG0104",
                 Gender.WOMAN,
-                Function.ASPI,
-                false,
-                null,
-                Eatinghabbit.VEGI,
-                "",
-                false,
-                "",
-                ""
+                Role.ASPI,
+                Eatinghabbit.VEGI
         );
 
         p.setAdress(new Adress());

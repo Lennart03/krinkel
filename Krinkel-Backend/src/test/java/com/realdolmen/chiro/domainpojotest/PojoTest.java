@@ -21,7 +21,7 @@ import java.util.List;
 public class PojoTest {
 
     // Configured for expectation, so we know when a class gets added or removed.
-    private static final int EXPECTED_CLASS_COUNT = 7;
+    private static final int EXPECTED_CLASS_COUNT = 13; // Why?  Big Question mark ?
 
     // The package to createBooking
     private static final String POJO_PACKAGE = "com.realdolmen.chiro.domain";
