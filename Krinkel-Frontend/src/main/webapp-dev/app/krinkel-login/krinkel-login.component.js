@@ -14,11 +14,17 @@ class KrinkelLoginController {
     console.debug(user + " " + password);
     this.KrinkelService.logIn(user, password).then((results) => {
       console.debug(results);
+
       this.AuthService.setLoggedinUser(results);
       this.$location.path('/home')
       return results;
     }, (results) => {
-      Toast('blabla', 2000);
+      console.debug(results.data);
+
+      if (results.status == "401") {
+        Materialize.toast(results.data.message, 2000);
+      }
+
     });
 
   }
