@@ -5,13 +5,9 @@ class KrinkelHomepageController{
     this.$location = $location;
   }
   $onInit(){
-<<<<<<< HEAD
-    
-=======
     if(this.AuthService.getLoggedinUser() == null){
       this.$location.path('/login');
     }
->>>>>>> feature/login
   }
 }
 
