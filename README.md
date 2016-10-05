@@ -21,3 +21,9 @@
 1. Goto Krinkel-Frontend/
 2. Run "npm install"
 3. Run "gulp serve"
+
+## Build a single Maven Submodule
+
+Only builds one of the submodules, not everything:
+
+    mvn clean package -pl Krinkel-Backend/
