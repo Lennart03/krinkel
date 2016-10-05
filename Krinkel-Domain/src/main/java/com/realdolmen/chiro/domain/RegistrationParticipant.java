@@ -27,7 +27,7 @@ public class RegistrationParticipant {
     private String lastName;
 
     @Embedded
-    private Adress adress;
+    private Address address;
 
     @Temporal(TemporalType.DATE)
     @JsonFormat(pattern="yyyy-MM-dd")
@@ -194,12 +194,12 @@ public class RegistrationParticipant {
         this.id = id;
     }
 
-    public Adress getAdress() {
-        return adress;
+    public Address getAddress() {
+        return address;
     }
 
-    public void setAdress(Adress adress) {
-        this.adress = adress;
+    public void setAddress(Address address) {
+        this.address = address;
     }
 
     public String getPhoneNumber() {

@@ -1,6 +1,6 @@
 package com.realdolmen.chiro.service;
 
-import com.realdolmen.chiro.domain.Adress;
+import com.realdolmen.chiro.domain.Address;
 import com.realdolmen.chiro.domain.Role;
 import com.realdolmen.chiro.domain.Gender;
 import com.realdolmen.chiro.domain.RegistrationParticipant;
@@ -15,8 +15,6 @@ import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import java.util.Date;
-
-import static org.mockito.Mockito.times;
 
 @RunWith(MockitoJUnitRunner.class)
 public class RegistrationParticipantServiceTest {
@@ -41,12 +39,12 @@ public class RegistrationParticipantServiceTest {
         participant.setGender(Gender.X);
         participant.setBirthdate(new Date());
 
-        Adress adress = new Adress();
-        adress.setCity("REET");
-        adress.setHouseNumber(69);
-        adress.setPostalCode(6969);
-        adress.setStreet("REETSESTEENWEG");
-        participant.setAdress(adress);
+        Address address = new Address();
+        address.setCity("REET");
+        address.setHouseNumber("69");
+        address.setPostalCode(6969);
+        address.setStreet("REETSESTEENWEG");
+        participant.setAddress(address);
     }
 
 

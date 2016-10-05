@@ -5,29 +5,57 @@ import org.hibernate.validator.constraints.NotBlank;
 import javax.persistence.Embeddable;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
-import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.io.Serializable;
 
+/**
+ * Country is always assumed to be Belgium.
+ *
+ * While a small portion of members are from other countries,
+ * these do not use the registration form provided by this app.
+ * These are handled by the administration itself.
+ */
 @Embeddable
-public class Adress implements Serializable {
+public class Address implements Serializable {
+    /**
+     * Longest street name in Belgium is:
+     * "Burgemeester Charles Rotsart de Hertainglaan" - 44 characters
+     *
+     */
     @NotBlank
+    @Size(max=60)
     private String street;
-    private int houseNumber;
-    @NotNull
+
+    /**
+     * Not necessary a strict numeric value.
+     * Examples include:
+     * "42", "7B" etc.
+     */
+    @NotBlank
+    private String houseNumber;
+
     @Max(9999)
     @Min(1000)
     private int postalCode;
+
+    /**
+     * The city in Belgium with the longest name is:
+     * 'Nil-Saint-Vincent-Saint-Martin'(30 characters in total)
+     */
     @NotBlank
+    @Size(max=50)
     private String city;
 
-    public Adress(String street, int houseNumber, int postalCode, String city) {
+    public Address(String street, String houseNumber, int postalCode, String city) {
         this.street = street;
         this.houseNumber = houseNumber;
         this.postalCode = postalCode;
         this.city = city;
     }
 
-    public Adress() {}
+    public Address() {
+        // Default constructor for management by Container.
+    }
 
     public String getStreet() {
         return street;
@@ -45,11 +73,11 @@ public class Adress implements Serializable {
         this.city = city;
     }
 
-    public int getHouseNumber() {
+    public String getHouseNumber() {
         return houseNumber;
     }
 
-    public void setHouseNumber(int houseNumber) {
+    public void setHouseNumber(String houseNumber) {
         this.houseNumber = houseNumber;
     }
 
