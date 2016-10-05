@@ -160,4 +160,27 @@ public class User {
     public void setEmail(String email) {
         this.email = email;
     }
+
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", role='" + role + '\'' +
+                ", adNumber='" + adNumber + '\'' +
+                ", token='" + token + '\'' +
+                ", subscribed=" + subscribed +
+                ", email='" + email + '\'' +
+                ", firstname='" + firstname + '\'' +
+                ", lastname='" + lastname + '\'' +
+                ", birthDate=" + birthDate +
+                ", streetname='" + streetname + '\'' +
+                ", houseNumber=" + houseNumber +
+                ", postalCode=" + postalCode +
+                ", city='" + city + '\'' +
+                ", phoneNumber='" + phoneNumber + '\'' +
+                ", unitStamNummer='" + unitStamNummer + '\'' +
+                '}';
+    }
 }
