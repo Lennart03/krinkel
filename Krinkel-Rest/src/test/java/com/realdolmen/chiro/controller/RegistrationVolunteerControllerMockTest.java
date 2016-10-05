@@ -45,4 +45,35 @@ public class RegistrationVolunteerControllerMockTest extends MockMvcTest {
                             .content(jsonPayload))
                 .andExpect(MockMvcResultMatchers.status().is2xxSuccessful());
     }
+
+    @Test
+    public void savingRegistrationWithDuplicateADNumberFails() throws Exception {
+        String jsonPayload = json(volunteer);
+
+        mockMvc()
+                .perform(
+                        MockMvcRequestBuilders.post("/api/volunteers")
+                                .contentType(MediaType.APPLICATION_JSON_UTF8)
+                                .content(jsonPayload))
+                .andExpect(MockMvcResultMatchers.status().is2xxSuccessful());
+
+        mockMvc()
+                .perform(
+                        MockMvcRequestBuilders.post("/api/volunteers")
+                                .contentType(MediaType.APPLICATION_JSON_UTF8)
+                                .content(jsonPayload))
+                .andExpect(MockMvcResultMatchers.status().is4xxClientError());
+    }
+
+    @Test
+    public void savingEmptyRegistrationFails() throws Exception {
+        String jsonPayload = "";
+
+        mockMvc()
+                .perform(
+                        MockMvcRequestBuilders.post("/api/volunteers")
+                                .contentType(MediaType.APPLICATION_JSON_UTF8)
+                                .content(jsonPayload))
+                .andExpect(MockMvcResultMatchers.status().is4xxClientError());
+    }
 }

@@ -15,6 +15,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.context.WebApplicationContext;
 
 import java.io.IOException;
@@ -32,6 +33,7 @@ import java.util.Arrays;
 @WebAppConfiguration
 @ContextConfiguration(classes={Application.class}) // Spring Boot config (includes component scan)
 @RunWith(SpringJUnit4ClassRunner.class)
+@Transactional // Rollback after each test.
 @TestPropertySource(locations="classpath:test-application.properties") // Different set of properties to set H2 as DB.
 public abstract class MockMvcTest {
 
