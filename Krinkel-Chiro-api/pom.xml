@@ -8,14 +8,10 @@
         <version>1.0-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
-    <packaging>war</packaging>
 
-    <artifactId>Krinkel-Batch</artifactId>
+    <artifactId>Krinkel-Chiro-api</artifactId>
+
     <dependencies>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-autoconfigure</artifactId>
-        </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
@@ -27,23 +23,8 @@
         </dependency>
         <dependency>
             <groupId>com.realdolmen.chiro</groupId>
-            <artifactId>Krinkel-Repository</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.realdolmen.chiro</groupId>
-            <artifactId>Krinkel-Chiro-api</artifactId>
-            <version>1.0-SNAPSHOT</version>
+            <artifactId>Krinkel-Domain</artifactId>
         </dependency>
     </dependencies>
-
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
-            </plugin>
-        </plugins>
-    </build>
-
 
 </project>
