@@ -4,13 +4,17 @@ import 'angular-route';
 
 import {appConfig} from './app.config';
 import {KrinkelService} from './shared/krinkel.service';
+import {AuthService} from './shared/auth.service';
 
 //components
 import {WelcomeMessageComponent} from './shared/welcome-message/welcome-message.component'
 import {RegisterComponent} from './krinkel-register/register.component'
+import {SuccessMessageComponent} from './shared/success-message/success-message.component'
+import {SideNavComponent} from './shared/sidenav/sidenav.component'
 
 //pages
 import {KrinkelHomepageComponent} from './krinkel-homepage/krinkel-homepage.component'
+import {KrinkelLoginComponent} from './krinkel-login/krinkel-login.component'
 
 export default angular
   .module('contactsApp', ['ngRoute'])
@@ -21,9 +25,14 @@ export default angular
     console.log(`version: ${appVersion}`);
   })
   .service('KrinkelService', KrinkelService)
+  .service('AuthService', AuthService)
+
   //global components
   .component('welcomeMessage', WelcomeMessageComponent)
+  .component('sideNav', SideNavComponent)
+  .component('successMessage',SuccessMessageComponent)
   //pages
   .component('krinkelHomepage', KrinkelHomepageComponent)
   .component('register', RegisterComponent)
+  .component('krinkelLogin', KrinkelLoginComponent)
   .name;

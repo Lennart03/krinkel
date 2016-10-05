@@ -32,16 +32,60 @@ ul.side-nav.fixed li a {
   color: blue;
 }
 
+
 input.ng-dirty.ng-invalid {
     color: red;
     border-bottom: 1px solid red;
 }
 
 input.ng-dirty.ng-valid {
-    border-bottom: 1px solid green; 
+    border-bottom: 1px solid green;
 }
 
 .error {
   color: red;
 }
 
+nav{
+  background-color: #00124D;
+}
+.row{
+  margin-bottom: 5px;
+}
+.collection .collection-item.active{
+  background-color: #32bdf3;
+}
+
+.container-auth {
+  display: flex;
+  flex-direction: column;
+  width:20%;
+
+}
+.topbot{
+  margin-top: 2em;
+  margin-bottom: 1em;
+}
+
+main {
+  flex: 1 0 auto;
+}
+
+body {
+  background: #fff;
+}
+.login-custom-card{
+  display: inline-block;
+  padding: 32px 10px 0px 10px;
+}
+.logintabs{
+  margin: 0 -0.74em;
+}
+.remove-button{
+  margin-top: 2em;
+}
+
+.side-nav-down{
+  padding: 1em;
+  color: blue;
+}
