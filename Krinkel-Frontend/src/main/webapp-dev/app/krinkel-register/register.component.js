@@ -1,11 +1,30 @@
+/*@ngInject*/
 class RegisterController {
 
-    constructor($log, $window) {
+    constructor(AuthService,$log, $window,$location) {
+        this.AuthService = AuthService;
+        this.$location = $location;
         this.$log = $log;
         this.$window = $window;
         this.phoneNumberPattern = /^((\+|00)32\s?|0)(\d\s?\d{3}|\d{2}\s?\d{2})(\s?\d{2}){2}|((\+|00)32\s?|0)4(60|[789]\d)(\s?\d{2}){3}$/;
         this.campgrounds = ['Antwerpen', 'Kempen', 'Mechelen', 'Limburg', 'Leuven', 'Brussel', 'West-Vlaanderen', 'Heuvelland', 'Roeland', 'Reinaert', 'Nationaal', 'Internationaal'];
         angular.element('select').material_select();
+    }
+
+    $onInit() {
+        if (this.AuthService.getLoggedinUser() == null) {
+            this.$location.path('/login');
+        }
+
+        angular.element('.modal-trigger').leanModal();
+        angular.element('.datepicker').pickadate({
+            selectMonths: true, // Creates a dropdown to control month
+            selectYears: 15 // Creates a dropdown of 15 years to control year
+        });
+        angular.element('select').material_select();
+
+        this.errorMessages = document.getElementsByClassName("error");
+        console.log(document.getElementsByClassName("error"));
     }
 
     registerPerson(newPerson) {
@@ -33,27 +52,15 @@ class RegisterController {
         this.$log.debug(person);
         this.$window.location.href = '/home';
     }
-    $onInit() {
-        angular.element('.modal-trigger').leanModal();
-        angular.element('.datepicker').pickadate({
-            selectMonths: true, // Creates a dropdown to control month
-            selectYears: 15 // Creates a dropdown of 15 years to control year
-        });
-        angular.element('select').material_select();
-
-        this.errorMessages = document.getElementsByClassName("error");
-        console.log(document.getElementsByClassName("error"));
-    }
-
 
 }
-
 
 
 export var RegisterComponent = {
     template: require('./register.html'),
     controller: RegisterController,
-    bindings:{
-      type:'@'
+    bindings: {
+        type: '@'
     }
 }
+RegisterComponent.$inject = ['AuthService','$log', '$window','$location'];
