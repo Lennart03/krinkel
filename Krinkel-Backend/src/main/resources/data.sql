@@ -1,3 +1,15 @@
+-- noinspection SqlDialectInspectionForFile
+-- noinspection SqlNoDataSourceInspectionForFile
+
+INSERT INTO pre_camp VALUES (10, '2017-08-21');
+INSERT INTO pre_camp VALUES (20, '2017-08-22');
+INSERT INTO pre_camp VALUES (30, '2017-08-23');
+INSERT INTO pre_camp VALUES (40, '2017-08-24');
+
+INSERT INTO post_camp VALUES (60, '2017-08-31');
+INSERT INTO post_camp VALUES (70, '2017-09-01');
+INSERT INTO post_camp VALUES (80, '2017-09-02');
+
 DROP TABLE IF EXISTS groepen;
 CREATE TABLE groepen (
     `groep_naam` VARCHAR(41),
