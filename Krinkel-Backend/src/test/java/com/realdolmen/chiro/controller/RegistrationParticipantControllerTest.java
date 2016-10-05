@@ -4,6 +4,7 @@ import com.realdolmen.chiro.domain.Adress;
 import com.realdolmen.chiro.domain.Role;
 import com.realdolmen.chiro.domain.Gender;
 import com.realdolmen.chiro.domain.RegistrationParticipant;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,6 +21,8 @@ public class RegistrationParticipantControllerTest {
     private RestTemplate restTemplate = new RestTemplate();
 
     @Test
+    @Ignore
+    // TODO Convert to MockMVC
     public void restServiceShouldSaveNewParticipant() {
         RegistrationParticipant participant = new RegistrationParticipant();
         Random random = new Random();
@@ -41,6 +44,8 @@ public class RegistrationParticipantControllerTest {
     }
 
     @Test
+    @Ignore
+    // TODO Convert to MockMVC
     public void restServiceCanNotSave2SameParticipant() {
         RegistrationParticipant participant = new RegistrationParticipant();
         Random random = new Random();
