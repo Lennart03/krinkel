@@ -1,15 +1,19 @@
 package com.realdolmen.chiro.controller;
 
+import com.realdolmen.chiro.controller.validation.EnableRestErrorHandling;
 import com.realdolmen.chiro.domain.*;
 import com.realdolmen.chiro.service.RegistrationVolunteerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.Calendar;
 
 @RestController
+@EnableRestErrorHandling
 public class RegistrationVolunteerController {
 
     @Autowired
@@ -23,7 +27,7 @@ public class RegistrationVolunteerController {
          "adNumber": "123456789",
          "firstName": "Aster",
          "lastName": "Deckers",
-         "adress": {
+         "address": {
              "street": null,
              "houseNumber": 0,
              "postalCode": 0,
@@ -51,7 +55,7 @@ public class RegistrationVolunteerController {
      }
      */
     @RequestMapping(method = RequestMethod.POST, value="/api/volunteers", consumes = "application/json")
-    public ResponseEntity<?> save(@RequestBody RegistrationVolunteer volunteer){
+    public ResponseEntity<?> save(@Valid @RequestBody RegistrationVolunteer volunteer){
         RegistrationVolunteer resultingVolunteer = registrationVolunteerService.save(volunteer);
         if(resultingVolunteer == null){
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -71,7 +75,8 @@ public class RegistrationVolunteerController {
                 CampGround.ANTWERPEN,
                 new VolunteerFunction(VolunteerFunction.Preset.KLINKER_EDITORIAL)
         );
-        volunteer.setAddress(new Address());
+
+        volunteer.setAddress(new Address("-","-",1500,"-"));
         return volunteer;
     }
 }

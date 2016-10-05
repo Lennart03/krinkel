@@ -70,4 +70,12 @@ public class RegistrationVolunteer extends RegistrationParticipant {
     public void setPostCampList(List<PostCamp> postCampList) {
         this.postCampList = postCampList;
     }
+
+    public void addPostCamp(PostCamp postCamp){
+        this.postCampList.add(postCamp);
+    }
+
+    public void addPreCamp(PreCamp preCamp){
+        this.preCampList.add(preCamp);
+    }
 }

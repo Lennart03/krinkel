@@ -20,6 +20,9 @@ public class RegistrationVolunteerTest extends BeanValidatorTest{
                 CampGround.ANTWERPEN,
                 new VolunteerFunction(VolunteerFunction.Preset.KLINKER_EDITORIAL)
         );
+        volunteer.setAddress(
+                new Address("-", "-", 1500, "-")
+        );
 
         Set<ConstraintViolation<RegistrationVolunteer>> violations = validator().validate(volunteer);
         Assert.assertTrue(violations.isEmpty());

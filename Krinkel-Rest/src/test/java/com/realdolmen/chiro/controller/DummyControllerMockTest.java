@@ -42,7 +42,7 @@ public class DummyControllerMockTest extends MockMvcTest{
                 Eatinghabbit.VEGI
         );
 
-        p.setAddress(new Address());
+        p.setAddress(new Address("-", "-", 1500, "-"));
         em.persist(p);
         id = p.getId();
     }

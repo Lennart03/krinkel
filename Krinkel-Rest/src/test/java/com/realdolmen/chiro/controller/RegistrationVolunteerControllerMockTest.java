@@ -25,7 +25,7 @@ public class RegistrationVolunteerControllerMockTest extends MockMvcTest {
                 CampGround.ANTWERPEN,
                 new VolunteerFunction(VolunteerFunction.Preset.KLINKER_EDITORIAL)
         );
-        volunteer.setAddress(new Address());
+        volunteer.setAddress(new Address("-", "-", 1500, "-"));
     }
 
     @Test
