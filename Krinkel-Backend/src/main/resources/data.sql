@@ -1,11 +1,11 @@
 DROP TABLE IF EXISTS groepen;
 CREATE TABLE groepen (
-    `groep_naam` VARCHAR(41) CHARACTER SET utf8,
-    `groep_stamnr` VARCHAR(8) CHARACTER SET utf8,
-    `gewest_stamnr` VARCHAR(8) CHARACTER SET utf8,
-    `gewest_naam` VARCHAR(20) CHARACTER SET utf8,
-    `verbond_stamnr` VARCHAR(9) CHARACTER SET utf8,
-    `verbond_naam` VARCHAR(15) CHARACTER SET utf8,
+    `groep_naam` VARCHAR(41),
+    `groep_stamnr` VARCHAR(8),
+    `gewest_stamnr` VARCHAR(8),
+    `gewest_naam` VARCHAR(20),
+    `verbond_stamnr` VARCHAR(9),
+    `verbond_naam` VARCHAR(15),
     PRIMARY KEY(`groep_stamnr`)
 );
 INSERT INTO groepen VALUES ('Pleplo','AG /0103','AG /0400','Zac','AG /0000','Antwerpen');
