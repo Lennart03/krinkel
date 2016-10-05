@@ -5,6 +5,7 @@ import 'angular-route';
 import {appConfig} from './app.config';
 import {KrinkelService} from './shared/krinkel.service';
 import {StorageService} from './shared/storage.service.js';
+import {MapperService} from './shared/mapping.service';
 
 
 
@@ -26,6 +27,7 @@ export default angular
   })
   .service('KrinkelService', KrinkelService)
   .service('StorageService', StorageService)
+  .service('MapperService', MapperService)
   //global components
   .component('welcomeMessage', WelcomeMessageComponent)
   //pages

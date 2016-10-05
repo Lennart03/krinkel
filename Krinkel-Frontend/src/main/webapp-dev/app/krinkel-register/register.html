@@ -35,7 +35,8 @@
                 <label for="date_of_birth">Geboortedatum</label>
                 <input id="date_of_birth" name="birthdate" type="date" class="datepicker"
                        ng-model="$ctrl.newPerson.birthdate"
-                        ng-change="$ctrl.setDateInModel()">
+                        ng-change="$ctrl.setDateInModel()"
+                        novalidate>
             </div>
             <div class="input-field col s12 m6">
                 <i class="material-icons prefix">email</i>
@@ -164,7 +165,7 @@
                         </div>
                     </div>
 
-                    <select ng-show="$ctrl.newPerson.buddy" multiple ng-model="$ctrl.newPerson.buddyLanguage">
+                    <select ng-show="$ctrl.newPerson.buddy" multiple ng-model="$ctrl.newPerson.languages">
                         <option value="" disabled selected>Selecteer je talen</option>
                         <option value="Engels">Engels</option>
                         <option value="Frans">Frans</option>
@@ -176,15 +177,10 @@
         </div>
 
         <div ng-show="$ctrl.type === 'volunteer'" class="row">
-            <div class="input-field col s12 m6">
-                <i class="material-icons prefix">mood</i>
-                <input type="text" id="team" class="autocomplete" ng-model="$ctrl.newPerson.team" required>
-                <label for="group">Ploeg</label>
-            </div>
 
             <div class="input-field col s12 m6">
-                <i class="material-icons prefix">location_on</i>
-                <select name="campground">
+                <!--<i class="material-icons prefix">location_on</i>-->
+                <select name="campground" ng-model="$ctrl.newPerson.campGround" class="browser-default">
                     <option value="" selected disabled>Keuze kampgrond:</option>
                     <option value="Antwerpen" selected>Antwerpen</option>
                     <option value="Brussel">Brussel</option>
@@ -199,27 +195,33 @@
                     <option value="Roeland">Roeland</option>
                     <option value="West-Vlaanderen">West-Vlaanderen</option>
                 </select>
-                <label>Keuze kampgrond:</label>
+                <!--<label>Keuze kampgrond:</label>-->
                 <p ng-show="personForm.campground.$invalid && personForm.campground.$touched" class="error">
                     <i class="material-icons">error_outline</i>
                     Verplicht</p>
+            </div>
+            <div class="input-field col s12 m5">
+                <!--<i class="material-icons prefix">restaurant</i>-->
+
+                <select ng-model="$ctrl.newPerson.dietary" class="browser-default">
+                    <option value="" disabled selected>Eetgewoonten</option>
+                    <option value="VEGI">Ik ben vegetariër</option>
+                    <option value="HALAL">Ik eet vis en vlees, maar halal</option>
+                    <option value="NORMAL">Ik eet vis en vlees</option>
+                </select>
+                <!--<label>Eetgewoonten</label>-->
             </div>
         </div>
 
 
         <div class="row" ng-show="$ctrl.type === 'volunteer'">
-            <div class="input-field col s12 m5">
-                <i class="material-icons prefix">restaurant</i>
 
-                <select ng-model="$ctrl.newPerson.dietary" ng-model="$ctrl.newPerson.campground">
-                    <option value="" disabled selected>Eetgewoonten</option>
-                    <option value="1">Ik ben vegetariër</option>
-                    <option value="2">Ik eet vis en vlees, maar halal</option>
-                    <option value="3">Ik eet vis en vlees</option>
-                </select>
-                <label>Eetgewoonten</label>
+            <div class="input-field col s12 m6">
+                <i class="material-icons prefix">mood</i>
+                <input type="text" id="team" class="autocomplete" ng-model="$ctrl.newPerson.team" required>
+                <label for="group">Ploeg</label>
             </div>
-            <div class="input-field col s12 m7">
+            <div class="input-field col s12 m6">
                 <i class="material-icons prefix">restaurant</i>
                 <textarea
                     placeholder="Zijn er zaken waar we bij maaltijden aandacht aan moeten besteden? Geef hier aan of je bepaalde voedselallergieën hebt."
@@ -353,6 +355,8 @@
 
     </form>
     {{$ctrl.newPerson | json}}
+    Errors:
+    {{personForm.$error}}
     <ul>
         <li ng-repeat="error in $ctrl.errorMessages" ng-hide="personForm.error.previousElementSibling.previousElementSibling.name.$valid"><i class="material-icons">error_outline</i> "{{ error.previousElementSibling.innerText }}" is verplicht </li>
     </ul>
