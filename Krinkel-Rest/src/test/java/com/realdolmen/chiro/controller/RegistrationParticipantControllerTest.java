@@ -4,6 +4,7 @@ import com.realdolmen.chiro.domain.Adress;
 import com.realdolmen.chiro.domain.Role;
 import com.realdolmen.chiro.domain.Gender;
 import com.realdolmen.chiro.domain.RegistrationParticipant;
+import org.junit.Assert;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.springframework.http.HttpStatus;
@@ -69,7 +70,7 @@ public class RegistrationParticipantControllerTest {
 
         response = restTemplate.postForEntity(URL_PREFIX + "/api/participants", participant, ResponseEntity.status(201).getClass());
         status = response.getStatusCode();
-        assertEquals(status.value(), 201);
+        Assert.assertEquals(status.value(), 201);
         try {
             restTemplate.postForEntity(URL_PREFIX + "/api/participants", participant, ResponseEntity.badRequest().getClass());
         } catch (org.springframework.web.client.HttpClientErrorException e) {

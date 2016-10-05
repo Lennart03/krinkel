@@ -1,17 +1,14 @@
 package com.realdolmen.chiro.controller;
 
 import com.realdolmen.chiro.domain.*;
+import org.hamcrest.Matchers;
 import org.junit.Before;
 import org.junit.Test;
+import org.springframework.http.MediaType;
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import java.util.Calendar;
-
-import static org.hamcrest.Matchers.containsString;
-import static org.springframework.http.MediaType.APPLICATION_JSON_UTF8;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 public class RegistrationVolunteerControllerMockTest extends MockMvcTest {
 
@@ -33,8 +30,8 @@ public class RegistrationVolunteerControllerMockTest extends MockMvcTest {
 
     @Test
     public void resultingJSONShouldUseCorrectDateFormat() throws Exception {
-        mockMvc().perform(get("/api/volunteers"))
-                .andExpect(content().string(containsString("\"birthdate\":\"1995-08-05\",")));
+        mockMvc().perform(MockMvcRequestBuilders.get("/api/volunteers"))
+                .andExpect(MockMvcResultMatchers.content().string(Matchers.containsString("\"birthdate\":\"1995-08-05\",")));
     }
 
     @Test
@@ -43,9 +40,9 @@ public class RegistrationVolunteerControllerMockTest extends MockMvcTest {
 
         mockMvc()
                 .perform(
-                        post("/api/volunteers")
-                            .contentType(APPLICATION_JSON_UTF8)
+                        MockMvcRequestBuilders.post("/api/volunteers")
+                            .contentType(MediaType.APPLICATION_JSON_UTF8)
                             .content(jsonPayload))
-                .andExpect(status().is2xxSuccessful());
+                .andExpect(MockMvcResultMatchers.status().is2xxSuccessful());
     }
 }

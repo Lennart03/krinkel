@@ -1,8 +1,12 @@
 package com.realdolmen.chiro.controller;
 
 import com.realdolmen.chiro.domain.*;
+import org.hamcrest.Matchers;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
@@ -50,13 +54,13 @@ public class DummyControllerMockTest extends MockMvcTest{
     public void testGetDummyEntity(){
         // Paranoia check: the transaction includes the @Before and @After methods.
         // This means an entity added in the @Before should be able to be retrieved in this method.
-        assertNotNull(em.find(RegistrationParticipant.class, id));
+        Assert.assertNotNull(em.find(RegistrationParticipant.class, id));
     }
 
     @Test
     public void testMockMvc() throws Exception{
-        mockMvc().perform(get("/dummy/"))
-                .andExpect(content().string(containsString("Hello World")))
-                .andExpect(status().isOk());
+        mockMvc().perform(MockMvcRequestBuilders.get("/dummy/"))
+                .andExpect(MockMvcResultMatchers.content().string(Matchers.containsString("Hello World")))
+                .andExpect(MockMvcResultMatchers.status().isOk());
     }
 }

@@ -16,6 +16,7 @@
         <module>Krinkel-Repository</module>
         <module>Krinkel-Core</module>
         <module>Krinkel-Chiro-api</module>
+        <module>Krinkel-Rest</module>
     </modules>
 
     <properties>
