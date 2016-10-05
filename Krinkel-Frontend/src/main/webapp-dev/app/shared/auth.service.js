@@ -1,29 +1,35 @@
 export class AuthService {
-  constructor($http, BASEURL) {
-    this.$http = $http;
-    this.BASEURL = BASEURL;
-
+  constructor() {
   }
 
-  setLoggedinUser(user,password){
+  setLoggedinUser(user){
+    this.user = user;
 
-    return this.$http.get(`${this.BASEURL}/api/users?user=${user}&password=${password}`).then((resp) => {
-      return resp.data;
-    });
+    sessionStorage.setItem('user', JSON.stringify(user));
   }
 
   getLoggedinUser(){
+    this.getUserFromLocalStorage();
     return this.user;
   }
 
   getUserRole(){
-    //return this.user.role;
-    return 'admin';
+    this.getUserFromLocalStorage();
+    return this.user.role;
   }
 
   getRegistrationStatus(){
-    // return this.user.isRegistrated;
-    return false;
+    this.getUserFromLocalStorage();
+    return this.user.subscribed;
+  }
+
+  getUserFromLocalStorage(){
+
+    this.user = JSON.parse(sessionStorage.getItem('user'));
+  }
+
+  logoutUser(){
+    sessionStorage.clear();
   }
 }
 

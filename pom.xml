@@ -11,6 +11,7 @@
     <modules>
         <module>Krinkel-Backend</module>
         <module>Krinkel-Frontend</module>
+
     </modules>
 
     <parent>

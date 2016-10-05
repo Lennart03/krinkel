@@ -1,11 +1,22 @@
 <ul id="slide-out" class="side-nav fixed">
   <li class="logo"><a id="logo-container" href="/" class="brand-logo">
-    <object id="front-page-logo" type="image/svg+xml" data="res/logo.svg">Your browser does not support SVG</object></a></li>
-  <li ng-if="!$ctrl.AuthService.getRegistrationStatus()"><a href="/register-participant">Schrijf je in</a></li>
-  <li><a href="/register-group">Schrijf anderen in</a></li>
-  <li ng-if="!$ctrl.AuthService.getRegistrationStatus()"><a href="/register-employee">Schrijf je in als medewerker</a></li>
-  <li ng-if="$ctrl.AuthService.getUserRole() === 'admin'"><a href="#">Overzicht inschrijvingen</a></li>
-  <li ng-if="$ctrl.AuthService.getUserRole() === 'admin'"><a href="#">Statistic's</a></li>
+    <object id="front-page-logo" type="image/svg+xml" data="res/logo.svg">Your browser does not support SVG</object>
+  </a></li>
+  <div ng-if="$ctrl.AuthService.getLoggedinUser() != null">
+    <li class="collection-item" ng-if="!$ctrl.AuthService.getRegistrationStatus()"><a href="/register-participant"><i
+      class="material-icons">person_add</i> Schrijf je in</a></li>
+    <li class="collection-item"><a href="/register-group"><i class="material-icons">group_add</i> Schrijf anderen in</a>
+    </li>
+    <li class="collection-item" ng-if="!$ctrl.AuthService.getRegistrationStatus()"><a href="/register-employee"><i
+      class="material-icons">work</i> Schrijf je in als medewerker</a></li>
+    <li class="collection-item" ng-if="$ctrl.AuthService.getUserRole() === 'admin'"><a href="#"><i
+      class="material-icons">equalizer</i> Overzicht inschrijvingen</a></li>
+    <li class="collection-item" ng-if="$ctrl.AuthService.getUserRole() === 'admin'"><a href="#"><i
+      class="material-icons">timeline</i> Statistic's</a></li>
+  </div>
+  <div class="setlocked" ng-if="$ctrl.AuthService.getLoggedinUser() == null">
+    <i class="material-icons large lockicon">lock</i>
+  </div>
 </ul>
 
 

@@ -89,3 +89,17 @@ body {
   padding: 1em;
   color: blue;
 }
+.side-nav li {
+  float: left;
+  width: 100%;
+  line-height: 48px;
+}
+.lockicon{
+  text-align: center;
+  width: 100%;
+  margin-top: 40%;
+}
+.setlocked{
+  height: 100%;
+  background-color: lightgray;
+}
