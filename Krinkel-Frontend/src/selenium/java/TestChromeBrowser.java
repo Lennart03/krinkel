@@ -25,11 +25,9 @@ public abstract class TestChromeBrowser {
     System.setProperty("webdriver.chrome.driver", driverPath + "chromedriver.exe");
     driver = new ChromeDriver();
     driver.manage().window().maximize();
+   /* JavascriptExecutor js = (JavascriptExecutor) driver;
+    js.executeScript(String.format("window.localStorage.clear();"));*/
   }
-
-
-
-
 
   @AfterClass
   public void tearDown() {
