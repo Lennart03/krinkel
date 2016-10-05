@@ -41,6 +41,8 @@ class RegisterController {
         });
         angular.element('select').material_select();
 
+        this.errorMessages = document.getElementsByClassName("error");
+        console.log(document.getElementsByClassName("error"));
     }
 
 
