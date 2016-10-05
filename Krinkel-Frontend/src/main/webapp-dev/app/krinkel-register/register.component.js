@@ -7,11 +7,7 @@ class RegisterController {
 
         this.phoneNumberPattern = /^((\+|00)32\s?|0)(\d\s?\d{3}|\d{2}\s?\d{2})(\s?\d{2}){2}|((\+|00)32\s?|0)4(60|[789]\d)(\s?\d{2}){3}$/;
         this.campgrounds = ['Antwerpen', 'Kempen', 'Mechelen', 'Limburg', 'Leuven', 'Brussel', 'West-Vlaanderen', 'Heuvelland', 'Roeland', 'Reinaert', 'Nationaal', 'Internationaal'];
-
-        $scope.$watch(this.newPerson, function () {
-            console.log("test");
-        });
-
+        angular.element('select').material_select();
     }
 
     registerPerson(newPerson) {
@@ -46,15 +42,11 @@ class RegisterController {
             selectYears: 15, // Creates a dropdown of 15 years to control year
             max: new Date()
         });
-        angular.element('select').material_select();
-
-
-
-
-
         // Fill data from localStorage
         this.newPerson = this.StorageService.getUser();
 
+        this.errorMessages = document.getElementsByClassName("error");
+        console.log(document.getElementsByClassName("error"));
     }
 
     /**

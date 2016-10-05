@@ -1,10 +1,7 @@
 <div class="row">
 
-    <p class="flow-text"><i class="material-icons">info_outline</i> Let op: Als je je inschrijft, word je meteen naar
-        een
-        betaalpagina gestuurd.
-        Hou dus je bankkaart bij de hand. Problemen met online betalen? Laat het dan weten via <a
-            href="mailto:inschrijvingen@krinkel.be">inschrijvingen@krinkel.be</a>.</p>
+    <p class="flow-text"><i class="material-icons">info_outline</i> Let op: Als je je inschrijft, word je meteen naar een betaalpagina gestuurd.
+        Hou dus je bankkaart bij de hand. Problemen met online betalen? Laat het dan weten via <a href="mailto:inschrijvingen@krinkel.be">inschrijvingen@krinkel.be</a>.</p>
 </div>
 
 
@@ -225,7 +222,6 @@
 
         </div>
 
-
         <div class="row" ng-show="$ctrl.type === 'volunteer'">
             <div class="input-field col s12 m6">
                 <i class="material-icons prefix">date_range</i>
@@ -274,9 +270,6 @@
                     <input class="with-gap" name="group3" type="radio" id="Leefgroepbegeleiding" ng-model="$ctrl.newPerson.job" value="Leefgroepbegeleiding"/>
                     <label for="Leefgroepbegeleiding">Leefgroepbegeleiding</label>
                 </p>
-
-
-
 
                 <p>
                     <input class="with-gap" name="group3" type="radio" id="logistiekKampgrond" ng-model="$ctrl.newPerson.job" value="Logistiek (kampgrond)"/>
@@ -353,5 +346,9 @@
 
     </form>
     {{$ctrl.newPerson | json}}
+<ul>
+    <li ng-repeat="error in $ctrl.errorMessages" ng-hide="personForm.{{error.previousElementSibling.previousElementSibling.name}}.$valid"><i class="material-icons">error_outline</i> "{{ error.previousElementSibling.innerText }}" is verplicht </li>
+</ul>
+</form>
 
 </div>
