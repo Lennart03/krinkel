@@ -14,6 +14,7 @@ public class RegistrationParticipantController {
     private RegistrationParticipantService registrationParticipantService;
 
     /**
+     * TODO: Fix Date Format
      *
      * Example JSON payload:
      * {

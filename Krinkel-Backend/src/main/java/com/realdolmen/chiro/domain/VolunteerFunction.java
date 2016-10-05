@@ -25,6 +25,8 @@ public class VolunteerFunction {
         CUSTOM // I didn't select something from this list but instead defined my own function in the 'other' field.
     }
 
+    public VolunteerFunction(){}
+
     public VolunteerFunction(Preset preset){
         this.preset = preset;
     }

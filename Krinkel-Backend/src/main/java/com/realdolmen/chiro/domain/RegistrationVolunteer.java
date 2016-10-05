@@ -31,6 +31,8 @@ public class RegistrationVolunteer extends RegistrationParticipant {
     @OneToMany
     private List<PostCamp> postCampList = new ArrayList<>();
 
+    public RegistrationVolunteer() {}
+
     public RegistrationVolunteer(String adNumber, String firstName, String lastName, Date birthdate, String stamnumber, Gender gender, Role role, Eatinghabbit eatinghabbit, CampGround campGround, VolunteerFunction function) {
         super(adNumber, firstName, lastName, birthdate, stamnumber, gender, role, eatinghabbit);
         this.campGround = campGround;
