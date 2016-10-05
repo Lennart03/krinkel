@@ -27,12 +27,11 @@
         </dependency>
         <dependency>
             <groupId>com.realdolmen.chiro</groupId>
-            <artifactId>Krinkel-Backend</artifactId>
-            <version>1.0-SNAPSHOT</version>
+            <artifactId>Krinkel-Repository</artifactId>
         </dependency>
         <dependency>
             <groupId>com.realdolmen.chiro</groupId>
-            <artifactId>Krinkel-Backend</artifactId>
+            <artifactId>Krinkel-Chiro-api</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
     </dependencies>
