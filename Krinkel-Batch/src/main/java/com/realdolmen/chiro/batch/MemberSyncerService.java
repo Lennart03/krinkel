@@ -13,15 +13,17 @@ import java.util.List;
 public class MemberSyncerService {
 
     @Autowired
-    private RegistrationParticipantRepository repository;
+    RegistrationParticipantRepository repository;
 
     @Autowired
-    private ChiroUserAdapter adapter;
+    ChiroUserAdapter adapter;
 
+    //TODO: update the interval to be less frequent
     @Scheduled(cron = "0/10 * * * * *")
-    public void executeBookProcessingSchedule() {
+    public void syncUsersToChiroDB() {
         List<RegistrationParticipant> all = repository.findAll();
 
+        System.out.println("found " + all.size() + " participants");
         if (all.size() == 0 ) {
             System.out.println("Couldn't find any registrations for participants");
         } else {
@@ -29,6 +31,5 @@ public class MemberSyncerService {
                 adapter.syncUser(participant);
             }
         }
-
     }
 }
