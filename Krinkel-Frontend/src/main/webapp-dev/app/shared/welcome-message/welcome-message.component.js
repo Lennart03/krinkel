@@ -1,11 +1,16 @@
 /*@ngInject*/
 class WelcomeMessageController{
-  constructor(){
+  constructor($location, AuthService){
+    this.$location = $location;
+    this.AuthService = AuthService;
   }
 
   $onInit(){
-    this.title = "Welcome to the Krinkel app!"
+    if(this.AuthService.getRegistrationStatus()){
+      this.$location.path('/success');
+    }
   }
+
 
 }
 
@@ -13,3 +18,5 @@ export var WelcomeMessageComponent = {
   template: require('./welcome-message.html'),
   controller: WelcomeMessageController
 };
+
+WelcomeMessageComponent.$inject = ['$location', 'AuthService'];

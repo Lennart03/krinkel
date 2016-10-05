@@ -1,7 +1,13 @@
-export class MoviesService {
+export class KrinkelService {
   constructor($http, BASEURL) {
     this.$http = $http;
     this.BASEURL = BASEURL;
+  }
+
+  logIn(user, password) {
+    return this.$http.get(`${this.BASEURL}/api/users?user=${user}&password=${password}`).then((resp) => {
+      return resp.data;
+    });
   }
   // getMovies(title) {
   //   return this.$http.get(`${this.BASEURL}/online?title=${title}`).then((resp) => {
@@ -15,4 +21,4 @@ export class MoviesService {
   // }
 }
 
-MoviesService.$inject = ['$http', 'BASEURL'];
+KrinkelService.$inject = ['$http', 'BASEURL'];
