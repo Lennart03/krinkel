@@ -141,7 +141,7 @@
             <div class="col s12">
                 <div>
                     <i class="small material-icons prefix">mood</i>
-                    <input type="checkbox" id="buddy" ng-model="newPerson.buddy"/>
+                    <input type="checkbox" id="buddy" ng-model="newPerson.buddy" />
                     <label for="buddy">Ik wil mee als buddy op de internationale kampgrond en spreek vlot volgende
                         talen: </label>
                     <!-- Modal Trigger -->
@@ -161,14 +161,13 @@
                         </div>
                     </div>
 
-                    <select ng-show="buddy" multiple>
+                    <select ng-show="newPerson.buddy" multiple>
                         <option value="" disabled selected>Selecteer je talen</option>
                         <option value="1">Engels</option>
                         <option value="2">Frans</option>
                         <option value="3">Spaans</option>
                     </select>
                 </div>
-
             </div>
         </div>
 
