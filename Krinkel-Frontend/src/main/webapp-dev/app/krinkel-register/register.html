@@ -318,7 +318,9 @@
             Volgende
             <i class="material-icons right">send</i>
         </button>
-
+<ul>
+    <li ng-repeat="error in $ctrl.errorMessages" ng-hide="personForm.{{error.previousElementSibling.previousElementSibling.name}}.$valid"><i class="material-icons">error_outline</i> "{{ error.previousElementSibling.innerText }}" is verplicht </li>
+</ul>
 </form>
 
 </div>
