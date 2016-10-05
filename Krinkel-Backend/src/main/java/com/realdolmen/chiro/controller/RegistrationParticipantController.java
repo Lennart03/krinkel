@@ -14,25 +14,30 @@ public class RegistrationParticipantController {
     private RegistrationParticipantService registrationParticipantService;
 
     /**
-     * TODO: Fix Date Format
      *
      * Example JSON payload:
-     * {
-     *    "adNumber": "123456",
-     *    "firstName": "Anna-Lyn",
-     *    "lastName": "Stardust",
-     *    "birthdate": "1991-02-20",
-     *    "stamnumber": "AG0104",
-     *    "gender": "X",
-     *    "function": "MENTOR",
-     *    "buddy": false,
-     *    "language": [ ],
-     *    "eatinghabbit": null,
-     *    "remarksFood": null,
-     *    "socialPromotion": false,
-     *    "medicalRemarks": null,
-     *    "remarks": null
-     * }
+     {
+        "adNumber": "123456",
+        "firstName": "Anna-Lyn",
+        "lastName": "Stardust",
+        "adress": {
+             "street": null,
+             "houseNumber": 0,
+             "postalCode": 0,
+             "city": null
+         },
+        "birthdate": "1991-02-20",
+        "stamnumber": "AG0104",
+        "gender": "X",
+        "function": "MENTOR",
+        "buddy": false,
+        "language": [],
+        "eatinghabbit": null,
+        "remarksFood": null,
+        "socialPromotion": false,
+        "medicalRemarks": null,
+        "remarks": null
+     }
      */
     @RequestMapping(method = RequestMethod.POST, value="/api/participants", consumes = "application/json")
     public ResponseEntity<?> save(@RequestBody RegistrationParticipant participant){
