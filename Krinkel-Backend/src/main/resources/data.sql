@@ -5,7 +5,8 @@ CREATE TABLE groepen (
     `gewest_stamnr` VARCHAR(8) CHARACTER SET utf8,
     `gewest_naam` VARCHAR(20) CHARACTER SET utf8,
     `verbond_stamnr` VARCHAR(9) CHARACTER SET utf8,
-    `verbond_naam` VARCHAR(15) CHARACTER SET utf8
+    `verbond_naam` VARCHAR(15) CHARACTER SET utf8,
+    PRIMARY KEY(`groep_stamnr`)
 );
 INSERT INTO groepen VALUES ('Pleplo','AG /0103','AG /0400','Zac','AG /0000','Antwerpen');
 INSERT INTO groepen VALUES ('Lore','AG /0104','AG /0400','Zac','AG /0000','Antwerpen');
