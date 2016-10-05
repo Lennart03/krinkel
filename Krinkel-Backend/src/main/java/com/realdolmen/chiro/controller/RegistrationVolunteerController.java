@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Calendar;
 import java.util.Date;
 
 @RestController
@@ -29,7 +30,7 @@ public class RegistrationVolunteerController {
              "postalCode": 0,
              "city": null
          },
-         "birthdate": 1475659258424,
+         "birthdate": "1995-05-01",
          "stamnumber": "AG0001",
          "gender": "MAN",
          "role": "LEADER",
@@ -61,8 +62,12 @@ public class RegistrationVolunteerController {
 
     @RequestMapping(method = RequestMethod.GET, value="/api/volunteers", produces = "application/json")
     public @ResponseBody RegistrationVolunteer retrieve(){
+
+        Calendar c = Calendar.getInstance();
+        c.set(1995, Calendar.AUGUST, 5);
+
         RegistrationVolunteer volunteer = new RegistrationVolunteer(
-                "123456789", "Aster", "Deckers", new Date(),
+                "123456789", "Aster", "Deckers", c.getTime(),
                 "AG0001", Gender.MAN, Role.LEADER, Eatinghabbit.VEGI,
                 CampGround.ANTWERPEN,
                 new VolunteerFunction(VolunteerFunction.Preset.KLINKER_EDITORIAL)

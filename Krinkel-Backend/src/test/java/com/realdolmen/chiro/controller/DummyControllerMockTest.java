@@ -9,9 +9,12 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import java.util.Date;
 
+import static org.hamcrest.Matchers.containsString;
 import static org.junit.Assert.assertNotNull;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 /**
  * Basic test class with the right configuration to use Spring MockMvc.
@@ -54,6 +57,7 @@ public class DummyControllerMockTest extends MockMvcTest{
     @Test
     public void testMockMvc() throws Exception{
         mockMvc().perform(get("/dummy/"))
+                .andExpect(content().string(containsString("Hello World")))
                 .andExpect(status().isOk());
     }
 }

@@ -1,5 +1,6 @@
 package com.realdolmen.chiro.domain;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import org.hibernate.validator.constraints.NotBlank;
 
 import javax.persistence.*;
@@ -29,6 +30,7 @@ public class RegistrationParticipant {
     private Adress adress;
 
     @Temporal(TemporalType.DATE)
+    @JsonFormat(pattern="yyyy-MM-dd")
     private Date birthdate;
 
     @NotBlank
