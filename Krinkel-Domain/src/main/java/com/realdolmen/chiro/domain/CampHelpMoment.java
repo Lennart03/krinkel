@@ -1,5 +1,7 @@
 package com.realdolmen.chiro.domain;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import javax.persistence.*;
 import java.util.Date;
 
@@ -19,6 +21,7 @@ public abstract class CampHelpMoment {
     private Integer id;
 
     @Temporal(TemporalType.DATE)
+    @JsonFormat(pattern="yyyy-MM-dd")
     private Date date;
 
     public CampHelpMoment() {

@@ -10,7 +10,9 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.Arrays;
 import java.util.Calendar;
+import java.util.Date;
 
 @RestController
 @EnableRestErrorHandling
@@ -22,37 +24,48 @@ public class RegistrationVolunteerController {
     /**
      * TODO: More detail in docs
      *
-     * Example JSON payload:
+     * Example JSON payload. (Pipes denote that the value is one from the list)
      {
          "adNumber": "123456789",
          "firstName": "Aster",
          "lastName": "Deckers",
          "address": {
-             "street": null,
-             "houseNumber": 0,
-             "postalCode": 0,
-             "city": null
+             "street": "Melkweg",
+             "houseNumber": 123,
+             "postalCode": 1850,
+             "city": "Alderaan Prime"
          },
          "birthdate": "1995-05-01",
          "stamnumber": "AG0001",
-         "gender": "MAN",
-         "role": "LEADER",
-         "buddy": false,
-         "language": [ ],
-         "eatinghabbit": "VEGI",
+         "gender": "MAN" | "WOMAN" | "X",
+         "role": "LEADER" | "ASPI" | "MENTOR",
+         "buddy": true | false,
+         "language": [
+                "ENGLISH",
+                "SPANISH"
+         ],
+         "eatinghabbit": "VEGI" | "HALAL" | FISHANDMEAT
          "remarksFood": null,
-         "socialPromotion": false,
+         "socialPromotion": true | false,
          "medicalRemarks": null,
          "remarks": null,
          "phoneNumber": null,
-         "campGround": "ANTWERPEN",
+         "campGround": "ANTWERPEN" | ... ,
          "function": {
-         "preset": "KLINKER_EDITORIAL",
+         "preset": "KLINKER_EDITORIAL" | ...,
          "other": null
          },
-         "preCampList": [ ],
+         "preCampList": [
+                 {
+                     "id": 10,
+                     "date": "2017-08-21"
+                 }
+                 // , ...
+          ],
          "postCampList": [ ]
      }
+
+     Pre and Post Camp -> see data.sql for available options.
      */
     @RequestMapping(method = RequestMethod.POST, value="/api/volunteers", consumes = "application/json")
     public ResponseEntity<?> save(@Valid @RequestBody RegistrationVolunteer volunteer){
@@ -74,6 +87,18 @@ public class RegistrationVolunteerController {
                 "AG0001", Gender.MAN, Role.LEADER, Eatinghabbit.VEGI,
                 CampGround.ANTWERPEN,
                 new VolunteerFunction(VolunteerFunction.Preset.KLINKER_EDITORIAL)
+        );
+
+        PreCamp preCamp = new PreCamp();
+        preCamp.setId(1);
+        preCamp.setDate(new Date());
+        volunteer.addPreCamp(preCamp);
+
+        volunteer.setLanguage(
+                Arrays.asList(
+                        Language.ENGLISH,
+                        Language.SPANISH
+                )
         );
 
         volunteer.setAddress(new Address("-","-",1500,"-"));
