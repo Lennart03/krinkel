@@ -1,5 +1,6 @@
 package com.realdolmen.chiro.chiro_api;
 
+import com.realdolmen.chiro.domain.RegistrationParticipant;
 import com.realdolmen.chiro.domain.User;
 import org.springframework.stereotype.Component;
 
@@ -23,5 +24,10 @@ public class ChiroUserAdapter {
                     res = u;
         }
         return res;
+    }
+
+
+    public void syncUser(RegistrationParticipant participant) {
+        System.out.print(participant.toString());
     }
 }
