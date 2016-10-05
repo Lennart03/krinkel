@@ -8,7 +8,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Calendar;
-import java.util.Date;
 
 @RestController
 public class RegistrationVolunteerController {
