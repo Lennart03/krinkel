@@ -20,14 +20,14 @@ public class Adress implements Serializable {
     @NotBlank
     private String city;
 
-    public Adress(){}
-
     public Adress(String street, int houseNumber, int postalCode, String city) {
         this.street = street;
         this.houseNumber = houseNumber;
         this.postalCode = postalCode;
         this.city = city;
     }
+
+    public Adress() {}
 
     public String getStreet() {
         return street;
