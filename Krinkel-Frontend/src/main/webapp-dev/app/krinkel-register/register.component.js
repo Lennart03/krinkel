@@ -1,6 +1,5 @@
 class RegisterController {
-
-    constructor($log, $window, $scope, StorageService) {
+    constructor($log, $window, StorageService) {
         this.$log = $log;
         this.$window = $window;
         this.StorageService = StorageService;
@@ -9,6 +8,7 @@ class RegisterController {
         this.campgrounds = ['Antwerpen', 'Kempen', 'Mechelen', 'Limburg', 'Leuven', 'Brussel', 'West-Vlaanderen', 'Heuvelland', 'Roeland', 'Reinaert', 'Nationaal', 'Internationaal'];
         angular.element('select').material_select();
     }
+
 
     registerPerson(newPerson) {
         var person = {
@@ -35,38 +35,54 @@ class RegisterController {
         this.$log.debug(person);
         this.$window.location.href = '/home';
     }
+
     $onInit() {
         angular.element('.modal-trigger').leanModal();
         angular.element('.datepicker').pickadate({
             selectMonths: true, // Creates a dropdown to control month
             selectYears: 15, // Creates a dropdown of 15 years to control year
-            max: new Date()
+            max: new Date(),
+            onClose: this.setDateInModel(this)
         });
         // Fill data from localStorage
-        this.newPerson = this.StorageService.getUser();
-
+        // this.newPerson = this.StorageService.getUser();
+        var user = this.StorageService.getUser();
+        if (user) {
+            this.newPerson = user;
+        } else {
+            this.newPerson = {};
+        }
         this.errorMessages = document.getElementsByClassName("error");
         console.log(document.getElementsByClassName("error"));
+    }
+
+    setDateInModel() {
+        if (this.newPerson != undefined) {
+            var birthDate = $('#date_of_birth').val();
+            this.newPerson.birthDate = new Date(birthDate);
+        }
     }
 
     /**
      * Not the ideal lifecycle hook to save everything in localstorage, due to time constraints this will have to do for now.
      */
+
     $doCheck() {
         this.StorageService.saveUser(this.newPerson);
 
-        if ()
+
+        // Couldn't find a better fix.
+        this.setDateInModel();
     }
 
 }
 
 
-
 export var RegisterComponent = {
     template: require('./register.html'),
     controller: RegisterController,
-    bindings:{
-      type:'@'
+    bindings: {
+        type: '@'
     }
 };
-RegisterComponent.$inject = ['$log', '$window', '$scope', 'StorageService'];
+RegisterComponent.$inject = ['$log', '$window', 'StorageService'];

@@ -27,23 +27,25 @@
             </div>
         </div>
 
+
+
         <div class="row">
             <div class="input-field col s12 m6">
                 <i class="material-icons prefix">date_range</i>
                 <label for="date_of_birth">Geboortedatum</label>
                 <input id="date_of_birth" name="birthdate" type="date" class="datepicker"
-                       ng-model="$ctrl.newPerson.birthdate">
+                       ng-model="$ctrl.newPerson.birthdate"
+                        ng-change="$ctrl.setDateInModel()">
             </div>
             <div class="input-field col s12 m6">
-                <i class="material-icons prefix">perm_identity</i>
-                <select ng-model="$ctrl.newPerson.gender">
-                    <option value="" disabled selected>Geslacht</option>
-                    <option value="1">Vrouw</option>
-                    <option value="2">Man</option>
-                    <option value="3">X</option>
-                </select>
-                <label>Geslacht</label>
+                <i class="material-icons prefix">email</i>
+                <input id="email" name="email" type="email" class="validate" ng-model="$ctrl.newPerson.email" required>
+                <label for="email">Email</label>
+                <p ng-show="personForm.email.$invalid && personForm.email.$touched" class="error"><i
+                    class="material-icons">error_outline</i>
+                    Email is verplicht</p>
             </div>
+
 
         </div>
 
@@ -70,7 +72,7 @@
         <div class="row">
             <div class="input-field col m4 s12">
                 <i class="material-icons prefix">home</i>
-                <input id="postal_code" name="postalCode" ng-minlength="4" type="text" class="validate"
+                <input id="postal_code" name="postalCode" ng-minlength="4" ng-maxlength="4" type="text" class="validate"
                        ng-model="$ctrl.newPerson.postalCode" required>
                 <label for="postal_code">Postcode</label>
                 <p ng-show="personForm.postalCode.$invalid && personForm.postalCode.$touched" class="error"><i
@@ -99,33 +101,10 @@
             </div>
         </div>
 
-        <div class="row">
-            <div class="input-field col s12">
-                <i class="material-icons prefix">email</i>
-                <input id="email" name="email" type="email" class="validate" ng-model="$ctrl.newPerson.email" required>
-                <label for="email">Email</label>
-                <p ng-show="personForm.email.$invalid && personForm.email.$touched" class="error"><i
-                    class="material-icons">error_outline</i>
-                    Email is verplicht</p>
-            </div>
-        </div>
-
         <div class="row" ng-show="$ctrl.type === 'participant'">
-            <div class="input-field col s12 m6">
-                <i class="material-icons prefix">mood</i>
-                <select name="rank" ng-model="$ctrl.newPerson.rank">
-                    <option value="" disabled selected>In '16-17' was ik:</option>
-                    <option value="Aspi">Aspi</option>
-                    <option value="Leider">Leid(st)er</option>
-                    <option value="Begeleider">Volwassen begeleider</option>
-                </select>
-                <label>In '16-17' was ik:</label>
-                <p ng-show="personForm.rank.$invalid && personForm.rank.$touched" class="error"><i
-                    class="material-icons">error_outline</i>
-                    Verplicht</p>
-            </div>
 
-            <div class="input-field col s12 m6" ng-if="$ctrl.type === 'participant'">
+
+            <div class="input-field col s12" ng-if="$ctrl.type === 'participant'">
                 <i class="material-icons prefix">mood</i>
                 <input type="text" id="group" class="autocomplete" ng-model="$ctrl.newPerson.group" required>
                 <label for="group">Groep</label>
@@ -133,10 +112,38 @@
 
         </div>
 
+        <div class="row">
+            <div class="input-field col s12 m6">
+                <!--<i class="material-icons prefix">perm_identity</i>-->
+                <select ng-model="$ctrl.newPerson.gender" class="browser-default">
+                    <option value="" disabled selected>Geslacht</option>
+                    <option value="Vrouw">Vrouw</option>
+                    <option value="Man">Man</option>
+                    <option value="X">X</option>
+                </select>
+                <!--<label>Geslacht</label>-->
+            </div>
+            <div class="input-field col s12 m6">
+                <!--<i class="material-icons prefix">mood</i>-->
+                <select name="rank" ng-model="$ctrl.newPerson.rank" class="browser-default">
+                    <option value="" disabled selected>In '16-17' was ik:</option>
+                    <option value="Aspi">Aspi</option>
+                    <option value="Leider">Leid(st)er</option>
+                    <option value="Begeleider">Volwassen begeleider</option>
+                </select>
+                <!--<label>In '16-17' was ik:</label>-->
+                <p ng-show="personForm.rank.$invalid && personForm.rank.$touched" class="error"><i
+                    class="material-icons">error_outline</i>
+                    Verplicht</p>
+            </div>
+        </div>
+
+
+
         <div class="row" ng-show="$ctrl.type === 'participant'">
             <div class="col s12">
                 <div>
-                    <i class="small material-icons prefix">mood</i>
+                    <!--<i class="small material-icons prefix">mood</i>-->
                     <input type="checkbox" id="buddy" ng-model="$ctrl.newPerson.buddy"/>
                     <label for="buddy">Ik wil mee als buddy op de internationale kampgrond en spreek vlot volgende
                         talen: </label>
@@ -346,9 +353,9 @@
 
     </form>
     {{$ctrl.newPerson | json}}
-<ul>
-    <li ng-repeat="error in $ctrl.errorMessages" ng-hide="personForm.{{error.previousElementSibling.previousElementSibling.name}}.$valid"><i class="material-icons">error_outline</i> "{{ error.previousElementSibling.innerText }}" is verplicht </li>
-</ul>
-</form>
+    <ul>
+        <li ng-repeat="error in $ctrl.errorMessages" ng-hide="personForm.error.previousElementSibling.previousElementSibling.name.$valid"><i class="material-icons">error_outline</i> "{{ error.previousElementSibling.innerText }}" is verplicht </li>
+    </ul>
+    </form>
 
 </div>

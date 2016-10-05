@@ -8,8 +8,12 @@ export class StorageService {
     }
 
     getUser() {
-        // TODO: FIX BUG: set preCamp & postCamp to be empty when loaded because the Materialize select can't load it (to avoid confusion)
-        return JSON.parse(localStorage.getItem('savedData'));
+        if (localStorage.getItem('savedData') == null || localStorage.getItem('savedData') == undefined) {
+            return;
+        } else {
+            // TODO: FIX BUG: set preCamp & postCamp to be empty when loaded because the Materialize select can't load it (to avoid confusion)
+            return JSON.parse(localStorage.getItem('savedData'));
+        }
     }
 }
 
