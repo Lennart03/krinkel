@@ -89,4 +89,46 @@ public class RegistrationParticipantTest extends BeanValidatorTest{
         Set<ConstraintViolation<RegistrationParticipant>> violations = validator().validateProperty(particpant, "email");
         Assert.assertEquals(1, violations.size());
     }
+
+    @Test
+    public void validPhoneNumberShouldBeValid(){
+        particpant.setPhoneNumber("016539999");
+        Set<ConstraintViolation<RegistrationParticipant>> violations = validator().validateProperty(particpant, "phoneNumber");
+        Assert.assertTrue(violations.isEmpty());
+    }
+
+    @Test
+    public void phoneNumberWithSpacesShouldBeValid(){
+        particpant.setPhoneNumber("016 53 99 99");
+        Set<ConstraintViolation<RegistrationParticipant>> violations = validator().validateProperty(particpant, "phoneNumber");
+        Assert.assertTrue(violations.isEmpty());
+    }
+
+    @Test
+    public void phoneNumberWithCountryCodeShouldBeValid(){
+        particpant.setPhoneNumber("+3216539999");
+        Set<ConstraintViolation<RegistrationParticipant>> violations = validator().validateProperty(particpant, "phoneNumber");
+        Assert.assertTrue(violations.isEmpty());
+    }
+
+    @Test
+    public void mobilePhoneAsPhoneNumberWithCountryCodeShouldBeValid(){
+        particpant.setPhoneNumber("+32486987654");
+        Set<ConstraintViolation<RegistrationParticipant>> violations = validator().validateProperty(particpant, "phoneNumber");
+        Assert.assertTrue(violations.isEmpty());
+    }
+
+    @Test
+    public void mobilePhoneAsPhoneNumberShouldBeValid(){
+        particpant.setPhoneNumber("0486987654");
+        Set<ConstraintViolation<RegistrationParticipant>> violations = validator().validateProperty(particpant, "phoneNumber");
+        Assert.assertTrue(violations.isEmpty());
+    }
+
+    @Test
+    public void incorrectPhoneNumberShouldBeValid(){
+        particpant.setPhoneNumber("-5sdfmoklsfjkljia");
+        Set<ConstraintViolation<RegistrationParticipant>> violations = validator().validateProperty(particpant, "phoneNumber");
+        Assert.assertEquals(1, violations.size());
+    }
 }

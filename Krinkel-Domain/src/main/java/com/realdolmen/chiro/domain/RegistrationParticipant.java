@@ -7,6 +7,7 @@ import org.hibernate.validator.constraints.NotBlank;
 import javax.persistence.*;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import java.util.ArrayList;
 import java.util.Date;
@@ -65,7 +66,10 @@ public class RegistrationParticipant {
     private String medicalRemarks;
     private String remarks;
 
-    //todo validate;
+    /**
+     * Regex adapted from frontend validation.
+     */
+    @Pattern(regexp= "^((\\+|00)32\\s?|0)(\\d\\s?\\d{3}|\\d{2}\\s?\\d{2})(\\s?\\d{2}){2}|((\\+|00)32\\s?|0)4(60|[789]\\d)(\\s?\\d{2}){3}$")
     private String phoneNumber;
 
     public RegistrationParticipant() {
