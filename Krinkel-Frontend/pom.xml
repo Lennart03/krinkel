@@ -11,14 +11,6 @@
 
   <artifactId>Krinkel-Frontend</artifactId>
 
-  <packaging>war</packaging>
-
-  <dependencies>
-    <dependency>
-      <artifactId>Krinkel-Rest</artifactId>
-      <groupId>com.realdolmen.chiro</groupId>
-    </dependency>
-  </dependencies>
   <build>
     <plugins>
       <plugin>

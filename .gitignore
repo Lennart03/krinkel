@@ -6,3 +6,4 @@ target/
 Krinkel-Frontend/src/main/webapp
 Krinkel-Frontend/src/main/webapp/index.html
 Krinkel-Frontend/src/main/webapp-dev/npm-debug.log
+Krinkel-Rest/src/main/resources/static/
