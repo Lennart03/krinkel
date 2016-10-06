@@ -14,6 +14,15 @@ export function appConfig($routeProvider, $locationProvider) {
     template: '<success-message></success-message>'
   });
 
+  $routeProvider.when('/register-participant', {
+    template: '<register type="participant"></register>'
+  });
+
+  $routeProvider.when('/register-volunteer', {
+    template: '<register type="volunteer"></register>',
+  });
+
+
   $routeProvider.otherwise({
     redirectTo: '/home'
   });

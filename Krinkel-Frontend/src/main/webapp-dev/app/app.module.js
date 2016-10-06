@@ -4,17 +4,23 @@ import 'angular-route';
 
 import {appConfig} from './app.config';
 import {KrinkelService} from './shared/krinkel.service';
+import {StorageService} from './shared/storage.service.js';
+import {MapperService} from './shared/mapping.service';
+
+
+
 import {AuthService} from './shared/auth.service';
 
 //components
-import {WelcomeMessageComponent} from './shared/welcome-message/welcome-message.component';
-import {SuccessMessageComponent} from './shared/success-message/success-message.component';
-import {SideNavComponent} from './shared/sidenav/sidenav.component';
+import {WelcomeMessageComponent} from './shared/welcome-message/welcome-message.component'
+import {RegisterComponent} from './krinkel-register/register.component'
+import {SuccessMessageComponent} from './shared/success-message/success-message.component'
+import {SideNavComponent} from './shared/sidenav/sidenav.component'
 import {TopNavComponent} from './shared/topnav/topnav.component';
+
 //pages
 import {KrinkelHomepageComponent} from './krinkel-homepage/krinkel-homepage.component';
 import {KrinkelLoginComponent} from './krinkel-login/krinkel-login.component';
-
 
 export default angular
   .module('contactsApp', ['ngRoute'])
@@ -27,6 +33,8 @@ export default angular
   .service('KrinkelService', KrinkelService)
   .service('AuthService', AuthService)
 
+  .service('StorageService', StorageService)
+  .service('MapperService', MapperService)
   //global components
   .component('welcomeMessage', WelcomeMessageComponent)
   .component('sideNav', SideNavComponent)
@@ -34,5 +42,6 @@ export default angular
   .component('topNav', TopNavComponent)
   //pages
   .component('krinkelHomepage', KrinkelHomepageComponent)
+  .component('register', RegisterComponent)
   .component('krinkelLogin', KrinkelLoginComponent)
   .name;

@@ -31,6 +31,21 @@ ul.side-nav.fixed li a {
   padding: 1em;
   color: blue;
 }
+
+
+input.ng-dirty.ng-invalid {
+    color: red;
+    border-bottom: 1px solid red;
+}
+
+input.ng-dirty.ng-valid {
+    border-bottom: 1px solid green;
+}
+
+.error {
+  color: red;
+}
+
 nav{
   background-color: #00124D;
 }

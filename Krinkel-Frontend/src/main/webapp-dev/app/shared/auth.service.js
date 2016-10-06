@@ -4,7 +4,8 @@ export class AuthService {
 
   setLoggedinUser(user){
     this.user = user;
-    localStorage.setItem('user', JSON.stringify(user));
+
+    sessionStorage.setItem('user', JSON.stringify(user));
   }
 
   getLoggedinUser(){
@@ -23,11 +24,12 @@ export class AuthService {
   }
 
   getUserFromLocalStorage(){
-    this.user = JSON.parse(localStorage.getItem('user'));
+
+    this.user = JSON.parse(sessionStorage.getItem('user'));
   }
 
   logoutUser(){
-    localStorage.clear();
+    sessionStorage.clear();
   }
 }
 
