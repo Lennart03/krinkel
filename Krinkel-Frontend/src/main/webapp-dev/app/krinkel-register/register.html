@@ -1,7 +1,9 @@
 <div class="row">
 
-    <p class="flow-text"><i class="material-icons">info_outline</i> Let op: Als je je inschrijft, word je meteen naar een betaalpagina gestuurd.
-        Hou dus je bankkaart bij de hand. Problemen met online betalen? Laat het dan weten via <a href="mailto:inschrijvingen@krinkel.be">inschrijvingen@krinkel.be</a>.</p>
+    <p class="flow-text"><i class="material-icons">info_outline</i> Let op: Als je je inschrijft, word je meteen naar
+        een betaalpagina gestuurd.
+        Hou dus je bankkaart bij de hand. Problemen met online betalen? Laat het dan weten via <a
+            href="mailto:inschrijvingen@krinkel.be">inschrijvingen@krinkel.be</a>.</p>
 </div>
 
 
@@ -28,15 +30,12 @@
         </div>
 
 
-
         <div class="row">
             <div class="input-field col s12 m6">
                 <i class="material-icons prefix">date_range</i>
                 <label for="date_of_birth">Geboortedatum</label>
                 <input id="date_of_birth" name="birthdate" type="date" class="datepicker"
-                       ng-model="$ctrl.newPerson.birthdate"
-                        ng-change="$ctrl.setDateInModel()"
-                        novalidate>
+                       ng-model="$ctrl.newPerson.birthdate">
             </div>
             <div class="input-field col s12 m6">
                 <i class="material-icons prefix">email</i>
@@ -53,7 +52,8 @@
         <div class="row">
             <div class="input-field col s12 m10">
                 <i class="material-icons prefix">home</i>
-                <input id="street" name="street" type="text" class="validate" ng-model="$ctrl.newPerson.street" required>
+                <input id="street" name="street" type="text" class="validate" ng-model="$ctrl.newPerson.street"
+                       required>
 
                 <label for="street">Straat</label>
                 <p ng-show="personForm.street.$invalid && personForm.street.$touched" class="error"><i
@@ -102,15 +102,12 @@
             </div>
         </div>
 
-        <div class="row" ng-show="$ctrl.type === 'participant'">
-
-
-            <div class="input-field col s12" ng-if="$ctrl.type === 'participant'">
+        <div class="row">
+            <div class="input-field col s12">
                 <i class="material-icons prefix">mood</i>
-                <input type="text" id="group" class="autocomplete" ng-model="$ctrl.newPerson.group" required>
+                <input type="text" id="group" class="autocomplete validate" ng-model="$ctrl.newPerson.group" required>
                 <label for="group">Groep</label>
             </div>
-
         </div>
 
         <div class="row">
@@ -124,61 +121,7 @@
                 </select>
                 <!--<label>Geslacht</label>-->
             </div>
-            <div class="input-field col s12 m6">
-                <!--<i class="material-icons prefix">mood</i>-->
-                <select name="rank" ng-model="$ctrl.newPerson.rank" class="browser-default">
-                    <option value="" disabled selected>In '16-17' was ik:</option>
-                    <option value="Aspi">Aspi</option>
-                    <option value="Leider">Leid(st)er</option>
-                    <option value="Begeleider">Volwassen begeleider</option>
-                </select>
-                <!--<label>In '16-17' was ik:</label>-->
-                <p ng-show="personForm.rank.$invalid && personForm.rank.$touched" class="error"><i
-                    class="material-icons">error_outline</i>
-                    Verplicht</p>
-            </div>
-        </div>
-
-
-
-        <div class="row" ng-show="$ctrl.type === 'participant'">
-            <div class="col s12">
-                <div>
-                    <!--<i class="small material-icons prefix">mood</i>-->
-                    <input type="checkbox" id="buddy" ng-model="$ctrl.newPerson.buddy"/>
-                    <label for="buddy">Ik wil mee als buddy op de internationale kampgrond en spreek vlot volgende
-                        talen: </label>
-                    <!-- Modal Trigger -->
-                    <a class="btn-floating waves-effect waves-light modal-trigger" href="#modal1"><i
-                        class="material-icons">help</i></a>
-                    <!-- Modal Structure -->
-                    <div id="modal1" class="modal">
-                        <div class="modal-content">
-                            <h4>Wat is een <i>buddy</i></h4>
-                            <p> Als buddy zit je in een leefgroep met internationale deelnemers en andere buddy’s. Je
-                                verblijft
-                                ook op de internationale kampgrond. Je bent mee verantwoordelijk voor een vlotte Krinkel
-                                voor internationale gasten.</p>
-                        </div>
-                        <div class="modal-footer">
-                            <a href="" class=" modal-action modal-close waves-effect waves-green btn-flat">OK</a>
-                        </div>
-                    </div>
-
-                    <select ng-show="$ctrl.newPerson.buddy" multiple ng-model="$ctrl.newPerson.languages">
-                        <option value="" disabled selected>Selecteer je talen</option>
-                        <option value="Engels">Engels</option>
-                        <option value="Frans">Frans</option>
-                        <option value="Spaans">Spaans</option>
-                    </select>
-                </div>
-
-            </div>
-        </div>
-
-        <div ng-show="$ctrl.type === 'volunteer'" class="row">
-
-            <div class="input-field col s12 m6">
+            <div class="input-field col s12 m6" ng-show="$ctrl.type === 'volunteer'">
                 <!--<i class="material-icons prefix">location_on</i>-->
                 <select name="campground" ng-model="$ctrl.newPerson.campGround" class="browser-default">
                     <option value="" selected disabled>Keuze kampgrond:</option>
@@ -200,36 +143,92 @@
                     <i class="material-icons">error_outline</i>
                     Verplicht</p>
             </div>
-            <div class="input-field col s12 m5">
+            <div class="input-field col s12 m6" ng-show="$ctrl.type === 'participant'">
+                <!--<i class="material-icons prefix">mood</i>-->
+                <select name="rank" ng-model="$ctrl.newPerson.rank" class="browser-default">
+                    <option value="" disabled selected>In '16-17' was ik:</option>
+                    <option value="Aspi">Aspi</option>
+                    <option value="Leider">Leid(st)er</option>
+                    <option value="Begeleider">Volwassen begeleider</option>
+                </select>
+                <!--<label>In '16-17' was ik:</label>-->
+                <p ng-show="personForm.rank.$invalid && personForm.rank.$touched" class="error">
+                    <i class="material-icons">error_outline</i>
+                    Verplicht</p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="input-field col s12">
                 <!--<i class="material-icons prefix">restaurant</i>-->
 
                 <select ng-model="$ctrl.newPerson.dietary" class="browser-default">
                     <option value="" disabled selected>Eetgewoonten</option>
                     <option value="VEGI">Ik ben vegetariër</option>
                     <option value="HALAL">Ik eet vis en vlees, maar halal</option>
-                    <option value="NORMAL">Ik eet vis en vlees</option>
+                    <option value="FISHANDMEAT">Ik eet vis en vlees</option>
                 </select>
                 <!--<label>Eetgewoonten</label>-->
             </div>
         </div>
-
-
-        <div class="row" ng-show="$ctrl.type === 'volunteer'">
-
-            <div class="input-field col s12 m6">
-                <i class="material-icons prefix">mood</i>
-                <input type="text" id="team" class="autocomplete" ng-model="$ctrl.newPerson.team" required>
-                <label for="group">Ploeg</label>
-            </div>
-            <div class="input-field col s12 m6">
+        <div class="row">
+            <div class="input-field col s12">
                 <i class="material-icons prefix">restaurant</i>
                 <textarea
                     placeholder="Zijn er zaken waar we bij maaltijden aandacht aan moeten besteden? Geef hier aan of je bepaalde voedselallergieën hebt."
                     id="dietary" class="materialize-textarea" ng-model="$ctrl.newPerson.dietaryText"></textarea>
                 <label for="dietary">Opmerkingen maaltijd</label>
             </div>
-
         </div>
+
+        <div class="row" ng-show="$ctrl.type === 'participant'">
+            <div class="col s12">
+                <div>
+                    <!--<i class="small material-icons prefix">mood</i>-->
+                    <input type="checkbox" id="buddy" ng-model="$ctrl.newPerson.buddy"/>
+                    <label for="buddy">Ik wil mee als buddy op de internationale kampgrond en spreek vlot volgende
+                        talen: </label>
+                    <!-- Modal Trigger -->
+                    <a class="btn-floating waves-effect waves-light modal-trigger" href="#modal1"><i
+                        class="material-icons">help</i></a>
+                    <!-- Modal Structure -->
+                    <div id="modal1" class="modal">
+                        <div class="modal-content">
+                            <h4>Wat is een <i>buddy</i></h4>
+                            <p> Als buddy zit je in een leefgroep met internationale deelnemers en andere buddy’s.
+                                Je
+                                verblijft
+                                ook op de internationale kampgrond. Je bent mee verantwoordelijk voor een vlotte
+                                Krinkel
+                                voor internationale gasten.</p>
+                        </div>
+                        <div class="modal-footer">
+                            <a href="" class=" modal-action modal-close waves-effect waves-green btn-flat">OK</a>
+                        </div>
+                    </div>
+
+                    <select ng-show="$ctrl.newPerson.buddy" multiple ng-model="$ctrl.newPerson.languages">
+                        <option value="" disabled selected>Selecteer je talen</option>
+                        <option value="ENGLISH">Engels</option>
+                        <option value="SPANISH">Frans</option>
+                        <option value="FRENCH">Spaans</option>
+                    </select>
+                </div>
+
+            </div>
+        </div>
+
+
+
+        <!--<div class="row" ng-show="$ctrl.type === 'volunteer'">-->
+
+            <!--<div class="input-field col s12">-->
+                <!--<i class="material-icons prefix">mood</i>-->
+                <!--<input type="text" id="team" class="autocomplete" ng-model="$ctrl.newPerson.team" required>-->
+                <!--<label for="team">Ploeg</label>-->
+            <!--</div>-->
+
+
+        <!--</div>-->
 
         <div class="row" ng-show="$ctrl.type === 'volunteer'">
             <div class="input-field col s12 m6">
@@ -259,43 +258,52 @@
             <div class="input-field col s12">
                 <h4>Functie</h4>
                 <p>
-                    <input class="with-gap" name="group3" type="radio" id="kampgrond" ng-model="$ctrl.newPerson.job" value="Aanbod nationale kampgrond"/>
+                    <input class="with-gap" name="group3" type="radio" id="kampgrond" ng-model="$ctrl.newPerson.job"
+                           value="Aanbod nationale kampgrond"/>
                     <label for="kampgrond">Aanbod nationale kampgrond</label>
                 </p>
                 <p>
-                    <input class="with-gap" name="group3" type="radio" id="Kampgrondtrekker" ng-model="$ctrl.newPerson.job" value="Kampgrondtrekker"/>
+                    <input class="with-gap" name="group3" type="radio" id="Kampgrondtrekker"
+                           ng-model="$ctrl.newPerson.job" value="Kampgrondtrekker"/>
                     <label for="Kampgrondtrekker">Kampgrondtrekker</label>
                 </p>
                 <p>
-                    <input class="with-gap" name="group3" type="radio" id="Klinkerredactie" ng-model="$ctrl.newPerson.job" value="Klinkerredactie"/>
+                    <input class="with-gap" name="group3" type="radio" id="Klinkerredactie"
+                           ng-model="$ctrl.newPerson.job" value="Klinkerredactie"/>
                     <label for="Klinkerredactie">Klinkerredactie</label>
                 </p>
                 <p>
-                    <input class="with-gap" name="group3" type="radio" id="Kookploeg" ng-model="$ctrl.newPerson.job" value="Kookploeg"/>
+                    <input class="with-gap" name="group3" type="radio" id="Kookploeg" ng-model="$ctrl.newPerson.job"
+                           value="Kookploeg"/>
                     <label for="Kookploeg">Kookploeg</label>
                 </p>
 
                 <p>
-                    <input class="with-gap" name="group3" type="radio" id="Leefgroepbegeleiding" ng-model="$ctrl.newPerson.job" value="Leefgroepbegeleiding"/>
+                    <input class="with-gap" name="group3" type="radio" id="Leefgroepbegeleiding"
+                           ng-model="$ctrl.newPerson.job" value="Leefgroepbegeleiding"/>
                     <label for="Leefgroepbegeleiding">Leefgroepbegeleiding</label>
                 </p>
 
                 <p>
-                    <input class="with-gap" name="group3" type="radio" id="logistiekKampgrond" ng-model="$ctrl.newPerson.job" value="Logistiek (kampgrond)"/>
+                    <input class="with-gap" name="group3" type="radio" id="logistiekKampgrond"
+                           ng-model="$ctrl.newPerson.job" value="Logistiek (kampgrond)"/>
                     <label for="logistiekKampgrond">Logistiek (kampgrond)</label>
                 </p>
 
                 <p>
-                    <input class="with-gap" name="group3" type="radio" id="logistiekNationaal" ng-model="$ctrl.newPerson.job" value="Logistiek (nationaal)"/>
+                    <input class="with-gap" name="group3" type="radio" id="logistiekNationaal"
+                           ng-model="$ctrl.newPerson.job" value="Logistiek (nationaal)"/>
                     <label for="logistiekNationaal">Logistiek (nationaal)</label>
                 </p>
 
                 <p>
-                    <input class="with-gap" name="group3" type="radio" id="andere" ng-model="$ctrl.newPerson.job" value="Other"/>
+                    <input class="with-gap" name="group3" type="radio" id="andere" ng-model="$ctrl.newPerson.job"
+                           value="Other"/>
                     <label for="andere">Andere
                         <div class="input-field col s12 m6" ng-if="$ctrl.newPerson.job === 'Other'">
                             <input
-                                type="text" id="jobOther" class="autocomplete" ng-model="$ctrl.newPerson.jobOther" required>
+                                type="text" id="jobOther" class="autocomplete" ng-model="$ctrl.newPerson.jobOther"
+                                required>
                             <label for="group">Andere</label>
                         </div>
                     </label>
@@ -348,18 +356,29 @@
             kunnen zoeken.  Je kan ons ook contacteren op 03/231 07 95 of <a href="mailto:info@krinkel.be">info@krinkel.be</a>.
         </p>
 
-        <button class="btn waves-effect waves-light" type="submit" name="action" ng-disabled="personForm.$invalid">
+        <button class="btn waves-effect waves-light" type="submit" name="action"
+                ng-disabled="$ctrl.isDisabled(personForm)">
             Volgende
             <i class="material-icons right">send</i>
         </button>
 
     </form>
-    {{$ctrl.newPerson | json}}
-    Errors:
-    {{personForm.$error}}
-    <ul>
-        <li ng-repeat="error in $ctrl.errorMessages" ng-hide="personForm.error.previousElementSibling.previousElementSibling.name.$valid"><i class="material-icons">error_outline</i> "{{ error.previousElementSibling.innerText }}" is verplicht </li>
-    </ul>
+
+    <!--&lt;!&ndash;DEV&ndash;&gt;-->
+    <!--&lt;!&ndash;DEV&ndash;&gt;-->
+    <!--&lt;!&ndash;DEV&ndash;&gt;-->
+    <!--{{$ctrl.newPerson | json}}-->
+    <!--Errors:-->
+    <!--{{personForm.$error}}-->
+    <!--<ul>-->
+        <!--<li ng-repeat="error in $ctrl.errorMessages"-->
+            <!--ng-hide="personForm.$error.previousElementSibling.previousElementSibling.name.$valid"><i-->
+            <!--class="material-icons">error_outline</i> "{{ error.previousElementSibling.innerText }}" is verplicht-->
+        <!--</li>-->
+    <!--</ul>-->
+    <!--&lt;!&ndash;DEV&ndash;&gt;-->
+    <!--&lt;!&ndash;DEV&ndash;&gt;-->
+    <!--&lt;!&ndash;DEV&ndash;&gt;-->
     </form>
 
 </div>

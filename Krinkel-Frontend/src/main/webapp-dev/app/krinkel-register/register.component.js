@@ -1,11 +1,12 @@
 class RegisterController {
 
-    constructor($log, $window, StorageService, MapperService, AuthService) {
+    constructor($log, $window, StorageService, MapperService, AuthService, KrinkelService) {
         this.$log = $log;
         this.$window = $window;
         this.StorageService = StorageService;
         this.MapperService = MapperService;
         this.AuthService = AuthService;
+        this.KrinkelService = KrinkelService;
 
         this.phoneNumberPattern = /^((\+|00)32\s?|0)(\d\s?\d{3}|\d{2}\s?\d{2})(\s?\d{2}){2}|((\+|00)32\s?|0)4(60|[789]\d)(\s?\d{2}){3}$/;
         this.campgrounds = ['Antwerpen', 'Kempen', 'Mechelen', 'Limburg', 'Leuven', 'Brussel', 'West-Vlaanderen', 'Heuvelland', 'Roeland', 'Reinaert', 'Nationaal', 'Internationaal'];
@@ -35,8 +36,17 @@ class RegisterController {
         //     otherText: newPerson.otherText
         // };
         // this.$log.debug(person);
+        if (this.type === 'volunteer') {
+            this.KrinkelService.postVolunteer(this.MapperService.mapVolunteer(newPerson));
+            return;
+        }
 
-        console.log(this.MapperService.mapVolunteer(newPerson));
+        if (this.type === 'participant') {
+            this.KrinkelService.postParticipant(this.MapperService.mapParticipant(newPerson));
+            return;
+        }
+
+        // console.log(this.MapperService.mapVolunteer(newPerson));
 
         // this.$window.location.href = '/home';
     }
@@ -56,16 +66,43 @@ class RegisterController {
             this.newPerson = user;
         } else {
             this.newPerson = {};
+            // this.newPerson.birthDate = "1995-11-24";
         }
         this.errorMessages = document.getElementsByClassName("error");
-        console.log(document.getElementsByClassName("error"));
+        // console.log(document.getElementsByClassName("error"));
     }
 
-    setDateInModel() {
-        if (this.newPerson != undefined) {
-            var birthDate = $('#date_of_birth').val();
-            this.newPerson.birthDate = new Date(birthDate);
+
+    isDisabled(form) {
+        /**
+         * This method is currently a workaround for the broken date. TODO: fix
+         */
+        // console.log(Object.keys(form.$error).length);
+        if (Object.keys(form.$error).length == 1) {
+            if (form.$error.hasOwnProperty("date")) {
+                return false;
+            }
         }
+        if (form.$error) {
+            return true;
+        }
+        // personForm.$invalid
+    }
+    setDateInModel() {
+        //TODO FIX DATE
+        // if (this.newPerson != undefined) {
+        //     var birthDate = $('#date_of_birth').val();
+        //     var birthDateInDate = new Date(birthDate);
+        //     // this.newPerson.birthDate = new Date(birthDate).toISOString().split('T')[0];
+        //     this.newPerson.birthDate = birthDate;
+        //     // console.log(birthDateInDate.toDateString());
+        //     console.log(birthDate);
+        //     if (birthDate != "") {
+        //         console.log(new Date(birthDate).toISOString().split('T')[0]);
+        //     }
+        //     // console.log(birthDateInDate.getFullYear() + "-" + (birthDateInDate.getMonth()+1) + "-" + birthDateInDate.getDate());
+        //     // this.newPerson.birthDate = new Date(birthDate);
+        // }
     }
 
     /**
@@ -74,8 +111,6 @@ class RegisterController {
 
     $doCheck() {
         this.StorageService.saveUser(this.newPerson);
-
-
         // Couldn't find a better fix.
         this.setDateInModel();
     }
@@ -90,4 +125,4 @@ export var RegisterComponent = {
         type: '@'
     }
 };
-RegisterComponent.$inject = ['$log', '$window', 'StorageService', 'MapperService', 'AuthService'];
+RegisterComponent.$inject = ['$log', '$window', 'StorageService', 'MapperService', 'AuthService', 'KrinkelService'];
