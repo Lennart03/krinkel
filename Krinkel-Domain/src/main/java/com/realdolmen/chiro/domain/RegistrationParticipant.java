@@ -29,6 +29,7 @@ public class RegistrationParticipant {
     private String lastName;
 
     @Email
+    @NotBlank
     private String email;
 
     @Embedded
@@ -72,6 +73,7 @@ public class RegistrationParticipant {
 
     public RegistrationParticipant(String adNumber, String email, String firstName, String lastName, Date birthdate, String stamnumber, Gender gender, Role role, Eatinghabbit eatinghabbit) {
         this.adNumber = adNumber;
+        this.email = email;
         this.firstName = firstName;
         this.lastName = lastName;
         this.birthdate = birthdate;

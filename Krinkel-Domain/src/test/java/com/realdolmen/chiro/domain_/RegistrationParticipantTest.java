@@ -75,4 +75,18 @@ public class RegistrationParticipantTest extends BeanValidatorTest{
         Set<ConstraintViolation<RegistrationParticipant>> violations = validator().validateProperty(particpant, "lastName");
         Assert.assertEquals(1, violations.size());
     }
+
+    @Test
+    public void emailAddressEmptyShouldBeInvalid(){
+        particpant.setEmail("");
+        Set<ConstraintViolation<RegistrationParticipant>> violations = validator().validateProperty(particpant, "email");
+        Assert.assertEquals(1, violations.size());
+    }
+
+    @Test
+    public void emailAddressNullShouldBeInvalid(){
+        particpant.setEmail(null);
+        Set<ConstraintViolation<RegistrationParticipant>> violations = validator().validateProperty(particpant, "email");
+        Assert.assertEquals(1, violations.size());
+    }
 }
