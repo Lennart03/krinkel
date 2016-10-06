@@ -21,7 +21,12 @@ public class RegistrationVolunteerController {
     private RegistrationVolunteerService registrationVolunteerService;
 
     /**
-     * TODO: More detail in docs
+     * Returns HTTP status 201 Created when registration has succeeded.
+     * Returns HTTP status 400 Bad Request when:
+     *     - A duplicate entry is attempted to be saved
+     *     - The JSON payload is malformed.
+     *     - The JSON payload contains an incomplete representation (missing fields)
+     *          or invalid entries.
      *
      * Example JSON payload. (Pipes denote that the value is one from the list)
      {
