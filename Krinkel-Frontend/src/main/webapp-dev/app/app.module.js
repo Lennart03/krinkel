@@ -4,10 +4,14 @@ import 'angular-route';
 
 import {appConfig} from './app.config';
 import {KrinkelService} from './shared/krinkel.service';
+import {StorageService} from './shared/storage.service.js';
+import {MapperService} from './shared/mapping.service';
+
+
+
 import {AuthService} from './shared/auth.service';
 
 //components
-
 import {WelcomeMessageComponent} from './shared/welcome-message/welcome-message.component'
 import {RegisterComponent} from './krinkel-register/register.component'
 import {SuccessMessageComponent} from './shared/success-message/success-message.component'
@@ -29,6 +33,8 @@ export default angular
   .service('KrinkelService', KrinkelService)
   .service('AuthService', AuthService)
 
+  .service('StorageService', StorageService)
+  .service('MapperService', MapperService)
   //global components
   .component('welcomeMessage', WelcomeMessageComponent)
   .component('sideNav', SideNavComponent)
