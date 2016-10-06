@@ -27,3 +27,24 @@
 Only builds one of the submodules, not everything:
 
     mvn clean package -pl Krinkel-Backend/
+
+
+## Overview of API Endpoints
+
+| Method   | URL                                           | Description
+| -------- |:---------------------------------------------:|:---------------------------
+| POST     | $HOSTNAME:$PORT/api/users?password=""&user="" | User login
+| POST     | $HOSTNAME:$PORT/api/participants              | Register a new Participant (Deelnemer)
+| POST     | $HOSTNAME:$PORT/api/volunteers                | Register a new Volunteer (Medewerker)
+| GET      | $HOSTNAME:$PORT/api/units                     | List of all groups.
+| GET      | $HOSTNAME:$PORT/api/units/{stamnummer}        | Info of the group identified by {stamnummer}
+
+## /api/units/{stamnummer}
+Should return the following info:
+
+    {
+        naam,
+        stamnummer,
+        bovenliggende stamnummer,
+        onderliggende stamnummers : [ ]
+    }
