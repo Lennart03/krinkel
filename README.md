@@ -48,3 +48,8 @@ Should return the following info:
         bovenliggende stamnummer,
         onderliggende stamnummers : [ ]
     }
+
+## Test users
+
+* PJ : password
+* Ziggy : test
