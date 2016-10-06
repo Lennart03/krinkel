@@ -89,6 +89,5 @@ export var RegisterComponent = {
     bindings: {
         type: '@'
     }
-}
 };
 RegisterComponent.$inject = ['$log', '$window', 'StorageService', 'MapperService', 'AuthService'];
