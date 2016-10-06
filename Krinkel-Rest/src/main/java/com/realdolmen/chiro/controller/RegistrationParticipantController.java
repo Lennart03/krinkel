@@ -28,6 +28,7 @@ public class RegistrationParticipantController {
      * Example JSON payload:
      {
         "adNumber": "123456",
+        "email": "anna-lyn@stardust.org",
         "firstName": "Anna-Lyn",
         "lastName": "Stardust",
         "address": {
