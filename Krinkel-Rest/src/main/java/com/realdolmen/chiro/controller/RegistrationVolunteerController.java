@@ -6,7 +6,6 @@ import com.realdolmen.chiro.service.RegistrationVolunteerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -27,6 +26,7 @@ public class RegistrationVolunteerController {
      * Example JSON payload. (Pipes denote that the value is one from the list)
      {
          "adNumber": "123456789",
+         "email" : "example@acme.com",
          "firstName": "Aster",
          "lastName": "Deckers",
          "address": {
@@ -83,7 +83,7 @@ public class RegistrationVolunteerController {
         c.set(1995, Calendar.AUGUST, 5);
 
         RegistrationVolunteer volunteer = new RegistrationVolunteer(
-                "123456789", "Aster", "Deckers", c.getTime(),
+                "123456789", "example@acme.com", "Aster", "Deckers", c.getTime(),
                 "AG0001", Gender.MAN, Role.LEADER, Eatinghabbit.VEGI,
                 CampGround.ANTWERPEN,
                 new VolunteerFunction(VolunteerFunction.Preset.KLINKER_EDITORIAL)

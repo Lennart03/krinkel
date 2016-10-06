@@ -33,8 +33,8 @@ public class RegistrationVolunteer extends RegistrationParticipant {
 
     public RegistrationVolunteer() {}
 
-    public RegistrationVolunteer(String adNumber, String firstName, String lastName, Date birthdate, String stamnumber, Gender gender, Role role, Eatinghabbit eatinghabbit, CampGround campGround, VolunteerFunction function) {
-        super(adNumber, firstName, lastName, birthdate, stamnumber, gender, role, eatinghabbit);
+    public RegistrationVolunteer(String adNumber, String email, String firstName, String lastName, Date birthdate, String stamnumber, Gender gender, Role role, Eatinghabbit eatinghabbit, CampGround campGround, VolunteerFunction function) {
+        super(adNumber, email, firstName, lastName, birthdate, stamnumber, gender, role, eatinghabbit);
         this.campGround = campGround;
         this.function = function;
     }

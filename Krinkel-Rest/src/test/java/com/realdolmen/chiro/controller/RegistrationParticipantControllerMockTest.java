@@ -19,7 +19,7 @@ public class RegistrationParticipantControllerMockTest extends MockMvcTest {
         c.set(1995, Calendar.AUGUST, 5);
 
         participant = new RegistrationParticipant(
-                "123456789", "Astrid", "Deckers", c.getTime(),
+                "123456789", "astrid@mail.do", "Astrid", "Deckers", c.getTime(),
                 "AG0001", Gender.WOMAN, Role.LEADER, Eatinghabbit.VEGI
         );
         participant.setAddress(new Address("My Street", "2", 1252, "My City"));

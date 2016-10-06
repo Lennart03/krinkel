@@ -23,6 +23,7 @@ public class RegistrationParticipantTest extends BeanValidatorTest{
     public void setUp(){
         this.particpant = new RegistrationParticipant(
                 "123456",
+                "hermione@hogwarts.example",
                 "Hermione",
                 "Granger",
                 new Date(),

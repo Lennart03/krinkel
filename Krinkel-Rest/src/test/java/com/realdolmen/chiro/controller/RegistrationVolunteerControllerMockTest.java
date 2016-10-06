@@ -20,7 +20,7 @@ public class RegistrationVolunteerControllerMockTest extends MockMvcTest {
         c.set(1995, Calendar.AUGUST, 5);
 
         volunteer = new RegistrationVolunteer(
-                "123456789", "Aster", "Deckers", c.getTime(),
+                "123456789", "aster.deckers@example.org", "Aster", "Deckers", c.getTime(),
                 "AG0001", Gender.MAN, Role.LEADER, Eatinghabbit.VEGI,
                 CampGround.ANTWERPEN,
                 new VolunteerFunction(VolunteerFunction.Preset.KLINKER_EDITORIAL)

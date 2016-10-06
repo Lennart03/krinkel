@@ -33,6 +33,7 @@ public class DummyControllerMockTest extends MockMvcTest{
     public void setUp(){
         RegistrationParticipant p = new RegistrationParticipant(
                 "123456",
+                "hermione@hogwarts.example",
                 "Hermione",
                 "Granger",
                 new Date(),

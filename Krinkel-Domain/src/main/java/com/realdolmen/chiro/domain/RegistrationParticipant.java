@@ -1,6 +1,7 @@
 package com.realdolmen.chiro.domain;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotBlank;
 
 import javax.persistence.*;
@@ -26,6 +27,9 @@ public class RegistrationParticipant {
 
     @Size(min=2)
     private String lastName;
+
+    @Email
+    private String email;
 
     @Embedded
     @Valid
@@ -66,7 +70,7 @@ public class RegistrationParticipant {
     public RegistrationParticipant() {
     }
 
-    public RegistrationParticipant(String adNumber, String firstName, String lastName, Date birthdate, String stamnumber, Gender gender, Role role, Eatinghabbit eatinghabbit) {
+    public RegistrationParticipant(String adNumber, String email, String firstName, String lastName, Date birthdate, String stamnumber, Gender gender, Role role, Eatinghabbit eatinghabbit) {
         this.adNumber = adNumber;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -211,6 +215,14 @@ public class RegistrationParticipant {
 
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 }
 
