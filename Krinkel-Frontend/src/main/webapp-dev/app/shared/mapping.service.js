@@ -8,7 +8,7 @@ export class MapperService {
             adNumber: 123, //TODO
             firstName: data.firstName,
             lastName: data.lastName,
-            adress: {
+            address: {
                 street: data.street,
                 houseNumber: data.building,
                 postalCode: data.postalCode,
@@ -48,10 +48,49 @@ export class MapperService {
 
         return volunteer;
     }
+
     mapParticipant(data) {
         var participant = {
-
+            adNumber: 123, //TODO
+            email: data.email,
+            firstName: data.firstName,
+            lastName: data.lastName,
+            adress: {
+                street: data.street,
+                houseNumber: data.building,
+                postalCode: data.postalCode,
+                city: data.city
+            },
+            birthdate: data.birthDate, //TODO
+            stamnumber: 123, //TODO
+            buddy: data.buddy,
+            languages: data.languages, //TODO lege array
+            eatinghabbit: data.dietary,
+            remarksFood: data.dietaryText,
+            socialPromotion: data.socialPromotion,
+            medicalRemarks: data.medicalText,
+            remarks: data.otherText,
+            phoneNumber: data.phoneNumber,
+        };
+        var genderTemp = data.gender.toLowerCase();
+        if (genderTemp === 'man') {
+            participant.gender = data.gender.toUpperCase();
+        } else if (genderTemp === 'vrouw') {
+            participant.gender = 'WOMAN';
+        } else if (genderTemp === 'x') {
+            participant.gender = data.gender.toUpperCase();
         }
+
+        if (data.rank === 'Leider') {
+            participant.role = 'LEADER';
+        } else if (data.rank === 'Begeleider') {
+            participant.role = 'MENTOR';
+        } else if (data.rank === 'ASPI') {
+            participant.role = 'ASPI';
+        }
+
+
+        return participant;
     }
 }
 

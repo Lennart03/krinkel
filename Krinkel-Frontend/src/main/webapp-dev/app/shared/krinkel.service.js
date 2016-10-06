@@ -9,6 +9,17 @@ export class KrinkelService {
       return resp.data;
     });
   }
+  postVolunteer(user) {
+      return this.$http.post(`${this.BASEURL}/api/volunteers`).then((resp) => {
+          return resp.data;
+      });
+  }
+  postParticipant(user) {
+      return this.$http.post(`${this.BASEURL}/api/participants`).then((resp) => {
+          return resp.data;
+      });
+  }
+
   // getMovies(title) {
   //   return this.$http.get(`${this.BASEURL}/online?title=${title}`).then((resp) => {
   //     return resp.data;
