@@ -29,6 +29,7 @@ public class EmailSenderTest {
 	@Autowired
 	private EmailSenderService emailSenderService;
 	
+	@Autowired
 	private GreenMail smtpServer;
 	
 	private RegistrationParticipant registrationParticipant;
@@ -37,12 +38,12 @@ public class EmailSenderTest {
 	
 	@Before
 	public void setup(){
-		smtpServer = new GreenMail(new ServerSetup(465, null, "smtp"));
+		//smtpServer = new GreenMail(new ServerSetup(465, null, "smtp"));
 		smtpServer.start();
 		registrationParticipant = new RegistrationParticipant();
 		registrationParticipant.setFirstName("Mathew");
 		registrationParticipant.setLastName("Perry");
-		registrationParticipant.setEmail("mathew@perry.com");
+		registrationParticipant.setEmail("frank.claes@realdolmen.com");
 	}
 	
 	@After
@@ -50,12 +51,12 @@ public class EmailSenderTest {
 		smtpServer.stop();
 	}
 
-//	@Test
-//	public void testSend() throws MessagingException {
-//		emailSenderService.sendMail(registrationParticipant);
-//	    MimeMessage[] emails = smtpServer.getReceivedMessages();
-//	    assertEquals(EMAIL_SUBJECT,emails[0].getSubject());
-//	}
+	@Test
+	public void testSend() throws MessagingException {
+		emailSenderService.sendMail(registrationParticipant);
+	    MimeMessage[] emails = smtpServer.getReceivedMessages();
+	    assertEquals(EMAIL_SUBJECT,emails[0].getSubject());
+	}
 	
 	@Test
 	public void sendMailShouldReturnOk() throws MessagingException, InterruptedException, ExecutionException {
