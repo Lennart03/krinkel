@@ -40,7 +40,7 @@ public class RegistrationParticipantController {
         "birthdate": "1991-02-20",
         "stamnumber": "AG0104",
         "gender": "X",
-        "function": "MENTOR",
+        "role": "LEADER" | "ASPI" | "MENTOR",
         "buddy": false,
         "language": [],
         "eatinghabbit": null,
