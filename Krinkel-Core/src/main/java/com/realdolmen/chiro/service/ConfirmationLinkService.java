@@ -5,6 +5,7 @@ import com.realdolmen.chiro.domain.RegistrationParticipant;
 import com.realdolmen.chiro.domain.Status;
 import com.realdolmen.chiro.repository.ConfirmationLinkRepository;
 import com.realdolmen.chiro.repository.RegistrationParticipantRepository;
+import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,12 +15,12 @@ import java.util.UUID;
 public class ConfirmationLinkService {
 
     @Autowired
-    private ConfirmationLinkRepository confirmationLinkRepositoryrepository;
+    private ConfirmationLinkRepository confirmationLinkRepository;
 
     @Autowired
     private RegistrationParticipantRepository registrationParticipantRepository;
 
-    public String generateToken() {
+    private String generateToken() {
         UUID token = UUID.randomUUID();
         return token.toString();
     }
@@ -34,7 +35,7 @@ public class ConfirmationLinkService {
      */
     public boolean checkToken(String adNumber, String token) {
         boolean isSuccess = false;
-        ConfirmationLink confirmationLink = confirmationLinkRepositoryrepository.findByAdNumber(adNumber);
+        ConfirmationLink confirmationLink = confirmationLinkRepository.findByAdNumber(adNumber);
         if(confirmationLink == null){
             return isSuccess;
         }
@@ -49,5 +50,12 @@ public class ConfirmationLinkService {
             }
         }
         return isSuccess;
+    }
+
+    public ConfirmationLink createConfirmationLink(String adNumber) throws DuplicateEntryException {
+        if(confirmationLinkRepository.findByAdNumber(adNumber) != null){
+            throw new DuplicateEntryException("Confirmation link for this AD number already exists!");
+        }
+        return confirmationLinkRepository.save( new ConfirmationLink(adNumber, this.generateToken()));
     }
 }
