@@ -4,11 +4,12 @@ import com.realdolmen.chiro.domain.RegistrationParticipant;
 import com.realdolmen.chiro.mspdto.OrderDto;
 import org.json.JSONObject;
 import org.springframework.http.*;
+import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import java.security.InvalidParameterException;
 
-
+@Service
 public class MultiSafePayService {
     private static final String URL = "https://testapi.multisafepay.com/v1/json/orders?api_key=a9026c8f9a1d49da542dd2f51d702a4442612e54";
     private RestTemplate restTemplate = new RestTemplate();

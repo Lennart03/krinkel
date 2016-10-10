@@ -63,6 +63,11 @@
             <groupId>com.realdolmen.chiro</groupId>
             <artifactId>Krinkel-Frontend</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.realdolmen.chiro</groupId>
+            <artifactId>krinkelmultisafepayapi</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
     </dependencies>
 
 

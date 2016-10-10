@@ -2,6 +2,7 @@ package com.realdolmen.chiro.controller;
 
 import com.realdolmen.chiro.controller.validation.EnableRestErrorHandling;
 import com.realdolmen.chiro.domain.RegistrationParticipant;
+import com.realdolmen.chiro.mspservice.MultiSafePayService;
 import com.realdolmen.chiro.service.RegistrationParticipantService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -20,6 +21,9 @@ public class RegistrationParticipantController {
 
     @Autowired
     private RegistrationParticipantService registrationParticipantService;
+
+    @Autowired
+    private MultiSafePayService mspService;
 
     /**
      * Returns HTTP status 201 Created when registration has succeeded.
@@ -62,8 +66,9 @@ public class RegistrationParticipantController {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
 
+        String paymentUrl = mspService.getParticipantPaymentUri(resultingParticipant, 10000);
         HttpHeaders headers = new HttpHeaders();
-        headers.setLocation(new URI("https://krinkel.be"));
+        headers.setLocation(new URI(paymentUrl));
         return new ResponseEntity<>(headers, HttpStatus.CREATED);
     }
 }
