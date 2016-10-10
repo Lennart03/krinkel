@@ -10,8 +10,13 @@ class RegisterController {
         this.$location = $location;
 
         this.phoneNumberPattern = /^((\+|00)32\s?|0)(\d\s?\d{3}|\d{2}\s?\d{2})(\s?\d{2}){2}|((\+|00)32\s?|0)4(60|[789]\d)(\s?\d{2}){3}$/;
+        this.birthdatePattern = /^(\d{4})(\/|-)(\d{1,2})(\/|-)(\d{1,2})$/;
+        this.postalcodePattern = /^(\d{4})$/;
         this.campgrounds = ['Antwerpen', 'Kempen', 'Mechelen', 'Limburg', 'Leuven', 'Brussel', 'West-Vlaanderen', 'Heuvelland', 'Roeland', 'Reinaert', 'Nationaal', 'Internationaal'];
         angular.element('select').material_select();
+
+
+
 
 
     }
@@ -39,18 +44,24 @@ class RegisterController {
         //     otherText: newPerson.otherText
         // };
         // this.$log.debug(person);
-        //TODO remove next line
-        this.$location.path('/success');
 
         if (this.type === 'volunteer') {
-            this.KrinkelService.postVolunteer(this.MapperService.mapVolunteer(newPerson));
+            var thiz = this;
+            this.KrinkelService.postVolunteer(this.MapperService.mapVolunteer(newPerson)).then(function (response) {
+                thiz.$location.path('/success');
+            });
             return;
         }
 
         if (this.type === 'participant') {
-            this.KrinkelService.postParticipant(this.MapperService.mapParticipant(newPerson));
+            var thiz = this;
+            this.KrinkelService.postParticipant(this.MapperService.mapParticipant(newPerson)).then(function (response) {
+                thiz.$location.path('/success');
+            });
             return;
         }
+
+
 
         // console.log(this.MapperService.mapVolunteer(newPerson));
 
@@ -75,6 +86,7 @@ class RegisterController {
             this.newPerson = user;
         } else {
             this.newPerson = {};
+            this.newPerson.job = 'Aanbod nationale kampgrond';
             // this.newPerson.birthDate = "1995-11-24";
         }
         this.errorMessages = document.getElementsByClassName("error");
@@ -90,13 +102,15 @@ class RegisterController {
          * This method is currently a workaround for the broken date. TODO: fix
          */
         // console.log(Object.keys(form.$error).length);
-        if (Object.keys(form.$error).length == 1) {
-            if (form.$error.hasOwnProperty("date")) {
-                return false;
-            }
-        }
+        // if (Object.keys(form.$error).length == 1) {
+        //     if (form.$error.hasOwnProperty("date")) {
+        //         return false;
+        //     }
+        // }
         if (form.$error) {
             return true;
+        }else{
+            return false;
         }
         // personForm.$invalid
     }
