@@ -16,6 +16,7 @@
         <module>Krinkel-Core</module>
         <module>Krinkel-Chiro-api</module>
         <module>Krinkel-Rest</module>
+        <module>Krinkel-Multisafepay-Api</module>
     </modules>
 
     <properties>

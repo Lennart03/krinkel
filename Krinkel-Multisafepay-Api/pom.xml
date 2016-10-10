@@ -9,24 +9,28 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>Krinkel-Core</artifactId>
-    <dependencies>
+    <artifactId>krinkelmultisafepayapi</artifactId>
 
+
+    <dependencies>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
         <dependency>
-            <groupId>com.realdolmen.chiro</groupId>
-            <artifactId>Krinkel-Repository</artifactId>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
         </dependency>
         <dependency>
-            <groupId>com.realdolmen.chiro</groupId>
-            <artifactId>Krinkel-Chiro-api</artifactId>
-            <version>1.0-SNAPSHOT</version>
+            <groupId>org.json</groupId>
+            <artifactId>json</artifactId>
+            <version>20160810</version>
         </dependency>
+
     </dependencies>
-
-
 </project>

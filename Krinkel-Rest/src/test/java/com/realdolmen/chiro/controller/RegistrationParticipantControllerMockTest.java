@@ -56,7 +56,7 @@ public class RegistrationParticipantControllerMockTest extends MockMvcTest {
                         MockMvcRequestBuilders.post("/api/participants")
                             .contentType(MediaType.APPLICATION_JSON_UTF8)
                             .content(jsonPayload))
-                .andExpect(MockMvcResultMatchers.status().is2xxSuccessful());
+                .andExpect(MockMvcResultMatchers.status().is3xxRedirection());
 
         assertNotNull(repo.findByAdNumber(participant.getAdNumber()));
         assertEquals(1, repo.findAll().size());
@@ -71,7 +71,7 @@ public class RegistrationParticipantControllerMockTest extends MockMvcTest {
                         MockMvcRequestBuilders.post("/api/participants")
                                 .contentType(MediaType.APPLICATION_JSON_UTF8)
                                 .content(jsonPayload))
-                .andExpect(MockMvcResultMatchers.status().is2xxSuccessful());
+                .andExpect(MockMvcResultMatchers.status().is3xxRedirection());
 
         assertNotNull(repo.findByAdNumber(volunteer.getAdNumber()));
         assertEquals(1, repo.findAll().size());
