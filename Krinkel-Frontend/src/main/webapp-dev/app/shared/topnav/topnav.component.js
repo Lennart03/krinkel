@@ -7,11 +7,6 @@ class TopNavController{
 
   $onInit(){
   }
-
-  logout(){
-    this.AuthService.logoutUser();
-    this.$location.path('/login')
-  }
 }
 
 export var TopNavComponent = {
