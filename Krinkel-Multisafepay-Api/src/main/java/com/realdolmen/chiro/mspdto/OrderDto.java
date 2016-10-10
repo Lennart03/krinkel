@@ -5,7 +5,6 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class OrderDto {
-    private String paymentUrl;
     private boolean success;
     private Data data;
     private Integer error_code;
@@ -43,11 +42,13 @@ public class OrderDto {
         this.error_info = error_info;
     }
 
-    public String getPaymentUrl() {
-        return paymentUrl;
-    }
-
-    public void setPaymentUrl(String paymentUrl) {
-        this.paymentUrl = paymentUrl;
+    @Override
+    public String toString() {
+        return "OrderDto{" +
+                ", success=" + success +
+                ", data=" + data +
+                ", error_code=" + error_code +
+                ", error_info='" + error_info + '\'' +
+                '}';
     }
 }

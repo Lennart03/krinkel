@@ -21,7 +21,7 @@ public class MultiSafePayServiceTest {
     @Test
     public void createPaymentReturnDtoWithUrl() throws URI.MalformedURIException {
         OrderDto payment = multiSafePayService.createPayment();
-        Assert.assertNotNull(payment.getPaymentUrl());
+        Assert.assertNotNull(payment.getData().getPayment_url());
     }
 
 
