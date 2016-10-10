@@ -63,8 +63,7 @@ public class RegistrationParticipantController {
         }
 
         HttpHeaders headers = new HttpHeaders();
-        headers.setLocation(new URI("https://www.google.com"));
-        ResponseEntity resp = new ResponseEntity<>(headers, HttpStatus.TEMPORARY_REDIRECT);
-        return resp;
+        headers.setLocation(new URI("https://krinkel.be"));
+        return new ResponseEntity<>(headers, HttpStatus.CREATED);
     }
 }
