@@ -16,17 +16,18 @@ import java.util.List;
 @Entity
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 public class RegistrationParticipant {
-    @GeneratedValue @Id
+    @GeneratedValue
+    @Id
     private Long id;
 
     @NotBlank
     @Column(unique = true)
     private String adNumber;
 
-    @Size(min=2)
+    @Size(min = 2)
     private String firstName;
 
-    @Size(min=2)
+    @Size(min = 2)
     private String lastName;
 
     @Email
@@ -39,7 +40,7 @@ public class RegistrationParticipant {
     private Address address;
 
     @Temporal(TemporalType.DATE)
-    @JsonFormat(pattern="yyyy-MM-dd")
+    @JsonFormat(pattern = "yyyy-MM-dd")
     private Date birthdate;
 
     @NotBlank
@@ -56,7 +57,7 @@ public class RegistrationParticipant {
     private boolean buddy = false;
 
     @ElementCollection
-    private List<Language> language=new ArrayList<>();
+    private List<Language> language = new ArrayList<>();
 
     @Enumerated(EnumType.STRING)
     private Eatinghabbit eatinghabbit;
@@ -66,10 +67,13 @@ public class RegistrationParticipant {
     private String medicalRemarks;
     private String remarks;
 
+    @Enumerated(EnumType.STRING)
+    private Status status = Status.TO_BE_PAID;
+
     /**
      * Regex adapted from frontend validation.
      */
-    @Pattern(regexp= "^((\\+|00)32\\s?|0)(\\d\\s?\\d{3}|\\d{2}\\s?\\d{2})(\\s?\\d{2}){2}|((\\+|00)32\\s?|0)4(60|[789]\\d)(\\s?\\d{2}){3}$")
+    @Pattern(regexp = "^((\\+|00)32\\s?|0)(\\d\\s?\\d{3}|\\d{2}\\s?\\d{2})(\\s?\\d{2}){2}|((\\+|00)32\\s?|0)4(60|[789]\\d)(\\s?\\d{2}){3}$")
     private String phoneNumber;
 
     public RegistrationParticipant() {
@@ -229,6 +233,14 @@ public class RegistrationParticipant {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public Status getStatus() {
+        return status;
+    }
+
+    public void setStatus(Status status) {
+        this.status = status;
     }
 }
 
