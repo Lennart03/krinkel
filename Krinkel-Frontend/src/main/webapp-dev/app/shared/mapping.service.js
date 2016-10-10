@@ -38,16 +38,57 @@ export class MapperService {
         }
 
         volunteer.function = {
-            preset: data.job.toUpperCase().replace(' ', '_')
+            preset: this.mapJob(data.job)
         };
         volunteer.preCampList = [];
+
+        //TODO CATCH NULL
         data.preCamp.forEach(d => volunteer.preCampList.push(new Date(d)));
         volunteer.postCampList = [];
         data.postCamp.forEach(d => volunteer.postCampList.push(new Date(d)));
 
+        map
+
+
 
         return volunteer;
     }
+
+    mapJob(job) {
+        var upperCasedJob = job.toUpperCase();
+
+        switch (upperCasedJob) {
+            case 'AANBOD NATIONALE KAMPGROND': return 'NATIONAL_CAMPGROUND';
+                break;
+            case 'KAMPGRONDTREKKER': return 'CAMPGROUND';
+                break;
+            case 'KLINKERREDACTIE': return 'KLINKER_EDITORIAL';
+                break;
+            case 'KOOKPLOEG': return 'COOCKING';
+                break;
+            case 'LOGISTIEK (KAMPGROND)': return 'LOGISTICS_CAMPGROUND';
+                break;
+            case 'LOGISTIEK (NATIONAAL)': return 'LOGISTICS_NATIONAL';
+                break;
+            case 'LEEFGROEPBEGELEIDING': return 'LIVING_GROUP_GUIDANCE';
+                break;
+            case 'OTHER': return 'CUSTOM';
+                break; // TODO OTHER
+        }
+
+        /**
+         * NATIONAL_CAMPGROUND, // Aanbod nationale kampgrond
+         CAMPGROUND, // Kampgrondtrekker
+         KLINKER_EDITORIAL, // Klinkerredactie
+         COOCKING, // Kookploeg
+
+         LOGISTICS_CAMPGROUND, // Logistiek (kampgrond)
+         LOGISTICS_NATIONAL, // Logistiek (nationaal)
+
+         LIVING_GROUP_GUIDANCE, // Leefgroepbegeleiding
+         CUSTOM // I didn't select something from this list but instead defined my own function in the 'other' field.
+         */
+            }
 
     mapParticipant(data) {
         var participant = {

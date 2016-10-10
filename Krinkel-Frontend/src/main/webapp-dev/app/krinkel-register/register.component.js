@@ -12,6 +12,8 @@ class RegisterController {
         this.phoneNumberPattern = /^((\+|00)32\s?|0)(\d\s?\d{3}|\d{2}\s?\d{2})(\s?\d{2}){2}|((\+|00)32\s?|0)4(60|[789]\d)(\s?\d{2}){3}$/;
         this.campgrounds = ['Antwerpen', 'Kempen', 'Mechelen', 'Limburg', 'Leuven', 'Brussel', 'West-Vlaanderen', 'Heuvelland', 'Roeland', 'Reinaert', 'Nationaal', 'Internationaal'];
         angular.element('select').material_select();
+
+
     }
 
     registerPerson(newPerson) {
@@ -76,6 +78,9 @@ class RegisterController {
             // this.newPerson.birthDate = "1995-11-24";
         }
         this.errorMessages = document.getElementsByClassName("error");
+
+
+        // Initialize Materialize inputs
         // console.log(document.getElementsByClassName("error"));
     }
 
@@ -95,6 +100,7 @@ class RegisterController {
         }
         // personForm.$invalid
     }
+
     setDateInModel() {
         //TODO FIX DATE
         // if (this.newPerson != undefined) {
@@ -111,6 +117,16 @@ class RegisterController {
         //     // this.newPerson.birthDate = new Date(birthDate);
         // }
     }
+
+
+    functionCallAfterDOMRender() {
+        try {
+            Materialize.updateTextFields();
+        } catch (exception) {
+
+        }
+    }
+
 
     /**
      * Not the ideal lifecycle hook to save everything in localstorage, due to time constraints this will have to do for now.
