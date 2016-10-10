@@ -10,10 +10,14 @@ public class RegistrationParticipantService {
 
     @Autowired
     private RegistrationParticipantRepository repository;
+    
+    @Autowired
+    private RegistrationCommunicationService registrationCommunicationService;
 
     public RegistrationParticipant save(RegistrationParticipant registration) {
         if(repository.findByAdNumber(registration.getAdNumber()) == null) {
-            return repository.save(registration);
+        	registrationCommunicationService.addNewToRegistrationCommunication(registration.getAdNumber());
+        	return repository.save(registration);
         }
         return null;
     }

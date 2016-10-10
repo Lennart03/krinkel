@@ -61,7 +61,5 @@ public class EmailSenderTest {
 	@Test
 	public void sendMailShouldReturnOk() throws MessagingException, InterruptedException, ExecutionException {
 		assertEquals("ok", emailSenderService.sendMail(registrationParticipant).get());
-	}
-	
-	
+	}	
 }
