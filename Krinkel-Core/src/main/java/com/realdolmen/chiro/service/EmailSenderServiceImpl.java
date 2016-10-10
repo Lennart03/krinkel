@@ -17,30 +17,29 @@ import org.thymeleaf.spring4.SpringTemplateEngine;
 
 import com.realdolmen.chiro.domain.RegistrationParticipant;
 import com.realdolmen.chiro.domain.RegistrationVolunteer;
+import com.realdolmen.chiro.exception.EmailSenderServiceException;
 
 @Service
 @Async
 public class EmailSenderServiceImpl implements EmailSenderService {
 	private static final String EMAIL_FROM = "inschrijvingen@krinkel.be";
 	private static final String EMAIL_SUBJECT = "Bevestiging inschrijving krinkel";
-	
+
 	@Autowired
 	JavaMailSender mailSender;
 	@Autowired
 	private SpringTemplateEngine thymeleaf;
 
-
 	@Override
 	public Future<String> sendMail(RegistrationParticipant participant) throws MessagingException {
-		
+
 		MimeMessage message = mailSender.createMimeMessage();
 		MimeMessageHelper helper = new MimeMessageHelper(message, true);
-		
+
 		Context ctx = new Context();
 		ctx.setVariable("participant", participant);
 		ctx.setVariable("isVolunteer", participant instanceof RegistrationVolunteer);
-		
-		
+
 		String emailText = thymeleaf.process("email", ctx);
 		ClassPathResource image = new ClassPathResource("/static/img/logo.png");
 
@@ -50,10 +49,13 @@ public class EmailSenderServiceImpl implements EmailSenderService {
 			helper.setTo(participant.getEmail());
 			helper.setSubject(EMAIL_SUBJECT);
 			helper.addInline("logo", image);
-		} catch (MessagingException e) {
-			e.printStackTrace();
+			mailSender.send(message);
+		} catch (MessagingException me) {
+			throw new EmailSenderServiceException("Something went wrong assembling email", me);
+		}catch(Exception e){
+			throw new EmailSenderServiceException("Something went wrong sending email", e);
 		}
-		mailSender.send(message);
+		
 
 		return new AsyncResult<String>("ok");
 
