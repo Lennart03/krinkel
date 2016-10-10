@@ -1,12 +1,13 @@
 class RegisterController {
 
-    constructor($log, $window, StorageService, MapperService, AuthService, KrinkelService) {
+    constructor($log, $window, StorageService, MapperService, AuthService, KrinkelService, $location) {
         this.$log = $log;
         this.$window = $window;
         this.StorageService = StorageService;
         this.MapperService = MapperService;
         this.AuthService = AuthService;
         this.KrinkelService = KrinkelService;
+        this.$location = $location;
 
         this.phoneNumberPattern = /^((\+|00)32\s?|0)(\d\s?\d{3}|\d{2}\s?\d{2})(\s?\d{2}){2}|((\+|00)32\s?|0)4(60|[789]\d)(\s?\d{2}){3}$/;
         this.campgrounds = ['Antwerpen', 'Kempen', 'Mechelen', 'Limburg', 'Leuven', 'Brussel', 'West-Vlaanderen', 'Heuvelland', 'Roeland', 'Reinaert', 'Nationaal', 'Internationaal'];
@@ -36,6 +37,9 @@ class RegisterController {
         //     otherText: newPerson.otherText
         // };
         // this.$log.debug(person);
+        //TODO remove next line
+        this.$location.path('/success');
+
         if (this.type === 'volunteer') {
             this.KrinkelService.postVolunteer(this.MapperService.mapVolunteer(newPerson));
             return;
@@ -52,6 +56,9 @@ class RegisterController {
     }
 
     $onInit() {
+        if (this.AuthService.getLoggedinUser() == null) {
+            this.$location.path('/login');
+        }
         angular.element('.modal-trigger').leanModal();
         angular.element('.datepicker').pickadate({
             selectMonths: true, // Creates a dropdown to control month
@@ -125,4 +132,4 @@ export var RegisterComponent = {
         type: '@'
     }
 };
-RegisterComponent.$inject = ['$log', '$window', 'StorageService', 'MapperService', 'AuthService', 'KrinkelService'];
+RegisterComponent.$inject = ['$log', '$window', 'StorageService', 'MapperService', 'AuthService', 'KrinkelService', '$location'];
