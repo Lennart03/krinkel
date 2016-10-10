@@ -8,7 +8,9 @@ class KrinkelConfirmationController{
         this.adNumber = this.$location.search().adNumber;
         this.token = this.$location.search().token;
 
-        this.KrinkelService.getConfirmation(this.adNumber, this.token);
+        this.KrinkelService.getConfirmation(this.adNumber, this.token).then((results) => {
+            this.isSuccess = results.success;
+        });
     }
 
 
