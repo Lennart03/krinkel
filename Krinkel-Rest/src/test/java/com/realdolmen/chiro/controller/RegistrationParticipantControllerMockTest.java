@@ -7,6 +7,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
@@ -56,7 +57,7 @@ public class RegistrationParticipantControllerMockTest extends MockMvcTest {
                         MockMvcRequestBuilders.post("/api/participants")
                             .contentType(MediaType.APPLICATION_JSON_UTF8)
                             .content(jsonPayload))
-                .andExpect(MockMvcResultMatchers.status().is3xxRedirection());
+                .andExpect(MockMvcResultMatchers.status().is2xxSuccessful());
 
         assertNotNull(repo.findByAdNumber(participant.getAdNumber()));
         assertEquals(1, repo.findAll().size());
@@ -71,7 +72,7 @@ public class RegistrationParticipantControllerMockTest extends MockMvcTest {
                         MockMvcRequestBuilders.post("/api/participants")
                                 .contentType(MediaType.APPLICATION_JSON_UTF8)
                                 .content(jsonPayload))
-                .andExpect(MockMvcResultMatchers.status().is3xxRedirection());
+                .andExpect(MockMvcResultMatchers.status().is2xxSuccessful());
 
         assertNotNull(repo.findByAdNumber(volunteer.getAdNumber()));
         assertEquals(1, repo.findAll().size());
@@ -147,5 +148,19 @@ public class RegistrationParticipantControllerMockTest extends MockMvcTest {
                 //.andExpect(MockMvcResultMatchers.status().is4xxClientError());
 
         assertEquals(1, repo.findAll().size());
+    }
+
+    @Test
+    public void savingRegistrationReturnsLocationHeaderOnSuccess() throws Exception {
+        String jsonPayload = json(participant);
+
+        MvcResult mvcResult = mockMvc()
+                .perform(
+                        MockMvcRequestBuilders.post("/api/participants")
+                                .contentType(MediaType.APPLICATION_JSON_UTF8)
+                                .content(jsonPayload))
+                .andReturn();
+
+        assertNotNull(mvcResult.getResponse().getHeader("Location"));
     }
 }
