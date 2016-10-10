@@ -26,6 +26,11 @@ export function appConfig($routeProvider, $locationProvider) {
         template: '<krinkel-confirmation></krinkel-confirmation>'
     });
 
+    $routeProvider.when('/analytics', {
+        template: '<krinkel-analytics></krinkel-analytics>'
+    });
+
+
 
     $routeProvider.otherwise({
         redirectTo: '/home'

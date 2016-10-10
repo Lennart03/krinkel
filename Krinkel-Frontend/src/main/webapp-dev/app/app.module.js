@@ -22,6 +22,7 @@ import {TopNavComponent} from './shared/topnav/topnav.component';
 import {KrinkelHomepageComponent} from './krinkel-homepage/krinkel-homepage.component';
 import {KrinkelLoginComponent} from './krinkel-login/krinkel-login.component';
 import {KrinkelConfirmationComponent} from './krinkel-confirmation/krinkel-confirmation.component';
+import {KrinkelAnalyticsComponent} from './krinkel-analytics/krinkel-analytics.component';
 
 export default angular
   .module('contactsApp', ['ngRoute'])
@@ -46,4 +47,5 @@ export default angular
   .component('register', RegisterComponent)
   .component('krinkelLogin', KrinkelLoginComponent)
    .component('krinkelConfirmation', KrinkelConfirmationComponent)
+    .component('krinkelAnalytics', KrinkelAnalyticsComponent)
   .name;
