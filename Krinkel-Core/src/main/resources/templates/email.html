@@ -1,5 +1,8 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
+<!-- <head> -->
+<!-- <meta charset="utf-8" /> -->
+<!-- </head> -->
 <body>
 	<img alt="logo" src="cid:logo" width="20%" />
 
@@ -29,16 +32,12 @@
 
 		</tr>
 		<tr>
-			<td>Straat:</td>
-			<td>
-<!-- 				<div>
-					<span th:text="${participant.address.street}"></span>, <span
-						th:text="${participant.address.houseNumber}"></span>
-				</div> -->
-			</td>
-			<td>Gemeente:</td>
-<!-- 			<td><span th:text="${participant.address.postalCode}"></span> <span
-				th:text="${participant.address.city}"></span></td> -->
+			<td>Straat en huisnummer:</td>
+			<td
+				th:text="${participant.address.street} + ', ' + ${participant.address.houseNumber}"></td>
+			<td>Postcode en Gemeente:</td>
+			<td
+				th:text="${participant.address.postalCode} + ', ' + ${participant.address.city}"></td>
 
 		</tr>
 		<tr>
@@ -106,7 +105,7 @@
 		<p th:case="true">Extra info over Krinkel krijg je nog via de
 			trekker van je kampgrond of werkgroep en via mail eind juli. Hou ook
 			zeker de website in de gaten, daar ga je steeds meer te weten kunnen
-			komen. </p>
+			komen.â€¯</p>
 	</div>
 
 
