@@ -7,6 +7,7 @@ import org.hibernate.validator.constraints.NotBlank;
 import javax.persistence.*;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Past;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import java.util.ArrayList;
@@ -40,6 +41,7 @@ public class RegistrationParticipant {
     private Address address;
 
     @Temporal(TemporalType.DATE)
+    @Past
     @JsonFormat(pattern = "yyyy-MM-dd")
     private Date birthdate;
 
