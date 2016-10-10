@@ -1,9 +1,6 @@
 package com.realdolmen.chiro.domain;
 
-import javax.persistence.Embedded;
-import javax.persistence.Entity;
-import javax.persistence.Enumerated;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -22,13 +19,13 @@ public class RegistrationVolunteer extends RegistrationParticipant {
     /**
      * Zero or many PreCamp moments.
      */
-    @OneToMany
+    @ManyToMany
     private List<PreCamp> preCampList = new ArrayList<>();
 
     /**
      * Zero or many PostCamp moments.
      */
-    @OneToMany
+    @ManyToMany
     private List<PostCamp> postCampList = new ArrayList<>();
 
     public RegistrationVolunteer() {}
