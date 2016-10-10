@@ -2,6 +2,8 @@ package com.realdolmen.chiro.service;
 
 import static org.junit.Assert.*;
 
+import java.util.concurrent.ExecutionException;
+
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 
@@ -20,15 +22,12 @@ import com.realdolmen.chiro.domain.RegistrationParticipant;
 import com.realdolmen.chiro.domain.RegistrationVolunteer;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@SpringBootTest(classes={EmailSenderService.class})
+@SpringBootTest
 public class EmailSenderTest {
 	private static final String EMAIL_SUBJECT = "Bevestiging inschrijving krinkel";
 	
 	@Autowired
 	private EmailSenderService emailSenderService;
-	
-//	@Rule
-//	public final GreenMailRule greenMail = new GreenMailRule(ServerSetupTest.SMTP);
 	
 	private GreenMail smtpServer;
 	
@@ -51,14 +50,16 @@ public class EmailSenderTest {
 		smtpServer.stop();
 	}
 
+//	@Test
+//	public void testSend() throws MessagingException {
+//		emailSenderService.sendMail(registrationParticipant);
+//	    MimeMessage[] emails = smtpServer.getReceivedMessages();
+//	    assertEquals(EMAIL_SUBJECT,emails[0].getSubject());
+//	}
+	
 	@Test
-	public void testSend() throws MessagingException {
-//	    GreenMailUtil.sendTextEmailTest("to@localhost.com", "from@localhost.com",
-//	        "some subject", "some body"); // --- Place your sending code here instead
-		emailSenderService.sendMail(registrationParticipant);
-	    assertEquals("some body", GreenMailUtil.getBody(smtpServer.getReceivedMessages()[0]));
-	    MimeMessage[] emails = smtpServer.getReceivedMessages();
-	    assertEquals(EMAIL_SUBJECT,emails[0].getSubject());
+	public void sendMailShouldReturnOk() throws MessagingException, InterruptedException, ExecutionException {
+		assertEquals("ok", emailSenderService.sendMail(registrationParticipant).get());
 	}
 	
 	
