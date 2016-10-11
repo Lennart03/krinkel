@@ -19,6 +19,7 @@ export class StorageService {
     removeUser(){
         localStorage.removeItem('savedData');
     }
+
 }
 
 StorageService.$inject = ['$window'];

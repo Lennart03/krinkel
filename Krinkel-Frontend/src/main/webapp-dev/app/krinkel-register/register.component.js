@@ -15,38 +15,16 @@ class RegisterController {
         this.campgrounds = ['Antwerpen', 'Kempen', 'Mechelen', 'Limburg', 'Leuven', 'Brussel', 'West-Vlaanderen', 'Heuvelland', 'Roeland', 'Reinaert', 'Nationaal', 'Internationaal'];
         angular.element('select').material_select();
 
-
+        this.dataIsRemoved = false;
 
 
     }
 
     registerPerson(newPerson) {
-        // var person = {
-        //     name: {
-        //         first: newPerson.firstName,
-        //         last: newPerson.lastName
-        //     },
-        //     street: newPerson.street,
-        //     building: newPerson.building,
-        //     postalCode: newPerson.postalCode,
-        //     city: newPerson.city,
-        //     phone: newPerson.phone,
-        //     gender: newPerson.gender,
-        //     rank: newPerson.rank,
-        //     group: newPerson.group,
-        //     buddy: newPerson.buddy,
-        //     languages: newPerson.languages,
-        //     dietary: newPerson.dietary,
-        //     dietaryText: newPerson.dietaryText,
-        //     socialPromotion: newPerson.socialPromotion,
-        //     medicalText: newPerson.medicalText,
-        //     otherText: newPerson.otherText
-        // };
-        // this.$log.debug(person);
-
         if (this.type === 'volunteer') {
             var thiz = this;
             this.KrinkelService.postVolunteer(this.MapperService.mapVolunteer(newPerson)).then(function (response) {
+                thiz.dataIsRemoved = true;
                 thiz.StorageService.removeUser();
                 thiz.$location.path('/success');
             });
@@ -56,17 +34,12 @@ class RegisterController {
         if (this.type === 'participant') {
             var thiz = this;
             this.KrinkelService.postParticipant(this.MapperService.mapParticipant(newPerson)).then(function (response) {
+                thiz.dataIsRemoved = true;
                 thiz.StorageService.removeUser();
                 thiz.$location.path('/success');
             });
             return;
         }
-
-
-
-        // console.log(this.MapperService.mapVolunteer(newPerson));
-
-        // this.$window.location.href = '/home';
     }
 
     $onInit() {
@@ -74,12 +47,6 @@ class RegisterController {
             this.$location.path('/login');
         }
         angular.element('.modal-trigger').leanModal();
-        angular.element('.datepicker').pickadate({
-            selectMonths: true, // Creates a dropdown to control month
-            selectYears: 15, // Creates a dropdown of 15 years to control year
-            max: new Date(),
-            onClose: this.setDateInModel(this)
-        });
         // Fill data from localStorage
         // this.newPerson = this.StorageService.getUser();
         var user = this.StorageService.getUser();
@@ -97,43 +64,6 @@ class RegisterController {
         // console.log(document.getElementsByClassName("error"));
     }
 
-
-    isDisabled(form) {
-        /**
-         * This method is currently a workaround for the broken date. TODO: fix
-         */
-        // console.log(Object.keys(form.$error).length);
-        // if (Object.keys(form.$error).length == 1) {
-        //     if (form.$error.hasOwnProperty("date")) {
-        //         return false;
-        //     }
-        // }
-        if (form.$error) {
-            return true;
-        }else{
-            return false;
-        }
-        // personForm.$invalid
-    }
-
-    setDateInModel() {
-        //TODO FIX DATE
-        // if (this.newPerson != undefined) {
-        //     var birthDate = $('#date_of_birth').val();
-        //     var birthDateInDate = new Date(birthDate);
-        //     // this.newPerson.birthDate = new Date(birthDate).toISOString().split('T')[0];
-        //     this.newPerson.birthDate = birthDate;
-        //     // console.log(birthDateInDate.toDateString());
-        //     console.log(birthDate);
-        //     if (birthDate != "") {
-        //         console.log(new Date(birthDate).toISOString().split('T')[0]);
-        //     }
-        //     // console.log(birthDateInDate.getFullYear() + "-" + (birthDateInDate.getMonth()+1) + "-" + birthDateInDate.getDate());
-        //     // this.newPerson.birthDate = new Date(birthDate);
-        // }
-    }
-
-
     functionCallAfterDOMRender() {
         try {
             Materialize.updateTextFields();
@@ -148,9 +78,9 @@ class RegisterController {
      */
 
     $doCheck() {
-        this.StorageService.saveUser(this.newPerson);
-        // Couldn't find a better fix.
-        this.setDateInModel();
+        if(!this.dataIsRemoved){
+            this.StorageService.saveUser(this.newPerson);
+        }
     }
 
 }
