@@ -78,8 +78,7 @@ public class RegistrationParticipant {
     @Pattern(regexp = "^((\\+|00)32\\s?|0)(\\d\\s?\\d{3}|\\d{2}\\s?\\d{2})(\\s?\\d{2}){2}|((\\+|00)32\\s?|0)4(60|[789]\\d)(\\s?\\d{2}){3}$")
     private String phoneNumber;
 
-    public RegistrationParticipant() {
-    }
+    public RegistrationParticipant() {}
 
     public RegistrationParticipant(String adNumber, String email, String firstName, String lastName, Date birthdate, String stamnumber, Gender gender, Role role, Eatinghabbit eatinghabbit) {
         this.adNumber = adNumber;
@@ -91,6 +90,18 @@ public class RegistrationParticipant {
         this.gender = gender;
         this.role = role;
         this.eatinghabbit = eatinghabbit;
+    }
+
+    private RegistrationParticipant(RegistrationParticipant.RegistrationParticipantBuilder builder) {
+        this.adNumber = builder.adNumber;
+        this.email = builder.email;
+        this.firstName = builder.firstName;
+        this.lastName = builder.lastName;
+        this.birthdate = builder.birthdate;
+        this.stamnumber = builder.stamnumber;
+        this.gender = builder.gender;
+        this.role = builder.role;
+        this.eatinghabbit = builder.eatinghabbit;
     }
 
     public String getFirstName() {
@@ -243,6 +254,122 @@ public class RegistrationParticipant {
 
     public void setStatus(Status status) {
         this.status = status;
+    }
+
+    public static class RegistrationParticipantBuilder {
+        private Long id;
+        private String adNumber;
+        private String firstName;
+        private String lastName;
+        private String email;
+        private Address address;
+        private Date birthdate;
+        private String stamnumber;
+        private Gender gender = Gender.X;
+        private Role role;
+        private boolean buddy = false;
+        private List<Language> language = new ArrayList<>();
+        private Eatinghabbit eatinghabbit;
+        private String remarksFood;
+        private boolean socialPromotion = false;
+        private String medicalRemarks;
+        private String remarks;
+        private Status status = Status.TO_BE_PAID;
+        private String phoneNumber;
+
+        public RegistrationParticipant build(){
+            return new RegistrationParticipant(this);
+        }
+
+        public RegistrationParticipantBuilder adNumber(String adNumber) {
+            this.adNumber = adNumber;
+            return this;
+        }
+
+        public RegistrationParticipantBuilder firstName(String firstName) {
+            this.firstName = firstName;
+            return this;
+        }
+
+        public RegistrationParticipantBuilder lastName(String lastName) {
+            this.lastName = lastName;
+            return this;
+        }
+
+        public RegistrationParticipantBuilder email(String email) {
+            this.email = email;
+            return this;
+        }
+
+        public RegistrationParticipantBuilder address(Address address) {
+            this.address = address;
+            return this;
+        }
+
+        public RegistrationParticipantBuilder birthdate(Date birthdate) {
+            this.birthdate = birthdate;
+            return this;
+        }
+
+        public RegistrationParticipantBuilder stamnumber(String stamnumber) {
+            this.stamnumber = stamnumber;
+            return this;
+        }
+
+        public RegistrationParticipantBuilder gender(Gender gender) {
+            this.gender = gender;
+            return this;
+        }
+
+        public RegistrationParticipantBuilder role(Role role) {
+            this.role = role;
+            return this;
+        }
+
+        public RegistrationParticipantBuilder buddy(boolean buddy) {
+            this.buddy = buddy;
+            return this;
+        }
+
+        public RegistrationParticipantBuilder language(List<Language> language) {
+            this.language = language;
+            return this;
+        }
+
+        public RegistrationParticipantBuilder eatinghabbit(Eatinghabbit eatinghabbit) {
+            this.eatinghabbit = eatinghabbit;
+            return this;
+        }
+
+        public RegistrationParticipantBuilder remarksFood(String remarksFood) {
+            this.remarksFood = remarksFood;
+            return this;
+        }
+
+        public RegistrationParticipantBuilder socialPromotion(boolean socialPromotion) {
+            this.socialPromotion = socialPromotion;
+            return this;
+        }
+
+        public RegistrationParticipantBuilder medicalRemarks(String medicalRemarks) {
+            this.medicalRemarks = medicalRemarks;
+            return this;
+        }
+
+        public RegistrationParticipantBuilder remarks(String remarks) {
+            this.remarks = remarks;
+            return this;
+        }
+
+        public RegistrationParticipantBuilder status(Status status) {
+            this.status = status;
+            return this;
+        }
+
+        public RegistrationParticipantBuilder phoneNumber(String phoneNumber) {
+            this.phoneNumber = phoneNumber;
+            return this;
+        }
     }
 }
 
