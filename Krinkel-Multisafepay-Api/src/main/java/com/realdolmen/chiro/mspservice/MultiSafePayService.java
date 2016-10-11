@@ -1,6 +1,7 @@
 package com.realdolmen.chiro.mspservice;
 
 import com.realdolmen.chiro.domain.RegistrationParticipant;
+import com.realdolmen.chiro.domain.RegistrationVolunteer;
 import com.realdolmen.chiro.mspdto.OrderDto;
 import org.json.JSONObject;
 import org.springframework.http.*;
@@ -82,5 +83,9 @@ public class MultiSafePayService {
      */
     public String getParticipantPaymentUri(RegistrationParticipant p, Integer amount) {
         return this.createPayment(p.getAdNumber(), amount).getData().getPayment_url();
+    }
+
+    public String getVolunteerPaymentUri(RegistrationVolunteer v, Integer amount) {
+        return this.createPayment(v.getAdNumber(), amount).getData().getPayment_url();
     }
 }

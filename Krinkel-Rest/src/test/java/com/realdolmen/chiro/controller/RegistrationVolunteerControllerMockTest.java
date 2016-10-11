@@ -7,6 +7,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
@@ -117,5 +118,20 @@ public class RegistrationVolunteerControllerMockTest extends MockMvcTest {
                 .andExpect(MockMvcResultMatchers.status().is4xxClientError());
 
         assertEquals(0, repo.findAll().size());
+    }
+
+
+    @Test
+    public void savingRegistrationReturnsLocationHeaderOnSuccess() throws Exception {
+        String jsonPayload = json(volunteer);
+
+        MvcResult mvcResult = mockMvc()
+                .perform(
+                        MockMvcRequestBuilders.post("/api/volunteers")
+                                .contentType(MediaType.APPLICATION_JSON_UTF8)
+                                .content(jsonPayload))
+                .andReturn();
+
+        assertNotNull(mvcResult.getResponse().getHeader("Location"));
     }
 }

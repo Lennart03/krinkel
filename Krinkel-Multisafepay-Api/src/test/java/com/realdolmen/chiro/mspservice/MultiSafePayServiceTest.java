@@ -3,6 +3,7 @@ package com.realdolmen.chiro.mspservice;
 
 import com.realdolmen.chiro.domain.Gender;
 import com.realdolmen.chiro.domain.RegistrationParticipant;
+import com.realdolmen.chiro.domain.RegistrationVolunteer;
 import com.realdolmen.chiro.domain.Role;
 import com.realdolmen.chiro.mspdto.OrderDto;
 import com.sun.org.apache.xerces.internal.util.URI;
@@ -26,11 +27,14 @@ public class MultiSafePayServiceTest {
     private MultiSafePayService multiSafePayService;
 
     private RegistrationParticipant p;
+    private RegistrationVolunteer v;
 
 
     @Before
     public void init() {
         p = new RegistrationParticipant("123", "jos@example.com", "Joske", "Vermeulen", new Date(), "AB 12/34", Gender.MAN, Role.ASPI, null);
+        v = new RegistrationVolunteer();
+        v.setAdNumber("1516");
     }
 
 
@@ -58,6 +62,11 @@ public class MultiSafePayServiceTest {
     @Test
     public void getParticipantPaymentUriReturnsUri() {
         Assert.assertNotNull(multiSafePayService.getParticipantPaymentUri(p, 10000));
+    }
+
+    @Test
+    public void getVolunteerPaymentUriReturnsUri() {
+        Assert.assertNotNull(multiSafePayService.getVolunteerPaymentUri(v, 6000));
     }
 
 

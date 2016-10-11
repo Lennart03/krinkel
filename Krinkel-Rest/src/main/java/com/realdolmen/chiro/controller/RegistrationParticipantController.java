@@ -66,7 +66,8 @@ public class RegistrationParticipantController {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
 
-        String paymentUrl = mspService.getParticipantPaymentUri(resultingParticipant, 10000);
+        Integer price = registrationParticipantService.PRICE_IN_EUROCENTS;
+        String paymentUrl = mspService.getParticipantPaymentUri(resultingParticipant, price);
         HttpHeaders headers = new HttpHeaders();
         headers.setLocation(new URI(paymentUrl));
         return new ResponseEntity<>(headers, HttpStatus.CREATED);

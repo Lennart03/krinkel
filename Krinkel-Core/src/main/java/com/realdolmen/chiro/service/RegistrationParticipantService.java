@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class RegistrationParticipantService {
+    public final static Integer PRICE_IN_EUROCENTS = 11000;
 
     @Autowired
     private RegistrationParticipantRepository repository;
