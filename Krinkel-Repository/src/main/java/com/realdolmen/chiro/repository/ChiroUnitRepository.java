@@ -9,7 +9,7 @@ import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
 
-public interface ChiroUnitRepository extends JpaRepository<RawChiroUnit, String>{
+public interface ChiroUnitRepository extends JpaRepository<RawChiroUnit, String> {
 
     @Query("SELECT c FROM RawChiroUnit c WHERE " +
             "(SUBSTRING(c.stamNumber, 1, 2) = SUBSTRING(?1, 1, 2) " +
@@ -31,12 +31,12 @@ public interface ChiroUnitRepository extends JpaRepository<RawChiroUnit, String>
     )
     List<RegistrationParticipant> findParticipantsByUnit(String s);
 
-    @Query("SELECT NEW com.realdolmen.chiro.domain.units.ChiroUnit(c.gewest, c.gewestName)"+
-           "FROM RawChiroUnit c " +
-           "GROUP BY c.gewest, c.gewestName")
+    @Query("SELECT NEW com.realdolmen.chiro.domain.units.ChiroUnit(c.gewest, c.gewestName)" +
+            "FROM RawChiroUnit c " +
+            "GROUP BY c.gewest, c.gewestName")
     List<ChiroUnit> findAllGewesten();
 
-    @Query("SELECT NEW com.realdolmen.chiro.domain.units.ChiroUnit(c.verbond, c.verbondName)"+
+    @Query("SELECT NEW com.realdolmen.chiro.domain.units.ChiroUnit(c.verbond, c.verbondName)" +
             "FROM RawChiroUnit c " +
             "GROUP BY c.verbond, c.verbondName")
     List<ChiroUnit> findAllVerbonden();
