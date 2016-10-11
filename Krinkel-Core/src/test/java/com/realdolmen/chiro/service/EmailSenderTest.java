@@ -41,6 +41,8 @@ public class EmailSenderTest {
 	private static final String EMAIL_SUBJECT = "Bevestiging inschrijving krinkel";
 	private static final String EMAIL_FROM = "inschrijvingen@krinkel.be";
 	private static final String EMAIL_TO = "Mathew.Perry@someEmail.com";
+	private static final String AD_NUMBER_1 = "12345";
+	private static final String AD_NUMBER_2 = "22345";
 	private static final String FIRST_NAME = "Mathew";
 	private static final String LAST_NAME = "Perry";
 	private static final String STREET="Alta Loma Rd";
@@ -58,6 +60,7 @@ public class EmailSenderTest {
 	private static final VolunteerFunction VOL_FUNCTION1 = new VolunteerFunction();
 	private static final VolunteerFunction VOL_FUNCTION2 = new VolunteerFunction();
 	private static final String CUSTOM_FUNCTION = "Een ander jobke";
+	
 	
 
 	@Autowired
@@ -77,6 +80,7 @@ public class EmailSenderTest {
 		registrationParticipant = new RegistrationParticipant();
 		registrationParticipant.setFirstName(FIRST_NAME);
 		registrationParticipant.setLastName(LAST_NAME);
+		registrationParticipant.setAdNumber(AD_NUMBER_1);
 		registrationParticipant.setEmail(EMAIL_TO);
 		registrationParticipant.setGender(MALE);
 		Address address= new Address(STREET, HOUSE_NUMBER, POSTAL_CODE, CITY);
@@ -84,6 +88,7 @@ public class EmailSenderTest {
 		registrationVolunteer = new RegistrationVolunteer();
 		registrationVolunteer.setFirstName(FIRST_NAME);
 		registrationVolunteer.setLastName(LAST_NAME);
+		registrationVolunteer.setAdNumber(AD_NUMBER_2);
 		registrationVolunteer.setEmail(EMAIL_TO);
 		registrationVolunteer.setAddress(address);
 		registrationVolunteer.setGender(MALE);
@@ -110,8 +115,8 @@ public class EmailSenderTest {
 		POST_CAMP_LIST.add(POST_CAMP_1);
 		POST_CAMP_LIST.add(POST_CAMP_2);
 		registrationVolunteer.setCampGround(CAMP_GROUND);
-		registrationVolunteer.setPreCampList(PRE_CAMP_LIST);
-		registrationVolunteer.setPostCampList(POST_CAMP_LIST);
+//		registrationVolunteer.setPreCampList(PRE_CAMP_LIST);
+//		registrationVolunteer.setPostCampList(POST_CAMP_LIST);
 		VOL_FUNCTION1.setPreset(Preset.CAMPGROUND);
 		VOL_FUNCTION2.setOther(CUSTOM_FUNCTION);
 		registrationVolunteer.setFunction(VOL_FUNCTION1);

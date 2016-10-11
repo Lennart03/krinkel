@@ -13,7 +13,7 @@ import javax.validation.constraints.NotNull;
 import org.hibernate.validator.constraints.NotBlank;
 
 @Entity
-@Table(name="registration_communciation")
+@Table(name="registration_communication")
 public class RegistrationCommunication {
 	
 	@Id

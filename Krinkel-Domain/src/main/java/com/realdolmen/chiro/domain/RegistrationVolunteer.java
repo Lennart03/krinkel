@@ -1,5 +1,6 @@
 package com.realdolmen.chiro.domain;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.Enumerated;
@@ -22,13 +23,13 @@ public class RegistrationVolunteer extends RegistrationParticipant {
     /**
      * Zero or many PreCamp moments.
      */
-    @OneToMany
+    @OneToMany(cascade=CascadeType.ALL)
     private List<PreCamp> preCampList = new ArrayList<>();
 
     /**
      * Zero or many PostCamp moments.
      */
-    @OneToMany
+    @OneToMany(cascade=CascadeType.ALL)
     private List<PostCamp> postCampList = new ArrayList<>();
 
     public RegistrationVolunteer() {}

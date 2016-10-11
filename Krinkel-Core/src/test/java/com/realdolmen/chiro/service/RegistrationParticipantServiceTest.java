@@ -24,11 +24,11 @@ public class RegistrationParticipantServiceTest {
     private RegistrationParticipantService registrationParticipantService;
 
     @Mock
-    private RegistrationCommunicationService registrationCommunicationService;
-    
-    @Mock
     private RegistrationParticipantRepository repo;
 
+    @Mock
+    private EmailSenderService emailSenderService;
+    
     private RegistrationParticipant participant;
 
     @Before

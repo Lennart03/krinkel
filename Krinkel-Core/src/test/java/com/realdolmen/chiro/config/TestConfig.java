@@ -13,8 +13,6 @@ import com.icegreen.greenmail.util.ServerSetup;
 import com.realdolmen.chiro.repository.RegistrationCommunicationRepository;
 import com.realdolmen.chiro.service.EmailSenderService;
 import com.realdolmen.chiro.service.EmailSenderServiceImpl;
-import com.realdolmen.chiro.service.RegistrationCommunicationService;
-import com.realdolmen.chiro.service.RegistrationCommunicationServiceImpl;
 
 @Configuration
 @EnableJpaRepositories
@@ -38,13 +36,6 @@ public class TestConfig {
 		javaMailSenderImpl.setProtocol("smtp");
 		return javaMailSenderImpl;
 	}
-	
-	@Bean
-	public RegistrationCommunicationService registrationCommunicationService(){
-		return new RegistrationCommunicationServiceImpl();
-	}
-	
-	
 	
 	
 }

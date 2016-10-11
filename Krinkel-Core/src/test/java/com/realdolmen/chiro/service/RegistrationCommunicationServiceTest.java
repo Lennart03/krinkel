@@ -13,18 +13,18 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.realdolmen.chiro.domain.RegistrationCommunication;
 import com.realdolmen.chiro.domain.SendStatus;
+import com.realdolmen.chiro.repository.RegistrationCommunicationRepository;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringBootTest
 public class RegistrationCommunicationServiceTest {
 	
 	@Autowired
-	private RegistrationCommunicationService registrationCommunicationService;
+	private RegistrationCommunicationRepository registrationCommunicationRepository;
 
 	@Test
 	public void shouldFindAllWaitingAndFailed(){
-		List<SendStatus>statuses = Arrays.asList(SendStatus.FAILED,SendStatus.WAITING);
-		List<RegistrationCommunication>communications = registrationCommunicationService.findAllWaitingAndFailedRegistrationCommunications();
+		List<RegistrationCommunication>communications = registrationCommunicationRepository.findAllWaitingAndFailed();
 		assertEquals(6, communications.size());
 	}
 	

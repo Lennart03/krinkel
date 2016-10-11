@@ -11,12 +11,12 @@ public class RegistrationParticipantService {
     @Autowired
     private RegistrationParticipantRepository repository;
     
-    @Autowired
-    private RegistrationCommunicationService registrationCommunicationService;
+	@Autowired
+	private EmailSenderService emailSenderService;
 
     public RegistrationParticipant save(RegistrationParticipant registration) {
         if(repository.findByAdNumber(registration.getAdNumber()) == null) {
-        	registrationCommunicationService.addNewToRegistrationCommunication(registration.getAdNumber());
+			emailSenderService.sendMail(registration);
         	return repository.save(registration);
         }
         return null;

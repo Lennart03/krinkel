@@ -10,5 +10,5 @@ import com.realdolmen.chiro.domain.RegistrationParticipant;
 
 @Service
 public interface EmailSenderService {
-	Future<String> sendMail(RegistrationParticipant participant) throws MessagingException;
+	Future<String> sendMail(RegistrationParticipant participant);
 }
