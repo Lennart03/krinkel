@@ -1,9 +1,6 @@
 package com.realdolmen.chiro.domain.mothers;
 
-import com.realdolmen.chiro.domain.Eatinghabbit;
-import com.realdolmen.chiro.domain.Gender;
-import com.realdolmen.chiro.domain.RegistrationParticipant;
-import com.realdolmen.chiro.domain.Role;
+import com.realdolmen.chiro.domain.*;
 
 import java.util.Calendar;
 
@@ -15,16 +12,22 @@ public class RegistrationParticipantMother {
         Calendar c = Calendar.getInstance();
         c.set(1979, Calendar.SEPTEMBER, 19);
 
-        return new RegistrationParticipant(
-                "123456",
-                "hermione@hogwarts.example",
-                "Hermione",
-                "Granger",
-                c.getTime(),
-                "AG0104",
-                Gender.WOMAN,
-                Role.ASPI,
-                Eatinghabbit.VEGI
-        );
+        RegistrationParticipant.RegistrationParticipantBuilder builder =
+                new RegistrationParticipant.RegistrationParticipantBuilder();
+
+        builder.adNumber("123456")
+                .email("hermione@hogwarts.example")
+                .firstName("Hermione")
+                .lastName("Granger")
+                .birthdate(c.getTime())
+                .stamnumber("AG0104")
+                .gender(Gender.WOMAN)
+                .eatinghabbit(Eatinghabbit.VEGI)
+                .role(Role.ASPI)
+                .address(
+                        new Address("Little Whinging street","32", 1380, "Waterloo")
+                );
+
+        return builder.build();
     }
 }

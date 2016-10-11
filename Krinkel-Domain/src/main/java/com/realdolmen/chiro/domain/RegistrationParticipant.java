@@ -102,6 +102,14 @@ public class RegistrationParticipant {
         this.gender = builder.gender;
         this.role = builder.role;
         this.eatinghabbit = builder.eatinghabbit;
+        this.address = builder.address;
+        this.buddy = builder.buddy;
+        this.status = builder.status;
+        this.socialPromotion = builder.socialPromotion;
+        this.remarksFood = builder.remarksFood;
+        this.medicalRemarks = builder.medicalRemarks;
+        this.remarks = builder.remarks;
+        this.phoneNumber = builder.phoneNumber;
     }
 
     public String getFirstName() {
@@ -257,7 +265,6 @@ public class RegistrationParticipant {
     }
 
     public static class RegistrationParticipantBuilder {
-        private Long id;
         private String adNumber;
         private String firstName;
         private String lastName;
