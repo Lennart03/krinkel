@@ -58,9 +58,10 @@ public class MultiSafePayService {
     private JSONObject createPaymentJsonObject(String orderId, Integer amount) {
         JSONObject paymentOptions = new JSONObject();
 
+        //TODO: update this with correct urls (use profiles for dev, test & production)
         paymentOptions.put("notification_url", "https://krinkel.be/notify");
-        paymentOptions.put("redirect_url", "https://krinkel.be/success");
-        paymentOptions.put("cancel_url", "https://krinkel.be/failure");
+        paymentOptions.put("redirect_url", "http://localhost:8080/payment/success");
+        paymentOptions.put("cancel_url", "http://localhost:8080/payment/failure");
 
         JSONObject jsonObject = new JSONObject();
 
