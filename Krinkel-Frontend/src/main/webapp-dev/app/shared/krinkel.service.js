@@ -11,17 +11,24 @@ export class KrinkelService {
   }
   postVolunteer(user) {
       return this.$http.post(`${this.BASEURL}/api/volunteers`, user).then((resp) => {
-          return resp.data;
+          console.debug("Printing volunteer POST response");
+          console.debug(resp);
+          console.debug(resp.headers);
+          console.debug(resp.headers().location);
+          return resp;
       });
   }
   postParticipant(user) {
       return this.$http.post(`${this.BASEURL}/api/participants`, user).then((resp) => {
-          return resp.data;
+          console.debug("Printing participant POST response");
+          console.debug(resp.headers);
+          console.debug(resp.headers().location);
+          return resp;
       });
   }
 
 
-  
+
 
   // getMovies(title) {
   //   return this.$http.get(`${this.BASEURL}/online?title=${title}`).then((resp) => {

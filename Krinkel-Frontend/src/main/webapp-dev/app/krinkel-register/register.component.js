@@ -23,20 +23,20 @@ class RegisterController {
     registerPerson(newPerson) {
         if (this.type === 'volunteer') {
             var thiz = this;
-            this.KrinkelService.postVolunteer(this.MapperService.mapVolunteer(newPerson)).then(function (response) {
+            this.KrinkelService.postVolunteer(this.MapperService.mapVolunteer(newPerson)).then(function (resp) {
                 thiz.dataIsRemoved = true;
                 thiz.StorageService.removeUser();
-                thiz.$location.path('/success');
+                thiz.$window.location.href = resp.headers().location;
             });
             return;
         }
 
         if (this.type === 'participant') {
             var thiz = this;
-            this.KrinkelService.postParticipant(this.MapperService.mapParticipant(newPerson)).then(function (response) {
+            this.KrinkelService.postParticipant(this.MapperService.mapParticipant(newPerson)).then(function (resp) {
                 thiz.dataIsRemoved = true;
                 thiz.StorageService.removeUser();
-                thiz.$location.path('/success');
+                thiz.$window.location.href = resp.headers().location;
             });
             return;
         }
