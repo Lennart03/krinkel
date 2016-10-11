@@ -17,18 +17,20 @@ export class MapperService {
             birthdate: data.birthDate,
             stamnumber: Math.floor(Math.random() * 100000), //TODO NON-RANDOM
             buddy: data.buddy,
-            languages: data.languages,
+            language: [], // data.languages
             eatinghabbit: data.dietary,
             remarksFood: data.dietaryText,
             socialPromotion: data.socialPromotion,
             medicalRemarks: data.medicalText,
             remarks: data.otherText,
-            phoneNumber: data.phoneNumber,
+            phoneNumber: data.phone,
             campGround: data.campGround.toUpperCase(),
             email: data.email,
             role: 'VOLUNTEER',
 
         };
+
+
 
         var genderTemp = data.gender.toLowerCase();
         if (genderTemp === 'man') {
@@ -39,10 +41,19 @@ export class MapperService {
             volunteer.gender = data.gender.toUpperCase();
         }
 
+        var mappedJob = this.mapJob(data.job);
 
-        volunteer.function = {
-            preset: this.mapJob(data.job)
-        };
+        if (mappedJob === 'CUSTOM') {
+            volunteer.function = {
+                preset: 'CUSTOM',
+                other: data.jobOther
+            };
+        } else {
+            volunteer.function = {
+                preset: mappedJob
+            };
+        }
+
         volunteer.preCampList = this.mapPreCampToObject(data.preCamp);
         volunteer.postCampList = this.mapPostCampToObject(data.postCamp);
 
@@ -52,6 +63,9 @@ export class MapperService {
 
         return volunteer;
     }
+
+
+
 
     mapJob(job) {
         var upperCasedJob = job.toUpperCase();
@@ -97,6 +111,8 @@ export class MapperService {
          */
     }
 
+
+
     mapParticipant(data) {
         var participant = {
             adNumber: Math.floor(Math.random() * 100000), //TODO NON-RANDOM
@@ -112,14 +128,26 @@ export class MapperService {
             birthdate: data.birthDate, //TODO
             stamnumber: Math.floor(Math.random() * 100000), //TODO NON-RANDOM
             buddy: data.buddy,
-            languages: data.languages, //TODO lege array
+            // language: data.languages,
             eatinghabbit: data.dietary,
             remarksFood: data.dietaryText,
             socialPromotion: data.socialPromotion,
             medicalRemarks: data.medicalText,
             remarks: data.otherText,
-            phoneNumber: data.phoneNumber,
+            phoneNumber: data.phone,
         };
+
+
+
+
+
+        if (data.buddy) {
+            participant.language = data.languages;
+        } else {
+            participant.language = [];
+        }
+        console.log("lagnuages:");
+        console.log(data.languages);
         var genderTemp = data.gender.toLowerCase();
         if (genderTemp === 'man') {
             participant.gender = data.gender.toUpperCase();
