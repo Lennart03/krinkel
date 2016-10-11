@@ -1,16 +1,17 @@
 package com.realdolmen.chiro.repository;
 
-import com.realdolmen.chiro.domain.ChiroUnit;
+
 import com.realdolmen.chiro.domain.RegistrationParticipant;
+import com.realdolmen.chiro.domain.units.ChiroUnit;
+import com.realdolmen.chiro.domain.units.RawChiroUnit;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
 
-public interface ChiroUnitRepository extends JpaRepository<ChiroUnit, String> {
-    //, ChiroUnitRepositoryCustom {
+public interface ChiroUnitRepository extends JpaRepository<RawChiroUnit, String>{
 
-    @Query("SELECT c FROM ChiroUnit c WHERE " +
+    @Query("SELECT c FROM RawChiroUnit c WHERE " +
             "(SUBSTRING(c.stamNumber, 1, 2) = SUBSTRING(?1, 1, 2) " +
             "OR SUBSTRING(c.stamNumber, 1, 3) = SUBSTRING(?1, 1, 3)) " +
             " AND " +
@@ -18,7 +19,7 @@ public interface ChiroUnitRepository extends JpaRepository<ChiroUnit, String> {
             "OR SUBSTRING(c.stamNumber,LOCATE('/',c.stamNumber)+1, 4) = SUBSTRING(?1, 4, 4)" +
             ")"
     )
-    ChiroUnit findOne(String s);
+    RawChiroUnit findOne(String s);
 
     @Query("SELECT p FROM RegistrationParticipant p WHERE " +
             "(SUBSTRING(p.stamnumber, 1, 2) = SUBSTRING(?1, 1, 2)" +
@@ -29,4 +30,14 @@ public interface ChiroUnitRepository extends JpaRepository<ChiroUnit, String> {
             ")"
     )
     List<RegistrationParticipant> findParticipantsByUnit(String s);
+
+    @Query("SELECT NEW com.realdolmen.chiro.domain.units.ChiroUnit(c.gewest, c.gewestName)"+
+           "FROM RawChiroUnit c " +
+           "GROUP BY c.gewest, c.gewestName")
+    List<ChiroUnit> findAllGewesten();
+
+    @Query("SELECT NEW com.realdolmen.chiro.domain.units.ChiroUnit(c.verbond, c.verbondName)"+
+            "FROM RawChiroUnit c " +
+            "GROUP BY c.verbond, c.verbondName")
+    List<ChiroUnit> findAllVerbonden();
 }

@@ -1,4 +1,4 @@
-package com.realdolmen.chiro.domain;
+package com.realdolmen.chiro.domain.units;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -7,11 +7,11 @@ import javax.persistence.Table;
 
 /**
  * TODO: See http://stackoverflow.com/questions/2355728/jpql-create-new-object-in-select-statement-avoid-or-embrace
- *  Creating new entity in JPQL select statement -> Distill verbond and gewest entities from the ChiroUnit tables.
+ *  Creating new entity in JPQL select statement -> Distill verbond and gewest entities from the RawChiroUnit tables.
  */
 @Entity
 @Table(name="groepen")
-public class ChiroUnit {
+public class RawChiroUnit {
 
     @Column(name="groep_stamnr")
     @Id
@@ -23,10 +23,16 @@ public class ChiroUnit {
     @Column(name="gewest_stamnr")
     private String gewest;
 
+    @Column(name="gewest_naam")
+    private String gewestName;
+
     @Column(name="verbond_stamnr")
     private String verbond;
 
-    public ChiroUnit() {
+    @Column(name="verbond_naam")
+    private String verbondName;
+
+    public RawChiroUnit() {
     }
 
     public String getName() {
@@ -53,11 +59,27 @@ public class ChiroUnit {
         this.gewest = gewest;
     }
 
+    public String getGewestName() {
+        return gewestName;
+    }
+
+    public void setGewestName(String gewestName) {
+        this.gewestName = gewestName;
+    }
+
     public String getVerbond() {
         return verbond;
     }
 
     public void setVerbond(String verbond) {
         this.verbond = verbond;
+    }
+
+    public String getVerbondName() {
+        return verbondName;
+    }
+
+    public void setVerbondName(String verbondName) {
+        this.verbondName = verbondName;
     }
 }
