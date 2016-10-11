@@ -3,6 +3,8 @@ package com.realdolmen.chiro.controller;
 import com.realdolmen.chiro.controller.validation.EnableRestErrorHandling;
 import com.realdolmen.chiro.domain.*;
 import com.realdolmen.chiro.service.RegistrationVolunteerService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,6 +18,8 @@ import java.util.Date;
 @RestController
 @EnableRestErrorHandling
 public class RegistrationVolunteerController {
+
+    private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @Autowired
     private RegistrationVolunteerService registrationVolunteerService;
@@ -76,8 +80,10 @@ public class RegistrationVolunteerController {
     public ResponseEntity<?> save(@Valid @RequestBody RegistrationVolunteer volunteer){
         RegistrationVolunteer resultingVolunteer = registrationVolunteerService.save(volunteer);
         if(resultingVolunteer == null){
+            logger.info("Registration for Volunteer failed.");
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
+        logger.info("New Registration for Volunteer created.");
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 

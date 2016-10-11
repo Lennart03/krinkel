@@ -3,6 +3,8 @@ package com.realdolmen.chiro.controller;
 import com.realdolmen.chiro.controller.validation.EnableRestErrorHandling;
 import com.realdolmen.chiro.domain.RegistrationParticipant;
 import com.realdolmen.chiro.service.RegistrationParticipantService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,6 +15,8 @@ import javax.validation.Valid;
 @RestController
 @EnableRestErrorHandling
 public class RegistrationParticipantController {
+
+    private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @Autowired
     private RegistrationParticipantService registrationParticipantService;
@@ -56,6 +60,7 @@ public class RegistrationParticipantController {
         if(resultingParticipant == null){
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
+        logger.info("New registration created.");
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 }
