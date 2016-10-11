@@ -15,6 +15,11 @@ export class StorageService {
             return JSON.parse(localStorage.getItem('savedData'));
         }
     }
+
+    removeUser(){
+        localStorage.removeItem('savedData');
+    }
+
 }
 
 StorageService.$inject = ['$window'];
