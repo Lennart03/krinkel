@@ -9,6 +9,6 @@ import com.realdolmen.chiro.domain.RegistrationCommunication;
 @Service
 public interface RegistrationCommunicationService {
 	void addNewToRegistrationCommunication(String adNumber);
-	List<RegistrationCommunication> findAllWaitingAndFailedRegistrationCommunications();
+	List<RegistrationCommunication> findAllWaitingAndFailedRegistrationCommunications(List<String>statuses);
 
 }

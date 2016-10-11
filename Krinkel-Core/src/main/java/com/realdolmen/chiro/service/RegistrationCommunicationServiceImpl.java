@@ -25,8 +25,8 @@ public class RegistrationCommunicationServiceImpl implements RegistrationCommuni
 	}
 
 	@Override
-	public List<RegistrationCommunication> findAllWaitingAndFailedRegistrationCommunications() {
-		return registrationCommunicationRepository.findAllWaitingAndFailed();
+	public List<RegistrationCommunication> findAllWaitingAndFailedRegistrationCommunications(List<String>statuses) {
+		return registrationCommunicationRepository.findAllWaitingAndFailed(statuses);
 	}
 
 }
