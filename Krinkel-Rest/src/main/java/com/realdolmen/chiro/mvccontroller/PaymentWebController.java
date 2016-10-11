@@ -18,14 +18,14 @@ public class PaymentWebController {
     private RegistrationParticipantService service;
 
     @RequestMapping(method = RequestMethod.GET, value = "/success")
-    public String paymentSuccess(@RequestParam(name = "orderid")String orderId) {
+    public String paymentSuccess(@RequestParam(name = "transactionid")String orderId) {
         System.out.println("reached payment succes for transaction " + orderId);
         service.updatePaymentStatus(orderId);
         return "redirect:/index.html";
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/failure")
-    public String paymentFailure(@RequestParam(name = "orderid")String orderId) {
+    public String paymentFailure(@RequestParam(name = "transactionid")String orderId) {
         System.out.println("reached payment failure for transaction" + orderId);
 
         return "redirect:/index.html";
