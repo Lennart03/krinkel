@@ -1,10 +1,14 @@
 package com.realdolmen.chiro.service;
 
-import org.springframework.boot.test.autoconfigure.web.client.AutoConfigureMockRestServiceServer;
+import java.util.List;
+
 import org.springframework.stereotype.Service;
+
+import com.realdolmen.chiro.domain.RegistrationCommunication;
 
 @Service
 public interface RegistrationCommunicationService {
 	void addNewToRegistrationCommunication(String adNumber);
+	List<RegistrationCommunication> findAllWaitingAndFailedRegistrationCommunications();
 
 }

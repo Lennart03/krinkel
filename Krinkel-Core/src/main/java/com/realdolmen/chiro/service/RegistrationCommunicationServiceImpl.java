@@ -1,5 +1,7 @@
 package com.realdolmen.chiro.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,4 +23,10 @@ public class RegistrationCommunicationServiceImpl implements RegistrationCommuni
 		registrationCommunication.setStatus(SendStatus.WAITING);
 		registrationCommunicationRepository.save(registrationCommunication);
 	}
+
+	@Override
+	public List<RegistrationCommunication> findAllWaitingAndFailedRegistrationCommunications() {
+		return registrationCommunicationRepository.findAllWaitingAndFailed();
+	}
+
 }

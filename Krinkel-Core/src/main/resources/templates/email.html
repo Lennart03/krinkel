@@ -54,6 +54,34 @@
 			<td th:text="${participant.role}"></td>
 
 		</tr>
+		<tr th:if="${isVolunteer}">
+			<td>Kampgrond:</td>
+			<td th:text="${participant.campGround.description}"></td>
+			<td></td>
+			<td></td>
+
+		</tr>
+		<tr th:if="${isVolunteer}">
+			<td>Voorwacht:</td>
+			<td><ul>
+					<li th:each="preCamp : ${participant.preCampList}"
+						th:text="${preCamp.toString()}"></li>
+				</ul></td>
+			<td>Nawacht:</td>
+			<td><ul>
+					<li th:each="postCamp : ${participant.postCampList}"
+						th:text="${postCamp.toString()}"></li>
+				</ul></td>
+
+		</tr>
+		<tr th:if="${isVolunteer}">
+			<td>Vrijwilligersfunctie:</td>
+			<td >
+				<div th:if="${participant.function.other}==null" th:text="${participant.function.preset.description}"></div>
+				<div th:if="${participant.function.other}!=null" th:text="${participant.function.other}"></div>
+			</td>
+			
+		</tr>
 		<tr>
 			<td>Buddy:</td>
 			<td th:switch="${participant.buddy}">
@@ -84,9 +112,7 @@
 		</tr>
 		<tr>
 			<td>Medische opmerkingen</td>
-			<td th:text="${participant.medicalRemarks}"></td>
-
-
+			<td th:text="${participant.medicalRemarks}"></td> 
 		</tr>
 		<tr>
 			<td>Andere opmerkingen</td>
@@ -105,7 +131,7 @@
 		<p th:case="true">Extra info over Krinkel krijg je nog via de
 			trekker van je kampgrond of werkgroep en via mail eind juli. Hou ook
 			zeker de website in de gaten, daar ga je steeds meer te weten kunnen
-			komen.â€¯</p>
+			komen.</p>
 	</div>
 
 

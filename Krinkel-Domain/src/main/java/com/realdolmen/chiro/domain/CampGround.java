@@ -5,16 +5,30 @@ package com.realdolmen.chiro.domain;
  *
  */
 public enum CampGround {
-    ANTWERPEN,
-    KEMPEN,
-    MECHELEN,
-    LIMBURG,
-    LEUVEN,
-    BRUSSEL,
-    WEST_VLAANDEREN,
-    HEUVELLAND,
-    ROELAND,
-    REINAERT,
-    NATIONAAL,
-    INTERNATIONAAL
+    ANTWERPEN("Antwerpen"),
+    KEMPEN("Kempen"),
+    MECHELEN("Mechelen"),
+    LIMBURG("Limburg"),
+    LEUVEN("Leuven"),
+    BRUSSEL("Brussel"),
+    WEST_VLAANDEREN("West-Vlaanderen"),
+    HEUVELLAND("Heuvelland"),
+    ROELAND("Roeland"),
+    REINAERT("Reinaert"),
+    NATIONAAL("Nationaal"),
+    INTERNATIONAAL("Internationaal");
+	
+	private String description;
+	
+	private CampGround(String description){
+		this.setDescription(description);
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
 }

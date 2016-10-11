@@ -3,6 +3,8 @@ package com.realdolmen.chiro.domain;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 import javax.persistence.*;
+
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
@@ -41,5 +43,11 @@ public abstract class CampHelpMoment {
 
     public void setDate(Date date) {
         this.date = date;
+    }
+    
+    @Override
+    public String toString(){
+    	SimpleDateFormat dateFrmt = new SimpleDateFormat("dd/MM/yyyy");
+    	return dateFrmt.format(getDate());
     }
 }
