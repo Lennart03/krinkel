@@ -24,6 +24,9 @@ public class RegistrationParticipantServiceTest {
     private RegistrationParticipantService registrationParticipantService;
 
     @Mock
+    private RegistrationCommunicationService registrationCommunicationService;
+    
+    @Mock
     private RegistrationParticipantRepository repo;
 
     private RegistrationParticipant participant;
@@ -51,7 +54,8 @@ public class RegistrationParticipantServiceTest {
     @Test
     public void saveShouldReturnParticipantAfter() {
         Mockito.when(repo.save(participant)).thenReturn(participant);
-        Assert.assertSame(participant, registrationParticipantService.save(participant));
+        Assert.assertSame(participant,
+        		registrationParticipantService.save(participant));
         Mockito.verify(repo).save(participant);
     }
 

@@ -23,8 +23,8 @@ public class RegistrationCommunicationServiceTest {
 
 	@Test
 	public void shouldFindAllWaitingAndFailed(){
-		List<String>statuses = Arrays.asList(SendStatus.FAILED.toString(),SendStatus.WAITING.toString());
-		List<RegistrationCommunication>communications = registrationCommunicationService.findAllWaitingAndFailedRegistrationCommunications(statuses);
+		List<SendStatus>statuses = Arrays.asList(SendStatus.FAILED,SendStatus.WAITING);
+		List<RegistrationCommunication>communications = registrationCommunicationService.findAllWaitingAndFailedRegistrationCommunications();
 		assertEquals(6, communications.size());
 	}
 	

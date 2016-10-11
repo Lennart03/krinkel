@@ -9,10 +9,11 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import com.realdolmen.chiro.domain.RegistrationCommunication;
+import com.realdolmen.chiro.domain.SendStatus;
 
 @Repository
 public interface RegistrationCommunicationRepository extends JpaRepository<RegistrationCommunication, Long> {
     RegistrationCommunication findByAdNumber(String adNumber);
-    @Query("SELECT r FROM RegistrationCommunication r WHERE r.SendStatus in :status")
-    List<RegistrationCommunication> findAllWaitingAndFailed(@Param("status")List<String>statuses);
+    @Query(value="SELECT * FROM registration_communication WHERE status IN ('WAITING', 'FAILED')", nativeQuery=true)
+    List<RegistrationCommunication> findAllWaitingAndFailed();
 }

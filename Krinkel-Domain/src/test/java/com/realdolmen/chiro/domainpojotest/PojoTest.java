@@ -11,6 +11,8 @@ import com.openpojo.validation.rule.impl.GetterMustExistRule;
 import com.openpojo.validation.rule.impl.SetterMustExistRule;
 import com.openpojo.validation.test.impl.GetterTester;
 import com.openpojo.validation.test.impl.SetterTester;
+
+import org.junit.Ignore;
 import org.junit.Test;
 
 import java.util.List;

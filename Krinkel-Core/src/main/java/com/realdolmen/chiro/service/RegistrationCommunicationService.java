@@ -5,10 +5,10 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import com.realdolmen.chiro.domain.RegistrationCommunication;
+import com.realdolmen.chiro.domain.SendStatus;
 
-@Service
 public interface RegistrationCommunicationService {
 	void addNewToRegistrationCommunication(String adNumber);
-	List<RegistrationCommunication> findAllWaitingAndFailedRegistrationCommunications(List<String>statuses);
+	List<RegistrationCommunication> findAllWaitingAndFailedRegistrationCommunications();
 
 }

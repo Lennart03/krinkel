@@ -17,8 +17,6 @@ import com.realdolmen.chiro.service.RegistrationCommunicationService;
 import com.realdolmen.chiro.service.RegistrationCommunicationServiceImpl;
 
 @Configuration
-//@Profile("test")
-//@ComponentScan("com.realdolmen.chiro.repository")
 @EnableJpaRepositories
 public class TestConfig {
 
