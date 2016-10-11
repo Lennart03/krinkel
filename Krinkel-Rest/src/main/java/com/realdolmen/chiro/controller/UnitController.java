@@ -21,30 +21,26 @@ import java.util.List;
 public class UnitController {
 
     @Autowired
-    private ChiroUnitService service;
+    private ChiroUnitService unitService;
+
 
     @RequestMapping(method = RequestMethod.GET, params = {"gewest"})
-    public List<ChiroUnit> allGewestUnits(){
-        return service.findGewestUnits();
+    public List<ChiroUnit> allGewestUnits() {
+        return unitService.findGewestUnits();
     }
 
-    @RequestMapping(value="", method = RequestMethod.GET, params ={"verbond"})
-    public List<ChiroUnit> allVerbondUnits(){
-        return service.findVerbondUnits();
+    @RequestMapping(value = "", method = RequestMethod.GET, params = {"verbond"})
+    public List<ChiroUnit> allVerbondUnits() {
+        return unitService.findVerbondUnits();
     }
 
-    @RequestMapping(value="", method = RequestMethod.GET)
-    public List<ChiroUnit> units(){
-        return service.findAll();
+    @RequestMapping(value = "", method = RequestMethod.GET)
+    public List<ChiroUnit> units() {
+        return unitService.findAll();
     }
 
-    @RequestMapping(value="/{stam}", method = RequestMethod.GET)
-    public ChiroUnit singleUnit(@PathVariable("stam") String stam){
-        return service.find(stam);
-    }
-
-    @RequestMapping(value = "participants/{stam}", method = RequestMethod.GET)
-    public int findParticipants(@PathVariable("stam") String stamNumber){
-        return service.findParticipantsByUnit(stamNumber).size();
+    @RequestMapping(value = "/{stam}", method = RequestMethod.GET)
+    public ChiroUnit singleUnit(@PathVariable("stam") String stam) {
+        return unitService.find(stam);
     }
 }

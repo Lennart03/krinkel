@@ -1,7 +1,7 @@
 package com.realdolmen.chiro.controller;
 
 import com.realdolmen.chiro.domain.*;
-import com.realdolmen.chiro.repository.ChiroUnitRepository;
+import com.realdolmen.chiro.repository.RegistrationParticipantRepository;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -16,7 +16,7 @@ import java.util.Calendar;
 import java.util.List;
 
 @RunWith(MockitoJUnitRunner.class)
-public class UnitControllerTest {
+public class OverviewControllerTest {
 
     private RegistrationParticipant participantAstrid;
 
@@ -25,13 +25,13 @@ public class UnitControllerTest {
     private List<RegistrationParticipant> participants = new ArrayList<>();
 
     @InjectMocks
-    private UnitController controller;
+    private OverviewController controller;
 
     @Mock
-    private ChiroUnitRepository repository;
+    private RegistrationParticipantRepository registrationRepository;
 
     @Before
-    public void init() {
+    public void init(){
         // Participant Astrid
         Calendar c = Calendar.getInstance();
         c.set(1995, Calendar.AUGUST, 5);
@@ -59,7 +59,7 @@ public class UnitControllerTest {
 
     @Test
     public void getParticipantsByUnit(){
-        Mockito.when(repository.findParticipantsByUnit("AG0001")).thenReturn(participants);
-        Assert.assertSame(repository.findParticipantsByUnit("AG0001").size(), participants.size());
+        Mockito.when(registrationRepository.findParticipantsByUnit("AG0001")).thenReturn(participants);
+        Assert.assertSame(registrationRepository.findParticipantsByUnit("AG0001").size(), participants.size());
     }
 }

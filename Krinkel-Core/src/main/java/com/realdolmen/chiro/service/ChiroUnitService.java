@@ -98,10 +98,6 @@ public class ChiroUnitService {
         return null;
     }
 
-    public List<RegistrationParticipant> findParticipantsByUnit(String stamNumber){
-        return repository.findParticipantsByUnit(stamNumber);
-    }
-
     private String trimStam(String stam){
         return stam.replace("/", "").replace("\\s", "").replace(" ", "");
     }

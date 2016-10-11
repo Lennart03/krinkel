@@ -5,6 +5,8 @@ import com.realdolmen.chiro.repository.RegistrationParticipantRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class RegistrationParticipantService {
 
@@ -16,5 +18,9 @@ public class RegistrationParticipantService {
             return repository.save(registration);
         }
         return null;
+    }
+
+    public List<RegistrationParticipant> findParticipantsByUnit(String stamNumber){
+        return repository.findParticipantsByUnit(stamNumber);
     }
 }
