@@ -10,18 +10,20 @@ import java.util.List;
  */
 @JsonIdentityInfo(
         generator = ObjectIdGenerators.PropertyGenerator.class,
-        property = "stam"
+        property = "stamnummer"
 )
 public class ChiroUnit {
+    @JsonProperty("stamnummer")
     private String stam;
 
+    @JsonProperty("naam")
     private String name;
 
-    @JsonProperty("boven_liggende")
+    @JsonProperty("bovenliggende_stamnummer")
     @JsonIdentityReference(alwaysAsId = true)
     private ChiroUnit upper;
 
-    @JsonProperty("onder_liggende")
+    @JsonProperty("onderliggende_stamnummers")
     @JsonIdentityReference(alwaysAsId = true)
     private List<ChiroUnit> lower = new ArrayList<>();
 
