@@ -25,13 +25,13 @@ public class RegistrationVolunteer extends RegistrationParticipant {
     /**
      * Zero or many PreCamp moments.
      */
-    @OneToMany
+    @ManyToMany
     private List<PreCamp> preCampList = new ArrayList<>();
 
     /**
      * Zero or many PostCamp moments.
      */
-    @OneToMany
+    @ManyToMany
     private List<PostCamp> postCampList = new ArrayList<>();
 
     public RegistrationVolunteer() {}

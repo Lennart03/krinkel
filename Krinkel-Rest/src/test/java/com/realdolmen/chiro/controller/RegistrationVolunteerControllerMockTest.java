@@ -1,6 +1,7 @@
 package com.realdolmen.chiro.controller;
 
 import com.realdolmen.chiro.domain.*;
+import com.realdolmen.chiro.domain.mothers.RegistrationVolunteerMother;
 import com.realdolmen.chiro.repository.RegistrationVolunteerRepository;
 import org.hamcrest.Matchers;
 import org.junit.Before;
@@ -103,6 +104,18 @@ public class RegistrationVolunteerControllerMockTest extends MockMvcTest {
                                 .contentType(MediaType.APPLICATION_JSON_UTF8)
                                 .content(jsonPayload))
                 .andExpect(MockMvcResultMatchers.status().is4xxClientError());
+    }
+
+    @Test
+    public void savingVolunteerWithManyPreCampsSucceeds() throws Exception {
+        String jsonPayload = json(RegistrationVolunteerMother.createRegistrationVolunteerWithManyPreCamps());
+
+        mockMvc()
+                .perform(
+                        MockMvcRequestBuilders.post("/api/volunteers")
+                                .contentType(MediaType.APPLICATION_JSON_UTF8)
+                                .content(jsonPayload))
+                .andExpect(MockMvcResultMatchers.status().is2xxSuccessful());
     }
 
     @Test
