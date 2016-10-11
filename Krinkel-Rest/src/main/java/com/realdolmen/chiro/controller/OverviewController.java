@@ -1,7 +1,7 @@
 package com.realdolmen.chiro.controller;
 
-import com.realdolmen.chiro.domain.ChiroGroup;
-import com.realdolmen.chiro.repository.ChiroGroupRepository;
+import com.realdolmen.chiro.domain.ChiroUnit;
+import com.realdolmen.chiro.repository.ChiroUnitRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -12,10 +12,10 @@ import java.util.List;
 public class OverviewController {
 
     @Autowired
-    private ChiroGroupRepository repository;
+    private ChiroUnitRepository repository;
 
     @RequestMapping(value = "/api/groups/all", produces = "application/json")
-    public List<ChiroGroup> allGroups(){
+    public List<ChiroUnit> allGroups(){
         return repository.findAll();
     }
 }

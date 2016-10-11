@@ -7,11 +7,11 @@ import javax.persistence.Table;
 
 /**
  * TODO: See http://stackoverflow.com/questions/2355728/jpql-create-new-object-in-select-statement-avoid-or-embrace
- *  Creating new entity in JPQL select statement -> Distill verbond and gewest entities from the ChiroGroup tables.
+ *  Creating new entity in JPQL select statement -> Distill verbond and gewest entities from the ChiroUnit tables.
  */
 @Entity
 @Table(name="groepen")
-public class ChiroGroup {
+public class ChiroUnit {
 
     @Column(name="groep_stamnr")
     @Id
@@ -26,7 +26,7 @@ public class ChiroGroup {
     @Column(name="verbond_stamnr")
     private String verbond;
 
-    public ChiroGroup() {
+    public ChiroUnit() {
     }
 
     public String getName() {
