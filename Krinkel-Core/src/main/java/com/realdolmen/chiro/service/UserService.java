@@ -22,7 +22,12 @@ public class UserService {
 
     public static final String  CASURL = "https://login.chiro.be/cas/login?service=http://localhost:8080/api/cas";
 
-    public final boolean validateTicket(String ticket) {
+    public String validateTicket(String ticket){
+        User user = validate(ticket);
+        return CreateToken(user);
+    }
+
+    public final User validate(String ticket) {
         AttributePrincipal principal = null;
         String casServerUrl = "https://login.chiro.be/cas/";
         Cas20ProxyTicketValidator sv = new Cas20ProxyTicketValidator(casServerUrl);
@@ -32,20 +37,29 @@ public class UserService {
             Assertion a = sv.validate(ticket, legacyServerServiceUrl);
             principal = a.getPrincipal();
             System.out.println("user name:" + principal.getName());
-            System.out.println(principal.getAttributes().get("ad_nummer"));
+            System.out.println(principal.getAttributes().toString());
             System.out.println(a.isValid());
         } catch (TicketValidationException e) {
             e.printStackTrace(); // bad style, but only for demonstration purpose.
         }
-        return principal != null;
+        if (principal != null){
+            User user = new User();
+            user.setEmail(principal.getAttributes().get("mail").toString());
+            user.setUsername(principal.getName().toString());
+            user.setFirstname(principal.getAttributes().get("first_name").toString());
+            user.setLastname(principal.getAttributes().get("last_name").toString());
+            user.setAdNumber(principal.getAttributes().get("ad_nummer").toString());
+            return user;
+        }
+        return null;
     }
-    public Boolean hasRole(final Role role, final HttpServletRequest request) throws ServletException {
+    public Boolean hasRole(final Role role, final HttpServletRequest request){
         final Claims claims = (Claims) request.getAttribute("claims");
 
         return ((List<String>) claims.get("role")).contains(role);
     }
 
-    public String CreateToken(User data) throws ServletException {
+    public String CreateToken(User data) {
         return Jwts.builder()
                 .setSubject(data.getUsername())
                 .claim("username", data.getUsername())

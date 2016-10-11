@@ -12,7 +12,6 @@ public class User {
     private String email;
     private String firstname;
     private String lastname;
-    private String JWTToken;
 
     public User() {
     }
@@ -83,11 +82,5 @@ public class User {
         this.lastname = lastname;
     }
 
-    public String getJWTToken() {
-        return JWTToken;
-    }
 
-    public void setJWTToken(String JWTToken) {
-        this.JWTToken = JWTToken;
-    }
 }

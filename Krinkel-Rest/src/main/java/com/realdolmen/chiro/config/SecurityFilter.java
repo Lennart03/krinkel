@@ -33,7 +33,7 @@ public class SecurityFilter extends WebSecurityConfigurerAdapter {
     public void configure(WebSecurity web) throws Exception {
         web
                 .ignoring()
-                .antMatchers("/api/user")
+                .antMatchers("/api/cas")
                 .antMatchers("/res/*")
                 .antMatchers("/*");
     }
