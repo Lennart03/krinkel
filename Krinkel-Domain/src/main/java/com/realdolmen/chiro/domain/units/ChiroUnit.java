@@ -7,12 +7,17 @@ import java.util.List;
 
 /**
  * Data Transfer Object for Chiro Units.
+ *
+ * Can represent a ChiroGroup, GewestUnit, or VerbondUnit.
  */
 @JsonIdentityInfo(
         generator = ObjectIdGenerators.PropertyGenerator.class,
         property = "stamnummer"
 )
 public class ChiroUnit {
+    /**
+     * Normalized stam number (without '/' and without whitespace)
+     */
     @JsonProperty("stamnummer")
     private String stam;
 
