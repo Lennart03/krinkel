@@ -21,25 +21,33 @@
     </thead>
 
     <tbody>
-    <tr ng-click="">
+    <tr ng-repeat="verbond in $ctrl.verbonden" ng-click="$ctrl.openVerbond(verbond)">
         <td>
-            West-Vlaanderen
+            {{verbond.name}}
         </td>
-        <td>200</td>
+        <td>
+            ##
+        </td>
     </tr>
-    <tr>
-        <td>Leuven</td>
-        <td>250</td>
-    </tr>
-    <tr>
-        <td>Antwerpen</td>
-        <td>300</td>
-    </tr>
+    <!--<tr ng-click="">-->
+        <!--<td>-->
+            <!--West-Vlaanderen-->
+        <!--</td>-->
+        <!--<td>200</td>-->
+    <!--</tr>-->
+    <!--<tr>-->
+        <!--<td>Leuven</td>-->
+        <!--<td>250</td>-->
+    <!--</tr>-->
+    <!--<tr>-->
+        <!--<td>Antwerpen</td>-->
+        <!--<td>300</td>-->
+    <!--</tr>-->
     </tbody>
 </table>
 
 
-<p>Totaal: 1500 Deelnemers</p>
+<!--<p>Totaal: 1500 Deelnemers</p>-->
 
 
 <gewest-unit></gewest-unit>

@@ -25,6 +25,18 @@ export class KrinkelService {
       });
   }
 
+  getVerbonden(){
+      return this.$http.get(`${this.BASEURL}/api/units?verbond`).then((resp) => {
+          return resp.data;
+      });
+  }
+
+  getGewestenForVerbond(verbondNummer){
+      return this.$http.get(`${this.BASEURL}/api/units/${verbondNummer}`).then((resp) => {
+          return resp.data;
+      })
+  }
+
   // getMovies(title) {
   //   return this.$http.get(`${this.BASEURL}/online?title=${title}`).then((resp) => {
   //     return resp.data;
