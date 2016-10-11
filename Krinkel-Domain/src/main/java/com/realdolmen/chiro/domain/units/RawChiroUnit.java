@@ -5,10 +5,6 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-/**
- * TODO: See http://stackoverflow.com/questions/2355728/jpql-create-new-object-in-select-statement-avoid-or-embrace
- *  Creating new entity in JPQL select statement -> Distill verbond and gewest entities from the RawChiroUnit tables.
- */
 @Entity
 @Table(name="groepen")
 public class RawChiroUnit {

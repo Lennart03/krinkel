@@ -6,12 +6,16 @@ import com.realdolmen.chiro.repository.ChiroUnitRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.PostConstruct;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- * TODO: Move to seperate module.
+ * TODO: Move to separate module?
  *
+ * Mock for an as of yet unavailable Chiro REST API.
+ *
+ * Maps organisational information about Chiro Groups to a format suitable for the REST endpoint.
  */
 @Service
 public class ChiroUnitService {
@@ -20,19 +24,26 @@ public class ChiroUnitService {
     private ChiroUnitRepository repository;
 
     private List<ChiroUnit> chiroUnits;
-
     private List<ChiroUnit> verbondUnits;
     private List<ChiroUnit> gewestUnits;
+
+    @PostConstruct
+    public void setUp(){
+        this.findAll();
+    }
 
     public List<ChiroUnit> findAll(){
         if(this.chiroUnits != null){
             return this.chiroUnits;
         }
+
+        /* Fix StamNumbers */
         verbondUnits = repository.findAllVerbonden();
         for(ChiroUnit verbondUnit : verbondUnits){
             verbondUnit.setStam(trimStam(verbondUnit.getStam()));
         }
 
+        /* Fix StamNumbers */
         gewestUnits = repository.findAllGewesten();
         for(ChiroUnit gewestUnit : gewestUnits){
             gewestUnit.setStam(trimStam(gewestUnit.getStam()));
@@ -60,16 +71,16 @@ public class ChiroUnitService {
         combinedUnits.addAll(gewestUnits);
         combinedUnits.addAll(chiroUnits);
 
+        this.chiroUnits = combinedUnits;
+
         return combinedUnits;
     }
 
     public List<ChiroUnit> findVerbondUnits(){
-        this.findAll();
         return this.verbondUnits;
     }
 
     public List<ChiroUnit> findGewestUnits(){
-        this.findAll();
         return this.gewestUnits;
     }
 
