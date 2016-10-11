@@ -64,7 +64,6 @@ public class RegistrationParticipantServiceTest {
     }
 
 
-
     @Test
     public void saveShouldReturnNULLWhenExisting() {
         Mockito.when(repo.findByAdNumber("ADNUMMER")).thenReturn(null);
@@ -76,7 +75,9 @@ public class RegistrationParticipantServiceTest {
 
     @Test
     public void updatePaymentStatusCallsMultiSafePayServiceWithCorrectOrderId() {
+        Mockito.when(repo.findByAdNumber(TEST_ORDER_ID)).thenReturn(participant);
         registrationParticipantService.updatePaymentStatus(TEST_ORDER_ID);
+
         Mockito.verify(mspService, times(1)).orderIsPaid(TEST_ORDER_ID);
     }
 
@@ -89,7 +90,5 @@ public class RegistrationParticipantServiceTest {
         Mockito.verify(repo, times(1)).findByAdNumber(TEST_ORDER_ID);
         Mockito.verify(repo, times(1)).save(participant);
         //TODO check if status is updated correctly
-
-        Mockito.verifyNoMoreInteractions();
     }
 }

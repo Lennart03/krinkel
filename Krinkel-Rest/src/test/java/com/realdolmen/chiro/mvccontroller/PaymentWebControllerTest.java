@@ -26,7 +26,6 @@ public class PaymentWebControllerTest {
     public void paymentSuccessCallsServiceToUpdateParticipantPaymentStatus() {
         controller.paymentSuccess(TEST_ORDER_ID);
         Mockito.verify(service, times(1)).updatePaymentStatus(TEST_ORDER_ID);
-        verifyNoMoreInteractions();
     }
 
 }
