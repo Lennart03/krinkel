@@ -59,14 +59,37 @@ public class MultiSafePayService {
 
     /**
      * Creates the JSON object that will be used in the request to initiate a multisafepay payment.
+     *
+     * {
+     * "type": "redirect",
+     * "order_id": "A100",
+     * "description": "teraf",
+     * "currency": "EUR",
+     * "amount": 1000,
+     * "payment_options": {
+     * "notification_url": null,
+     * "redirect_url": null,
+     * "cancel_url": null
+     * },
+     * "customer": {
+     * "locale": "nl_BE",
+     * <p>
+     * "country": "BE"
+     * <p>
+     * }
+     * }
      */
     private JSONObject createPaymentJsonObject(String orderId, Integer amount) {
         JSONObject paymentOptions = new JSONObject();
+        JSONObject customer = new JSONObject();
 
         //TODO: update this with correct urls (use profiles for dev, test & production)
         paymentOptions.put("notification_url", "https://krinkel.be/notify");
         paymentOptions.put("redirect_url", "http://localhost:8080/payment/success");
         paymentOptions.put("cancel_url", "http://localhost:8080/payment/failure");
+
+        customer.put("locale", "nl_BE");
+        customer.put("country", "BE");
 
         JSONObject jsonObject = new JSONObject();
 
@@ -76,6 +99,7 @@ public class MultiSafePayService {
         jsonObject.put("currency", "EUR");
         jsonObject.put("amount", amount);
         jsonObject.put("payment_options", paymentOptions);
+        jsonObject.put("customer", customer);
 
         return jsonObject;
     }
