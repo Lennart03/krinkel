@@ -24,4 +24,9 @@ public class UnitController {
         // TODO: Different fetch strategy:  "AG /0103" versus "AG0103". :s
         return repository.findOne(stamNumber);
     }
+
+    @RequestMapping(value = "participants/{stam}", method = RequestMethod.GET)
+    public int findParticipants(@PathVariable("stam") String stamNumber){
+        return repository.findParticipantsByUnit(stamNumber).size();
+    }
 }

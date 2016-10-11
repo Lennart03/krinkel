@@ -1,11 +1,13 @@
 package com.realdolmen.chiro.repository;
 
 import com.realdolmen.chiro.domain.ChiroUnit;
+import com.realdolmen.chiro.domain.RegistrationParticipant;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 
-public interface ChiroUnitRepository extends JpaRepository<ChiroUnit, String>{
+import java.util.List;
+
+public interface ChiroUnitRepository extends JpaRepository<ChiroUnit, String> {
     //, ChiroUnitRepositoryCustom {
 
     @Query("SELECT c FROM ChiroUnit c WHERE " +
@@ -17,4 +19,14 @@ public interface ChiroUnitRepository extends JpaRepository<ChiroUnit, String>{
             ")"
     )
     ChiroUnit findOne(String s);
+
+    @Query("SELECT p FROM RegistrationParticipant p WHERE " +
+            "(SUBSTRING(p.stamNumber, 1, 2) = SUBSTRING(?1, 1, 2)" +
+            "OR SUBSTRING(p.stamNumber, 1, 3) = SUBSTRING(?1, 1, 3))" +
+            " AND " +
+            "(SUBSTRING(p.stamNumber, LOCATE('/', p.stamNumber)+1, 4) = SUBSTRING(?1, 3, 4)" +
+            "OR SUBSTRING(p.stamNumber, LOCATE('/', p.stamNumber)+1, 4) = SUBSTRING(?1, 4, 4)" +
+            ")"
+    )
+    List<RegistrationParticipant> findParticipantsByUnit(String s);
 }
