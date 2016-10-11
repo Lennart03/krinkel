@@ -20,7 +20,6 @@ import {TopNavComponent} from './shared/topnav/topnav.component';
 
 //pages
 import {KrinkelHomepageComponent} from './krinkel-homepage/krinkel-homepage.component';
-import {KrinkelLoginComponent} from './krinkel-login/krinkel-login.component';
 import {KrinkelConfirmationComponent} from './krinkel-confirmation/krinkel-confirmation.component';
 
 export default angular
@@ -44,6 +43,5 @@ export default angular
   //pages
   .component('krinkelHomepage', KrinkelHomepageComponent)
   .component('register', RegisterComponent)
-  .component('krinkelLogin', KrinkelLoginComponent)
-   .component('krinkelConfirmation', KrinkelConfirmationComponent)
+    .component('krinkelConfirmation', KrinkelConfirmationComponent)
   .name;

@@ -44,7 +44,7 @@ class RegisterController {
 
     $onInit() {
         if (this.AuthService.getLoggedinUser() == null) {
-            this.$location.path('/login');
+            this.$location.path('/');
         }
         angular.element('.modal-trigger').leanModal();
         // Fill data from localStorage

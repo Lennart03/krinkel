@@ -4,6 +4,12 @@ export class KrinkelService {
     this.BASEURL = BASEURL;
   }
 
+  getCasUrl(){
+      return this.$http.get(`${this.BASEURL}/api/casurl`).then((resp) => {
+          return resp.data;
+      });
+  }
+
   logIn(user, password) {
     return this.$http.get(`${this.BASEURL}/api/users?user=${user}&password=${password}`).then((resp) => {
       return resp.data;
