@@ -25,7 +25,7 @@ public class OverviewController {
         return repository.findAll();
     }
 
-    @RequestMapping(value = "participants/{stam}", method = RequestMethod.GET)
+    @RequestMapping(value = "/api/participants/{stam}", method = RequestMethod.GET)
     public int findParticipants(@PathVariable("stam") String stamNumber){
         return registrationParticipantService.findParticipantsByUnit(stamNumber).size();
     }
