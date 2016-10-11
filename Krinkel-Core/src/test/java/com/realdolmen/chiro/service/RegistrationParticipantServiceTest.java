@@ -1,9 +1,6 @@
 package com.realdolmen.chiro.service;
 
-import com.realdolmen.chiro.domain.Address;
-import com.realdolmen.chiro.domain.Role;
-import com.realdolmen.chiro.domain.Gender;
-import com.realdolmen.chiro.domain.RegistrationParticipant;
+import com.realdolmen.chiro.domain.*;
 import com.realdolmen.chiro.mspservice.MultiSafePayService;
 import com.realdolmen.chiro.repository.RegistrationParticipantRepository;
 import org.junit.Assert;
@@ -46,6 +43,7 @@ public class RegistrationParticipantServiceTest {
         participant.setRole(Role.MENTOR);
         participant.setGender(Gender.X);
         participant.setBirthdate(new Date());
+        participant.setStatus(Status.TO_BE_PAID);
 
         Address address = new Address();
         address.setCity("REET");
@@ -89,6 +87,6 @@ public class RegistrationParticipantServiceTest {
         registrationParticipantService.updatePaymentStatus(TEST_ORDER_ID);
         Mockito.verify(repo, times(1)).findByAdNumber(TEST_ORDER_ID);
         Mockito.verify(repo, times(1)).save(participant);
-        //TODO check if status is updated correctly
+        Assert.assertEquals(Status.PAID, participant.getStatus());
     }
 }

@@ -1,6 +1,7 @@
 package com.realdolmen.chiro.service;
 
 import com.realdolmen.chiro.domain.RegistrationParticipant;
+import com.realdolmen.chiro.domain.Status;
 import com.realdolmen.chiro.mspservice.MultiSafePayService;
 import com.realdolmen.chiro.repository.RegistrationParticipantRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,7 +30,7 @@ public class RegistrationParticipantService {
         if (participant != null) {
 
             if (mspService.orderIsPaid(testOrderId)) {
-                //TODO update status participant to PAID
+                participant.setStatus(Status.PAID);
                 repository.save(participant);
             }
         }
