@@ -1,4 +1,5 @@
-<h1>Lijst van verbonden</h1>
+<h1 ng-if="!$ctrl.unitLevel">Lijst van verbonden</h1>
+<h1 ng-if="$ctrl.unitLevel">Lijst van {{$ctrl.unitLevel}}</h1>
 <style>
     tbody tr:hover {
         background-color: #EEE;
@@ -23,7 +24,7 @@
     <tbody>
     <tr ng-repeat="verbond in $ctrl.verbonden" ng-click="$ctrl.openVerbond(verbond)">
         <td>
-            {{verbond.name}}
+            {{verbond.naam}}
         </td>
         <td>
             ##

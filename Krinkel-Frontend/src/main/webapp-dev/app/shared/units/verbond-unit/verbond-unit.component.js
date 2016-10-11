@@ -11,9 +11,11 @@ class VerbondUnitController {
 
     openVerbond(verbond) {
         this.verbond = verbond;
-        this.KrinkelService.getGewestenForVerbond(this.verbond.stam).then((results) => {
-            this.gewesten = results;
-            console.debug(this.gewesten);
+        this.KrinkelService.getGewestenForVerbond(this.verbond.stamnummer).then((results) => {
+            if (results.onderliggende_stamnummers != 0) {
+                this.unitLevel = this.verbond.naam;
+                this.verbonden = results.onderliggende_stamnummers;
+            }
         });
     }
 }
