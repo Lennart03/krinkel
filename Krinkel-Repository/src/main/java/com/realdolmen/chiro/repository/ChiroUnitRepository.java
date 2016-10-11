@@ -21,11 +21,11 @@ public interface ChiroUnitRepository extends JpaRepository<ChiroUnit, String> {
     ChiroUnit findOne(String s);
 
     @Query("SELECT p FROM RegistrationParticipant p WHERE " +
-            "(SUBSTRING(p.stamNumber, 1, 2) = SUBSTRING(?1, 1, 2)" +
-            "OR SUBSTRING(p.stamNumber, 1, 3) = SUBSTRING(?1, 1, 3))" +
+            "(SUBSTRING(p.stamnumber, 1, 2) = SUBSTRING(?1, 1, 2)" +
+            "OR SUBSTRING(p.stamnumber, 1, 3) = SUBSTRING(?1, 1, 3))" +
             " AND " +
-            "(SUBSTRING(p.stamNumber, LOCATE('/', p.stamNumber)+1, 4) = SUBSTRING(?1, 3, 4)" +
-            "OR SUBSTRING(p.stamNumber, LOCATE('/', p.stamNumber)+1, 4) = SUBSTRING(?1, 4, 4)" +
+            "(SUBSTRING(p.stamnumber, LOCATE('/', p.stamnumber)+1, 4) = SUBSTRING(?1, 3, 4)" +
+            "OR SUBSTRING(p.stamnumber, LOCATE('/', p.stamnumber)+1, 4) = SUBSTRING(?1, 4, 4)" +
             ")"
     )
     List<RegistrationParticipant> findParticipantsByUnit(String s);
