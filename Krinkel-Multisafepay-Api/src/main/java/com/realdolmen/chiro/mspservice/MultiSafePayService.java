@@ -89,4 +89,8 @@ public class MultiSafePayService {
     public String getVolunteerPaymentUri(RegistrationVolunteer v, Integer amount) {
         return this.createPayment(v.getAdNumber(), amount).getData().getPayment_url();
     }
+
+    public boolean orderIsPaid(String testOrderId) {
+        return false;
+    }
 }

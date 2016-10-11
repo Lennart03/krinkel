@@ -85,6 +85,12 @@
                 <scope>compile</scope>
             </dependency>
             <dependency>
+                <groupId>com.realdolmen.chiro</groupId>
+                <artifactId>krinkelmultisafepayapi</artifactId>
+                <version>1.0-SNAPSHOT</version>
+                <scope>compile</scope>
+            </dependency>
+            <dependency>
                 <groupId>org.json</groupId>
                 <artifactId>json</artifactId>
                 <version>20160810</version>

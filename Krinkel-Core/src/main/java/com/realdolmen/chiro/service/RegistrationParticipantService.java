@@ -18,4 +18,8 @@ public class RegistrationParticipantService {
         }
         return null;
     }
+
+    public void updatePaymentStatus(String testOrderId) {
+
+    }
 }
