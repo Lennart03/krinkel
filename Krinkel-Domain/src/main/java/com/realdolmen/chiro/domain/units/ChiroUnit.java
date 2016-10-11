@@ -20,11 +20,11 @@ public class ChiroUnit {
     private String name;
 
     @JsonProperty("bovenliggende_stamnummer")
-    @JsonIdentityReference(alwaysAsId = true)
+    @JsonIgnoreProperties({"bovenliggende_stamnummer", "onderliggende_stamnummers" })
     private ChiroUnit upper;
 
     @JsonProperty("onderliggende_stamnummers")
-    @JsonIdentityReference(alwaysAsId = true)
+    @JsonIgnoreProperties({"bovenliggende_stamnummer", "onderliggende_stamnummers" })
     private List<ChiroUnit> lower = new ArrayList<>();
 
     public ChiroUnit() {

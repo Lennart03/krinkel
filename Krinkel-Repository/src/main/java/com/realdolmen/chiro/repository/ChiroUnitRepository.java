@@ -1,6 +1,5 @@
 package com.realdolmen.chiro.repository;
 
-import com.realdolmen.chiro.domain.ChiroGewestUnit;
 import com.realdolmen.chiro.domain.units.ChiroUnit;
 import com.realdolmen.chiro.domain.units.RawChiroUnit;
 import org.springframework.data.jpa.repository.JpaRepository;
