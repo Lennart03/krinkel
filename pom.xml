@@ -113,26 +113,24 @@
                 <artifactId>coveralls-maven-plugin</artifactId>
                 <version>4.2.0</version>
             </plugin>
-                    <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-clean-plugin</artifactId>
-                        <version>3.0.0</version>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-clean-plugin</artifactId>
+                <version>3.0.0</version>
 
-                                <configuration>
-                                    <filesets>
-                                        <fileset>
-                                            <directory>Krinkel-Rest/src/main/resources</directory>
-                                            <includes>
-                                                <include>**/static/**</include>
-                                            </includes>
-                                        </fileset>
-                                    </filesets>
-                                </configuration>
-                    </plugin>
+                <configuration>
+                    <filesets>
+                        <fileset>
+                            <directory>Krinkel-Rest/src/main/resources</directory>
+                            <includes>
+                                <include>**/static/**</include>
+                            </includes>
+                        </fileset>
+                    </filesets>
+                </configuration>
+            </plugin>
         </plugins>
     </build>
-
-
 
 
     <reporting>

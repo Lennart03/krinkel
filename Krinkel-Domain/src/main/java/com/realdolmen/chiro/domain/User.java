@@ -6,103 +6,25 @@ import java.util.Date;
 public class User {
 
     private String username;
-    private String password;
-    private String role;
+    private Role role;
     private String adNumber;
-    private String token;
     private Boolean subscribed;
     private String email;
     private String firstname;
     private String lastname;
-    private Date birthDate;
-    private String streetname;
-    private Integer houseNumber;
-    private Integer postalCode;
-    private String city;
-    private String phoneNumber;
-    private String unitStamNummer;
+    private String JWTToken;
 
+    public User() {
+    }
 
-    public User(String username, String password, String role, String adNumber, String token, Boolean subscribed, String unitStamNummer) {
+    public User(String username, Role role, String adNumber, Boolean subscribed, String email, String firstname, String lastname) {
         this.username = username;
-        this.password = password;
         this.role = role;
         this.adNumber = adNumber;
-        this.token = token;
         this.subscribed = subscribed;
-        this.unitStamNummer = unitStamNummer;
-    }
-
-    public String getFirstname() {
-        return firstname;
-    }
-
-    public void setFirstname(String firstname) {
+        this.email = email;
         this.firstname = firstname;
-    }
-
-    public String getLastname() {
-        return lastname;
-    }
-
-    public void setLastname(String lastname) {
         this.lastname = lastname;
-    }
-
-    public Date getBirthDate() {
-        return birthDate;
-    }
-
-    public void setBirthDate(Date birthDate) {
-        this.birthDate = birthDate;
-    }
-
-    public String getStreetname() {
-        return streetname;
-    }
-
-    public void setStreetname(String streetname) {
-        this.streetname = streetname;
-    }
-
-    public Integer getHouseNumber() {
-        return houseNumber;
-    }
-
-    public void setHouseNumber(Integer houseNumber) {
-        this.houseNumber = houseNumber;
-    }
-
-    public Integer getPostalCode() {
-        return postalCode;
-    }
-
-    public void setPostalCode(Integer postalCode) {
-        this.postalCode = postalCode;
-    }
-
-    public String getCity() {
-        return city;
-    }
-
-    public void setCity(String city) {
-        this.city = city;
-    }
-
-    public String getPhoneNumber() {
-        return phoneNumber;
-    }
-
-    public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
-    }
-
-    public String getUnitStamNummer() {
-        return unitStamNummer;
-    }
-
-    public void setUnitStamNummer(String unitStamNummer) {
-        this.unitStamNummer = unitStamNummer;
     }
 
     public String getUsername() {
@@ -113,19 +35,11 @@ public class User {
         this.username = username;
     }
 
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public String getRole() {
+    public Role getRole() {
         return role;
     }
 
-    public void setRole(String role) {
+    public void setRole(Role role) {
         this.role = role;
     }
 
@@ -135,14 +49,6 @@ public class User {
 
     public void setAdNumber(String adNumber) {
         this.adNumber = adNumber;
-    }
-
-    public String getToken() {
-        return token;
-    }
-
-    public void setToken(String token) {
-        this.token = token;
     }
 
     public Boolean getSubscribed() {
@@ -161,26 +67,27 @@ public class User {
         this.email = email;
     }
 
+    public String getFirstname() {
+        return firstname;
+    }
 
-    @Override
-    public String toString() {
-        return "User{" +
-                "username='" + username + '\'' +
-                ", password='" + password + '\'' +
-                ", role='" + role + '\'' +
-                ", adNumber='" + adNumber + '\'' +
-                ", token='" + token + '\'' +
-                ", subscribed=" + subscribed +
-                ", email='" + email + '\'' +
-                ", firstname='" + firstname + '\'' +
-                ", lastname='" + lastname + '\'' +
-                ", birthDate=" + birthDate +
-                ", streetname='" + streetname + '\'' +
-                ", houseNumber=" + houseNumber +
-                ", postalCode=" + postalCode +
-                ", city='" + city + '\'' +
-                ", phoneNumber='" + phoneNumber + '\'' +
-                ", unitStamNummer='" + unitStamNummer + '\'' +
-                '}';
+    public void setFirstname(String firstname) {
+        this.firstname = firstname;
+    }
+
+    public String getLastname() {
+        return lastname;
+    }
+
+    public void setLastname(String lastname) {
+        this.lastname = lastname;
+    }
+
+    public String getJWTToken() {
+        return JWTToken;
+    }
+
+    public void setJWTToken(String JWTToken) {
+        this.JWTToken = JWTToken;
     }
 }

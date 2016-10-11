@@ -8,6 +8,7 @@ class KrinkelLoginController {
   }
 
   $onInit() {
+
   }
 
   login(user, password) {
