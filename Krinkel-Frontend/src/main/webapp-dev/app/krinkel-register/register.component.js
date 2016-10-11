@@ -18,7 +18,6 @@ class RegisterController {
 
 
 
-
     }
 
     registerPerson(newPerson) {
@@ -48,6 +47,7 @@ class RegisterController {
         if (this.type === 'volunteer') {
             var thiz = this;
             this.KrinkelService.postVolunteer(this.MapperService.mapVolunteer(newPerson)).then(function (response) {
+                thiz.StorageService.removeUser();
                 thiz.$location.path('/success');
             });
             return;
@@ -56,6 +56,7 @@ class RegisterController {
         if (this.type === 'participant') {
             var thiz = this;
             this.KrinkelService.postParticipant(this.MapperService.mapParticipant(newPerson)).then(function (response) {
+                thiz.StorageService.removeUser();
                 thiz.$location.path('/success');
             });
             return;
