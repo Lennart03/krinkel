@@ -2,6 +2,11 @@
 [![Build Status](https://travis-ci.org/Nawsen/Krinkel.svg?branch=master)](https://travis-ci.org/Nawsen/Krinkel)
 [![Coverage Status](https://coveralls.io/repos/github/Nawsen/Krinkel/badge.svg)](https://coveralls.io/github/Nawsen/Krinkel)
 
+## Links
+
+* [Angular Frontend](http://localhost:8080/)
+* [Static Website with general info](http://localhost:8080/site/index.html)
+
 ## How to clone
 
 1. git config --global http.sslVerify false
