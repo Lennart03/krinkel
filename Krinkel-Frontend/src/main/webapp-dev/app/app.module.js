@@ -17,10 +17,7 @@ import {RegisterComponent} from './krinkel-register/register.component'
 import {SuccessMessageComponent} from './shared/success-message/success-message.component'
 import {SideNavComponent} from './shared/sidenav/sidenav.component'
 import {TopNavComponent} from './shared/topnav/topnav.component'
-import {VerbondUnitComponent} from './shared/units/verbond-unit/verbond-unit.component'
-import {GewestUnitComponent} from './shared/units/gewest-unit/gewest-unit.component'
-import {GroepUnitComponent} from './shared/units/groep-unit/groep-unit.component'
-import {UnitMemberComponent} from './shared/units/unit-member/unit-member.component'
+import {UnitsComponent} from './shared/units/units.component'
 
 //pages
 import {KrinkelHomepageComponent} from './krinkel-homepage/krinkel-homepage.component';
@@ -46,10 +43,7 @@ export default angular
   .component('sideNav', SideNavComponent)
   .component('successMessage',SuccessMessageComponent)
   .component('topNav', TopNavComponent)
-    .component('verbondUnit', VerbondUnitComponent)
-    .component('gewestUnit', GewestUnitComponent)
-    .component('groepUnit', GroepUnitComponent)
-    .component('unitMember', UnitMemberComponent)
+    .component('units', UnitsComponent)
   //pages
   .component('krinkelHomepage', KrinkelHomepageComponent)
   .component('register', RegisterComponent)

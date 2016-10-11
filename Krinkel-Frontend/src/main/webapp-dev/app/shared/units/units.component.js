@@ -1,4 +1,4 @@
-class VerbondUnitController {
+class UnitsController {
     constructor(KrinkelService) {
         this.KrinkelService = KrinkelService;
     }
@@ -20,9 +20,9 @@ class VerbondUnitController {
     }
 }
 
-export var VerbondUnitComponent = {
-    template: require('./verbond-unit.html'),
-    controller: VerbondUnitController
+export var UnitsComponent = {
+    template: require('./units.html'),
+    controller: UnitsController
 };
 
-VerbondUnitComponent.$inject = ['KrinkelService'];
+UnitsComponent.$inject = ['KrinkelService'];
