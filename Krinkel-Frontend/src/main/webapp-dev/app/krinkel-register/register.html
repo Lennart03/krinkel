@@ -121,12 +121,15 @@
         <div class="row">
             <div class="input-field col s12 m6">
                 <!--<i class="material-icons prefix">perm_identity</i>-->
-                <select ng-model="$ctrl.newPerson.gender" class="browser-default" required>
+                <select name="gender" ng-model="$ctrl.newPerson.gender" class="browser-default" required>
                     <option value="" disabled selected>Geslacht *</option>
                     <option value="Vrouw">Vrouw</option>
                     <option value="Man">Man</option>
                     <option value="X">X</option>
                 </select>
+                <p ng-show="personForm.gender.$invalid && personForm.gender.$touched" class="error">
+                    <i class="material-icons">error_outline</i>
+                    Verplicht</p>
                 <!--<label>Geslacht</label>-->
             </div>
             <div class="input-field col s12 m6" ng-if="$ctrl.type === 'volunteer'">
@@ -169,12 +172,15 @@
             <div class="input-field col s12">
                 <!--<i class="material-icons prefix">restaurant</i>-->
 
-                <select ng-model="$ctrl.newPerson.dietary" class="browser-default">
+                <select name="eatingHabbits" ng-model="$ctrl.newPerson.dietary" class="browser-default" required>
                     <option value="" disabled selected>Eetgewoonten *</option>
                     <option value="VEGI">Ik ben vegetariër</option>
                     <option value="HALAL">Ik eet vis en vlees, maar halal</option>
                     <option value="FISHANDMEAT">Ik eet vis en vlees</option>
                 </select>
+                <p ng-show="personForm.eatingHabbits.$invalid && personForm.eatingHabbits.$touched" class="error">
+                    <i class="material-icons">error_outline</i>
+                    Verplicht</p>
                 <!--<label>Eetgewoonten</label>-->
             </div>
         </div>
@@ -331,7 +337,7 @@
                     <!--<i class="small material-icons prefix">favorite</i>-->
 
                     <input type="checkbox" id="social_promotion" ng-model="$ctrl.newPerson.socialPromotion"/>
-                    <label for="social_promotion">Sociale promotie <a href="https://chiro.be/node/71622">(wat is
+                    <label for="social_promotion">Sociale promotie <a href="https://chiro.be/node/71622" target="_blank">(wat is
                         dit?)</a></label>
                 </p>
             </div>
@@ -377,7 +383,7 @@
     <!--&lt;!&ndash;DEV&ndash;&gt;-->
     <!--{{$ctrl.newPerson | json}}-->
     <!--Errors:-->
-    {{personForm.$error}}
+    <!--{{personForm.$error}}-->
     <!--<ul>-->
     <!--<li ng-repeat="error in $ctrl.errorMessages"-->
     <!--ng-hide="personForm.$error.previousElementSibling.previousElementSibling.name.$valid"><i-->

@@ -26,6 +26,11 @@ export class KrinkelService {
           return resp;
       });
   }
+  getConfirmation(adNumber, token){
+      return this.$http.get(`${this.BASEURL}/api/confirmation?ad=${adNumber}&token=${token}`).then((resp) => {
+          return resp.data;
+      });
+  }
 
 
 

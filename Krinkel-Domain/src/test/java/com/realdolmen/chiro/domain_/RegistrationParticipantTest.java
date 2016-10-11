@@ -1,5 +1,8 @@
 package com.realdolmen.chiro.domain_;
 
+import com.realdolmen.chiro.domain.Eatinghabbit;
+import com.realdolmen.chiro.domain.Role;
+import com.realdolmen.chiro.domain.Gender;
 import com.realdolmen.chiro.domain.RegistrationParticipant;
 import com.realdolmen.chiro.domain.mothers.RegistrationParticipantMother;
 import org.junit.Assert;
@@ -7,6 +10,8 @@ import org.junit.Before;
 import org.junit.Test;
 
 import javax.validation.ConstraintViolation;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.Set;
 
 import static org.junit.Assert.assertEquals;
@@ -116,6 +121,26 @@ public class RegistrationParticipantTest extends BeanValidatorTest{
     public void incorrectPhoneNumberShouldBeValid(){
         particpant.setPhoneNumber("-5sdfmoklsfjkljia");
         Set<ConstraintViolation<RegistrationParticipant>> violations = validator().validateProperty(particpant, "phoneNumber");
+        Assert.assertEquals(1, violations.size());
+    }
+
+    @Test
+    public void birthDateInPastShouldBeValid(){
+        Calendar c = Calendar.getInstance();
+        c.set(1999, Calendar.APRIL, 1);
+
+        particpant.setBirthdate(c.getTime());
+        Set<ConstraintViolation<RegistrationParticipant>> violations = validator().validateProperty(particpant, "birthdate");
+        assertTrue(violations.isEmpty());
+    }
+
+    @Test
+    public void birthDateInFutureShouldBeInvalid(){
+        Calendar c = Calendar.getInstance();
+        c.add(Calendar.YEAR, 10); // I have travelled some 10 years into the future.
+
+        particpant.setBirthdate(c.getTime());
+        Set<ConstraintViolation<RegistrationParticipant>> violations = validator().validateProperty(particpant, "birthdate");
         Assert.assertEquals(1, violations.size());
     }
 }

@@ -121,7 +121,6 @@ public class RegistrationVolunteerControllerMockTest extends MockMvcTest {
         assertEquals(0, repo.findAll().size());
     }
 
-
     @Test
     public void savingRegistrationReturnsLocationHeaderOnSuccess() throws Exception {
         String jsonPayload = json(volunteer);
@@ -135,6 +134,7 @@ public class RegistrationVolunteerControllerMockTest extends MockMvcTest {
 
         assertNotNull(mvcResult.getResponse().getHeader("Location"));
     }
+
 
     @Test
     public void savingVolunteerWithManyPreCampsSucceeds() throws Exception {
