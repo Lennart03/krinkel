@@ -36,11 +36,8 @@ public class UserService {
             String legacyServerServiceUrl = "http://localhost:8080/api/cas";
             Assertion a = sv.validate(ticket, legacyServerServiceUrl);
             principal = a.getPrincipal();
-            System.out.println("user name:" + principal.getName());
-            System.out.println(principal.getAttributes().toString());
-            System.out.println(a.isValid());
         } catch (TicketValidationException e) {
-            e.printStackTrace(); // bad style, but only for demonstration purpose.
+            throw new SecurityException("Ticket could not be validated");
         }
         if (principal != null){
             User user = new User();
@@ -49,6 +46,8 @@ public class UserService {
             user.setFirstname(principal.getAttributes().get("first_name").toString());
             user.setLastname(principal.getAttributes().get("last_name").toString());
             user.setAdNumber(principal.getAttributes().get("ad_nummer").toString());
+            //TODO: implement this for real data & persons
+            user.setRole(Role.ADMIN);
             return user;
         }
         return null;
@@ -62,12 +61,10 @@ public class UserService {
     public String CreateToken(User data) {
         return Jwts.builder()
                 .setSubject(data.getUsername())
-                .claim("username", data.getUsername())
                 .claim("firstname", data.getFirstname())
                 .claim("lastname", data.getLastname())
                 .claim("adnummer", data.getAdNumber())
                 .claim("email", data.getEmail())
-                .claim("subscribed", data.getSubscribed())
                 .claim("role", data.getRole())
                 .setIssuedAt(new Date())
                 .signWith(SignatureAlgorithm.HS256, "MATHIASISNOOB").compact();

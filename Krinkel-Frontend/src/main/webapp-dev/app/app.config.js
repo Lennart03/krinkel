@@ -5,10 +5,7 @@ export function appConfig($routeProvider, $locationProvider) {
 
   $routeProvider.when('/home', {
     template: '<krinkel-homepage></krinkel-homepage>'
-  })
-    .when('/login', {
-      template: '<krinkel-login></krinkel-login>'
-    });
+  });
 
   $routeProvider.when('/success', {
     template: '<success-message></success-message>'

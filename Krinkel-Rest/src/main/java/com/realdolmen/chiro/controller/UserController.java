@@ -43,6 +43,7 @@ public class UserController {
             myCookie.setPath("/");
             myCookie.setMaxAge(-1);
             response.addCookie(myCookie);
+            response.setHeader("Authorization", jwt);
             response.sendRedirect("/index.html");
         }
     }

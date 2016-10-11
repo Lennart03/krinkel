@@ -35,7 +35,7 @@ public class SecurityFilter extends WebSecurityConfigurerAdapter {
                 .ignoring()
                 .antMatchers("/api/cas")
                 .antMatchers("/res/*")
-                .antMatchers("/*");
+                .regexMatchers("/");
     }
 
     @Override

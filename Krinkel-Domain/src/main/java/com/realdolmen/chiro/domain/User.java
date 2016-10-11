@@ -8,7 +8,6 @@ public class User {
     private String username;
     private Role role;
     private String adNumber;
-    private Boolean subscribed;
     private String email;
     private String firstname;
     private String lastname;
@@ -16,11 +15,10 @@ public class User {
     public User() {
     }
 
-    public User(String username, Role role, String adNumber, Boolean subscribed, String email, String firstname, String lastname) {
+    public User(String username, Role role, String adNumber, String email, String firstname, String lastname) {
         this.username = username;
         this.role = role;
         this.adNumber = adNumber;
-        this.subscribed = subscribed;
         this.email = email;
         this.firstname = firstname;
         this.lastname = lastname;
@@ -48,14 +46,6 @@ public class User {
 
     public void setAdNumber(String adNumber) {
         this.adNumber = adNumber;
-    }
-
-    public Boolean getSubscribed() {
-        return subscribed;
-    }
-
-    public void setSubscribed(Boolean subscribed) {
-        this.subscribed = subscribed;
     }
 
     public String getEmail() {

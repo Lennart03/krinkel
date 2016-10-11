@@ -20,7 +20,6 @@ import {TopNavComponent} from './shared/topnav/topnav.component';
 
 //pages
 import {KrinkelHomepageComponent} from './krinkel-homepage/krinkel-homepage.component';
-import {KrinkelLoginComponent} from './krinkel-login/krinkel-login.component';
 
 export default angular
   .module('contactsApp', ['ngRoute'])
@@ -43,5 +42,4 @@ export default angular
   //pages
   .component('krinkelHomepage', KrinkelHomepageComponent)
   .component('register', RegisterComponent)
-  .component('krinkelLogin', KrinkelLoginComponent)
   .name;

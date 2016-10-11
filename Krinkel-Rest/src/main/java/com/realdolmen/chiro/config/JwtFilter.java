@@ -10,6 +10,7 @@ import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -26,25 +27,46 @@ public class JwtFilter extends GenericFilterBean {
         final HttpServletRequest request = (HttpServletRequest) req;
         final HttpServletResponse response = (HttpServletResponse) res;
         final String authHeader = request.getHeader("Authorization");
+        final String authCookieToken = getTokenFromCookie(request.getCookies());
+
+        String token;
         if (authHeader == null || !authHeader.startsWith("Bearer ")) {
-            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-            return;
+            //second way of authentication is with the cookie set by the server
+            if(authCookieToken!=null){
+                token = authCookieToken;
+            }else{
+                response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+                return;
+            }
+
+        }else{
+            token = authHeader.substring(7); // The part after "Bearer "
         }
 
-        final String token = authHeader.substring(7); // The part after "Bearer "
+
 
         try {
             final Claims claims = Jwts.parser().setSigningKey("MATHIASISNOOB")
                     .parseClaimsJws(token).getBody();
             request.setAttribute("claims", claims);
-            System.out.println("CONFIRMED BITCH");
         }
         catch (final SignatureException e) {
             response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
         }
-        System.out.println("next filter done");
         chain.doFilter(req, res);
-        System.out.println("filter complete");
+    }
+
+    /**
+     * @param cookies list of cookies from the request
+     * @return Authorization cookie value (JWT)
+     */
+    protected String getTokenFromCookie(Cookie[] cookies){
+        for(Cookie c:cookies){
+            if(c.getName().equals("Authorization")){
+                return c.getValue();
+            }
+        }
+        return null;
     }
 
 }
