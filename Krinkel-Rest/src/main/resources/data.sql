@@ -3,17 +3,17 @@
 
 
 INSERT INTO registration_participant VALUES('RegistrationParticipant', '10', '123456', 'Brussel', '123', '1000', 'Veldstraat', '1995-08-21', false, 'FISHANDMEAT',
-                              'email@test.be', 'Johnny', 'MAN', 'Flodder', '', '', '', '', 'ASPI', false, 'AG /0103', 'TO_BE_PAID', 1, '', '');
+                              'email@test.be', 'Johnny', 'MAN', 'Flodder', '', '', '', '', 'ASPI', false, 'AG /0103', 'CONFIRMED', 1, '', '');
 INSERT INTO registration_participant VALUES('RegistrationParticipant', '20', '234567', 'Brussel', '123', '1000', 'Veldstraat', '1995-08-21', false, 'FISHANDMEAT',
-                              'email@test.be', 'Kees', 'MAN', 'Flodder', '', '', '', '', 'ASPI', false, 'BG /0301', 'TO_BE_PAID', 1, '', '');
+                              'email@test.be', 'Kees', 'MAN', 'Flodder', '', '', '', '', 'ASPI', false, 'BG /0301', 'CONFIRMED', 1, '', '');
 INSERT INTO registration_participant VALUES('RegistrationParticipant', '30', '345678', 'Brussel', '123', '1000', 'Veldstraat', '1995-08-21', false, 'FISHANDMEAT',
-                              'email@test.be', 'Ma', 'WOMAN', 'Flodder', '', '', '', '', 'ASPI', false, 'AG /0103', 'TO_BE_PAID', 1, '', '');
+                              'email@test.be', 'Ma', 'WOMAN', 'Flodder', '', '', '', '', 'ASPI', false, 'AG /0103', 'CONFIRMED', 1, '', '');
 INSERT INTO registration_participant VALUES('RegistrationParticipant', '40', '456789', 'Brussel', '123', '1000', 'Veldstraat', '1995-08-21', false, 'FISHANDMEAT',
-                              'email@test.be', 'Cees', 'WOMAN', 'Flodder', '', '', '', '', 'ASPI', false, 'LEG/0101', 'TO_BE_PAID', 1, '', '');
+                              'email@test.be', 'Cees', 'WOMAN', 'Flodder', '', '', '', '', 'ASPI', false, 'LEG/0101', 'CONFIRMED', 1, '', '');
 INSERT INTO registration_participant VALUES('RegistrationParticipant', '50', '987654', 'Brussel', '123', '1000', 'Veldstraat', '1995-08-21', false, 'FISHANDMEAT',
-                              'email@test.be', 'Frederik', 'MAN', 'Flodder', '', '', '', '', 'ASPI', false, 'AG /0202', 'TO_BE_PAID', 1, '', '');
+                              'email@test.be', 'Frederik', 'MAN', 'Flodder', '', '', '', '', 'ASPI', false, 'AG /0202', 'CONFIRMED', 1, '', '');
 INSERT INTO registration_participant VALUES('RegistrationVolunteer', '60', '876543', 'Brussel', '123', '1000', 'Veldstraat', '1995-08-21', false, 'FISHANDMEAT',
-                              'email@test.be', 'Jos', 'MAN', 'Flodder', '', '', '', '', 'ASPI', false, 'AG /0103', 'TO_BE_PAID', 1, '', 'CAMPGROUND');
+                              'email@test.be', 'Jos', 'MAN', 'Flodder', '', '', '', '', 'ASPI', false, 'AG /0103', 'CONFIRMED', 1, '', 'CAMPGROUND');
 
 INSERT INTO pre_camp VALUES (10, '2017-08-21');
 INSERT INTO pre_camp VALUES (20, '2017-08-22');
