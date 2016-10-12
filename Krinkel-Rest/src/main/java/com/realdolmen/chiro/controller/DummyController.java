@@ -1,5 +1,7 @@
 package com.realdolmen.chiro.controller;
 
+import com.realdolmen.chiro.config.AuthRole;
+import com.realdolmen.chiro.domain.Role;
 import org.apache.catalina.connector.Response;
 import org.springframework.boot.autoconfigure.web.ErrorController;
 import org.springframework.data.rest.webmvc.ResourceNotFoundException;
@@ -20,11 +22,13 @@ import java.io.IOException;
 public class DummyController {
 
     @RequestMapping("/api/dummy")
+    @AuthRole(role= Role.ADMIN)
     public String dummy(){
         return "Hello World";
     }
 
-    @RequestMapping("/dummy")
+    @RequestMapping("/api/dummy/test")
+    @AuthRole(role = Role.ADMIN)
     public String dummy2(){
         return "Hello World";
     }

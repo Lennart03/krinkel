@@ -12,7 +12,9 @@ import org.jasig.cas.client.validation.TicketValidationException;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.ServletException;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.xml.bind.DatatypeConverter;
 import java.util.Date;
 import java.util.List;
 
@@ -20,9 +22,10 @@ import java.util.List;
 @Service
 public class UserService {
 
-    public static final String  CASURL = "https://login.chiro.be/cas/login?service=http://localhost:8080/api/cas";
+    public static final String CASURL = "https://login.chiro.be/cas/login?service=http://localhost:8080/api/cas";
+    public static final String JWT_SECRET = "MATHIASISNOOB";
 
-    public String validateTicket(String ticket){
+    public String validateTicket(String ticket) {
         User user = validate(ticket);
         return CreateToken(user);
     }
@@ -39,7 +42,7 @@ public class UserService {
         } catch (TicketValidationException e) {
             throw new SecurityException("Ticket could not be validated");
         }
-        if (principal != null){
+        if (principal != null) {
             User user = new User();
             user.setEmail(principal.getAttributes().get("mail").toString());
             user.setUsername(principal.getName().toString());
@@ -52,10 +55,27 @@ public class UserService {
         }
         return null;
     }
-    public Boolean hasRole(final Role role, final HttpServletRequest request){
-        final Claims claims = (Claims) request.getAttribute("claims");
 
-        return ((List<String>) claims.get("role")).contains(role);
+    public Boolean hasRole(final Role role, final HttpServletRequest request) {
+
+        Claims claims = Jwts.parser()
+                .setSigningKey(DatatypeConverter.parseBase64Binary(JWT_SECRET))
+                .parseClaimsJws(getTokenFromCookie(request.getCookies())).getBody();
+        if (claims != null) {
+            if (claims.get("role").toString().equals(role.toString())) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    protected String getTokenFromCookie(Cookie[] cookies) {
+        for (Cookie c : cookies) {
+            if (c.getName().equals("Authorization")) {
+                return c.getValue();
+            }
+        }
+        return null;
     }
 
     public String CreateToken(User data) {
@@ -67,6 +87,6 @@ public class UserService {
                 .claim("email", data.getEmail())
                 .claim("role", data.getRole())
                 .setIssuedAt(new Date())
-                .signWith(SignatureAlgorithm.HS256, "MATHIASISNOOB").compact();
+                .signWith(SignatureAlgorithm.HS256, JWT_SECRET).compact();
     }
 }
