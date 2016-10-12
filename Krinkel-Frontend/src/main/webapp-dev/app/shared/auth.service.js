@@ -3,13 +3,11 @@ export class AuthService {
         this.$window = $window;
         this.KrinkelService = KrinkelService;
 
+        this.getCurrentUserDetails(this.getLoggedinUser().adnummer).then((resp) => {
 
+        });
 
         this.getUserFromStorage();
-
-        this.getCurrentUserDetails(this.getLoggedinUser().adnummer);
-
-
 
 
     }
@@ -66,8 +64,11 @@ export class AuthService {
     }
 
     getCurrentUserDetails(adNumber){
-        this.KrinkelService.getCurrentUserDetails(adNumber).then(resp => {
+        return this.KrinkelService.getCurrentUserDetails(adNumber).then(resp => {
             this.userDetails = resp;
+            return resp;
+        }, function () {
+            console.log("failed");
         })
     }
     getUserDetails() {

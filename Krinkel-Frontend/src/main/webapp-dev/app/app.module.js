@@ -19,6 +19,7 @@ import {SuccessMessageComponent} from './shared/success-message/success-message.
 import {SideNavComponent} from './shared/sidenav/sidenav.component'
 import {TopNavComponent} from './shared/topnav/topnav.component';
 import {KrinkelSelectComponent} from './krinkel-select-person/select.component';
+import {FailMessageComponent} from './shared/fail-message/fail-message.component'
 
 //pages
 import {KrinkelHomepageComponent} from './krinkel-homepage/krinkel-homepage.component';
@@ -43,6 +44,7 @@ export default angular
   .component('successMessage',SuccessMessageComponent)
   .component('topNav', TopNavComponent)
   .component('krinkelSelect', KrinkelSelectComponent)
+    .component('failMessage', FailMessageComponent)
   //pages
   .component('krinkelHomepage', KrinkelHomepageComponent)
   .component('register', RegisterComponent)

@@ -43,7 +43,7 @@ export class KrinkelService {
       })
   }
   getCurrentUserDetails(adNumber){
-      return this.$http.get(`${this.BASEURL}/api/users?adnr=${adNumber}`).then((resp) => {
+      return this.$http.get(`${this.BASEURL}/api/users/${adNumber}`).then((resp) => {
           return resp.data;
       })
   }
