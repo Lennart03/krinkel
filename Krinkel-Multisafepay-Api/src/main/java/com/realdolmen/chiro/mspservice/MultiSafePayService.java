@@ -6,8 +6,11 @@ import com.realdolmen.chiro.mspdto.Data;
 import com.realdolmen.chiro.mspdto.OrderDto;
 import com.realdolmen.chiro.mspdto.StatusDto;
 import org.json.JSONObject;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 
 import java.security.InvalidParameterException;
@@ -19,6 +22,7 @@ public class MultiSafePayService {
     private static final String API_KEY = "a9026c8f9a1d49da542dd2f51d702a4442612e54";
     private RestTemplate restTemplate = new RestTemplate();
 
+    private Logger logger = LoggerFactory.getLogger(MultiSafePayService.class);
 
     /**
      * Initiates a payment at Multisafepay.
@@ -28,7 +32,7 @@ public class MultiSafePayService {
      * @param amount      specifies the amount that has to be paid in eurocents
      * @return returns the JSON response in object form (an OrderDto object)
      */
-    public OrderDto createPayment(RegistrationParticipant participant, Integer amount) {
+    public OrderDto createPayment(RegistrationParticipant participant, Integer amount) throws InvalidPaymentOrderIdException {
         if (!createPaymentParamsAreValid(participant.getAdNumber(), amount))
             throw new InvalidParameterException("cannot create a payment with those params");
         JSONObject jsonObject = this.createPaymentJsonObject(participant, amount);
@@ -39,9 +43,16 @@ public class MultiSafePayService {
 
         String url = URL + "?api_key=" + API_KEY;
 
-        ResponseEntity<OrderDto> response = restTemplate.exchange(url, HttpMethod.POST, entity, OrderDto.class);
 
-        return response.getBody();
+        try {
+            ResponseEntity<OrderDto> response = restTemplate.exchange(url, HttpMethod.POST, entity, OrderDto.class);
+            return response.getBody();
+        } catch (HttpClientErrorException ex)   {
+            // Assume failure to be due  to a duplicate OrderID.
+            logger.warn("Request to Payment Site failed with status " + ex.getStatusCode().value());
+
+            throw new InvalidPaymentOrderIdException();
+        }
     }
 
     private boolean createPaymentParamsAreValid(String orderId, Integer amount) {
@@ -133,12 +144,12 @@ public class MultiSafePayService {
      * @param amount the amount the participant or volunteer has to pay
      * @return the url at which the payment page is located
      */
-    public String getParticipantPaymentUri(RegistrationParticipant p, Integer amount) {
+    public String getParticipantPaymentUri(RegistrationParticipant p, Integer amount) throws InvalidPaymentOrderIdException {
         return this.createPayment(p, amount).getData().getPayment_url();
 
     }
 
-    public String getVolunteerPaymentUri(RegistrationVolunteer v, Integer amount) {
+    public String getVolunteerPaymentUri(RegistrationVolunteer v, Integer amount) throws InvalidPaymentOrderIdException {
         return this.createPayment(v, amount).getData().getPayment_url();
     }
 
@@ -152,5 +163,9 @@ public class MultiSafePayService {
 
 
         return res;
+    }
+
+
+    public static class InvalidPaymentOrderIdException extends Exception{
     }
 }
