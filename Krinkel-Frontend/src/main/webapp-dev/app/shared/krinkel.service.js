@@ -46,16 +46,34 @@ export class KrinkelService {
 
 
 
-  // getMovies(title) {
-  //   return this.$http.get(`${this.BASEURL}/online?title=${title}`).then((resp) => {
-  //     return resp.data;
-  //   });
-  // }
-  // postMovie(imdbid){
-  //   return this.$http.post(`${this.BASEURL}`, {imdbId: imdbid}).then((resp) => {
-  //     return resp.data;
-  //   });
-  // }
+    getVerbonden() {
+        return this.$http.get(`${this.BASEURL}/api/units?verbond`).then((resp) => {
+            return resp.data;
+        });
+    }
+
+    getGewestenForVerbond(verbondNummer) {
+        return this.$http.get(`${this.BASEURL}/api/units/${verbondNummer}`).then((resp) => {
+            return resp.data;
+        });
+    }
+
+    getParticipantsForUnit(stamNummer) {
+        return this.$http.get(`${this.BASEURL}/api/participants/${stamNummer}`).then((resp) => {
+            return resp.data;
+        });
+    }
+
+    // getMovies(title) {
+    //   return this.$http.get(`${this.BASEURL}/online?title=${title}`).then((resp) => {
+    //     return resp.data;
+    //   });
+    // }
+    // postMovie(imdbid){
+    //   return this.$http.post(`${this.BASEURL}`, {imdbId: imdbid}).then((resp) => {
+    //     return resp.data;
+    //   });
+    // }
 }
 
 KrinkelService.$inject = ['$http', 'BASEURL'];
