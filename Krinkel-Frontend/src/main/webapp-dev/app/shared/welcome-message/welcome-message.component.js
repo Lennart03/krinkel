@@ -4,13 +4,18 @@ class WelcomeMessageController {
         this.$location = $location;
         this.AuthService = AuthService;
 
-        this.AuthService.getCurrentUserDetails().then((resp) => {
+
+        this.AuthService.getCurrentUserDetails(this.AuthService.getLoggedinUser().adnummer).then((resp) => {
+            console.log(resp);
             if (resp.registered && resp.hasPaid) {
                 console.log("true true");
                 this.$location.path('/success');
             } else if (resp.registered && !resp.hasPaid) {
                 this.$location.path('/fail');
             }
+        }, (resp) => {
+            console.log("failed");
+            console.log(resp);
         })
     }
 
