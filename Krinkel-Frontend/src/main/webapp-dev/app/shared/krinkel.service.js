@@ -30,6 +30,11 @@ export class KrinkelService {
           return resp.data;
       });
   }
+  getColleagues(adNumber){
+      return this.$http.get(`${this.BASEURL}/api/colleagues?ad=${adNumber}`).then((resp) => {
+          return resp.data;
+      })
+  }
 
 
   
