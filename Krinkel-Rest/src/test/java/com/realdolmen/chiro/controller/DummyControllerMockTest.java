@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import java.util.Calendar;
 import java.util.Date;
 
 import static org.junit.Assert.assertNotNull;
@@ -31,12 +32,15 @@ public class DummyControllerMockTest extends MockMvcTest{
 
     @Before
     public void setUp(){
+        Calendar c = Calendar.getInstance();
+        c.set(1999,Calendar.APRIL, 2);
+
         RegistrationParticipant p = new RegistrationParticipant(
-                "123456",
+                "4242123456",
                 "hermione@hogwarts.example",
                 "Hermione",
                 "Granger",
-                new Date(),
+                c.getTime(),
                 "AG0104",
                 Gender.WOMAN,
                 Role.ASPI,

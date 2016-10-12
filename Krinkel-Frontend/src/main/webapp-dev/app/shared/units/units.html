@@ -1,0 +1,40 @@
+<h1 ng-if="!$ctrl.unitLevel">Lijst van verbonden</h1>
+<h1 ng-if="$ctrl.unitLevel">Lijst van {{$ctrl.unitLevel}}</h1>
+<style>
+    tbody tr:hover {
+        background-color: #EEE;
+        cursor: pointer;
+    }
+
+</style>
+
+<a class="btn" ng-click="$ctrl.goToPrevious($ctrl.verbond)" ng-if="$ctrl.unitLevel">
+    <i class="material-icons left">chevron_left</i>
+    Terug
+</a>
+
+<table>
+    <thead>
+    <tr>
+        <th data-field="name">Naam</th>
+        <th data-field="amountParticipants">Aantal Deelnemers</th>
+        <th data-field="amountVolunteers">Aantal vrijwilligers</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    <tr ng-repeat="verbond in $ctrl.verbonden" ng-click="$ctrl.openVerbond(verbond)">
+        <td>
+            {{verbond.naam}}
+        </td>
+        <td>
+            {{verbond.amountParticipants}}
+        </td>
+        <td>
+            {{verbond.amountVolunteers}}
+            <!--TODO send icon ook tonen wanneer admin is ingelogd-->
+            <i class="material-icons right" ng-if="verbond.stamnummer.endsWith('00')">send</i>
+        </td>
+    </tr>
+    </tbody>
+</table>

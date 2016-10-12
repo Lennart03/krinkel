@@ -1,22 +1,42 @@
 package com.realdolmen.chiro.controller;
 
 import com.realdolmen.chiro.domain.*;
+import com.realdolmen.chiro.repository.RegistrationVolunteerRepository;
 import org.hamcrest.Matchers;
 import org.junit.Before;
 import org.junit.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import java.util.Calendar;
 
+import static org.hibernate.validator.internal.util.Contracts.assertNotNull;
+import static org.junit.Assert.assertEquals;
+
 public class RegistrationVolunteerControllerMockTest extends MockMvcTest {
 
     private RegistrationVolunteer volunteer;
+    private RegistrationParticipant participant;
+
+    @Autowired
+    private RegistrationVolunteerRepository repo;
+
+    private int nVolunteers = 0;
 
     @Before
     public void setUp(){
+        // Participant
         Calendar c = Calendar.getInstance();
+        c.set(1995, Calendar.AUGUST, 5);
+
+        participant = new RegistrationParticipant(
+                "123456789", "astrid@mail.any", "Maia", "Van Op Beeck", c.getTime(),
+                "AG0001", Gender.WOMAN, Role.ASPI, Eatinghabbit.FISHANDMEAT
+        );
+        participant.setAddress(new Address("My Street", "2", 1252, "My City"));
+
         c.set(1995, Calendar.AUGUST, 5);
 
         volunteer = new RegistrationVolunteer(
@@ -26,6 +46,8 @@ public class RegistrationVolunteerControllerMockTest extends MockMvcTest {
                 new VolunteerFunction(VolunteerFunction.Preset.KLINKER_EDITORIAL)
         );
         volunteer.setAddress(new Address("-", "-", 1500, "-"));
+
+        this.nVolunteers = repo.findAll().size();
     }
 
     @Test
@@ -44,6 +66,9 @@ public class RegistrationVolunteerControllerMockTest extends MockMvcTest {
                             .contentType(MediaType.APPLICATION_JSON_UTF8)
                             .content(jsonPayload))
                 .andExpect(MockMvcResultMatchers.status().is2xxSuccessful());
+
+        assertNotNull(repo.findByAdNumber(volunteer.getAdNumber()));
+        assertEquals(nVolunteers+1, repo.findAll().size());
     }
 
     @Test
@@ -57,12 +82,17 @@ public class RegistrationVolunteerControllerMockTest extends MockMvcTest {
                                 .content(jsonPayload))
                 .andExpect(MockMvcResultMatchers.status().is2xxSuccessful());
 
+        assertNotNull(repo.findByAdNumber(volunteer.getAdNumber()));
+        assertEquals(nVolunteers+1, repo.findAll().size());
+
         mockMvc()
                 .perform(
                         MockMvcRequestBuilders.post("/api/volunteers")
                                 .contentType(MediaType.APPLICATION_JSON_UTF8)
                                 .content(jsonPayload))
                 .andExpect(MockMvcResultMatchers.status().is4xxClientError());
+
+        assertEquals(nVolunteers+1, repo.findAll().size());
     }
 
     @Test
@@ -75,5 +105,19 @@ public class RegistrationVolunteerControllerMockTest extends MockMvcTest {
                                 .contentType(MediaType.APPLICATION_JSON_UTF8)
                                 .content(jsonPayload))
                 .andExpect(MockMvcResultMatchers.status().is4xxClientError());
+    }
+
+    @Test
+    public void savingRegistrationForParticipantInsteadOfVolunteerFails() throws Exception {
+        String jsonPayload = json(participant);
+
+        mockMvc()
+                .perform(
+                        MockMvcRequestBuilders.post("/api/volunteers")
+                                .contentType(MediaType.APPLICATION_JSON_UTF8)
+                                .content(jsonPayload))
+                .andExpect(MockMvcResultMatchers.status().is4xxClientError());
+
+        assertEquals(nVolunteers, repo.findAll().size());
     }
 }
