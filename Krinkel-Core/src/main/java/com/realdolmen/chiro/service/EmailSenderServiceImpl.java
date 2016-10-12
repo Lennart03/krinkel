@@ -48,7 +48,7 @@ public class EmailSenderServiceImpl implements EmailSenderService {
 		ctx.setVariable("participant", participant);
 		ctx.setVariable("isVolunteer", participant instanceof RegistrationVolunteer);
 
-		String emailText = thymeleaf.process("email", ctx);
+		String emailText = thymeleaf.process("email.html", ctx);
 		ClassPathResource image = new ClassPathResource("/static/img/logo.png");
 		
 		registrationCommunication = new RegistrationCommunication();

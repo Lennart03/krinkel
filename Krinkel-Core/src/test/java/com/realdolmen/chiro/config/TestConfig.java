@@ -14,10 +14,14 @@ import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseBuilder;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseType;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
+import org.springframework.orm.hibernate3.HibernateTransactionManager;
+import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.JpaVendorAdapter;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.Database;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
+import org.springframework.transaction.PlatformTransactionManager;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.web.servlet.ViewResolver;
 import org.thymeleaf.spring4.SpringTemplateEngine;
 import org.thymeleaf.spring4.view.ThymeleafViewResolver;
@@ -29,6 +33,7 @@ import com.icegreen.greenmail.util.ServerSetup;
 
 @Configuration
 @EnableJpaRepositories(basePackages="com.realdolmen.chiro")
+@EnableTransactionManagement
 @ComponentScan("com.realdolmen.chiro")
 public class TestConfig {
 
@@ -71,7 +76,7 @@ public class TestConfig {
         LocalContainerEntityManagerFactoryBean lef = new LocalContainerEntityManagerFactoryBean();
         lef.setDataSource(embeddedDataSource());
         lef.setJpaVendorAdapter(jpaVendorAdapter());
-        lef.setPackagesToScan("com.realdolmen.chiro.*");
+        lef.setPackagesToScan("com.realdolmen.chiro");
         lef.afterPropertiesSet();
         return lef.getObject();
     }
@@ -108,18 +113,22 @@ public class TestConfig {
 	@Bean
 	public SpringTemplateEngine templateEngine(TemplateResolver templateResolver){
 		SpringTemplateEngine templateEngine = new SpringTemplateEngine();
-		templateEngine.setTemplateResolver(emailTemplateResolver());
+		templateEngine.setTemplateResolver(templateResolver());
 		return templateEngine;
 	}
 	
 	
 	@Bean
-	public TemplateResolver emailTemplateResolver() {
-	    TemplateResolver templateResolver = new ClassLoaderTemplateResolver();
-	    templateResolver.setPrefix("classpath:templates/");
-	    templateResolver.setTemplateMode("HTML5");
-	    templateResolver.setOrder(1);
+	public ClassLoaderTemplateResolver templateResolver() {
+		ClassLoaderTemplateResolver templateResolver = new ClassLoaderTemplateResolver();
+	    templateResolver.setPrefix("templates/");
+	    templateResolver.setTemplateMode("HTML5");        
+	    templateResolver.setCacheable(false);
 	    return templateResolver;
+	 }
+	@Bean
+	public JpaTransactionManager transactionManager () {
+		return new JpaTransactionManager(entityManagerFactory());
 	}
 	
 }
