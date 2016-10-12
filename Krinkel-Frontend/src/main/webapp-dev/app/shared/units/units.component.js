@@ -11,7 +11,6 @@ class UnitsController {
     }
 
     openVerbond(verbond) {
-        console.log(verbond);
         this.KrinkelService.getGewestenForVerbond(verbond.stamnummer).then((results) => {
 
             if (results.onderliggende_stamnummers != 0) {
@@ -27,7 +26,8 @@ class UnitsController {
     getParticipantsForUnit(verbonden) {
         angular.forEach(verbonden, (value, index) => {
             this.KrinkelService.getParticipantsForUnit(value.stamnummer).then((results) => {
-                value.amount = results;
+                value.amountParticipants = results[0];
+                value.amountVolunteers = results[1];
             })
         });
     }

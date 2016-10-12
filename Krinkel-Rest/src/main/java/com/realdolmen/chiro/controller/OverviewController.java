@@ -23,13 +23,18 @@ public class OverviewController {
 
 
     @RequestMapping(value = "/api/participants/{stam}", method = RequestMethod.GET)
-    public int findParticipants(@PathVariable("stam") String stamNumber){
+    public int[] findParticipants(@PathVariable("stam") String stamNumber){
         if (!stamNumber.endsWith("00")) {
-            return registrationParticipantService.findParticipantsByGroup(stamNumber).size();
+            int[] participantsAndVolunteers = new int[2];
+            int participants = registrationParticipantService.findParticipantsByGroup(stamNumber).size();
+            int volunteers = registrationParticipantService.findVolunteersByGroup(stamNumber).size();
+            participantsAndVolunteers[0] = participants;
+            participantsAndVolunteers[1] = volunteers;
+            return participantsAndVolunteers;
         }else if (!stamNumber.endsWith("000")){
-            return overviewService.findParticipantsByGewest(stamNumber).size();
+            return overviewService.findParticipantsByGewest(stamNumber);
         }else{
-            return overviewService.findParticipantsByVerbond(stamNumber).size();
+            return overviewService.findParticipantsByVerbond(stamNumber);
         }
     }
 }

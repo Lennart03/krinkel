@@ -16,8 +16,9 @@
 <table>
     <thead>
     <tr>
-        <th data-field="id">Naam</th>
-        <th data-field="name">Aantal Deelnemers</th>
+        <th data-field="name">Naam</th>
+        <th data-field="amountParticipants">Aantal Deelnemers</th>
+        <th data-field="amountVolunteers">Aantal vrijwilligers</th>
     </tr>
     </thead>
 
@@ -27,7 +28,12 @@
             {{verbond.naam}}
         </td>
         <td>
-            {{verbond.amount}}
+            {{verbond.amountParticipants}}
+        </td>
+        <td>
+            {{verbond.amountVolunteers}}
+            <!--TODO send icon ook tonen wanneer admin is ingelogd-->
+            <i class="material-icons right" ng-if="verbond.stamnummer.endsWith('00')">send</i>
         </td>
     </tr>
     </tbody>
