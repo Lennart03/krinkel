@@ -183,15 +183,6 @@ public class EmailSenderTest {
 		assertTrue(body.contains(VOL_FUNCTION1.getPreset().getDescription()));
 	}
 	
-	@Test(expected=EmailSenderServiceException.class)
-	public void shouldThrowExceptionSendingEmail() throws MessagingException{
-		RegistrationParticipant participant = new RegistrationParticipant();
-		participant.setFirstName(FIRST_NAME);
-		participant.setLastName(LAST_NAME);	
-		participant.setAddress(new Address(STREET,HOUSE_NUMBER,POSTAL_CODE,CITY));
-		emailSenderService.sendMail(participant);
-	}
-	
 	/**
 	 * exception evaluating Spring EL: ${street.address.street} generates Nullpointer in template
 	 * 

@@ -51,9 +51,9 @@ public class EmailSenderServiceImpl implements EmailSenderService {
 		String emailText = thymeleaf.process("email.html", ctx);
 		ClassPathResource image = new ClassPathResource("/static/img/logo.png");
 		
-		registrationCommunication = new RegistrationCommunication();
-		registrationCommunication.setAdNumber(participant.getAdNumber());
-		registrationCommunication.setCommunicationAttempt(0);
+		registrationCommunication = registrationCommunicationRepository.findByAdNumber(participant.getAdNumber());
+		registrationCommunication.setCommunicationAttempt(registrationCommunication.getCommunicationAttempt()+1);
+		
 		
 		try {
 			MimeMessageHelper helper = new MimeMessageHelper(message, true);
