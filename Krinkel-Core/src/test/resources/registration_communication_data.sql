@@ -1,9 +1,9 @@
 DROP TABLE IF EXISTS registration_communication;
 CREATE TABLE registration_communication (
 `id` BIGINT,
-`ad_number` VARCHAR(15),
+`adNumber` VARCHAR(15),
 `status` VARCHAR(20),
-`communication_attempt` INT,
+`communicationAttempt` INT,
 PRIMARY KEY(`id`)
 );
 

@@ -32,6 +32,7 @@ public class EmailSenderServiceImpl implements EmailSenderService {
 
 	@Autowired
 	JavaMailSender mailSender;
+	
 	@Autowired
 	private SpringTemplateEngine thymeleaf;
 

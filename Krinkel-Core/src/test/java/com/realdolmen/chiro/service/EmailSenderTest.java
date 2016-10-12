@@ -19,6 +19,8 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.thymeleaf.exceptions.TemplateProcessingException;
 
@@ -36,7 +38,9 @@ import com.realdolmen.chiro.domain.PostCamp;
 import com.realdolmen.chiro.domain.PreCamp;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@SpringBootTest
+//@SpringBootTest
+//@ComponentScan("com.realdolmen.chiro.service")
+@ContextConfiguration(classes=com.realdolmen.chiro.config.TestConfig.class)
 public class EmailSenderTest {
 	private static final String EMAIL_SUBJECT = "Bevestiging inschrijving krinkel";
 	private static final String EMAIL_FROM = "inschrijvingen@krinkel.be";

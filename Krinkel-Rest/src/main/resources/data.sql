@@ -10,16 +10,16 @@ INSERT INTO post_camp VALUES (60, '2017-08-31');
 INSERT INTO post_camp VALUES (70, '2017-09-01');
 INSERT INTO post_camp VALUES (80, '2017-09-02');
 
-DROP TABLE IF EXISTS groepen;
-CREATE TABLE groepen (
-    `groep_naam` VARCHAR(41),
-    `groep_stamnr` VARCHAR(8),
-    `gewest_stamnr` VARCHAR(8),
-    `gewest_naam` VARCHAR(20),
-    `verbond_stamnr` VARCHAR(9),
-    `verbond_naam` VARCHAR(15),
-    PRIMARY KEY(`groep_stamnr`)
-);
+--DROP TABLE IF EXISTS groepen;
+--CREATE TABLE groepen (
+--    `groep_naam` VARCHAR(41),
+--    `groep_stamnr` VARCHAR(8),
+--    `gewest_stamnr` VARCHAR(8),
+--    `gewest_naam` VARCHAR(20),
+--    `verbond_stamnr` VARCHAR(9),
+--    `verbond_naam` VARCHAR(15),
+--    PRIMARY KEY(`groep_stamnr`)
+--);
 INSERT INTO groepen VALUES ('Pleplo','AG /0103','AG /0400','Zac','AG /0000','Antwerpen');
 INSERT INTO groepen VALUES ('Lore','AG /0104','AG /0400','Zac','AG /0000','Antwerpen');
 INSERT INTO groepen VALUES ('Dolfijn','AG /0108','AG /0400','Zac','AG /0000','Antwerpen');
