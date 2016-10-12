@@ -14,6 +14,8 @@ import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 
 import java.security.InvalidParameterException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 
 @Service
@@ -47,7 +49,7 @@ public class MultiSafePayService {
         try {
             ResponseEntity<OrderDto> response = restTemplate.exchange(url, HttpMethod.POST, entity, OrderDto.class);
             return response.getBody();
-        } catch (HttpClientErrorException ex)   {
+        } catch (HttpClientErrorException ex) {
             // Assume failure to be due  to a duplicate OrderID.
             logger.warn("Request to Payment Site failed with status " + ex.getStatusCode().value());
 
@@ -67,6 +69,12 @@ public class MultiSafePayService {
         return res;
     }
 
+    public static String getCurrentTimeStamp() {
+        SimpleDateFormat sdfDate = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");//dd/MM/yyyy
+        Date now = new Date();
+        String strDate = sdfDate.format(now);
+        return strDate;
+    }
 
     /**
      * Creates the JSON object that will be used in the request to initiate a multisafepay payment.
@@ -122,11 +130,10 @@ public class MultiSafePayService {
         customer.put("email", participant.getEmail());
 
 
-
         JSONObject jsonObject = new JSONObject();
 
         jsonObject.put("type", "redirect");
-        jsonObject.put("order_id", participant.getAdNumber());
+        jsonObject.put("order_id", participant.getAdNumber() + "/" + getCurrentTimeStamp());
         jsonObject.put("description", "Payment for Krinkel ");
         jsonObject.put("currency", "EUR");
         jsonObject.put("amount", amount);
@@ -166,6 +173,6 @@ public class MultiSafePayService {
     }
 
 
-    public static class InvalidPaymentOrderIdException extends Exception{
+    public static class InvalidPaymentOrderIdException extends Exception {
     }
 }
