@@ -12,11 +12,11 @@ import org.springframework.boot.autoconfigure.security.oauth2.resource.ResourceS
 
 public class UserServiceTest {
     User user;
-    UserService userService;
+    CASService casService;
 
     @Before
     public void setUp(){
-        userService = new UserService();
+        casService = new CASService();
         user = new User();
         user.setAdNumber("ADBUmBER");
         user.setEmail("john.doe@example.com");
@@ -28,8 +28,8 @@ public class UserServiceTest {
 
     @Test
     public void testUserService()  {
-        String token = userService.createToken(user);
-        Jwt jwt = Jwts.parser().setSigningKey("MATHIASISNOOB").parse(token);
+        String token = casService.createToken(user);
+        Jwt jwt = Jwts.parser().setSigningKey(casService.JWT_SECRET).parse(token);
         Assert.assertEquals(jwt.getBody().toString().substring(0, jwt.getBody().toString().lastIndexOf(",")), "{sub=Franske4653, firstname=John, lastname=Doe, adnummer=ADBUmBER, email=john.doe@example.com, role=MENTOR");
         Assert.assertEquals(jwt.getHeader().toString(), "{alg=HS256}");
     }
