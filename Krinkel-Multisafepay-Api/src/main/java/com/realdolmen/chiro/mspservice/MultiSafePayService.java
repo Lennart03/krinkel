@@ -116,7 +116,7 @@ public class MultiSafePayService {
 
         jsonObject.put("type", "redirect");
         jsonObject.put("order_id", participant.getAdNumber());
-        jsonObject.put("description", "this is the description");
+        jsonObject.put("description", "Payment for Krinkel ");
         jsonObject.put("currency", "EUR");
         jsonObject.put("amount", amount);
         jsonObject.put("payment_options", paymentOptions);
