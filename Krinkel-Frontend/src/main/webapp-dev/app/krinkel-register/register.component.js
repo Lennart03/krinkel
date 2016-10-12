@@ -1,6 +1,6 @@
 class RegisterController {
 
-    constructor($log, $window, StorageService, MapperService, AuthService, KrinkelService, $location) {
+    constructor($log, $window, StorageService, MapperService, AuthService, KrinkelService, $location, SelectService) {
         this.$log = $log;
         this.$window = $window;
         this.StorageService = StorageService;
@@ -8,6 +8,7 @@ class RegisterController {
         this.AuthService = AuthService;
         this.KrinkelService = KrinkelService;
         this.$location = $location;
+        this.SelectService = SelectService;
 
         this.phoneNumberPattern = /^((\+|00)32\s?|0)(\d\s?\d{3}|\d{2}\s?\d{2})(\s?\d{2}){2}|((\+|00)32\s?|0)4(60|[789]\d)(\s?\d{2}){3}$/;
         this.birthdatePattern = /^(\d{4})(\/|-)(\d{1,2})(\/|-)(\d{1,2})$/;
@@ -17,7 +18,14 @@ class RegisterController {
 
         this.dataIsRemoved = false;
 
+        window.scrollTo(0,0);
 
+
+
+        if (this.SelectService.getSelectedFlag()) {
+            this.SelectService.setColleague(undefined);
+            this.SelectService.setSelectedFlag(false);
+        }
     }
 
     registerPerson(newPerson) {
@@ -36,31 +44,43 @@ class RegisterController {
             this.KrinkelService.postParticipant(this.MapperService.mapParticipant(newPerson)).then(function (resp) {
                 thiz.dataIsRemoved = true;
                 thiz.StorageService.removeUser();
+                thiz.SelectService.setSelectedFlag(false);
                 thiz.$window.location.href = resp.headers().location;
             });
             return;
         }
     }
 
+
+
     $onInit() {
         if (this.AuthService.getLoggedinUser() == null) {
-            this.$location.path('/login');
+            this.$location.path('/');
         }
+
+        if (this.SelectService.getColleague() !== undefined) {
+            this.newPerson = {
+                adNumber: this.SelectService.getColleague().adnr
+            };
+            this.SelectService.setSelectedFlag(true);
+
+            console.log("From select");
+        } else {
+            console.log("Not from selectx");
+            var user = this.StorageService.getUser();
+            if (user) {
+                this.newPerson = user;
+            } else {
+                this.newPerson = {};
+                // this.newPerson.birthDate = "1995-11-24";
+            }
+        }
+
         angular.element('.modal-trigger').leanModal();
         // Fill data from localStorage
         // this.newPerson = this.StorageService.getUser();
-        var user = this.StorageService.getUser();
-        if (user) {
-            this.newPerson = user;
-        } else {
-            this.newPerson = {};
-            this.newPerson.job = 'Aanbod nationale kampgrond';
-            // this.newPerson.birthDate = "1995-11-24";
-        }
+
         this.errorMessages = document.getElementsByClassName("error");
-
-
-        // Initialize Materialize inputs
         // console.log(document.getElementsByClassName("error"));
     }
 
@@ -71,6 +91,9 @@ class RegisterController {
 
         }
     }
+
+
+
 
 
     /**
@@ -93,4 +116,4 @@ export var RegisterComponent = {
         type: '@'
     }
 };
-RegisterComponent.$inject = ['$log', '$window', 'StorageService', 'MapperService', 'AuthService', 'KrinkelService', '$location'];
+RegisterComponent.$inject = ['$log', '$window', 'StorageService', 'MapperService', 'AuthService', 'KrinkelService', '$location', 'SelectService'];

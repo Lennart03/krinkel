@@ -17,6 +17,7 @@
         <module>Krinkel-Chiro-api</module>
         <module>Krinkel-Rest</module>
         <module>Krinkel-Multisafepay-Api</module>
+        <module>Krinkel-Static</module>
     </modules>
 
     <properties>
@@ -95,6 +96,12 @@
                 <artifactId>json</artifactId>
                 <version>20160810</version>
             </dependency>
+            <dependency>
+                <groupId>com.realdolmen.chiro</groupId>
+                <artifactId>Krinkel-Static</artifactId>
+                <version>1.0-SNAPSHOT</version>
+                <scope>compile</scope>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 
@@ -130,22 +137,19 @@
                         <artifactId>maven-clean-plugin</artifactId>
                         <version>3.0.0</version>
 
-                                <configuration>
-                                    <filesets>
-                                        <fileset>
-                                            <directory>Krinkel-Rest/src/main/resources</directory>
-                                            <includes>
-                                                <include>**/static/**</include>
-                                            </includes>
-                                        </fileset>
-                                    </filesets>
-                                </configuration>
-                    </plugin>
+                <configuration>
+                    <filesets>
+                        <fileset>
+                            <directory>Krinkel-Rest/src/main/resources</directory>
+                            <includes>
+                                <include>**/static/**</include>
+                            </includes>
+                        </fileset>
+                    </filesets>
+                </configuration>
+            </plugin>
         </plugins>
     </build>
-
-
-
 
     <reporting>
         <plugins>

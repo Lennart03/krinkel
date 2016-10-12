@@ -1,11 +1,13 @@
 export class MapperService {
-    constructor() {
-
+    constructor(AuthService, SelectService) {
+        this.AuthService = AuthService;
+        this.SelectService = SelectService;
     }
 
     mapVolunteer(data) {
         var volunteer = {
-            adNumber: Math.floor(Math.random() * 100000), //TODO NON-RANDOM
+            // adNumber: Math.floor(Math.random() * 100000),
+            adNumber: this.AuthService.getLoggedinUser().adnummer, //TODO NON-RANDOM
             firstName: data.firstName,
             lastName: data.lastName,
             address: {
@@ -15,7 +17,7 @@ export class MapperService {
                 city: data.city
             },
             birthdate: data.birthDate,
-            stamnumber: Math.floor(Math.random() * 100000), //TODO NON-RANDOM
+            stamnumber: Math.floor(Math.random() * 100000), //TODO WHEN CHIRO STOPS BORKING
             buddy: data.buddy,
             language: [], // data.languages
             eatinghabbit: data.dietary,
@@ -111,11 +113,9 @@ export class MapperService {
          */
     }
 
-
-
     mapParticipant(data) {
         var participant = {
-            adNumber: Math.floor(Math.random() * 100000), //TODO NON-RANDOM
+            // adNumber: Math.floor(Math.random() * 100000), // FOR TESTING
             email: data.email,
             firstName: data.firstName,
             lastName: data.lastName,
@@ -137,7 +137,11 @@ export class MapperService {
             phoneNumber: data.phone,
         };
 
-
+        if (this.SelectService.getSelectedFlag()) {
+            participant.adNumber = this.SelectService.getColleague().adnr;
+        } else {
+            participant.adNumber = this.AuthService.getLoggedinUser().adnummer;
+        }
 
 
 
@@ -231,7 +235,7 @@ export class MapperService {
     }
 }
 
-// MapperService.$inject = ['$window'];
+MapperService.$inject = ['AuthService', 'SelectService'];
 
 
 /**
