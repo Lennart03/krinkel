@@ -45,8 +45,6 @@ public class JwtFilter extends GenericFilterBean {
             token = authHeader.substring(7); // The part after "Bearer "
         }
 
-
-
         try {
             final Claims claims = Jwts.parser().setSigningKey("MATHIASISNOOB")
                     .parseClaimsJws(token).getBody();

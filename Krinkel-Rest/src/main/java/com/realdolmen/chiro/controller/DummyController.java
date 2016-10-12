@@ -2,6 +2,7 @@ package com.realdolmen.chiro.controller;
 
 import com.realdolmen.chiro.config.AuthRole;
 import com.realdolmen.chiro.domain.Role;
+import com.sun.media.sound.SoftTuning;
 import org.apache.catalina.connector.Response;
 import org.springframework.boot.autoconfigure.web.ErrorController;
 import org.springframework.data.rest.webmvc.ResourceNotFoundException;
@@ -30,6 +31,10 @@ public class DummyController {
     @RequestMapping("/api/dummy/test")
     @AuthRole(roles = {Role.ASPI, Role.LEADER})
     public String dummy2(){
+        return "Hello World";
+    }
+    @RequestMapping("/api/dummy/t")
+    public String dummy3(){
         return "Hello World";
     }
 

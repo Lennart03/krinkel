@@ -22,31 +22,7 @@ import java.util.*;
 @Controller
 public class UserController {
 
-    @Autowired
-    UserService service;
 
-
-    @RequestMapping(value = "/", method = RequestMethod.GET)
-    public String viewer(HttpServletRequest request) throws IOException {
-        if (request.getHeader("Authorization")!=null){
-            return "redirect:/index.html";
-        } else {
-            return "redirect:" + service.CASURL;
-        }
-    }
-
-    @RequestMapping(value = "/api/cas", method = RequestMethod.GET)
-    public void casRedirect(@RequestParam String ticket, HttpServletResponse response) throws IOException {
-        String jwt = service.validateTicket(ticket);
-        if (jwt!=null){
-            Cookie myCookie = new Cookie("Authorization", jwt);
-            myCookie.setPath("/");
-            myCookie.setMaxAge(-1);
-            response.addCookie(myCookie);
-            response.setHeader("Authorization", jwt);
-            response.sendRedirect("/index.html");
-        }
-    }
 
 
 }

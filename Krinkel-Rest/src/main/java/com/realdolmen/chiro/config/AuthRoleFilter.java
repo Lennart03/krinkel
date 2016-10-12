@@ -1,6 +1,7 @@
 package com.realdolmen.chiro.config;
 
 import com.realdolmen.chiro.service.UserService;
+import org.aopalliance.intercept.Joinpoint;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
@@ -23,14 +24,14 @@ public class  AuthRoleFilter {
     @Autowired
     UserService service;
     @Around(value = "@annotation(annotation)")
-    public void checkAuthRole(final AuthRole annotation) throws Throwable {
-        System.out.println(annotation.roles());
+    public Object checkAuthRole(final ProceedingJoinPoint jp,final AuthRole annotation) throws Throwable {
         HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes()).getRequest();
         if(!service.hasRole(annotation.roles(), request)){
-            ServletWebRequest servletWebRequest=new ServletWebRequest(request);
-            HttpServletResponse response = servletWebRequest.getResponse();
-            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+            throw new SecurityException();
+        }else{
+            return jp.proceed();
         }
+
 
     }
 }
