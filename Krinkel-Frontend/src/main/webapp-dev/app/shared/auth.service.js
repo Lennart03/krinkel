@@ -1,6 +1,7 @@
 export class AuthService {
-    constructor($window) {
+    constructor($window,KrinkelService, NotifyingService) {
         this.$window = $window;
+        this.KrinkelService = KrinkelService;
     }
 
     getLoggedinUser() {
@@ -54,7 +55,13 @@ export class AuthService {
         if (parts.length == 2) return parts.pop().split(";").shift();
     }
 
+    getCurrentUserDetails(adNumber){
+        this.KrinkelService.getCurrentUserDetails(adNumber).then(resp => {
+            return resp;
+        })
+    }
+
 }
-AuthService.$inject = ['$window'];
+AuthService.$inject = ['$window','KrinkelService', 'NotifyingService'];
 
 

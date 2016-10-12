@@ -42,9 +42,11 @@ export class KrinkelService {
           return resp.data;
       })
   }
-
-
-
+  getCurrentUserDetails(adNumber){
+      return this.$http.get(`${this.BASEURL}/api/users?adnr=${adNumber}`).then((resp) => {
+          return resp.data;
+      })
+  }
 
   // getMovies(title) {
   //   return this.$http.get(`${this.BASEURL}/online?title=${title}`).then((resp) => {
