@@ -9,13 +9,14 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.realdolmen.chiro.config.TestConfig;
+import com.realdolmen.chiro.configuration.ApplicationConfiguration;
 import com.realdolmen.chiro.domain.RegistrationParticipant;
 import com.realdolmen.chiro.domain.RegistrationVolunteer;
 import com.realdolmen.chiro.repository.RegistrationParticipantRepository;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 //@SpringBootTest
-@ContextConfiguration(classes=TestConfig.class)
+@ContextConfiguration(classes={TestConfig.class,ApplicationConfiguration.class})
 public class EmailBatchTest {
 
 	@Autowired
