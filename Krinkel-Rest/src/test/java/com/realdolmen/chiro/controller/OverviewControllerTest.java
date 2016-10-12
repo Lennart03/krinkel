@@ -59,7 +59,7 @@ public class OverviewControllerTest {
 
     @Test
     public void getParticipantsByUnit(){
-        Mockito.when(registrationRepository.findParticipantsByUnit("AG0001")).thenReturn(participants);
-        Assert.assertSame(registrationRepository.findParticipantsByUnit("AG0001").size(), participants.size());
+        Mockito.when(registrationRepository.findParticipantsByGroup("AG0001")).thenReturn(participants);
+        Assert.assertSame(registrationRepository.findParticipantsByGroup("AG0001").size(), participants.size());
     }
 }

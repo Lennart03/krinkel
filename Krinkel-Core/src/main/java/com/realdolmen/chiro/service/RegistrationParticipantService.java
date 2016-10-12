@@ -20,7 +20,7 @@ public class RegistrationParticipantService {
         return null;
     }
 
-    public List<RegistrationParticipant> findParticipantsByUnit(String stamNumber){
-        return repository.findParticipantsByUnit(stamNumber);
+    public List<RegistrationParticipant> findParticipantsByGroup(String stamNumber){
+        return repository.findParticipantsByGroup(stamNumber);
     }
 }

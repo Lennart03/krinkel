@@ -6,6 +6,7 @@ class UnitsController {
     $onInit() {
         this.KrinkelService.getVerbonden().then((results) => {
             this.verbonden = results;
+            this.getParticipantsForUnit(this.verbonden);
         });
     }
 
@@ -18,19 +19,20 @@ class UnitsController {
                 this.verbonden = results.onderliggende_stamnummers;
                 this.verbond = results;
 
-                angular.forEach(this.verbonden, (value, index) => {
-                    if (!value.stamnummer.endsWith("00")) {
-                        this.KrinkelService.getParticipantsForUnit(value.stamnummer).then((results) => {
-                            value.amount = results;
-                        })
-                    }
-                });
+                this.getParticipantsForUnit(this.verbonden);
             }
         });
     }
 
-    goToPrevious(verbond) {
+    getParticipantsForUnit(verbonden) {
+        angular.forEach(verbonden, (value, index) => {
+            this.KrinkelService.getParticipantsForUnit(value.stamnummer).then((results) => {
+                value.amount = results;
+            })
+        });
+    }
 
+    goToPrevious(verbond) {
         this.unitLevel = null;
 
         if (verbond.bovenliggende_stamnummer != null) {
@@ -39,6 +41,7 @@ class UnitsController {
         else {
             this.KrinkelService.getVerbonden().then((results) => {
                 this.verbonden = results;
+                this.getParticipantsForUnit(this.verbonden);
             });
         }
     }

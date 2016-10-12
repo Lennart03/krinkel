@@ -17,5 +17,5 @@ public interface RegistrationParticipantRepository extends JpaRepository<Registr
             "OR SUBSTRING(p.stamnumber, LOCATE('/', p.stamnumber)+1, 4) = SUBSTRING(?1, 4, 4)" +
             ")"
     )
-    List<RegistrationParticipant> findParticipantsByUnit(String s);
+    List<RegistrationParticipant> findParticipantsByGroup(String s);
 }
