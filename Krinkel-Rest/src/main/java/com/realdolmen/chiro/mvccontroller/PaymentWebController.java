@@ -19,6 +19,7 @@ public class PaymentWebController {
 
     @RequestMapping(method = RequestMethod.GET, value = "/success")
     public String paymentSuccess(@RequestParam(name = "transactionid")String orderId) {
+
         System.out.println("reached payment succes for transaction " + orderId);
         service.updatePaymentStatus(orderId);
         return "redirect:/index.html";

@@ -31,7 +31,8 @@ public class RegistrationParticipantServiceTest {
     private MultiSafePayService mspService;
 
     private RegistrationParticipant participant;
-    public final static String TEST_ORDER_ID = "2134684163";
+    public final static String TEST_AD_NUMBER = "123456";
+    public final static String TEST_ORDER_ID = "123456-2134684163";
 
     @Before
     public void setUp() {
@@ -73,19 +74,19 @@ public class RegistrationParticipantServiceTest {
 
     @Test
     public void updatePaymentStatusCallsMultiSafePayServiceWithCorrectOrderId() {
-        Mockito.when(repo.findByAdNumber(TEST_ORDER_ID)).thenReturn(participant);
+        Mockito.when(repo.findByAdNumber(TEST_AD_NUMBER)).thenReturn(participant);
         registrationParticipantService.updatePaymentStatus(TEST_ORDER_ID);
 
-        Mockito.verify(mspService, times(1)).orderIsPaid(TEST_ORDER_ID);
+        Mockito.verify(mspService, times(1)).orderIsPaid(TEST_AD_NUMBER);
     }
 
     @Test
     public void updatePaymentStatusSetsStatusToPaidWhenMultisafepayStatusIsCompleted() {
         Mockito.when(mspService.orderIsPaid(anyString())).thenReturn(true);
-        Mockito.when(repo.findByAdNumber(TEST_ORDER_ID)).thenReturn(participant);
+        Mockito.when(repo.findByAdNumber(TEST_AD_NUMBER)).thenReturn(participant);
 
         registrationParticipantService.updatePaymentStatus(TEST_ORDER_ID);
-        Mockito.verify(repo, times(1)).findByAdNumber(TEST_ORDER_ID);
+        Mockito.verify(repo, times(1)).findByAdNumber(TEST_AD_NUMBER);
         Mockito.verify(repo, times(1)).save(participant);
         Assert.assertEquals(Status.PAID, participant.getStatus());
     }

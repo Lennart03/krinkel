@@ -70,10 +70,8 @@ public class MultiSafePayService {
     }
 
     public static String getCurrentTimeStamp() {
-        SimpleDateFormat sdfDate = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");//dd/MM/yyyy
-        Date now = new Date();
-        String strDate = sdfDate.format(now);
-        return strDate;
+        Long test = new Date().getTime();
+        return  "-" + test;
     }
 
     /**
@@ -133,7 +131,7 @@ public class MultiSafePayService {
         JSONObject jsonObject = new JSONObject();
 
         jsonObject.put("type", "redirect");
-        jsonObject.put("order_id", participant.getAdNumber() + "/" + getCurrentTimeStamp());
+        jsonObject.put("order_id", participant.getAdNumber() + getCurrentTimeStamp());
         jsonObject.put("description", "Payment for Krinkel ");
         jsonObject.put("currency", "EUR");
         jsonObject.put("amount", amount);
