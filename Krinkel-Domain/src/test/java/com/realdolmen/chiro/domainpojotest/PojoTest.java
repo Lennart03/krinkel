@@ -2,6 +2,7 @@ package com.realdolmen.chiro.domainpojotest;
 
 import com.openpojo.reflection.PojoClass;
 import com.openpojo.reflection.filters.FilterChain;
+import com.openpojo.reflection.filters.FilterClassName;
 import com.openpojo.reflection.filters.FilterPackageInfo;
 import com.openpojo.reflection.impl.PojoClassFactory;
 import com.openpojo.validation.Validator;
@@ -31,6 +32,7 @@ public class PojoTest {
     public void ensureExpectedPojoCount() {
         List<PojoClass> pojoClasses = PojoClassFactory.getPojoClasses(POJO_PACKAGE,
                 new FilterPackageInfo());
+
         // This breaks more than it fixes things!
         // Affirm.affirmEquals("Classes added / removed?", EXPECTED_CLASS_COUNT, pojoClasses.size());
     }
@@ -48,7 +50,9 @@ public class PojoTest {
                 .with(new GetterTester())
                 .build();
 
-        validator.validate(POJO_PACKAGE, new FilterChain(new FilterPackageInfo()));
+        validator.validate(POJO_PACKAGE, new FilterChain(new FilterPackageInfo(),
+                new FilterClassName("\\w*Test\\w*$"),
+                new FilterClassName("\\w*Builder\\w*$")));
 
     }
 

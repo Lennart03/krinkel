@@ -8,13 +8,14 @@ public class ChiroUserAdapterTest {
 
     private ChiroUserAdapter adapter = new ChiroUserAdapter();
 
+
     @Test
-    public void getUserReturnsUserWhenCredentialsAreCorrect() {
-        Assert.assertNotNull(adapter.getUser("Ziggy", "test"));
+    public void getChiroUserReturnsUserWhenAdNumberIsValid() {
+        Assert.assertNotNull(adapter.getChiroUser("386289"));
     }
 
     @Test
-    public void getUserReturnsNullWhenCredentialsAreFalse() {
-        Assert.assertNull(adapter.getUser("Ziggy", "password"));
+    public void getChiroUserReturnsNullWhenAdNumberIsNotValid() {
+        Assert.assertNull(adapter.getChiroUser("ao9iefjpao9iejf"));
     }
 }

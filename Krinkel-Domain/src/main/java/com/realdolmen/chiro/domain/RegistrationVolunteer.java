@@ -4,8 +4,8 @@ import javax.persistence.CascadeType;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.Enumerated;
-import javax.persistence.OneToMany;
 import javax.validation.constraints.NotNull;
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -26,13 +26,14 @@ public class RegistrationVolunteer extends RegistrationParticipant {
     /**
      * Zero or many PreCamp moments.
      */
-    @OneToMany(cascade=CascadeType.ALL)
+    @ManyToMany
     private List<PreCamp> preCampList = new ArrayList<>();
 
     /**
      * Zero or many PostCamp moments.
      */
-    @OneToMany(cascade=CascadeType.ALL)
+
+    @ManyToMany
     private List<PostCamp> postCampList = new ArrayList<>();
 
     public RegistrationVolunteer() {}

@@ -1,10 +1,9 @@
 package com.realdolmen.chiro.service;
 
-import com.realdolmen.chiro.domain.RegistrationCommunication;
 import com.realdolmen.chiro.domain.RegistrationParticipant;
-import com.realdolmen.chiro.domain.SendStatus;
-import com.realdolmen.chiro.repository.RegistrationCommunicationRepository;
 import com.realdolmen.chiro.domain.RegistrationVolunteer;
+import com.realdolmen.chiro.domain.Status;
+import com.realdolmen.chiro.mspservice.MultiSafePayService;
 import com.realdolmen.chiro.repository.RegistrationParticipantRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,23 +13,36 @@ import java.util.List;
 
 @Service
 public class RegistrationParticipantService {
+    public final static Integer PRICE_IN_EUROCENTS = 11000;
 
     @Autowired
     private RegistrationParticipantRepository repository;
-    
-	@Autowired
-	private RegistrationCommunicationRepository registrationCommunicationRepository;
+
+    @Autowired
+    private MultiSafePayService mspService;
+
+
+
 
     public RegistrationParticipant save(RegistrationParticipant registration) {
-        if(repository.findByAdNumber(registration.getAdNumber()) == null) {
-        	RegistrationCommunication regCom = new RegistrationCommunication();
-			regCom.setAdNumber(registration.getAdNumber());
-			regCom.setCommunicationAttempt(0);
-			regCom.setStatus(SendStatus.WAITING);
-        	registrationCommunicationRepository.save(regCom);
-        	return repository.save(registration);
+        if (repository.findByAdNumber(registration.getAdNumber()) == null) {
+            return repository.save(registration);
         }
         return null;
+    }
+
+    public void updatePaymentStatus(String testOrderId) {
+        String[] split = testOrderId.split("-");
+        testOrderId = split[0];
+
+        RegistrationParticipant participant = repository.findByAdNumber(testOrderId);
+        if (participant != null) {
+
+            if (mspService.orderIsPaid(testOrderId)) {
+                participant.setStatus(Status.PAID);
+                repository.save(participant);
+            }
+        }
     }
 
     public List<RegistrationParticipant> findParticipantsByGroup(String stamNumber){

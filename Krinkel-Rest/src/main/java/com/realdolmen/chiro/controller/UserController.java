@@ -1,37 +1,47 @@
 package com.realdolmen.chiro.controller;
 
+import javax.servlet.*;
+import javax.servlet.http.*;
+
 import com.realdolmen.chiro.domain.User;
 import com.realdolmen.chiro.service.UserService;
+import com.sun.media.sound.SoftTuning;
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.stereotype.Controller;
+import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.util.*;
+
 @RestController
-@RequestMapping("/api/users")
 public class UserController {
 
     @Autowired
-    UserService service;
+    private UserService service;
 
-    @RequestMapping(method = RequestMethod.GET)
-    public User getUser(@RequestParam("user") String user, @RequestParam("password") String passw) {
-        User u = service.getUser(user, passw);
-        this.validateUser(u);
+
+    @RequestMapping(method = RequestMethod.GET, value = "/api/users/{adNumber}")
+    public User getUser(@PathVariable("adNumber") String adNumber) throws UserNotfoundException {
+        User u = service.getUser(adNumber);
+
+        if ( u == null )
+            throw new UserNotfoundException();
+
         return u;
     }
 
-    //package private to allow testing
-    void validateUser(User u) {
-        if (u == null) {
-            throw new UserNotfoundException();
-        }
-    }
-
-
-    @ResponseStatus(HttpStatus.UNAUTHORIZED)
-    private class UserNotfoundException extends RuntimeException {
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public class UserNotfoundException extends RuntimeException {
         public UserNotfoundException() {
-            super("Ongeldige gebruikersgegevens");
+            super("Gebruiker bestaat niet.");
         }
     }
 }

@@ -4,6 +4,7 @@ import com.realdolmen.chiro.domain.Eatinghabbit;
 import com.realdolmen.chiro.domain.Role;
 import com.realdolmen.chiro.domain.Gender;
 import com.realdolmen.chiro.domain.RegistrationParticipant;
+import com.realdolmen.chiro.domain.mothers.RegistrationParticipantMother;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -22,17 +23,7 @@ public class RegistrationParticipantTest extends BeanValidatorTest{
 
     @Before
     public void setUp(){
-        this.particpant = new RegistrationParticipant(
-                "123456",
-                "hermione@hogwarts.example",
-                "Hermione",
-                "Granger",
-                new Date(),
-                "AG0104",
-                Gender.WOMAN,
-                Role.ASPI,
-                Eatinghabbit.VEGI
-        );
+        this.particpant = RegistrationParticipantMother.createBasicRegistrationParticipant();
     }
 
     @Test

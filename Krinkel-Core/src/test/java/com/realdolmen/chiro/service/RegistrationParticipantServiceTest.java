@@ -5,6 +5,8 @@ import com.realdolmen.chiro.domain.Role;
 import com.realdolmen.chiro.domain.Gender;
 import com.realdolmen.chiro.domain.RegistrationParticipant;
 import com.realdolmen.chiro.repository.RegistrationCommunicationRepository;
+import com.realdolmen.chiro.domain.*;
+import com.realdolmen.chiro.mspservice.MultiSafePayService;
 import com.realdolmen.chiro.repository.RegistrationParticipantRepository;
 import org.junit.Assert;
 import org.junit.Before;
@@ -17,6 +19,9 @@ import org.mockito.runners.MockitoJUnitRunner;
 
 import java.util.Date;
 
+import static org.mockito.Matchers.anyString;
+import static org.mockito.Mockito.times;
+
 @RunWith(MockitoJUnitRunner.class)
 public class RegistrationParticipantServiceTest {
 
@@ -28,9 +33,11 @@ public class RegistrationParticipantServiceTest {
     private RegistrationParticipantRepository repo;
 
     @Mock
-    private RegistrationCommunicationRepository registrationCommunicationRepository;
-    
+    private MultiSafePayService mspService;
+
     private RegistrationParticipant participant;
+    public final static String TEST_AD_NUMBER = "123456";
+    public final static String TEST_ORDER_ID = "123456-2134684163";
 
     @Before
     public void setUp() {
@@ -42,6 +49,7 @@ public class RegistrationParticipantServiceTest {
         participant.setRole(Role.MENTOR);
         participant.setGender(Gender.X);
         participant.setBirthdate(new Date());
+        participant.setStatus(Status.TO_BE_PAID);
 
         Address address = new Address();
         address.setCity("REET");
@@ -61,12 +69,31 @@ public class RegistrationParticipantServiceTest {
     }
 
 
-
     @Test
     public void saveShouldReturnNULLWhenExisting() {
         Mockito.when(repo.findByAdNumber("ADNUMMER")).thenReturn(null);
         registrationParticipantService.save(participant);
         Assert.assertSame(null, registrationParticipantService.save(participant));
-        Mockito.verify(repo, Mockito.times(2)).save(participant);
+        Mockito.verify(repo, times(2)).save(participant);
+    }
+
+
+    @Test
+    public void updatePaymentStatusCallsMultiSafePayServiceWithCorrectOrderId() {
+        Mockito.when(repo.findByAdNumber(TEST_AD_NUMBER)).thenReturn(participant);
+        registrationParticipantService.updatePaymentStatus(TEST_ORDER_ID);
+
+        Mockito.verify(mspService, times(1)).orderIsPaid(TEST_AD_NUMBER);
+    }
+
+    @Test
+    public void updatePaymentStatusSetsStatusToPaidWhenMultisafepayStatusIsCompleted() {
+        Mockito.when(mspService.orderIsPaid(anyString())).thenReturn(true);
+        Mockito.when(repo.findByAdNumber(TEST_AD_NUMBER)).thenReturn(participant);
+
+        registrationParticipantService.updatePaymentStatus(TEST_ORDER_ID);
+        Mockito.verify(repo, times(1)).findByAdNumber(TEST_AD_NUMBER);
+        Mockito.verify(repo, times(1)).save(participant);
+        Assert.assertEquals(Status.PAID, participant.getStatus());
     }
 }

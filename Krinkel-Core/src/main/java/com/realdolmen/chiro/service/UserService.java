@@ -1,7 +1,8 @@
 package com.realdolmen.chiro.service;
 
-
 import com.realdolmen.chiro.chiro_api.ChiroUserAdapter;
+import com.realdolmen.chiro.domain.RegistrationParticipant;
+import com.realdolmen.chiro.domain.Status;
 import com.realdolmen.chiro.domain.User;
 import com.realdolmen.chiro.repository.RegistrationParticipantRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,21 +11,27 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class UserService {
+    @Autowired
+    private ChiroUserAdapter adapter;
 
     @Autowired
-    ChiroUserAdapter userAdapter;
+    private RegistrationParticipantRepository repo;
 
-    @Autowired
-    RegistrationParticipantRepository repository;
+    public User getUser(String adNumber) {
+        User u = adapter.getChiroUser(adNumber);
 
-
-    public User getUser(String username, String passw) {
-        System.out.println("useradapter == null?" + (userAdapter == null));
-        User u = userAdapter.getUser(username, passw);
         if (u != null) {
-            Boolean isRegistered = repository.findByAdNumber(u.getAdNumber()) != null;
-            u.setSubscribed(isRegistered);
+            RegistrationParticipant participant = repo.findByAdNumber(u.getAdNumber());
+
+            if (participant != null) {
+                u.setRegistered(true);
+
+                if (participant.getStatus() == Status.PAID)
+                    u.setHasPaid(true);
+            }
+
         }
+
         return u;
     }
 }

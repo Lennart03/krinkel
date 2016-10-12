@@ -3,19 +3,22 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
-	<groupId>com.realdolmen.chiro</groupId>
-	<artifactId>Krinkel</artifactId>
-	<packaging>pom</packaging>
-	<version>1.0-SNAPSHOT</version>
-	<modules>
-		<module>Krinkel-Frontend</module>
-		<module>Krinkel-Batch</module>
-		<module>Krinkel-Domain</module>
-		<module>Krinkel-Repository</module>
-		<module>Krinkel-Core</module>
-		<module>Krinkel-Chiro-api</module>
-		<module>Krinkel-Rest</module>
-	</modules>
+
+    <groupId>com.realdolmen.chiro</groupId>
+    <artifactId>Krinkel</artifactId>
+    <packaging>pom</packaging>
+    <version>1.0-SNAPSHOT</version>
+    <modules>
+        <module>Krinkel-Frontend</module>
+        <module>Krinkel-Batch</module>
+        <module>Krinkel-Domain</module>
+        <module>Krinkel-Repository</module>
+        <module>Krinkel-Core</module>
+        <module>Krinkel-Chiro-api</module>
+        <module>Krinkel-Rest</module>
+        <module>Krinkel-Multisafepay-Api</module>
+        <module>Krinkel-Static</module>
+    </modules>
 
 	<properties>
 		<java.version>1.8</java.version>
@@ -66,35 +69,59 @@
 
 			<dependency>
 				<groupId>com.realdolmen.chiro</groupId>
-				<artifactId>Krinkel-Repository</artifactId>
+				<artifactId>Krinkel-Chiro-api</artifactId>
 				<version>1.0-SNAPSHOT</version>
 				<scope>compile</scope>
 			</dependency>
-			<dependency>
-				<groupId>com.realdolmen.chiro</groupId>
-				<artifactId>Krinkel-Core</artifactId>
-				<version>1.0-SNAPSHOT</version>
-				<scope>compile</scope>
-			</dependency>
-			<dependency>
-				<groupId>com.realdolmen.chiro</groupId>
-				<artifactId>Krinkel-Rest</artifactId>
-				<version>1.0-SNAPSHOT</version>
-				<scope>compile</scope>
-			</dependency>
-			<dependency>
-				<groupId>com.realdolmen.chiro</groupId>
-				<artifactId>Krinkel-Frontend</artifactId>
-				<version>1.0-SNAPSHOT</version>
-				<scope>compile</scope>
-			</dependency>
+
+            <dependency>
+                <groupId>com.realdolmen.chiro</groupId>
+                <artifactId>Krinkel-Repository</artifactId>
+                <version>1.0-SNAPSHOT</version>
+                <scope>compile</scope>
+            </dependency>
+            <dependency>
+                <groupId>com.realdolmen.chiro</groupId>
+                <artifactId>Krinkel-Core</artifactId>
+                <version>1.0-SNAPSHOT</version>
+                <scope>compile</scope>
+            </dependency>
+            <dependency>
+                <groupId>com.realdolmen.chiro</groupId>
+                <artifactId>Krinkel-Rest</artifactId>
+                <version>1.0-SNAPSHOT</version>
+                <scope>compile</scope>
+            </dependency>
+            <dependency>
+                <groupId>com.realdolmen.chiro</groupId>
+                <artifactId>Krinkel-Frontend</artifactId>
+                <version>1.0-SNAPSHOT</version>
+                <scope>compile</scope>
+            </dependency>
+            <dependency>
+                <groupId>com.realdolmen.chiro</groupId>
+                <artifactId>krinkelmultisafepayapi</artifactId>
+                <version>1.0-SNAPSHOT</version>
+                <scope>compile</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.json</groupId>
+                <artifactId>json</artifactId>
+                <version>20160810</version>
+            </dependency>
+            <dependency>
+                <groupId>com.realdolmen.chiro</groupId>
+                <artifactId>Krinkel-Static</artifactId>
+                <version>1.0-SNAPSHOT</version>
+                <scope>compile</scope>
+            </dependency>
 			<dependency>
 				<groupId>com.google.guava</groupId>
 				<artifactId>guava</artifactId>
 				<version>r05</version>
 			</dependency>
-		</dependencies>
-	</dependencyManagement>
+        </dependencies>
+    </dependencyManagement>
 
 
 	<build>

@@ -1,10 +1,12 @@
 package com.realdolmen.chiro.controller;
 
 import com.realdolmen.chiro.Application;
+import com.realdolmen.chiro.TestApplication;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
@@ -12,6 +14,7 @@ import org.springframework.mock.http.MockHttpOutputMessage;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
@@ -31,10 +34,11 @@ import java.util.Arrays;
  *
  */
 @WebAppConfiguration
-@ContextConfiguration(classes={Application.class}) // Spring Boot config (includes component scan)
 @RunWith(SpringJUnit4ClassRunner.class)
+//@SpringBootTest(classes = {TestApplication.class})
+@ContextConfiguration(classes={TestApplication.class}) // Spring Boot config (includes component scan)
 @Transactional // Rollback after each test.
-@TestPropertySource(locations="classpath:test-application.properties") // Different set of properties to set H2 as DB.
+@TestPropertySource(locations="classpath:application-test.properties") // Different set of properties to set H2 as DB.
 public abstract class MockMvcTest {
 
     @Autowired
