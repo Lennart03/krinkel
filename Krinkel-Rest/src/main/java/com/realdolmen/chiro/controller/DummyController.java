@@ -33,7 +33,8 @@ public class DummyController {
     public String dummy2(){
         return "Hello World";
     }
-    @RequestMapping("/api/dummy/t")
+    //let this or tests will fail
+    @RequestMapping("/dummy")
     public String dummy3(){
         return "Hello World";
     }
