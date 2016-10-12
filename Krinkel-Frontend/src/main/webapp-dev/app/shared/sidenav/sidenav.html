@@ -5,7 +5,7 @@
   <div ng-if="$ctrl.AuthService.getLoggedinUser() != null">
     <li class="collection-item" ng-if="!$ctrl.AuthService.getRegistrationStatus()"><a href="/register-participant"><i
       class="material-icons">person_add</i> Schrijf je in</a></li>
-    <li class="collection-item"><a href="/register-group"><i class="material-icons">group_add</i> Schrijf anderen in</a>
+    <li class="collection-item"><a href="/select-participant"><i class="material-icons">group_add</i> Schrijf anderen in</a>
     </li>
     <li class="collection-item" ng-if="!$ctrl.AuthService.getRegistrationStatus()"><a href="/register-volunteer"><i
       class="material-icons">work</i> Schrijf je in als medewerker</a></li>

@@ -1,4 +1,7 @@
 <div class="row">
+    <h1 ng-if="$ctrl.type === 'volunteer'">Medewerker inschrijven</h1>
+    <h1 ng-if="$ctrl.type === 'participant'">Deelnemer inschrijven</h1>
+    <h1>{{$ctrl.SelectService.getSelectedFlag()}}</h1>
 
     <p class="flow-text"><i class="material-icons">info_outline</i> Let op: Als je je inschrijft, word je meteen naar
         een betaalpagina gestuurd.

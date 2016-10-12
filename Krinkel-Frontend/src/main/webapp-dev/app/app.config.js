@@ -26,6 +26,10 @@ export function appConfig($routeProvider, $locationProvider) {
         template: '<krinkel-confirmation></krinkel-confirmation>'
     });
 
+    $routeProvider.when('/select-participant', {
+        template: '<krinkel-select></krinkel-select>'
+    });
+
 
     $routeProvider.otherwise({
         redirectTo: '/home'

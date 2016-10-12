@@ -3,6 +3,7 @@ class SuccessMessageController {
     constructor(AuthService,$location) {
         this.AuthService = AuthService;
         this.$location = $location;
+        window.scrollTo(0,0);
     }
 
     $onInit() {
