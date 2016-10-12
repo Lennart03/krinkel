@@ -4,7 +4,6 @@ package com.realdolmen.chiro.domain;
 
 public class User {
 
-    private String username;
     private Role role;
     private String adNumber;
     private String email;
@@ -12,17 +11,34 @@ public class User {
     private String lastname;
     private boolean registered;
     private boolean hasPaid;
+    private String stamnummer;
+    private String username;
 
     public User() {
     }
 
-    public User(String username, Role role, String adNumber, String email, String firstname, String lastname) {
-        this.username = username;
+    public User(String firstName, Role role, String adNumber, String email, String firstname, String lastname) {
         this.role = role;
         this.adNumber = adNumber;
         this.email = email;
         this.firstname = firstname;
         this.lastname = lastname;
+    }
+
+    public User(String adNumber, String email, String firstname, String lastname, String stamnummer) {
+        this.adNumber = adNumber;
+        this.email = email;
+        this.firstname = firstname;
+        this.lastname = lastname;
+        this.stamnummer = stamnummer;
+    }
+
+    public String getStamnummer() {
+        return stamnummer;
+    }
+
+    public void setStamnummer(String stamnummer) {
+        this.stamnummer = stamnummer;
     }
 
     public String getUsername() {
