@@ -2,7 +2,6 @@ package com.realdolmen.chiro.controller;
 
 import com.realdolmen.chiro.domain.*;
 import com.realdolmen.chiro.repository.RegistrationParticipantRepository;
-import com.realdolmen.chiro.repository.RegistrationVolunteerRepository;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;

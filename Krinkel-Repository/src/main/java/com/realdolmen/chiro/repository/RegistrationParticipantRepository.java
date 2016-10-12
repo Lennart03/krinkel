@@ -18,4 +18,7 @@ public interface RegistrationParticipantRepository extends JpaRepository<Registr
             ")"
     )
     List<RegistrationParticipant> findParticipantsByGroup(String s);
+    
+    @Query(value="SELECT * FROM RegistrationParticipant WHERE status = 'PAID')", nativeQuery=true)
+    List<RegistrationParticipant> findRegistrationParticipantsWithStatusPAID();
 }
