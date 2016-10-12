@@ -33,28 +33,10 @@ public class UserServiceTest {
     private final static String TEST_AD_NUMBER = "apiuehf54aiawuef";
     private User u = new User();
 
-    User user;
-    CASService casService;
 
     @Before
     public void setUp(){
-        casService = new CASService();
-        user = new User();
-        user.setAdNumber("ADBUmBER");
-        user.setEmail("john.doe@example.com");
-        user.setFirstname("John");
-        user.setLastname("Doe");
-        user.setRole(Role.MENTOR);
-        user.setUsername("Franske4653");
         u.setAdNumber(TEST_AD_NUMBER);
-    }
-
-    @Test
-    public void testUserService()  {
-        String token = casService.createToken(user);
-        Jwt jwt = Jwts.parser().setSigningKey(casService.JWT_SECRET).parse(token);
-        Assert.assertEquals(jwt.getBody().toString().substring(0, jwt.getBody().toString().lastIndexOf(",")), "{sub=Franske4653, firstname=John, lastname=Doe, adnummer=ADBUmBER, email=john.doe@example.com, role=MENTOR");
-        Assert.assertEquals(jwt.getHeader().toString(), "{alg=HS256}");
     }
 
 
@@ -125,6 +107,6 @@ public class UserServiceTest {
 
         User user = service.getUser(TEST_AD_NUMBER);
         Assert.assertSame(u, user);
-        Assert.assertTrue(user.hasPaid());
+        Assert.assertTrue(user.isRegistered());
     }
 }
