@@ -4,7 +4,7 @@ export class AuthService {
         this.KrinkelService = KrinkelService;
 
         this.getCurrentUserDetails(this.getLoggedinUser().adnummer).then((resp) => {
-
+            this.userDetails = resp;
         });
 
         this.getUserFromStorage();

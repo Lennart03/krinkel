@@ -10,7 +10,7 @@ public class UserService {
     public User getUser(String adNumber) {
         User u = new User();
         u.setAdNumber(adNumber);
-        u.setHasPaid(false);
+        u.setHasPaid(true);
         u.setIsRegistered(true);
         return u;
     }

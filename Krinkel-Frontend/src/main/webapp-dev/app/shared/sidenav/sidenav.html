@@ -4,11 +4,11 @@
     </a></li>
 
   <div ng-if="$ctrl.AuthService.getLoggedinUser() != null">
-    <li class="collection-item" ng-if="!$ctrl.getUserDetails().registered == false"><a href="/register-participant"><i
+      <li class="collection-item" ng-if="$ctrl.AuthService.getUserDetails().registered == false"><a href="/register-participant"><i
       class="material-icons">person_add</i> Schrijf je in</a></li>
     <li class="collection-item"><a href="/select-participant"><i class="material-icons">group_add</i> Schrijf anderen in</a>
     </li>
-    <li class="collection-item" ng-if="!$ctrl.getUserDetails().registered == false"><a href="/register-volunteer"><i
+    <li class="collection-item" ng-if="$ctrl.AuthService.getUserDetails().registered == false"><a href="/register-volunteer"><i
       class="material-icons">work</i> Schrijf je in als medewerker</a></li>
     <li class="collection-item" ng-if="$ctrl.AuthService.getUserRole() === 'ADMIN'"><a href="#"><i
       class="material-icons">equalizer</i> Overzicht inschrijvingen</a></li>
