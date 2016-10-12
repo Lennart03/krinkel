@@ -26,7 +26,7 @@ public class UserService {
 
     public String validateTicket(String ticket){
         User user = validate(ticket);
-        return CreateToken(user);
+        return createToken(user);
     }
 
     public final User validate(String ticket) {
@@ -60,7 +60,7 @@ public class UserService {
         return ((List<String>) claims.get("role")).contains(role);
     }
 
-    public String CreateToken(User data) {
+    public String createToken(User data) {
         return Jwts.builder()
                 .setSubject(data.getUsername())
                 .claim("firstname", data.getFirstname())
