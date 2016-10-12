@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<!-- <head> -->
+<!-- <meta charset="utf-8" /> -->
+<!-- </head> -->
+<body>
+	<img alt="logo" src="cid:logo" width="20%" />
+
+	<h1>Hoera!</h1>
+
+	<p>
+		Dag <span th:text="${participant.firstName}"></span>! Je hebt je
+		succesvol ingeschreven <span th:if='${isVolunteer}'>als
+			medewerker</span> voor Krinkel. Je betaling is gelukt en we hebben je
+		gegevens ontvangen. Hieronder vind je de gegevens die je invulde. Wil
+		je iets veranderen aan je inschrijving? Laat het weten via
+		inschrijvingen@krinkel.be.
+	</p>
+
+	<table>
+		<tr>
+			<td>Naam:</td>
+			<td th:text="${participant.firstName}"></td>
+			<td>Achternaam:</td>
+			<td th:text="${participant.lastName}"></td>
+		</tr>
+		<tr>
+			<td>Email:</td>
+			<td th:text="${participant.email}"></td>
+			<td>Telefoonnummer:</td>
+			<td th:text="${participant.phoneNumber}"></td>
+
+		</tr>
+		<tr>
+			<td>Straat en huisnummer:</td>
+			<td
+				th:text="${participant.address.street} + ', ' + ${participant.address.houseNumber}"></td>
+			<td>Postcode en Gemeente:</td>
+			<td
+				th:text="${participant.address.postalCode} + ', ' + ${participant.address.city}"></td>
+
+		</tr>
+		<tr>
+			<td>Geboortedatum:</td>
+			<td th:text="${participant.birthdate}"></td>
+			<td>Stamnummer</td>
+			<td th:text="${participant.stamnumber}"></td>
+
+		</tr>
+		<tr>
+			<td>Geslacht:</td>
+			<td th:text="${participant.gender}"></td>
+			<td>Functie:</td>
+			<td th:text="${participant.role}"></td>
+
+		</tr>
+		<tr th:if="${isVolunteer}">
+			<td>Kampgrond:</td>
+			<td th:text="${participant.campGround.description}"></td>
+			<td></td>
+			<td></td>
+
+		</tr>
+		<tr th:if="${isVolunteer}">
+			<td>Voorwacht:</td>
+			<td><ul>
+					<li th:each="preCamp : ${participant.preCampList}"
+						th:text="${preCamp.toString()}"></li>
+				</ul></td>
+			<td>Nawacht:</td>
+			<td><ul>
+					<li th:each="postCamp : ${participant.postCampList}"
+						th:text="${postCamp.toString()}"></li>
+				</ul></td>
+
+		</tr>
+		<tr th:if="${isVolunteer}">
+			<td>Vrijwilligersfunctie:</td>
+			<td >
+				<div th:if="${participant.function.other}==null" th:text="${participant.function.preset.description}"></div>
+				<div th:if="${participant.function.other}!=null" th:text="${participant.function.other}"></div>
+			</td>
+			
+		</tr>
+		<tr>
+			<td>Buddy:</td>
+			<td th:switch="${participant.buddy}">
+				<div th:case="true">ja</div>
+				<div th:case="false">neen</div>
+			</td>
+			<td>Talen:</td>
+			<td><ul>
+					<li th:each="lang : ${participant.language}" th:text="lang"></li>
+				</ul></td>
+
+		</tr>
+		<tr>
+			<td>Sociale promotie:</td>
+			<td th:switch="${participant.socialPromotion}"><div
+					th:case="true">ja</div>
+				<div th:case="false">neen</div></td>
+			<td>Voorkeur maaltijden:</td>
+			<td th:switch="${participant.eatinghabbit}"><div
+					th:case="'VEGI'">Vegetarisch</div>
+				<div th:case="'FISHANDMEAT'">Vis en vlees</div>
+				<div th:case="'HALAL'">Halal</div></td>
+
+		</tr>
+		<tr>
+			<td>Opmerkingen maaltijden:</td>
+			<td th:text="${participant.remarksFood}"></td>
+		</tr>
+		<tr>
+			<td>Medische opmerkingen</td>
+			<td th:text="${participant.medicalRemarks}"></td> 
+		</tr>
+		<tr>
+			<td>Andere opmerkingen</td>
+			<td th:text="${participant.remarks}"></td>
+		</tr>
+
+	</table>
+
+
+	<div th:switch="${isVolunteer}">
+		<p th:case="false">We verwachten je op 25 augustus in Merksplas en
+			je gaat moe, maar voldaan weer naar huis in de namiddag van 30
+			augustus. Exacte uren, welke trein je kan nemen, een meeneemlijstje:
+			die info krijg je nog via mail eind juli. Hou ook zeker de website in
+			de gaten, daar ga je steeds meer te weten kunnen komen.</p>
+		<p th:case="true">Extra info over Krinkel krijg je nog via de
+			trekker van je kampgrond of werkgroep en via mail eind juli. Hou ook
+			zeker de website in de gaten, daar ga je steeds meer te weten kunnen
+			komen.</p>
+	</div>
+
+
+	<p>Kan je wegens een geldige reden niet meer mee op Krinkel? Dan
+		kun je je uitschrijven. Je krijgt dan het hele bedrag teruggestort.
+		Geldige redenen voor uitschrijven zijn:</p>
+	<ul>
+		<li>Herexamens. Je schrijft je uit voor x augustus.</li>
+		<li>Huwelijken, of andere belangrijke familiale momenten zijn ook
+			geldige redenen om je uit te schrijven. Krinkel tijdelijk verlaten
+			kan niet. Je schrijft je uit voor x augustus.</li>
+		<li>Overlijdens in de familie.</li>
+		<li>Ziekte of ongeval met doktersattest.</li>
+		<li>Vakantie die plots wordt ingetrokken door de werkgever.</li>
+	</ul>
+	<p>
+		Neem hiervoor contact met ons op via <a
+			href="mailto:inschrijvingen@krinkel.be">inschrijvingen@krinkel.be</a>
+		of 03/231 07 95.
+	</p>
+
+	<p>
+		Nog algemene Krinkelvragen? Dan kan je terecht op <a
+			href="mailto:info@krinkel.be">info@krinkel.be</a>.
+	</p>
+
+	<p>Tot op Krinkel!</p>
+
+
+
+</body>
+</html>
