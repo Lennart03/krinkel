@@ -72,6 +72,7 @@ public class RegistrationParticipantServiceTest {
     @Test
     public void saveShouldReturnParticipantAfter() {
         Mockito.when(repo.save(participant)).thenReturn(participant);
+        Mockito.when(adapter.getChiroUser(participant.getAdNumber())).thenReturn(user);
         Assert.assertSame(participant, registrationParticipantService.save(participant));
         Mockito.verify(repo).save(participant);
     }
@@ -80,7 +81,10 @@ public class RegistrationParticipantServiceTest {
     @Test
     public void saveShouldReturnNULLWhenExisting() {
         Mockito.when(repo.findByAdNumber("ADNUMMER")).thenReturn(null);
+        Mockito.when(adapter.getChiroUser(participant.getAdNumber())).thenReturn(user);
+
         registrationParticipantService.save(participant);
+
         Assert.assertSame(null, registrationParticipantService.save(participant));
         Mockito.verify(repo, times(2)).save(participant);
     }
