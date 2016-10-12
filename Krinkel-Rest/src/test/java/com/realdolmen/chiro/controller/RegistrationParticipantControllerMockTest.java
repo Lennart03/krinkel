@@ -23,6 +23,8 @@ public class RegistrationParticipantControllerMockTest extends MockMvcTest {
     @Autowired
     private RegistrationParticipantRepository repo;
 
+    private int nParticipants = 0;
+
     @Before
     public void setUp(){
         // Participant
@@ -45,6 +47,9 @@ public class RegistrationParticipantControllerMockTest extends MockMvcTest {
                 new VolunteerFunction(VolunteerFunction.Preset.KLINKER_EDITORIAL)
         );
         volunteer.setAddress(new Address("-", "-", 1500, "-"));
+
+
+        this.nParticipants = repo.findAll().size();
     }
 
     @Test
@@ -59,7 +64,7 @@ public class RegistrationParticipantControllerMockTest extends MockMvcTest {
                 .andExpect(MockMvcResultMatchers.status().is2xxSuccessful());
 
         assertNotNull(repo.findByAdNumber(participant.getAdNumber()));
-        assertEquals(1, repo.findAll().size());
+        assertEquals(nParticipants+1, repo.findAll().size());
     }
 
     @Test
@@ -74,7 +79,7 @@ public class RegistrationParticipantControllerMockTest extends MockMvcTest {
                 .andExpect(MockMvcResultMatchers.status().is2xxSuccessful());
 
         assertNotNull(repo.findByAdNumber(volunteer.getAdNumber()));
-        assertEquals(1, repo.findAll().size());
+        assertEquals(nParticipants+1, repo.findAll().size());
 
         mockMvc()
                 .perform(
@@ -83,7 +88,7 @@ public class RegistrationParticipantControllerMockTest extends MockMvcTest {
                                 .content(jsonPayload))
                 .andExpect(MockMvcResultMatchers.status().is4xxClientError());
 
-        assertEquals(1, repo.findAll().size());
+        assertEquals(nParticipants+1, repo.findAll().size());
     }
 
     @Test
@@ -97,7 +102,7 @@ public class RegistrationParticipantControllerMockTest extends MockMvcTest {
                                 .content(jsonPayload))
                 .andExpect(MockMvcResultMatchers.status().is4xxClientError());
 
-        assertEquals(0, repo.findAll().size());
+        assertEquals(nParticipants, repo.findAll().size());
     }
 
     @Test
@@ -111,7 +116,7 @@ public class RegistrationParticipantControllerMockTest extends MockMvcTest {
                                 .content(jsonPayload))
                 .andExpect(MockMvcResultMatchers.status().is4xxClientError());
 
-        assertEquals(0, repo.findAll().size());
+        assertEquals(nParticipants, repo.findAll().size());
     }
 
     @Test
@@ -127,7 +132,7 @@ public class RegistrationParticipantControllerMockTest extends MockMvcTest {
                                 .content(jsonPayload))
                 .andExpect(MockMvcResultMatchers.status().is4xxClientError());
 
-        assertEquals(0, repo.findAll().size());
+        assertEquals(nParticipants, repo.findAll().size());
     }
 
     /**
@@ -146,6 +151,6 @@ public class RegistrationParticipantControllerMockTest extends MockMvcTest {
                                 .content(jsonPayload));
                 //.andExpect(MockMvcResultMatchers.status().is4xxClientError());
 
-        assertEquals(1, repo.findAll().size());
+        assertEquals(nParticipants+1, repo.findAll().size());
     }
 }

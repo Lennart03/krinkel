@@ -36,7 +36,7 @@ public class DummyControllerMockTest extends MockMvcTest{
         c.set(1999,Calendar.APRIL, 2);
 
         RegistrationParticipant p = new RegistrationParticipant(
-                "123456",
+                "4242123456",
                 "hermione@hogwarts.example",
                 "Hermione",
                 "Granger",
