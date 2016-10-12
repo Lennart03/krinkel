@@ -23,15 +23,15 @@ public class MultiSafePayService {
     /**
      * Initiates a payment at Multisafepay.
      *
-     * @param orderId the order id that is given to Multisafepay. This is used for later callbacks. For now, we consider
-     *                the ad-number of the person that is being paid for as order id.
-     * @param amount  specifies the amount that has to be paid in eurocents
+     * @param participant the order id that is given to Multisafepay. This is used for later callbacks. For now, we consider
+     *                    the ad-number of the person that is being paid for as order id.
+     * @param amount      specifies the amount that has to be paid in eurocents
      * @return returns the JSON response in object form (an OrderDto object)
      */
-    public OrderDto createPayment(String orderId, Integer amount) {
-        if (!createPaymentParamsAreValid(orderId, amount))
+    public OrderDto createPayment(RegistrationParticipant participant, Integer amount) {
+        if (!createPaymentParamsAreValid(participant.getAdNumber(), amount))
             throw new InvalidParameterException("cannot create a payment with those params");
-        JSONObject jsonObject = this.createPaymentJsonObject(orderId, amount);
+        JSONObject jsonObject = this.createPaymentJsonObject(participant, amount);
 
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
@@ -59,7 +59,7 @@ public class MultiSafePayService {
 
     /**
      * Creates the JSON object that will be used in the request to initiate a multisafepay payment.
-     *
+     * <p>
      * {
      * "type": "redirect",
      * "order_id": "A100",
@@ -73,13 +73,20 @@ public class MultiSafePayService {
      * },
      * "customer": {
      * "locale": "nl_BE",
-     * <p>
+     * "first_name": null,
+     * "last_name": null,
+     * "address1": null,
+     * "house_number": null,
+     * "zip_code": null,
+     * "city": null,
      * "country": "BE"
-     * <p>
+     * "phone": null,
+     * "email": null,
+     * "disable_send_email": false
      * }
      * }
      */
-    private JSONObject createPaymentJsonObject(String orderId, Integer amount) {
+    private JSONObject createPaymentJsonObject(RegistrationParticipant participant, Integer amount) {
         JSONObject paymentOptions = new JSONObject();
         JSONObject customer = new JSONObject();
 
@@ -89,12 +96,26 @@ public class MultiSafePayService {
         paymentOptions.put("cancel_url", "http://localhost:8080/payment/failure");
 
         customer.put("locale", "nl_BE");
+        customer.put("first_name", participant.getFirstName());
+        customer.put("last_name", participant.getLastName());
+
+        if (participant.getAddress() != null) {
+            customer.put("address1", participant.getAddress().getStreet());
+            customer.put("house_number", participant.getAddress().getHouseNumber());
+            customer.put("city", participant.getAddress().getCity());
+            customer.put("zip_code", participant.getAddress().getPostalCode());
+        }
         customer.put("country", "BE");
+
+        customer.put("phone", participant.getPhoneNumber());
+        customer.put("email", participant.getEmail());
+
+
 
         JSONObject jsonObject = new JSONObject();
 
         jsonObject.put("type", "redirect");
-        jsonObject.put("order_id", orderId);
+        jsonObject.put("order_id", participant.getAdNumber());
         jsonObject.put("description", "this is the description");
         jsonObject.put("currency", "EUR");
         jsonObject.put("amount", amount);
@@ -113,11 +134,12 @@ public class MultiSafePayService {
      * @return the url at which the payment page is located
      */
     public String getParticipantPaymentUri(RegistrationParticipant p, Integer amount) {
-        return this.createPayment(p.getAdNumber(), amount).getData().getPayment_url();
+        return this.createPayment(p, amount).getData().getPayment_url();
+
     }
 
     public String getVolunteerPaymentUri(RegistrationVolunteer v, Integer amount) {
-        return this.createPayment(v.getAdNumber(), amount).getData().getPayment_url();
+        return this.createPayment(v, amount).getData().getPayment_url();
     }
 
     public boolean orderIsPaid(String testOrderId) {

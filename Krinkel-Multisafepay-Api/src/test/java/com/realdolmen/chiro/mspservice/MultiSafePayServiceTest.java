@@ -1,10 +1,7 @@
 package com.realdolmen.chiro.mspservice;
 
 
-import com.realdolmen.chiro.domain.Gender;
-import com.realdolmen.chiro.domain.RegistrationParticipant;
-import com.realdolmen.chiro.domain.RegistrationVolunteer;
-import com.realdolmen.chiro.domain.Role;
+import com.realdolmen.chiro.domain.*;
 import com.realdolmen.chiro.mspdto.OrderDto;
 import com.sun.org.apache.xerces.internal.util.URI;
 import org.junit.Assert;
@@ -28,35 +25,45 @@ public class MultiSafePayServiceTest {
 
     private RegistrationParticipant p;
     private RegistrationVolunteer v;
-
+    private Address address;
 
     @Before
     public void init() {
+        Address address = new Address("rttr", "3", 1600, "test");
         p = new RegistrationParticipant("123", "jos@example.com", "Joske", "Vermeulen", new Date(), "AB 12/34", Gender.MAN, Role.ASPI, null);
+        p.setAddress(address);
         v = new RegistrationVolunteer();
+
         v.setAdNumber("1516");
     }
 
 
     @Test
-    public void createPaymentReturnDtoWithUrl(){
-        OrderDto payment = multiSafePayService.createPayment("abc", 100);
+    public void createPaymentReturnsDtoWithUrl() {
+        OrderDto payment = multiSafePayService.createPayment(p, 100);
+        Assert.assertNotNull(payment.getData().getPayment_url());
+    }
+
+    @Test
+    public void createPaymentForVolunteerWithEmptyFieldsReturnsDtoWithUrl() {
+        OrderDto payment = multiSafePayService.createPayment(v, 6000);
         Assert.assertNotNull(payment.getData().getPayment_url());
     }
 
     @Test(expected = InvalidParameterException.class)
     public void createPaymentThrowsErrorWhenOrderIdIsNull() {
-        multiSafePayService.createPayment(null, 100);
+        p.setAdNumber(null);
+        multiSafePayService.createPayment(p, 100);
     }
 
     @Test(expected = InvalidParameterException.class)
     public void createPaymentThrowsErrorWhenAmountIsNull() {
-        multiSafePayService.createPayment("abc", null);
+        multiSafePayService.createPayment(p, null);
     }
 
     @Test(expected = InvalidParameterException.class)
     public void createPaymentThrowsErrorWhenAmountIsNegative() {
-        multiSafePayService.createPayment("abc", -1);
+        multiSafePayService.createPayment(p, -1);
     }
 
     @Test
@@ -68,8 +75,6 @@ public class MultiSafePayServiceTest {
     public void getVolunteerPaymentUriReturnsUri() {
         Assert.assertNotNull(multiSafePayService.getVolunteerPaymentUri(v, 6000));
     }
-
-
 
 
 }
