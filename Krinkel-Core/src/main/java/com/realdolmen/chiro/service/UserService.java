@@ -9,7 +9,9 @@ import org.jasig.cas.client.authentication.AttributePrincipal;
 import org.jasig.cas.client.validation.Assertion;
 import org.jasig.cas.client.validation.Cas20ProxyTicketValidator;
 import org.jasig.cas.client.validation.TicketValidationException;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.ResponseStatus;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -68,5 +70,13 @@ public class UserService {
                 .claim("role", data.getRole())
                 .setIssuedAt(new Date())
                 .signWith(SignatureAlgorithm.HS256, "MATHIASISNOOB").compact();
+    }
+
+    public User getUser(String adNumber) {
+        User u = new User();
+        u.setAdNumber(adNumber);
+        u.setHasPaid(false);
+        u.setIsRegistered(false);
+        return u;
     }
 }

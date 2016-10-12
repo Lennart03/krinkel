@@ -2,6 +2,8 @@ package com.realdolmen.chiro.controller;
 
 import javax.servlet.*;
 import javax.servlet.http.*;
+
+import com.realdolmen.chiro.domain.User;
 import com.realdolmen.chiro.service.UserService;
 import com.sun.media.sound.SoftTuning;
 import io.jsonwebtoken.Claims;
@@ -19,11 +21,11 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.*;
 
-@Controller
+@RestController
 public class UserController {
 
     @Autowired
-    UserService service;
+    private UserService service;
 
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
@@ -38,7 +40,7 @@ public class UserController {
     @RequestMapping(value = "/api/cas", method = RequestMethod.GET)
     public void casRedirect(@RequestParam String ticket, HttpServletResponse response) throws IOException {
         String jwt = service.validateTicket(ticket);
-        if (jwt!=null){
+        if (jwt != null) {
             Cookie myCookie = new Cookie("Authorization", jwt);
             myCookie.setPath("/");
             myCookie.setMaxAge(-1);
@@ -49,4 +51,20 @@ public class UserController {
     }
 
 
+    @RequestMapping(method = RequestMethod.GET, value = "/api/users/{adNumber}")
+    public User getUser(@PathVariable("adNumber") String adNumber) throws UserNotfoundException {
+        User u = service.getUser(adNumber);
+
+        if ( u == null )
+            throw new UserNotfoundException();
+
+        return u;
+    }
+
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public class UserNotfoundException extends RuntimeException {
+        public UserNotfoundException() {
+            super("Gebruiker bestaat niet.");
+        }
+    }
 }

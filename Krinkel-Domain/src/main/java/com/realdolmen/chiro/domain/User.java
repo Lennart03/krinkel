@@ -11,6 +11,8 @@ public class User {
     private String email;
     private String firstname;
     private String lastname;
+    private boolean isRegistered;
+    private boolean hasPaid;
 
     public User() {
     }
@@ -72,5 +74,27 @@ public class User {
         this.lastname = lastname;
     }
 
+    public boolean isRegistered() {
+        return isRegistered;
+    }
 
+    public boolean getIsRegistered() {
+        return isRegistered;
+    }
+
+    public void setIsRegistered(boolean registered) {
+        isRegistered = registered;
+    }
+
+    public boolean hasPaid() {
+        return hasPaid;
+    }
+
+    public boolean getHasPaid() {
+        return hasPaid;
+    }
+
+    public void setHasPaid(boolean hasPaid) {
+        this.hasPaid = hasPaid;
+    }
 }
