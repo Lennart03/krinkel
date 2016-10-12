@@ -17,12 +17,14 @@ import {WelcomeMessageComponent} from './shared/welcome-message/welcome-message.
 import {RegisterComponent} from './krinkel-register/register.component'
 import {SuccessMessageComponent} from './shared/success-message/success-message.component'
 import {SideNavComponent} from './shared/sidenav/sidenav.component'
-import {TopNavComponent} from './shared/topnav/topnav.component';
+import {TopNavComponent} from './shared/topnav/topnav.component'
+import {UnitsComponent} from './shared/units/units.component'
 import {KrinkelSelectComponent} from './krinkel-select-person/select.component';
 
 //pages
 import {KrinkelHomepageComponent} from './krinkel-homepage/krinkel-homepage.component';
 import {KrinkelConfirmationComponent} from './krinkel-confirmation/krinkel-confirmation.component';
+import {KrinkelAnalyticsComponent} from './krinkel-analytics/krinkel-analytics.component';
 
 export default angular
   .module('contactsApp', ['ngRoute'])
@@ -43,8 +45,11 @@ export default angular
   .component('successMessage',SuccessMessageComponent)
   .component('topNav', TopNavComponent)
   .component('krinkelSelect', KrinkelSelectComponent)
+    .component('units', UnitsComponent)
   //pages
   .component('krinkelHomepage', KrinkelHomepageComponent)
   .component('register', RegisterComponent)
     .component('krinkelConfirmation', KrinkelConfirmationComponent)
+   .component('krinkelConfirmation', KrinkelConfirmationComponent)
+    .component('krinkelAnalytics', KrinkelAnalyticsComponent)
   .name;

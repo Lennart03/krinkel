@@ -47,10 +47,10 @@ Only builds one of the submodules, not everything:
 Should return the following info:
 
     {
-        naam,
-        stamnummer,
-        bovenliggende stamnummer,
-        onderliggende stamnummers : [ ]
+        "naam" : "",
+        "stamnummer : "",
+        "bovenliggende_stamnummer" : "" | null,
+        "onderliggende_stamnummers" : [ "", ... ]
     }
 
 ## Auth for angular development (gulp serve)
