@@ -23,9 +23,10 @@ import {KrinkelSelectComponent} from './krinkel-select-person/select.component';
 //pages
 import {KrinkelHomepageComponent} from './krinkel-homepage/krinkel-homepage.component';
 import {KrinkelConfirmationComponent} from './krinkel-confirmation/krinkel-confirmation.component';
+import {KrinkelGraphComponent} from './krinkel-graph/krinkel-graph.component';
 
 export default angular
-  .module('contactsApp', ['ngRoute'])
+  .module('contactsApp', ['ngRoute', 'nvd3'])
   .config(appConfig)
   .constant('appVersion', 'BETA')
   .constant('BASEURL', 'http://localhost:8080')
@@ -47,4 +48,5 @@ export default angular
   .component('krinkelHomepage', KrinkelHomepageComponent)
   .component('register', RegisterComponent)
     .component('krinkelConfirmation', KrinkelConfirmationComponent)
+    .component('krinkelGraph', KrinkelGraphComponent)
   .name;
