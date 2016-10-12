@@ -10,3 +10,4 @@ import appModule from './app/app.module';
 angular.bootstrap(document, [appModule]);
 
 $('.button-collapse').sideNav();
+

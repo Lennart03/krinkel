@@ -4,6 +4,12 @@ export class KrinkelService {
     this.BASEURL = BASEURL;
   }
 
+  getCasUrl(){
+      return this.$http.get(`${this.BASEURL}/api/casurl`).then((resp) => {
+          return resp.data;
+      });
+  }
+
   logIn(user, password) {
     return this.$http.get(`${this.BASEURL}/api/users?user=${user}&password=${password}`).then((resp) => {
       return resp.data;
@@ -30,6 +36,11 @@ export class KrinkelService {
       return this.$http.get(`${this.BASEURL}/api/confirmation?ad=${adNumber}&token=${token}`).then((resp) => {
           return resp.data;
       });
+  }
+  getColleagues(adNumber){
+      return this.$http.get(`${this.BASEURL}/api/colleagues?ad=${adNumber}`).then((resp) => {
+          return resp.data;
+      })
   }
 
 
