@@ -24,7 +24,7 @@ public abstract class CampHelpMoment {
 
     @Temporal(TemporalType.DATE)
     @JsonFormat(pattern="yyyy-MM-dd")
-    private Date date;
+    private Date date = new Date();
 
     public CampHelpMoment() {
     }
@@ -48,6 +48,6 @@ public abstract class CampHelpMoment {
     @Override
     public String toString(){
     	SimpleDateFormat dateFrmt = new SimpleDateFormat("dd/MM/yyyy");
-    	return dateFrmt.format(getDate());
+    	return dateFrmt.format(this.getDate());
     }
 }

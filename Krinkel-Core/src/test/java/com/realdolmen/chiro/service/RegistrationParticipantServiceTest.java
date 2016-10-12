@@ -4,6 +4,7 @@ import com.realdolmen.chiro.domain.Address;
 import com.realdolmen.chiro.domain.Role;
 import com.realdolmen.chiro.domain.Gender;
 import com.realdolmen.chiro.domain.RegistrationParticipant;
+import com.realdolmen.chiro.repository.RegistrationCommunicationRepository;
 import com.realdolmen.chiro.repository.RegistrationParticipantRepository;
 import org.junit.Assert;
 import org.junit.Before;
@@ -27,7 +28,7 @@ public class RegistrationParticipantServiceTest {
     private RegistrationParticipantRepository repo;
 
     @Mock
-    private EmailSenderService emailSenderService;
+    private RegistrationCommunicationRepository registrationCommunicationRepository;
     
     private RegistrationParticipant participant;
 

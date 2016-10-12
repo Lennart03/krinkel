@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 import com.realdolmen.chiro.domain.RegistrationParticipant;
 
 
-@Service
+//@Service
 public interface EmailSenderService {
 	Future<String> sendMail(RegistrationParticipant participant);
 }
