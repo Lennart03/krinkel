@@ -44,6 +44,7 @@ class RegisterController {
             this.KrinkelService.postParticipant(this.MapperService.mapParticipant(newPerson)).then(function (response) {
                 thiz.dataIsRemoved = true;
                 thiz.StorageService.removeUser();
+                thiz.SelectService.setSelectedFlag(false);
                 thiz.$location.path('/success');
             });
             return;
