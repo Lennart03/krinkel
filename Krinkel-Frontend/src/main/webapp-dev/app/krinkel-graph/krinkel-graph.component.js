@@ -5,7 +5,9 @@ class KrinkelGraphController {
 
     $onInit() {
         this.test = "sunburstChart";
-        this.options = {
+
+        //sunburst------------------
+        this.sunBurstOptions = {
             chart: {
                 type: 'sunburstChart',
                 height: 450,
@@ -14,7 +16,7 @@ class KrinkelGraphController {
             }
         };
 
-        this.data = [{
+        this.sunBurstData = [{
             "name": "Inschrijvingen",
             "children": [
                 {
@@ -394,6 +396,128 @@ class KrinkelGraphController {
                 }
             ]
         }];
+        //loginchart----------------------------------------------
+        this.lineOptions = {
+            chart: {
+                type: 'stackedAreaChart',
+                height: 450,
+                margin : {
+                    top: 20,
+                    right: 20,
+                    bottom: 30,
+                    left: 40
+                },
+                x: function(d){return d[0];},
+                y: function(d){return d[1];},
+                showControls: false,
+                useVoronoi: false,
+                clipEdge: true,
+                duration: 100,
+                useInteractiveGuideline: true,
+                xAxis: {
+                    showMaxMin: false,
+                    tickFormat: function(d) {
+                        return d3.time.format('%x')(new Date(d))
+                    }
+                },
+                yAxis: {
+                    tickFormat: function(d){
+                        return d3.format(',.0f')(d);
+                    }
+                },
+                zoom: {
+                    enabled: false,
+                    scaleExtent: [1, 10],
+                    useFixedDomain: false,
+                    useNiceScale: false,
+                    horizontalOff: false,
+                    verticalOff: false,
+                    unzoomEventType: 'dblclick.zoom'
+                }
+            }
+        };
+
+        this.lineData = [
+            {
+                key: "Aantal login\'s: ",
+                values: [
+                    [
+                        1083297600000,
+                        1
+                    ],
+                    [
+                        1085976000000,
+                        2
+                    ],
+                    [
+                        1088568000000,
+                        5
+                    ],
+                    [
+                        1091246400000,
+                        3
+                    ],
+                    [
+                        1093924800000,
+                        8
+                    ]
+                ]
+            }
+        ];
+        //barchart -------------------
+        this.barOptions = {
+            chart: {
+                type: 'discreteBarChart',
+                height: 450,
+                margin: {
+                    top: 20,
+                    right: 20,
+                    bottom: 50,
+                    left: 55
+                },
+                x: function (d) {
+                    return d.label;
+                },
+                y: function (d) {
+                    return d.value;
+                },
+                showValues: true,
+                valueFormat: function (d) {
+                    return d3.format(',.0f')(d);
+                },
+                duration: 500,
+                xAxis: {
+                    axisLabel: 'X Axis'
+                },
+                yAxis: {
+                    axisLabel: 'Y Axis',
+                    axisLabelDistance: -10,
+                    tickFormat: function (d) {
+                        return d3.format(',.0f')(d);
+                    },
+                }
+            }
+        };
+
+        this.barData = [
+            {
+                key: "Cumulative Return",
+                values: [
+                    {
+                        "label": "Deelnemers",
+                        "value": 50
+                    },
+                    {
+                        "label": "Medewerkers",
+                        "value": 10
+                    },
+                    {
+                        "label": "Niet betaald",
+                        "value": 3
+                    }
+                ]
+            }
+        ]
     }
 
 
