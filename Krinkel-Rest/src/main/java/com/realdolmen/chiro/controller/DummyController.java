@@ -22,13 +22,13 @@ import java.io.IOException;
 public class DummyController {
 
     @RequestMapping("/api/dummy")
-    @AuthRole(role= Role.ADMIN)
+    @AuthRole(roles = {Role.ADMIN, Role.ASPI})
     public String dummy(){
         return "Hello World";
     }
 
     @RequestMapping("/api/dummy/test")
-    @AuthRole(role = Role.ADMIN)
+    @AuthRole(roles = {Role.ASPI, Role.LEADER})
     public String dummy2(){
         return "Hello World";
     }

@@ -56,14 +56,16 @@ public class UserService {
         return null;
     }
 
-    public Boolean hasRole(final Role role, final HttpServletRequest request) {
+    public Boolean hasRole(final Role[] roles, final HttpServletRequest request) {
 
         Claims claims = Jwts.parser()
                 .setSigningKey(DatatypeConverter.parseBase64Binary(JWT_SECRET))
                 .parseClaimsJws(getTokenFromCookie(request.getCookies())).getBody();
         if (claims != null) {
-            if (claims.get("role").toString().equals(role.toString())) {
-                return true;
+            for(Role role:roles){
+                if (claims.get("role").toString().equals(role.toString())) {
+                    return true;
+                }
             }
         }
         return false;

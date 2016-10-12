@@ -24,9 +24,9 @@ public class  AuthRoleFilter {
     UserService service;
     @Around(value = "@annotation(annotation)")
     public void checkAuthRole(final AuthRole annotation) throws Throwable {
-        System.out.println(annotation.role());
+        System.out.println(annotation.roles());
         HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes()).getRequest();
-        if(!service.hasRole(annotation.role(), request)){
+        if(!service.hasRole(annotation.roles(), request)){
             ServletWebRequest servletWebRequest=new ServletWebRequest(request);
             HttpServletResponse response = servletWebRequest.getResponse();
             response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
