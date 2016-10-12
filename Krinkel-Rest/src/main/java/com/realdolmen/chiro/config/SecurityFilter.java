@@ -20,22 +20,14 @@ import org.springframework.security.web.authentication.www.BasicAuthenticationFi
 @Configuration
 public class SecurityFilter extends WebSecurityConfigurerAdapter {
 
-//    @Bean
-//    public FilterRegistrationBean jwtFilter() {
-//        final FilterRegistrationBean registrationBean = new FilterRegistrationBean();
-//        registrationBean.setFilter(new JwtFilter());
-//        registrationBean.addUrlPatterns("/api/*");
-//
-//        return registrationBean;
-//    }
-
     @Override
     public void configure(WebSecurity web) throws Exception {
         web
                 .ignoring()
                 .antMatchers("/api/cas")
-//                .antMatchers("/api/**") UNCOMMENT THIS FOR TESTING ON PORT 3000
+//              .antMatchers("/api/**") UNCOMMENT THIS FOR TESTING ON PORT 3000
                 .antMatchers("/res/*")
+                .antMatchers("/site/**")
                 .regexMatchers("/");
     }
 

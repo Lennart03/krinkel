@@ -3,7 +3,6 @@ package com.realdolmen.chiro.config;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureException;
-import org.springframework.security.core.AuthenticationException;
 import org.springframework.web.filter.GenericFilterBean;
 
 import javax.servlet.FilterChain;
@@ -27,7 +26,10 @@ public class JwtFilter extends GenericFilterBean {
         final HttpServletRequest request = (HttpServletRequest) req;
         final HttpServletResponse response = (HttpServletResponse) res;
         final String authHeader = request.getHeader("Authorization");
-        final String authCookieToken = getTokenFromCookie(request.getCookies());
+        String authCookieToken = null;
+        if(request.getCookies()!=null){
+             authCookieToken = getTokenFromCookie(request.getCookies());
+        }
 
         String token;
         if (authHeader == null || !authHeader.startsWith("Bearer ")) {
@@ -42,8 +44,6 @@ public class JwtFilter extends GenericFilterBean {
         }else{
             token = authHeader.substring(7); // The part after "Bearer "
         }
-
-
 
         try {
             final Claims claims = Jwts.parser().setSigningKey("MATHIASISNOOB")

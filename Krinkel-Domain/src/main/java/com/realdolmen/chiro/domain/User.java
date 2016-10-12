@@ -1,27 +1,44 @@
 package com.realdolmen.chiro.domain;
 
 
-import java.util.Date;
 
 public class User {
 
-    private String username;
     private Role role;
     private String adNumber;
     private String email;
     private String firstname;
     private String lastname;
+    private boolean registered;
+    private boolean hasPaid;
+    private String stamnummer;
+    private String username;
 
     public User() {
     }
 
-    public User(String username, Role role, String adNumber, String email, String firstname, String lastname) {
-        this.username = username;
+    public User(String firstName, Role role, String adNumber, String email, String firstname, String lastname) {
         this.role = role;
         this.adNumber = adNumber;
         this.email = email;
         this.firstname = firstname;
         this.lastname = lastname;
+    }
+
+    public User(String adNumber, String email, String firstname, String lastname, String stamnummer) {
+        this.adNumber = adNumber;
+        this.email = email;
+        this.firstname = firstname;
+        this.lastname = lastname;
+        this.stamnummer = stamnummer;
+    }
+
+    public String getStamnummer() {
+        return stamnummer;
+    }
+
+    public void setStamnummer(String stamnummer) {
+        this.stamnummer = stamnummer;
     }
 
     public String getUsername() {
@@ -72,5 +89,31 @@ public class User {
         this.lastname = lastname;
     }
 
+    public boolean isRegistered() {
+        return registered;
+    }
 
+    public boolean getIsRegistered() {
+        return registered;
+    }
+
+    public void setRegistered(boolean registered) {
+        this.registered = registered;
+    }
+
+    public boolean isHasPaid() {
+        return hasPaid;
+    }
+
+    public boolean hasPaid() {
+        return hasPaid;
+    }
+
+    public boolean getHasPaid(){
+        return hasPaid;
+    }
+
+    public void setHasPaid(boolean hasPaid) {
+        this.hasPaid = hasPaid;
+    }
 }

@@ -1,10 +1,7 @@
 package com.realdolmen.chiro.mspservice;
 
 
-import com.realdolmen.chiro.domain.Gender;
-import com.realdolmen.chiro.domain.RegistrationParticipant;
-import com.realdolmen.chiro.domain.RegistrationVolunteer;
-import com.realdolmen.chiro.domain.Role;
+import com.realdolmen.chiro.domain.*;
 import com.realdolmen.chiro.mspdto.OrderDto;
 import com.sun.org.apache.xerces.internal.util.URI;
 import org.junit.Assert;
@@ -28,48 +25,56 @@ public class MultiSafePayServiceTest {
 
     private RegistrationParticipant p;
     private RegistrationVolunteer v;
-
+    private Address address;
 
     @Before
     public void init() {
+        Address address = new Address("rttr", "3", 1600, "test");
         p = new RegistrationParticipant("123", "jos@example.com", "Joske", "Vermeulen", new Date(), "AB 12/34", Gender.MAN, Role.ASPI, null);
+        p.setAddress(address);
         v = new RegistrationVolunteer();
+
         v.setAdNumber("1516");
     }
 
 
     @Test
-    public void createPaymentReturnDtoWithUrl(){
-        OrderDto payment = multiSafePayService.createPayment("abc", 100);
+    public void createPaymentReturnsDtoWithUrl() throws MultiSafePayService.InvalidPaymentOrderIdException {
+        OrderDto payment = multiSafePayService.createPayment(p, 100);
+        Assert.assertNotNull(payment.getData().getPayment_url());
+    }
+
+    @Test
+    public void createPaymentForVolunteerWithEmptyFieldsReturnsDtoWithUrl() throws MultiSafePayService.InvalidPaymentOrderIdException {
+        OrderDto payment = multiSafePayService.createPayment(v, 6000);
         Assert.assertNotNull(payment.getData().getPayment_url());
     }
 
     @Test(expected = InvalidParameterException.class)
-    public void createPaymentThrowsErrorWhenOrderIdIsNull() {
-        multiSafePayService.createPayment(null, 100);
+    public void createPaymentThrowsErrorWhenOrderIdIsNull() throws MultiSafePayService.InvalidPaymentOrderIdException {
+        p.setAdNumber(null);
+        multiSafePayService.createPayment(p, 100);
     }
 
     @Test(expected = InvalidParameterException.class)
-    public void createPaymentThrowsErrorWhenAmountIsNull() {
-        multiSafePayService.createPayment("abc", null);
+    public void createPaymentThrowsErrorWhenAmountIsNull() throws MultiSafePayService.InvalidPaymentOrderIdException {
+        multiSafePayService.createPayment(p, null);
     }
 
     @Test(expected = InvalidParameterException.class)
-    public void createPaymentThrowsErrorWhenAmountIsNegative() {
-        multiSafePayService.createPayment("abc", -1);
+    public void createPaymentThrowsErrorWhenAmountIsNegative() throws MultiSafePayService.InvalidPaymentOrderIdException {
+        multiSafePayService.createPayment(p, -1);
     }
 
     @Test
-    public void getParticipantPaymentUriReturnsUri() {
+    public void getParticipantPaymentUriReturnsUri() throws MultiSafePayService.InvalidPaymentOrderIdException {
         Assert.assertNotNull(multiSafePayService.getParticipantPaymentUri(p, 10000));
     }
 
     @Test
-    public void getVolunteerPaymentUriReturnsUri() {
+    public void getVolunteerPaymentUriReturnsUri() throws MultiSafePayService.InvalidPaymentOrderIdException {
         Assert.assertNotNull(multiSafePayService.getVolunteerPaymentUri(v, 6000));
     }
-
-
 
 
 }
