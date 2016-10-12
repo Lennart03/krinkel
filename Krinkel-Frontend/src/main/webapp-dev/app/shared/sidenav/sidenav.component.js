@@ -1,17 +1,23 @@
 /*@ngInject*/
-class SideNavController{
-  constructor(AuthService){
-    this.AuthService = AuthService;
-  }
+class SideNavController {
+    constructor(AuthService,$location) {
+        this.AuthService = AuthService;
+        this.$location = $location;
+    }
 
-  $onInit(){
-  }
+    $onInit() {
+    }
+
+    logout() {
+        this.AuthService.logoutUser();
+        this.$location.path('/login')
+    }
 
 }
 
 export var SideNavComponent = {
-  template: require('./sidenav.html'),
-  controller: SideNavController
+    template: require('./sidenav.html'),
+    controller: SideNavController
 };
 
-SideNavComponent.$inject = ['AuthService'];
+SideNavComponent.$inject = ['AuthService','$location'];
