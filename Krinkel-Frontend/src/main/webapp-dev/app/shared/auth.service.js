@@ -1,6 +1,15 @@
 export class AuthService {
-    constructor($window) {
+    constructor($window,KrinkelService) {
         this.$window = $window;
+        this.KrinkelService = KrinkelService;
+
+        this.getCurrentUserDetails(this.getLoggedinUser().adnummer).then((resp) => {
+            this.userDetails = resp;
+        });
+
+        this.getUserFromStorage();
+
+
     }
 
     getLoggedinUser() {
@@ -54,7 +63,18 @@ export class AuthService {
         if (parts.length == 2) return parts.pop().split(";").shift();
     }
 
+    getCurrentUserDetails(adNumber){
+        return this.KrinkelService.getCurrentUserDetails(adNumber).then(resp => {
+            this.userDetails = resp;
+            return resp;
+        }, function () {
+            console.log("failed");
+        })
+    }
+    getUserDetails() {
+        return this.userDetails;
+    }
 }
-AuthService.$inject = ['$window'];
+AuthService.$inject = ['$window','KrinkelService'];
 
 

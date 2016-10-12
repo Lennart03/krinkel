@@ -20,6 +20,7 @@ import {SideNavComponent} from './shared/sidenav/sidenav.component'
 import {TopNavComponent} from './shared/topnav/topnav.component'
 import {UnitsComponent} from './shared/units/units.component'
 import {KrinkelSelectComponent} from './krinkel-select-person/select.component';
+import {FailMessageComponent} from './shared/fail-message/fail-message.component'
 
 //pages
 import {KrinkelHomepageComponent} from './krinkel-homepage/krinkel-homepage.component';
@@ -46,6 +47,7 @@ export default angular
   .component('topNav', TopNavComponent)
   .component('krinkelSelect', KrinkelSelectComponent)
     .component('units', UnitsComponent)
+    .component('failMessage', FailMessageComponent)
   //pages
   .component('krinkelHomepage', KrinkelHomepageComponent)
   .component('register', RegisterComponent)

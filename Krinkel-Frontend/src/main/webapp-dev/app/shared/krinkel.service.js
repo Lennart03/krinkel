@@ -42,9 +42,11 @@ export class KrinkelService {
           return resp.data;
       })
   }
-
-
-
+  getCurrentUserDetails(adNumber){
+      return this.$http.get(`${this.BASEURL}/api/users/${adNumber}`).then((resp) => {
+          return resp.data;
+      })
+  }
 
     getVerbonden() {
         return this.$http.get(`${this.BASEURL}/api/units?verbond`).then((resp) => {
