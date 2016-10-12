@@ -1,5 +1,6 @@
 package com.realdolmen.chiro.config;
 
+import com.realdolmen.chiro.service.CASService;
 import com.realdolmen.chiro.service.UserService;
 import org.aopalliance.intercept.Joinpoint;
 import org.aspectj.lang.ProceedingJoinPoint;
@@ -22,7 +23,7 @@ import javax.servlet.http.HttpServletResponse;
 @Aspect
 public class  AuthRoleFilter {
     @Autowired
-    UserService service;
+    CASService service;
     @Around(value = "@annotation(annotation)")
     public Object checkAuthRole(final ProceedingJoinPoint jp,final AuthRole annotation) throws Throwable {
         HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes()).getRequest();
