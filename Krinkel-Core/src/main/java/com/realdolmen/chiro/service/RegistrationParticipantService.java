@@ -1,5 +1,6 @@
 package com.realdolmen.chiro.service;
 
+import com.realdolmen.chiro.chiro_api.ChiroUserAdapter;
 import com.realdolmen.chiro.domain.RegistrationParticipant;
 import com.realdolmen.chiro.domain.RegistrationVolunteer;
 import com.realdolmen.chiro.domain.Status;
@@ -21,9 +22,14 @@ public class RegistrationParticipantService {
     @Autowired
     private MultiSafePayService mspService;
 
+    @Autowired
+    private ChiroUserAdapter adapter;
+
 
     public RegistrationParticipant save(RegistrationParticipant registration) {
         if (repository.findByAdNumber(registration.getAdNumber()) == null) {
+            String stamnummer = adapter.getChiroUser(registration.getAdNumber()).getStamnummer();
+            registration.setStamnumber(stamnummer);
             return repository.save(registration);
         }
         return null;
