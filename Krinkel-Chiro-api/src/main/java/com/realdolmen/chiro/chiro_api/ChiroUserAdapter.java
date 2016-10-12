@@ -15,16 +15,26 @@ public class ChiroUserAdapter {
 
     public ChiroUserAdapter() {
         users = new ArrayList<>();
-        users.add(new User("386289", "nick.hanot@realdolmen.com", "Nick", "Hanot", "pipi"));
-        users.add(new User("386292", "vincent.ceulemans@realdolmen.com", "Vincent", "Ceulemans", "pipi"));
-        users.add(new User("386283", "pieter-jan.smets@realdolmen.com", "Pieter-Jan", "Smets", "pipi"));
-        users.add(new User("386293", "wannes.vandorpe@realdolmen.com", "Wannes", "Van Dorpe", "pipi"));
-        users.add(new User("386288", "mathias.bulte@realdolmen.com", "Mathias", "Bult", "pipi"));
-        users.add(new User("169314", "arne.knockaert@realdolmen.com", "Arne", "Knockaert", "pipi"));
-        users.add(new User("386290", "philippe.desal@realdolmen.com", "Philippe", "Desal", "pipi"));
-        users.add(new User("386291", "timothy.leduc@realdolmen.com", "Timothy", "Leduc", "pipi"));
-        users.add(new User("386287", "frank.claes@realdolmen.com", "Frank", "Claes", "pipi"));
-        users.add(new User("386318", "ziggy.streulens@realdolmen.com", "Ziggy", "Streulens", "pipi"));
+
+        // chiro nationaal
+        users.add(new User("386287", "frank.claes@realdolmen.com", "Frank", "Claes", "NAT/0000"));
+
+        // chiro leuven
+        users.add(new User("386290", "philippe.desal@realdolmen.com", "Philippe", "Desal", "LEG /0000"));
+
+        // chiro demerdal
+        users.add(new User("386318", "ziggy.streulens@realdolmen.com", "Ziggy", "Streulens", "LEG/0600"));
+
+        // chiro ourodenberg
+        users.add(new User("386289", "nick.hanot@realdolmen.com", "Nick", "Hanot", "LEG/0608"));
+        users.add(new User("386292", "vincent.ceulemans@realdolmen.com", "Vincent", "Ceulemans", "LEG/0608"));
+        users.add(new User("386283", "pieter-jan.smets@realdolmen.com", "Pieter-Jan", "Smets", "LEG/0608"));
+        
+        // chiro esjeewee
+        users.add(new User("386293", "wannes.vandorpe@realdolmen.com", "Wannes", "Van Dorpe", "LEG/0607"));
+        users.add(new User("386288", "mathias.bulte@realdolmen.com", "Mathias", "Bult", "LEG/0607"));
+        users.add(new User("169314", "arne.knockaert@realdolmen.com", "Arne", "Knockaert", "LEG/0607"));
+        users.add(new User("386291", "timothy.leduc@realdolmen.com", "Timothy", "Leduc", "LEG/0607"));
     }
 
     public void syncUser(RegistrationParticipant participant) {
