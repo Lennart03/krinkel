@@ -1,7 +1,6 @@
 package com.realdolmen.chiro.domain;
 
 
-import java.util.Date;
 
 public class User {
 
@@ -11,7 +10,7 @@ public class User {
     private String email;
     private String firstname;
     private String lastname;
-    private boolean isRegistered;
+    private boolean registered;
     private boolean hasPaid;
 
     public User() {
@@ -75,22 +74,26 @@ public class User {
     }
 
     public boolean isRegistered() {
-        return isRegistered;
+        return registered;
     }
 
     public boolean getIsRegistered() {
-        return isRegistered;
+        return registered;
     }
 
-    public void setIsRegistered(boolean registered) {
-        isRegistered = registered;
+    public void setRegistered(boolean registered) {
+        this.registered = registered;
+    }
+
+    public boolean isHasPaid() {
+        return hasPaid;
     }
 
     public boolean hasPaid() {
         return hasPaid;
     }
 
-    public boolean getHasPaid() {
+    public boolean getHasPaid(){
         return hasPaid;
     }
 
