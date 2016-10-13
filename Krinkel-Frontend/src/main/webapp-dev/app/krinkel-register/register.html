@@ -137,28 +137,7 @@
                     Verplicht</p>
                 <!--<label>Geslacht</label>-->
             </div>
-            <div class="input-field col s12 m6" ng-if="$ctrl.type === 'volunteer'">
-                <!--<i class="material-icons prefix">location_on</i>-->
-                <select name="campground" ng-model="$ctrl.newPerson.campGround" class="browser-default" required>
-                    <option value="" selected disabled>Keuze kampgrond *</option>
-                    <option value="Antwerpen" selected>Antwerpen</option>
-                    <option value="Brussel">Brussel</option>
-                    <option value="Heuvelland">Heuvelland</option>
-                    <option value="Internationaal">Internationaal</option>
-                    <option value="Kempen">Kempen</option>
-                    <option value="Leuven">Leuven</option>
-                    <option value="Limburg">Limburg</option>
-                    <option value="Mechelen">Mechelen</option>
-                    <option value="Nationaal">Nationaal</option>
-                    <option value="Reinaert">Reinaert</option>
-                    <option value="Roeland">Roeland</option>
-                    <option value="West-Vlaanderen">West-Vlaanderen</option>
-                </select>
-                <!--<label>Keuze kampgrond:</label>-->
-                <p ng-show="personForm.campground.$invalid && personForm.campground.$touched" class="error">
-                    <i class="material-icons">error_outline</i>
-                    Verplicht</p>
-            </div>
+
             <div class="input-field col s12 m6" ng-if="$ctrl.type === 'participant'">
                 <!--<i class="material-icons prefix">mood</i>-->
                 <select name="rank" ng-model="$ctrl.newPerson.rank" class="browser-default" required>
@@ -271,6 +250,32 @@
                     <option value="2017-09-02">zaterdag 2 september</option>
                 </select>
                 <label>Nawacht</label>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="input-field col s12 m6" ng-if="$ctrl.type === 'volunteer'">
+                <select name="campground" ng-model="$ctrl.newPerson.campGround"
+                        class="browser-default" required>
+                    <option value="" selected disabled>Keuze kampgrond *</option>
+                    <option value="Antwerpen" selected>Antwerpen</option>
+                    <option value="Brussel">Brussel</option>
+                    <option value="Heuvelland">Heuvelland</option>
+                    <option value="Internationaal">Internationaal</option>
+                    <option value="Kempen">Kempen</option>
+                    <option value="Leuven">Leuven</option>
+                    <option value="Limburg">Limburg</option>
+                    <option value="Mechelen">Mechelen</option>
+                    <option value="Nationaal">Nationaal</option>
+                    <option value="Reinaert">Reinaert</option>
+                    <option value="Roeland">Roeland</option>
+                    <option value="West-Vlaanderen">West-Vlaanderen</option>
+                </select>
+                <!--<label>Keuze kampgrond:</label>-->
+                <p ng-show="personForm.campground.$invalid && personForm.campground.$touched" class="error">
+                    <i class="material-icons">error_outline</i>
+                    Verplicht
+                </p>
             </div>
         </div>
 
