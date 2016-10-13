@@ -49,7 +49,7 @@ public class OverviewControllerTest {
                 "123456789", "aster.deckers@example.org", "Aster", "Deckers", c.getTime(),
                 "AG0001", Gender.MAN, Role.LEADER, Eatinghabbit.VEGI,
                 CampGround.ANTWERPEN,
-                new VolunteerFunction(VolunteerFunction.Preset.KLINKER_EDITORIAL)
+                new VolunteerFunction(VolunteerFunction.Preset.KRINKEL_EDITORIAL)
         );
         participantAster.setAddress(new Address("-", "-", 1500, "-"));
 
