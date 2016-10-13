@@ -137,9 +137,14 @@ export class MapperService {
             phoneNumber: data.phone,
         };
 
+        console.log("outside selectedflqg");
+        console.log(this.SelectService.getColleague());
         if (this.SelectService.getSelectedFlag()) {
-            participant.adNumber = this.SelectService.getColleague().adnr;
+            console.log(this.SelectService.getColleague());
+            console.log("pipikaka");
+            participant.adNumber = this.SelectService.getColleague().adNumber;
         } else {
+            console.log("not in if selectedflqg");
             participant.adNumber = this.AuthService.getLoggedinUser().adnummer;
         }
 
