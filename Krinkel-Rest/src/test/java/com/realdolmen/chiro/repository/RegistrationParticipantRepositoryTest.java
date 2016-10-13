@@ -4,6 +4,7 @@ import static org.junit.Assert.assertNotNull;
 
 import java.util.List;
 
+import com.realdolmen.chiro.TestApplication;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,12 +14,10 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.realdolmen.chiro.config.TestApplication;
 import com.realdolmen.chiro.domain.RegistrationParticipant;
 
 @WebAppConfiguration
 @RunWith(SpringJUnit4ClassRunner.class)
-//@SpringBootTest(classes = {TestApplication.class})
 @ContextConfiguration(classes={TestApplication.class}) // Spring Boot config (includes component scan)
 @Transactional // Rollback after each test.
 @TestPropertySource(locations="classpath:application-test.properties") // Different set of properties to set H2 as DB.
