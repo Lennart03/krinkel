@@ -55,7 +55,9 @@ export class AuthService {
             var name = eqPos > -1 ? cookie.substr(0, eqPos) : cookie;
             document.cookie = name + "=;expires=Thu, 01 Jan 1970 00:00:00 GMT";
         }
-        this.$window.location = 'https://login.chiro.be/cas/logout';
+        // The service parameter is not recognized by the Chiro CAS.
+        // This feature is probably deactivated.
+        this.$window.location = 'https://login.chiro.be/cas/logout?service=http://localhost:8080/site/index.html';
     }
 
 

@@ -104,13 +104,14 @@
         <div class="row">
             <div class="input-field col s12">
                 <i class="material-icons prefix">phone</i>
-                <input id="phone" name="phone" type="tel" class="validate" ng-pattern="$ctrl.phoneNumberPattern"
+                <input title="" id="phone" name="phone" type="tel" class="validate" ng-pattern="$ctrl.phoneNumberPattern"
                        ng-model="$ctrl.newPerson.phone"
                        required>
-                <label for="phone">Telefoon *</label>
-                <p ng-show="personForm.phone.$invalid && personForm.phone.$touched" class="error"><i
-                    class="material-icons">error_outline</i>
-                    Telefoonnummer is verplicht</p>
+                <label for="phone">Telefoon (+32xxxxxxxx (9 of 10 cijfers)) *</label>
+                <p ng-show="personForm.phone.$invalid && personForm.phone.$touched" class="error">
+                    <i class="material-icons">error_outline</i>
+                    Telefoonnummer is verplicht
+                </p>
             </div>
         </div>
 
