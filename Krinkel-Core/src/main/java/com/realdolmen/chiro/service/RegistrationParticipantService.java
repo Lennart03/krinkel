@@ -1,12 +1,18 @@
 package com.realdolmen.chiro.service;
 
+import com.realdolmen.chiro.domain.RegistrationCommunication;
 import com.realdolmen.chiro.chiro_api.ChiroUserAdapter;
 import com.realdolmen.chiro.domain.RegistrationParticipant;
 import com.realdolmen.chiro.domain.RegistrationVolunteer;
+import com.realdolmen.chiro.domain.SendStatus;
 import com.realdolmen.chiro.domain.Status;
 import com.realdolmen.chiro.domain.User;
 import com.realdolmen.chiro.mspservice.MultiSafePayService;
+import com.realdolmen.chiro.repository.RegistrationCommunicationRepository;
 import com.realdolmen.chiro.repository.RegistrationParticipantRepository;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,61 +21,78 @@ import java.util.List;
 
 @Service
 public class RegistrationParticipantService {
-    public final static Integer PRICE_IN_EUROCENTS = 11000;
+	public final static Integer PRICE_IN_EUROCENTS = 11000;
 
-    @Autowired
-    private RegistrationParticipantRepository repository;
+	private Logger logger = LoggerFactory.getLogger(RegistrationParticipantService.class);
 
-    @Autowired
-    private MultiSafePayService mspService;
+	@Autowired
+	private RegistrationParticipantRepository repository;
 
-    @Autowired
-    private ChiroUserAdapter adapter;
+	@Autowired
+	private RegistrationCommunicationRepository registrationCommunicationRepository;
+
+	@Autowired
+	private ChiroUserAdapter adapter;
+
+	@Autowired
+	private MultiSafePayService mspService;
 
 
-    public RegistrationParticipant save(RegistrationParticipant registration) {
-        User chiroUser = adapter.getChiroUser(registration.getAdNumber());
-        if (repository.findByAdNumber(registration.getAdNumber()) == null && chiroUser != null) {
-            String stamnummer = chiroUser.getStamnummer();
-            registration.setStamnumber(stamnummer);
-            return repository.save(registration);
-        }
-        return null;
-    }
+	public RegistrationParticipant save(RegistrationParticipant registration) {
+		User chiroUser = adapter.getChiroUser(registration.getAdNumber());
+		if (repository.findByAdNumber(registration.getAdNumber()) == null && chiroUser != null) {
+			String stamnummer = chiroUser.getStamnummer();
+			registration.setStamnumber(stamnummer);
+			return repository.save(registration);
+		}
+		return null;
+	}
 
-    public void updatePaymentStatus(String testOrderId) {
-        String[] split = testOrderId.split("-");
-        String adNumber = split[0];
+	public void updatePaymentStatus(String testOrderId) {
+		logger.info("in updatePaymentStatus()");
+		String[] split = testOrderId.split("-");
+		String adNumber = split[0];
+		RegistrationParticipant participant = repository.findByAdNumber(adNumber);
+		if (participant != null) {
+			logger.info("found participant " + participant.getAdNumber());
 
-        RegistrationParticipant participant = repository.findByAdNumber(adNumber);
-        if (participant != null) {
+			if (mspService.orderIsPaid(testOrderId)) {
+				participant.setStatus(Status.PAID);
+				logger.info("participant " + participant.getAdNumber() + " on status 'PAID'");
 
-            if (mspService.orderIsPaid(testOrderId)) {
-                participant.setStatus(Status.PAID);
-                repository.save(participant);
-            }
-        }
-    }
+				RegistrationCommunication registrationCommunication = new RegistrationCommunication();
+				registrationCommunication.setStatus(SendStatus.WAITING);
+				registrationCommunication.setCommunicationAttempt(0);
+				registrationCommunication.setAdNumber(participant.getAdNumber());
+				if (registrationCommunicationRepository.findByAdNumber(participant.getAdNumber()) == null) {
+					logger.info("registering communication to participant/volunteer with ad-number: "
+							+ participant.getAdNumber() + " with status: " + registrationCommunication.getStatus());
+					registrationCommunicationRepository.save(registrationCommunication);
+				}
+				repository.save(participant);
+			}
+		}
+	}
 
-    public List<RegistrationParticipant> findParticipantsByGroup(String stamNumber){
-        List<RegistrationParticipant> participants = repository.findParticipantsByGroup(stamNumber);
-        List<RegistrationParticipant> results = new ArrayList<>();
-        for (RegistrationParticipant participant: participants){
-            if (!(participant instanceof RegistrationVolunteer)){
-                results.add(participant);
-            }
-        }
-        return results;
-    }
+	public List<RegistrationParticipant> findParticipantsByGroup(String stamNumber) {
+		List<RegistrationParticipant> participants = repository.findParticipantsByGroup(stamNumber);
+		List<RegistrationParticipant> results = new ArrayList<>();
+		for (RegistrationParticipant participant : participants) {
+			if (!(participant instanceof RegistrationVolunteer)) {
+				results.add(participant);
+			}
+		}
+		return results;
+	}
 
-    public List<RegistrationVolunteer> findVolunteersByGroup(String stamNumber){
-        List<RegistrationParticipant> participants = repository.findParticipantsByGroup(stamNumber);
-        List<RegistrationVolunteer> results = new ArrayList<>();
-        for (RegistrationParticipant participant: participants){
-            if (participant instanceof RegistrationVolunteer){
-                results.add((RegistrationVolunteer)participant);
-            }
-        }
-        return results;
-    }
+	public List<RegistrationVolunteer> findVolunteersByGroup(String stamNumber) {
+		List<RegistrationParticipant> participants = repository.findParticipantsByGroup(stamNumber);
+		List<RegistrationVolunteer> results = new ArrayList<>();
+		for (RegistrationParticipant participant : participants) {
+			if (participant instanceof RegistrationVolunteer) {
+				results.add((RegistrationVolunteer) participant);
+			}
+		}
+		return results;
+	}
 }

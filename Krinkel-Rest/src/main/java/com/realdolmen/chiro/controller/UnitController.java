@@ -1,5 +1,6 @@
 package com.realdolmen.chiro.controller;
 
+import com.realdolmen.chiro.domain.User;
 import com.realdolmen.chiro.domain.units.ChiroUnit;
 import com.realdolmen.chiro.service.ChiroUnitService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,6 +38,12 @@ public class UnitController {
     @RequestMapping(value = "", method = RequestMethod.GET)
     public List<ChiroUnit> units() {
         return unitService.findAll();
+    }
+
+    @RequestMapping(value = "{stamletters}/{stamnummers}/users")
+    public List<User> getUnitUserList(@PathVariable("stamletters") String stamletters, @PathVariable("stamnummers") String stamnummers) {
+        String stamnr = stamletters + "/" + stamnummers;
+        return unitService.getUnitUsers(stamnr);
     }
 
     @RequestMapping(value = "/{stam}", method = RequestMethod.GET)

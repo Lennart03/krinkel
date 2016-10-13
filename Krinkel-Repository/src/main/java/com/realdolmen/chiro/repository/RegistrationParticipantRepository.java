@@ -9,6 +9,10 @@ import java.util.List;
 public interface RegistrationParticipantRepository extends JpaRepository<RegistrationParticipant, Long> {
     RegistrationParticipant findByAdNumber(String adNumber);
 
+
+	@Query("SELECT r FROM RegistrationParticipant r WHERE status = 'PAID')")
+	List<RegistrationParticipant> findRegistrationParticipantsWithStatusPAID();
+	
     @Query("SELECT p FROM RegistrationParticipant p WHERE " +
             "(SUBSTRING(p.stamnumber, 1, 2) = SUBSTRING(?1, 1, 2)" +
             "OR SUBSTRING(p.stamnumber, 1, 3) = SUBSTRING(?1, 1, 3))" +
@@ -19,6 +23,7 @@ public interface RegistrationParticipantRepository extends JpaRepository<Registr
             "((p.status = com.realdolmen.chiro.domain.Status.CONFIRMED)" +
             " OR " +
             "(p.status = com.realdolmen.chiro.domain.Status.PAID))"
+
     )
     List<RegistrationParticipant> findParticipantsByGroup(String s);
 }
