@@ -1,5 +1,7 @@
 package com.realdolmen.chiro.config;
 
+import java.util.Properties;
+
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
@@ -17,6 +19,7 @@ import org.springframework.orm.jpa.JpaVendorAdapter;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.Database;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.web.servlet.ViewResolver;
 import org.thymeleaf.spring4.SpringTemplateEngine;
 import org.thymeleaf.spring4.view.ThymeleafViewResolver;
@@ -25,8 +28,18 @@ import org.thymeleaf.templateresolver.TemplateResolver;
 
 @Configuration
 @EnableJpaRepositories(basePackages="com.realdolmen.chiro")
+@EnableTransactionManagement
 @ComponentScan("com.realdolmen.chiro")
-public class RepositoryTestConfig {
+public class BatchTestConfig {
+
+//	@Bean
+//    public Properties additionalProperties() {
+//        Properties properties = new Properties();
+//        properties.setProperty("hibernate.hbm2ddl.auto", "create-drop");
+//        properties.setProperty("hibernate.dialect", "org.hibernate.dialect.H2Dialect");
+//        return properties;
+//    }
+	
 	@Bean
 	public JavaMailSender javaMailSender(){
 		JavaMailSenderImpl javaMailSenderImpl = new JavaMailSenderImpl();
@@ -44,8 +57,7 @@ public class RepositoryTestConfig {
 	@Bean
 	//@Profile("test")
 	public DataSource embeddedDataSource(){
-		System.err.println("script----------------------------------------------");
-		return new EmbeddedDatabaseBuilder().setType(EmbeddedDatabaseType.H2).addScript("repo_data.sql").build();
+		return new EmbeddedDatabaseBuilder().setType(EmbeddedDatabaseType.H2).addScript("batch-data.sql").build();
 	}
 	
 	
@@ -108,4 +120,5 @@ public class RepositoryTestConfig {
 	public JpaTransactionManager transactionManager () {
 		return new JpaTransactionManager(entityManagerFactory());
 	}
+
 }

@@ -28,8 +28,10 @@ public class EmailBatchService {
 //	@Autowired
 //	private RegistrationVolunteerRepository registrationVolunteerRepository;
 	
-	@Scheduled(cron = "*/2 * * * * ")
+	@Scheduled(cron = "*/2 * * * * *")
 	public void sendEmails(){
+		List<RegistrationParticipant>participants = registrationParticipantRepository.findRegistrationParticipantsWithStatusPAID();
+		
 		List<RegistrationCommunication>regComs = registrationCommunicationRepository.findAllWaitingAndFailed();
 		regComs.forEach(r->{
 			RegistrationParticipant participant= registrationParticipantRepository.findByAdNumber(r.getAdNumber());
