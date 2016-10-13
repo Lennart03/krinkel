@@ -1,6 +1,8 @@
 package com.realdolmen.chiro.service;
 
+import com.realdolmen.chiro.chiro_api.ChiroUserAdapter;
 import com.realdolmen.chiro.domain.RegistrationParticipant;
+import com.realdolmen.chiro.domain.User;
 import com.realdolmen.chiro.domain.units.ChiroUnit;
 import com.realdolmen.chiro.domain.units.RawChiroUnit;
 import com.realdolmen.chiro.repository.ChiroUnitRepository;
@@ -23,6 +25,9 @@ public class ChiroUnitService {
 
     @Autowired
     private ChiroUnitRepository repository;
+
+    @Autowired
+    private ChiroUserAdapter adapter;
 
     private List<ChiroUnit> chiroUnits;
     private List<ChiroUnit> verbondUnits;
@@ -102,4 +107,7 @@ public class ChiroUnitService {
         return stam.replace("/", "").replace("\\s", "").replace(" ", "");
     }
 
+    public List<User> getUnitUsers(String stamnr) {
+        return adapter.getColleagues(stamnr);
+    }
 }
