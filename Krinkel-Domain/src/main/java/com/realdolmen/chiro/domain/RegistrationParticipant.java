@@ -58,7 +58,7 @@ public class RegistrationParticipant {
 
     private boolean buddy = false;
 
-    @ElementCollection
+    @ElementCollection(fetch = FetchType.EAGER)
     private List<Language> language = new ArrayList<>();
 
     @Enumerated(EnumType.STRING)

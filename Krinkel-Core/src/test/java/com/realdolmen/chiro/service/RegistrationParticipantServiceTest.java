@@ -1,9 +1,14 @@
 package com.realdolmen.chiro.service;
 
+import com.realdolmen.chiro.domain.Address;
+import com.realdolmen.chiro.domain.Role;
+import com.realdolmen.chiro.domain.Gender;
+import com.realdolmen.chiro.domain.RegistrationParticipant;
+import com.realdolmen.chiro.repository.RegistrationParticipantRepository;
+import com.realdolmen.chiro.repository.RegistrationCommunicationRepository;
 import com.realdolmen.chiro.chiro_api.ChiroUserAdapter;
 import com.realdolmen.chiro.domain.*;
 import com.realdolmen.chiro.mspservice.MultiSafePayService;
-import com.realdolmen.chiro.repository.RegistrationParticipantRepository;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -32,6 +37,9 @@ public class RegistrationParticipantServiceTest {
 
     @Mock
     private MultiSafePayService mspService;
+    
+    @Mock
+    private RegistrationCommunicationRepository registrationCommunicationRepository;
 
     @Mock
     private ChiroUserAdapter adapter;

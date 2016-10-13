@@ -1,9 +1,11 @@
 package com.realdolmen.chiro.service;
 
-import com.realdolmen.chiro.chiro_api.ChiroUserAdapter;
 import com.realdolmen.chiro.domain.RegistrationVolunteer;
+import com.realdolmen.chiro.repository.RegistrationCommunicationRepository;
+import com.realdolmen.chiro.chiro_api.ChiroUserAdapter;
 import com.realdolmen.chiro.domain.User;
 import com.realdolmen.chiro.repository.RegistrationVolunteerRepository;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -11,8 +13,11 @@ import org.springframework.stereotype.Service;
 public class RegistrationVolunteerService {
     public final static Integer PRICE_IN_EUROCENTS = 6000;
 
-    @Autowired
-    private RegistrationVolunteerRepository repository;
+	@Autowired
+	private RegistrationVolunteerRepository repository;
+	
+	@Autowired
+	private RegistrationCommunicationRepository registrationCommunicationRepository;
 
     @Autowired
     private ChiroUserAdapter adapter;
