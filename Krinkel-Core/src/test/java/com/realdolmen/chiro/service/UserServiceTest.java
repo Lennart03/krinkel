@@ -2,15 +2,12 @@ package com.realdolmen.chiro.service;
 
 import com.realdolmen.chiro.chiro_api.ChiroUserAdapter;
 import com.realdolmen.chiro.domain.RegistrationParticipant;
-import com.realdolmen.chiro.domain.Role;
 import com.realdolmen.chiro.domain.Status;
 import com.realdolmen.chiro.domain.User;
 import com.realdolmen.chiro.repository.RegistrationParticipantRepository;
-import io.jsonwebtoken.Jwt;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import io.jsonwebtoken.Jwts;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;

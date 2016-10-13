@@ -13,16 +13,30 @@ import javax.persistence.Enumerated;
 public class VolunteerFunction {
 
     public enum Preset {
-        NATIONAL_CAMPGROUND, // Aanbod nationale kampgrond
-        CAMPGROUND, // Kampgrondtrekker
-        KRINKEL_EDITORIAL, // Krinkelredactie
-        COOCKING, // Kookploeg
+        NATIONAL_CAMPGROUND("Aanbod nationale kampgrond"), // Aanbod nationale kampgrond
+        CAMPGROUND("Kampgrondtrekker"), // Kampgrondtrekker
+        KRINKEL_EDITORIAL("Klinkerredactie"), // Klinkerredactie
+        COOCKING("Kookploeg"), // Kookploeg
 
-        LOGISTICS_CAMPGROUND, // Logistiek (kampgrond)
-        LOGISTICS_NATIONAL, // Logistiek (nationaal)
+        LOGISTICS_CAMPGROUND("Logistiek (kampgrond)"), // Logistiek (kampgrond)
+        LOGISTICS_NATIONAL("Logistiek (nationaal)"), // Logistiek (nationaal)
 
-        LIVING_GROUP_GUIDANCE, // Leefgroepbegeleiding
-        CUSTOM // I didn't select something from this list but instead defined my own function in the 'other' field.
+        LIVING_GROUP_GUIDANCE("Leefgroepbegeleiding"), // Leefgroepbegeleiding
+        CUSTOM("custom"); // I didn't select something from this list but instead defined my own function in the 'other' field.
+        
+        private String description;
+    	
+    	private Preset(String description){
+    		this.setDescription(description);
+    	}
+
+		public String getDescription() {
+			return description;
+		}
+
+		public void setDescription(String description) {
+			this.description = description;
+		}
     }
 
     public VolunteerFunction(){}

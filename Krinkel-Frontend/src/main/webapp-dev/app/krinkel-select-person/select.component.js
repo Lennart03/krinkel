@@ -4,11 +4,13 @@ class KrinkelSelectController{
         this.KrinkelService = KrinkelService;
         this.AuthService = AuthService;
         this.SelectService = SelectService;
-        this.colleagues = []
+        this.colleagues = [];
     }
 
     $onInit(){
-        this.KrinkelService.getColleagues('1').then((resp) => {
+        console.log("log");
+        console.log(this.AuthService.getUserDetails());
+        this.KrinkelService.getColleagues(this.AuthService.getUserDetails().stamnummer).then((resp) => {
             this.colleagues = resp;
         });
     }

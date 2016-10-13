@@ -5,7 +5,6 @@ import com.realdolmen.chiro.domain.RegistrationParticipant;
 import com.realdolmen.chiro.domain.Status;
 import com.realdolmen.chiro.repository.ConfirmationLinkRepository;
 import com.realdolmen.chiro.repository.RegistrationParticipantRepository;
-import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
