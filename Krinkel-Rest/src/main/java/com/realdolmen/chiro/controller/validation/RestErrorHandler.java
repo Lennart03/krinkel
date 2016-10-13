@@ -1,5 +1,6 @@
 package com.realdolmen.chiro.controller.validation;
 
+import com.realdolmen.chiro.mspservice.MultiSafePayService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
@@ -15,6 +16,10 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import java.util.List;
 import java.util.Locale;
 
+/**
+ * RestErrorHandler is a controller advice which is only used on
+ * controllers which have the @EnableRestErrorHandling annotation.
+ */
 @ControllerAdvice(annotations = EnableRestErrorHandling.class)
 public class RestErrorHandler {
 
@@ -25,7 +30,7 @@ public class RestErrorHandler {
         this.messageSource = messageSource;
     }
 
-    @ExceptionHandler(MethodArgumentNotValidException.class)
+    @ExceptionHandler(value = MethodArgumentNotValidException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ResponseBody
     public ValidationErrorDTO processValidationError(MethodArgumentNotValidException ex) {
@@ -33,6 +38,18 @@ public class RestErrorHandler {
         List<FieldError> fieldErrors = result.getFieldErrors();
 
         return processFieldErrors(fieldErrors);
+    }
+
+    @ExceptionHandler(value = MultiSafePayService.InvalidPaymentOrderIdException.class)
+    @ResponseStatus(HttpStatus.CONFLICT)
+    @ResponseBody
+    public ValidationErrorDTO processPaymentError(MultiSafePayService.InvalidPaymentOrderIdException ex) {
+        ValidationErrorDTO errorDTO = new ValidationErrorDTO();
+        errorDTO.addFieldError(
+                "payment", "OrderId for Payment already exists"
+        );
+
+        return errorDTO;
     }
 
     private ValidationErrorDTO processFieldErrors(List<FieldError> fieldErrors) {

@@ -84,7 +84,7 @@ public class RegistrationVolunteerController {
      * Pre and Post Camp -> see data.sql for available options.
      */
     @RequestMapping(method = RequestMethod.POST, value = "/api/volunteers", consumes = "application/json")
-    public ResponseEntity<?> save(@Valid @RequestBody RegistrationVolunteer volunteer) throws URISyntaxException {
+    public ResponseEntity<?> save(@Valid @RequestBody RegistrationVolunteer volunteer) throws URISyntaxException, MultiSafePayService.InvalidPaymentOrderIdException {
         RegistrationVolunteer resultingVolunteer = registrationVolunteerService.save(volunteer);
         if (resultingVolunteer == null) {
             logger.info("Registration for Volunteer failed.");

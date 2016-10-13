@@ -41,7 +41,7 @@ public class RegistrationVolunteerControllerMockitoTest {
 
 
     @Test
-    public void saveReturnsUrlGivenByMultiSafePayService() throws URISyntaxException {
+    public void saveReturnsUrlGivenByMultiSafePayService() throws URISyntaxException, MultiSafePayService.InvalidPaymentOrderIdException {
         Mockito.when(mspService.getVolunteerPaymentUri(v, 6000)).thenReturn(TEST_URL);
         Mockito.when(rvService.save(v)).thenReturn(v);
 

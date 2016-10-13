@@ -17,22 +17,22 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * Created by WVDAZ49 on 12/10/2016.
+ * Checks the role of the logged in user for methods annotated with @AuthRole.
  */
 @Component
 @Aspect
 public class  AuthRoleFilter {
     @Autowired
-    CASService service;
+    private CASService service;
+
     @Around(value = "@annotation(annotation)")
     public Object checkAuthRole(final ProceedingJoinPoint jp,final AuthRole annotation) throws Throwable {
         HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes()).getRequest();
         if(!service.hasRole(annotation.roles(), request)){
             throw new SecurityException();
-        }else{
+        }
+        else{
             return jp.proceed();
         }
-
-
     }
 }

@@ -17,7 +17,7 @@ class RegisterController {
         angular.element('select').material_select();
 
         this.dataIsRemoved = false;
-
+        this.voorwaarden = false;
         window.scrollTo(0,0);
 
 

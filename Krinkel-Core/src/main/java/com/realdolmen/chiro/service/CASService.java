@@ -45,7 +45,7 @@ public class CASService {
         if (principal != null) {
             User user = new User();
             user.setEmail(principal.getAttributes().get("mail").toString());
-            user.setUsername(principal.getName().toString());
+            user.setFirstname(principal.getName().toString());
             user.setFirstname(principal.getAttributes().get("first_name").toString());
             user.setLastname(principal.getAttributes().get("last_name").toString());
             user.setAdNumber(principal.getAttributes().get("ad_nummer").toString());

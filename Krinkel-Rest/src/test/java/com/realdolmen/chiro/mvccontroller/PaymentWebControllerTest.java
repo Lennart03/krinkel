@@ -23,7 +23,7 @@ public class PaymentWebControllerTest {
 
 
     @Test
-    public void paymentSuccessCallsServiceToUpdateParticipantPaymentStatus() {
+    public void paymentSuccessCallsServiceToUpdateParticipantPaymentStatusWithOrderId() {
         controller.paymentSuccess(TEST_ORDER_ID);
         Mockito.verify(service, times(1)).updatePaymentStatus(TEST_ORDER_ID);
     }

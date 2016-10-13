@@ -8,7 +8,9 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * Created by WVDAZ49 on 12/10/2016.
+ * Example:
+ * @AuthRole(role = { Role.ADMIN })
+ * public void someMethod(){}
  */
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.METHOD)
