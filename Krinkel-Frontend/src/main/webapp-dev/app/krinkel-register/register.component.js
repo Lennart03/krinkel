@@ -11,14 +11,15 @@ class RegisterController {
         this.SelectService = SelectService;
 
         this.phoneNumberPattern = /^((\+|00)32\s?|0)(\d\s?\d{3}|\d{2}\s?\d{2})(\s?\d{2}){2}|((\+|00)32\s?|0)4(60|[789]\d)(\s?\d{2}){3}$/;
-        this.birthdatePattern = /^(\d{4})(\/|-)(\d{1,2})(\/|-)(\d{1,2})$/;
-        this.postalcodePattern = /^(\d{4})$/;
+        this.birthdatePattern = /^(\d{4})(\/|-)(\d{1,2})(\/|-)(\d{1,2})$/;
+        this.postalcodePattern = /^(\d{4})$/;
         this.campgrounds = ['Antwerpen', 'Kempen', 'Mechelen', 'Limburg', 'Leuven', 'Brussel', 'West-Vlaanderen', 'Heuvelland', 'Roeland', 'Reinaert', 'Nationaal', 'Internationaal'];
         angular.element('select').material_select();
 
         this.dataIsRemoved = false;
+        this.voorwaarden = false;
+        window.scrollTo(0,0);
 
-        window.scrollTo(0, 0);
 
 
         if (this.SelectService.getSelectedFlag()) {
@@ -92,6 +93,7 @@ class RegisterController {
     }
 
 
+
     $onInit() {
         if (this.AuthService.getLoggedinUser() == null) {
             this.$location.path('/');
@@ -155,7 +157,7 @@ class RegisterController {
      */
 
     $doCheck() {
-        if (!this.dataIsRemoved) {
+        if(!this.dataIsRemoved){
             this.StorageService.saveUser(this.newPerson);
         }
     }
