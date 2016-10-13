@@ -21,15 +21,8 @@ import com.realdolmen.chiro.repository.RegistrationParticipantRepository;
 @ContextConfiguration(classes={BatchTestConfig.class,ApplicationConfiguration.class})
 public class EmailBatchTest {
 
-	@Autowired
-	private RegistrationParticipantRepository registrationParticipantRepository;
-
-	@Ignore
 	@Test
-	public void shouldContainVolunteerFields() {
-		RegistrationParticipant participant = registrationParticipantRepository.findByAdNumber("876543");
-		assertEquals("Jos", participant.getFirstName());
-		RegistrationVolunteer volunteer = (RegistrationVolunteer)participant;
-		assertEquals("CAMPGROUND", volunteer.getCampGround().toString());
+	public void test(){
+		
 	}
 }

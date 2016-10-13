@@ -5,6 +5,7 @@ import com.realdolmen.chiro.domain.Role;
 import com.realdolmen.chiro.domain.Gender;
 import com.realdolmen.chiro.domain.RegistrationParticipant;
 import com.realdolmen.chiro.repository.RegistrationParticipantRepository;
+import com.realdolmen.chiro.repository.RegistrationCommunicationRepository;
 import com.realdolmen.chiro.domain.*;
 import com.realdolmen.chiro.mspservice.MultiSafePayService;
 import org.junit.Assert;
@@ -33,6 +34,9 @@ public class RegistrationParticipantServiceTest {
 
     @Mock
     private MultiSafePayService mspService;
+    
+    @Mock
+    private RegistrationCommunicationRepository registrationCommunicationRepository;
 
     private RegistrationParticipant participant;
     public final static String TEST_AD_NUMBER = "123456";
