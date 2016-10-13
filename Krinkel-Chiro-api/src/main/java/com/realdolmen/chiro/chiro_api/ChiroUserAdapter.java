@@ -25,6 +25,9 @@ public class ChiroUserAdapter {
         users.add(new User("386291", "timothy.leduc@realdolmen.com", "Timothy", "Leduc", "pipi"));
         users.add(new User("386287", "frank.claes@realdolmen.com", "Frank", "Claes", "pipi"));
         users.add(new User("386318", "ziggy.streulens@realdolmen.com", "Ziggy", "Streulens", "pipi"));
+        users.add(new User("386284", "thomas.vanlomberghen@realdolmen.com", "Thomas", "Van Lomberghen", "pipi"));
+        users.add(new User("386285", "gil.mathijs@realdolmen.com", "Gil", "Mathijs", "pipi"));
+        users.add(new User("386286", "matthias.vanderwilt@realdolmen.com", "Matthias", "Vanderwilt", "pipi"));
     }
 
     public void syncUser(RegistrationParticipant participant) {
