@@ -13,7 +13,7 @@ INSERT INTO registration_participant VALUES('RegistrationParticipant', '40', '45
 INSERT INTO registration_participant VALUES('RegistrationParticipant', '50', '987654', 'Brussel', '123', '1000', 'Veldstraat', '1995-08-21', false, 'FISHANDMEAT',
                               'email@test.be', 'Frederik', 'MAN', 'Flodder', '', '', '', '', 'ASPI', false, 'AG /0202', 'TO_BE_PAID', 1, '', '');
 INSERT INTO registration_participant VALUES('RegistrationVolunteer', '60', '876543', 'Brussel', '123', '1000', 'Veldstraat', '1995-08-21', false, 'FISHANDMEAT',
-                              'email@test.be', 'Jos', 'MAN', 'Flodder', '', '', '', '', 'ASPI', false, 'AG /0103', 'TO_BE_PAID', 1, '', 'CAMPGROUND');
+                              'email@test.be', 'Jos', 'MAN', 'Flodder', '', '', '', '', 'VOLUNTEER', false, 'AG /0103', 'TO_BE_PAID', 1, '', 'CAMPGROUND');
 
 INSERT INTO pre_camp VALUES (10, '2017-08-21');
 INSERT INTO pre_camp VALUES (20, '2017-08-22');
@@ -34,6 +34,22 @@ CREATE TABLE groepen (
     `verbond_naam` VARCHAR(15),
     PRIMARY KEY(`groep_stamnr`)
 );
+INSERT INTO login_log (id, ad_number, stamp) VALUES (1, '123456', '2016-10-13');
+INSERT INTO login_log (id, ad_number, stamp) VALUES (2, '123456', '2016-10-13');
+INSERT INTO login_log (id, ad_number, stamp) VALUES (3, '123444', '2016-10-12');
+INSERT INTO login_log (id, ad_number, stamp) VALUES (4, '126456', '2016-10-12');
+INSERT INTO login_log (id, ad_number, stamp) VALUES (5, '123456', '2016-10-11');
+INSERT INTO login_log (id, ad_number, stamp) VALUES (6, '122456', '2016-10-10');
+INSERT INTO login_log (id, ad_number, stamp) VALUES (7, '123456', '2016-10-9');
+INSERT INTO login_log (id, ad_number, stamp) VALUES (8, '123466', '2016-10-7');
+INSERT INTO login_log (id, ad_number, stamp) VALUES (9, '123416', '2016-10-7');
+INSERT INTO login_log (id, ad_number, stamp) VALUES (10, '123456', '2016-10-7');
+INSERT INTO login_log (id, ad_number, stamp) VALUES (11, '123456', '2016-10-3');
+INSERT INTO login_log (id, ad_number, stamp) VALUES (12, '123455', '2016-10-1');
+INSERT INTO login_log (id, ad_number, stamp) VALUES (13, '123856', '2016-10-1');
+INSERT INTO login_log (id, ad_number, stamp) VALUES (14, '123456', '2016-10-1');
+INSERT INTO login_log (id, ad_number, stamp) VALUES (15, '123446', '2016-10-1');
+
 INSERT INTO groepen VALUES ('Pleplo','AG /0103','AG /0400','Zac','AG /0000','Antwerpen');
 INSERT INTO groepen VALUES ('Lore','AG /0104','AG /0400','Zac','AG /0000','Antwerpen');
 INSERT INTO groepen VALUES ('Dolfijn','AG /0108','AG /0400','Zac','AG /0000','Antwerpen');
