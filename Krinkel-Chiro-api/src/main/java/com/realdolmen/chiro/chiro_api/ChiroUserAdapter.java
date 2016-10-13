@@ -54,4 +54,15 @@ public class ChiroUserAdapter {
 
         return res;
     }
+
+    public List<User> getColleagues(String stamnummer) {
+        List<User> res = new ArrayList<>();
+
+        for (User u : users) {
+            if (u.getStamnummer().equals(stamnummer))
+                res.add(u);
+        }
+
+        return res;
+    }
 }
