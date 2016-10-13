@@ -11,24 +11,49 @@ class RegisterController {
         this.SelectService = SelectService;
 
         this.phoneNumberPattern = /^((\+|00)32\s?|0)(\d\s?\d{3}|\d{2}\s?\d{2})(\s?\d{2}){2}|((\+|00)32\s?|0)4(60|[789]\d)(\s?\d{2}){3}$/;
-        this.birthdatePattern = /^(\d{4})(\/|-)(\d{1,2})(\/|-)(\d{1,2})$/;
-        this.postalcodePattern = /^(\d{4})$/;
+        this.birthdatePattern = /^(\d{4})(\/|-)(\d{1,2})(\/|-)(\d{1,2})$/;
+        this.postalcodePattern = /^(\d{4})$/;
         this.campgrounds = ['Antwerpen', 'Kempen', 'Mechelen', 'Limburg', 'Leuven', 'Brussel', 'West-Vlaanderen', 'Heuvelland', 'Roeland', 'Reinaert', 'Nationaal', 'Internationaal'];
         angular.element('select').material_select();
 
         this.dataIsRemoved = false;
 
-        window.scrollTo(0,0);
-
+        window.scrollTo(0, 0);
 
 
         if (this.SelectService.getSelectedFlag()) {
             this.SelectService.setColleague(undefined);
             this.SelectService.setSelectedFlag(false);
         }
+
+    }
+
+    extractFromAdress(components) {
+        if (components != null) {
+
+            for (var i = 0; i <= components.length; i++)
+                for (var j = 0; j <= components[i].types.length; j++) {
+                    if (components[i].types[j] == 'postal_code') {
+                        console.debug(components[i].long_name);
+                        this.details2 = {
+                            name: components[i].long_name
+                        };
+                    }
+                   // console.debug(components[i].types[j]);
+                    if (components[i].types[j] == 'locality') {
+                        console.debug(components[i].short_name);
+                        this.details3 = {
+                            vicinity: components[i].short_name
+                        };
+                    }
+                }
+        }
     }
 
     registerPerson(newPerson) {
+        this.newPerson.city = this.details3.vicinity;
+        this.newPerson.postalCode = this.details2.name;
+        this.newPerson.street = this.details.address_components[0].long_name;
         if (this.type === 'volunteer') {
             var thiz = this;
             this.KrinkelService.postVolunteer(this.MapperService.mapVolunteer(newPerson)).then(function (resp) {
@@ -50,7 +75,6 @@ class RegisterController {
             return;
         }
     }
-
 
 
     $onInit() {
@@ -85,16 +109,15 @@ class RegisterController {
 
         this.optionsStad = {
             country: 'be',
-            types: '(cities)'
+            types: '(regions)'
         };
 
         this.optionsPostalCode = {
             country: 'be',
             types: '(regions)'
-
-
         };
-
+        this.details3 = '';
+        this.details2 = '';
         this.details = '';
 
         angular.element('.modal-trigger').leanModal();
@@ -114,15 +137,12 @@ class RegisterController {
     }
 
 
-
-
-
     /**
      * Not the ideal lifecycle hook to save everything in localstorage, due to time constraints this will have to do for now.
      */
 
     $doCheck() {
-        if(!this.dataIsRemoved){
+        if (!this.dataIsRemoved) {
             this.StorageService.saveUser(this.newPerson);
         }
     }
