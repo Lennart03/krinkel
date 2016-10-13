@@ -1,10 +1,12 @@
 package com.realdolmen.chiro.service;
 
 import com.realdolmen.chiro.domain.RegistrationCommunication;
+import com.realdolmen.chiro.chiro_api.ChiroUserAdapter;
 import com.realdolmen.chiro.domain.RegistrationParticipant;
 import com.realdolmen.chiro.domain.RegistrationVolunteer;
 import com.realdolmen.chiro.domain.SendStatus;
 import com.realdolmen.chiro.domain.Status;
+import com.realdolmen.chiro.domain.User;
 import com.realdolmen.chiro.mspservice.MultiSafePayService;
 import com.realdolmen.chiro.repository.RegistrationCommunicationRepository;
 import com.realdolmen.chiro.repository.RegistrationParticipantRepository;
@@ -30,10 +32,17 @@ public class RegistrationParticipantService {
 	private RegistrationCommunicationRepository registrationCommunicationRepository;
 
 	@Autowired
+	private ChiroUserAdapter adapter;
+
+	@Autowired
 	private MultiSafePayService mspService;
 
+
 	public RegistrationParticipant save(RegistrationParticipant registration) {
-		if (repository.findByAdNumber(registration.getAdNumber()) == null) {
+		User chiroUser = adapter.getChiroUser(registration.getAdNumber());
+		if (repository.findByAdNumber(registration.getAdNumber()) == null && chiroUser != null) {
+			String stamnummer = chiroUser.getStamnummer();
+			registration.setStamnumber(stamnummer);
 			return repository.save(registration);
 		}
 		return null;
@@ -43,7 +52,6 @@ public class RegistrationParticipantService {
 		logger.info("in updatePaymentStatus()");
 		String[] split = testOrderId.split("-");
 		String adNumber = split[0];
-
 		RegistrationParticipant participant = repository.findByAdNumber(adNumber);
 		if (participant != null) {
 			logger.info("found participant " + participant.getAdNumber());

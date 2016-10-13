@@ -37,14 +37,29 @@ export class KrinkelService {
           return resp.data;
       });
   }
-  getColleagues(adNumber){
-      return this.$http.get(`${this.BASEURL}/api/colleagues?ad=${adNumber}`).then((resp) => {
+  // getColleagues(adNumber){
+  //     return this.$http.get(`${this.BASEURL}/api/colleagues?ad=${adNumber}`).then((resp) => {
+  //         return resp.data;
+  //     })
+  // }
+
+    getColleagues(stamnummer){
+        return this.$http.get(`${this.BASEURL}/api/units/${stamnummer}/users`).then((resp) => {
+            return resp.data;
+        })
+    }
+
+  getCurrentUserDetails(adNumber){
+      //`${this.BASEURL}/api/users/${adNumber}`
+      console.log("adNumber:");
+      console.log(adNumber);
+      return this.$http.get(this.BASEURL + "/api/users/" + adNumber).then((resp) => {
           return resp.data;
+      }, (resp) => {
+          console.log("logging resp");
+          console.log(resp);
       })
   }
-
-
-
 
     getVerbonden() {
         return this.$http.get(`${this.BASEURL}/api/units?verbond`).then((resp) => {
@@ -62,6 +77,12 @@ export class KrinkelService {
         return this.$http.get(`${this.BASEURL}/api/participants/${stamNummer}`).then((resp) => {
             return resp.data;
         });
+    }
+
+    getUsersOfUnit(stamNummer){
+        return this.$http.get(`${this.BASEURL}/api/participants/info/${stamNummer}`).then((resp) => {
+            return resp.data;
+        })
     }
 
     // getMovies(title) {

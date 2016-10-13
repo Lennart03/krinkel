@@ -2,8 +2,14 @@ package com.realdolmen.chiro.controller.validation;
 
 public class FieldErrorDTO {
 
+    /**
+     * Name of the field which has errors.
+     */
     private String field;
 
+    /**
+     * Description of the error.
+     */
     private String message;
 
     public FieldErrorDTO(String field, String message) {

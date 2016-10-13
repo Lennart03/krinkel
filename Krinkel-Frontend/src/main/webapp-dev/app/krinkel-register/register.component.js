@@ -13,11 +13,12 @@ class RegisterController {
         this.phoneNumberPattern = /^((\+|00)32\s?|0)(\d\s?\d{3}|\d{2}\s?\d{2})(\s?\d{2}){2}|((\+|00)32\s?|0)4(60|[789]\d)(\s?\d{2}){3}$/;
         this.birthdatePattern = /^(\d{4})(\/|-)(\d{1,2})(\/|-)(\d{1,2})$/;
         this.postalcodePattern = /^(\d{4})$/;
+        this.emailPattern = /^[-a-z0-9~!$%^&*_=+}{\'?]+(\.[-a-z0-9~!$%^&*_=+}{\'?]+)*@([a-z0-9_][-a-z0-9_]*(\.[-a-z0-9_]+)*\.(aero|arpa|biz|com|coop|edu|gov|info|int|mil|museum|name|net|org|pro|travel|mobi|[a-z][a-z])|([0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}))(:[0-9]{1,5})?$/i;
         this.campgrounds = ['Antwerpen', 'Kempen', 'Mechelen', 'Limburg', 'Leuven', 'Brussel', 'West-Vlaanderen', 'Heuvelland', 'Roeland', 'Reinaert', 'Nationaal', 'Internationaal'];
         angular.element('select').material_select();
 
         this.dataIsRemoved = false;
-
+        this.voorwaarden = false;
         window.scrollTo(0,0);
 
 
@@ -72,7 +73,7 @@ class RegisterController {
                 this.newPerson = user;
             } else {
                 this.newPerson = {};
-                // this.newPerson.birthDate = "1995-11-24";
+                this.newPerson.job = "Aanbod nationale kampgrond";
             }
         }
 

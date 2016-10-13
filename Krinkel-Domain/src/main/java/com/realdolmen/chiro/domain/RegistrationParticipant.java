@@ -73,9 +73,10 @@ public class RegistrationParticipant {
     private Status status = Status.TO_BE_PAID;
 
     /**
-     * Regex adapted from frontend validation.
-     */
-    @Pattern(regexp = "^((\\+|00)32\\s?|0)(\\d\\s?\\d{3}|\\d{2}\\s?\\d{2})(\\s?\\d{2}){2}|((\\+|00)32\\s?|0)4(60|[789]\\d)(\\s?\\d{2}){3}$")
+     * Only numbers, spaces and optionally a '+' sign are allowed.
+     * Front end does more thorough checking.
+     **/
+    @Pattern(regexp = "^\\+*[0-9\\s]*$")
     private String phoneNumber;
 
     public RegistrationParticipant() {}

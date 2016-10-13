@@ -10,10 +10,10 @@ import java.util.List;
  *
  * Can represent a ChiroGroup, GewestUnit, or VerbondUnit.
  */
-@JsonIdentityInfo(
+/*@JsonIdentityInfo(
         generator = ObjectIdGenerators.PropertyGenerator.class,
         property = "stamnummer"
-)
+)*/
 public class ChiroUnit {
     /**
      * Normalized stam number (without '/' and without whitespace)

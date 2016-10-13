@@ -33,7 +33,6 @@ export class MapperService {
         };
 
 
-
         var genderTemp = data.gender.toLowerCase();
         if (genderTemp === 'man') {
             volunteer.gender = data.gender.toUpperCase();
@@ -65,8 +64,6 @@ export class MapperService {
 
         return volunteer;
     }
-
-
 
 
     mapJob(job) {
@@ -102,7 +99,7 @@ export class MapperService {
         /**
          * NATIONAL_CAMPGROUND, // Aanbod nationale kampgrond
          CAMPGROUND, // Kampgrondtrekker
-         KLINKER_EDITORIAL, // Klinkerredactie
+         KRINKEL_EDITORIAL, // Krinkelredactie
          COOCKING, // Kookploeg
 
          LOGISTICS_CAMPGROUND, // Logistiek (kampgrond)
@@ -137,12 +134,16 @@ export class MapperService {
             phoneNumber: data.phone,
         };
 
+        console.log("outside selectedflqg");
+        console.log(this.SelectService.getColleague());
         if (this.SelectService.getSelectedFlag()) {
-            participant.adNumber = this.SelectService.getColleague().adnr;
+            console.log(this.SelectService.getColleague());
+            console.log("pipikaka");
+            participant.adNumber = this.SelectService.getColleague().adNumber;
         } else {
+            console.log("not in if selectedflqg");
             participant.adNumber = this.AuthService.getLoggedinUser().adnummer;
         }
-
 
 
         if (data.buddy) {
@@ -168,7 +169,6 @@ export class MapperService {
         } else if (data.rank === 'Aspi') {
             participant.role = 'ASPI';
         }
-
         return participant;
     }
 
@@ -233,6 +233,90 @@ export class MapperService {
         }
 
     }
+
+    mapVolunteerFunction(volunteerFunction) {
+        switch (volunteerFunction) {
+            case 'NATIONAL_CAMPGROUND':
+                return 'Nationale kampgrond';
+                break;
+            case 'CAMPGROUND':
+                return 'Kampgrondtrekker';
+                break;
+            case 'KLINKER_EDITORIAL':
+                return 'Krinkelredactie';
+                break;
+            case 'COOCKING':
+                return 'Kookploeg';
+                break;
+            case 'LOGISTICS_CAMPGROUND':
+                return 'Logistiek (kampgrond)';
+                break;
+            case 'LOGISTICS_NATIONAL':
+                return 'Logistiek (nationaal)';
+                break;
+            case 'LIVING_GROUP_GUIDANCE':
+                return 'Leefgroepbegeleiding';
+                break;
+            case 'CUSTOM':
+                return 'CUSTOM';
+                break; // TODO OTHER
+        }
+    }
+
+    mapEatingHabbit(eatingHabbit) {
+        switch (eatingHabbit) {
+            case 'VEGI':
+                return 'Vegetarisch';
+                break;
+            case 'HALAL':
+                return 'Halal';
+                break;
+            case 'FISHANDMEAT':
+                return 'Vlees en vis';
+                break;
+        }
+    }
+
+    mapCampground(campGround) {
+        switch (campGround) {
+            case 'ANTWERPEN':
+                return 'Antwerpen';
+                break;
+            case 'KEMPEN':
+                return 'Kempen';
+                break;
+            case 'MECHELEN':
+                return 'Mechelen';
+                break;
+            case 'LIMBURG':
+                return 'Limburg';
+                break;
+            case 'LEUVEN':
+                return 'Leuven';
+                break;
+            case 'BRUSSEL':
+                return 'Brussel';
+                break;
+            case 'WEST_VLAANDEREN':
+                return 'West-Vlaanderen';
+                break;
+            case 'HEUVELLAND':
+                return 'Heuvelland';
+                break;
+            case 'ROELAND':
+                return 'Roeland';
+                break;
+            case 'REINAERT':
+                return 'Reinaert';
+                break;
+            case 'NATIONAAL':
+                return 'Nationaal';
+                break;
+            case 'INTERNATIONAAL':
+                return 'Internationaal';
+                break;
+        }
+    }
 }
 
 MapperService.$inject = ['AuthService', 'SelectService'];
@@ -265,7 +349,7 @@ MapperService.$inject = ['AuthService', 'SelectService'];
 //     "phoneNumber": null,
 //     "campGround": "ANTWERPEN",
 //     "function": {
-//     "preset": "KLINKER_EDITORIAL",
+//     "preset": "KRINKEL_EDITORIAL",
 //         "other": null
 // },
 //     "preCampList": [ ],

@@ -1,6 +1,17 @@
 export class AuthService {
-    constructor($window) {
+    constructor($window,KrinkelService) {
         this.$window = $window;
+        this.KrinkelService = KrinkelService;
+
+        this.getUserFromStorage();
+        console.log("logged in user:");
+        console.log(this.getLoggedinUser());
+
+        this.getCurrentUserDetails(this.getLoggedinUser().adnummer).then((resp) => {
+            this.userDetails = resp;
+        });
+
+
     }
 
     getLoggedinUser() {
@@ -44,7 +55,9 @@ export class AuthService {
             var name = eqPos > -1 ? cookie.substr(0, eqPos) : cookie;
             document.cookie = name + "=;expires=Thu, 01 Jan 1970 00:00:00 GMT";
         }
-        this.$window.location = 'https://login.chiro.be/cas/logout';
+        // The service parameter is not recognized by the Chiro CAS.
+        // This feature is probably deactivated.
+        this.$window.location = 'https://login.chiro.be/cas/logout?service=http://localhost:8080/site/index.html';
     }
 
 
@@ -54,7 +67,16 @@ export class AuthService {
         if (parts.length == 2) return parts.pop().split(";").shift();
     }
 
+    getCurrentUserDetails(adNumber){
+        return this.KrinkelService.getCurrentUserDetails(adNumber).then(resp => {
+            this.userDetails = resp;
+            return resp;
+        })
+    }
+    getUserDetails() {
+        return this.userDetails;
+    }
 }
-AuthService.$inject = ['$window'];
+AuthService.$inject = ['$window','KrinkelService'];
 
 

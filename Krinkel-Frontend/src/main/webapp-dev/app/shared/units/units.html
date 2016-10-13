@@ -13,17 +13,30 @@
     Terug
 </a>
 
-<table>
+<a class="btn" ng-click="$ctrl.switchDetails('participants')" ng-if="$ctrl.userDetails">
+    Deelnemers
+</a>
+
+<a class="btn" ng-click="$ctrl.switchDetails('volunteers')" ng-if="$ctrl.userDetails">
+    Medewerkers
+</a>
+
+<h2 ng-if="$ctrl.participantDetails">Deelnemers</h2>
+<h2 ng-if="$ctrl.volunteerDetails">Medewerkers</h2>
+
+
+
+<table ng-if="!$ctrl.userDetails">
     <thead>
     <tr>
         <th data-field="name">Naam</th>
-        <th data-field="amountParticipants">Aantal Deelnemers</th>
-        <th data-field="amountVolunteers">Aantal vrijwilligers</th>
+        <th data-field="amountParticipants">Aantal deelnemers</th>
+        <th data-field="amountVolunteers">Aantal medewerkers</th>
     </tr>
     </thead>
 
     <tbody>
-    <tr ng-repeat="verbond in $ctrl.verbonden" ng-click="$ctrl.openVerbond(verbond)">
+    <tr ng-repeat="verbond in $ctrl.verbonden" ng-click="$ctrl.openExtraInfo(verbond)">
         <td>
             {{verbond.naam}}
         </td>
@@ -32,8 +45,79 @@
         </td>
         <td>
             {{verbond.amountVolunteers}}
-            <!--TODO send icon ook tonen wanneer admin is ingelogd-->
-            <i class="material-icons right" ng-if="verbond.stamnummer.endsWith('00')">send</i>
+            <i class="material-icons right"
+               ng-if="verbond.stamnummer.endsWith('00') || $ctrl.AuthService.getUserRole() === 'ADMIN'">send</i>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+<table ng-if="$ctrl.participantDetails">
+    <thead>
+    <tr>
+        <th data-field="name">Naam</th>
+        <th data-field="address">Adres</th>
+        <th data-field="city">Gemeente</th>
+        <th data-field="eatinghabit">Eetgewoonte</th>
+        <th data-field="medicalRemarks">Medische info</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr ng-repeat="participant in $ctrl.participants">
+        <td>
+            {{participant.firstName}} {{participant.lastName}}
+        </td>
+        <td>
+            {{participant.address.street}} {{participant.address.houseNumber}}
+        </td>
+        <td>
+            {{participant.address.city}}
+        </td>
+        <td>
+            {{participant.eatinghabbit}}
+        </td>
+        <td>
+            {{participant.medicalRemarks}}
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+
+<table ng-if="$ctrl.volunteerDetails">
+    <thead>
+    <tr>
+        <th data-field="name">Naam</th>
+        <th data-field="address">Adres</th>
+        <th data-field="city">Gemeente</th>
+        <th data-field="eatinghabit">Eetgewoonte</th>
+        <th data-field="medicalRemarks">Medische info</th>
+        <th data-field="function">Functie</th>
+        <th data-field="campground">Kampgrond</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr ng-repeat="volunteer in $ctrl.volunteers">
+        <td>
+            {{volunteer.firstName}} {{volunteer.lastName}}
+        </td>
+        <td>
+            {{volunteer.address.street}} {{volunteer.address.houseNumber}}
+        </td>
+        <td>
+            {{volunteer.address.city}}
+        </td>
+        <td>
+            {{volunteer.eatinghabbit}}
+        </td>
+        <td>
+            {{volunteer.medicalRemarks}}
+        </td>
+        <td>
+            {{volunteer.function.preset}}
+        </td>
+        <td>
+            {{volunteer.campGround}}
         </td>
     </tr>
     </tbody>

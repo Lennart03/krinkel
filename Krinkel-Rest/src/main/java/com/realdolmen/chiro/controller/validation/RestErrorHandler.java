@@ -13,10 +13,13 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
-import javax.validation.Valid;
 import java.util.List;
 import java.util.Locale;
 
+/**
+ * RestErrorHandler is a controller advice which is only used on
+ * controllers which have the @EnableRestErrorHandling annotation.
+ */
 @ControllerAdvice(annotations = EnableRestErrorHandling.class)
 public class RestErrorHandler {
 
