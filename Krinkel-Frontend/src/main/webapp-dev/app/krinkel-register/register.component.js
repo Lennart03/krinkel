@@ -73,7 +73,7 @@ class RegisterController {
                 this.newPerson = user;
             } else {
                 this.newPerson = {};
-                // this.newPerson.birthDate = "1995-11-24";
+                this.newPerson.job = "Aanbod nationale kampgrond";
             }
         }
 
