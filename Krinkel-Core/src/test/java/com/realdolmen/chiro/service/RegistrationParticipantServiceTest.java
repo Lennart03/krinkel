@@ -17,7 +17,6 @@ import org.mockito.stubbing.Answer;
 
 import java.util.Date;
 
-import static org.junit.Assert.assertThat;
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.times;
 
