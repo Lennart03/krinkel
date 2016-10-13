@@ -19,6 +19,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+/**
+ * A Sample RestController for testing purposes.
+ * Holds no further functional value.
+ */
 @RestController
 public class DummyController {
 
