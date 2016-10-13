@@ -86,7 +86,7 @@ public class RegistrationParticipantServiceTest {
         Mockito.when(repo.findByAdNumber(TEST_AD_NUMBER)).thenReturn(participant);
         registrationParticipantService.updatePaymentStatus(TEST_ORDER_ID);
 
-        Mockito.verify(mspService, times(1)).orderIsPaid(TEST_AD_NUMBER);
+        Mockito.verify(mspService, times(1)).orderIsPaid(TEST_ORDER_ID);
     }
 
     @Test
@@ -98,5 +98,13 @@ public class RegistrationParticipantServiceTest {
         Mockito.verify(repo, times(1)).findByAdNumber(TEST_AD_NUMBER);
         Mockito.verify(repo, times(1)).save(participant);
         Assert.assertEquals(Status.PAID, participant.getStatus());
+    }
+
+    @Test
+    public void updatePaymentStatusCallsRepositoryWithAdNumber() {
+        Mockito.when(repo.findByAdNumber(TEST_AD_NUMBER)).thenReturn(participant);
+        registrationParticipantService.updatePaymentStatus(TEST_ORDER_ID);
+        Mockito.verify(repo, times(1)).findByAdNumber(TEST_AD_NUMBER);
+        Mockito.verify(mspService, times(1)).orderIsPaid(TEST_ORDER_ID);
     }
 }

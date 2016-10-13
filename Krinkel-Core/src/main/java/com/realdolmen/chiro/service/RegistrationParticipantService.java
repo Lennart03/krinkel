@@ -34,12 +34,14 @@ public class RegistrationParticipantService {
 		return null;
 	}
 
-	public void updatePaymentStatus(String testOrderId) {
-		String[] split = testOrderId.split("-");
-		testOrderId = split[0];
 
-		RegistrationParticipant participant = repository.findByAdNumber(testOrderId);
-		if (participant != null) {
+    public void updatePaymentStatus(String testOrderId) {
+        String[] split = testOrderId.split("-");
+        String adNumber = split[0];
+
+        RegistrationParticipant participant = repository.findByAdNumber(adNumber);
+        if (participant != null) {
+
 
 			if (mspService.orderIsPaid(testOrderId)) {
 				participant.setStatus(Status.PAID);
