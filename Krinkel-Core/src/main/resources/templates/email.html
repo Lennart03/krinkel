@@ -49,14 +49,14 @@
 		</tr>
 		<tr>
 			<td>Geslacht:</td>
-			<td th:text="${participant.gender.description}"></td>
+			<td th:if="${participant.gender != null}" th:text="${participant.gender.description}"></td>
 			<td>Functie:</td>
-			<td th:text="${participant.role.description}"></td>
+			<td th:if="${participant.role != null}" th:text="${participant.role.description}"></td>
 
 		</tr>
 		<tr th:if="${isVolunteer}">
 			<td>Kampgrond:</td>
-			<td th:text="${participant.campGround.description}"></td>
+			<td th:if="${participant.campGround != null}" th:text="${participant.campGround.description}"></td>
 			<td></td>
 			<td></td>
 
