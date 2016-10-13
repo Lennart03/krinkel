@@ -24,8 +24,8 @@ public class RegistrationCommunicationServiceTest {
 	@Test
 	public void shouldFindAllWaitingAndFailed(){
 		List<RegistrationCommunication>communications = registrationCommunicationRepository.findAllWaitingAndFailed();
+		System.out.println(communications.size());
 		assertEquals(6, communications.size());
 	}
-	
 
 }

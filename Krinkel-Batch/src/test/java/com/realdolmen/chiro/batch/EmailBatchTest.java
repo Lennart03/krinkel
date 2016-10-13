@@ -2,6 +2,7 @@ package com.realdolmen.chiro.batch;
 
 import static org.junit.Assert.assertEquals;
 
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +15,7 @@ import com.realdolmen.chiro.domain.RegistrationParticipant;
 import com.realdolmen.chiro.domain.RegistrationVolunteer;
 import com.realdolmen.chiro.repository.RegistrationParticipantRepository;
 
+
 @RunWith(SpringJUnit4ClassRunner.class)
 //@SpringBootTest
 @ContextConfiguration(classes={BatchTestConfig.class,ApplicationConfiguration.class})
@@ -22,6 +24,7 @@ public class EmailBatchTest {
 	@Autowired
 	private RegistrationParticipantRepository registrationParticipantRepository;
 
+	@Ignore
 	@Test
 	public void shouldContainVolunteerFields() {
 		RegistrationParticipant participant = registrationParticipantRepository.findByAdNumber("876543");
@@ -29,5 +32,4 @@ public class EmailBatchTest {
 		RegistrationVolunteer volunteer = (RegistrationVolunteer)participant;
 		assertEquals("CAMPGROUND", volunteer.getCampGround().toString());
 	}
-
 }

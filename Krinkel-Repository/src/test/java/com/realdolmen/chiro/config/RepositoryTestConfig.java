@@ -24,88 +24,93 @@ import org.thymeleaf.templateresolver.ClassLoaderTemplateResolver;
 import org.thymeleaf.templateresolver.TemplateResolver;
 
 @Configuration
-@EnableJpaRepositories(basePackages="com.realdolmen.chiro")
-@ComponentScan("com.realdolmen.chiro")
+/*
+@EnableJpaRepositories(basePackages = "com.realdolmen.chiro")
+@ComponentScan("com.realdolmen.chiro")*/
 public class RepositoryTestConfig {
-	@Bean
-	public JavaMailSender javaMailSender(){
+	/*@Bean
+	public JavaMailSender javaMailSender() {
 		JavaMailSenderImpl javaMailSenderImpl = new JavaMailSenderImpl();
 		javaMailSenderImpl.setHost("localhost");
 		javaMailSenderImpl.setPort(465);
 		javaMailSenderImpl.setProtocol("smtp");
 		return javaMailSenderImpl;
 	}
-	
+
 	@Bean
-    public Database database() {
-        return Database.H2;
-    }
-	
-	@Bean
-	//@Profile("test")
-	public DataSource embeddedDataSource(){
-		System.err.println("script----------------------------------------------");
-		return new EmbeddedDatabaseBuilder().setType(EmbeddedDatabaseType.H2).addScript("repo_data.sql").build();
+	public Database database() {
+		return Database.H2;
 	}
-	
-	
+
 	@Bean
-    public EntityManagerFactory entityManagerFactory() {
-        LocalContainerEntityManagerFactoryBean lef = new LocalContainerEntityManagerFactoryBean();
-        lef.setDataSource(embeddedDataSource());
-        lef.setJpaVendorAdapter(jpaVendorAdapter());
-        lef.setPackagesToScan("com.realdolmen.chiro");
-        lef.afterPropertiesSet();
-        return lef.getObject();
-    }
+	// @Profile("test")
+	public DataSource embeddedDataSource() {
+		System.err.println("script----------------------------------------------");
+		return new EmbeddedDatabaseBuilder().setType(EmbeddedDatabaseType.H2).addScript("classpath:repo_data.sql")
+				.build();
+	}
+
+	@Bean
+	public EntityManagerFactory entityManagerFactory() {
+		LocalContainerEntityManagerFactoryBean lef = new LocalContainerEntityManagerFactoryBean();
+		lef.setDataSource(embeddedDataSource());
+		lef.setJpaVendorAdapter(jpaVendorAdapter());
+		lef.setPackagesToScan("com.realdolmen.chiro");
+		lef.afterPropertiesSet();
+		return lef.getObject();
+	}
+
 	@Bean
 	public EntityManager entityManager() {
-	    return entityManagerFactory().createEntityManager();
+		return entityManagerFactory().createEntityManager();
 	}
-	
-//	@Bean
-//	public LocalContainerEntityManagerFactoryBean entityManagerFactoryBean(DataSource dataSource,JpaVendorAdapter jpaVendorAdapter){
-//		LocalContainerEntityManagerFactoryBean emfb = new LocalContainerEntityManagerFactoryBean();
-//		emfb.setDataSource(dataSource);
-//		emfb.setJpaVendorAdapter(jpaVendorAdapter);
-//		emfb.setPackagesToScan("com.realdolmen.chiro");
-//		return emfb;
-//	}
-	
+
+	// @Bean
+	// public LocalContainerEntityManagerFactoryBean
+	// entityManagerFactoryBean(DataSource dataSource,JpaVendorAdapter
+	// jpaVendorAdapter){
+	// LocalContainerEntityManagerFactoryBean emfb = new
+	// LocalContainerEntityManagerFactoryBean();
+	// emfb.setDataSource(dataSource);
+	// emfb.setJpaVendorAdapter(jpaVendorAdapter);
+	// emfb.setPackagesToScan("com.realdolmen.chiro");
+	// return emfb;
+	// }
+
 	@Bean
-	public JpaVendorAdapter jpaVendorAdapter(){
+	public JpaVendorAdapter jpaVendorAdapter() {
 		HibernateJpaVendorAdapter adaptor = new HibernateJpaVendorAdapter();
 		adaptor.setDatabase(Database.H2);
 		adaptor.setShowSql(true);
 		adaptor.setGenerateDdl(true);
 		return adaptor;
-	}
-	
+	}*/
+
 	@Bean
-	public ViewResolver viewResolver (SpringTemplateEngine templateEngine){
+	public ViewResolver viewResolver(SpringTemplateEngine templateEngine) {
 		ThymeleafViewResolver viewResolver = new ThymeleafViewResolver();
 		viewResolver.setTemplateEngine(templateEngine);
 		return viewResolver;
 	}
-	
+
 	@Bean
-	public SpringTemplateEngine templateEngine(TemplateResolver templateResolver){
+	public SpringTemplateEngine templateEngine(TemplateResolver templateResolver) {
 		SpringTemplateEngine templateEngine = new SpringTemplateEngine();
 		templateEngine.setTemplateResolver(templateResolver());
 		return templateEngine;
 	}
-	
-	
+
 	@Bean
 	public ClassLoaderTemplateResolver templateResolver() {
 		ClassLoaderTemplateResolver templateResolver = new ClassLoaderTemplateResolver();
-	    templateResolver.setPrefix("templates/");
-	    templateResolver.setTemplateMode("HTML5");        
-	    templateResolver.setCacheable(false);
-	    return templateResolver;
-	 }
-	@Bean
-	public JpaTransactionManager transactionManager () {
-		return new JpaTransactionManager(entityManagerFactory());
+		templateResolver.setPrefix("templates/");
+		templateResolver.setTemplateMode("HTML5");
+		templateResolver.setCacheable(false);
+		return templateResolver;
 	}
+
+	/*@Bean
+	public JpaTransactionManager transactionManager() {
+		return new JpaTransactionManager(entityManagerFactory());
+	}*/
 }
