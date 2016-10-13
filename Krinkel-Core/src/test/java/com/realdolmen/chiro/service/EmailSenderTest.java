@@ -98,7 +98,7 @@ public class EmailSenderTest {
 		registrationVolunteer.setEmail(EMAIL_TO);
 		registrationVolunteer.setAddress(address);
 		registrationVolunteer.setGender(MALE);
-		registrationVolunteer.setFunction(new VolunteerFunction(Preset.KLINKER_EDITORIAL));
+		registrationVolunteer.setFunction(new VolunteerFunction(Preset.KRINKEL_EDITORIAL));
 		Calendar calendar = Calendar.getInstance();
 		calendar.set(Calendar.YEAR, 2017);
 		calendar.set(Calendar.MONTH,7);//zero-based!!!
