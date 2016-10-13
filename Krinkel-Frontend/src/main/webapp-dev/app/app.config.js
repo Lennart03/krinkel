@@ -32,6 +32,10 @@ export function appConfig($routeProvider, $locationProvider) {
         template: '<krinkel-select></krinkel-select>'
     });
 
+    $routeProvider.when('/fail', {
+        template: '<fail-message></fail-message>'
+    });
+
 
     $routeProvider.otherwise({
         redirectTo: '/home'

@@ -1,6 +1,17 @@
 export class AuthService {
-    constructor($window) {
+    constructor($window,KrinkelService) {
         this.$window = $window;
+        this.KrinkelService = KrinkelService;
+
+        this.getUserFromStorage();
+        console.log("logged in user:");
+        console.log(this.getLoggedinUser());
+
+        this.getCurrentUserDetails(this.getLoggedinUser().adnummer).then((resp) => {
+            this.userDetails = resp;
+        });
+
+
     }
 
     getLoggedinUser() {
@@ -54,7 +65,16 @@ export class AuthService {
         if (parts.length == 2) return parts.pop().split(";").shift();
     }
 
+    getCurrentUserDetails(adNumber){
+        return this.KrinkelService.getCurrentUserDetails(adNumber).then(resp => {
+            this.userDetails = resp;
+            return resp;
+        })
+    }
+    getUserDetails() {
+        return this.userDetails;
+    }
 }
-AuthService.$inject = ['$window'];
+AuthService.$inject = ['$window','KrinkelService'];
 
 

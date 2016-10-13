@@ -13,6 +13,18 @@ class SideNavController {
         this.$location.path('/login')
     }
 
+    go(){
+        var currentUser = this.AuthService.getUserDetails();
+
+        if(currentUser.registered && currentUser.hasPaid){
+            this.$location.path('/success');
+        }else if (currentUser.registered && !currentUser.hasPaid){
+            this.$location.path('/fail');
+        }else{
+            this.$location.path('/home')
+        }
+    }
+
 }
 
 export var SideNavComponent = {
