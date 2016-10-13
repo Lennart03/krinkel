@@ -1,5 +1,6 @@
 package com.realdolmen.chiro.repository;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
 import java.util.List;
@@ -15,6 +16,8 @@ import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.realdolmen.chiro.domain.RegistrationParticipant;
+import com.realdolmen.chiro.domain.RegistrationVolunteer;
+import com.realdolmen.chiro.domain.VolunteerFunction;
 
 @WebAppConfiguration
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -27,17 +30,16 @@ public class RegistrationParticipantRepositoryTest {
 	@Autowired
 	private RegistrationParticipantRepository registrationParticipantRepository;
 
-//	@Test
-//	public void shouldContainVolunteerFields() {
-//		System.err.println("testtestsetsets");
-//		assertNotNull(registrationParticipantRepository);
-//		
-//		RegistrationParticipant participant = registrationParticipantRepository.findByAdNumber(AD_NUMBER);
-//		assertNotNull(participant);
-//		assertEquals("Jos", participant.getFirstName());
-//		RegistrationVolunteer volunteer = (RegistrationVolunteer)participant;
-//		assertEquals("CAMPGROUND", volunteer.getCampGround().toString());
-//	}
+	@Test
+	public void shouldContainVolunteerFields() {
+		assertNotNull(registrationParticipantRepository);
+		RegistrationParticipant participant = registrationParticipantRepository.findByAdNumber(AD_NUMBER);
+		assertNotNull(participant);
+		assertEquals("Jos", participant.getFirstName());
+		RegistrationVolunteer volunteer = (RegistrationVolunteer)participant;
+		assertEquals("KEMPEN", volunteer.getCampGround().toString());
+		assertEquals(VolunteerFunction.Preset.CAMPGROUND, volunteer.getFunction().getPreset());
+	}
 	
 	@Test
 	public void shouldReturnAParticipant(){
