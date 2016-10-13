@@ -34,6 +34,20 @@ CREATE TABLE groepen (
     `verbond_naam` VARCHAR(15),
     PRIMARY KEY(`groep_stamnr`)
 );
+INSERT INTO login_log (id,ad_number,stamp) VALUES (1,'123456',{d '2016-10-01'});
+INSERT INTO login_log (id,ad_number,stamp) VALUES (2,'123456',{d '2016-10-02'});
+INSERT INTO login_log (id,ad_number,stamp) VALUES (3,'654321',{d '2016-10-02'});
+INSERT INTO login_log (id,ad_number,stamp) VALUES (4,'123528',{d '2016-10-03'});
+INSERT INTO login_log (id,ad_number,stamp) VALUES (5,'1688456',{d '2016-10-03'});
+INSERT INTO login_log (id,ad_number,stamp) VALUES (6,'123456',{d '2016-10-04'});
+INSERT INTO login_log (id,ad_number,stamp) VALUES (7,'123456',{d '2016-10-04'});
+INSERT INTO login_log (id,ad_number,stamp) VALUES (8,'144546',{d '2016-10-04'});
+INSERT INTO login_log (id,ad_number,stamp) VALUES (9,'129897',{d '2016-10-04'});
+INSERT INTO login_log (id,ad_number,stamp) VALUES (10,'123856',{d '2016-10-04'});
+INSERT INTO login_log (id,ad_number,stamp) VALUES (11,'133456',{d '2016-10-07'});
+INSERT INTO login_log (id,ad_number,stamp) VALUES (12,'126556',{d '2016-10-07'});
+
+
 INSERT INTO groepen VALUES ('Pleplo','AG /0103','AG /0400','Zac','AG /0000','Antwerpen');
 INSERT INTO groepen VALUES ('Lore','AG /0104','AG /0400','Zac','AG /0000','Antwerpen');
 INSERT INTO groepen VALUES ('Dolfijn','AG /0108','AG /0400','Zac','AG /0000','Antwerpen');

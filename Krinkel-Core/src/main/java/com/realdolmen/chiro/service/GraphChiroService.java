@@ -37,15 +37,27 @@ public class GraphChiroService {
         participantRepository.findAll().forEach(r -> {
             if(r.getRole().equals(Role.VOLUNTEER)){
                 switch (r.getStatus()){
-                    case PAID: status.setVolunteersNotConfirmed(status.getVolunteersNotConfirmed() + 1);
-                    case CONFIRMED: status.setVolunteersConfirmed(status.getVolunteersConfirmed() + 1);
-                    case TO_BE_PAID: status.setVolunteersNotPaid(status.getVolunteersNotPaid() + 1);
+                    case PAID:
+                        status.setVolunteersNotConfirmed(status.getVolunteersNotConfirmed() + 1);
+                        break;
+                    case CONFIRMED:
+                        status.setVolunteersConfirmed(status.getVolunteersConfirmed() + 1);
+                        break;
+                    case TO_BE_PAID:
+                        status.setVolunteersNotPaid(status.getVolunteersNotPaid() + 1);
+                        break;
                 }
             } else {
                 switch (r.getStatus()){
-                    case PAID: status.setParticipantsNotConfirmed(status.getParticipantsNotConfirmed() + 1);
-                    case CONFIRMED: status.setParticipantsConfirmed(status.getParticipantsConfirmed() + 1);
-                    case TO_BE_PAID: status.setParticipantsNotPaid(status.getParticipantsNotPaid() + 1);
+                    case PAID:
+                        status.setParticipantsNotConfirmed(status.getParticipantsNotConfirmed() + 1);
+                        break;
+                    case CONFIRMED:
+                        status.setParticipantsConfirmed(status.getParticipantsConfirmed() + 1);
+                        break;
+                    case TO_BE_PAID:
+                        status.setParticipantsNotPaid(status.getParticipantsNotPaid() + 1);
+                        break;
                 }
             }
 
