@@ -31,6 +31,9 @@ export function appConfig($routeProvider, $locationProvider) {
     $routeProvider.when('/select-participant', {
         template: '<krinkel-select></krinkel-select>'
     });
+    $routeProvider.when('/graph', {
+        template: '<krinkel-graph></krinkel-graph>'
+    });
 
     $routeProvider.when('/fail', {
         template: '<fail-message></fail-message>'
