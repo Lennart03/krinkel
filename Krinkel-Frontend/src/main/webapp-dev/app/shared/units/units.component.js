@@ -1,6 +1,8 @@
 class UnitsController {
-    constructor(KrinkelService) {
+    constructor(KrinkelService, AuthService, MapperService) {
         this.KrinkelService = KrinkelService;
+        this.AuthService = AuthService;
+        this.MapperService = MapperService;
     }
 
     $onInit() {
@@ -10,14 +12,48 @@ class UnitsController {
         });
     }
 
+    openExtraInfo(verbond) {
+        this.openVerbond(verbond);
+
+        if (!verbond.stamnummer.endsWith("00") && this.AuthService.getUserRole() === 'ADMIN') {
+            this.openUsers(verbond);
+        }
+    }
+
+    openUsers(verbond) {
+        this.unitLevel = verbond.naam;
+        this.userDetails = true;
+        this.participantDetails = true;
+        this.volunteerDetails = false;
+        this.participants = [];
+        this.volunteers = [];
+        this.KrinkelService.getUsersOfUnit(verbond.stamnummer).then((results) => {
+            angular.forEach(results[0], (value, index) => {
+                value.participant = "Deelnemer";
+                value.eatinghabbit = this.MapperService.mapEatingHabbit(value.eatinghabbit);
+                value.campGround = this.MapperService.mapCampground(value.campGround);
+                this.participants.push(value);
+            });
+            angular.forEach(results[1], (value, index) => {
+                value.participant = "Vrijwilliger";
+                value.function.preset = this.MapperService.mapVolunteerFunction(value.function.preset);
+                value.eatinghabbit = this.MapperService.mapEatingHabbit(value.eatinghabbit);
+                value.campGround = this.MapperService.mapCampground(value.campGround);
+                if (value.function.preset == "CUSTOM"){
+                    value.function.preset = value.function.other;
+                }
+                this.volunteers.push(value);
+            });
+        });
+    }
+
     openVerbond(verbond) {
         this.KrinkelService.getGewestenForVerbond(verbond.stamnummer).then((results) => {
+            this.unitLevel = verbond.naam;
+            this.verbonden = results.onderliggende_stamnummers;
+            this.verbond = results;
 
             if (results.onderliggende_stamnummers != 0) {
-                this.unitLevel = verbond.naam;
-                this.verbonden = results.onderliggende_stamnummers;
-                this.verbond = results;
-
                 this.getParticipantsForUnit(this.verbonden);
             }
         });
@@ -34,15 +70,29 @@ class UnitsController {
 
     goToPrevious(verbond) {
         this.unitLevel = null;
+        this.userDetails = false;
+        this.participantDetails = false;
+        this.volunteerDetails = false;
 
         if (verbond.bovenliggende_stamnummer != null) {
             this.openVerbond(verbond.bovenliggende_stamnummer);
-        }
-        else {
+        } else if (!verbond.stamnummer.endsWith("000")) {
+            this.openVerbond(verbond.stamnummer);
+        } else {
             this.KrinkelService.getVerbonden().then((results) => {
                 this.verbonden = results;
                 this.getParticipantsForUnit(this.verbonden);
             });
+        }
+    }
+
+    switchDetails(participant) {
+        if (participant == 'participants') {
+            this.participantDetails = true;
+            this.volunteerDetails = false;
+        } else if (participant == 'volunteers') {
+            this.volunteerDetails = true;
+            this.participantDetails = false;
         }
     }
 }
@@ -52,4 +102,4 @@ export var UnitsComponent = {
     controller: UnitsController
 };
 
-UnitsComponent.$inject = ['KrinkelService'];
+UnitsComponent.$inject = ['KrinkelService', 'AuthService', 'MapperService'];

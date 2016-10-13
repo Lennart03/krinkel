@@ -72,11 +72,10 @@ export class KrinkelService {
         });
     }
 
-    getLocationFromGoogleApi(street) {
-
-        return this.$http.get(`https://maps.googleapis.com/maps/api/geocode/json?address=${street}&key=AIzaSyAoLq_x3LA4vc6febb2-8WPtuZhOdPGdUQ`).then((resp) => {
-                return resp;
-            });
+    getUsersOfUnit(stamNummer){
+        return this.$http.get(`${this.BASEURL}/api/participants/info/${stamNummer}`).then((resp) => {
+            return resp.data;
+        })
     }
 
     // getMovies(title) {
