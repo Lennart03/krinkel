@@ -25,29 +25,44 @@ class RegisterController {
             this.SelectService.setColleague(undefined);
             this.SelectService.setSelectedFlag(false);
         }
-
+        this.details3 = {};
+        this.details2 = {};
+        this.details = {};
     }
 
     extractFromAdress(components) {
         if (components != null) {
 
-            for (var i = 0; i <= components.length; i++)
-                for (var j = 0; j <= components[i].types.length; j++) {
+
+            for (var i = 0; i < components.length; i++)
+                for (var j = 0; j < components[i].types.length; j++) {
+
                     if (components[i].types[j] == 'postal_code') {
-                      //  console.debug(components[i].long_name);
-                        this.details2 = {
+                        //  console.debug(components[i].long_name);
+
+                        //change model on runtime causes an error [$rootScope:infdig] 10 $digest() iterations reached. Aborting!
+                        //but runs as expected --' something for the angular guys ?
+                      this.details2 = {
                             name: components[i].long_name
                         };
+
+
                     }
-                   // console.debug(components[i].types[j]);
+                    // console.debug(components[i].types[j]);
                     if (components[i].types[j] == 'locality') {
                         //console.debug(components[i].short_name);
+                        //change model on runtime causes an error [$rootScope:infdig] 10 $digest() iterations reached. Aborting!
+                        //but runs as expected --' something for the angular guys ?
                         this.details3 = {
                             vicinity: components[i].short_name
                         };
+
+
                     }
+
                 }
         }
+        return "";
     }
 
     registerPerson(newPerson) {
@@ -116,9 +131,7 @@ class RegisterController {
             country: 'be',
             types: '(regions)'
         };
-        this.details3 = '';
-        this.details2 = '';
-        this.details = '';
+
 
         angular.element('.modal-trigger').leanModal();
         // Fill data from localStorage

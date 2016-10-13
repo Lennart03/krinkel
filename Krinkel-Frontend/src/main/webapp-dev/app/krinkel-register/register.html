@@ -67,8 +67,9 @@
                 <!--$ctrl.newPerson.street-->
                 <input name="street" type="text" class="validate" id="street" ng-model="$ctrl.details.address_components[0].long_name"
                        class="validate" ng-autocomplete
-                       options="$ctrl.optionsStreet" details="$ctrl.details" required placeholder="...">{{$ctrl.extractFromAdress($ctrl.details.address_components )}}</input>
+                       options="$ctrl.optionsStreet" details="$ctrl.details" required placeholder="..."/>
 
+                {{$ctrl.extractFromAdress($ctrl.details.address_components )}}
 
                 <label for="street">Straat *</label>
                 <p ng-show="personForm.street.$invalid && personForm.street.$touched" class="error"><i
@@ -94,16 +95,18 @@
                        ng-pattern="$ctrl.postalcodePattern"
                        ng-autocomplete details="$ctrl.details2"
                        options="$ctrl.optionsPostalCode" required placeholder="..."
-                       required>{{$ctrl.extractFromAdress($ctrl.details2.address_components )}}</input>
-                <label for="postal_code">Postcode *</label>
-                <p ng-show="personForm.postalCode.$invalid && personForm.postalCode.$touched" class="error"><i
-                    class="material-icons">error_outline</i> Postcode is verplicht</p>
-            </div>
-            <div class="input-field col m8 s12">
-                <i class="material-icons prefix">home</i>
-                <!--$ctrl.newPerson.city-->
+                       required/>
+                <!--   {{$ctrl.extractFromAdress($ctrl.details2.address_components )}}-->
+              <label for="postal_code">Postcode *</label>
+              <p ng-show="personForm.postalCode.$invalid && personForm.postalCode.$touched" class="error"><i
+                  class="material-icons">error_outline</i> Postcode is verplicht</p>
+          </div>
+          <div class="input-field col m8 s12">
+              <i class="material-icons prefix">home</i>
+              <!--$ctrl.newPerson.city-->
                 <input id="city" name="city" type="text" class="validate" ng-model="$ctrl.details3.vicinity" required  ng-autocomplete
-                       options="$ctrl.optionsStad" details="$ctrl.details3" required placeholder="...">{{$ctrl.extractFromAdress($ctrl.details3.address_components )}}</input>
+                       options="$ctrl.optionsStad" details="$ctrl.details3" required placeholder="..."/>
+              <!--  {{$ctrl.extractFromAdress($ctrl.details3.address_components )}}-->
                 <label for="city">Gemeente *</label>
                 <p ng-show="personForm.city.$invalid && personForm.city.$touched" class="error"><i
                     class="material-icons">error_outline</i>
