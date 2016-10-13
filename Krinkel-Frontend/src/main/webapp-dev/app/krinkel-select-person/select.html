@@ -3,7 +3,6 @@
        ng-repeat="colleague in $ctrl.colleagues"
        class="collection-item"
        ng-if="colleague.adNumber != $ctrl.AuthService.getLoggedinUser().adnummer"
-    >{{colleague.firstname}} {{colleague.lastname}}<br/>stamnummer: {{colleague.stamnummer}} adnummer: {{colleague.adNumber}}
+    >{{colleague.firstname}} {{colleague.lastname}}<br/>stamnummer: {{colleague.stamnummer}} adnummer: {{colleague.adNumber}}</a>
 </div>
 
-// TODO titel
