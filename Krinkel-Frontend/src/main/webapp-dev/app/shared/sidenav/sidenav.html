@@ -10,6 +10,8 @@
     </li>
     <li class="collection-item" ng-if="$ctrl.AuthService.getUserDetails().registered == false"><a href="/register-volunteer"><i
       class="material-icons">work</i> Schrijf je in als medewerker</a></li>
+      <li><div class="divider" ng-if="$ctrl.AuthService.getUserRole() === 'ADMIN'"></div></li>
+      <li><a class="subheader" ng-if="$ctrl.AuthService.getUserRole() === 'ADMIN'">Administratie</a></li>
     <li class="collection-item" ng-if="$ctrl.AuthService.getUserRole() === 'ADMIN'"><a href="/analytics"><i
       class="material-icons">equalizer</i> Overzicht inschrijvingen</a></li>
       <li class="collection-item" ng-if="$ctrl.AuthService.getUserRole() === 'ADMIN'"><a href="#"><i

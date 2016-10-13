@@ -61,6 +61,7 @@ export class KrinkelService {
       })
   }
 
+
     getVerbonden() {
         return this.$http.get(`${this.BASEURL}/api/units?verbond`).then((resp) => {
             return resp.data;
@@ -95,6 +96,22 @@ export class KrinkelService {
     //     return resp.data;
     //   });
     // }
+
+    getGraphSunInfo() {
+        return this.$http.get(`${this.BASEURL}/api/graph/sun`).then((resp) => {
+            return resp.data;
+        });
+    }
+    getGraphStatusInfo() {
+        return this.$http.get(`${this.BASEURL}/api/graph/status`).then((resp) => {
+           return resp.data;
+        });
+    }
+    getGraphLoginInfo() {
+        return this.$http.get(`${this.BASEURL}/api/graph/login`).then((resp) => {
+            return resp.data;
+        });
+    }
 }
 
 KrinkelService.$inject = ['$http', 'BASEURL'];

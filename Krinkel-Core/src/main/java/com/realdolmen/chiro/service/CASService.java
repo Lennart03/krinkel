@@ -1,7 +1,10 @@
 package com.realdolmen.chiro.service;
 
+import com.realdolmen.chiro.domain.GraphLoginCount;
+import com.realdolmen.chiro.domain.LoginLog;
 import com.realdolmen.chiro.domain.Role;
 import com.realdolmen.chiro.domain.User;
+import com.realdolmen.chiro.repository.LoginLoggerRepository;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -9,12 +12,14 @@ import org.jasig.cas.client.authentication.AttributePrincipal;
 import org.jasig.cas.client.validation.Assertion;
 import org.jasig.cas.client.validation.Cas20ProxyTicketValidator;
 import org.jasig.cas.client.validation.TicketValidationException;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.xml.bind.DatatypeConverter;
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by WVDAZ49 on 12/10/2016.
@@ -24,6 +29,9 @@ public class CASService {
 
     public static final String CASURL = "https://login.chiro.be/cas/login?service=http://localhost:8080/api/cas";
     public static final String JWT_SECRET = "MATHIASISNOOB";
+
+    @Autowired
+    private LoginLoggerRepository loggerRepo;
 
     public String validateTicket(String ticket) {
         User user = validate(ticket);
@@ -50,7 +58,14 @@ public class CASService {
             user.setLastname(principal.getAttributes().get("last_name").toString());
             user.setAdNumber(principal.getAttributes().get("ad_nummer").toString());
             //TODO: implement this for real data & persons
-            user.setRole(Role.ADMIN);
+
+            if(user.getFirstname().toLowerCase().equals("philippe") ||
+                    user.getFirstname().toLowerCase().equals("thomas") ||
+                    user.getFirstname().toLowerCase().equals("wannes")){
+                user.setRole(Role.ADMIN);
+            } else {
+                user.setRole(Role.LEADER);
+            }
             return user;
         }
         return null;
@@ -87,6 +102,7 @@ public class CASService {
     }
 
     public String createToken(User data) {
+        newLogin(data);
         return Jwts.builder()
                 .setSubject(data.getUsername())
                 .claim("firstname", data.getFirstname())
@@ -97,4 +113,9 @@ public class CASService {
                 .setIssuedAt(new Date())
                 .signWith(SignatureAlgorithm.HS256, JWT_SECRET).compact();
     }
+
+    public void newLogin(User user) {
+        loggerRepo.save(new LoginLog(user.getAdNumber()));
+    }
+
 }

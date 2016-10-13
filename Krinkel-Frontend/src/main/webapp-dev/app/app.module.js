@@ -26,10 +26,11 @@ import {VoorwaardenComponent} from './shared/voorwaarden/voorwaarden.component';
 //pages
 import {KrinkelHomepageComponent} from './krinkel-homepage/krinkel-homepage.component';
 import {KrinkelConfirmationComponent} from './krinkel-confirmation/krinkel-confirmation.component';
+import {KrinkelGraphComponent} from './krinkel-graph/krinkel-graph.component';
 import {KrinkelAnalyticsComponent} from './krinkel-analytics/krinkel-analytics.component';
 
 export default angular
-  .module('contactsApp', ['ngRoute','ngAutocomplete'])
+  .module('contactsApp', ['ngRoute', 'nvd3', 'ngAutocomplete'])
   .config(appConfig)
   .constant('appVersion', 'BETA')
   .constant('BASEURL', 'http://localhost:8080')
@@ -53,7 +54,7 @@ export default angular
   .component('krinkelHomepage', KrinkelHomepageComponent)
   .component('register', RegisterComponent)
     .component('krinkelConfirmation', KrinkelConfirmationComponent)
-   .component('krinkelConfirmation', KrinkelConfirmationComponent)
     .component('krinkelAnalytics', KrinkelAnalyticsComponent)
+    .component('krinkelGraph', KrinkelGraphComponent)
     .component('voorwaarden',VoorwaardenComponent)
   .name;
