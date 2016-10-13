@@ -29,6 +29,9 @@ public class ChiroUserAdapter {
         users.add(new User("386289", "nick.hanot@realdolmen.com", "Nick", "Hanot", "LEG/0608"));
         users.add(new User("386292", "vincent.ceulemans@realdolmen.com", "Vincent", "Ceulemans", "LEG/0608"));
         users.add(new User("386283", "pieter-jan.smets@realdolmen.com", "Pieter-Jan", "Smets", "LEG/0608"));
+        users.add(new User("386284", "thomas.vanlomberghen@realdolmen.com", "Thomas", "Van Lomberghen", "LEG/0608"));
+        users.add(new User("386285", "gil.mathijs@realdolmen.com", "Gil", "Mathijs", "LEG/0608"));
+        users.add(new User("386286", "matthias.vanderwilt@realdolmen.com", "Matthias", "Vanderwilt", "LEG/0608"));
 
         // chiro esjeewee
         users.add(new User("386293", "wannes.vandorpe@realdolmen.com", "Wannes", "Van Dorpe", "LEG/0607"));

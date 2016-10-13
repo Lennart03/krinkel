@@ -39,9 +39,9 @@ public class RegistrationParticipantService {
 
     public void updatePaymentStatus(String testOrderId) {
         String[] split = testOrderId.split("-");
-        testOrderId = split[0];
+        String adNumber = split[0];
 
-        RegistrationParticipant participant = repository.findByAdNumber(testOrderId);
+        RegistrationParticipant participant = repository.findByAdNumber(adNumber);
         if (participant != null) {
 
             if (mspService.orderIsPaid(testOrderId)) {
