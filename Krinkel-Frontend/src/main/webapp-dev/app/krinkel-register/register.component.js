@@ -11,16 +11,15 @@ class RegisterController {
         this.SelectService = SelectService;
 
         this.phoneNumberPattern = /^((\+|00)32\s?|0)(\d\s?\d{3}|\d{2}\s?\d{2})(\s?\d{2}){2}|((\+|00)32\s?|0)4(60|[789]\d)(\s?\d{2}){3}$/;
-        this.birthdatePattern = /^(\d{4})(\/|-)(\d{1,2})(\/|-)(\d{1,2})$/;
-        this.postalcodePattern = /^(\d{4})$/;
+        this.birthdatePattern = /^(\d{4})(\/|-)(\d{1,2})(\/|-)(\d{1,2})$/;
+        this.postalcodePattern = /^(\d{4})$/;
         this.emailPattern = /^[-a-z0-9~!$%^&*_=+}{\'?]+(\.[-a-z0-9~!$%^&*_=+}{\'?]+)*@([a-z0-9_][-a-z0-9_]*(\.[-a-z0-9_]+)*\.(aero|arpa|biz|com|coop|edu|gov|info|int|mil|museum|name|net|org|pro|travel|mobi|[a-z][a-z])|([0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}))(:[0-9]{1,5})?$/i;
         this.campgrounds = ['Antwerpen', 'Kempen', 'Mechelen', 'Limburg', 'Leuven', 'Brussel', 'West-Vlaanderen', 'Heuvelland', 'Roeland', 'Reinaert', 'Nationaal', 'Internationaal'];
         angular.element('select').material_select();
 
         this.dataIsRemoved = false;
         this.voorwaarden = false;
-        window.scrollTo(0,0);
-
+        window.scrollTo(0, 0);
 
 
         if (this.SelectService.getSelectedFlag()) {
@@ -32,34 +31,37 @@ class RegisterController {
         this.details = {};
     }
 
+    clearPostCodeAndCityNameFields() {
+
+        if (this.details3 != null || this.details2 != null || this.details != null) {
+
+            this.details3 = {};
+            this.details2 = {};
+
+        }
+    }
+
     extractFromAdress(components) {
+        if (this.details3.vicinity != null || this.details2.name != null) {
+            return;
+        }
+
         if (components != null) {
-
-
             for (var i = 0; i < components.length; i++)
                 for (var j = 0; j < components[i].types.length; j++) {
-
                     if (components[i].types[j] == 'postal_code') {
                         //  console.debug(components[i].long_name);
-
-                        //change model on runtime causes an error [$rootScope:infdig] 10 $digest() iterations reached. Aborting!
-                        //but runs as expected --' something for the angular guys ?
-                      this.details2 = {
+                        this.details2 = {
                             name: components[i].long_name
                         };
-
-
                     }
                     // console.debug(components[i].types[j]);
                     if (components[i].types[j] == 'locality') {
                         //console.debug(components[i].short_name);
-                        //change model on runtime causes an error [$rootScope:infdig] 10 $digest() iterations reached. Aborting!
-                        //but runs as expected --' something for the angular guys ?
+
                         this.details3 = {
                             vicinity: components[i].short_name
                         };
-
-
                     }
 
                 }
@@ -92,7 +94,6 @@ class RegisterController {
             return;
         }
     }
-
 
 
     $onInit() {
@@ -158,7 +159,7 @@ class RegisterController {
      */
 
     $doCheck() {
-        if(!this.dataIsRemoved){
+        if (!this.dataIsRemoved) {
             this.StorageService.saveUser(this.newPerson);
         }
     }

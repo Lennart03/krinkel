@@ -65,7 +65,7 @@
                 <!--$ctrl.newPerson.street-->
                 <input name="street" type="text" class="validate" id="street" ng-model="$ctrl.details.address_components[0].long_name"
                        class="validate" ng-autocomplete
-                       options="$ctrl.optionsStreet" details="$ctrl.details" required placeholder="..."/>
+                       options="$ctrl.optionsStreet" details="$ctrl.details" required placeholder="..." ng-change="$ctrl.clearPostCodeAndCityNameFields()"/>
 
                 {{$ctrl.extractFromAdress($ctrl.details.address_components )}}
 
@@ -93,7 +93,7 @@
                        ng-pattern="$ctrl.postalcodePattern"
                        ng-autocomplete details="$ctrl.details2"
                        options="$ctrl.optionsPostalCode" required placeholder="..."
-                       required/>
+                       required />
                   {{$ctrl.extractFromAdress($ctrl.details2.address_components )}}
               <label for="postal_code">Postcode *</label>
               <p ng-show="personForm.postalCode.$invalid && personForm.postalCode.$touched" class="error"><i
