@@ -58,7 +58,14 @@ public class CASService {
             user.setLastname(principal.getAttributes().get("last_name").toString());
             user.setAdNumber(principal.getAttributes().get("ad_nummer").toString());
             //TODO: implement this for real data & persons
-            user.setRole(Role.ADMIN);
+
+            if(user.getFirstname().toLowerCase().equals("philippe") ||
+                    user.getFirstname().toLowerCase().equals("thomas") ||
+                    user.getFirstname().toLowerCase().equals("wannes")){
+                user.setRole(Role.ADMIN);
+            } else {
+                user.setRole(Role.LEADER);
+            }
             return user;
         }
         return null;
