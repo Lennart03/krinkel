@@ -168,7 +168,6 @@ export class MapperService {
         } else if (data.rank === 'Aspi') {
             participant.role = 'ASPI';
         }
-
         return participant;
     }
 

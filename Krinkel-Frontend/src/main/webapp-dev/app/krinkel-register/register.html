@@ -363,6 +363,24 @@
             </div>
         </div>
 
+        <div class="row" ng-show="$ctrl.type === 'participant'">
+            <div class="col s12">
+                <div>
+                    <!--<i class="small material-icons prefix">mood</i>-->
+                    <input type="checkbox" id="voorwaarden" ng-model="$ctrl.voorwaarden" required/>
+                    <label for="voorwaarden">Ik aanvaard de algemene voorwaarden.</label>
+                    <!-- Modal Trigger -->
+                    <a class="btn-floating waves-effect waves-light modal-trigger" href="#modal2"><i
+                        class="material-icons">help</i></a>
+                    <!-- Modal Structure -->
+                    <div id="modal2" class="modal">
+                        <voorwaarden></voorwaarden>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
         <p>
             Iedereen heeft zijn eigen voorkeur, achtergrond, mogelijkheden en talenten en daar willen we op Krinkel zoveel mogelijk
             rekening mee houden. Want iedereen heeft het recht om dit fantastische bivak mee te maken.
