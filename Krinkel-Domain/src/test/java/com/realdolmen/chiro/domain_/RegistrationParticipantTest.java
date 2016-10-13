@@ -7,6 +7,7 @@ import com.realdolmen.chiro.domain.RegistrationParticipant;
 import com.realdolmen.chiro.domain.mothers.RegistrationParticipantMother;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import javax.validation.ConstraintViolation;
@@ -106,19 +107,40 @@ public class RegistrationParticipantTest extends BeanValidatorTest{
     @Test
     public void mobilePhoneAsPhoneNumberWithCountryCodeShouldBeValid(){
         particpant.setPhoneNumber("+32486987654");
+
         Set<ConstraintViolation<RegistrationParticipant>> violations = validator().validateProperty(particpant, "phoneNumber");
+        Assert.assertTrue(violations.isEmpty());
+
+        particpant.setPhoneNumber("+32488336677");
+        violations = validator().validateProperty(particpant, "phoneNumber");
+        Assert.assertTrue(violations.isEmpty());
+
+        particpant.setPhoneNumber("+32460336677");
+        violations = validator().validateProperty(particpant, "phoneNumber");
+        Assert.assertTrue(violations.isEmpty());
+
+        particpant.setPhoneNumber("+32473446677");
+        violations = validator().validateProperty(particpant, "phoneNumber");
+        Assert.assertTrue(violations.isEmpty());
+
+        particpant.setPhoneNumber("+32493446677");
+        violations = validator().validateProperty(particpant, "phoneNumber");
+        Assert.assertTrue(violations.isEmpty());
+
+        particpant.setPhoneNumber("+32453446677");
+        violations = validator().validateProperty(particpant, "phoneNumber");
         Assert.assertTrue(violations.isEmpty());
     }
 
     @Test
     public void mobilePhoneAsPhoneNumberShouldBeValid(){
-        particpant.setPhoneNumber("0486987654");
+        particpant.setPhoneNumber("04869876");
         Set<ConstraintViolation<RegistrationParticipant>> violations = validator().validateProperty(particpant, "phoneNumber");
         Assert.assertTrue(violations.isEmpty());
     }
 
     @Test
-    public void incorrectPhoneNumberShouldBeValid(){
+    public void incorrectPhoneNumberShouldBeInvalid(){
         particpant.setPhoneNumber("-5sdfmoklsfjkljia");
         Set<ConstraintViolation<RegistrationParticipant>> violations = validator().validateProperty(particpant, "phoneNumber");
         Assert.assertEquals(1, violations.size());
