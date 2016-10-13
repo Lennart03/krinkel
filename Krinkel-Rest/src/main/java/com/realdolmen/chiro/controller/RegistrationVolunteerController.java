@@ -68,7 +68,7 @@ public class RegistrationVolunteerController {
      * "phoneNumber": null,
      * "campGround": "ANTWERPEN" | ... ,
      * "function": {
-     * "preset": "KLINKER_EDITORIAL" | ...,
+     * "preset": "KRINKEL_EDITORIAL" | ...,
      * "other": null
      * },
      * "preCampList": [
@@ -113,7 +113,7 @@ public class RegistrationVolunteerController {
                 "123456789", "example@acme.com", "Aster", "Deckers", c.getTime(),
                 "AG0001", Gender.MAN, Role.LEADER, Eatinghabbit.VEGI,
                 CampGround.ANTWERPEN,
-                new VolunteerFunction(VolunteerFunction.Preset.KLINKER_EDITORIAL)
+                new VolunteerFunction(VolunteerFunction.Preset.KRINKEL_EDITORIAL)
         );
 
         PreCamp preCamp = new PreCamp();

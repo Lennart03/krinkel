@@ -79,6 +79,12 @@ export class KrinkelService {
         });
     }
 
+    getUsersOfUnit(stamNummer){
+        return this.$http.get(`${this.BASEURL}/api/participants/info/${stamNummer}`).then((resp) => {
+            return resp.data;
+        })
+    }
+
     // getMovies(title) {
     //   return this.$http.get(`${this.BASEURL}/online?title=${title}`).then((resp) => {
     //     return resp.data;

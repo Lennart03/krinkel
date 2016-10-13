@@ -15,7 +15,7 @@ public class VolunteerFunction {
     public enum Preset {
         NATIONAL_CAMPGROUND, // Aanbod nationale kampgrond
         CAMPGROUND, // Kampgrondtrekker
-        KLINKER_EDITORIAL, // Klinkerredactie
+        KRINKEL_EDITORIAL, // Krinkelredactie
         COOCKING, // Kookploeg
 
         LOGISTICS_CAMPGROUND, // Logistiek (kampgrond)
