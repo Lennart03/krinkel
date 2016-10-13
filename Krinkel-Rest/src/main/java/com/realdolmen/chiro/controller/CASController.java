@@ -14,13 +14,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-/**
- * Created by WVDAZ49 on 12/10/2016.
- */
 @Controller
 public class CASController {
     @Autowired
-    CASService service;
+    private CASService service;
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public String viewer(HttpServletRequest request) throws IOException {

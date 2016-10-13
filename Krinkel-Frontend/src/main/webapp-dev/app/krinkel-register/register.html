@@ -49,7 +49,7 @@
             </div>
             <div class="input-field col s12 m6">
                 <i class="material-icons prefix">email</i>
-                <input id="email" name="email" type="email" class="validate" ng-model="$ctrl.newPerson.email" required>
+                <input id="email" name="email" type="email" class="validate" ng-model="$ctrl.newPerson.email" ng-pattern="$ctrl.emailPattern" required>
                 <label for="email">Email *</label>
                 <p ng-show="personForm.email.$invalid && personForm.email.$touched" class="error"><i
                     class="material-icons">error_outline</i>
@@ -104,13 +104,14 @@
         <div class="row">
             <div class="input-field col s12">
                 <i class="material-icons prefix">phone</i>
-                <input id="phone" name="phone" type="tel" class="validate" ng-pattern="$ctrl.phoneNumberPattern"
+                <input title="" id="phone" name="phone" type="tel" class="validate" ng-pattern="$ctrl.phoneNumberPattern"
                        ng-model="$ctrl.newPerson.phone"
                        required>
-                <label for="phone">Telefoon *</label>
-                <p ng-show="personForm.phone.$invalid && personForm.phone.$touched" class="error"><i
-                    class="material-icons">error_outline</i>
-                    Telefoonnummer is verplicht</p>
+                <label for="phone">Telefoon (+32xxxxxxxx (9 of 10 cijfers)) *</label>
+                <p ng-show="personForm.phone.$invalid && personForm.phone.$touched" class="error">
+                    <i class="material-icons">error_outline</i>
+                    Telefoonnummer is verplicht
+                </p>
             </div>
         </div>
 
@@ -136,28 +137,7 @@
                     Verplicht</p>
                 <!--<label>Geslacht</label>-->
             </div>
-            <div class="input-field col s12 m6" ng-if="$ctrl.type === 'volunteer'">
-                <!--<i class="material-icons prefix">location_on</i>-->
-                <select name="campground" ng-model="$ctrl.newPerson.campGround" class="browser-default" required>
-                    <option value="" selected disabled>Keuze kampgrond *</option>
-                    <option value="Antwerpen" selected>Antwerpen</option>
-                    <option value="Brussel">Brussel</option>
-                    <option value="Heuvelland">Heuvelland</option>
-                    <option value="Internationaal">Internationaal</option>
-                    <option value="Kempen">Kempen</option>
-                    <option value="Leuven">Leuven</option>
-                    <option value="Limburg">Limburg</option>
-                    <option value="Mechelen">Mechelen</option>
-                    <option value="Nationaal">Nationaal</option>
-                    <option value="Reinaert">Reinaert</option>
-                    <option value="Roeland">Roeland</option>
-                    <option value="West-Vlaanderen">West-Vlaanderen</option>
-                </select>
-                <!--<label>Keuze kampgrond:</label>-->
-                <p ng-show="personForm.campground.$invalid && personForm.campground.$touched" class="error">
-                    <i class="material-icons">error_outline</i>
-                    Verplicht</p>
-            </div>
+
             <div class="input-field col s12 m6" ng-if="$ctrl.type === 'participant'">
                 <!--<i class="material-icons prefix">mood</i>-->
                 <select name="rank" ng-model="$ctrl.newPerson.rank" class="browser-default" required>
@@ -273,6 +253,32 @@
             </div>
         </div>
 
+        <div class="row">
+            <div class="input-field col s12 m6" ng-if="$ctrl.type === 'volunteer'">
+                <select name="campground" ng-model="$ctrl.newPerson.campGround"
+                        class="browser-default" required>
+                    <option value="" selected disabled>Keuze kampgrond *</option>
+                    <option value="Antwerpen" selected>Antwerpen</option>
+                    <option value="Brussel">Brussel</option>
+                    <option value="Heuvelland">Heuvelland</option>
+                    <option value="Internationaal">Internationaal</option>
+                    <option value="Kempen">Kempen</option>
+                    <option value="Leuven">Leuven</option>
+                    <option value="Limburg">Limburg</option>
+                    <option value="Mechelen">Mechelen</option>
+                    <option value="Nationaal">Nationaal</option>
+                    <option value="Reinaert">Reinaert</option>
+                    <option value="Roeland">Roeland</option>
+                    <option value="West-Vlaanderen">West-Vlaanderen</option>
+                </select>
+                <!--<label>Keuze kampgrond:</label>-->
+                <p ng-show="personForm.campground.$invalid && personForm.campground.$touched" class="error">
+                    <i class="material-icons">error_outline</i>
+                    Verplicht
+                </p>
+            </div>
+        </div>
+
         <div class="row" ng-if="$ctrl.type === 'volunteer'">
             <div class="input-field col s12">
                 <h4>Functie *</h4>
@@ -333,17 +339,31 @@
             </div>
         </div>
 
-
         <div class="row">
             <div class="col s12">
-
-                <p>
-                    <!--<i class="small material-icons prefix">favorite</i>-->
-
+                <div>
+                    <!--<i class="small material-icons prefix">mood</i>-->
                     <input type="checkbox" id="social_promotion" ng-model="$ctrl.newPerson.socialPromotion"/>
-                    <label for="social_promotion">Sociale promotie <a href="https://chiro.be/node/71622" target="_blank">(wat is
-                        dit?)</a></label>
-                </p>
+                    <label for="social_promotion">Sociale promotie</label>
+                    <!-- Modal Trigger -->
+                    <a class="btn-floating waves-effect waves-light modal-trigger" href="#modal3"><i
+                        class="material-icons">help</i></a>
+                    <!-- Modal Structure -->
+                    <div id="modal3" class="modal">
+                        <div class="modal-content">
+                            <h4>Enkel belangrijk voor cursussen die weekdagen bevatten.</h4>
+                            <p>Elke werkende jongere kan aan de werkgever verlof aanvragen om deel te nemen aan vormingsinitiatieven die door het Ministerie van de Vlaamse Gemeenschap erkend werden als ‘cursussen voor sociale promotie’. Enkel meerdaagsecursussen  komen in aanmerking (weekends tellen niet).</p>
+                            <p>De werkgever is niet verplicht de sociale promotie toe te staan, maar als hij of zij meewerkt, krijg je voor de cursus 'extra verlofdagen', zij het zonder loon.  Je krijgt in de plaats een (beperkte) vergoeding van de overheid.</p>
+                            <p>Als deelnemers van jouw cursus sociale promotie aanvragen (dan kunnen ze doen via <a href="mailto:vorming@chiro.be"> vorming@chiro.be</a>) en ze krijgen dat ook van hun werkgever, dan zal iemand van het secretariaat jullie voor de cursus contacteren.  Zij of hij vertelt je dan welke papieren jullie hiervoor extra in orde moeten maken.</p>
+                            <p>Ook begeleiding kan sociale promotie aanvragen. Als trekker kan jij hen vragen of ze dit willen of niet. Dan wordt dit ook mee geregeld door het secretariaat.</p>
+                            <p>Is het niet duidelijk en heb je nog vragen? Mail dan gerust naar <a href="mailto:vorming@chiro.be">vorming@chiro.be</a>. Zij kunnen je zeker verder helpen!</p>
+                        </div>
+                        <div class="modal-footer">
+                            <a href="" class=" modal-action modal-close waves-effect waves-green btn-flat">OK</a>
+                        </div>
+                    </div>
+                </div>
+
             </div>
         </div>
 
@@ -363,7 +383,7 @@
             </div>
         </div>
 
-        <div class="row" ng-show="$ctrl.type === 'participant'">
+        <div class="row">
             <div class="col s12">
                 <div>
                     <!--<i class="small material-icons prefix">mood</i>-->
@@ -389,48 +409,16 @@
 
         <p>
             Heb je extra ondersteuning nodig tijdens de spelen, verplaatsingen of andere taken? Laat het hier dan zeker weten zodat we samen naar oplossingen
-            kunnen zoeken. Je kan ons ook contacteren op 03/231 07 95 of info@krinkel.be.
+            kunnen zoeken. Je kan ons ook contacteren op 03/231 07 95 of <a href="mailto:info@krinkel.be">info@krinkel.be</a>.
         </p>
 
         <button class="btn waves-effect waves-light" type="submit" name="action"
                 ng-disabled="!personForm.$valid">
-            Volgende
+            Betalen
             <i class="material-icons right">send</i>
         </button>
     </form>
-    <!--{{$ctrl.preCamp['2017-08-21'].date}} dasdasd-->
-    <!--&lt;!&ndash;DEV&ndash;&gt;-->
-    <!--&lt;!&ndash;DEV&ndash;&gt;-->
-    <!--&lt;!&ndash;DEV&ndash;&gt;-->
-    <!--{{$ctrl.newPerson | json}}-->
-    <!--Errors:-->
-    <!--{{personForm.$error}}-->
-    <!--<ul>-->
-    <!--<li ng-repeat="error in $ctrl.errorMessages"-->
-    <!--ng-hide="personForm.$error.previousElementSibling.previousElementSibling.name.$valid"><i-->
-    <!--class="material-icons">error_outline</i> "{{ error.previousElementSibling.innerText }}" is verplicht-->
-    <!--</li>-->
-    <!--</ul>-->
-    <!--&lt;!&ndash;DEV&ndash;&gt;-->
-    <!--&lt;!&ndash;DEV&ndash;&gt;-->
-    <!--&lt;!&ndash;DEV&ndash;&gt;-->
 
-
-
-    <!--Errors:-->
-    <!--{{personForm.$valid}}-->
-    <!--<br/>-->
-    <!--ERRORS-->
-    <!--{{personForm.$error}}-->
-
-
-
-
-
-    <!--map Participant:-->
-    <!--{{$ctrl.MapperService.mapVolunteer($ctrl.newPerson)}}-->
-    <!--{{$ctrl.newPerson}}-->
-    <!--Don't remove this! This is a hacky way to call the Materialize function to initialize textfields after the DOM has rendered.-->
     <div ng-show="$ctrl.functionCallAfterDOMRender()"></div>
     <!--Don't remove this! This is a hacky way to call the Materialize function to initialize textfields after the DOM has rendered.-->
 </div>
