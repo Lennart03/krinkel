@@ -13,7 +13,7 @@ INSERT INTO registration_participant VALUES('RegistrationParticipant', '40', '45
 INSERT INTO registration_participant VALUES('RegistrationParticipant', '50', '987654', 'Brussel', '123', '1000', 'Veldstraat', '1995-08-21', false, 'FISHANDMEAT',
                               'email@test.be', 'Frederik', 'MAN', 'Flodder', '', '', '', '', 'ASPI', false, 'AG /0202', 'TO_BE_PAID', 1, '', '');
 INSERT INTO registration_participant VALUES('RegistrationVolunteer', '60', '876543', 'Brussel', '123', '1000', 'Veldstraat', '1995-08-21', false, 'FISHANDMEAT',
-                              'email@test.be', 'Jos', 'MAN', 'Flodder', '', '', '', '', 'ASPI', false, 'AG /0103', 'TO_BE_PAID', 1, '', 'CAMPGROUND');
+                              'email@test.be', 'Jos', 'MAN', 'Flodder', '', '', '', '', 'ASPI', false, 'AG /0103', 'PAID', 1, '', 'CAMPGROUND');
 
 INSERT INTO pre_camp VALUES (10, '2017-08-21');
 INSERT INTO pre_camp VALUES (20, '2017-08-22');

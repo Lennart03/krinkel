@@ -53,6 +53,7 @@ public class RegistrationParticipantRepositoryTest {
 	public void shouldReturnAListWithParticipantsWithStatusPaid(){
 		List<RegistrationParticipant>participants = registrationParticipantRepository.findRegistrationParticipantsWithStatusPAID();
 		assertNotNull(participants);
+		assertEquals(1,participants.size());
 		System.out.println(participants.size());
 	}
 }
