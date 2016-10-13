@@ -34,7 +34,7 @@ public class EmailBatchService {
 	// @Autowired
 	// private RegistrationVolunteerRepository registrationVolunteerRepository;
 
-	@Scheduled(cron = "*/10 * * * * *")
+	@Scheduled(cron = "*/30 * * * * *")
 	public void sendEmails() {
 		logger.info("email batch service running...");
 		regComs = registrationCommunicationRepository.findAllWaitingAndFailed();

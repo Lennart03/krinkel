@@ -49,9 +49,9 @@
 		</tr>
 		<tr>
 			<td>Geslacht:</td>
-			<td th:text="${participant.gender}"></td>
+			<td th:text="${participant.gender.description}"></td>
 			<td>Functie:</td>
-			<td th:text="${participant.role}"></td>
+			<td th:text="${participant.role.description}"></td>
 
 		</tr>
 		<tr th:if="${isVolunteer}">
@@ -88,7 +88,7 @@
 				<div th:case="true">ja</div>
 				<div th:case="false">neen</div>
 			</td>
-			<td>Talen:</td>
+			<td th:if="${participant.buddy}">Talen:</td>
 			<td><ul>
 					<li th:each="lang : ${participant.language}" th:text="lang"></li>
 				</ul></td>
