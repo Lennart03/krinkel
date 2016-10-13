@@ -9,16 +9,102 @@
     <packaging>pom</packaging>
     <version>1.0-SNAPSHOT</version>
     <modules>
-        <module>Krinkel-Backend</module>
         <module>Krinkel-Frontend</module>
-
+        <module>Krinkel-Batch</module>
+        <module>Krinkel-Domain</module>
+        <module>Krinkel-Repository</module>
+        <module>Krinkel-Core</module>
+        <module>Krinkel-Chiro-api</module>
+        <module>Krinkel-Rest</module>
+        <module>Krinkel-Multisafepay-Api</module>
+        <module>Krinkel-Static</module>
     </modules>
+
+    <properties>
+        <java.version>1.8</java.version>
+    </properties>
 
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
         <version>1.4.0.RELEASE</version>
     </parent>
+
+    <dependencies>
+
+    </dependencies>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>mysql</groupId>
+                <artifactId>mysql-connector-java</artifactId>
+                <version>5.1.36</version>
+            </dependency>
+            <dependency>
+                <groupId>com.h2database</groupId>
+                <artifactId>h2</artifactId>
+                <version>1.4.191</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>com.openpojo</groupId>
+                <artifactId>openpojo</artifactId>
+                <version>0.7.5</version>
+                <scope>test</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>com.realdolmen.chiro</groupId>
+                <artifactId>Krinkel-Domain</artifactId>
+                <version>1.0-SNAPSHOT</version>
+                <scope>compile</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>com.realdolmen.chiro</groupId>
+                <artifactId>Krinkel-Repository</artifactId>
+                <version>1.0-SNAPSHOT</version>
+                <scope>compile</scope>
+            </dependency>
+            <dependency>
+                <groupId>com.realdolmen.chiro</groupId>
+                <artifactId>Krinkel-Core</artifactId>
+                <version>1.0-SNAPSHOT</version>
+                <scope>compile</scope>
+            </dependency>
+            <dependency>
+                <groupId>com.realdolmen.chiro</groupId>
+                <artifactId>Krinkel-Rest</artifactId>
+                <version>1.0-SNAPSHOT</version>
+                <scope>compile</scope>
+            </dependency>
+            <dependency>
+                <groupId>com.realdolmen.chiro</groupId>
+                <artifactId>Krinkel-Frontend</artifactId>
+                <version>1.0-SNAPSHOT</version>
+                <scope>compile</scope>
+            </dependency>
+            <dependency>
+                <groupId>com.realdolmen.chiro</groupId>
+                <artifactId>krinkelmultisafepayapi</artifactId>
+                <version>1.0-SNAPSHOT</version>
+                <scope>compile</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.json</groupId>
+                <artifactId>json</artifactId>
+                <version>20160810</version>
+            </dependency>
+            <dependency>
+                <groupId>com.realdolmen.chiro</groupId>
+                <artifactId>Krinkel-Static</artifactId>
+                <version>1.0-SNAPSHOT</version>
+                <scope>compile</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
 
     <build>
         <plugins>
@@ -46,8 +132,25 @@
                 <artifactId>coveralls-maven-plugin</artifactId>
                 <version>4.2.0</version>
             </plugin>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-clean-plugin</artifactId>
+                        <version>3.0.0</version>
+
+                <configuration>
+                    <filesets>
+                        <fileset>
+                            <directory>Krinkel-Rest/src/main/resources</directory>
+                            <includes>
+                                <include>**/static/**</include>
+                            </includes>
+                        </fileset>
+                    </filesets>
+                </configuration>
+            </plugin>
         </plugins>
     </build>
+
     <reporting>
         <plugins>
             <plugin>

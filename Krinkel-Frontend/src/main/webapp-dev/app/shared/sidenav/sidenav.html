@@ -5,14 +5,18 @@
   <div ng-if="$ctrl.AuthService.getLoggedinUser() != null">
     <li class="collection-item" ng-if="!$ctrl.AuthService.getRegistrationStatus()"><a href="/register-participant"><i
       class="material-icons">person_add</i> Schrijf je in</a></li>
-    <li class="collection-item"><a href="/register-group"><i class="material-icons">group_add</i> Schrijf anderen in</a>
+    <li class="collection-item"><a href="/select-participant"><i class="material-icons">group_add</i> Schrijf anderen in</a>
     </li>
     <li class="collection-item" ng-if="!$ctrl.AuthService.getRegistrationStatus()"><a href="/register-volunteer"><i
       class="material-icons">work</i> Schrijf je in als medewerker</a></li>
-    <li class="collection-item" ng-if="$ctrl.AuthService.getUserRole() === 'admin'"><a href="#"><i
+    <li class="collection-item" ng-if="$ctrl.AuthService.getUserRole() === 'ADMIN'"><a href="/analytics"><i
       class="material-icons">equalizer</i> Overzicht inschrijvingen</a></li>
-    <li class="collection-item" ng-if="$ctrl.AuthService.getUserRole() === 'admin'"><a href="#"><i
-      class="material-icons">timeline</i> Statistic's</a></li>
+      <li class="collection-item" ng-if="$ctrl.AuthService.getUserRole() === 'ADMIN'"><a href="#"><i
+          class="material-icons">timeline</i> Statistieken</a></li>
+      <li><br/></li>
+      <li class="collection-item"><a ng-click="$ctrl.logout()" href="#">
+          <i class="material-icons">exit_to_app</i>Afmelden
+      </a></li>
   </div>
   <div class="setlocked" ng-if="$ctrl.AuthService.getLoggedinUser() == null">
     <i class="material-icons large lockicon">lock</i>

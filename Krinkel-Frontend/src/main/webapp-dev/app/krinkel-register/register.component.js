@@ -1,19 +1,79 @@
-/*@ngInject*/
 class RegisterController {
 
-    constructor(AuthService, $log, $window, $location) {
-        this.AuthService = AuthService;
-        this.$location = $location;
+    constructor($log, $window, StorageService, MapperService, AuthService, KrinkelService, $location, SelectService) {
         this.$log = $log;
         this.$window = $window;
+        this.StorageService = StorageService;
+        this.MapperService = MapperService;
+        this.AuthService = AuthService;
+        this.KrinkelService = KrinkelService;
+        this.$location = $location;
+        this.SelectService = SelectService;
+
         this.phoneNumberPattern = /^((\+|00)32\s?|0)(\d\s?\d{3}|\d{2}\s?\d{2})(\s?\d{2}){2}|((\+|00)32\s?|0)4(60|[789]\d)(\s?\d{2}){3}$/;
+        this.birthdatePattern = /^(\d{4})(\/|-)(\d{1,2})(\/|-)(\d{1,2})$/;
+        this.postalcodePattern = /^(\d{4})$/;
         this.campgrounds = ['Antwerpen', 'Kempen', 'Mechelen', 'Limburg', 'Leuven', 'Brussel', 'West-Vlaanderen', 'Heuvelland', 'Roeland', 'Reinaert', 'Nationaal', 'Internationaal'];
         angular.element('select').material_select();
+
+        this.dataIsRemoved = false;
+
+        window.scrollTo(0,0);
+
+
+
+        if (this.SelectService.getSelectedFlag()) {
+            this.SelectService.setColleague(undefined);
+            this.SelectService.setSelectedFlag(false);
+        }
     }
+
+    registerPerson(newPerson) {
+        if (this.type === 'volunteer') {
+            var thiz = this;
+            this.KrinkelService.postVolunteer(this.MapperService.mapVolunteer(newPerson)).then(function (resp) {
+                thiz.dataIsRemoved = true;
+                thiz.StorageService.removeUser();
+                thiz.$window.location.href = resp.headers().location;
+            });
+            return;
+        }
+
+        if (this.type === 'participant') {
+            var thiz = this;
+            this.KrinkelService.postParticipant(this.MapperService.mapParticipant(newPerson)).then(function (resp) {
+                thiz.dataIsRemoved = true;
+                thiz.StorageService.removeUser();
+                thiz.SelectService.setSelectedFlag(false);
+                thiz.$window.location.href = resp.headers().location;
+            });
+            return;
+        }
+    }
+
+
 
     $onInit() {
         if (this.AuthService.getLoggedinUser() == null) {
-            this.$location.path('/login');
+            this.$location.path('/');
+        }
+
+        if (this.SelectService.getColleague() !== undefined) {
+            this.newPerson = {
+                adNumber: this.SelectService.getColleague().adnr
+            };
+            this.SelectService.setSelectedFlag(true);
+
+            console.log("From select");
+        } else {
+            console.log("Not from selectx");
+            var user = this.StorageService.getUser();
+            if (user) {
+                this.newPerson = user;
+            } else {
+                this.newPerson = {};
+                // this.newPerson.birthDate = "1995-11-24";
+            }
         }
 
         this.optionsStreet = {
@@ -38,40 +98,34 @@ class RegisterController {
         this.details = '';
 
         angular.element('.modal-trigger').leanModal();
-        angular.element('.datepicker').pickadate({
-            selectMonths: true, // Creates a dropdown to control month
-            selectYears: 15 // Creates a dropdown of 15 years to control year
-        });
-        angular.element('select').material_select();
+        // Fill data from localStorage
+        // this.newPerson = this.StorageService.getUser();
 
+        this.errorMessages = document.getElementsByClassName("error");
+        // console.log(document.getElementsByClassName("error"));
     }
 
-    registerPerson(newPerson) {
-        var person = {
-            name: {
-                first: newPerson.firstName,
-                last: newPerson.lastName
-            },
-            street: newPerson.street,
-            building: newPerson.building,
-            postalCode: newPerson.postalCode,
-            city: newPerson.city,
-            phone: newPerson.phone,
-            gender: newPerson.gender,
-            rank: newPerson.rank,
-            group: newPerson.group,
-            buddy: newPerson.buddy,
-            languages: newPerson.languages,
-            dietary: newPerson.dietary,
-            dietaryText: newPerson.dietaryText,
-            socialPromotion: newPerson.socialPromotion,
-            medicalText: newPerson.medicalText,
-            otherText: newPerson.otherText
-        };
-        this.$log.debug(person);
-        this.$window.location.href = '/home';
+    functionCallAfterDOMRender() {
+        try {
+            Materialize.updateTextFields();
+        } catch (exception) {
+
+        }
     }
 
+
+
+
+
+    /**
+     * Not the ideal lifecycle hook to save everything in localstorage, due to time constraints this will have to do for now.
+     */
+
+    $doCheck() {
+        if(!this.dataIsRemoved){
+            this.StorageService.saveUser(this.newPerson);
+        }
+    }
 
 }
 
@@ -82,5 +136,5 @@ export var RegisterComponent = {
     bindings: {
         type: '@'
     }
-}
-RegisterComponent.$inject = ['AuthService', '$log', '$window', '$location'];
+};
+RegisterComponent.$inject = ['$log', '$window', 'StorageService', 'MapperService', 'AuthService', 'KrinkelService', '$location', 'SelectService'];

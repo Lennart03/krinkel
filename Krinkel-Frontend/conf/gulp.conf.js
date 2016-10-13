@@ -18,7 +18,7 @@ exports.ngModule = 'app';
  */
 exports.paths = {
   src: 'src/main/webapp-dev',
-  dist: 'src/main/webapp',
+  dist: '../Krinkel-Rest/src/main/resources/static',
   tmp: '.tmp',
   e2e: 'e2e',
   tasks: 'gulp_tasks'
