@@ -16,7 +16,9 @@ public interface RegistrationParticipantRepository extends JpaRepository<Registr
             "(SUBSTRING(p.stamnumber, LOCATE('/', p.stamnumber)+1, 4) = SUBSTRING(?1, 3, 4)" +
             "OR SUBSTRING(p.stamnumber, LOCATE('/', p.stamnumber)+1, 4) = SUBSTRING(?1, 4, 4))" +
             "AND " +
-            "(p.status = com.realdolmen.chiro.domain.Status.CONFIRMED)"
+            "((p.status = com.realdolmen.chiro.domain.Status.CONFIRMED)" +
+            " OR " +
+            "(p.status = com.realdolmen.chiro.domain.Status.PAID))"
     )
     List<RegistrationParticipant> findParticipantsByGroup(String s);
 }
