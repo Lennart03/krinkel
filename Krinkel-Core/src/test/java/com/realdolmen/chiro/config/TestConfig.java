@@ -121,6 +121,7 @@ public class TestConfig {
 	public ClassLoaderTemplateResolver templateResolver() {
 		ClassLoaderTemplateResolver templateResolver = new ClassLoaderTemplateResolver();
 	    templateResolver.setPrefix("templates/");
+	    templateResolver.setSuffix(".html");
 	    templateResolver.setTemplateMode("HTML5");        
 	    templateResolver.setCacheable(false);
 	    return templateResolver;

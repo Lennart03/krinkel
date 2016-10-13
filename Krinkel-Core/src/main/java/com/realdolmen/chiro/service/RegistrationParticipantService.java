@@ -8,6 +8,9 @@ import com.realdolmen.chiro.domain.Status;
 import com.realdolmen.chiro.mspservice.MultiSafePayService;
 import com.realdolmen.chiro.repository.RegistrationCommunicationRepository;
 import com.realdolmen.chiro.repository.RegistrationParticipantRepository;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,6 +20,8 @@ import java.util.List;
 @Service
 public class RegistrationParticipantService {
 	public final static Integer PRICE_IN_EUROCENTS = 11000;
+
+	private Logger logger = LoggerFactory.getLogger(RegistrationParticipantService.class);
 
 	@Autowired
 	private RegistrationParticipantRepository repository;
@@ -34,23 +39,26 @@ public class RegistrationParticipantService {
 		return null;
 	}
 
+	public void updatePaymentStatus(String testOrderId) {
+		logger.info("in updatePaymentStatus()");
+		String[] split = testOrderId.split("-");
+		String adNumber = split[0];
 
-    public void updatePaymentStatus(String testOrderId) {
-        String[] split = testOrderId.split("-");
-        String adNumber = split[0];
-
-        RegistrationParticipant participant = repository.findByAdNumber(adNumber);
-        if (participant != null) {
-
+		RegistrationParticipant participant = repository.findByAdNumber(adNumber);
+		if (participant != null) {
+			logger.info("found participant " + participant.getAdNumber());
 
 			if (mspService.orderIsPaid(testOrderId)) {
 				participant.setStatus(Status.PAID);
-				// TODO register
+				logger.info("participant " + participant.getAdNumber() + " on status 'PAID'");
+
 				RegistrationCommunication registrationCommunication = new RegistrationCommunication();
 				registrationCommunication.setStatus(SendStatus.WAITING);
 				registrationCommunication.setCommunicationAttempt(0);
 				registrationCommunication.setAdNumber(participant.getAdNumber());
-				if (registrationCommunicationRepository.findByAdNumber(participant.getAdNumber()) != null) {
+				if (registrationCommunicationRepository.findByAdNumber(participant.getAdNumber()) == null) {
+					logger.info("registering communication to participant/volunteer with ad-number: "
+							+ participant.getAdNumber() + " with status: " + registrationCommunication.getStatus());
 					registrationCommunicationRepository.save(registrationCommunication);
 				}
 				repository.save(participant);

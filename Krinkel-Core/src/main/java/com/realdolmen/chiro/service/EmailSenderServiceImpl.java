@@ -2,12 +2,12 @@ package com.realdolmen.chiro.service;
 
 import java.util.concurrent.Future;
 
-import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
-import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.scheduling.annotation.Async;
@@ -20,7 +20,6 @@ import com.realdolmen.chiro.domain.RegistrationCommunication;
 import com.realdolmen.chiro.domain.RegistrationParticipant;
 import com.realdolmen.chiro.domain.RegistrationVolunteer;
 import com.realdolmen.chiro.domain.SendStatus;
-import com.realdolmen.chiro.exception.EmailSenderServiceException;
 import com.realdolmen.chiro.repository.RegistrationCommunicationRepository;
 
 @Service
@@ -29,6 +28,8 @@ public class EmailSenderServiceImpl implements EmailSenderService {
 	private static final String EMAIL_FROM = "inschrijvingen@krinkel.be";
 	private static final String EMAIL_SUBJECT = "Bevestiging inschrijving krinkel";
 	private RegistrationCommunication registrationCommunication;
+	
+	private Logger logger = LoggerFactory.getLogger(EmailSenderServiceImpl.class);
 
 	@Autowired
 	JavaMailSender mailSender;
@@ -48,7 +49,7 @@ public class EmailSenderServiceImpl implements EmailSenderService {
 		ctx.setVariable("participant", participant);
 		ctx.setVariable("isVolunteer", participant instanceof RegistrationVolunteer);
 
-		String emailText = thymeleaf.process("email.html", ctx);
+		String emailText = thymeleaf.process("email", ctx);
 		ClassPathResource image = new ClassPathResource("/static/img/logo.png");
 		
 		registrationCommunication = registrationCommunicationRepository.findByAdNumber(participant.getAdNumber());
@@ -63,16 +64,17 @@ public class EmailSenderServiceImpl implements EmailSenderService {
 			helper.setTo(participant.getEmail());
 			helper.setSubject(EMAIL_SUBJECT);
 			helper.addInline("logo", image);
-
+			logger.info("trying to send confirmation email to: " + participant.getEmail());
 			mailSender.send(message);
 			
 			registrationCommunication.setStatus(SendStatus.SENT);
 			registrationCommunicationRepository.save(registrationCommunication);
 		} catch (Exception e) {
 			registrationCommunication.setStatus(SendStatus.FAILED);
+			logger.info("sending confirmation email to: " + participant.getEmail() + " failed");
 			registrationCommunicationRepository.save(registrationCommunication);
 		}
-
+		logger.info("sending confirmation email to: " + participant.getEmail() + " succeeded");
 		return new AsyncResult<String>("ok");
 
 	}
