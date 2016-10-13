@@ -34,14 +34,14 @@ class RegisterController {
             for (var i = 0; i <= components.length; i++)
                 for (var j = 0; j <= components[i].types.length; j++) {
                     if (components[i].types[j] == 'postal_code') {
-                        console.debug(components[i].long_name);
+                      //  console.debug(components[i].long_name);
                         this.details2 = {
                             name: components[i].long_name
                         };
                     }
                    // console.debug(components[i].types[j]);
                     if (components[i].types[j] == 'locality') {
-                        console.debug(components[i].short_name);
+                        //console.debug(components[i].short_name);
                         this.details3 = {
                             vicinity: components[i].short_name
                         };
