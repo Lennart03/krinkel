@@ -1,9 +1,12 @@
 package com.realdolmen.chiro.service;
 
+import com.realdolmen.chiro.domain.RegistrationCommunication;
 import com.realdolmen.chiro.domain.RegistrationParticipant;
 import com.realdolmen.chiro.domain.RegistrationVolunteer;
+import com.realdolmen.chiro.domain.SendStatus;
 import com.realdolmen.chiro.domain.Status;
 import com.realdolmen.chiro.mspservice.MultiSafePayService;
+import com.realdolmen.chiro.repository.RegistrationCommunicationRepository;
 import com.realdolmen.chiro.repository.RegistrationParticipantRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,57 +16,65 @@ import java.util.List;
 
 @Service
 public class RegistrationParticipantService {
-    public final static Integer PRICE_IN_EUROCENTS = 11000;
+	public final static Integer PRICE_IN_EUROCENTS = 11000;
 
-    @Autowired
-    private RegistrationParticipantRepository repository;
+	@Autowired
+	private RegistrationParticipantRepository repository;
 
-    @Autowired
-    private MultiSafePayService mspService;
+	@Autowired
+	private RegistrationCommunicationRepository registrationCommunicationRepository;
 
+	@Autowired
+	private MultiSafePayService mspService;
 
+	public RegistrationParticipant save(RegistrationParticipant registration) {
+		if (repository.findByAdNumber(registration.getAdNumber()) == null) {
+			return repository.save(registration);
+		}
+		return null;
+	}
 
+	public void updatePaymentStatus(String testOrderId) {
+		String[] split = testOrderId.split("-");
+		testOrderId = split[0];
 
-    public RegistrationParticipant save(RegistrationParticipant registration) {
-        if (repository.findByAdNumber(registration.getAdNumber()) == null) {
-            return repository.save(registration);
-        }
-        return null;
-    }
+		RegistrationParticipant participant = repository.findByAdNumber(testOrderId);
+		if (participant != null) {
 
-    public void updatePaymentStatus(String testOrderId) {
-        String[] split = testOrderId.split("-");
-        testOrderId = split[0];
+			if (mspService.orderIsPaid(testOrderId)) {
+				participant.setStatus(Status.PAID);
+				// TODO register
+				RegistrationCommunication registrationCommunication = new RegistrationCommunication();
+				registrationCommunication.setStatus(SendStatus.WAITING);
+				registrationCommunication.setCommunicationAttempt(0);
+				registrationCommunication.setAdNumber(participant.getAdNumber());
+				if (registrationCommunicationRepository.findByAdNumber(participant.getAdNumber()) != null) {
+					registrationCommunicationRepository.save(registrationCommunication);
+				}
+				repository.save(participant);
+			}
+		}
+	}
 
-        RegistrationParticipant participant = repository.findByAdNumber(testOrderId);
-        if (participant != null) {
+	public List<RegistrationParticipant> findParticipantsByGroup(String stamNumber) {
+		List<RegistrationParticipant> participants = repository.findParticipantsByGroup(stamNumber);
+		List<RegistrationParticipant> results = new ArrayList<>();
+		for (RegistrationParticipant participant : participants) {
+			if (!(participant instanceof RegistrationVolunteer)) {
+				results.add(participant);
+			}
+		}
+		return results;
+	}
 
-            if (mspService.orderIsPaid(testOrderId)) {
-                participant.setStatus(Status.PAID);
-                repository.save(participant);
-            }
-        }
-    }
-
-    public List<RegistrationParticipant> findParticipantsByGroup(String stamNumber){
-        List<RegistrationParticipant> participants = repository.findParticipantsByGroup(stamNumber);
-        List<RegistrationParticipant> results = new ArrayList<>();
-        for (RegistrationParticipant participant: participants){
-            if (!(participant instanceof RegistrationVolunteer)){
-                results.add(participant);
-            }
-        }
-        return results;
-    }
-
-    public List<RegistrationVolunteer> findVolunteersByGroup(String stamNumber){
-        List<RegistrationParticipant> participants = repository.findParticipantsByGroup(stamNumber);
-        List<RegistrationVolunteer> results = new ArrayList<>();
-        for (RegistrationParticipant participant: participants){
-            if (participant instanceof RegistrationVolunteer){
-                results.add((RegistrationVolunteer)participant);
-            }
-        }
-        return results;
-    }
+	public List<RegistrationVolunteer> findVolunteersByGroup(String stamNumber) {
+		List<RegistrationParticipant> participants = repository.findParticipantsByGroup(stamNumber);
+		List<RegistrationVolunteer> results = new ArrayList<>();
+		for (RegistrationParticipant participant : participants) {
+			if (participant instanceof RegistrationVolunteer) {
+				results.add((RegistrationVolunteer) participant);
+			}
+		}
+		return results;
+	}
 }

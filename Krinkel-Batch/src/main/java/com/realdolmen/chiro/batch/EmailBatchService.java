@@ -17,8 +17,6 @@ import com.realdolmen.chiro.service.EmailSenderService;
 @Service
 public class EmailBatchService {
 
-	private List<RegistrationParticipant> participantsPaid = new ArrayList<>();
-
 	private List<RegistrationCommunication> regComs = new ArrayList<>();
 
 	@Autowired
@@ -46,14 +44,6 @@ public class EmailBatchService {
 		});
 	}
 
-	private boolean checkIfPaidParticipantInRegistrationCommunication(RegistrationParticipant participant) {
-		boolean isPresent = false;
-		for (RegistrationCommunication regCom : regComs) {
-			if (regCom.getAdNumber().equals(participant.getAdNumber())) {
-				isPresent = true;
-			}
-		}
-		return isPresent;
-	}
+	
 
 }
