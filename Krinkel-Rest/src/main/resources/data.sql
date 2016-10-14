@@ -3,18 +3,17 @@
 
 
 INSERT INTO registration_participant VALUES('RegistrationParticipant', '10', '123456', 'Brussel', '123', '1000', 'Veldstraat', '1995-08-21', false, 'FISHANDMEAT',
-                              'email@test.be', 'Johnny', 'MAN', 'Flodder', '', '', '', '', 'ASPI', false, 'AG /0103', 'CONFIRMED', 1, '', '');
+                              'email@test.be', 'Johnny', 'MAN', 'Flodder', '', '', '', '', 'ASPI', false, 'AG /0103', 'TO_BE_PAID', 1, '', '');
 INSERT INTO registration_participant VALUES('RegistrationParticipant', '20', '234567', 'Brussel', '123', '1000', 'Veldstraat', '1995-08-21', false, 'FISHANDMEAT',
-                              'email@test.be', 'Kees', 'MAN', 'Flodder', '', '', '', '', 'ASPI', false, 'BG /0301', 'CONFIRMED', 1, '', '');
+                              'email@test.be', 'Kees', 'MAN', 'Flodder', '', '', '', '', 'ASPI', false, 'BG /0301', 'TO_BE_PAID', 1, '', '');
 INSERT INTO registration_participant VALUES('RegistrationParticipant', '30', '345678', 'Brussel', '123', '1000', 'Veldstraat', '1995-08-21', false, 'FISHANDMEAT',
                               'email@test.be', 'Ma', 'WOMAN', 'Flodder', '', '', '', '', 'ASPI', false, 'AG /0103', 'CONFIRMED', 1, '', '');
 INSERT INTO registration_participant VALUES('RegistrationParticipant', '40', '456789', 'Brussel', '123', '1000', 'Veldstraat', '1995-08-21', false, 'FISHANDMEAT',
-                              'email@test.be', 'Cees', 'WOMAN', 'Flodder', '', '', '', '', 'ASPI', false, 'LEG/0101', 'CONFIRMED', 1, '', '');
+                              'email@test.be', 'Cees', 'WOMAN', 'Flodder', '', '', '', '', 'ASPI', false, 'LEG/0101', 'PAID', 1, '', '');
 INSERT INTO registration_participant VALUES('RegistrationParticipant', '50', '987654', 'Brussel', '123', '1000', 'Veldstraat', '1995-08-21', false, 'FISHANDMEAT',
                               'email@test.be', 'Frederik', 'MAN', 'Flodder', '', '', '', '', 'ASPI', false, 'AG /0202', 'CONFIRMED', 1, '', '');
 INSERT INTO registration_participant VALUES('RegistrationVolunteer', '60', '876543', 'Brussel', '123', '1000', 'Veldstraat', '1995-08-21', false, 'FISHANDMEAT',
-                              'email@test.be', 'Jos', 'MAN', 'Flodder', '', '', '', '', 'ASPI', false, 'AG /0103', 'PAID', 1, '', 'CAMPGROUND');
-
+                              'email@test.be', 'Jos', 'MAN', 'Flodder', '', '', '', '', 'VOLUNTEER', false, 'AG /0103', 'TO_BE_PAID', 1, '', 'CAMPGROUND');
 
 INSERT INTO pre_camp VALUES (10, '2017-08-21');
 INSERT INTO pre_camp VALUES (20, '2017-08-22');
@@ -35,6 +34,20 @@ CREATE TABLE groepen (
     `verbond_naam` VARCHAR(15),
     PRIMARY KEY(`groep_stamnr`)
 );
+INSERT INTO login_log (id,ad_number,stamp) VALUES (1,'123456',{d '2016-10-01'});
+INSERT INTO login_log (id,ad_number,stamp) VALUES (2,'123456',{d '2016-10-02'});
+INSERT INTO login_log (id,ad_number,stamp) VALUES (3,'654321',{d '2016-10-02'});
+INSERT INTO login_log (id,ad_number,stamp) VALUES (4,'123528',{d '2016-10-03'});
+INSERT INTO login_log (id,ad_number,stamp) VALUES (5,'1688456',{d '2016-10-03'});
+INSERT INTO login_log (id,ad_number,stamp) VALUES (6,'123456',{d '2016-10-04'});
+INSERT INTO login_log (id,ad_number,stamp) VALUES (7,'123456',{d '2016-10-04'});
+INSERT INTO login_log (id,ad_number,stamp) VALUES (8,'144546',{d '2016-10-04'});
+INSERT INTO login_log (id,ad_number,stamp) VALUES (9,'129897',{d '2016-10-04'});
+INSERT INTO login_log (id,ad_number,stamp) VALUES (10,'123856',{d '2016-10-04'});
+INSERT INTO login_log (id,ad_number,stamp) VALUES (11,'133456',{d '2016-10-07'});
+INSERT INTO login_log (id,ad_number,stamp) VALUES (12,'126556',{d '2016-10-07'});
+
+
 INSERT INTO groepen VALUES ('Pleplo','AG /0103','AG /0400','Zac','AG /0000','Antwerpen');
 INSERT INTO groepen VALUES ('Lore','AG /0104','AG /0400','Zac','AG /0000','Antwerpen');
 INSERT INTO groepen VALUES ('Dolfijn','AG /0108','AG /0400','Zac','AG /0000','Antwerpen');
