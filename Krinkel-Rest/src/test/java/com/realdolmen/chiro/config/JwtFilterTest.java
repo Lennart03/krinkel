@@ -1,38 +1,34 @@
 package com.realdolmen.chiro.config;
 
-import javax.servlet.FilterChain;
-import javax.servlet.ServletRequest;
-import javax.servlet.ServletResponse;
-import javax.servlet.ServletResponseWrapper;
-import javax.servlet.http.Cookie;
-
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-public class JwtFilterTest {
-    Cookie cookie;
-    Cookie[] cookies;
-    JwtFilter jwtFilter;
+import javax.servlet.http.Cookie;
 
-    String AUTHCOOKIE = "erbsmoqjqsfczkkjpzoeezqlffruezqcizuyvirtfszeoiaqé";
+public class JwtFilterTest {
+    private Cookie cookie;
+    private Cookie[] cookies;
+    private JwtFilter jwtFilter;
+
+    private String AUTHCOOKIE = "erbsmoqjqsfczkkjpzoeezqlffruezqcizuyvirtfszeoiaqé";
 
     @Before
     public void setUp(){
-        cookie = new Cookie("Authorization", AUTHCOOKIE );
+        cookie = new Cookie("Authorization", AUTHCOOKIE);
         cookies = new Cookie[1];
         cookies[0] = cookie;
         jwtFilter = new JwtFilter();
     }
 
-
     @Test
     public void testCookieShouldSucceed(){
-        Assert.assertEquals(jwtFilter.getTokenFromCookie(cookies), AUTHCOOKIE);
+        Assert.assertEquals(AUTHCOOKIE, jwtFilter.getTokenFromCookie(cookies));
     }
 
+    // TODO: Remove test, already checked by #testCookieShouldSucceed().
     @Test
     public void testCookieShouldFail(){
-        Assert.assertNotEquals(jwtFilter.getTokenFromCookie(cookies), AUTHCOOKIE.substring(9));
+        Assert.assertNotEquals(AUTHCOOKIE.substring(9), jwtFilter.getTokenFromCookie(cookies));
     }
 }

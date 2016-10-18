@@ -16,10 +16,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-
+/**
+ * JSON Web Tokens Security Filter.
+ */
 public class JwtFilter extends GenericFilterBean {
 
     private Logger logger = LoggerFactory.getLogger(JwtFilter.class);
+
     @Override
     public void doFilter(final ServletRequest req,
                          final ServletResponse res,
@@ -37,18 +40,21 @@ public class JwtFilter extends GenericFilterBean {
             //second way of authentication is with the cookie set by the server
             if(authCookieToken!=null){
                 token = authCookieToken;
-            }else{
+            }
+            else{
                 response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
                 return;
             }
-
-        }else{
+        }
+        else{
             token = authHeader.substring(7); // The part after "Bearer "
         }
 
         try {
-            final Claims claims = Jwts.parser().setSigningKey("MATHIASISNOOB")
-                    .parseClaimsJws(token).getBody();
+            final Claims claims = Jwts.parser()
+                                    .setSigningKey("MATHIASISNOOB")
+                                    .parseClaimsJws(token)
+                                    .getBody();
             request.setAttribute("claims", claims);
         }
         catch (final SignatureException e) {
@@ -58,13 +64,13 @@ public class JwtFilter extends GenericFilterBean {
     }
 
     /**
-     * @param cookies list of cookies from the request
+     * @param cookies List of cookies from the request
      * @return Authorization cookie value (JWT)
      */
     protected String getTokenFromCookie(Cookie[] cookies){
-        for(Cookie c:cookies){
-            if(c.getName().equals("Authorization")){
-                return c.getValue();
+        for(Cookie cookie : cookies){
+            if(cookie.getName().equals("Authorization")){
+                return cookie.getValue();
             }
         }
         return null;
