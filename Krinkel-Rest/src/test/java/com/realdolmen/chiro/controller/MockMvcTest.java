@@ -32,9 +32,8 @@ import com.realdolmen.chiro.TestApplication;
  */
 @WebAppConfiguration
 @RunWith(SpringJUnit4ClassRunner.class)
-//@SpringBootTest(classes = {TestApplication.class})
 @ContextConfiguration(classes={TestApplication.class}) // Spring Boot config (includes component scan)
-@Transactional // Rollback after each test.
+@Transactional // Enables rollback after each test.
 @TestPropertySource(locations="classpath:application-test.properties") // Different set of properties to set H2 as DB.
 public abstract class MockMvcTest {
 
@@ -47,27 +46,41 @@ public abstract class MockMvcTest {
 
     @Autowired
     void setConverters(HttpMessageConverter<?>[] converters) {
+        this.mappingJackson2HttpMessageConverter =
+                Arrays.stream(converters)
+                      .filter(
+                          hmc -> hmc instanceof MappingJackson2HttpMessageConverter
+                      )
+                      .findAny()
+                      .get();
 
-        this.mappingJackson2HttpMessageConverter = Arrays.asList(converters).stream().filter(
-                hmc -> hmc instanceof MappingJackson2HttpMessageConverter).findAny().get();
-
-        Assert.assertNotNull("the JSON message converter must not be null",
-                this.mappingJackson2HttpMessageConverter);
+        Assert.assertNotNull(
+                "the JSON message converter must not be null",
+                this.mappingJackson2HttpMessageConverter
+        );
     }
 
     @Before
     public void mockMvcSetUp(){
-        this.mockMvc = MockMvcBuilders.webAppContextSetup(this.context).build();
+        this.mockMvc = MockMvcBuilders
+                            .webAppContextSetup(this.context)
+                            .build();
     }
 
+    /**
+     * Convenience method for subclasses to access the MockMvc instance.
+     */
     MockMvc mockMvc(){
         return this.mockMvc;
     }
 
+    /**
+     * Convenience method for subclasses to convert an object to JSON format.
+     */
     String json(Object o) throws IOException {
         MockHttpOutputMessage mockHttpOutputMessage = new MockHttpOutputMessage();
-        this.mappingJackson2HttpMessageConverter.write(
-                o, MediaType.APPLICATION_JSON, mockHttpOutputMessage);
+        this.mappingJackson2HttpMessageConverter
+                .write(o, MediaType.APPLICATION_JSON, mockHttpOutputMessage);
         return mockHttpOutputMessage.getBodyAsString();
     }
 }
