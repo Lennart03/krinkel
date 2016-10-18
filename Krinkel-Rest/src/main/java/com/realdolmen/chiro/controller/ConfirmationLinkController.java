@@ -16,15 +16,7 @@ public class ConfirmationLinkController {
     @RequestMapping(method = RequestMethod.GET)
     public String confirm(@RequestParam("ad") String adNumber, @RequestParam("token") String token, Model model){
         boolean success = service.checkToken(adNumber, token);
-
         model.addAttribute("success", success);
-/*
-        if(success){
-            return "{\"success\" : true}";
-        }
-        else{
-            return "{\"success\" : false}";
-        }*/
         return "confirmation";
     }
 }
