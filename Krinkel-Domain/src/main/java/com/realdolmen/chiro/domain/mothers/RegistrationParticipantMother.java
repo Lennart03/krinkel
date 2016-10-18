@@ -8,6 +8,11 @@ import java.util.Calendar;
  * Object Mother used for testing.
  */
 public class RegistrationParticipantMother {
+
+    private RegistrationParticipantMother(){
+        // Hide constructor.
+    }
+
     public static RegistrationParticipant createBasicRegistrationParticipant(){
         Calendar c = Calendar.getInstance();
         c.set(1979, Calendar.SEPTEMBER, 19);
@@ -15,7 +20,7 @@ public class RegistrationParticipantMother {
         RegistrationParticipant.RegistrationParticipantBuilder builder =
                 new RegistrationParticipant.RegistrationParticipantBuilder();
 
-        builder.adNumber("123456")
+        builder.adNumber("778899")
                 .email("hermione@hogwarts.example")
                 .firstName("Hermione")
                 .lastName("Granger")
