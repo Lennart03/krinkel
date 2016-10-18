@@ -3,6 +3,7 @@ package com.realdolmen.chiro.controller;
 import java.io.IOException;
 import java.util.Arrays;
 
+import com.realdolmen.chiro.integration.IntegrationTest;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.runner.RunWith;
@@ -35,7 +36,7 @@ import com.realdolmen.chiro.TestApplication;
 @ContextConfiguration(classes={TestApplication.class}) // Spring Boot config (includes component scan)
 @Transactional // Enables rollback after each test.
 @TestPropertySource(locations="classpath:application-test.properties") // Different set of properties to set H2 as DB.
-public abstract class MockMvcTest {
+public abstract class MockMvcTest extends IntegrationTest {
 
     @Autowired
     private WebApplicationContext context;
