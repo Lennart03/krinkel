@@ -18,9 +18,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-/**
- * Created by WVDAZ49 on 12/10/2016.
- */
 @Service
 public class GraphChiroService {
     @Autowired

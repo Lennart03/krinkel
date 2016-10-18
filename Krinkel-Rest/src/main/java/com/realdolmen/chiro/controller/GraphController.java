@@ -12,9 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
-/**
- * Created by WVDAZ49 on 12/10/2016.
- */
+
 @RestController
 public class GraphController {
     @Autowired

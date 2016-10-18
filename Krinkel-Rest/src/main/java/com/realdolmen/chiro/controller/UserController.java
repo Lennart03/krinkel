@@ -11,14 +11,15 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
 
+/**
+*   UserController class
+ *  Handles the endpoints for the user resource, which represents a user known to the Chiro.
+ */
 @RestController
 public class UserController {
 
     @Autowired
     private UserService service;
-
-    @Autowired
-    private ChiroUnitService unitService;
 
 
     @RequestMapping(method = RequestMethod.GET, value = "/api/users/{adNumber}")

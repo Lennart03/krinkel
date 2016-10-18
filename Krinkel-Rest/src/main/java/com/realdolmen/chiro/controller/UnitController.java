@@ -16,6 +16,7 @@ import java.util.List;
  * /units?verbond = Alleen verbonden
  * /units?gewest = Alleen gewesten.
  * /units/{stam} = Eén groep.
+ * /units/{stamletters}/{stamnummers}/users = all users with given stamnummer ({stamletters}/{stamnummers} = stamnummer)
  */
 @RestController
 @RequestMapping(value = "/api/units", produces = "application/json")

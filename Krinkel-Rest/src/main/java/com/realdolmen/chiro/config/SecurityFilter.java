@@ -13,9 +13,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 
-/**
- * Created by WVDAZ49 on 10/10/2016.
- */
+
 @EnableGlobalAuthentication
 @Configuration
 public class SecurityFilter extends WebSecurityConfigurerAdapter {
