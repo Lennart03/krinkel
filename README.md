@@ -27,6 +27,10 @@
 2. Run "npm install"
 3. Run "gulp serve"
 
+## Build with integration tests enabled
+
+    mvn clean package -Dintegration
+
 ## Build a single Maven Submodule
 
 Only builds one of the submodules, not everything:
