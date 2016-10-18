@@ -16,6 +16,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import java.security.InvalidParameterException;
 import java.util.Date;
 
+//TODO make this an integration test
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = MultiSafePayService.class)
 public class MultiSafePayServiceTest {
@@ -29,7 +30,7 @@ public class MultiSafePayServiceTest {
 
     @Before
     public void init() {
-        Address address = new Address("rttr", "3", 1600, "test");
+        address = new Address("rttr", "3", 1600, "test");
         p = new RegistrationParticipant("123", "jos@example.com", "Joske", "Vermeulen", new Date(), "AB 12/34", Gender.MAN, Role.ASPI, null);
         p.setAddress(address);
         v = new RegistrationVolunteer();

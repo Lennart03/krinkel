@@ -2,6 +2,11 @@ package com.realdolmen.chiro.mspdto;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+/**
+ * This object represents the data part in the OrderDto and StatusDto objects.
+ * It contains the actual interesting bits. This class is a combination of the
+ * fields that are used in both json objects.
+ */
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Data {
     private String order_id;

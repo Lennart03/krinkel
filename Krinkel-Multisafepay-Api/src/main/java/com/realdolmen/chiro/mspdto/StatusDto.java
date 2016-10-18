@@ -2,7 +2,10 @@ package com.realdolmen.chiro.mspdto;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-
+/**
+ * This class represents the json that multisafepay returns when we ask about
+ * the status for a certain order.
+ */
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class StatusDto {
     private boolean success;
