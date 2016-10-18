@@ -3,6 +3,7 @@ package com.realdolmen.chiro.controller;
 import com.realdolmen.chiro.domain.RegistrationParticipant;
 import com.realdolmen.chiro.mspservice.MultiSafePayService;
 import com.realdolmen.chiro.service.RegistrationParticipantService;
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -12,7 +13,6 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
 import org.springframework.http.ResponseEntity;
-
 import java.net.URISyntaxException;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -26,16 +26,20 @@ public class RegistrationParticipantControllerMockitoTest {
     @Mock
     private RegistrationParticipantService rpService;
 
-
-    public static String TEST_URL = "apeiofjoiaejfoioijagrapioejfleiofja";  //gibberish so test won't pass by accident
+    private static String TEST_URL = "apeiofjoiaejfoioijagrapioejfleiofja";  //gibberish so test won't pass by accident
     private RegistrationParticipant p;
 
     @Before
-    public void init() {
+    public void setUp() {
         p = new RegistrationParticipant();
         p.setAdNumber("abc123");
     }
 
+    @After
+    public void verifyStrict(){
+        Mockito.verifyNoMoreInteractions(mspService);
+        Mockito.verifyNoMoreInteractions(rpService);
+    }
 
     @Test
     public void saveReturnsUrlGivenByMultiSafePayService() throws URISyntaxException, MultiSafePayService.InvalidPaymentOrderIdException {
@@ -44,5 +48,8 @@ public class RegistrationParticipantControllerMockitoTest {
 
         ResponseEntity<?> response = controller.save(p);
         Assert.assertSame(response.getHeaders().getFirst("Location"), TEST_URL);
+
+        Mockito.verify(mspService).getParticipantPaymentUri(p, 11000);
+        Mockito.verify(rpService).save(p);
     }
 }
