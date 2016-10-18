@@ -1,17 +1,16 @@
 export class AuthService {
-    constructor($window,KrinkelService) {
+    constructor($window, $log, KrinkelService) {
         this.$window = $window;
         this.KrinkelService = KrinkelService;
 
         this.getUserFromStorage();
-        console.log("logged in user:");
-        console.log(this.getLoggedinUser());
+        this.$log = $log;
+        this.$log.debug("logged in user:");
+        this.$log.debug(this.getLoggedinUser());
 
         this.getCurrentUserDetails(this.getLoggedinUser().adnummer).then((resp) => {
             this.userDetails = resp;
         });
-
-
     }
 
     getLoggedinUser() {
@@ -38,7 +37,6 @@ export class AuthService {
             var decodedPayload = JSON.parse(window.atob(payload));
             this.user = decodedPayload;
         }
-
     }
 
     logoutUser() {
@@ -60,23 +58,28 @@ export class AuthService {
         this.$window.location = 'https://login.chiro.be/cas/logout?service=http://localhost:8080/site/index.html';
     }
 
-
     getToken(name) {
         var value = "; " + document.cookie;
         var parts = value.split("; " + name + "=");
-        if (parts.length == 2) return parts.pop().split(";").shift();
+        if (parts.length == 2) {
+            return parts.pop()
+                        .split(";")
+                        .shift();
+        }
     }
 
     getCurrentUserDetails(adNumber){
         return this.KrinkelService.getCurrentUserDetails(adNumber).then(resp => {
             this.userDetails = resp;
             return resp;
-        })
+        });
     }
+
     getUserDetails() {
         return this.userDetails;
     }
 }
-AuthService.$inject = ['$window','KrinkelService'];
+
+AuthService.$inject = ['$window', '$log', 'KrinkelService'];
 
 

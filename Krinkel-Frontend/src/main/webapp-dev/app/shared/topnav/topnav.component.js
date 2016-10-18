@@ -1,17 +1,17 @@
 /*@ngInject*/
-class TopNavController{
-  constructor(AuthService, $location){
-    this.AuthService = AuthService;
-    this.$location = $location;
-  }
+class TopNavController {
+    constructor(AuthService, $location) {
+        this.AuthService = AuthService;
+        this.$location = $location;
+    }
 
-  $onInit(){
-  }
+    $onInit() {
+    }
 }
 
 export var TopNavComponent = {
-  template: require('./topnav.html'),
-  controller: TopNavController
+    template: require('./topnav.html'),
+    controller: TopNavController
 };
 
-TopNavComponent.$inject = ['AuthService','$location'];
+TopNavComponent.$inject = ['AuthService', '$location'];

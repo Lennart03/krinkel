@@ -1,5 +1,6 @@
 class KrinkelSelectController{
-    constructor($location, KrinkelService,AuthService,SelectService){
+    constructor($location, $log, KrinkelService,AuthService,SelectService){
+        this.$log = $log;
         this.$location = $location;
         this.KrinkelService = KrinkelService;
         this.AuthService = AuthService;
@@ -8,8 +9,8 @@ class KrinkelSelectController{
     }
 
     $onInit(){
-        console.log("log");
-        console.log(this.AuthService.getUserDetails());
+        this.$log.debug("log");
+        this.$log.debug(this.AuthService.getUserDetails());
         this.KrinkelService.getColleagues(this.AuthService.getUserDetails().stamnummer).then((resp) => {
             this.colleagues = resp;
         });
@@ -26,4 +27,4 @@ export var KrinkelSelectComponent = {
     controller: KrinkelSelectController
 };
 
-KrinkelSelectComponent.$inject = ['$location', 'KrinkelService','AuthService','SelectService'];
+KrinkelSelectComponent.$inject = ['$location', '$log', 'KrinkelService','AuthService','SelectService'];

@@ -4,7 +4,6 @@ class WelcomeMessageController {
         this.$location = $location;
         this.AuthService = AuthService;
 
-
         this.AuthService.getCurrentUserDetails(this.AuthService.getLoggedinUser().adnummer).then((resp) => {
             console.log(resp);
             if (resp.registered && resp.hasPaid) {
@@ -26,8 +25,6 @@ class WelcomeMessageController {
         //     this.$location.path('/fail');
         // }
     }
-
-
 }
 
 export var WelcomeMessageComponent = {

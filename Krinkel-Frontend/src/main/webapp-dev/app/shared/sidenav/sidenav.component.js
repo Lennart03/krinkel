@@ -24,7 +24,6 @@ class SideNavController {
             this.$location.path('/home')
         }
     }
-
 }
 
 export var SideNavComponent = {

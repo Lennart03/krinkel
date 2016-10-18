@@ -31,11 +31,10 @@
                        required>
                 <label for="last_name">Achternaam *</label>
                 <p ng-show="personForm.lastName.$invalid && personForm.lastName.$touched" class="error"><i
-                    class="material-icons">error_outline</i> Achternaam is verplicht</p>
-
+                    class="material-icons">error_outline</i> Achternaam is verplicht
+                </p>
             </div>
         </div>
-
 
         <div class="row">
             <div class="input-field col s12 m6">
@@ -47,6 +46,7 @@
                     class="material-icons">error_outline</i>
                     Geboortedatum is verplicht</p>
             </div>
+
             <div class="input-field col s12 m6">
                 <i class="material-icons prefix">email</i>
                 <input id="email" name="email" type="email" class="validate" ng-model="$ctrl.newPerson.email" ng-pattern="$ctrl.emailPattern" required>
@@ -55,8 +55,6 @@
                     class="material-icons">error_outline</i>
                     Email is verplicht</p>
             </div>
-
-
         </div>
 
         <div class="row">
@@ -74,6 +72,7 @@
                     class="material-icons">error_outline</i>
                     Straatnaam is verplicht</p>
             </div>
+
             <div class="input-field col s6 m2">
                 <i class="material-icons prefix">home</i>
                 <input id="building" name="building" type="text" class="validate" ng-model="$ctrl.newPerson.building"
@@ -99,6 +98,7 @@
               <p ng-show="personForm.postalCode.$invalid && personForm.postalCode.$touched" class="error"><i
                   class="material-icons">error_outline</i> Postcode is verplicht</p>
           </div>
+
           <div class="input-field col m8 s12">
               <i class="material-icons prefix">home</i>
               <!--$ctrl.newPerson.city-->
@@ -163,6 +163,7 @@
                     Verplicht</p>
             </div>
         </div>
+
         <div class="row">
             <div class="input-field col s12">
                 <!--<i class="material-icons prefix">restaurant</i>-->
@@ -179,6 +180,7 @@
                 <!--<label>Eetgewoonten</label>-->
             </div>
         </div>
+
         <div class="row">
             <div class="input-field col s12">
                 <i class="material-icons prefix">restaurant</i>
@@ -195,10 +197,14 @@
                     <!--<i class="small material-icons prefix">mood</i>-->
                     <input type="checkbox" id="buddy" ng-model="$ctrl.newPerson.buddy"/>
                     <label for="buddy">Ik wil mee als buddy op de internationale kampgrond en spreek vlot volgende
-                        talen: </label>
+                        talen:
+                    </label>
+
                     <!-- Modal Trigger -->
-                    <a class="btn-floating waves-effect waves-light modal-trigger" href="#modal1"><i
-                        class="material-icons">help</i></a>
+                    <a class="btn-floating waves-effect waves-light modal-trigger" href="#modal1">
+                        <i class="material-icons">help</i>
+                    </a>
+
                     <!-- Modal Structure -->
                     <div id="modal1" class="modal">
                         <div class="modal-content">
@@ -210,6 +216,7 @@
                                 Krinkel
                                 voor internationale gasten.</p>
                         </div>
+
                         <div class="modal-footer">
                             <a href="" class=" modal-action modal-close waves-effect waves-green btn-flat">OK</a>
                         </div>
@@ -234,10 +241,6 @@
         <!--<input type="text" id="team" class="autocomplete" ng-model="$ctrl.newPerson.team" required>-->
         <!--<label for="team">Ploeg</label>-->
         <!--</div>-->
-
-
-
-
         <!--</div>-->
 
         <div class="row" ng-show="$ctrl.type === 'volunteer'">
@@ -252,6 +255,7 @@
                 </select>
                 <label>Voorwacht</label>
             </div>
+
             <div class="input-field col s12 m6">
                 <i class="material-icons prefix">date_range</i>
                 <select multiple ng-model="$ctrl.newPerson.postCamp">
@@ -298,16 +302,19 @@
                            value="Aanbod nationale kampgrond"/>
                     <label for="kampgrond">Aanbod nationale kampgrond</label>
                 </p>
+
                 <p>
                     <input class="with-gap" name="group3" type="radio" id="Kampgrondtrekker"
                            ng-model="$ctrl.newPerson.job" value="Kampgrondtrekker"/>
                     <label for="Kampgrondtrekker">Kampgrondtrekker</label>
                 </p>
+
                 <p>
                     <input class="with-gap" name="group3" type="radio" id="Krinkelredactie"
                            ng-model="$ctrl.newPerson.job" value="Krinkelredactie"/>
                     <label for="Krinkelredactie">Krinkelredactie</label>
                 </p>
+
                 <p>
                     <input class="with-gap" name="group3" type="radio" id="Kookploeg" ng-model="$ctrl.newPerson.job"
                            value="Kookploeg"/>
@@ -344,9 +351,10 @@
                         </div>
                     </label>
                 </p>
+
                 <p ng-show="personForm.job.$invalid && personForm.job.$touched" class="error">
-                    <i class="material-icons">error_outline</i>
-                    Verplicht</p>
+                    <i class="material-icons">error_outline</i> Verplicht
+                </p>
             </div>
         </div>
 
@@ -362,7 +370,6 @@
                     <!-- Modal Structure -->
                     <div id="modal3" class="modal">
                         <div class="modal-content">
-
                             <h4>Sociale promotie</h4>
                             <p>Enkel belangrijk voor cursussen die weekdagen bevatten.</p>
                             <p>Elke werkende jongere kan aan de werkgever verlof aanvragen om deel te nemen aan vormingsinitiatieven die door het Ministerie van de Vlaamse Gemeenschap erkend werden als ‘cursussen voor sociale promotie’. Enkel meerdaagsecursussen  komen in aanmerking (weekends tellen niet).</p>
@@ -371,12 +378,12 @@
                             <p>Ook begeleiding kan sociale promotie aanvragen. Als trekker kan jij hen vragen of ze dit willen of niet. Dan wordt dit ook mee geregeld door het secretariaat.</p>
                             <p>Is het niet duidelijk en heb je nog vragen? Mail dan gerust naar <a href="mailto:vorming@chiro.be">vorming@chiro.be</a>. Zij kunnen je zeker verder helpen!</p>
                         </div>
+
                         <div class="modal-footer">
                             <a href="" class=" modal-action modal-close waves-effect waves-green btn-flat">OK</a>
                         </div>
                     </div>
                 </div>
-
             </div>
         </div>
 
@@ -410,7 +417,6 @@
                         <voorwaarden></voorwaarden>
                     </div>
                 </div>
-
             </div>
         </div>
 
@@ -432,6 +438,6 @@
         </button>
     </form>
 
-    <div ng-show="$ctrl.functionCallAfterDOMRender()"></div>
     <!--Don't remove this! This is a hacky way to call the Materialize function to initialize textfields after the DOM has rendered.-->
+    <div ng-show="$ctrl.functionCallAfterDOMRender()"></div>
 </div>

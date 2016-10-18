@@ -73,7 +73,6 @@ class KrinkelGraphController {
     }
 
     $onInit() {
-
         this.getDataForSunBurst();
         this.getDataForStatus();
         this.getDataForLogin();
@@ -175,11 +174,8 @@ class KrinkelGraphController {
                 }
             }
         };
-
         this.barData = [];
     }
-
-
 }
 
 export var KrinkelGraphComponent = {

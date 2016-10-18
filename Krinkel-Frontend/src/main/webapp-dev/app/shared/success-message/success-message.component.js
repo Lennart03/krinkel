@@ -28,11 +28,11 @@ class SuccessMessageController {
     $onInit() {
         this.title = "Hoera!"
     }
-
 }
 
 export var SuccessMessageComponent = {
     template: require('./success-message.html'),
     controller: SuccessMessageController
 };
+
 SuccessMessageComponent.$inject = ['AuthService', '$location'];

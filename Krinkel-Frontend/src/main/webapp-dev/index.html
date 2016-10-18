@@ -1,30 +1,22 @@
 <!doctype html>
 <html>
-
 <head>
-  <meta charset="utf-8">
-  <base href="/">
-  <title>Krinkel</title>
-  <meta name="description" content="">
-  <meta name="viewport" content="width=device-width">
-  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <meta charset="utf-8"/>
+    <base href="/"/>
+    <title>Krinkel</title>
 
+    <meta name="description" content=""/>
+    <meta name="viewport" content="width=device-width"/>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
 </head>
-
 <body>
-<top-nav></top-nav>
-<side-nav></side-nav>
+    <top-nav></top-nav>
+    <side-nav></side-nav>
 
+    <main>
+        <div class="container" ng-view></div>
+    </main>
 
-
-<main>
-  <div class="container" ng-view></div>
-</main>
-
-
-
-<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=AIzaSyAoLq_x3LA4vc6febb2-8WPtuZhOdPGdUQ&libraries=places"></script>
-
+    <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=AIzaSyAoLq_x3LA4vc6febb2-8WPtuZhOdPGdUQ&libraries=places"></script>
 </body>
-
 </html>

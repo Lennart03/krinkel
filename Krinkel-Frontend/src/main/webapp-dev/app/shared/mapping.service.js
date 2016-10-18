@@ -1,5 +1,6 @@
 export class MapperService {
-    constructor(AuthService, SelectService) {
+    constructor($log, AuthService, SelectService) {
+        this.$log = $log;
         this.AuthService = AuthService;
         this.SelectService = SelectService;
     }
@@ -7,7 +8,7 @@ export class MapperService {
     mapVolunteer(data) {
         var volunteer = {
             // adNumber: Math.floor(Math.random() * 100000),
-            adNumber: this.AuthService.getLoggedinUser().adnummer, //TODO NON-RANDOM
+            adNumber: this.AuthService.getLoggedinUser().adnummer,
             firstName: data.firstName,
             lastName: data.lastName,
             address: {
@@ -17,7 +18,7 @@ export class MapperService {
                 city: data.city
             },
             birthdate: data.birthDate,
-            stamnumber: Math.floor(Math.random() * 100000), //TODO WHEN CHIRO STOPS BORKING
+            stamnumber: Math.floor(Math.random() * 100000), //TODO When Chiro API Available.
             buddy: data.buddy,
             language: [], // data.languages
             eatinghabbit: data.dietary,
@@ -29,9 +30,7 @@ export class MapperService {
             campGround: data.campGround.toUpperCase(),
             email: data.email,
             role: 'VOLUNTEER',
-
         };
-
 
         var genderTemp = data.gender.toLowerCase();
         if (genderTemp === 'man') {
@@ -58,13 +57,9 @@ export class MapperService {
         volunteer.preCampList = this.mapPreCampToObject(data.preCamp);
         volunteer.postCampList = this.mapPostCampToObject(data.postCamp);
 
-
         // map
-
-
         return volunteer;
     }
-
 
     mapJob(job) {
         var upperCasedJob = job.toUpperCase();
@@ -122,7 +117,7 @@ export class MapperService {
                 postalCode: data.postalCode,
                 city: data.city
             },
-            birthdate: data.birthDate, //TODO
+            birthdate: data.birthDate,
             stamnumber: Math.floor(Math.random() * 100000), //TODO NON-RANDOM
             buddy: data.buddy,
             // language: data.languages,
@@ -134,25 +129,24 @@ export class MapperService {
             phoneNumber: data.phone,
         };
 
-        console.log("outside selectedflqg");
-        console.log(this.SelectService.getColleague());
+        this.$log.debug("outside selectedflqg");
+        this.$log.debug(this.SelectService.getColleague());
         if (this.SelectService.getSelectedFlag()) {
-            console.log(this.SelectService.getColleague());
-            console.log("pipikaka");
+            this.$log.debug(this.SelectService.getColleague());
+            this.$log.debug("ppp");
             participant.adNumber = this.SelectService.getColleague().adNumber;
         } else {
-            console.log("not in if selectedflqg");
+            this.$log.debug("not in if selectedflqg");
             participant.adNumber = this.AuthService.getLoggedinUser().adnummer;
         }
-
 
         if (data.buddy) {
             participant.language = data.languages;
         } else {
             participant.language = [];
         }
-        console.log("lagnuages:");
-        console.log(data.languages);
+        this.$log.debug("languages:");
+        this.$log.debug(data.languages);
         var genderTemp = data.gender.toLowerCase();
         if (genderTemp === 'man') {
             participant.gender = data.gender.toUpperCase();
@@ -172,7 +166,7 @@ export class MapperService {
         return participant;
     }
 
-
+    // TODO Make endpoint in backend to retrieve dates
     mapPreCampToObject(listOfPreCamp) {
         if (listOfPreCamp !== undefined) {
             var preCamp = {
@@ -199,12 +193,14 @@ export class MapperService {
             listOfPreCamp.forEach(d => {
                 mappedList.push(preCamp[d]);
             });
+
             return mappedList;
         } else {
             return [];
         }
     }
 
+    // TODO Make endpoint in backend to retrieve dates
     mapPostCampToObject(listOfPostCamp) {
         if (listOfPostCamp !== undefined) {
             var postCamp = {
@@ -319,7 +315,7 @@ export class MapperService {
     }
 }
 
-MapperService.$inject = ['AuthService', 'SelectService'];
+MapperService.$inject = ['$log', 'AuthService', 'SelectService'];
 
 
 /**
