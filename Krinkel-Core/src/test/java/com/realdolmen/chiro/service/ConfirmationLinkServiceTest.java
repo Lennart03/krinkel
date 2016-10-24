@@ -1,6 +1,7 @@
 package com.realdolmen.chiro.service;
 
 import com.realdolmen.chiro.domain.*;
+import com.realdolmen.chiro.exception.DuplicateEntryException;
 import com.realdolmen.chiro.repository.ConfirmationLinkRepository;
 import com.realdolmen.chiro.repository.RegistrationParticipantRepository;
 import org.junit.Before;

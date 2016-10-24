@@ -3,6 +3,7 @@ package com.realdolmen.chiro.service;
 import com.realdolmen.chiro.domain.ConfirmationLink;
 import com.realdolmen.chiro.domain.RegistrationParticipant;
 import com.realdolmen.chiro.domain.Status;
+import com.realdolmen.chiro.exception.DuplicateEntryException;
 import com.realdolmen.chiro.repository.ConfirmationLinkRepository;
 import com.realdolmen.chiro.repository.RegistrationParticipantRepository;
 import org.springframework.beans.factory.annotation.Autowired;

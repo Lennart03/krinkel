@@ -1,4 +1,4 @@
-package com.realdolmen.chiro.service;
+package com.realdolmen.chiro.exception;
 
 /**
  * Should be thrown when an attempt is made to save a duplicate entry.
