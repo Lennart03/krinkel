@@ -103,10 +103,9 @@ class RegisterController {
 
         if (this.SelectService.getColleague() !== undefined) {
             this.newPerson = {
-                adNumber: this.SelectService.getColleague().adnr
+                adNumber: this.SelectService.getColleague().adNumber
             };
             this.SelectService.setSelectedFlag(true);
-
             console.log("From select");
         } else {
             console.log("Not from selectx");
