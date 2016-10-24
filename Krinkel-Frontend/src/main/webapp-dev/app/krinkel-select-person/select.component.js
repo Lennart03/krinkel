@@ -11,6 +11,7 @@ class KrinkelSelectController{
     $onInit(){
         this.$log.debug("log");
         this.$log.debug(this.AuthService.getUserDetails());
+        this.SelectService.setSelectedFlag(false);
         this.KrinkelService.getColleagues(this.AuthService.getUserDetails().stamnummer).then((resp) => {
             this.colleagues = resp;
         });

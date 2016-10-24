@@ -9,8 +9,6 @@ class WelcomeMessageController {
             if (resp.registered && resp.hasPaid) {
                 console.log("true true");
                 this.$location.path('/success');
-            } else if (resp.registered && !resp.hasPaid) {
-                this.$location.path('/fail');
             }
         }, (resp) => {
             console.log("failed");
