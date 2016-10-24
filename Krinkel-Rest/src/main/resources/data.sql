@@ -2,18 +2,41 @@
 -- noinspection SqlNoDataSourceInspectionForFile
 
 
-INSERT INTO registration_participant VALUES('RegistrationParticipant', '10', '123456', 'Brussel', '123', '1000', 'Veldstraat', '1995-08-21', false, 'FISHANDMEAT',
-                              'email@test.be', 'Johnny', 'MAN', 'Flodder', '', '', '', '', 'ASPI', false, 'AG /0103', 'TO_BE_PAID', 1, '', '');
-INSERT INTO registration_participant VALUES('RegistrationParticipant', '20', '234567', 'Brussel', '123', '1000', 'Veldstraat', '1995-08-21', false, 'FISHANDMEAT',
-                              'email@test.be', 'Kees', 'MAN', 'Flodder', '', '', '', '', 'ASPI', false, 'BG /0301', 'TO_BE_PAID', 1, '', '');
-INSERT INTO registration_participant VALUES('RegistrationParticipant', '30', '345678', 'Brussel', '123', '1000', 'Veldstraat', '1995-08-21', false, 'FISHANDMEAT',
-                              'email@test.be', 'Ma', 'WOMAN', 'Flodder', '', '', '', '', 'ASPI', false, 'AG /0103', 'CONFIRMED', 1, '', '');
-INSERT INTO registration_participant VALUES('RegistrationParticipant', '40', '456789', 'Brussel', '123', '1000', 'Veldstraat', '1995-08-21', false, 'FISHANDMEAT',
-                              'email@test.be', 'Cees', 'WOMAN', 'Flodder', '', '', '', '', 'ASPI', false, 'LEG/0101', 'PAID', 1, '', '');
-INSERT INTO registration_participant VALUES('RegistrationParticipant', '50', '987654', 'Brussel', '123', '1000', 'Veldstraat', '1995-08-21', false, 'FISHANDMEAT',
-                              'email@test.be', 'Frederik', 'MAN', 'Flodder', '', '', '', '', 'ASPI', false, 'AG /0202', 'CONFIRMED', 1, '', '');
-INSERT INTO registration_participant VALUES('RegistrationVolunteer', '60', '876543', 'Brussel', '123', '1000', 'Veldstraat', '1995-08-21', false, 'FISHANDMEAT',
-                              'email@test.be', 'Jos', 'MAN', 'Flodder', '', '', '', '', 'VOLUNTEER', false, 'AG /0103', 'TO_BE_PAID', 1, '', 'CAMPGROUND');
+INSERT INTO registration_participant (dtype,id,ad_number,city, house_number, postal_code, street, birthdate,
+social_promotion, eatinghabbit, email, first_name, gender, last_name, remarks_food, medical_remarks, remarks,
+event_role, buddy, stamnumber, status, phone_number, camp_ground, other, preset)
+VALUES('RegistrationParticipant', '10', '123456', 'Brussel', '123', '1000', 'Veldstraat', '1995-08-21', false, 'FISHANDMEAT',
+                              'email@test.be', 'Johnny', 'MAN', 'Flodder', 'food remarks', 'medical remarks', 'remarks', 'ASPI', false, 'AG /0103', 'TO_BE_PAID', 1, '', '', '');
+
+INSERT INTO registration_participant (dtype,id,ad_number,city, house_number, postal_code, street, birthdate,
+social_promotion, eatinghabbit, email, first_name, gender, last_name, remarks_food, medical_remarks, remarks,
+event_role, buddy, stamnumber, status, phone_number, camp_ground, other, preset)
+VALUES('RegistrationParticipant', '20', '234567', 'Brussel', '123', '1000', 'Veldstraat', '1995-08-21', false, 'FISHANDMEAT',
+                              'email@test.be', 'Kees', 'MAN', 'Flodder', '', '', '', 'ASPI', false, 'BG /0301', 'TO_BE_PAID', 1, '', '', '');
+
+INSERT INTO registration_participant (dtype,id,ad_number,city, house_number, postal_code, street, birthdate,
+social_promotion, eatinghabbit, email, first_name, gender, last_name, remarks_food, medical_remarks, remarks,
+event_role, buddy, stamnumber, status, phone_number, camp_ground, other, preset)
+VALUES('RegistrationParticipant', '30', '345678', 'Brussel', '123', '1000', 'Veldstraat', '1995-08-21', false, 'FISHANDMEAT',
+                              'email@test.be', 'Ma', 'WOMAN', 'Flodder', '', '', '', 'ASPI', false, 'AG /0103', 'CONFIRMED', 1, '', '', '');
+
+INSERT INTO registration_participant (dtype,id,ad_number,city, house_number, postal_code, street, birthdate,
+social_promotion, eatinghabbit, email, first_name, gender, last_name, remarks_food, medical_remarks, remarks,
+event_role, buddy, stamnumber, status, phone_number, camp_ground, other, preset)
+VALUES('RegistrationParticipant', '40', '456789', 'Brussel', '123', '1000', 'Veldstraat', '1995-08-21', false, 'FISHANDMEAT',
+                              'email@test.be', 'Cees', 'WOMAN', 'Flodder', '', '', '', 'ASPI', false, 'LEG/0101', 'PAID', 1, '', '', '');
+
+INSERT INTO registration_participant (dtype,id,ad_number,city, house_number, postal_code, street, birthdate,
+social_promotion, eatinghabbit, email, first_name, gender, last_name, remarks_food, medical_remarks, remarks,
+event_role, buddy, stamnumber, status, phone_number, camp_ground, other, preset)
+VALUES('RegistrationParticipant', '50', '987654', 'Brussel', '123', '1000', 'Veldstraat', '1995-08-21', false, 'FISHANDMEAT',
+                              'email@test.be', 'Frederik', 'MAN', 'Flodder', '', '', '', 'ASPI', false, 'AG /0202', 'CONFIRMED', 1, '', '', '');
+
+INSERT INTO registration_participant (dtype,id,ad_number,city, house_number, postal_code, street, birthdate,
+social_promotion, eatinghabbit, email, first_name, gender, last_name, remarks_food, medical_remarks, remarks,
+event_role, buddy, stamnumber, status, phone_number, camp_ground, other, preset)
+VALUES('RegistrationVolunteer', '60', '876543', 'Brussel', '123', '1000', 'Veldstraat', '1995-08-21', false, 'FISHANDMEAT',
+                              'email@test.be', 'Jos', 'MAN', 'Flodder', '', '', '', 'VOLUNTEER', false, 'AG /0103', 'TO_BE_PAID', 1, 'KEMPEN', '', 'CAMPGROUND');
 
 INSERT INTO pre_camp VALUES (10, '2017-08-21');
 INSERT INTO pre_camp VALUES (20, '2017-08-22');

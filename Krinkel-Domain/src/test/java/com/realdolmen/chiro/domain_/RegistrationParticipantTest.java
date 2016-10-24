@@ -1,18 +1,13 @@
 package com.realdolmen.chiro.domain_;
 
-import com.realdolmen.chiro.domain.Eatinghabbit;
-import com.realdolmen.chiro.domain.Role;
-import com.realdolmen.chiro.domain.Gender;
 import com.realdolmen.chiro.domain.RegistrationParticipant;
 import com.realdolmen.chiro.domain.mothers.RegistrationParticipantMother;
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 
 import javax.validation.ConstraintViolation;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.Set;
 
 import static org.junit.Assert.assertEquals;

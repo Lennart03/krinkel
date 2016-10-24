@@ -4,7 +4,7 @@ package com.realdolmen.chiro.domain;
 
 public class User {
 
-    private Role role;
+    private SecurityRole role;
     private String adNumber;
     private String email;
     private String firstname;
@@ -17,7 +17,7 @@ public class User {
     public User() {
     }
 
-    public User(String firstName, Role role, String adNumber, String email, String firstname, String lastname) {
+    public User(String firstName, SecurityRole role, String adNumber, String email, String firstname, String lastname) {
         this.role = role;
         this.adNumber = adNumber;
         this.email = email;
@@ -49,11 +49,11 @@ public class User {
         this.username = username;
     }
 
-    public Role getRole() {
+    public SecurityRole getRole() {
         return role;
     }
 
-    public void setRole(Role role) {
+    public void setRole(SecurityRole role) {
         this.role = role;
     }
 

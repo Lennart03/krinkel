@@ -1,8 +1,8 @@
 package com.realdolmen.chiro.service;
 
-import com.realdolmen.chiro.domain.GraphLoginCount;
+import com.realdolmen.chiro.domain.EventRole;
 import com.realdolmen.chiro.domain.LoginLog;
-import com.realdolmen.chiro.domain.Role;
+import com.realdolmen.chiro.domain.SecurityRole;
 import com.realdolmen.chiro.domain.User;
 import com.realdolmen.chiro.repository.LoginLoggerRepository;
 import io.jsonwebtoken.Claims;
@@ -19,7 +19,6 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.xml.bind.DatatypeConverter;
 import java.util.Date;
-import java.util.List;
 
 /**
  * Created by WVDAZ49 on 12/10/2016.
@@ -62,22 +61,22 @@ public class CASService {
             if(user.getFirstname().toLowerCase().equals("philippe") ||
                     user.getFirstname().toLowerCase().equals("thomas") ||
                     user.getFirstname().toLowerCase().equals("wannes")){
-                user.setRole(Role.ADMIN);
+                user.setRole(SecurityRole.ADMIN);
             } else {
-                user.setRole(Role.LEADER);
+                user.setRole(SecurityRole.GROEP);
             }
             return user;
         }
         return null;
     }
 
-    public Boolean hasRole(final Role[] roles, final HttpServletRequest request) {
+    public Boolean hasRole(final SecurityRole[] roles, final HttpServletRequest request) {
 
         Claims claims = Jwts.parser()
                 .setSigningKey(DatatypeConverter.parseBase64Binary(JWT_SECRET))
                 .parseClaimsJws(getTokenFromCookie(request.getCookies())).getBody();
         if (claims != null) {
-            for(Role role:roles){
+            for(SecurityRole role:roles){
                 if (claims.get("role").toString().equals(role.toString())) {
                     return true;
                 }

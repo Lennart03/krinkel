@@ -47,7 +47,7 @@ public class ConfirmationLinkServiceTest {
                 new Date(),
                 "AG0104",
                 Gender.WOMAN,
-                Role.ASPI,
+                EventRole.ASPI,
                 Eatinghabbit.VEGI
         );
         this.participant.setStatus(Status.PAID);

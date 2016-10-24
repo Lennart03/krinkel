@@ -1,7 +1,7 @@
 package com.realdolmen.chiro.service;
 
 import com.realdolmen.chiro.domain.Address;
-import com.realdolmen.chiro.domain.Role;
+import com.realdolmen.chiro.domain.EventRole;
 import com.realdolmen.chiro.domain.Gender;
 import com.realdolmen.chiro.domain.RegistrationParticipant;
 import com.realdolmen.chiro.repository.RegistrationParticipantRepository;
@@ -58,7 +58,7 @@ public class RegistrationParticipantServiceTest {
         participant.setLastName("HANOT");
         participant.setStamnumber("STAMNUMMER");    // don't assign TEST_STAMNR to it
         participant.setAdNumber("ADNUMMER");
-        participant.setRole(Role.MENTOR);
+        participant.setEventRole(EventRole.MENTOR);
         participant.setGender(Gender.X);
         participant.setBirthdate(new Date());
         participant.setStatus(Status.TO_BE_PAID);

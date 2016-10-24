@@ -44,7 +44,7 @@ public class OverviewControllerTest {
 
         participantAstrid = new RegistrationParticipant(
                 "123456789", "astrid@mail.do", "Astrid", "Deckers", c.getTime(),
-                "AG0001", Gender.WOMAN, Role.LEADER, Eatinghabbit.VEGI
+                "AG0001", Gender.WOMAN, EventRole.LEADER, Eatinghabbit.VEGI
         );
         participantAstrid.setAddress(new Address("My Street", "2", 1252, "My City"));
 
@@ -53,7 +53,7 @@ public class OverviewControllerTest {
 
         participantAster = new RegistrationVolunteer(
                 "123456789", "aster.deckers@example.org", "Aster", "Deckers", c.getTime(),
-                "AG0001", Gender.MAN, Role.LEADER, Eatinghabbit.VEGI,
+                "AG0001", Gender.MAN, EventRole.LEADER, Eatinghabbit.VEGI,
                 CampGround.ANTWERPEN,
                 new VolunteerFunction(VolunteerFunction.Preset.KRINKEL_EDITORIAL)
         );
