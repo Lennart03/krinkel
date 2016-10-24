@@ -115,6 +115,10 @@ public class RegistrationParticipant {
         this.phoneNumber = builder.phoneNumber;
     }
 
+    public boolean isRegisteredByOther(){
+        return !this.getAdNumber().equals(this.registeredBy);
+    }
+
     public String getFirstName() {
         return firstName;
     }

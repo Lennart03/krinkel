@@ -91,6 +91,8 @@ public class EmailSenderTest {
 		registrationParticipant.setGender(MALE);
 		Address address= new Address(STREET, HOUSE_NUMBER, POSTAL_CODE, CITY);
 		registrationParticipant.setAddress(address);
+		registrationParticipant.setRegisteredBy(AD_NUMBER_2);
+
 		registrationVolunteer = new RegistrationVolunteer();
 		registrationVolunteer.setFirstName(FIRST_NAME);
 		registrationVolunteer.setLastName(LAST_NAME);
@@ -99,6 +101,7 @@ public class EmailSenderTest {
 		registrationVolunteer.setAddress(address);
 		registrationVolunteer.setGender(MALE);
 		registrationVolunteer.setFunction(new VolunteerFunction(Preset.KRINKEL_EDITORIAL));
+
 		Calendar calendar = Calendar.getInstance();
 		calendar.set(Calendar.YEAR, 2017);
 		calendar.set(Calendar.MONTH,7);//zero-based!!!
@@ -190,6 +193,8 @@ public class EmailSenderTest {
 	@Test(expected=TemplateProcessingException.class)
 	public void shouldThrowExceptionBecauseOfNullpointerInThymeLeafTemplate() throws MessagingException{
 		RegistrationParticipant participant = new RegistrationParticipant();
+		participant.setAdNumber("123");
+		participant.setRegisteredBy("123");
 		participant.setFirstName(FIRST_NAME);
 		participant.setLastName(LAST_NAME);	
 		emailSenderService.sendMail(participant);
@@ -198,5 +203,14 @@ public class EmailSenderTest {
 	@Test
 	public void sendMailShouldReturnOk() throws MessagingException, InterruptedException, ExecutionException {
 		assertEquals("ok", emailSenderService.sendMail(registrationParticipant).get());
+	}
+
+	@Test
+	public void mailShouldContainConfirmationLink(){
+		emailSenderService.sendMail(registrationParticipant);
+		MimeMessage[] emails = smtpServer.getReceivedMessages();
+		MimeMessage email1 = emails[0];
+		String body = GreenMailUtil.getBody(email1);
+		assertTrue(body.contains("confirmation link"));
 	}
 }

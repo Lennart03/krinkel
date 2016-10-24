@@ -5,7 +5,9 @@
 <!-- </head> -->
 <body>
 	<img alt="logo" src="cid:logo" width="20%" />
-
+	<div th:if="${participant.isRegisteredByOther()}">confirmation link
+		<a th:href="${confirmationLink}">Bevestigen</a>
+	</div>
 	<h1>Hoera!</h1>
 
 	<p>
