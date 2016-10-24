@@ -14,8 +14,6 @@ class SuccessMessageController {
                     this.$location.path('/home');
                 }
                 if (currentUser.registered && currentUser.hasPaid) {
-                } else if (currentUser.registered && !currentUser.hasPaid) {
-                    this.$location.path('/fail');
                 } else {
                     this.$location.path('/home')
                 }

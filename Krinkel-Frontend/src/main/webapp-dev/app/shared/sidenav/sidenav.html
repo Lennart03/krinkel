@@ -6,7 +6,7 @@
     </li>
 
     <div ng-if="$ctrl.AuthService.getLoggedinUser() != null">
-        <li class="collection-item" ng-if="$ctrl.AuthService.getUserDetails().registered == false">
+        <li class="collection-item" ng-if="$ctrl.AuthService.getUserDetails().hasPaid == false">
             <a href="/register-participant">
                 <i class="material-icons">person_add</i> Schrijf je in
             </a>
@@ -16,7 +16,7 @@
                 <i class="material-icons">group_add</i> Schrijf anderen in
             </a>
         </li>
-        <li class="collection-item" ng-if="$ctrl.AuthService.getUserDetails().registered == false">
+        <li class="collection-item" ng-if="$ctrl.AuthService.getUserDetails().hasPaid == false">
             <a href="/register-volunteer">
                 <i class="material-icons">work</i> Schrijf je in als medewerker
             </a>
@@ -56,5 +56,3 @@
         <i class="material-icons large lockicon">lock</i>
     </div>
 </ul>
-
-mathias stinkt
