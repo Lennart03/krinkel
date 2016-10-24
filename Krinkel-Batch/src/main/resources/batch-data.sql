@@ -18,7 +18,7 @@ CREATE TABLE registration_participant (
 `medical_remarks` VARCHAR(30),
 `remarks` VARCHAR(30),
 `more_remarks` VARCHAR(30),
-`role` VARCHAR(30),
+`eventRole` VARCHAR(30),
 `buddy` BOOLEAN,
 `stamnumber` VARCHAR(30),
 `status` VARCHAR(30),

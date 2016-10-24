@@ -1,6 +1,6 @@
 package com.realdolmen.chiro.domain;
 
-public enum Role {
+public enum EventRole {
     ASPI("Aspi"), 
     LEADER("Leid(st)er"),
     MENTOR("Mentor"), 
@@ -9,7 +9,7 @@ public enum Role {
     
     private String description;
     
-    private Role(String description) {
+    private EventRole(String description) {
     	this.description = description;
     }
 

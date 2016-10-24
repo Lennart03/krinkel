@@ -51,7 +51,7 @@
 			<td>Geslacht:</td>
 			<td th:if="${participant.gender != null}" th:text="${participant.gender.description}"></td>
 			<td>Functie:</td>
-			<td th:if="${participant.role != null}" th:text="${participant.role.description}"></td>
+			<td th:if="${participant.eventRole != null}" th:text="${participant.eventRole.description}"></td>
 
 		</tr>
 		<tr th:if="${isVolunteer}">

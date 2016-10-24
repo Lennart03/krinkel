@@ -2,6 +2,7 @@ package com.realdolmen.chiro.service;
 
 import com.realdolmen.chiro.chiro_api.ChiroUserAdapter;
 import com.realdolmen.chiro.domain.RegistrationParticipant;
+import com.realdolmen.chiro.domain.SecurityRole;
 import com.realdolmen.chiro.domain.Status;
 import com.realdolmen.chiro.domain.User;
 import com.realdolmen.chiro.repository.RegistrationParticipantRepository;
@@ -105,5 +106,41 @@ public class UserServiceTest {
         User user = service.getUser(TEST_AD_NUMBER);
         Assert.assertSame(u, user);
         Assert.assertTrue(user.isRegistered());
+    }
+
+    @Test
+    public void getUserSecurityRoleToNationaalWhenUserHasNationaalStamnummer() {
+        u.setStamnummer("NAT/0000");
+        Mockito.when(adapter.getChiroUser(u.getAdNumber())).thenReturn(u);
+        User user = service.getUser(TEST_AD_NUMBER);
+        Assert.assertEquals(SecurityRole.NATIONAAL, user.getRole());
+    }
+
+    @Test
+    public void getUserSecurityRoleToVerbondWhenUserHasVerbondStamnummer() {
+        u.setStamnummer("LEG /0000");
+        Mockito.when(adapter.getChiroUser(u.getAdNumber())).thenReturn(u);
+        User user = service.getUser(TEST_AD_NUMBER);
+        Assert.assertEquals(SecurityRole.VERBOND, user.getRole());
+    }
+
+    @Test
+    public void getUserSecurityRoleToGewestWhenUserHasGewestStamnummer() {
+        u.setStamnummer("LEG/0600");
+        Mockito.when(adapter.getChiroUser(u.getAdNumber())).thenReturn(u);
+        User user = service.getUser(TEST_AD_NUMBER);
+        Assert.assertEquals(SecurityRole.GEWEST, user.getRole());
+
+        u.setStamnummer("LG /1000");
+        user = service.getUser(TEST_AD_NUMBER);
+        Assert.assertEquals(SecurityRole.GEWEST, user.getRole());
+    }
+
+    @Test
+    public void getUserSecurityRoleToGroepWhenUserHasGroepStamnummer() {
+        u.setStamnummer("LEG/0608");
+        Mockito.when(adapter.getChiroUser(u.getAdNumber())).thenReturn(u);
+        User user = service.getUser(TEST_AD_NUMBER);
+        Assert.assertEquals(SecurityRole.GROEP, user.getRole());
     }
 }

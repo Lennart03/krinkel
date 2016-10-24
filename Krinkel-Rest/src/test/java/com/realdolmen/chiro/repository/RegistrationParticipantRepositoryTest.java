@@ -6,6 +6,7 @@ import static org.junit.Assert.assertNotNull;
 import java.util.List;
 
 import com.realdolmen.chiro.TestApplication;
+import com.realdolmen.chiro.domain.CampGround;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,7 +38,9 @@ public class RegistrationParticipantRepositoryTest {
 		assertNotNull(participant);
 		assertEquals("Jos", participant.getFirstName());
 		RegistrationVolunteer volunteer = (RegistrationVolunteer)participant;
-		assertEquals("KEMPEN", volunteer.getCampGround().toString());
+		CampGround campGround = volunteer.getCampGround();
+		String s = campGround.toString();
+		assertEquals("KEMPEN", s);
 		assertEquals(VolunteerFunction.Preset.CAMPGROUND, volunteer.getFunction().getPreset());
 	}
 	

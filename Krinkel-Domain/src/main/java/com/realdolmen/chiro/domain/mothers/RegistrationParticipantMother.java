@@ -28,7 +28,7 @@ public class RegistrationParticipantMother {
                 .stamnumber("AG0104")
                 .gender(Gender.WOMAN)
                 .eatinghabbit(Eatinghabbit.VEGI)
-                .role(Role.ASPI)
+                .role(EventRole.ASPI)
                 .address(
                         new Address("Little Whinging street","32", 1380, "Waterloo")
                 );

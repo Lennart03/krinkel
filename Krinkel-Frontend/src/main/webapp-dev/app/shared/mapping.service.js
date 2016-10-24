@@ -29,7 +29,7 @@ export class MapperService {
             phoneNumber: data.phone,
             campGround: data.campGround.toUpperCase(),
             email: data.email,
-            role: 'VOLUNTEER',
+            eventRole: 'VOLUNTEER',
         };
 
         var genderTemp = data.gender.toLowerCase();
@@ -157,11 +157,11 @@ export class MapperService {
         }
 
         if (data.rank === 'Leider') {
-            participant.role = 'LEADER';
+            participant.eventRole = 'LEADER';
         } else if (data.rank === 'Begeleider') {
-            participant.role = 'MENTOR';
+            participant.eventRole = 'MENTOR';
         } else if (data.rank === 'Aspi') {
-            participant.role = 'ASPI';
+            participant.eventRole = 'ASPI';
         }
         return participant;
     }
@@ -334,7 +334,7 @@ MapperService.$inject = ['$log', 'AuthService', 'SelectService'];
 //     "birthdate": "1995-05-01",
 //     "stamnumber": "AG0001",
 //     "gender": "MAN",
-//     "role": "LEADER",
+//     "eventRole": "LEADER",
 //     "buddy": false,
 //     "language": [ ],
 //     "eatinghabbit": "VEGI",
