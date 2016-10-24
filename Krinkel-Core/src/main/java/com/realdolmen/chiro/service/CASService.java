@@ -32,6 +32,9 @@ public class CASService {
     @Autowired
     private LoginLoggerRepository loggerRepo;
 
+    @Autowired
+    private UserService userService;
+
     public String validateTicket(String ticket) {
         User user = validate(ticket);
         return createToken(user);
@@ -50,22 +53,8 @@ public class CASService {
             throw new SecurityException("Ticket could not be validated");
         }
         if (principal != null) {
-            User user = new User();
-            user.setEmail(principal.getAttributes().get("mail").toString());
-            user.setFirstname(principal.getName().toString());
-            user.setFirstname(principal.getAttributes().get("first_name").toString());
-            user.setLastname(principal.getAttributes().get("last_name").toString());
-            user.setAdNumber(principal.getAttributes().get("ad_nummer").toString());
-            //TODO: implement this for real data & persons
-
-            if(user.getFirstname().toLowerCase().equals("philippe") ||
-                    user.getFirstname().toLowerCase().equals("thomas") ||
-                    user.getFirstname().toLowerCase().equals("wannes")){
-                user.setRole(SecurityRole.ADMIN);
-            } else {
-                user.setRole(SecurityRole.GROEP);
-            }
-            return user;
+            // TODO: in an ideal world, cookie should only contain ad-number (and mayhaps role)
+            return userService.getUser(principal.getAttributes().get("ad_nummer").toString());
         }
         return null;
     }
