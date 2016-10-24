@@ -431,11 +431,26 @@
             kunnen zoeken. Je kan ons ook contacteren op 03/231 07 95 of <a href="mailto:info@krinkel.be">info@krinkel.be</a>.
         </p>
 
-        <button class="btn waves-effect waves-light" type="submit" name="action"
+        <button href="#modal4" class="btn waves-effect waves-light modal-trigger"  name="action"
                 ng-disabled="!personForm.$valid">
             Betalen
             <i class="material-icons right">send</i>
         </button>
+
+        <!-- Modal Structure -->
+        <div id="modal4" class="modal">
+            <div  ng-if="$ctrl.type === 'volunteer'" class="modal-content">
+                <h4>U wordt doorverwezen naar de betaalpagina</h4>
+                <p>De prijs voor vrijwilliger is €60</p>
+            </div>
+            <div  ng-if="$ctrl.type === 'participant'" class="modal-content">
+                <h4>U wordt doorverwezen naar de betaalpagina</h4>
+                <p>De prijs voor deelnemers is €110</p>
+            </div>
+            <div class="modal-footer">
+                <button type="submit" class=" modal-action modal-close waves-effect waves-green btn-flat">OK</button>
+            </div>
+        </div>
     </form>
 
     <!--Don't remove this! This is a hacky way to call the Materialize function to initialize textfields after the DOM has rendered.-->
