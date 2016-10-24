@@ -8,6 +8,14 @@ header, main, footer {
     }
 }
 
+a {
+    color: #319683;
+}
+
+i.icon-green {
+    color: #319683;
+}
+
 #logo-container {
     height: 160px;
     margin-bottom: 32px;
@@ -50,7 +58,7 @@ input.ng-dirty.ng-valid {
 }
 
 nav {
-    background-color: #00124D;
+    background-color: #319683;
 }
 
 .row {
