@@ -25,7 +25,6 @@ public class RegistrationParticipant {
     @Column(unique = true)
     private String adNumber;
 
-    @NotBlank
     private String registeredBy;
 
     @Size(min = 2)

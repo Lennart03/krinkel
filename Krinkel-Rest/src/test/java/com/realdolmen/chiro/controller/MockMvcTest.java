@@ -8,10 +8,12 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Profile;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.mock.http.MockHttpOutputMessage;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -36,6 +38,7 @@ import com.realdolmen.chiro.TestApplication;
 @ContextConfiguration(classes={TestApplication.class}) // Spring Boot config (includes component scan)
 @Transactional // Enables rollback after each test.
 @TestPropertySource(locations="classpath:application-test.properties") // Different set of properties to set H2 as DB.
+@ActiveProfiles("test")
 public abstract class MockMvcTest extends IntegrationTest {
 
     @Autowired

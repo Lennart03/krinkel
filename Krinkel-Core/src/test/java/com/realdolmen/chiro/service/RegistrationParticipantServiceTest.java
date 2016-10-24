@@ -42,7 +42,7 @@ public class RegistrationParticipantServiceTest {
     private RegistrationCommunicationRepository registrationCommunicationRepository;
 
     @Mock
-    private ChiroUserAdapter adapter;
+    private UserService userService;
 
     private RegistrationParticipant participant;
     private User user;
@@ -79,8 +79,11 @@ public class RegistrationParticipantServiceTest {
     @Test
     public void saveShouldReturnParticipantAfter() {
         Mockito.when(repo.save(participant)).thenReturn(participant);
-        Mockito.when(adapter.getChiroUser(participant.getAdNumber())).thenReturn(user);
+        Mockito.when(userService.getUser(participant.getAdNumber())).thenReturn(user);
+        Mockito.when(userService.getCurrentUser()).thenReturn(user);
+
         Assert.assertSame(participant, registrationParticipantService.save(participant));
+
         Mockito.verify(repo).save(participant);
     }
 
@@ -88,7 +91,8 @@ public class RegistrationParticipantServiceTest {
     @Test
     public void saveShouldReturnNULLWhenExisting() {
         Mockito.when(repo.findByAdNumber("ADNUMMER")).thenReturn(null);
-        Mockito.when(adapter.getChiroUser(participant.getAdNumber())).thenReturn(user);
+        Mockito.when(userService.getUser(participant.getAdNumber())).thenReturn(user);
+        Mockito.when(userService.getCurrentUser()).thenReturn(user);
 
         registrationParticipantService.save(participant);
 
@@ -98,7 +102,8 @@ public class RegistrationParticipantServiceTest {
 
     @Test
     public void saveShouldAskChiroAdapterForStamnrOfParticipantBeingSaved() {
-        Mockito.when(adapter.getChiroUser(TEST_AD_NUMBER)).thenReturn(user);
+        Mockito.when(userService.getUser(TEST_AD_NUMBER)).thenReturn(user);
+        Mockito.when(userService.getCurrentUser()).thenReturn(user);
         Mockito.when(repo.findByAdNumber(TEST_AD_NUMBER)).thenReturn(null);
 
         // make repo save method return its argument
@@ -114,7 +119,7 @@ public class RegistrationParticipantServiceTest {
         participant.setStamnumber("aojefaef;hjpaioefj");
 
         RegistrationParticipant p = registrationParticipantService.save(participant);
-        Mockito.verify(adapter, times(1)).getChiroUser(TEST_AD_NUMBER);
+        Mockito.verify(userService, times(1)).getUser(TEST_AD_NUMBER);
         Assert.assertEquals(TEST_STAMNR, p.getStamnumber());
     }
 

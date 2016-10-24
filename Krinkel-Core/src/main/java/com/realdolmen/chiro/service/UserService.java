@@ -2,18 +2,17 @@ package com.realdolmen.chiro.service;
 
 import com.realdolmen.chiro.chiro_api.ChiroUserAdapter;
 import com.realdolmen.chiro.domain.RegistrationParticipant;
-<<<<<<< 45d6e614606cf9242fa1509e4a06ce0498d2ef9f
 import com.realdolmen.chiro.domain.SecurityRole;
-=======
-import com.realdolmen.chiro.domain.Role;
->>>>>>> Add convenience method to get current user
 import com.realdolmen.chiro.domain.Status;
 import com.realdolmen.chiro.domain.User;
 import com.realdolmen.chiro.repository.RegistrationParticipantRepository;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -21,8 +20,8 @@ import javax.xml.bind.DatatypeConverter;
 
 import static com.realdolmen.chiro.service.CASService.JWT_SECRET;
 
-
 @Service
+@Profile("!test")
 public class UserService {
     @Autowired
     private ChiroUserAdapter adapter;
@@ -30,10 +29,8 @@ public class UserService {
     @Autowired
     private RegistrationParticipantRepository repo;
 
-    @Autowired
-    private HttpServletRequest context;
-
     public User getUser(String adNumber) {
+
         User u = adapter.getChiroUser(adNumber);
 
         if (u != null) {
@@ -81,6 +78,8 @@ public class UserService {
     }
 
     public User getCurrentUser(){
+        ServletRequestAttributes requestAttributes = (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
+        HttpServletRequest context = requestAttributes.getRequest();
         return this.getCurrentUser(context);
     }
 

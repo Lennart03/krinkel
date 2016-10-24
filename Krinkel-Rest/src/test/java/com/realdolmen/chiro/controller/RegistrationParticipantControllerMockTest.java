@@ -2,8 +2,11 @@ package com.realdolmen.chiro.controller;
 
 import com.realdolmen.chiro.domain.*;
 import com.realdolmen.chiro.repository.RegistrationParticipantRepository;
+import com.realdolmen.chiro.service.UserService;
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MvcResult;
@@ -16,7 +19,6 @@ import static org.hibernate.validator.internal.util.Contracts.assertNotNull;
 import static org.junit.Assert.assertEquals;
 
 public class RegistrationParticipantControllerMockTest extends MockMvcTest {
-
     private RegistrationParticipant participant;
     private RegistrationVolunteer volunteer;
 
@@ -27,6 +29,8 @@ public class RegistrationParticipantControllerMockTest extends MockMvcTest {
 
     @Before
     public void setUp(){
+        MockitoAnnotations.initMocks(this);
+
         // Participant
         Calendar c = Calendar.getInstance();
         c.set(1995, Calendar.AUGUST, 5);
