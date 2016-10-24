@@ -10,7 +10,10 @@ class FailMessageController {
             this.$location.path('/login');
         } else {
             try {
-                var currentUser = this.AuthService.getUserDetails();
+                var currentUser;
+                this.AuthService.getUserDetails().then((resp) => {
+                    currentUser = resp;
+                });
 
                 if (currentUser === undefined) {
                     this.$location.path('/home');

@@ -1,16 +1,25 @@
 export class AuthService {
-    constructor($window, $log, KrinkelService) {
+    constructor($window, $log, KrinkelService, $timeout) {
         this.$window = $window;
         this.KrinkelService = KrinkelService;
+        this.$timeout = $timeout;
 
         this.getUserFromStorage();
         this.$log = $log;
         this.$log.debug("logged in user:");
         this.$log.debug(this.getLoggedinUser());
 
-        this.getCurrentUserDetails(this.getLoggedinUser().adnummer).then((resp) => {
-            this.userDetails = resp;
+        this.userDetailsCallMade = false;
+        this.userDetailsCallReturned = false;
+        this.userDetailsPromiseWhenCallHasntReturnedYet = undefined;
+
+
+        this.getUserDetails().then(function (resp) {
+            // Initialize userdetails because we need them instantly.
         });
+
+
+
     }
 
     getLoggedinUser() {
@@ -76,10 +85,28 @@ export class AuthService {
     }
 
     getUserDetails() {
-        return this.userDetails;
+        if (this.userDetailsCallMade) {
+            if (this.userDetailsCallReturned) {
+                return new Promise((resolve, reject) => {
+                    resolve(this.userDetails);
+                });
+            } else {
+                return this.userDetailsPromiseWhenCallHasntReturnedYet;
+            }
+        } else {
+            this.userDetailsCallMade = true;
+            this.userDetailsPromiseWhenCallHasntReturnedYet = this.getCurrentUserDetails(this.getLoggedinUser().adnummer).then((resp) => {
+                this.userDetails = resp;
+                return new Promise((resolve, reject) => {
+                    this.userDetailsCallReturned = true;
+                    resolve(resp);
+                });
+            });
+            return this.userDetailsPromiseWhenCallHasntReturnedYet;
+        }
     }
 }
 
-AuthService.$inject = ['$window', '$log', 'KrinkelService'];
+AuthService.$inject = ['$window', '$log', 'KrinkelService', '$timeout'];
 
 
