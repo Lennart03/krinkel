@@ -6,6 +6,8 @@ import com.realdolmen.chiro.domain.SecurityRole;
 import com.realdolmen.chiro.domain.Status;
 import com.realdolmen.chiro.domain.User;
 import com.realdolmen.chiro.repository.RegistrationParticipantRepository;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -15,6 +17,13 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+
+import java.util.Arrays;
+import java.util.Date;
+
+import static com.realdolmen.chiro.service.CASService.JWT_SECRET;
 import static org.mockito.Mockito.times;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -24,6 +33,9 @@ public class UserServiceTest {
 
     @Mock
     private ChiroUserAdapter adapter;
+
+    @Mock
+    private HttpServletRequest httpServletRequest;
 
     @Mock
     private RegistrationParticipantRepository repo;
@@ -142,5 +154,24 @@ public class UserServiceTest {
         Mockito.when(adapter.getChiroUser(u.getAdNumber())).thenReturn(u);
         User user = service.getUser(TEST_AD_NUMBER);
         Assert.assertEquals(SecurityRole.GROEP, user.getRole());
+    }
+
+    @Test
+    public void getCurrentUserShouldReturnCurrentUserWithCorrectInfo(){
+        Mockito.when(adapter.getChiroUser(TEST_AD_NUMBER)).thenReturn(u);
+        String jwt = Jwts.builder()
+                .setSubject("username")
+                .claim("adnummer", u.getAdNumber())
+                .setIssuedAt(new Date())
+                .signWith(SignatureAlgorithm.HS256, JWT_SECRET).compact();
+        Cookie cookie = new Cookie("Authorization",jwt);
+        Cookie[]cookies =new Cookie[]{cookie};
+        Mockito.when(httpServletRequest.getCookies()).thenReturn(cookies);
+        User currentUser = service.getCurrentUser(httpServletRequest);
+        Assert.assertSame(u,currentUser);
+        Mockito.verify(adapter).getChiroUser(TEST_AD_NUMBER);
+        Mockito.verify(httpServletRequest).getCookies();
+        Mockito.verifyNoMoreInteractions(adapter);
+        Mockito.verifyNoMoreInteractions(httpServletRequest);
     }
 }

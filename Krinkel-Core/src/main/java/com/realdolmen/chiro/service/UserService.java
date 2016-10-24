@@ -2,12 +2,24 @@ package com.realdolmen.chiro.service;
 
 import com.realdolmen.chiro.chiro_api.ChiroUserAdapter;
 import com.realdolmen.chiro.domain.RegistrationParticipant;
+<<<<<<< 45d6e614606cf9242fa1509e4a06ce0498d2ef9f
 import com.realdolmen.chiro.domain.SecurityRole;
+=======
+import com.realdolmen.chiro.domain.Role;
+>>>>>>> Add convenience method to get current user
 import com.realdolmen.chiro.domain.Status;
 import com.realdolmen.chiro.domain.User;
 import com.realdolmen.chiro.repository.RegistrationParticipantRepository;
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jwts;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.xml.bind.DatatypeConverter;
+
+import static com.realdolmen.chiro.service.CASService.JWT_SECRET;
 
 
 @Service
@@ -17,6 +29,9 @@ public class UserService {
 
     @Autowired
     private RegistrationParticipantRepository repo;
+
+    @Autowired
+    private HttpServletRequest context;
 
     public User getUser(String adNumber) {
         User u = adapter.getChiroUser(adNumber);
@@ -44,20 +59,37 @@ public class UserService {
         String stamNummer = u.getStamnummer();
 
         if (stamNummer.matches("NAT\\/0000")) {
-          u.setRole(SecurityRole.NATIONAAL);
-        }
-
-        else if (stamNummer.matches("[A-Z]+ /0000")) {
+            u.setRole(SecurityRole.NATIONAAL);
+        } else if (stamNummer.matches("[A-Z]+ /0000")) {
             u.setRole(SecurityRole.VERBOND);
-        }
-
-        else if (stamNummer.matches("[A-Z]{3}/[0-9]{2}00") || stamNummer.matches("[A-Z]{2} /[0-9]{2}00")) {
+        } else if (stamNummer.matches("[A-Z]{3}/[0-9]{2}00") || stamNummer.matches("[A-Z]{2} /[0-9]{2}00")) {
             u.setRole(SecurityRole.GEWEST);
-        }
-
-        else {
+        } else {
             u.setRole(SecurityRole.GROEP);
         }
+    }
 
+    public User getCurrentUser(HttpServletRequest context){
+        Claims claims = Jwts.parser()
+                .setSigningKey(DatatypeConverter.parseBase64Binary(JWT_SECRET))
+                .parseClaimsJws(getTokenFromCookie(context.getCookies())).getBody();
+
+
+        String adnumber = claims.get("adnummer").toString();
+
+        return this.getUser(adnumber);
+    }
+
+    public User getCurrentUser(){
+        return this.getCurrentUser(context);
+    }
+
+    protected String getTokenFromCookie(Cookie[] cookies){
+        for(Cookie cookie : cookies){
+            if(cookie.getName().equals("Authorization")){
+                return cookie.getValue();
+            }
+        }
+        return null;
     }
 }

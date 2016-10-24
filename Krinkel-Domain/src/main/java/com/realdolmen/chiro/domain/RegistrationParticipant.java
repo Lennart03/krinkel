@@ -25,6 +25,9 @@ public class RegistrationParticipant {
     @Column(unique = true)
     private String adNumber;
 
+    @NotBlank
+    private String registeredBy;
+
     @Size(min = 2)
     private String firstName;
 
@@ -263,6 +266,14 @@ public class RegistrationParticipant {
 
     public void setStatus(Status status) {
         this.status = status;
+    }
+
+    public String getRegisteredBy() {
+        return registeredBy;
+    }
+
+    public void setRegisteredBy(String registeredBy) {
+        this.registeredBy = registeredBy;
     }
 
     public static class RegistrationParticipantBuilder {
