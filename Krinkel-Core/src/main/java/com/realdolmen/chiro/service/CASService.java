@@ -1,10 +1,7 @@
 package com.realdolmen.chiro.service;
 
-import com.realdolmen.chiro.domain.EventRole;
-import com.realdolmen.chiro.domain.LoginLog;
 import com.realdolmen.chiro.domain.SecurityRole;
 import com.realdolmen.chiro.domain.User;
-import com.realdolmen.chiro.repository.LoginLoggerRepository;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -20,17 +17,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.xml.bind.DatatypeConverter;
 import java.util.Date;
 
-/**
- * Created by WVDAZ49 on 12/10/2016.
- */
 @Service
 public class CASService {
 
     public static final String CASURL = "https://login.chiro.be/cas/login?service=http://localhost:8080/api/cas";
     public static final String JWT_SECRET = "MATHIASISNOOB";
-
-    @Autowired
-    private LoginLoggerRepository loggerRepo;
 
     @Autowired
     private UserService userService;
@@ -73,6 +64,7 @@ public class CASService {
         }
         return false;
     }
+
     public Cookie createCookie(String jwt){
         Cookie myCookie = new Cookie("Authorization", jwt);
         myCookie.setPath("/");
@@ -89,21 +81,16 @@ public class CASService {
         return null;
     }
 
-    public String createToken(User data) {
-        newLogin(data);
+    public String createToken(User user) {
+        //newLogin(data);
         return Jwts.builder()
-                .setSubject(data.getUsername())
-                .claim("firstname", data.getFirstname())
-                .claim("lastname", data.getLastname())
-                .claim("adnummer", data.getAdNumber())
-                .claim("email", data.getEmail())
-                .claim("role", data.getRole())
+                .setSubject(user.getUsername())
+                .claim("firstname", user.getFirstname())
+                .claim("lastname", user.getLastname())
+                .claim("adnummer", user.getAdNumber())
+                .claim("email", user.getEmail())
+                .claim("role", user.getRole())
                 .setIssuedAt(new Date())
                 .signWith(SignatureAlgorithm.HS256, JWT_SECRET).compact();
     }
-
-    public void newLogin(User user) {
-        loggerRepo.save(new LoginLog(user.getAdNumber()));
-    }
-
 }
