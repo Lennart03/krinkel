@@ -1,4 +1,4 @@
-package com.realdolmen.chiro.controller;
+package com.realdolmen.chiro.mvccontroller;
 
 import com.realdolmen.chiro.service.ConfirmationLinkService;
 import org.springframework.beans.factory.annotation.Autowired;
