@@ -9,10 +9,12 @@ import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.*;
+import org.springframework.http.converter.StringHttpMessageConverter;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 
+import java.nio.charset.Charset;
 import java.security.InvalidParameterException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -38,21 +40,22 @@ public class MultiSafePayService {
         if (!createPaymentParamsAreValid(participant.getAdNumber(), amount))
             throw new InvalidParameterException("cannot create a payment with those params");
         JSONObject jsonObject = this.createPaymentJsonObject(participant, amount);
-
+        System.out.println(jsonObject.toString());
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
         HttpEntity<String> entity = new HttpEntity<>(jsonObject.toString(), headers);
-
+        System.out.println(entity.getBody());
         String url = URL + "?api_key=" + API_KEY;
 
 
         try {
+            restTemplate.getMessageConverters()
+                    .add(0, new StringHttpMessageConverter(Charset.forName("UTF-8")));
             ResponseEntity<OrderDto> response = restTemplate.exchange(url, HttpMethod.POST, entity, OrderDto.class);
             return response.getBody();
         } catch (HttpClientErrorException ex) {
             // Assume failure to be due  to a duplicate OrderID.
-            logger.warn("Request to Payment Site failed with status " + ex.getStatusCode().value());
-
+            logger.warn("Request to Payment Site failed with status " + ex.getMessage());
             throw new InvalidPaymentOrderIdException();
         }
     }
