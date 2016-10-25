@@ -2,10 +2,9 @@ package com.realdolmen.chiro.controller;
 
 import com.realdolmen.chiro.domain.*;
 import com.realdolmen.chiro.repository.RegistrationParticipantRepository;
-import com.realdolmen.chiro.service.UserService;
+import com.realdolmen.chiro.spring_test.MockMvcTest;
 import org.junit.Before;
 import org.junit.Test;
-import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;

@@ -54,6 +54,11 @@
         </dependency>
 
         <dependency>
+            <groupId>com.realdolmen.chiro</groupId>
+            <artifactId>Krinkel-Test-Base</artifactId>
+        </dependency>
+
+        <dependency>
             <groupId>com.openpojo</groupId>
             <artifactId>openpojo</artifactId>
             <version>0.7.5</version>

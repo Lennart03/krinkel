@@ -46,6 +46,25 @@ INSERT INTO post_camp VALUES (60, '2017-08-31');
 INSERT INTO post_camp VALUES (70, '2017-09-01');
 INSERT INTO post_camp VALUES (80, '2017-09-02');
 
+
+-- DROP TABLE IF EXISTS registration_communication;
+-- CREATE TABLE registration_communication (
+-- `id` BIGINT,
+-- `AD_NUMBER` VARCHAR(15),
+-- `status` VARCHAR(20),
+-- `communicationAttempt` INT,
+-- PRIMARY KEY(`id`)
+-- );
+
+INSERT INTO registration_communication VALUES ('1','12345','0', 'WAITING');
+INSERT INTO registration_communication VALUES ('2','22345','0', 'WAITING');
+INSERT INTO registration_communication VALUES ('3','32345','0', 'WAITING');
+INSERT INTO registration_communication VALUES ('4','42345','0', 'WAITING');
+INSERT INTO registration_communication VALUES ('5','52345','0', 'SENT');
+INSERT INTO registration_communication VALUES ('6','62345','0', 'FAILED');
+INSERT INTO registration_communication VALUES ('7','72345','0', 'SENT');
+INSERT INTO registration_communication VALUES ('8','82345','0', 'FAILED');
+
 DROP TABLE IF EXISTS groepen;
 CREATE TABLE groepen (
     `groep_naam` VARCHAR(41),

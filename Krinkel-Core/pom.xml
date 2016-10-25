@@ -65,5 +65,10 @@
 			<artifactId>jjwt</artifactId>
 			<version>0.7.0</version>
 		</dependency>
+
+		<dependency>
+			<groupId>com.realdolmen.chiro</groupId>
+			<artifactId>Krinkel-Test-Base</artifactId>
+		</dependency>
 	</dependencies>
 </project>

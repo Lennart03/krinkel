@@ -18,6 +18,7 @@
         <module>Krinkel-Rest</module>
         <module>Krinkel-Multisafepay-Api</module>
         <module>Krinkel-Static</module>
+        <module>Krinkel-Test-Base</module>
     </modules>
 
 	<properties>
@@ -104,6 +105,14 @@
                 <version>1.0-SNAPSHOT</version>
                 <scope>compile</scope>
             </dependency>
+
+			<dependency>
+				<groupId>com.realdolmen.chiro</groupId>
+				<artifactId>Krinkel-Test-Base</artifactId>
+				<version>1.0-SNAPSHOT</version>
+				<scope>test</scope>
+			</dependency>
+
             <dependency>
                 <groupId>org.json</groupId>
                 <artifactId>json</artifactId>

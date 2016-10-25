@@ -6,6 +6,7 @@ import com.realdolmen.chiro.domain.Status;
 import com.realdolmen.chiro.domain.mothers.RegistrationParticipantMother;
 import com.realdolmen.chiro.repository.RegistrationParticipantRepository;
 import com.realdolmen.chiro.service.ConfirmationLinkService;
+import com.realdolmen.chiro.spring_test.MockMvcTest;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +16,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
 
-public class ConfirmationLinkControllerMockTest extends MockMvcTest{
+public class ConfirmationLinkControllerMockTest extends MockMvcTest {
 
     @Autowired
     private ConfirmationLinkService linkService;
