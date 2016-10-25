@@ -44,6 +44,12 @@
 			<groupId>com.realdolmen.chiro</groupId>
 			<artifactId>Krinkel-Test-Base</artifactId>
 		</dependency>
+
+		<dependency>
+			<groupId>com.realdolmen.chiro</groupId>
+			<artifactId>Krinkel-App-Config</artifactId>
+		</dependency>
+
 		<dependency>
 			<groupId>mysql</groupId>
 			<artifactId>mysql-connector-java</artifactId>

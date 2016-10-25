@@ -67,10 +67,17 @@
             <groupId>com.realdolmen.chiro</groupId>
             <artifactId>Krinkel-Frontend</artifactId>
         </dependency>
-            <dependency>
-                <groupId>com.realdolmen.chiro</groupId>
-                <artifactId>krinkelmultisafepayapi</artifactId>
-            </dependency>
+
+        <dependency>
+            <groupId>com.realdolmen.chiro</groupId>
+            <artifactId>krinkelmultisafepayapi</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.realdolmen.chiro</groupId>
+            <artifactId>Krinkel-App-Config</artifactId>
+        </dependency>
+
         <dependency>
             <groupId>io.jsonwebtoken</groupId>
             <artifactId>jjwt</artifactId>
