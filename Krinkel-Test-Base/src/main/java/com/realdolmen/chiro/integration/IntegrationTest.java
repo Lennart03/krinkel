@@ -1,6 +1,7 @@
 package com.realdolmen.chiro.integration;
 
 import org.junit.Before;
+import org.junit.BeforeClass;
 
 import static org.junit.Assume.assumeFalse;
 
@@ -18,8 +19,8 @@ public abstract class IntegrationTest {
 
     private static final String INTEGRATION_DISABLED_SYSTEM_PROPERTY = "skipIntegration";
 
-    @Before
-    public void verifyIntegrationEnablingPreConditions(){
+    @BeforeClass
+    public static void verifyIntegrationEnablingPreConditions(){
         boolean isIntegrationDisabled = (System.getProperty(IntegrationTest.INTEGRATION_DISABLED_SYSTEM_PROPERTY) != null);
         assumeFalse("Integration testing is disabled", isIntegrationDisabled);
     }
