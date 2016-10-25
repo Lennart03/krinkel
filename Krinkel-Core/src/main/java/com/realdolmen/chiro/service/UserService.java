@@ -20,7 +20,7 @@ import javax.xml.bind.DatatypeConverter;
 
 import static com.realdolmen.chiro.service.CASService.JWT_SECRET;
 
-@Service
+@Service("userService")
 @Profile("!test")
 public class UserService {
     @Autowired
