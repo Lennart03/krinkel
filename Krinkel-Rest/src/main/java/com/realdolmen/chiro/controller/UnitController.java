@@ -58,7 +58,6 @@ public class UnitController {
     //@PreAuthorize("#stam == 'LEG0000'")
     //@PreAuthorize("#stam eq @userService.currentUser.normalizedStamNumber")
     public ChiroUnit singleUnit(@PathVariable("stam") String stam) {
-        System.out.println("***********" + userService.getCurrentUser().getStamnummer());
         return unitService.find(stam);
     }
 }
