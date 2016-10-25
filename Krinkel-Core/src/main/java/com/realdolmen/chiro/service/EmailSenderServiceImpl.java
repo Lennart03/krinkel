@@ -30,18 +30,16 @@ public class EmailSenderServiceImpl implements EmailSenderService {
 	private Logger logger = LoggerFactory.getLogger(EmailSenderServiceImpl.class);
 
 	@Autowired
-	JavaMailSender mailSender;
+	private JavaMailSender mailSender;
 	
 	@Autowired
-	SpringTemplateEngine thymeleaf;
+	private SpringTemplateEngine thymeleaf;
 
 	@Autowired
 	private RegistrationCommunicationRepository registrationCommunicationRepository;
 
 	@Autowired
 	private ConfirmationLinkService confirmationLinkService;
-
-
 
 	@Override
 	public Future<String> sendMail(RegistrationParticipant participant) {
@@ -66,8 +64,7 @@ public class EmailSenderServiceImpl implements EmailSenderService {
 		
 		registrationCommunication = registrationCommunicationRepository.findByAdNumber(participant.getAdNumber());
 		registrationCommunication.setCommunicationAttempt(registrationCommunication.getCommunicationAttempt()+1);
-		
-		
+
 		try {
 			MimeMessageHelper helper = new MimeMessageHelper(message, true);
 

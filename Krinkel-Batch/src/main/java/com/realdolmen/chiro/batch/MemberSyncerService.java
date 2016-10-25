@@ -13,10 +13,10 @@ import java.util.List;
 public class MemberSyncerService {
 
     @Autowired
-    RegistrationParticipantRepository repository;
+    private RegistrationParticipantRepository repository;
 
     @Autowired
-    ChiroUserAdapter adapter;
+    private ChiroUserAdapter adapter;
 
     //TODO: update the interval to be less frequent
     @Scheduled(cron = "0/10 * * * * *")
