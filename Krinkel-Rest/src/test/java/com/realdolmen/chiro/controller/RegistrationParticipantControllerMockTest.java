@@ -2,8 +2,11 @@ package com.realdolmen.chiro.controller;
 
 import com.realdolmen.chiro.domain.*;
 import com.realdolmen.chiro.repository.RegistrationParticipantRepository;
+import com.realdolmen.chiro.service.UserService;
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MvcResult;
@@ -16,7 +19,6 @@ import static org.hibernate.validator.internal.util.Contracts.assertNotNull;
 import static org.junit.Assert.assertEquals;
 
 public class RegistrationParticipantControllerMockTest extends MockMvcTest {
-
     private RegistrationParticipant participant;
     private RegistrationVolunteer volunteer;
 
@@ -27,13 +29,15 @@ public class RegistrationParticipantControllerMockTest extends MockMvcTest {
 
     @Before
     public void setUp(){
+        MockitoAnnotations.initMocks(this);
+
         // Participant
         Calendar c = Calendar.getInstance();
         c.set(1995, Calendar.AUGUST, 5);
 
         participant = new RegistrationParticipant(
                 "386283", "astrid@mail.do", "Astrid", "Deckers", c.getTime(),
-                "AG0001", Gender.WOMAN, Role.LEADER, Eatinghabbit.VEGI
+                "AG0001", Gender.WOMAN, EventRole.LEADER, Eatinghabbit.VEGI
         );
         participant.setAddress(new Address("My Street", "2", 1252, "My City"));
 
@@ -42,7 +46,7 @@ public class RegistrationParticipantControllerMockTest extends MockMvcTest {
 
         volunteer = new RegistrationVolunteer(
                 "386283", "aster.deckers@example.org", "Aster", "Deckers", c.getTime(),
-                "AG0001", Gender.MAN, Role.LEADER, Eatinghabbit.VEGI,
+                "AG0001", Gender.MAN, EventRole.LEADER, Eatinghabbit.VEGI,
                 CampGround.ANTWERPEN,
                 new VolunteerFunction(VolunteerFunction.Preset.KRINKEL_EDITORIAL)
         );

@@ -1,8 +1,8 @@
 package com.realdolmen.chiro.service;
 
-import com.realdolmen.chiro.domain.GraphLoginCount;
+import com.realdolmen.chiro.domain.EventRole;
 import com.realdolmen.chiro.domain.LoginLog;
-import com.realdolmen.chiro.domain.Role;
+import com.realdolmen.chiro.domain.SecurityRole;
 import com.realdolmen.chiro.domain.User;
 import com.realdolmen.chiro.repository.LoginLoggerRepository;
 import io.jsonwebtoken.Claims;
@@ -19,7 +19,6 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.xml.bind.DatatypeConverter;
 import java.util.Date;
-import java.util.List;
 
 /**
  * Created by WVDAZ49 on 12/10/2016.
@@ -32,6 +31,9 @@ public class CASService {
 
     @Autowired
     private LoginLoggerRepository loggerRepo;
+
+    @Autowired
+    private UserService userService;
 
     public String validateTicket(String ticket) {
         User user = validate(ticket);
@@ -51,33 +53,19 @@ public class CASService {
             throw new SecurityException("Ticket could not be validated");
         }
         if (principal != null) {
-            User user = new User();
-            user.setEmail(principal.getAttributes().get("mail").toString());
-            user.setFirstname(principal.getName().toString());
-            user.setFirstname(principal.getAttributes().get("first_name").toString());
-            user.setLastname(principal.getAttributes().get("last_name").toString());
-            user.setAdNumber(principal.getAttributes().get("ad_nummer").toString());
-            //TODO: implement this for real data & persons
-
-            if(user.getFirstname().toLowerCase().equals("philippe") ||
-                    user.getFirstname().toLowerCase().equals("thomas") ||
-                    user.getFirstname().toLowerCase().equals("wannes")){
-                user.setRole(Role.ADMIN);
-            } else {
-                user.setRole(Role.LEADER);
-            }
-            return user;
+            // TODO: in an ideal world, cookie should only contain ad-number (and mayhaps role)
+            return userService.getUser(principal.getAttributes().get("ad_nummer").toString());
         }
         return null;
     }
 
-    public Boolean hasRole(final Role[] roles, final HttpServletRequest request) {
+    public Boolean hasRole(final SecurityRole[] roles, final HttpServletRequest request) {
 
         Claims claims = Jwts.parser()
                 .setSigningKey(DatatypeConverter.parseBase64Binary(JWT_SECRET))
                 .parseClaimsJws(getTokenFromCookie(request.getCookies())).getBody();
         if (claims != null) {
-            for(Role role:roles){
+            for(SecurityRole role:roles){
                 if (claims.get("role").toString().equals(role.toString())) {
                     return true;
                 }

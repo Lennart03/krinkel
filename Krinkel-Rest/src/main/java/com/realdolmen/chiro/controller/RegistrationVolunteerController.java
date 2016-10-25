@@ -111,7 +111,7 @@ public class RegistrationVolunteerController {
 
         RegistrationVolunteer volunteer = new RegistrationVolunteer(
                 "123456789", "example@acme.com", "Aster", "Deckers", c.getTime(),
-                "AG0001", Gender.MAN, Role.LEADER, Eatinghabbit.VEGI,
+                "AG0001", Gender.MAN, EventRole.LEADER, Eatinghabbit.VEGI,
                 CampGround.ANTWERPEN,
                 new VolunteerFunction(VolunteerFunction.Preset.KRINKEL_EDITORIAL)
         );

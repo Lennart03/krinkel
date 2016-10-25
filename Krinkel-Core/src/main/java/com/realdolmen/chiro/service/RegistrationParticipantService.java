@@ -35,14 +35,21 @@ public class RegistrationParticipantService {
 	private ChiroUserAdapter adapter;
 
 	@Autowired
+	private UserService userService;
+
+	@Autowired
 	private MultiSafePayService mspService;
 
 
 	public RegistrationParticipant save(RegistrationParticipant registration) {
-		User chiroUser = adapter.getChiroUser(registration.getAdNumber());
+		//User chiroUser = adapter.getChiroUser(registration.getAdNumber());
+		User chiroUser = userService.getUser(registration.getAdNumber());
+
 		if (repository.findByAdNumber(registration.getAdNumber()) == null && chiroUser != null) {
 			String stamnummer = chiroUser.getStamnummer();
+			User currentUser = userService.getCurrentUser();
 			registration.setStamnumber(stamnummer);
+			registration.setRegisteredBy(currentUser.getAdNumber());
 			return repository.save(registration);
 		}
 		return null;

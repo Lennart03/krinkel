@@ -3,14 +3,12 @@ package com.realdolmen.chiro.mspservice;
 
 import com.realdolmen.chiro.domain.*;
 import com.realdolmen.chiro.mspdto.OrderDto;
-import com.sun.org.apache.xerces.internal.util.URI;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.TestExecutionListeners;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.security.InvalidParameterException;
@@ -31,7 +29,7 @@ public class MultiSafePayServiceTest {
     @Before
     public void init() {
         address = new Address("rttr", "3", 1600, "test");
-        p = new RegistrationParticipant("123", "jos@example.com", "Joske", "Vermeulen", new Date(), "AB 12/34", Gender.MAN, Role.ASPI, null);
+        p = new RegistrationParticipant("123", "jos@example.com", "Joske", "Vermeulen", new Date(), "AB 12/34", Gender.MAN, EventRole.ASPI, null);
         p.setAddress(address);
         v = new RegistrationVolunteer();
 

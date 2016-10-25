@@ -18,7 +18,7 @@ CREATE TABLE registration_participant (
 `medical_remarks` VARCHAR(30),
 `remarks` VARCHAR(30),
 `more_remarks` VARCHAR(30),
-`role` VARCHAR(30),
+`eventRole` VARCHAR(30),
 `buddy` BOOLEAN,
 `stamnumber` VARCHAR(30),
 `status` VARCHAR(30),
@@ -30,23 +30,23 @@ PRIMARY KEY(`id`)
 -- noinspection SqlDialectInspectionForFile
 -- noinspection SqlNoDataSourceInspectionForFile
 
-
 INSERT INTO registration_participant VALUES('RegistrationParticipant', '10', '123456', 'Brussel', '123', '1000', 'Veldstraat', '1995-08-21', false, 'FISHANDMEAT',
-                              'email@test.be', 'Johnny', 'MAN', 'Flodder', '', '', '', '', 'ASPI', false, 'AG /0103', 'TO_BE_PAID', 1, '', '');
+                              'email@test.be', 'Johnny', 'MAN', 'Flodder', '', '', '123456', '', '', 'ASPI', false, 'AG /0103', 'TO_BE_PAID', 1, '', '');
 INSERT INTO registration_participant VALUES('RegistrationParticipant', '20', '234567', 'Brussel', '123', '1000', 'Veldstraat', '1995-08-21', false, 'FISHANDMEAT',
-                              'email@test.be', 'Kees', 'MAN', 'Flodder', '', '', '', '', 'ASPI', false, 'BG /0301', 'TO_BE_PAID', 1, '', '');
+                              'email@test.be', 'Kees', 'MAN', 'Flodder', '', '', '234567', '', '', 'ASPI', false, 'BG /0301', 'TO_BE_PAID', 1, '', '');
 INSERT INTO registration_participant VALUES('RegistrationParticipant', '30', '345678', 'Brussel', '123', '1000', 'Veldstraat', '1995-08-21', false, 'FISHANDMEAT',
-                              'email@test.be', 'Ma', 'WOMAN', 'Flodder', '', '', '', '', 'ASPI', false, 'AG /0103', 'TO_BE_PAID', 1, '', '');
+                              'email@test.be', 'Ma', 'WOMAN', 'Flodder', '', '', '345678', '', '', 'ASPI', false, 'AG /0103', 'CONFIRMED', 1, '', '');
 INSERT INTO registration_participant VALUES('RegistrationParticipant', '40', '456789', 'Brussel', '123', '1000', 'Veldstraat', '1995-08-21', false, 'FISHANDMEAT',
-                              'email@test.be', 'Cees', 'WOMAN', 'Flodder', '', '', '', '', 'ASPI', false, 'LEG/0101', 'TO_BE_PAID', 1, '', '');
+                              'email@test.be', 'Cees', 'WOMAN', 'Flodder', '', '', '456789', '', '', 'ASPI', false, 'LEG/0101', 'PAID', 1, '', '');
 INSERT INTO registration_participant VALUES('RegistrationParticipant', '50', '987654', 'Brussel', '123', '1000', 'Veldstraat', '1995-08-21', false, 'FISHANDMEAT',
-                              'email@test.be', 'Frederik', 'MAN', 'Flodder', '', '', '', '', 'ASPI', false, 'AG /0202', 'TO_BE_PAID', 1, '', '');
+                              'email@test.be', 'Frederik', 'MAN', 'Flodder', '', '', '987654', '', '', 'ASPI', false, 'AG /0202', 'CONFIRMED', 1, '', '');
 INSERT INTO registration_participant VALUES('RegistrationVolunteer', '60', '876543', 'Brussel', '123', '1000', 'Veldstraat', '1995-08-21', false, 'FISHANDMEAT',
-                              'email@test.be', 'Jos', 'MAN', 'Flodder', '', '', '', '', 'ASPI', false, 'AG /0103', 'TO_BE_PAID', 1, '', 'CAMPGROUND');
+                              'email@test.be', 'Jos', 'MAN', 'Flodder', '', '', '876543', '', '', 'VOLUNTEER', false, 'AG /0103', 'TO_BE_PAID', 1, '', 'CAMPGROUND');
+
 DROP TABLE IF EXISTS pre_camp;
 CREATE TABLE pre_camp (
     `id` BIGINT,
-    `precampdate` VARCHAR(15),    
+    `precampdate` VARCHAR(15),
     PRIMARY KEY(`id`)
 );
 
@@ -58,7 +58,7 @@ INSERT INTO pre_camp VALUES (40, '2017-08-24');
 DROP TABLE IF EXISTS post_camp;
 CREATE TABLE post_camp (
     `id` BIGINT,
-    `postcampdate` VARCHAR(15),    
+    `postcampdate` VARCHAR(15),
     PRIMARY KEY(`id`)
 );
 

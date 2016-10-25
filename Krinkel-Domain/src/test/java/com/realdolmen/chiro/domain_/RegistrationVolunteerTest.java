@@ -16,13 +16,14 @@ public class RegistrationVolunteerTest extends BeanValidatorTest{
     public void constructorWorksAsExpectedAndCreatesAValidInstance(){
         RegistrationVolunteer volunteer = new RegistrationVolunteer(
                 "123456789", "aster.deckers@example.com", "Aster", "Deckers", new Date(),
-                "AG0001", Gender.MAN, Role.LEADER, Eatinghabbit.VEGI,
+                "AG0001", Gender.MAN, EventRole.LEADER, Eatinghabbit.VEGI,
                 CampGround.ANTWERPEN,
                 new VolunteerFunction(VolunteerFunction.Preset.KRINKEL_EDITORIAL)
         );
         volunteer.setAddress(
                 new Address("-", "-", 1500, "-")
         );
+        volunteer.setRegisteredBy(volunteer.getAdNumber());
 
         Set<ConstraintViolation<RegistrationVolunteer>> violations = validator().validate(volunteer);
         Assert.assertTrue(violations.isEmpty());

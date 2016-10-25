@@ -20,6 +20,9 @@ public class ConfirmationLinkService {
     @Autowired
     private RegistrationParticipantRepository registrationParticipantRepository;
 
+    @Autowired
+    private ServerInfoService serverInfoService;
+
     private String generateToken() {
         UUID token = UUID.randomUUID();
         return token.toString();
@@ -57,5 +60,11 @@ public class ConfirmationLinkService {
             throw new DuplicateEntryException("Confirmation link for this AD number already exists!");
         }
         return confirmationLinkRepository.save( new ConfirmationLink(adNumber, this.generateToken()));
+    }
+
+    public String generateURLFromConfirmationLink(ConfirmationLink link){
+        return "http://" + serverInfoService.getServerHostname() +
+                        ":" + serverInfoService.getServerPort() +
+                "/confirmation?ad=" + link.getAdNumber() + "&token=" + link.getToken();
     }
 }
