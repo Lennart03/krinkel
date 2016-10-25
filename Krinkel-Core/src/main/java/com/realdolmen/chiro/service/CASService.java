@@ -1,5 +1,7 @@
 package com.realdolmen.chiro.service;
 
+import com.realdolmen.chiro.config.CasConfiguration;
+import com.realdolmen.chiro.config.JwtConfiguration;
 import com.realdolmen.chiro.domain.SecurityRole;
 import com.realdolmen.chiro.domain.User;
 import io.jsonwebtoken.Claims;
@@ -19,9 +21,11 @@ import java.util.Date;
 
 @Service
 public class CASService {
+    @Autowired
+    private CasConfiguration configuration;
 
-    public static final String CASURL = "https://login.chiro.be/cas/login?service=http://localhost:8080/api/cas";
-    public static final String JWT_SECRET = "MATHIASISNOOB";
+    @Autowired
+    private JwtConfiguration jwtConfig;
 
     @Autowired
     private UserService userService;
@@ -33,27 +37,28 @@ public class CASService {
 
     public final User validate(String ticket) {
         AttributePrincipal principal = null;
-        String casServerUrl = "https://login.chiro.be/cas/";
-        Cas20ProxyTicketValidator sv = new Cas20ProxyTicketValidator(casServerUrl);
+        Cas20ProxyTicketValidator sv = new Cas20ProxyTicketValidator(configuration.getBaseCasUrl());
         sv.setAcceptAnyProxy(true);
+
         try {
-            String legacyServerServiceUrl = "http://localhost:8080/api/cas";
-            Assertion a = sv.validate(ticket, legacyServerServiceUrl);
+            Assertion a = sv.validate(ticket, configuration.getServiceUrl());
             principal = a.getPrincipal();
         } catch (TicketValidationException e) {
             throw new SecurityException("Ticket could not be validated");
         }
+
         if (principal != null) {
             // TODO: in an ideal world, cookie should only contain ad-number (and mayhaps role)
-            return userService.getUser(principal.getAttributes().get("ad_nummer").toString());
+            return userService.getUser(
+                    principal.getAttributes().get("ad_nummer").toString()
+            );
         }
         return null;
     }
 
     public Boolean hasRole(final SecurityRole[] roles, final HttpServletRequest request) {
-
         Claims claims = Jwts.parser()
-                .setSigningKey(DatatypeConverter.parseBase64Binary(JWT_SECRET))
+                .setSigningKey(DatatypeConverter.parseBase64Binary(jwtConfig.getJwtSecret()))
                 .parseClaimsJws(getTokenFromCookie(request.getCookies())).getBody();
         if (claims != null) {
             for(SecurityRole role:roles){
@@ -91,6 +96,6 @@ public class CASService {
                 .claim("email", user.getEmail())
                 .claim("role", user.getRole())
                 .setIssuedAt(new Date())
-                .signWith(SignatureAlgorithm.HS256, JWT_SECRET).compact();
+                .signWith(SignatureAlgorithm.HS256, jwtConfig.getJwtSecret()).compact();
     }
 }
