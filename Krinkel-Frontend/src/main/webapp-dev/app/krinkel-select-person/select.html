@@ -2,7 +2,9 @@
     <a ng-click="$ctrl.selectPerson(colleague)"
        ng-repeat="colleague in $ctrl.colleagues"
        class="collection-item"
-       ng-if="colleague.adNumber != $ctrl.AuthService.getLoggedinUser().adnummer"
-    >{{colleague.firstname}} {{colleague.lastname}}<br/>stamnummer: {{colleague.stamnummer}} adnummer: {{colleague.adNumber}}</a>
+       ng-if="colleague.adNumber != $ctrl.AuthService.getLoggedinUser().adnummer &&colleague.hasPaid == false">
+        {{colleague.firstname}} {{colleague.lastname}}<br/>
+        stamnummer: {{colleague.stamnummer}} adnummer: {{colleague.adNumber}}
+    </a>
 </div>
 

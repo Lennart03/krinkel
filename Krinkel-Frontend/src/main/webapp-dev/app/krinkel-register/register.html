@@ -31,11 +31,10 @@
                        required>
                 <label for="last_name">Achternaam *</label>
                 <p ng-show="personForm.lastName.$invalid && personForm.lastName.$touched" class="error"><i
-                    class="material-icons">error_outline</i> Achternaam is verplicht</p>
-
+                    class="material-icons">error_outline</i> Achternaam is verplicht
+                </p>
             </div>
         </div>
-
 
         <div class="row">
             <div class="input-field col s12 m6">
@@ -47,25 +46,27 @@
                     class="material-icons">error_outline</i>
                     Geboortedatum is verplicht</p>
             </div>
+
             <div class="input-field col s12 m6">
                 <i class="material-icons prefix">email</i>
-                <input id="email" name="email" type="email" class="validate" ng-model="$ctrl.newPerson.email" ng-pattern="$ctrl.emailPattern" required>
+                <input id="email" name="email" type="email" class="validate" ng-model="$ctrl.newPerson.email"
+                       ng-pattern="$ctrl.emailPattern" required>
                 <label for="email">Email *</label>
                 <p ng-show="personForm.email.$invalid && personForm.email.$touched" class="error"><i
                     class="material-icons">error_outline</i>
                     Email is verplicht</p>
             </div>
-
-
         </div>
 
         <div class="row">
             <div class="input-field col s12 m10">
                 <i class="material-icons prefix">home</i>
                 <!--$ctrl.newPerson.street-->
-                <input name="street" type="text" class="validate" id="street" ng-model="$ctrl.details.address_components[0].long_name"
+                <input name="street" type="text" class="validate" id="street"
+                       ng-model="$ctrl.details.address_components[0].long_name"
                        class="validate" ng-autocomplete
-                       options="$ctrl.optionsStreet" details="$ctrl.details" required placeholder="..." ng-change="$ctrl.clearPostCodeAndCityNameFields()"/>
+                       options="$ctrl.optionsStreet" details="$ctrl.details" required placeholder="..."
+                       ng-change="$ctrl.clearPostCodeAndCityNameFields()"/>
 
                 {{$ctrl.extractFromAdress($ctrl.details.address_components )}}
 
@@ -74,6 +75,7 @@
                     class="material-icons">error_outline</i>
                     Straatnaam is verplicht</p>
             </div>
+
             <div class="input-field col s6 m2">
                 <i class="material-icons prefix">home</i>
                 <input id="building" name="building" type="text" class="validate" ng-model="$ctrl.newPerson.building"
@@ -93,18 +95,20 @@
                        ng-pattern="$ctrl.postalcodePattern"
                        ng-autocomplete details="$ctrl.details2"
                        options="$ctrl.optionsPostalCode" required placeholder="..."
-                       required />
-                  {{$ctrl.extractFromAdress($ctrl.details2.address_components )}}
-              <label for="postal_code">Postcode *</label>
-              <p ng-show="personForm.postalCode.$invalid && personForm.postalCode.$touched" class="error"><i
-                  class="material-icons">error_outline</i> Postcode is verplicht</p>
-          </div>
-          <div class="input-field col m8 s12">
-              <i class="material-icons prefix">home</i>
-              <!--$ctrl.newPerson.city-->
-                <input id="city" name="city" type="text" class="validate" ng-model="$ctrl.details3.vicinity" required  ng-autocomplete
+                       required/>
+                {{$ctrl.extractFromAdress($ctrl.details2.address_components )}}
+                <label for="postal_code">Postcode *</label>
+                <p ng-show="personForm.postalCode.$invalid && personForm.postalCode.$touched" class="error"><i
+                    class="material-icons">error_outline</i> Postcode is verplicht</p>
+            </div>
+
+            <div class="input-field col m8 s12">
+                <i class="material-icons prefix">home</i>
+                <!--$ctrl.newPerson.city-->
+                <input id="city" name="city" type="text" class="validate" ng-model="$ctrl.details3.vicinity" required
+                       ng-autocomplete
                        options="$ctrl.optionsStad" details="$ctrl.details3" required placeholder="..."/>
-              {{$ctrl.extractFromAdress($ctrl.details3.address_components )}}
+                {{$ctrl.extractFromAdress($ctrl.details3.address_components )}}
                 <label for="city">Gemeente *</label>
                 <p ng-show="personForm.city.$invalid && personForm.city.$touched" class="error"><i
                     class="material-icons">error_outline</i>
@@ -115,10 +119,11 @@
         <div class="row">
             <div class="input-field col s12">
                 <i class="material-icons prefix">phone</i>
-                <input title="" id="phone" name="phone" type="tel" class="validate" ng-pattern="$ctrl.phoneNumberPattern"
+                <input title="" id="phone" name="phone" type="tel" class="validate"
+                       ng-pattern="$ctrl.phoneNumberPattern"
                        ng-model="$ctrl.newPerson.phone"
                        required>
-                <label for="phone">Telefoon (+32xxxxxxxx (9 of 10 cijfers)) *</label>
+                <label for="phone">Telefoon (+32xxxxxxxx) *</label>
                 <p ng-show="personForm.phone.$invalid && personForm.phone.$touched" class="error">
                     <i class="material-icons">error_outline</i>
                     Telefoonnummer is verplicht
@@ -163,6 +168,7 @@
                     Verplicht</p>
             </div>
         </div>
+
         <div class="row">
             <div class="input-field col s12">
                 <!--<i class="material-icons prefix">restaurant</i>-->
@@ -179,6 +185,7 @@
                 <!--<label>Eetgewoonten</label>-->
             </div>
         </div>
+
         <div class="row">
             <div class="input-field col s12">
                 <i class="material-icons prefix">restaurant</i>
@@ -195,10 +202,14 @@
                     <!--<i class="small material-icons prefix">mood</i>-->
                     <input type="checkbox" id="buddy" ng-model="$ctrl.newPerson.buddy"/>
                     <label for="buddy">Ik wil mee als buddy op de internationale kampgrond en spreek vlot volgende
-                        talen: </label>
+                        talen:
+                    </label>
+
                     <!-- Modal Trigger -->
-                    <a class="btn-floating waves-effect waves-light modal-trigger" href="#modal1"><i
-                        class="material-icons">help</i></a>
+                    <a class="btn-floating waves-effect waves-light modal-trigger" href="#modal1">
+                        <i class="material-icons">help</i>
+                    </a>
+
                     <!-- Modal Structure -->
                     <div id="modal1" class="modal">
                         <div class="modal-content">
@@ -210,17 +221,20 @@
                                 Krinkel
                                 voor internationale gasten.</p>
                         </div>
+
                         <div class="modal-footer">
                             <a href="" class=" modal-action modal-close waves-effect waves-green btn-flat">OK</a>
                         </div>
                     </div>
 
-                    <select ng-show="$ctrl.newPerson.buddy" multiple ng-model="$ctrl.newPerson.languages">
-                        <option value="" disabled selected>Selecteer je talen</option>
-                        <option value="ENGLISH">Engels</option>
-                        <option value="SPANISH">Frans</option>
-                        <option value="FRENCH">Spaans</option>
-                    </select>
+                    <div ng-show="$ctrl.newPerson.buddy">
+                        <select ng-show="$ctrl.newPerson.buddy" multiple ng-required="$ctrl.newPerson.buddy" ng-model="$ctrl.newPerson.languages">
+                            <option value="" disabled selected>Selecteer je talen</option>
+                            <option value="ENGLISH">Engels</option>
+                            <option value="FRENCH">Frans</option>
+                            <option value="SPANISH">Spaans</option>
+                        </select>
+                    </div>
                 </div>
 
             </div>
@@ -234,10 +248,6 @@
         <!--<input type="text" id="team" class="autocomplete" ng-model="$ctrl.newPerson.team" required>-->
         <!--<label for="team">Ploeg</label>-->
         <!--</div>-->
-
-
-
-
         <!--</div>-->
 
         <div class="row" ng-show="$ctrl.type === 'volunteer'">
@@ -252,6 +262,7 @@
                 </select>
                 <label>Voorwacht</label>
             </div>
+
             <div class="input-field col s12 m6">
                 <i class="material-icons prefix">date_range</i>
                 <select multiple ng-model="$ctrl.newPerson.postCamp">
@@ -298,16 +309,19 @@
                            value="Aanbod nationale kampgrond"/>
                     <label for="kampgrond">Aanbod nationale kampgrond</label>
                 </p>
+
                 <p>
                     <input class="with-gap" name="group3" type="radio" id="Kampgrondtrekker"
                            ng-model="$ctrl.newPerson.job" value="Kampgrondtrekker"/>
                     <label for="Kampgrondtrekker">Kampgrondtrekker</label>
                 </p>
+
                 <p>
                     <input class="with-gap" name="group3" type="radio" id="Krinkelredactie"
                            ng-model="$ctrl.newPerson.job" value="Krinkelredactie"/>
                     <label for="Krinkelredactie">Krinkelredactie</label>
                 </p>
+
                 <p>
                     <input class="with-gap" name="group3" type="radio" id="Kookploeg" ng-model="$ctrl.newPerson.job"
                            value="Kookploeg"/>
@@ -344,9 +358,10 @@
                         </div>
                     </label>
                 </p>
+
                 <p ng-show="personForm.job.$invalid && personForm.job.$touched" class="error">
-                    <i class="material-icons">error_outline</i>
-                    Verplicht</p>
+                    <i class="material-icons">error_outline</i> Verplicht
+                </p>
             </div>
         </div>
 
@@ -362,21 +377,31 @@
                     <!-- Modal Structure -->
                     <div id="modal3" class="modal">
                         <div class="modal-content">
-
                             <h4>Sociale promotie</h4>
                             <p>Enkel belangrijk voor cursussen die weekdagen bevatten.</p>
-                            <p>Elke werkende jongere kan aan de werkgever verlof aanvragen om deel te nemen aan vormingsinitiatieven die door het Ministerie van de Vlaamse Gemeenschap erkend werden als ‘cursussen voor sociale promotie’. Enkel meerdaagsecursussen  komen in aanmerking (weekends tellen niet).</p>
-                            <p>De werkgever is niet verplicht de sociale promotie toe te staan, maar als hij of zij meewerkt, krijg je voor de cursus 'extra verlofdagen', zij het zonder loon.  Je krijgt in de plaats een (beperkte) vergoeding van de overheid.</p>
-                            <p>Als deelnemers van jouw cursus sociale promotie aanvragen (dan kunnen ze doen via <a href="mailto:vorming@chiro.be"> vorming@chiro.be</a>) en ze krijgen dat ook van hun werkgever, dan zal iemand van het secretariaat jullie voor de cursus contacteren.  Zij of hij vertelt je dan welke papieren jullie hiervoor extra in orde moeten maken.</p>
-                            <p>Ook begeleiding kan sociale promotie aanvragen. Als trekker kan jij hen vragen of ze dit willen of niet. Dan wordt dit ook mee geregeld door het secretariaat.</p>
-                            <p>Is het niet duidelijk en heb je nog vragen? Mail dan gerust naar <a href="mailto:vorming@chiro.be">vorming@chiro.be</a>. Zij kunnen je zeker verder helpen!</p>
+                            <p>Elke werkende jongere kan aan de werkgever verlof aanvragen om deel te nemen aan
+                                vormingsinitiatieven die door het Ministerie van de Vlaamse Gemeenschap erkend werden
+                                als ‘cursussen voor sociale promotie’. Enkel meerdaagsecursussen komen in aanmerking
+                                (weekends tellen niet).</p>
+                            <p>De werkgever is niet verplicht de sociale promotie toe te staan, maar als hij of zij
+                                meewerkt, krijg je voor de cursus 'extra verlofdagen', zij het zonder loon. Je krijgt in
+                                de plaats een (beperkte) vergoeding van de overheid.</p>
+                            <p>Als deelnemers van jouw cursus sociale promotie aanvragen (dan kunnen ze doen via <a
+                                href="mailto:vorming@chiro.be"> vorming@chiro.be</a>) en ze krijgen dat ook van hun
+                                werkgever, dan zal iemand van het secretariaat jullie voor de cursus contacteren. Zij of
+                                hij vertelt je dan welke papieren jullie hiervoor extra in orde moeten maken.</p>
+                            <p>Ook begeleiding kan sociale promotie aanvragen. Als trekker kan jij hen vragen of ze dit
+                                willen of niet. Dan wordt dit ook mee geregeld door het secretariaat.</p>
+                            <p>Is het niet duidelijk en heb je nog vragen? Mail dan gerust naar <a
+                                href="mailto:vorming@chiro.be">vorming@chiro.be</a>. Zij kunnen je zeker verder helpen!
+                            </p>
                         </div>
+
                         <div class="modal-footer">
                             <a href="" class=" modal-action modal-close waves-effect waves-green btn-flat">OK</a>
                         </div>
                     </div>
                 </div>
-
             </div>
         </div>
 
@@ -410,28 +435,44 @@
                         <voorwaarden></voorwaarden>
                     </div>
                 </div>
-
             </div>
         </div>
 
         <p>
-            Iedereen heeft zijn eigen voorkeur, achtergrond, mogelijkheden en talenten en daar willen we op Krinkel zoveel mogelijk
+            Iedereen heeft zijn eigen voorkeur, achtergrond, mogelijkheden en talenten en daar willen we op Krinkel
+            zoveel mogelijk
             rekening mee houden. Want iedereen heeft het recht om dit fantastische bivak mee te maken.
             Ook mensen die tegen financiële, culturele, fysieke of andere drempels aanlopen.
         </p>
 
         <p>
-            Heb je extra ondersteuning nodig tijdens de spelen, verplaatsingen of andere taken? Laat het hier dan zeker weten zodat we samen naar oplossingen
+            Heb je extra ondersteuning nodig tijdens de spelen, verplaatsingen of andere taken? Laat het hier dan zeker
+            weten zodat we samen naar oplossingen
             kunnen zoeken. Je kan ons ook contacteren op 03/231 07 95 of <a href="mailto:info@krinkel.be">info@krinkel.be</a>.
         </p>
 
-        <button class="btn waves-effect waves-light" type="submit" name="action"
+        <button href="#modal4" class="btn waves-effect waves-light modal-trigger"  name="action"
                 ng-disabled="!personForm.$valid">
             Betalen
             <i class="material-icons right">send</i>
         </button>
+
+        <!-- Modal Structure -->
+        <div id="modal4" class="modal">
+            <div  ng-if="$ctrl.type === 'volunteer'" class="modal-content">
+                <h4>U wordt doorverwezen naar de betaalpagina</h4>
+                <p>De prijs voor vrijwilliger is €60</p>
+            </div>
+            <div  ng-if="$ctrl.type === 'participant'" class="modal-content">
+                <h4>U wordt doorverwezen naar de betaalpagina</h4>
+                <p>De prijs voor deelnemers is €110</p>
+            </div>
+            <div class="modal-footer">
+                <button type="submit" class=" modal-action modal-close waves-effect waves-green btn-flat">OK</button>
+            </div>
+        </div>
     </form>
 
-    <div ng-show="$ctrl.functionCallAfterDOMRender()"></div>
     <!--Don't remove this! This is a hacky way to call the Materialize function to initialize textfields after the DOM has rendered.-->
+    <div ng-show="$ctrl.functionCallAfterDOMRender()"></div>
 </div>

@@ -9,13 +9,14 @@ class SuccessMessageController {
             this.$location.path('/login');
         } else {
             try {
-                var currentUser = this.AuthService.getUserDetails();
+                var currentUser;
+                this.AuthService.getUserDetails().then((resp) => {
+                    currentUser = resp;
+                });
                 if (currentUser === undefined) {
                     this.$location.path('/home');
                 }
                 if (currentUser.registered && currentUser.hasPaid) {
-                } else if (currentUser.registered && !currentUser.hasPaid) {
-                    this.$location.path('/fail');
                 } else {
                     this.$location.path('/home')
                 }
@@ -28,11 +29,11 @@ class SuccessMessageController {
     $onInit() {
         this.title = "Hoera!"
     }
-
 }
 
 export var SuccessMessageComponent = {
     template: require('./success-message.html'),
     controller: SuccessMessageController
 };
+
 SuccessMessageComponent.$inject = ['AuthService', '$location'];

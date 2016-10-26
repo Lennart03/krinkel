@@ -1,9 +1,7 @@
 package com.realdolmen.chiro.service;
 
 import com.realdolmen.chiro.domain.GraphLoginCount;
-import com.realdolmen.chiro.domain.RegistrationParticipant;
-import com.realdolmen.chiro.domain.Role;
-import com.realdolmen.chiro.domain.Status;
+import com.realdolmen.chiro.domain.EventRole;
 import com.realdolmen.chiro.domain.units.GraphChiroUnit;
 import com.realdolmen.chiro.domain.units.RawChiroUnit;
 import com.realdolmen.chiro.domain.units.StatusChiroUnit;
@@ -14,13 +12,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
-/**
- * Created by WVDAZ49 on 12/10/2016.
- */
 @Service
 public class GraphChiroService {
     @Autowired
@@ -35,7 +28,7 @@ public class GraphChiroService {
     public StatusChiroUnit getStatusChiro(){
         StatusChiroUnit status = new StatusChiroUnit();
         participantRepository.findAll().forEach(r -> {
-            if(r.getRole().equals(Role.VOLUNTEER)){
+            if(r.getEventRole().equals(EventRole.VOLUNTEER)){
                 switch (r.getStatus()){
                     case PAID:
                         status.setVolunteersNotConfirmed(status.getVolunteersNotConfirmed() + 1);

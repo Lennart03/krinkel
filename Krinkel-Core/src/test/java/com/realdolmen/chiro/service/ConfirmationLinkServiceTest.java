@@ -1,6 +1,7 @@
 package com.realdolmen.chiro.service;
 
 import com.realdolmen.chiro.domain.*;
+import com.realdolmen.chiro.exception.DuplicateEntryException;
 import com.realdolmen.chiro.repository.ConfirmationLinkRepository;
 import com.realdolmen.chiro.repository.RegistrationParticipantRepository;
 import org.junit.Before;
@@ -46,7 +47,7 @@ public class ConfirmationLinkServiceTest {
                 new Date(),
                 "AG0104",
                 Gender.WOMAN,
-                Role.ASPI,
+                EventRole.ASPI,
                 Eatinghabbit.VEGI
         );
         this.participant.setStatus(Status.PAID);

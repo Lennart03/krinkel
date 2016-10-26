@@ -1,6 +1,7 @@
 package com.realdolmen.chiro.config;
 
-import com.realdolmen.chiro.domain.Role;
+import com.realdolmen.chiro.domain.EventRole;
+import com.realdolmen.chiro.domain.SecurityRole;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -9,12 +10,12 @@ import java.lang.annotation.Target;
 
 /**
  * Example:
- * @AuthRole(role = { Role.ADMIN })
+ * @AuthRole(role = { SecurityRole.ADMIN })
  * public void someMethod(){}
  */
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.METHOD)
 public @interface AuthRole {
-    Role[] roles();
+    SecurityRole[] roles();
 }
 

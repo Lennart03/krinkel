@@ -1,49 +1,30 @@
 package com.realdolmen.chiro.service;
 
-import static org.junit.Assert.*;
-
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
-import java.util.concurrent.ExecutionException;
-
-//import javax.mail.Address;
-import javax.mail.MessagingException;
-import javax.mail.internet.MimeMessage;
-
+import com.icegreen.greenmail.util.GreenMail;
+import com.icegreen.greenmail.util.GreenMailUtil;
+import com.realdolmen.chiro.domain.*;
+import com.realdolmen.chiro.domain.VolunteerFunction.Preset;
+import com.realdolmen.chiro.spring_test.SpringIntegrationTest;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.transaction.annotation.Transactional;
 import org.thymeleaf.exceptions.TemplateProcessingException;
 
-import com.icegreen.greenmail.util.GreenMail;
-import com.icegreen.greenmail.util.GreenMailUtil;
-import com.realdolmen.chiro.domain.RegistrationParticipant;
-import com.realdolmen.chiro.domain.RegistrationVolunteer;
-import com.realdolmen.chiro.domain.VolunteerFunction;
-import com.realdolmen.chiro.domain.VolunteerFunction.Preset;
-import com.realdolmen.chiro.exception.EmailSenderServiceException;
-import com.realdolmen.chiro.domain.Address;
-import com.realdolmen.chiro.domain.CampGround;
-import com.realdolmen.chiro.domain.Gender;
-import com.realdolmen.chiro.domain.PostCamp;
-import com.realdolmen.chiro.domain.PreCamp;
+import javax.mail.MessagingException;
+import javax.mail.internet.MimeMessage;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.List;
+import java.util.concurrent.ExecutionException;
 
-@RunWith(SpringJUnit4ClassRunner.class)
-//@SpringBootTest
-//@ComponentScan("com.realdolmen.chiro.service")
-@ContextConfiguration(classes=com.realdolmen.chiro.config.TestConfig.class)
- @Transactional
-public class EmailSenderTest {
+import static org.junit.Assert.*;
+
+//import javax.mail.Address;
+
+@ContextConfiguration(classes={com.realdolmen.chiro.config.TestConfig.class})
+public class EmailSenderTest extends SpringIntegrationTest {
 	private static final String EMAIL_SUBJECT = "Bevestiging inschrijving krinkel";
 	private static final String EMAIL_FROM = "inschrijvingen@krinkel.be";
 	private static final String EMAIL_TO = "Mathew.Perry@someEmail.com";
@@ -91,6 +72,8 @@ public class EmailSenderTest {
 		registrationParticipant.setGender(MALE);
 		Address address= new Address(STREET, HOUSE_NUMBER, POSTAL_CODE, CITY);
 		registrationParticipant.setAddress(address);
+		registrationParticipant.setRegisteredBy(AD_NUMBER_2);
+
 		registrationVolunteer = new RegistrationVolunteer();
 		registrationVolunteer.setFirstName(FIRST_NAME);
 		registrationVolunteer.setLastName(LAST_NAME);
@@ -99,6 +82,7 @@ public class EmailSenderTest {
 		registrationVolunteer.setAddress(address);
 		registrationVolunteer.setGender(MALE);
 		registrationVolunteer.setFunction(new VolunteerFunction(Preset.KRINKEL_EDITORIAL));
+
 		Calendar calendar = Calendar.getInstance();
 		calendar.set(Calendar.YEAR, 2017);
 		calendar.set(Calendar.MONTH,7);//zero-based!!!
@@ -190,6 +174,8 @@ public class EmailSenderTest {
 	@Test(expected=TemplateProcessingException.class)
 	public void shouldThrowExceptionBecauseOfNullpointerInThymeLeafTemplate() throws MessagingException{
 		RegistrationParticipant participant = new RegistrationParticipant();
+		participant.setAdNumber("123");
+		participant.setRegisteredBy("123");
 		participant.setFirstName(FIRST_NAME);
 		participant.setLastName(LAST_NAME);	
 		emailSenderService.sendMail(participant);
@@ -198,5 +184,14 @@ public class EmailSenderTest {
 	@Test
 	public void sendMailShouldReturnOk() throws MessagingException, InterruptedException, ExecutionException {
 		assertEquals("ok", emailSenderService.sendMail(registrationParticipant).get());
+	}
+
+	@Test
+	public void mailShouldContainConfirmationLink(){
+		emailSenderService.sendMail(registrationParticipant);
+		MimeMessage[] emails = smtpServer.getReceivedMessages();
+		MimeMessage email1 = emails[0];
+		String body = GreenMailUtil.getBody(email1);
+		assertTrue(body.contains("confirmation link"));
 	}
 }

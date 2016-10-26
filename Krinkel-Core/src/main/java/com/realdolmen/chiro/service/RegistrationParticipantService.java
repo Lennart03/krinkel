@@ -1,16 +1,9 @@
 package com.realdolmen.chiro.service;
 
-import com.realdolmen.chiro.domain.RegistrationCommunication;
-import com.realdolmen.chiro.chiro_api.ChiroUserAdapter;
-import com.realdolmen.chiro.domain.RegistrationParticipant;
-import com.realdolmen.chiro.domain.RegistrationVolunteer;
-import com.realdolmen.chiro.domain.SendStatus;
-import com.realdolmen.chiro.domain.Status;
-import com.realdolmen.chiro.domain.User;
+import com.realdolmen.chiro.domain.*;
 import com.realdolmen.chiro.mspservice.MultiSafePayService;
 import com.realdolmen.chiro.repository.RegistrationCommunicationRepository;
 import com.realdolmen.chiro.repository.RegistrationParticipantRepository;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,17 +25,20 @@ public class RegistrationParticipantService {
 	private RegistrationCommunicationRepository registrationCommunicationRepository;
 
 	@Autowired
-	private ChiroUserAdapter adapter;
+	private UserService userService;
 
 	@Autowired
 	private MultiSafePayService mspService;
 
 
 	public RegistrationParticipant save(RegistrationParticipant registration) {
-		User chiroUser = adapter.getChiroUser(registration.getAdNumber());
+		User chiroUser = userService.getUser(registration.getAdNumber());
+
 		if (repository.findByAdNumber(registration.getAdNumber()) == null && chiroUser != null) {
 			String stamnummer = chiroUser.getStamnummer();
+			User currentUser = userService.getCurrentUser();
 			registration.setStamnumber(stamnummer);
+			registration.setRegisteredBy(currentUser.getAdNumber());
 			return repository.save(registration);
 		}
 		return null;

@@ -3,6 +3,12 @@ package com.realdolmen.chiro.mspdto;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+
+/**
+ * This class represents the JSON object that will be sent to multisafepay to
+ * create an order. The response will contain the link we can redirect the
+ * user to.
+ */
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class OrderDto {
     private boolean success;

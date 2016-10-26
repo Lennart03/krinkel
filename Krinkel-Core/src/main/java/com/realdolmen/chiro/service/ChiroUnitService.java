@@ -70,7 +70,7 @@ public class ChiroUnitService {
         for(ChiroUnit gewestUnit : gewestUnits){
             ChiroUnit verbond = findByStam(verbondUnits, trimStam(gewestUnit.getUpper().getStam()));
             verbond.getLower().add(gewestUnit);
-        }
+        }        
 
         List<ChiroUnit> combinedUnits = new ArrayList<ChiroUnit>();
         combinedUnits.addAll(verbondUnits);

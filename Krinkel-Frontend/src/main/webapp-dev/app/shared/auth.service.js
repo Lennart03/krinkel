@@ -1,15 +1,23 @@
 export class AuthService {
-    constructor($window,KrinkelService) {
+    constructor($window, $log, KrinkelService, $timeout) {
         this.$window = $window;
         this.KrinkelService = KrinkelService;
+        this.$timeout = $timeout;
 
         this.getUserFromStorage();
-        console.log("logged in user:");
-        console.log(this.getLoggedinUser());
+        this.$log = $log;
+        this.$log.debug("logged in user:");
+        this.$log.debug(this.getLoggedinUser());
 
-        this.getCurrentUserDetails(this.getLoggedinUser().adnummer).then((resp) => {
-            this.userDetails = resp;
+        this.userDetailsCallMade = false;
+        this.userDetailsCallReturned = false;
+        this.userDetailsPromiseWhenCallHasntReturnedYet = undefined;
+
+
+        this.getUserDetails().then(function (resp) {
+            // Initialize userdetails because we need them instantly.
         });
+
 
 
     }
@@ -38,7 +46,6 @@ export class AuthService {
             var decodedPayload = JSON.parse(window.atob(payload));
             this.user = decodedPayload;
         }
-
     }
 
     logoutUser() {
@@ -60,23 +67,46 @@ export class AuthService {
         this.$window.location = 'https://login.chiro.be/cas/logout?service=http://localhost:8080/site/index.html';
     }
 
-
     getToken(name) {
         var value = "; " + document.cookie;
         var parts = value.split("; " + name + "=");
-        if (parts.length == 2) return parts.pop().split(";").shift();
+        if (parts.length == 2) {
+            return parts.pop()
+                        .split(";")
+                        .shift();
+        }
     }
 
     getCurrentUserDetails(adNumber){
         return this.KrinkelService.getCurrentUserDetails(adNumber).then(resp => {
             this.userDetails = resp;
             return resp;
-        })
+        });
     }
+
     getUserDetails() {
-        return this.userDetails;
+        if (this.userDetailsCallMade) {
+            if (this.userDetailsCallReturned) {
+                return new Promise((resolve, reject) => {
+                    resolve(this.userDetails);
+                });
+            } else {
+                return this.userDetailsPromiseWhenCallHasntReturnedYet;
+            }
+        } else {
+            this.userDetailsCallMade = true;
+            this.userDetailsPromiseWhenCallHasntReturnedYet = this.getCurrentUserDetails(this.getLoggedinUser().adnummer).then((resp) => {
+                this.userDetails = resp;
+                return new Promise((resolve, reject) => {
+                    this.userDetailsCallReturned = true;
+                    resolve(resp);
+                });
+            });
+            return this.userDetailsPromiseWhenCallHasntReturnedYet;
+        }
     }
 }
-AuthService.$inject = ['$window','KrinkelService'];
+
+AuthService.$inject = ['$window', '$log', 'KrinkelService', '$timeout'];
 
 

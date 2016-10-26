@@ -25,7 +25,6 @@
 <h2 ng-if="$ctrl.volunteerDetails">Medewerkers</h2>
 
 
-
 <table ng-if="!$ctrl.userDetails">
     <thead>
     <tr>
@@ -45,7 +44,7 @@
         </td>
         <td>
             {{verbond.amountVolunteers}}
-            <i class="material-icons right"
+            <i class="material-icons right icon-green"
                ng-if="verbond.stamnummer.endsWith('00') || $ctrl.AuthService.getUserRole() === 'ADMIN'">send</i>
         </td>
     </tr>

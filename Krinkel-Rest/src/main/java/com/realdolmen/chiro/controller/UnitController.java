@@ -6,7 +6,7 @@ import com.realdolmen.chiro.domain.User;
 import com.realdolmen.chiro.domain.units.ChiroUnit;
 import com.realdolmen.chiro.service.ChiroUnitService;
 import com.realdolmen.chiro.service.RegistrationParticipantService;
-
+import com.realdolmen.chiro.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,6 +20,7 @@ import java.util.List;
  * /units?verbond = Alleen verbonden
  * /units?gewest = Alleen gewesten.
  * /units/{stam} = Eén groep.
+ * /units/{stamletters}/{stamnummers}/users = all users with given stamnummer ({stamletters}/{stamnummers} = stamnummer)
  */
 @RestController
 @RequestMapping(value = "/api/units", produces = "application/json")
@@ -30,6 +31,9 @@ public class UnitController {
     
     @Autowired
     private RegistrationParticipantService registrationParticipantsService;
+
+    @Autowired
+    private UserService userService;
 
     @RequestMapping(method = RequestMethod.GET, params = {"gewest"})
     public List<ChiroUnit> allGewestUnits() {
@@ -53,6 +57,9 @@ public class UnitController {
     }
 
     @RequestMapping(value = "/{stam}", method = RequestMethod.GET)
+    // TODO: Move authorisation to Service layer
+    //@PreAuthorize("#stam == 'LEG0000'")
+    //@PreAuthorize("#stam eq @userService.currentUser.normalizedStamNumber")
     public ChiroUnit singleUnit(@PathVariable("stam") String stam) {
         return unitService.find(stam);
     }

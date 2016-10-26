@@ -1,6 +1,6 @@
 import 'materialize-css/dist/css/materialize.css';
-import './style.css'
 import 'nvd3/build/nv.d3.css'
+import './style.css'
 import 'jquery/dist/jquery.js';
 import 'materialize-css/dist/js/materialize.min.js';
 import 'angular';

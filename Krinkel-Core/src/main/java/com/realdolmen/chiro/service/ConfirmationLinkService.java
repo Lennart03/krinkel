@@ -3,6 +3,7 @@ package com.realdolmen.chiro.service;
 import com.realdolmen.chiro.domain.ConfirmationLink;
 import com.realdolmen.chiro.domain.RegistrationParticipant;
 import com.realdolmen.chiro.domain.Status;
+import com.realdolmen.chiro.exception.DuplicateEntryException;
 import com.realdolmen.chiro.repository.ConfirmationLinkRepository;
 import com.realdolmen.chiro.repository.RegistrationParticipantRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +19,9 @@ public class ConfirmationLinkService {
 
     @Autowired
     private RegistrationParticipantRepository registrationParticipantRepository;
+
+    @Autowired
+    private ServerInfoService serverInfoService;
 
     private String generateToken() {
         UUID token = UUID.randomUUID();
@@ -56,5 +60,11 @@ public class ConfirmationLinkService {
             throw new DuplicateEntryException("Confirmation link for this AD number already exists!");
         }
         return confirmationLinkRepository.save( new ConfirmationLink(adNumber, this.generateToken()));
+    }
+
+    public String generateURLFromConfirmationLink(ConfirmationLink link){
+        return "http://" + serverInfoService.getServerHostname() +
+                        ":" + serverInfoService.getServerPort() +
+                "/confirmation?ad=" + link.getAdNumber() + "&token=" + link.getToken();
     }
 }

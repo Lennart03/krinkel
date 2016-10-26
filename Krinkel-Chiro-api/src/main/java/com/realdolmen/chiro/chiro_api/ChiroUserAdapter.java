@@ -1,6 +1,7 @@
 package com.realdolmen.chiro.chiro_api;
 
 import com.realdolmen.chiro.domain.RegistrationParticipant;
+import com.realdolmen.chiro.domain.SecurityRole;
 import com.realdolmen.chiro.domain.User;
 import org.springframework.stereotype.Component;
 
@@ -17,13 +18,15 @@ public class ChiroUserAdapter {
         users = new ArrayList<>();
 
         // chiro nationaal
-        users.add(new User("386287", "frank.claes@realdolmen.com", "Frank", "Claes", "NAT/0000"));
+        User frank = new User("386287", "frank.claes@realdolmen.com", "Frank", "Claes", "NAT/0000");
+        frank.setRole(SecurityRole.ADMIN);
+        users.add(frank);
 
         // chiro leuven
         users.add(new User("386290", "philippe.desal@realdolmen.com", "Philippe", "Desal", "LEG /0000"));
 
         // chiro demerdal
-        users.add(new User("386318", "ziggy.streulens@realdolmen.com", "Ziggy", "Streulens", "LEG/0600"));
+        users.add(new User("386318", "ziggy.streulens@realdolmen.com", "Ziggy", "Streulens", "LEG/0608"));
 
         // chiro ourodenberg
         users.add(new User("386289", "nick.hanot@realdolmen.com", "Nick", "Hanot", "LEG/0608"));
@@ -34,7 +37,9 @@ public class ChiroUserAdapter {
         users.add(new User("386286", "matthias.vanderwilt@realdolmen.com", "Matthias", "Vanderwilt", "LEG/0608"));
 
         // chiro esjeewee
-        users.add(new User("386293", "wannes.vandorpe@realdolmen.com", "Wannes", "Van Dorpe", "LEG/0607"));
+        User wannes = new User("386293", "wannes.vandorpe@realdolmen.com", "Wannes", "Van Dorpe", "LEG/0607");
+        wannes.setRole(SecurityRole.ADMIN);
+        users.add(wannes);
         users.add(new User("386288", "mathias.bulte@realdolmen.com", "Mathias", "Bult", "LEG/0607"));
         users.add(new User("169314", "arne.knockaert@realdolmen.com", "Arne", "Knockaert", "LEG/0607"));
         users.add(new User("386291", "timothy.leduc@realdolmen.com", "Timothy", "Leduc", "LEG/0607"));

@@ -25,6 +25,8 @@ public class RegistrationParticipant {
     @Column(unique = true)
     private String adNumber;
 
+    private String registeredBy;
+
     @Size(min = 2)
     private String firstName;
 
@@ -54,7 +56,7 @@ public class RegistrationParticipant {
 
     @Enumerated(EnumType.STRING)
     @NotNull
-    private Role role;
+    private EventRole eventRole;
 
     private boolean buddy = false;
 
@@ -81,7 +83,7 @@ public class RegistrationParticipant {
 
     public RegistrationParticipant() {}
 
-    public RegistrationParticipant(String adNumber, String email, String firstName, String lastName, Date birthdate, String stamnumber, Gender gender, Role role, Eatinghabbit eatinghabbit) {
+    public RegistrationParticipant(String adNumber, String email, String firstName, String lastName, Date birthdate, String stamnumber, Gender gender, EventRole eventRole, Eatinghabbit eatinghabbit) {
         this.adNumber = adNumber;
         this.email = email;
         this.firstName = firstName;
@@ -89,7 +91,7 @@ public class RegistrationParticipant {
         this.birthdate = birthdate;
         this.stamnumber = stamnumber;
         this.gender = gender;
-        this.role = role;
+        this.eventRole = eventRole;
         this.eatinghabbit = eatinghabbit;
     }
 
@@ -101,7 +103,7 @@ public class RegistrationParticipant {
         this.birthdate = builder.birthdate;
         this.stamnumber = builder.stamnumber;
         this.gender = builder.gender;
-        this.role = builder.role;
+        this.eventRole = builder.eventRole;
         this.eatinghabbit = builder.eatinghabbit;
         this.address = builder.address;
         this.buddy = builder.buddy;
@@ -111,6 +113,10 @@ public class RegistrationParticipant {
         this.medicalRemarks = builder.medicalRemarks;
         this.remarks = builder.remarks;
         this.phoneNumber = builder.phoneNumber;
+    }
+
+    public boolean isRegisteredByOther(){
+        return !this.getAdNumber().equals(this.registeredBy);
     }
 
     public String getFirstName() {
@@ -153,12 +159,12 @@ public class RegistrationParticipant {
         this.gender = gender;
     }
 
-    public Role getRole() {
-        return role;
+    public EventRole getEventRole() {
+        return eventRole;
     }
 
-    public void setRole(Role role) {
-        this.role = role;
+    public void setEventRole(EventRole eventRole) {
+        this.eventRole = eventRole;
     }
 
     public boolean isBuddy() {
@@ -265,6 +271,14 @@ public class RegistrationParticipant {
         this.status = status;
     }
 
+    public String getRegisteredBy() {
+        return registeredBy;
+    }
+
+    public void setRegisteredBy(String registeredBy) {
+        this.registeredBy = registeredBy;
+    }
+
     public static class RegistrationParticipantBuilder {
         private String adNumber;
         private String firstName;
@@ -274,7 +288,7 @@ public class RegistrationParticipant {
         private Date birthdate;
         private String stamnumber;
         private Gender gender = Gender.X;
-        private Role role;
+        private EventRole eventRole;
         private boolean buddy = false;
         private List<Language> language = new ArrayList<>();
         private Eatinghabbit eatinghabbit;
@@ -329,8 +343,8 @@ public class RegistrationParticipant {
             return this;
         }
 
-        public RegistrationParticipantBuilder role(Role role) {
-            this.role = role;
+        public RegistrationParticipantBuilder role(EventRole eventRole) {
+            this.eventRole = eventRole;
             return this;
         }
 

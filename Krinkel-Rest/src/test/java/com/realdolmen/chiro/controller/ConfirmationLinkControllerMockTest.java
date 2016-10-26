@@ -6,18 +6,17 @@ import com.realdolmen.chiro.domain.Status;
 import com.realdolmen.chiro.domain.mothers.RegistrationParticipantMother;
 import com.realdolmen.chiro.repository.RegistrationParticipantRepository;
 import com.realdolmen.chiro.service.ConfirmationLinkService;
-import org.junit.Ignore;
+import com.realdolmen.chiro.spring_test.MockMvcTest;
+import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
-import static org.hamcrest.Matchers.containsString;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
 
-// TODO : Test Not valid anymore: Uses Thymeleaf now.
-public class ConfirmationLinkControllerMockTest extends MockMvcTest{
+public class ConfirmationLinkControllerMockTest extends MockMvcTest {
 
     @Autowired
     private ConfirmationLinkService linkService;
@@ -25,25 +24,56 @@ public class ConfirmationLinkControllerMockTest extends MockMvcTest{
     @Autowired
     private RegistrationParticipantRepository participantRepository;
 
-    @Test
-    @Ignore
-    public void correctTokenInLinkReturnsPayloadForSuccess() throws Exception {
-        RegistrationParticipant participant = RegistrationParticipantMother.createBasicRegistrationParticipant();
+    private RegistrationParticipant participant;
+    private ConfirmationLink confirmationLink;
+
+    @Before
+    public void setUp() throws Exception {
+        participant = RegistrationParticipantMother.createBasicRegistrationParticipant();
         participant.setStatus(Status.PAID);
 
         participantRepository.save(participant);
-        ConfirmationLink confirmationLink = linkService.createConfirmationLink(participant.getAdNumber());
+        confirmationLink = linkService.createConfirmationLink(participant.getAdNumber());
+    }
 
-        System.out.println(confirmationLink.getToken());
-
+    @Test
+    public void correctTokenInLinkGivesSuccessConfirmationPage() throws Exception {
         mockMvc().perform(
-                    get("/api/confirmation")
+                    get("/confirmation")
                         .param("ad", participant.getAdNumber())
                         .param("token", confirmationLink.getToken())
-                        .contentType(MediaType.APPLICATION_JSON_UTF8)
                 )
                 .andExpect(MockMvcResultMatchers.status().is2xxSuccessful())
-                .andExpect(content().string(containsString("\"success\" : true")));
+                .andExpect(view().name("confirmation"))
+                .andExpect(model().attribute("success", true));
+    }
 
+    @Test
+    public void incorrectTokenInLinkGivesErrorConfirmationPage() throws Exception {
+        // Make a wrong token by appending the correct token with some rubbish data.
+        String wrongToken = "AAA" + confirmationLink.getToken() + "AAA";
+
+        mockMvc().perform(
+                get("/confirmation")
+                        .param("ad", participant.getAdNumber())
+                        .param("token", wrongToken)
+                )
+                .andExpect(MockMvcResultMatchers.status().is2xxSuccessful())
+                .andExpect(view().name("confirmation"))
+                .andExpect(model().attribute("success", false));
+    }
+
+    @Test
+    public void emptyTokenInLinkGivesErrorConfirmationPage() throws Exception {
+        String emptyToken = "";
+
+        mockMvc().perform(
+                get("/confirmation")
+                        .param("ad", participant.getAdNumber())
+                        .param("token", emptyToken)
+        )
+                .andExpect(MockMvcResultMatchers.status().is2xxSuccessful())
+                .andExpect(view().name("confirmation"))
+                .andExpect(model().attribute("success", false));
     }
 }

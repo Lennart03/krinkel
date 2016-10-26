@@ -6,6 +6,7 @@ import com.realdolmen.chiro.domain.User;
 import com.realdolmen.chiro.service.ChiroUnitService;
 import com.realdolmen.chiro.service.RegistrationParticipantService;
 import com.realdolmen.chiro.service.UserService;
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -30,10 +31,15 @@ public class UnitControllerMockitoTest {
     @Mock
     private UserService userService;
 
-    public final static String TEST_STAMLETTERS = "LEG ";
-    public final static String TEST_STAMCIJFERS = "0000";
-    public final static String TEST_STAMNR = "LEG /0000";
+    private final static String TEST_STAMLETTERS = "LEG ";
+    private final static String TEST_STAMCIJFERS = "0000";
+    private final static String TEST_STAMNR = "LEG /0000";
 
+    @After
+    public void verifyStrict(){
+        Mockito.verifyNoMoreInteractions(userService);
+        Mockito.verifyNoMoreInteractions(unitService);
+    }
 
     @Test
     public void getUnitUserListReturnsListGivenByUserService() {
@@ -41,6 +47,8 @@ public class UnitControllerMockitoTest {
         Mockito.when(unitService.getUnitUsers(TEST_STAMNR)).thenReturn(list);
         List<User> unitUserList = controller.getUnitUserList(TEST_STAMLETTERS, TEST_STAMCIJFERS);
         Assert.assertSame(list, unitUserList);
+
+        Mockito.verify(unitService).getUnitUsers(TEST_STAMNR);
     }
     
     @Test

@@ -1,37 +1,48 @@
 header, main, footer {
-  padding-left: 300px;
+    padding-left: 300px;
 }
 
-@media only screen and (max-width : 992px) {
-  header, main, footer {
-    padding-left: 0;
-  }
+@media only screen and (max-width: 992px) {
+    header, main, footer {
+        padding-left: 0;
+    }
 }
+
+a {
+    color: #319683;
+}
+
+i.icon-green {
+    color: #319683;
+}
+
 #logo-container {
-  height: 160px;
-  margin-bottom: 32px;
-  text-align: center;
+    height: 160px;
+    margin-bottom: 32px;
+    text-align: center;
 }
+
 #front-page-logo {
-  display: inline-block;
-  height: 100%;
-  pointer-events: none;
+    display: inline-block;
+    height: 100%;
+    pointer-events: none;
 }
+
 ul.side-nav.fixed li a {
-  font-size: 13px;
-  line-height: 44px;
-  height: 44px;
-  padding: 0 30px;
-}
-.remove-button{
-  margin-top: 2em;
+    font-size: 13px;
+    line-height: 44px;
+    height: 44px;
+    padding: 0 30px;
 }
 
-.side-nav-down{
-  padding: 1em;
-  color: blue;
+.remove-button {
+    margin-top: 2em;
 }
 
+.side-nav-down {
+    padding: 1em;
+    color: blue;
+}
 
 input.ng-dirty.ng-invalid {
     color: red;
@@ -43,78 +54,87 @@ input.ng-dirty.ng-valid {
 }
 
 .error {
-  color: red;
+    color: red;
 }
 
-nav{
-  background-color: #00124D;
+nav {
+    background-color: #319683;
 }
-.row{
-  margin-bottom: 5px;
+
+.row {
+    margin-bottom: 5px;
 }
-.collection .collection-item.active{
-  background-color: #32bdf3;
+
+.collection .collection-item.active {
+    background-color: #32bdf3;
 }
 
 .container-auth {
-  display: flex;
-  flex-direction: column;
-  width:20%;
-
+    display: flex;
+    flex-direction: column;
+    width: 20%;
 }
-.topbot{
-  margin-top: 2em;
-  margin-bottom: 1em;
+
+.topbot {
+    margin-top: 2em;
+    margin-bottom: 1em;
 }
 
 main {
-  flex: 1 0 auto;
+    flex: 1 0 auto;
 }
 
 body {
-  background: #fff;
-}
-.login-custom-card{
-  display: inline-block;
-  padding: 32px 10px 0px 10px;
-}
-.logintabs{
-  margin: 0 -0.74em;
-}
-.remove-button{
-  margin-top: 2em;
+    background: #fff;
 }
 
-.side-nav-down{
-  padding: 1em;
-  color: blue;
+.login-custom-card {
+    display: inline-block;
+    padding: 32px 10px 0px 10px;
 }
+
+.logintabs {
+    margin: 0 -0.74em;
+}
+
+.remove-button {
+    margin-top: 2em;
+}
+
+.side-nav-down {
+    padding: 1em;
+    color: blue;
+}
+
 .side-nav li {
-  float: left;
-  width: 100%;
-  line-height: 48px;
-}
-.lockicon{
-  text-align: center;
-  width: 100%;
-  margin-top: 40%;
-}
-.setlocked{
-  height: 100%;
-  background-color: lightgray;
+    float: left;
+    width: 100%;
+    line-height: 48px;
 }
 
+.lockicon {
+    text-align: center;
+    width: 100%;
+    margin-top: 40%;
+}
 
-*::-moz-placeholder{
+.setlocked {
+    height: 100%;
+    background-color: lightgray;
+}
+
+*::-moz-placeholder {
     color: #333;
 }
 
 ::-webkit-input-placeholder { /* Chrome/Opera/Safari */
     color: #333;
 }
+
 ::-moz-placeholder { /* Firefox 19+ */
     color: #333;
 }
+
 :-ms-input-placeholder { /* IE 10+ */
     color: #333;
 }

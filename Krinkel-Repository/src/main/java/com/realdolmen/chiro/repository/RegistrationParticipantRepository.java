@@ -9,8 +9,7 @@ import java.util.List;
 public interface RegistrationParticipantRepository extends JpaRepository<RegistrationParticipant, Long> {
     RegistrationParticipant findByAdNumber(String adNumber);
 
-
-	@Query("SELECT r FROM RegistrationParticipant r WHERE status = 'PAID')")
+	@Query("SELECT r FROM RegistrationParticipant r WHERE r.status = 'PAID'")
 	List<RegistrationParticipant> findRegistrationParticipantsWithStatusPAID();
 	
     @Query("SELECT p FROM RegistrationParticipant p WHERE " +
