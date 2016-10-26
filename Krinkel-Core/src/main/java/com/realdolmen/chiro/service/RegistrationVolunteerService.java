@@ -44,6 +44,8 @@ public class RegistrationVolunteerService {
         } else if (volunteerFromOurDB != null && volunteerFromOurDB.getStatus().equals(Status.TO_BE_PAID) && chiroUser != null){
             volunteer.setId(volunteerFromOurDB.getId());
             return repository.save(volunteer);
+        } else if (volunteerFromOurDB != null && (volunteerFromOurDB.getStatus().equals(Status.PAID))|| volunteerFromOurDB.getStatus().equals(Status.CONFIRMED)){
+            return null;
         }
         return null;
     }

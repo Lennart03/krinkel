@@ -45,6 +45,8 @@ public class RegistrationParticipantService {
 			User currentUser = userService.getCurrentUser();
 			participantFromOurDB.setRegisteredBy(currentUser.getAdNumber());
 			return registrationParticipantRepository.save(participant);
+		} else if (participantFromOurDB != null && (participantFromOurDB.getStatus().equals(Status.PAID)) || participantFromOurDB.getStatus().equals(Status.CONFIRMED)){
+			return null;
 		}
 		return null;
 	}
