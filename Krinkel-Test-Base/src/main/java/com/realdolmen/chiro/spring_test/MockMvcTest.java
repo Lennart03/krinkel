@@ -1,4 +1,4 @@
-package com.realdolmen.chiro.controller;
+package com.realdolmen.chiro.spring_test;
 
 import java.io.IOException;
 import java.util.Arrays;
@@ -8,7 +8,6 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Profile;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
@@ -33,13 +32,7 @@ import com.realdolmen.chiro.TestApplication;
  * JSON conversion adapted from [Building REST services with Spring](https://spring.io/guides/tutorials/bookmarks/)
  *
  */
-@WebAppConfiguration
-@RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes={TestApplication.class}) // Spring Boot config (includes component scan)
-@Transactional // Enables rollback after each test.
-@TestPropertySource(locations="classpath:application-test.properties") // Different set of properties to set H2 as DB.
-@ActiveProfiles("test")
-public abstract class MockMvcTest extends IntegrationTest {
+public abstract class MockMvcTest extends SpringIntegrationTest {
 
     @Autowired
     private WebApplicationContext context;
@@ -74,14 +67,14 @@ public abstract class MockMvcTest extends IntegrationTest {
     /**
      * Convenience method for subclasses to access the MockMvc instance.
      */
-    MockMvc mockMvc(){
+    protected MockMvc mockMvc(){
         return this.mockMvc;
     }
 
     /**
      * Convenience method for subclasses to convert an object to JSON format.
      */
-    String json(Object o) throws IOException {
+    protected String json(Object o) throws IOException {
         MockHttpOutputMessage mockHttpOutputMessage = new MockHttpOutputMessage();
         this.mappingJackson2HttpMessageConverter
                 .write(o, MediaType.APPLICATION_JSON, mockHttpOutputMessage);

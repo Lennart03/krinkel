@@ -1,5 +1,6 @@
 package com.realdolmen.chiro.controller;
 
+import com.realdolmen.chiro.config.CasConfiguration;
 import com.realdolmen.chiro.service.CASService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -16,6 +17,9 @@ public class CASController {
     @Autowired
     private CASService service;
 
+    @Autowired
+    private CasConfiguration casConfiguration;
+
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public String viewer(HttpServletRequest request) throws IOException {
         if (request.getHeader("Authorization")!=null){
@@ -23,7 +27,7 @@ public class CASController {
         }
         else {
             // Redirect to CAS server so the user can login.
-            return "redirect:" + service.CASURL;
+            return "redirect:" + casConfiguration.getCasRedirectUrl();
         }
     }
 

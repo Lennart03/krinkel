@@ -1,23 +1,17 @@
 package com.realdolmen.chiro.mspservice;
 
-
 import com.realdolmen.chiro.domain.*;
 import com.realdolmen.chiro.mspdto.OrderDto;
+import com.realdolmen.chiro.spring_test.SpringIntegrationTest;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringRunner;
 
 import java.security.InvalidParameterException;
 import java.util.Date;
 
-//TODO make this an integration test
-@RunWith(SpringRunner.class)
-@SpringBootTest(classes = MultiSafePayService.class)
-public class MultiSafePayServiceTest {
+public class MultiSafePayServiceTest extends SpringIntegrationTest {
 
     @Autowired
     private MultiSafePayService multiSafePayService;
@@ -27,7 +21,7 @@ public class MultiSafePayServiceTest {
     private Address address;
 
     @Before
-    public void init() {
+    public void setUp() {
         address = new Address("rttr", "3", 1600, "test");
         p = new RegistrationParticipant("123", "jos@example.com", "Joske", "Vermeulen", new Date(), "AB 12/34", Gender.MAN, EventRole.ASPI, null);
         p.setAddress(address);
@@ -74,6 +68,4 @@ public class MultiSafePayServiceTest {
     public void getVolunteerPaymentUriReturnsUri() throws MultiSafePayService.InvalidPaymentOrderIdException {
         Assert.assertNotNull(multiSafePayService.getVolunteerPaymentUri(v, 6000));
     }
-
-
 }

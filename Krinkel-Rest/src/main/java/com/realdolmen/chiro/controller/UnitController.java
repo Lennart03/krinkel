@@ -3,7 +3,10 @@ package com.realdolmen.chiro.controller;
 import com.realdolmen.chiro.domain.User;
 import com.realdolmen.chiro.domain.units.ChiroUnit;
 import com.realdolmen.chiro.service.ChiroUnitService;
+import com.realdolmen.chiro.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.access.prepost.PreFilter;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -24,6 +27,9 @@ public class UnitController {
 
     @Autowired
     private ChiroUnitService unitService;
+
+    @Autowired
+    private UserService userService;
 
 
     @RequestMapping(method = RequestMethod.GET, params = {"gewest"})
@@ -48,6 +54,9 @@ public class UnitController {
     }
 
     @RequestMapping(value = "/{stam}", method = RequestMethod.GET)
+    // TODO: Move authorisation to Service layer
+    //@PreAuthorize("#stam == 'LEG0000'")
+    //@PreAuthorize("#stam eq @userService.currentUser.normalizedStamNumber")
     public ChiroUnit singleUnit(@PathVariable("stam") String stam) {
         return unitService.find(stam);
     }

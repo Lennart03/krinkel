@@ -1,19 +1,41 @@
 -- noinspection SqlDialectInspectionForFile
 -- noinspection SqlNoDataSourceInspectionForFile
 
+INSERT INTO registration_participant (dtype,id,ad_number,city, house_number, postal_code, street, birthdate,
+social_promotion, eatinghabbit, email, first_name, gender, last_name, remarks_food, medical_remarks, remarks,
+event_role, buddy, stamnumber, status, phone_number, camp_ground, other, preset, registered_by)
+VALUES('RegistrationParticipant', '10', '123456', 'Brussel', '123', '1000', 'Veldstraat', '1995-08-21', false, 'FISHANDMEAT',
+                              'email@test.be', 'Johnny', 'MAN', 'Flodder', 'food remarks', 'medical remarks', 'remarks', 'ASPI', false, 'AG /0103', 'TO_BE_PAID', 1, '', '', '', '123456');
 
-INSERT INTO registration_participant VALUES('RegistrationParticipant', '10', '123456', 'Brussel', '123', '1000', 'Veldstraat', '1995-08-21', false, 'FISHANDMEAT',
-                              'email@test.be', 'Johnny', 'MAN', 'Flodder', '', '', '', '', 'ASPI', false, 'AG /0103', 'TO_BE_PAID', 1, '', '');
-INSERT INTO registration_participant VALUES('RegistrationParticipant', '20', '234567', 'Brussel', '123', '1000', 'Veldstraat', '1995-08-21', false, 'FISHANDMEAT',
-                              'email@test.be', 'Kees', 'MAN', 'Flodder', '', '', '', '', 'ASPI', false, 'BG /0301', 'TO_BE_PAID', 1, '', '');
-INSERT INTO registration_participant VALUES('RegistrationParticipant', '30', '345678', 'Brussel', '123', '1000', 'Veldstraat', '1995-08-21', false, 'FISHANDMEAT',
-                              'email@test.be', 'Ma', 'WOMAN', 'Flodder', '', '', '', '', 'ASPI', false, 'AG /0103', 'TO_BE_PAID', 1, '', '');
-INSERT INTO registration_participant VALUES('RegistrationParticipant', '40', '456789', 'Brussel', '123', '1000', 'Veldstraat', '1995-08-21', false, 'FISHANDMEAT',
-                              'email@test.be', 'Cees', 'WOMAN', 'Flodder', '', '', '', '', 'ASPI', false, 'LEG/0101', 'TO_BE_PAID', 1, '', '');
-INSERT INTO registration_participant VALUES('RegistrationParticipant', '50', '987654', 'Brussel', '123', '1000', 'Veldstraat', '1995-08-21', false, 'FISHANDMEAT',
-                              'email@test.be', 'Frederik', 'MAN', 'Flodder', '', '', '', '', 'ASPI', false, 'AG /0202', 'TO_BE_PAID', 1, '', '');
-INSERT INTO registration_participant VALUES('RegistrationVolunteer', '60', '876543', 'Brussel', '123', '1000', 'Veldstraat', '1995-08-21', false, 'FISHANDMEAT',
-                              'email@test.be', 'Jos', 'MAN', 'Flodder', '', '', '', '', 'ASPI', false, 'AG /0103', 'TO_BE_PAID', 1, '', 'CAMPGROUND');
+INSERT INTO registration_participant (dtype,id,ad_number,city, house_number, postal_code, street, birthdate,
+social_promotion, eatinghabbit, email, first_name, gender, last_name, remarks_food, medical_remarks, remarks,
+event_role, buddy, stamnumber, status, phone_number, camp_ground, other, preset, registered_by)
+VALUES('RegistrationParticipant', '20', '234567', 'Brussel', '123', '1000', 'Veldstraat', '1995-08-21', false, 'FISHANDMEAT',
+                              'email@test.be', 'Kees', 'MAN', 'Flodder', '', '', '', 'ASPI', false, 'BG /0301', 'TO_BE_PAID', 1, '', '', '', '234567');
+
+INSERT INTO registration_participant (dtype,id,ad_number,city, house_number, postal_code, street, birthdate,
+social_promotion, eatinghabbit, email, first_name, gender, last_name, remarks_food, medical_remarks, remarks,
+event_role, buddy, stamnumber, status, phone_number, camp_ground, other, preset, registered_by)
+VALUES('RegistrationParticipant', '30', '345678', 'Brussel', '123', '1000', 'Veldstraat', '1995-08-21', false, 'FISHANDMEAT',
+                              'email@test.be', 'Ma', 'WOMAN', 'Flodder', '', '', '', 'ASPI', false, 'AG /0103', 'CONFIRMED', 1, '', '', '', '345678');
+
+INSERT INTO registration_participant (dtype,id,ad_number,city, house_number, postal_code, street, birthdate,
+social_promotion, eatinghabbit, email, first_name, gender, last_name, remarks_food, medical_remarks, remarks,
+event_role, buddy, stamnumber, status, phone_number, camp_ground, other, preset, registered_by)
+VALUES('RegistrationParticipant', '40', '456789', 'Brussel', '123', '1000', 'Veldstraat', '1995-08-21', false, 'FISHANDMEAT',
+                              'email@test.be', 'Cees', 'WOMAN', 'Flodder', '', '', '', 'ASPI', false, 'LEG/0101', 'PAID', 1, '', '', '',  '456789');
+
+INSERT INTO registration_participant (dtype,id,ad_number,city, house_number, postal_code, street, birthdate,
+social_promotion, eatinghabbit, email, first_name, gender, last_name, remarks_food, medical_remarks, remarks,
+event_role, buddy, stamnumber, status, phone_number, camp_ground, other, preset, registered_by)
+VALUES('RegistrationParticipant', '50', '987654', 'Brussel', '123', '1000', 'Veldstraat', '1995-08-21', false, 'FISHANDMEAT',
+                              'email@test.be', 'Frederik', 'MAN', 'Flodder', '', '', '', 'ASPI', false, 'AG /0202', 'CONFIRMED', 1, '', '', '', '987654');
+
+INSERT INTO registration_participant (dtype,id,ad_number,city, house_number, postal_code, street, birthdate,
+social_promotion, eatinghabbit, email, first_name, gender, last_name, remarks_food, medical_remarks, remarks,
+event_role, buddy, stamnumber, status, phone_number, camp_ground, other, preset, registered_by)
+VALUES('RegistrationVolunteer', '60', '876543', 'Brussel', '123', '1000', 'Veldstraat', '1995-08-21', false, 'FISHANDMEAT',
+                              'email@test.be', 'Jos', 'MAN', 'Flodder', '', '', '', 'VOLUNTEER', false, 'AG /0103', 'TO_BE_PAID', 1, 'KEMPEN', '', 'CAMPGROUND', '876543');
 
 INSERT INTO pre_camp VALUES (10, '2017-08-21');
 INSERT INTO pre_camp VALUES (20, '2017-08-22');
@@ -23,6 +45,25 @@ INSERT INTO pre_camp VALUES (40, '2017-08-24');
 INSERT INTO post_camp VALUES (60, '2017-08-31');
 INSERT INTO post_camp VALUES (70, '2017-09-01');
 INSERT INTO post_camp VALUES (80, '2017-09-02');
+
+
+-- DROP TABLE IF EXISTS registration_communication;
+-- CREATE TABLE registration_communication (
+-- `id` BIGINT,
+-- `AD_NUMBER` VARCHAR(15),
+-- `status` VARCHAR(20),
+-- `communicationAttempt` INT,
+-- PRIMARY KEY(`id`)
+-- );
+
+INSERT INTO registration_communication VALUES ('1','12345','0', 'WAITING');
+INSERT INTO registration_communication VALUES ('2','22345','0', 'WAITING');
+INSERT INTO registration_communication VALUES ('3','32345','0', 'WAITING');
+INSERT INTO registration_communication VALUES ('4','42345','0', 'WAITING');
+INSERT INTO registration_communication VALUES ('5','52345','0', 'SENT');
+INSERT INTO registration_communication VALUES ('6','62345','0', 'FAILED');
+INSERT INTO registration_communication VALUES ('7','72345','0', 'SENT');
+INSERT INTO registration_communication VALUES ('8','82345','0', 'FAILED');
 
 DROP TABLE IF EXISTS groepen;
 CREATE TABLE groepen (
@@ -34,6 +75,20 @@ CREATE TABLE groepen (
     `verbond_naam` VARCHAR(15),
     PRIMARY KEY(`groep_stamnr`)
 );
+INSERT INTO login_log (id,ad_number,stamp) VALUES (1,'123456',{d '2016-10-01'});
+INSERT INTO login_log (id,ad_number,stamp) VALUES (2,'123456',{d '2016-10-02'});
+INSERT INTO login_log (id,ad_number,stamp) VALUES (3,'654321',{d '2016-10-02'});
+INSERT INTO login_log (id,ad_number,stamp) VALUES (4,'123528',{d '2016-10-03'});
+INSERT INTO login_log (id,ad_number,stamp) VALUES (5,'1688456',{d '2016-10-03'});
+INSERT INTO login_log (id,ad_number,stamp) VALUES (6,'123456',{d '2016-10-04'});
+INSERT INTO login_log (id,ad_number,stamp) VALUES (7,'123456',{d '2016-10-04'});
+INSERT INTO login_log (id,ad_number,stamp) VALUES (8,'144546',{d '2016-10-04'});
+INSERT INTO login_log (id,ad_number,stamp) VALUES (9,'129897',{d '2016-10-04'});
+INSERT INTO login_log (id,ad_number,stamp) VALUES (10,'123856',{d '2016-10-04'});
+INSERT INTO login_log (id,ad_number,stamp) VALUES (11,'133456',{d '2016-10-07'});
+INSERT INTO login_log (id,ad_number,stamp) VALUES (12,'126556',{d '2016-10-07'});
+
+
 INSERT INTO groepen VALUES ('Pleplo','AG /0103','AG /0400','Zac','AG /0000','Antwerpen');
 INSERT INTO groepen VALUES ('Lore','AG /0104','AG /0400','Zac','AG /0000','Antwerpen');
 INSERT INTO groepen VALUES ('Dolfijn','AG /0108','AG /0400','Zac','AG /0000','Antwerpen');

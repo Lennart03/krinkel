@@ -6,37 +6,28 @@
         <artifactId>Krinkel</artifactId>
         <groupId>com.realdolmen.chiro</groupId>
         <version>1.0-SNAPSHOT</version>
+        <relativePath>../pom.xml</relativePath>
     </parent>
+
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>krinkelmultisafepayapi</artifactId>
+    <artifactId>Krinkel-Test-Base</artifactId>
 
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
+
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>com.fasterxml.jackson.core</groupId>
-            <artifactId>jackson-databind</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.json</groupId>
-            <artifactId>json</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.realdolmen.chiro</groupId>
-            <artifactId>Krinkel-Domain</artifactId>
+            <scope>compile</scope>
         </dependency>
 
         <dependency>
-            <groupId>com.realdolmen.chiro</groupId>
-            <artifactId>Krinkel-Test-Base</artifactId>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-jpa</artifactId>
         </dependency>
 
         <dependency>
@@ -44,4 +35,5 @@
             <artifactId>h2</artifactId>
         </dependency>
     </dependencies>
+
 </project>

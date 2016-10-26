@@ -1,6 +1,7 @@
 package com.realdolmen.chiro.service;
 
 import com.realdolmen.chiro.chiro_api.ChiroUserAdapter;
+import com.realdolmen.chiro.config.JwtConfiguration;
 import com.realdolmen.chiro.domain.RegistrationParticipant;
 import com.realdolmen.chiro.domain.SecurityRole;
 import com.realdolmen.chiro.domain.Status;
@@ -18,9 +19,7 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.xml.bind.DatatypeConverter;
 
-import static com.realdolmen.chiro.service.CASService.JWT_SECRET;
-
-@Service
+@Service("userService")
 @Profile("!test")
 public class UserService {
     @Autowired
@@ -28,6 +27,9 @@ public class UserService {
 
     @Autowired
     private RegistrationParticipantRepository repo;
+
+    @Autowired
+    private JwtConfiguration jwtConfig;
 
     public User getUser(String adNumber) {
 
@@ -68,7 +70,7 @@ public class UserService {
 
     public User getCurrentUser(HttpServletRequest context){
         Claims claims = Jwts.parser()
-                .setSigningKey(DatatypeConverter.parseBase64Binary(JWT_SECRET))
+                .setSigningKey(DatatypeConverter.parseBase64Binary(jwtConfig.getJwtSecret()))
                 .parseClaimsJws(getTokenFromCookie(context.getCookies())).getBody();
 
 

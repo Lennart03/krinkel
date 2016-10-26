@@ -3,6 +3,7 @@ package com.realdolmen.chiro.controller;
 import com.realdolmen.chiro.domain.*;
 import com.realdolmen.chiro.repository.RegistrationVolunteerRepository;
 import com.realdolmen.chiro.domain.mothers.RegistrationVolunteerMother;
+import com.realdolmen.chiro.spring_test.MockMvcTest;
 import org.hamcrest.Matchers;
 import org.junit.Before;
 import org.junit.Test;
