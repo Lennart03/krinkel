@@ -31,6 +31,9 @@ public class ChiroUnit {
     @JsonProperty("onderliggende_stamnummers")
     @JsonIgnoreProperties({"bovenliggende_stamnummer", "onderliggende_stamnummers" })
     private List<ChiroUnit> lower = new ArrayList<>();
+    
+    @JsonProperty("aantal_ingeschreven_leden")
+    private int count;
 
     public ChiroUnit() {
         this.lower = new ArrayList<>();
@@ -73,4 +76,14 @@ public class ChiroUnit {
     public void setLower(List<ChiroUnit> lower) {
         this.lower = lower;
     }
+
+	public int getCount() {
+		return count;
+	}
+
+	public void setCount(int count) {
+		this.count = count;
+	}
+    
+    
 }

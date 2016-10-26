@@ -65,5 +65,5 @@ public class UnitController {
     @RequestMapping(value = "/{stamNummer}/volunteers", method = RequestMethod.GET)
     public List<RegistrationVolunteer>findRegisteredVolunteersByGroup(@PathVariable("stamNummer") String stamNumber){
     	return registrationParticipantsService.findVolunteersByGroup(stamNumber);
-    }    
+    }
 }
