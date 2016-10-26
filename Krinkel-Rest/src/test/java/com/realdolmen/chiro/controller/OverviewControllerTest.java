@@ -26,9 +26,9 @@ public class OverviewControllerTest {
 
     private List<RegistrationVolunteer> volunteers = new ArrayList<>();
 
-    private int[] participantsAndVolunteers = new int[2];
+    //private int[] participantsAndVolunteers = new int[2];
 
-    private List[] participantsInfo = new List[2];
+    //private List[] participantsInfo = new List[2];
 
     @InjectMocks
     private OverviewController controller;
@@ -64,28 +64,6 @@ public class OverviewControllerTest {
 
 
     }
-
-    @Test
-    public void getParticipantsByUnit() {
-        Mockito.when(registrationParticipantService.findParticipantsByGroup("AG0001")).thenReturn(participants);
-        Mockito.when(registrationParticipantService.findVolunteersByGroup("AG0001")).thenReturn(volunteers);
-
-        participantsAndVolunteers[0] = participants.size();
-        participantsAndVolunteers[1] = volunteers.size();
-
-        Assert.assertSame(controller.findParticipants("AG0001")[0], participantsAndVolunteers[0]);
-        Assert.assertSame(controller.findParticipants("AG0001")[1], participantsAndVolunteers[1]);
-    }
-
-    @Test
-    public void getParticipuntsInfo() {
-        Mockito.when(registrationParticipantService.findParticipantsByGroup("AG0001")).thenReturn(participants);
-        Mockito.when(registrationParticipantService.findVolunteersByGroup("AG0001")).thenReturn(volunteers);
-
-        participantsInfo[0] = participants;
-        participantsInfo[1] = volunteers;
-
-        Assert.assertSame(controller.participantsInfo("AG0001")[0], participantsInfo[0]);
-        Assert.assertSame(controller.participantsInfo("AG0001")[1], participantsInfo[1]);
-    }
 }
+
+  

@@ -40,13 +40,13 @@ public class OverviewController {
         }
     }
 
-    @RequestMapping(value = "/info/{stamNummer}", method = RequestMethod.GET)
-    public List[] participantsInfo(@PathVariable("stamNummer") String stamNumber){
-        List<RegistrationParticipant> participants = registrationParticipantService.findParticipantsByGroup(stamNumber);
-        List<RegistrationVolunteer> volunteers = registrationParticipantService.findVolunteersByGroup(stamNumber);
-        List[] userInfo = new List[2];
-        userInfo[0] = participants;
-        userInfo[1] = volunteers;
-        return userInfo;
-    }
+//    @RequestMapping(value = "/info/{stamNummer}", method = RequestMethod.GET)
+//    public List[] participantsInfo(@PathVariable("stamNummer") String stamNumber){
+//        List<RegistrationParticipant> participants = registrationParticipantService.findParticipantsByGroup(stamNumber);
+//        List<RegistrationVolunteer> volunteers = registrationParticipantService.findVolunteersByGroup(stamNumber);
+//        List[] userInfo = new List[2];
+//        userInfo[0] = participants;
+//        userInfo[1] = volunteers;
+//        return userInfo;
+//    }
 }
