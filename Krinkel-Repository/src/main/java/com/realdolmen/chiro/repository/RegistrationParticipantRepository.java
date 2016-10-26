@@ -24,5 +24,5 @@ public interface RegistrationParticipantRepository extends JpaRepository<Registr
             "(p.status = com.realdolmen.chiro.domain.Status.PAID))"
 
     )
-    List<RegistrationParticipant> findParticipantsByGroup(String s);
+    List<RegistrationParticipant> findParticipantsByGroupWithStatusConfirmedOrPaid(String s);
 }
