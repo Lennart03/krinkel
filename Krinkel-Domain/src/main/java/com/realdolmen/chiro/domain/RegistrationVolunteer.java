@@ -25,14 +25,13 @@ public class RegistrationVolunteer extends RegistrationParticipant {
     /**
      * Zero or many PreCamp moments.
      */
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     private List<PreCamp> preCampList = new ArrayList<>();
 
     /**
      * Zero or many PostCamp moments.
      */
-
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     private List<PostCamp> postCampList = new ArrayList<>();
 
     public RegistrationVolunteer() {}

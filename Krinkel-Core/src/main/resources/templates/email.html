@@ -324,17 +324,17 @@
                                                                             <table align="center" border="0" cellpadding="0" cellspacing="0" width="100%">
                                                                                 <tr>
                                                                                     <td align="center" valign="middle">
-                                                                                        <!--[if gte mso 9]>
+
                                                                                         <table align="center" border="0" cellspacing="0" cellpadding="0" style="width:200px" width="200">
                                                                                             <tr>
                                                                                                 <td align="center" bgcolor="#6DC6DD" style="padding:20px;" valign="top">
-                                                                                        <![endif]-->
-                                                                                        <a th:href="${confirmationLink}" target="_blank" style="background-color:#6DC6DD; border-collapse:separate; border-top:20px solid #6DC6DD; border-right:40px solid #6DC6DD; border-bottom:20px solid #6DC6DD; border-left:40px solid #6DC6DD; border-radius:3px; color:#FFFFFF; display:inline-block; font-family:'Helvetica Neue', Helvetica, Arial, sans-serif; font-size:16px; font-weight:600; letter-spacing:.3px; text-decoration:none;">Bevestigen</a>
-                                                                                        <!--[if gte mso 9]>
+
+                                                                                        <a th:href="${confirmationLink}" target="_blank" style="background-color:#6DC6DD; border-collapse:separate; border-top:20px solid #6DC6DD; border-right:40px solid #6DC6DD; border-bottom:20px solid #6DC6DD; border-left:40px solid #6DC6DD; border-radius:3px; color:#FFFFFF; display:inline-block; font-family:'Helvetica Neue', Helvetica, Arial, sans-serif; font-size:16px; font-weight:600; letter-spacing:.3px; text-decoration:none;">Confirmation link</a>
+
                                                                                         </td>
                                                                                         </tr>
                                                                                         </table>
-                                                                                        <![endif]-->
+
                                                                                     </td>
                                                                                 </tr>
                                                                             </table>
@@ -360,55 +360,55 @@
                                                                                    id="bodyTableInfo" border="0"
                                                                                    style="height:100%;">
                                                                                 <tr>
-                                                                                    <td>Naam:</td>
+                                                                                    <td><b>Naam:</b></td>
                                                                                     <td th:text="${participant.firstName}"></td>
-                                                                                    <td>Achternaam:</td>
+                                                                                    <td><b>Achternaam:</b></td>
                                                                                     <td th:text="${participant.lastName}"></td>
                                                                                 </tr>
                                                                                 <tr>
-                                                                                    <td>Email:</td>
+                                                                                    <td><b>Email:</b></td>
                                                                                     <td th:text="${participant.email}"></td>
-                                                                                    <td>Telefoonnummer:</td>
+                                                                                    <td><b>Telefoonnummer:</b></td>
                                                                                     <td th:text="${participant.phoneNumber}"></td>
 
                                                                                 </tr>
                                                                                 <tr>
-                                                                                    <td>Straat en huisnummer:</td>
+                                                                                    <td><b>Straat en huisnummer:</b></td>
                                                                                     <td
                                                                                             th:text="${participant.address.street} + ', ' + ${participant.address.houseNumber}"></td>
-                                                                                    <td>Postcode en Gemeente:</td>
+                                                                                    <td><b>Postcode en Gemeente:</b></td>
                                                                                     <td
                                                                                             th:text="${participant.address.postalCode} + ', ' + ${participant.address.city}"></td>
 
                                                                                 </tr>
                                                                                 <tr>
-                                                                                    <td>Geboortedatum:</td>
+                                                                                    <td><b>Geboortedatum:</b></td>
                                                                                     <td th:text="${participant.birthdate}"></td>
-                                                                                    <td>Stamnummer</td>
+                                                                                    <td><b>Stamnummer:</b></td>
                                                                                     <td th:text="${participant.stamnumber}"></td>
 
                                                                                 </tr>
                                                                                 <tr>
-                                                                                    <td>Geslacht:</td>
+                                                                                    <td><b>Geslacht:</b></td>
                                                                                     <td th:if="${participant.gender != null}" th:text="${participant.gender.description}"></td>
-                                                                                    <td>Functie:</td>
+                                                                                    <td><b>Functie:</b></td>
                                                                                     <td th:if="${participant.eventRole != null}" th:text="${participant.eventRole.description}"></td>
 
                                                                                 </tr>
                                                                                 <tr th:if="${isVolunteer}">
-                                                                                    <td>Kampgrond:</td>
+                                                                                    <td><b>Kampgrond:</b></td>
                                                                                     <td th:if="${participant.campGround != null}" th:text="${participant.campGround.description}"></td>
                                                                                     <td></td>
                                                                                     <td></td>
 
                                                                                 </tr>
                                                                                 <tr th:if="${isVolunteer}">
-                                                                                    <td>Voorwacht:</td>
+                                                                                    <td><b>Voorwacht:</b></td>
                                                                                     <td><ul>
                                                                                         <li th:each="preCamp : ${participant.preCampList}"
                                                                                             th:text="${preCamp.toString()}"></li>
                                                                                     </ul></td>
-                                                                                    <td>Nawacht:</td>
+                                                                                    <td><b>Nawacht:</b></td>
                                                                                     <td><ul>
                                                                                         <li th:each="postCamp : ${participant.postCampList}"
                                                                                             th:text="${postCamp.toString()}"></li>
@@ -416,7 +416,7 @@
 
                                                                                 </tr>
                                                                                 <tr th:if="${isVolunteer}">
-                                                                                    <td>Vrijwilligersfunctie:</td>
+                                                                                    <td><b>Vrijwilligersfunctie:</b></td>
                                                                                     <td >
                                                                                         <div th:if="${participant.function.other}==null" th:text="${participant.function.preset.description}"></div>
                                                                                         <div th:if="${participant.function.other}!=null" th:text="${participant.function.other}"></div>
@@ -424,39 +424,37 @@
 
                                                                                 </tr>
                                                                                 <tr>
-                                                                                    <td>Buddy:</td>
+                                                                                    <td><b>Buddy:</b></td>
                                                                                     <td th:switch="${participant.buddy}">
                                                                                         <div th:case="true">ja</div>
                                                                                         <div th:case="false">neen</div>
                                                                                     </td>
-                                                                                    <td th:if="${participant.buddy}">Talen:</td>
+                                                                                    <td th:if="${participant.buddy}"><b>Talen:</b></td>
                                                                                     <td><ul>
-                                                                                        <li th:each="lang : ${participant.language}" th:text="lang"></li>
+                                                                                        <li th:each="lang : ${participant.language}" th:text="${lang.description}"></li>
                                                                                     </ul></td>
 
                                                                                 </tr>
                                                                                 <tr>
-                                                                                    <td>Sociale promotie:</td>
-                                                                                    <td th:switch="${participant.socialPromotion}"><div
-                                                                                            th:case="true">ja</div>
+                                                                                    <td><b>Sociale promotie:</b></td>
+                                                                                    <td th:switch="${participant.socialPromotion}">
+                                                                                        <div th:case="true">ja</div>
                                                                                         <div th:case="false">neen</div></td>
-                                                                                    <td>Voorkeur maaltijden:</td>
-                                                                                    <td th:switch="${participant.eatinghabbit}"><div
-                                                                                            th:case="VEGI">Vegetarisch</div>
-                                                                                        <div th:case="FISHANDMEAT">Vis en vlees</div>
-                                                                                        <div th:case="HALAL">Halal</div></td>
+                                                                                    <td><b>Voorkeur maaltijden:</b></td>
+                                                                                    <td th:if="${participant.eatinghabbit != null}" th:text="${participant.eatinghabbit.description}"></td>
+
 
                                                                                 </tr>
                                                                                 <tr>
-                                                                                    <td>Opmerkingen maaltijden:</td>
+                                                                                    <td><b>Opmerkingen maaltijden:</b></td>
                                                                                     <td th:text="${participant.remarksFood}"></td>
                                                                                 </tr>
                                                                                 <tr>
-                                                                                    <td>Medische opmerkingen</td>
+                                                                                    <td><b>Medische opmerkingen:</b></td>
                                                                                     <td th:text="${participant.medicalRemarks}"></td>
                                                                                 </tr>
                                                                                 <tr>
-                                                                                    <td>Andere opmerkingen</td>
+                                                                                    <td><b>Andere opmerkingen:</b></td>
                                                                                     <td th:text="${participant.remarks}"></td>
                                                                                 </tr>
 

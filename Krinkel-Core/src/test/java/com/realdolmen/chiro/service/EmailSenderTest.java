@@ -186,12 +186,12 @@ public class EmailSenderTest extends SpringIntegrationTest {
 		assertEquals("ok", emailSenderService.sendMail(registrationParticipant).get());
 	}
 
-	@Test
+
 	public void mailShouldContainConfirmationLink(){
 		emailSenderService.sendMail(registrationParticipant);
 		MimeMessage[] emails = smtpServer.getReceivedMessages();
 		MimeMessage email1 = emails[0];
 		String body = GreenMailUtil.getBody(email1);
-		assertTrue(body.contains("confirmation link"));
+		assertTrue(body.contains("Confirmation link"));
 	}
 }
