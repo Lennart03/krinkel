@@ -1,0 +1,904 @@
+     West-Vlaanderen     WG0000        Streuvelsland     WG0100                           Moen     WG0105
+     West-Vlaanderen     WG0000        Streuvelsland     WG0100                     WISTIK TOF     WG0106
+     West-Vlaanderen     WG0000        Streuvelsland     WG0100                     Ter Plekke     WG0107
+     West-Vlaanderen     WG0000        Streuvelsland     WG0100                     Scheldedal     WJ0101
+     West-Vlaanderen     WG0000        Streuvelsland     WG0100           Prins Van Steenhuyse     WJ0102
+     West-Vlaanderen     WG0000        Streuvelsland     WG0100            Jongenschiro Yvegem     WJ0103
+     West-Vlaanderen     WG0000        Streuvelsland     WG0100                        T Axent     WJ0108
+     West-Vlaanderen     WG0000        Streuvelsland     WG0100                     Kantekleer     WM0101
+     West-Vlaanderen     WG0000        Streuvelsland     WG0100             Vergeet Me Nietjes     WM0102
+     West-Vlaanderen     WG0000        Streuvelsland     WG0100                        Wyvegem     WM0103
+     West-Vlaanderen     WG0000        Streuvelsland     WG0100              Chiromeisjes Nele     WM0108
+     West-Vlaanderen     WG0000           Doppe Drip     WG1800                    T Sleutelke     WG1801
+     West-Vlaanderen     WG0000           Doppe Drip     WG1800                      De Ginste     WG1806
+     West-Vlaanderen     WG0000           Doppe Drip     WG1800                      Jattetoet     WJ1802
+     West-Vlaanderen     WG0000           Doppe Drip     WG1800                Oetsjiekoetsjie     WJ1803
+     West-Vlaanderen     WG0000           Doppe Drip     WG1800                         Aktivo     WJ1807
+     West-Vlaanderen     WG0000           Doppe Drip     WG1800                Oetsjiekoetsjie     WM1803
+     West-Vlaanderen     WG0000           Doppe Drip     WG1800                      Elckerlyc     WM1805
+     West-Vlaanderen     WG0000           Doppe Drip     WG1800                      Kris Kras     WM1807
+     West-Vlaanderen     WG0000             T Groene     WG0400                     SINT JORIS     WG0401
+     West-Vlaanderen     WG0000             T Groene     WG0400                     Razzmakker     WG0405
+     West-Vlaanderen     WG0000             T Groene     WG0400           Sint Petrus Oostveld     WG0406
+     West-Vlaanderen     WG0000             T Groene     WG0400                     Sparregalm     WJ0404
+     West-Vlaanderen     WG0000             T Groene     WG0400                      Sint Rita     WM0402
+     West-Vlaanderen     WG0000             T Groene     WG0400              Wij Doen Ons Best     WM0404
+     West-Vlaanderen     WG0000             T Groene     WG0400                 Laat Ma-rollen     WM0407
+     West-Vlaanderen     WG0000            Koekerond     WG0600               Onze Lieve Vrouw     WG0602
+     West-Vlaanderen     WG0000            Koekerond     WG0600                  Globetrotters     WG0605
+     West-Vlaanderen     WG0000            Koekerond     WG0600                      Ekebelloh     WG0606
+     West-Vlaanderen     WG0000            Koekerond     WG0600                    Vlamertinge     WG0607
+     West-Vlaanderen     WG0000            Koekerond     WG0600                Wij(t)schateren     WG0608
+     West-Vlaanderen     WG0000            Koekerond     WG0600                      Zillebeke     WG0609
+     West-Vlaanderen     WG0000            Koekerond     WG0600                       Zonnezee     WG0610
+     West-Vlaanderen     WG0000            Koekerond     WG0600                       Kameleon     WG0611
+     West-Vlaanderen     WG0000            Koekerond     WG0600                       Lange Jo     WJ0604
+     West-Vlaanderen     WG0000            Koekerond     WG0600                        IXAGODO     WM0604
+     West-Vlaanderen     WG0000            Koekerond     WG0600                   T Lachepitje     WM0612
+     West-Vlaanderen     WG0000       Zakolekehohawe     WG0500                       Sint Jan     WG0501
+     West-Vlaanderen     WG0000       Zakolekehohawe     WG0500                         Klimop     WG0502
+     West-Vlaanderen     WG0000       Zakolekehohawe     WG0500                      Regenboog     WG0505
+     West-Vlaanderen     WG0000       Zakolekehohawe     WG0500                         Woumen     WG0507
+     West-Vlaanderen     WG0000       Zakolekehohawe     WG0500       Chiro Spartok (handzame)     WG0508
+     West-Vlaanderen     WG0000       Zakolekehohawe     WG0500               SINT PIETER ESEN     WG0509
+     West-Vlaanderen     WG0000       Zakolekehohawe     WG0500                    Chirozarren     WG0511
+     West-Vlaanderen     WG0000       Zakolekehohawe     WG0500                   Sint Maarten     WJ0506
+     West-Vlaanderen     WG0000       Zakolekehohawe     WG0500                  Sint Maarten      WM0506
+     West-Vlaanderen     WG0000 GEWEST GOE EN ME GIE     WG1100                     SPERATOKER     WG1103
+     West-Vlaanderen     WG0000 GEWEST GOE EN ME GIE     WG1100             Oltegoare Moorsele     WG1104
+     West-Vlaanderen     WG0000 GEWEST GOE EN ME GIE     WG1100                   Miengelienge     WG1105
+     West-Vlaanderen     WG0000 GEWEST GOE EN ME GIE     WG1100             Dienamiet - Pit In     WG1106
+     West-Vlaanderen     WG0000 GEWEST GOE EN ME GIE     WG1100                            Jow     WG1109
+     West-Vlaanderen     WG0000 GEWEST GOE EN ME GIE     WG1100                     Pendoender     WG1110
+     West-Vlaanderen     WG0000 GEWEST GOE EN ME GIE     WG1100                  Sint Martinus     WJ1101
+     West-Vlaanderen     WG0000 GEWEST GOE EN ME GIE     WG1100                    De Belhamel     WJ1102
+     West-Vlaanderen     WG0000 GEWEST GOE EN ME GIE     WG1100                  Sint Martinus     WM1101
+     West-Vlaanderen     WG0000 GEWEST GOE EN ME GIE     WG1100                     De Schakel     WM1102
+     West-Vlaanderen     WG0000              Topekom     WG1600                      NELLEKIJN     WG1602
+     West-Vlaanderen     WG0000              Topekom     WG1600                   T Kartouchke     WG1605
+     West-Vlaanderen     WG0000              Topekom     WG1600                    Jokwy-mekwy     WG1609
+     West-Vlaanderen     WG0000              Topekom     WG1600                      Elckerlyc     WG1610
+     West-Vlaanderen     WG0000              Topekom     WG1600                        Atadura     WG1611
+     West-Vlaanderen     WG0000              Topekom     WG1600                   Sint Amandus     WJ1604
+     West-Vlaanderen     WG0000              Topekom     WG1600                        Keratop     WJ1606
+     West-Vlaanderen     WG0000              Topekom     WG1600                  Sint Hubertus     WJ1608
+     West-Vlaanderen     WG0000              Topekom     WG1600                     Sint Amand     WM1604
+     West-Vlaanderen     WG0000              Topekom     WG1600                 Sint Lutgardis     WM1606
+     West-Vlaanderen     WG0000              Topekom     WG1600                Sint Aldegondis     WM1608
+     West-Vlaanderen     WG0000                 Brok     WG0200                     Sint Jozef     WG0202
+     West-Vlaanderen     WG0000                 Brok     WG0200            Spodd - Op Den Dijk     WG0203
+     West-Vlaanderen     WG0000                 Brok     WG0200            Sint Joris T Leitje     WG0204
+     West-Vlaanderen     WG0000                 Brok     WG0200                           Waww     WG0206
+     West-Vlaanderen     WG0000                 Brok     WG0200                      Beukenhof     WG0207
+     West-Vlaanderen     WG0000                 Brok     WG0200                     Wilgenhart     WG0209
+     West-Vlaanderen     WG0000                 Brok     WG0200        Sint Arnold-steenbrugge     WG0210
+     West-Vlaanderen     WG0000                 Brok     WG0200                     Zuienkerke     WG0211
+     West-Vlaanderen     WG0000                 Brok     WG0200                    Chiro Heist     WG0302
+     West-Vlaanderen     WG0000                 Brok     WG0200            Vzw Chiro Bloemkine     WM0306
+     West-Vlaanderen     WG0000          Baeckelandt     WG0700                   Mandelburcht     WG0701
+     West-Vlaanderen     WG0000          Baeckelandt     WG0700                          Jefri     WG0702
+     West-Vlaanderen     WG0000          Baeckelandt     WG0700                      Bosmolens     WG0703
+     West-Vlaanderen     WG0000          Baeckelandt     WG0700                 Kiekeboe Sente     WG0707
+     West-Vlaanderen     WG0000          Baeckelandt     WG0700                       Sint Jan     WJ0705
+     West-Vlaanderen     WG0000          Baeckelandt     WG0700                      SINT NICO     WJ0706
+     West-Vlaanderen     WG0000          Baeckelandt     WG0700                    Sint Pieter     WJ0709
+     West-Vlaanderen     WG0000          Baeckelandt     WG0700                        Vivaldi     WM0705
+     West-Vlaanderen     WG0000          Baeckelandt     WG0700                           Ilse     WM0706
+     West-Vlaanderen     WG0000          Baeckelandt     WG0700                           Nele     WM0708
+     West-Vlaanderen     WG0000          Baeckelandt     WG0700           Chiromeisjes Emelgem     WM0709
+     West-Vlaanderen     WG0000             Jakkedoe     WG1500                       T Geetje     WG1503
+     West-Vlaanderen     WG0000             Jakkedoe     WG1500                           Moza     WG1504
+     West-Vlaanderen     WG0000             Jakkedoe     WG1500                       Kiekeboe     WG1505
+     West-Vlaanderen     WG0000             Jakkedoe     WG1500                         Romejo     WG1506
+     West-Vlaanderen     WG0000             Jakkedoe     WG1500                     ZILVERBERG     WG1510
+     West-Vlaanderen     WG0000             Jakkedoe     WG1500                      Trefferke     WG1515
+     West-Vlaanderen     WG0000             Jakkedoe     WG1500                         Jomego     WG1517
+     West-Vlaanderen     WG0000             Jakkedoe     WG1500                      Edelweiss     WG1518
+     West-Vlaanderen     WG0000             Jakkedoe     WG1500                           Tijl     WJ1501
+     West-Vlaanderen     WG0000             Jakkedoe     WG1500                     Sint Joris     WJ1502
+     West-Vlaanderen     WG0000             Jakkedoe     WG1500   Chirojongens Sint-jan Staden     WJ1511
+     West-Vlaanderen     WG0000             Jakkedoe     WG1500               D Oude Maalderij     WJ1512
+     West-Vlaanderen     WG0000             Jakkedoe     WG1500                        Jooniek     WJ1513
+     West-Vlaanderen     WG0000             Jakkedoe     WG1500                           Nele     WM1501
+     West-Vlaanderen     WG0000             Jakkedoe     WG1500     Chiromeisjes De Kadullekes     WM1502
+     West-Vlaanderen     WG0000             Jakkedoe     WG1500                          Jochi     WM1507
+     West-Vlaanderen     WG0000             Jakkedoe     WG1500                     Chirumbero     WM1509
+     West-Vlaanderen     WG0000             Jakkedoe     WG1500                    T Piegoetje     WM1511
+     West-Vlaanderen     WG0000             Jakkedoe     WG1500               Onze Lieve Vrouw     WM1512
+     West-Vlaanderen     WG0000             Jakkedoe     WG1500                  T Scamanderke     WM1513
+     West-Vlaanderen     WG0000             Jakkedoe     WG1500                  DE PRETMAKERS     WM1514
+     West-Vlaanderen     WG0000             Jakkedoe     WG1500                         Vlo'ke     WM1515
+     West-Vlaanderen     WG0000             Jakkedoe     WG1500                   Nele Beveren     WM1516
+     West-Vlaanderen     WG0000               Oe Est     WG1900                          Beete     WJ1901
+     West-Vlaanderen     WG0000               Oe Est     WG1900                       Leieland     WJ1902
+     West-Vlaanderen     WG0000               Oe Est     WG1900                        Horizon     WJ1904
+     West-Vlaanderen     WG0000               Oe Est     WG1900                           Vita     WJ1905
+     West-Vlaanderen     WG0000               Oe Est     WG1900               Gaverke Beregoed     WJ1907
+     West-Vlaanderen     WG0000               Oe Est     WG1900                      REGENBOOG     WJ1908
+     West-Vlaanderen     WG0000               Oe Est     WG1900                     Zie Zo Zon     WM1901
+     West-Vlaanderen     WG0000               Oe Est     WG1900                       Leieland     WM1902
+     West-Vlaanderen     WG0000               Oe Est     WG1900                        Horizon     WM1904
+     West-Vlaanderen     WG0000               Oe Est     WG1900                        FREEDOM     WM1905
+     West-Vlaanderen     WG0000               Oe Est     WG1900              Gaverke Beregoed!     WM1907
+     West-Vlaanderen     WG0000               Oe Est     WG1900                         Klimop     WM1908
+     West-Vlaanderen     WG0000           Win-gewest     WG0900                      Verticaal     WG0901
+     West-Vlaanderen     WG0000           Win-gewest     WG0900                   Tijl En Nele     WG0903
+     West-Vlaanderen     WG0000           Win-gewest     WG0900                       Zandberg     WG0904
+     West-Vlaanderen     WG0000           Win-gewest     WG0900                       Stasegem     WG0905
+     West-Vlaanderen     WG0000           Win-gewest     WG0900                   De Sprokkels     WG0906
+     West-Vlaanderen     WG0000           Win-gewest     WG0900                   Sint-Michiel     WG0907
+     West-Vlaanderen     WG0000           Win-gewest     WG0900                      Kierewiet     WG0908
+     West-Vlaanderen     WG0000           Win-gewest     WG0900            De Nieuwe Generatie     WJ0902
+     West-Vlaanderen     WG0000           Win-gewest     WG0900                           Iris     WM0902
+     West-Vlaanderen     WG0000           Win-gewest     WG0900                          Joeki     WM0910
+     West-Vlaanderen     WG0000               Foefel     WG1700                      Aartrijke     WG1701
+     West-Vlaanderen     WG0000               Foefel     WG1700           'T ZAWEZIEN EERNEGEM     WG1702
+     West-Vlaanderen     WG0000               Foefel     WG1700                         Jomada     WG1703
+     West-Vlaanderen     WG0000               Foefel     WG1700                  Zedelgem Dorp     WG1708
+     West-Vlaanderen     WG0000               Foefel     WG1700                        Groezie     WG1710
+     West-Vlaanderen     WG0000               Foefel     WG1700                    SINT PAULUS     WJ1704
+     West-Vlaanderen     WG0000               Foefel     WG1700                       De Kobbe     WJ1706
+     West-Vlaanderen     WG0000               Foefel     WG1700                      DON BOSCO     WJ1709
+     West-Vlaanderen     WG0000               Foefel     WG1700                    Wietjesland     WM1704
+     West-Vlaanderen     WG0000               Foefel     WG1700                   Sint Michiel     WM1705
+     West-Vlaanderen     WG0000               Foefel     WG1700                       Burlebub     WM1706
+     West-Vlaanderen     WG0000               Foefel     WG1700                      Don Bosco     WM1709
+     West-Vlaanderen     WG0000          GEWEST KUST     WG1300                     Ter Streep     WG1204
+     West-Vlaanderen     WG0000          GEWEST KUST     WG1300                            Sas     WG1301
+     West-Vlaanderen     WG0000          GEWEST KUST     WG1300                     Mariakerke     WG1304
+     West-Vlaanderen     WG0000          GEWEST KUST     WG1300                    Sint Arnout     WG1306
+     West-Vlaanderen     WG0000          GEWEST KUST     WG1300                     Snaaskerke     WG1307
+     West-Vlaanderen     WG0000          GEWEST KUST     WG1300                         't Ark     WG1311
+     West-Vlaanderen     WG0000          GEWEST KUST     WG1300                    De Branding     WJ1202
+     West-Vlaanderen     WG0000          GEWEST KUST     WG1300                 Sint Godelieve     WJ1303
+     West-Vlaanderen     WG0000          GEWEST KUST     WG1300                    Speelvogels     WJ1306
+     West-Vlaanderen     WG0000          GEWEST KUST     WG1300                        Vagadam     WJ1308
+     West-Vlaanderen     WG0000          GEWEST KUST     WG1300                    De Branding     WM1202
+     West-Vlaanderen     WG0000          GEWEST KUST     WG1300                    Noorderwind     WM1305
+     West-Vlaanderen     WG0000          GEWEST KUST     WG1300         Chiro KATRIEN Oostende     WM1308
+     West-Vlaanderen     WG0000               Widder     WG1000                      Korneelke     WG1001
+     West-Vlaanderen     WG0000               Widder     WG1000                          Stine     WG1002
+     West-Vlaanderen     WG0000               Widder     WG1000                          Okido     WG1004
+     West-Vlaanderen     WG0000               Widder     WG1000                         Tsjoef     WG1006
+     West-Vlaanderen     WG0000               Widder     WG1000                         Tandem     WG1007
+     West-Vlaanderen     WG0000               Widder     WG1000                      T Stratje     WG1012
+     West-Vlaanderen     WG0000               Widder     WG1000                        Knipoog     WG1013
+     West-Vlaanderen     WG0000               Widder     WG1000                       Sint Jan     WG1014
+     West-Vlaanderen     WG0000               Widder     WG1000                        ROCHIRO     WG1015
+     West-Vlaanderen     WG0000               Widder     WG1000                       Oskaarke     WJ1005
+     West-Vlaanderen     WG0000               Widder     WG1000                      Don Bosco     WJ1009
+     West-Vlaanderen     WG0000               Widder     WG1000      Chirojongens Wevelgem Vzw     WJ1010
+     West-Vlaanderen     WG0000               Widder     WG1000                        Gerboda     WM1003
+     West-Vlaanderen     WG0000               Widder     WG1000                         Padiro     WM1005
+     West-Vlaanderen     WG0000               Widder     WG1000                          Marke     WM1008
+     West-Vlaanderen     WG0000               Widder     WG1000                         Center     WM1010
+     West-Vlaanderen     WG0000       Sante Me Ratje     WG1400                           Haro     WG1401
+     West-Vlaanderen     WG0000       Sante Me Ratje     WG1400                      Trezebees     WG1402
+     West-Vlaanderen     WG0000       Sante Me Ratje     WG1400                          Abele     WG1404
+     West-Vlaanderen     WG0000       Sante Me Ratje     WG1400                        Sjaloom     WG1405
+     West-Vlaanderen     WG0000       Sante Me Ratje     WG1400                       Parcifal     WG1406
+     West-Vlaanderen     WG0000       Sante Me Ratje     WG1400                      Pimpernel     WG1407
+     West-Vlaanderen     WG0000       Sante Me Ratje     WG1400                          Dokio     WG1411
+     West-Vlaanderen     WG0000       Sante Me Ratje     WG1400                      Windekind     WG1412
+            Mechelen     MG0000                Rupel     MG0300                         JERUBO     MG0301
+            Mechelen     MG0000                Rupel     MG0300                       Calimero     MG0303
+            Mechelen     MG0000                Rupel     MG0300                        Schelle     MG0310
+            Mechelen     MG0000                Rupel     MG0300                           Hiro     mg0311
+            Mechelen     MG0000                Rupel     MG0300                        Tisselt     MG0313
+            Mechelen     MG0000                Rupel     MG0300                        Kontakt     MJ0302
+            Mechelen     MG0000                Rupel     MG0300                       Sint Jef     MJ0304
+            Mechelen     MG0000                Rupel     MG0300                        Instuif     MJ0306
+            Mechelen     MG0000                Rupel     MG0300                        Jochihe     MJ0309
+            Mechelen     MG0000                Rupel     MG0300                        Kontakt     MM0302
+            Mechelen     MG0000                Rupel     MG0300        Chiromeisjes Willebroek     MM0304
+            Mechelen     MG0000                Rupel     MG0300                           Vita     MM0306
+            Mechelen     MG0000                Rupel     MG0300                        Klaasje     MM0309
+            Mechelen     MG0000           Maneschijn     MG0800                             XL     MG0801
+            Mechelen     MG0000           Maneschijn     MG0800                       Libertus     MG0802
+            Mechelen     MG0000           Maneschijn     MG0800                         Battel     MG0803
+            Mechelen     MG0000           Maneschijn     MG0800                         Coloma     MG0804
+            Mechelen     MG0000           Maneschijn     MG0800                         Heffen     MG0807
+            Mechelen     MG0000           Maneschijn     MG0800             Aksent   Bonheiden     MG0811
+            Mechelen     MG0000           Maneschijn     MG0800                           Tijl     MG0815
+            Mechelen     MG0000           Maneschijn     MG0800                         Skippy     MG0816
+            Mechelen     MG0000           Maneschijn     MG0800                        Eppegem     MG0817
+            Mechelen     MG0000           Maneschijn     MG0800                Sint Lambertus      MJ0805
+            Mechelen     MG0000           Maneschijn     MG0800                           HOJE     MJ0806
+            Mechelen     MG0000           Maneschijn     MG0800                   Zennedijkers     MJ0808
+            Mechelen     MG0000           Maneschijn     MG0800                    Heilige Leo     MJ0809
+            Mechelen     MG0000           Maneschijn     MG0800                     Sint Elooi     MJ0810
+            Mechelen     MG0000           Maneschijn     MG0800 Chirojongens Elzestraat (sint-augustinus)     MJ0812
+            Mechelen     MG0000           Maneschijn     MG0800                          Jochi     MJ0813
+            Mechelen     MG0000           Maneschijn     MG0800                  Sint Martinus     MJ0814
+            Mechelen     MG0000           Maneschijn     MG0800                 Sint Lambertus     MM0805
+            Mechelen     MG0000           Maneschijn     MG0800                           Hoje     MM0806
+            Mechelen     MG0000           Maneschijn     MG0800                   Zennedijkers     MM0808
+            Mechelen     MG0000           Maneschijn     MG0800                          Owaze     MM0809
+            Mechelen     MG0000           Maneschijn     MG0800                   Sint Maarten     MM0810
+            Mechelen     MG0000           Maneschijn     MG0800   Sint Augustinus (elzestraat)     MM0812
+            Mechelen     MG0000           Maneschijn     MG0800                         Aurora     MM0813
+            Mechelen     MG0000           Maneschijn     MG0800                  Sint Martinus     mm0814
+            Mechelen     MG0000                 Maas     MG0700                           Koka     MJ0701
+            Mechelen     MG0000                 Maas     MG0700               Heilige Lodewijk     MJ0703
+            Mechelen     MG0000                 Maas     MG0700                           Echo     MJ0705
+            Mechelen     MG0000                 Maas     MG0700       Chirojongens Duffel-oost     MJ0707
+            Mechelen     MG0000                 Maas     MG0700                     Sint Jozef     MJ0708
+            Mechelen     MG0000                 Maas     MG0700                           Koka     MM0701
+            Mechelen     MG0000                 Maas     MG0700                   Sint Michael     MM0703
+            Mechelen     MG0000                 Maas     MG0700                     Keten Lint     MM0704
+            Mechelen     MG0000                 Maas     MG0700                     Akkefietje     MM0705
+            Mechelen     MG0000                 Maas     MG0700                         Aurora     MM0706
+            Mechelen     MG0000                 Maas     MG0700                    Duffel Oost     MM0707
+            Mechelen     MG0000                 Maas     MG0700                     Sint Agnes     MM0708
+            Mechelen     MG0000            Pallieter     MG0100                      Lips Lier     MG0104
+            Mechelen     MG0000            Pallieter     MG0100                      Valentijn     MG0111
+            Mechelen     MG0000            Pallieter     MG0100          Reigersnest Zandhoven     MG0112
+            Mechelen     MG0000            Pallieter     MG0100                  Sint-stefanus     MG0113
+            Mechelen     MG0000            Pallieter     MG0100                  Sint Gummarus     MJ0101
+            Mechelen     MG0000            Pallieter     MG0100                      Bechibeng     MJ0105
+            Mechelen     MG0000            Pallieter     MG0100                           Gust     MJ0106
+            Mechelen     MG0000            Pallieter     MG0100                        Jochiko     MJ0107
+            Mechelen     MG0000            Pallieter     MG0100                        Pako-jo     MJ0108
+            Mechelen     MG0000            Pallieter     MG0100                     JONG LEVEN     MJ0109
+            Mechelen     MG0000            Pallieter     MG0100                    Heilig Hart     MM0103
+            Mechelen     MG0000            Pallieter     MG0100                        BECHIME     MM0105
+            Mechelen     MG0000            Pallieter     MG0100                           NELE     MM0106
+            Mechelen     MG0000            Pallieter     MG0100                          Lutje     MM0107
+            Mechelen     MG0000            Pallieter     MG0100                         Pakome     MM0108
+            Mechelen     MG0000            Pallieter     MG0100                      Elckerlyc     MM0109
+            Mechelen     MG0000                 Hest     MG0400                    Zonderschot     MG0403
+            Mechelen     MG0000                 Hest     MG0400                        Hallaar     MG0405
+            Mechelen     MG0000                 Hest     MG0400                         Itegem     MG0406
+            Mechelen     MG0000                 Hest     MG0400         Sint Rum0ldus Heimatje     MG0407
+            Mechelen     MG0000                 Hest     MG0400                          Jegra     MG0410
+            Mechelen     MG0000                 Hest     MG0400                Chiro Houtvenne     MG0413
+            Mechelen     MG0000                 Hest     MG0400                  Sint Salvator     MG0415
+            Mechelen     MG0000                 Hest     MG0400                       Chijosta     MJ0401
+            Mechelen     MG0000                 Hest     MG0400             Sint Jan Berghmans     MJ0402
+            Mechelen     MG0000                 Hest     MG0400                      Jochibeer     MJ0408
+            Mechelen     MG0000                 Hest     MG0400                    Sint Gerolf     MJ0409
+            Mechelen     MG0000                 Hest     MG0400                  Sint Mattheus     MJ0414
+            Mechelen     MG0000                 Hest     MG0400                 Sint Lutgardis     MM0401
+            Mechelen     MG0000                 Hest     MG0400                  Heist Centrum     MM0402
+            Mechelen     MG0000                 Hest     MG0400             Mechibeer (beerzel     MM0408
+            Mechelen     MG0000                 Hest     MG0400        Chiromeisjes Sint Agnes     MM0409
+            Mechelen     MG0000                 Hest     MG0400                      Sint Anna     MM0414
+            Mechelen     MG0000             Kla'bant     MG0500                         Bornem     MG0502
+            Mechelen     MG0000             Kla'bant     MG0500                      Don Bosco     MG0503
+            Mechelen     MG0000             Kla'bant     MG0500   Sint Pieter + Sint Lutgardis     MG0504
+            Mechelen     MG0000             Kla'bant     MG0500                      Don Bosco     MG0509
+            Mechelen     MG0000             Kla'bant     MG0500                  Sint Stefanus     MJ0501
+            Mechelen     MG0000             Kla'bant     MG0500     Onze Lieve Vrouw Ten Traan     MJ0505
+            Mechelen     MG0000             Kla'bant     MG0500     Onze Lieve Vrouw Ruisbroek     MJ0506
+            Mechelen     MG0000             Kla'bant     MG0500                    T Snotterke     MJ0507
+            Mechelen     MG0000             Kla'bant     MG0500                        Liezele     MJ0508
+            Mechelen     MG0000             Kla'bant     MG0500                 SINT LEONARDUS     MJ0510
+            Mechelen     MG0000             Kla'bant     MG0500             Sint Jan Berchmans     MJ0512
+            Mechelen     MG0000             Kla'bant     MG0500                   SINT STEFAAN     MM0501
+            Mechelen     MG0000             Kla'bant     MG0500                      Himaranga     MM0505
+            Mechelen     MG0000             Kla'bant     MG0500     Onze Lieve Vrouw Ruisbroek     MM0506
+            Mechelen     MG0000             Kla'bant     MG0500                 SINT LUTGARDIS     MM0507
+            Mechelen     MG0000             Kla'bant     MG0500                        Liezele     MM0508
+            Mechelen     MG0000             Kla'bant     MG0500                 Sint Lutgardis     MM0510
+            Mechelen     MG0000             Kla'bant     MG0500                 Heilige Imelda     MM0512
+              Leuven    LEG0000           Suikerspin    LEG0300                      T Klontje    LEG0302
+              Leuven    LEG0000           Suikerspin    LEG0300                 Dominiek Savio    LEG0304
+              Leuven    LEG0000           Suikerspin    LEG0300                     Jeugddroom    LEG0305
+              Leuven    LEG0000           Suikerspin    LEG0300                       ROOSBEEK    LEG0306
+              Leuven    LEG0000           Suikerspin    LEG0300                   Nemas Binkom    LEG0307
+              Leuven    LEG0000           Suikerspin    LEG0300                          HOGEN    LEG0313
+              Leuven    LEG0000           Suikerspin    LEG0300                       Budingen    LEG0314
+              Leuven    LEG0000           Suikerspin    LEG0300                      Melkwezer    LEG0316
+              Leuven    LEG0000           Suikerspin    LEG0300                        Breydel    LEJ0310
+              Leuven    LEG0000           Suikerspin    LEG0300                       Alpaidis    LEM0310
+              Leuven    LEG0000           Heuvelland    LEG0500                      Ottenburg    LEG0501
+              Leuven    LEG0000           Heuvelland    LEG0500                        Blanden    LEG0504
+              Leuven    LEG0000           Heuvelland    LEG0500         Sint Anna En Don Bosco    LEG0505
+              Leuven    LEG0000           Heuvelland    LEG0500                          Kadee    LEG0506
+              Leuven    LEG0000           Heuvelland    LEG0500                       Leefdaal    LEG0507
+              Leuven    LEG0000           Heuvelland    LEG0500                      Doeritsan    LEG0508
+              Leuven    LEG0000           Heuvelland    LEG0500                 FLURK EVERBERG    LEG0509
+              Leuven    LEG0000           Heuvelland    LEG0500          Godelieve De Montfort    LEG0510
+              Leuven    LEG0000           Heuvelland    LEG0500                 Sint Tarcitius    LEJ0502
+              Leuven    LEG0000           Heuvelland    LEG0500                  Flits En Knal    LEM0502
+              Leuven    LEG0000             Meerdaal    LEG0200                          Karoo    LEG0201
+              Leuven    LEG0000             Meerdaal    LEG0200                      Crescendo    LEG0202
+              Leuven    LEG0000             Meerdaal    LEG0200                       Hiperlie    LEG0203
+              Leuven    LEG0000             Meerdaal    LEG0200                         Hekeko    LEG0204
+              Leuven    LEG0000             Meerdaal    LEG0200                         Spirit    LEG0209
+              Leuven    LEG0000             Meerdaal    LEG0200                   Pro Wijgmaal    LEG0213
+              Leuven    LEG0000             Meerdaal    LEG0200                   Sint Carolus    LEG0214
+              Leuven    LEG0000             Meerdaal    LEG0200                  Holsbeek Dorp    LEG0215
+              Leuven    LEG0000             Meerdaal    LEG0200                      Don Bosco    LEG0221
+              Leuven    LEG0000             Meerdaal    LEG0200                      Don Bosco    LEG0222
+              Leuven    LEG0000             Meerdaal    LEG0200                      Vlierbeek    LEJ0216
+              Leuven    LEG0000             Meerdaal    LEG0200                       Blauwput    LEJ0220
+              Leuven    LEG0000             Meerdaal    LEG0200                      Vlierbeek    LEM0216
+              Leuven    LEG0000             Meerdaal    LEG0200                       Blauwput    LEM0220
+              Leuven    LEG0000       Demer En Dijle    LEG0100     Sint-hubertus & Sint-lucia    LEG0101
+              Leuven    LEG0000       Demer En Dijle    LEG0100                      Frolevita    LEG0102
+              Leuven    LEG0000       Demer En Dijle    LEG0100                           Anto    LEG0103
+              Leuven    LEG0000       Demer En Dijle    LEG0100                        Damiaan    LEG0104
+              Leuven    LEG0000       Demer En Dijle    LEG0100                      Don Bosco    LEG0105
+              Leuven    LEG0000       Demer En Dijle    LEG0100                     Keerbergen    LEG0106
+              Leuven    LEG0000       Demer En Dijle    LEG0100                  SINT MARTINUS    LEG0107
+              Leuven    LEG0000       Demer En Dijle    LEG0100                     Kampenhout    LEG0111
+              Leuven    LEG0000       Demer En Dijle    LEG0100                  St-anna  Baal    LEJ0109
+              Leuven    LEG0000       Demer En Dijle    LEG0100                 Sint Lutgardis    LEM0109
+              Leuven    LEG0000             Demerdal    LEG0600                    Betekom vzw    LEG0605
+              Leuven    LEG0000             Demerdal    LEG0600                         JEVATI    LEG0606
+              Leuven    LEG0000             Demerdal    LEG0600                       ESJEEWEE    LEG0607
+              Leuven    LEG0000             Demerdal    LEG0600        HEILIG HART Ourodenberg    LEG0608
+              Leuven    LEG0000             Demerdal    LEG0600                         Gijmel    LEG0611
+              Leuven    LEG0000             Demerdal    LEG0600                   Begijnendijk    LEG0612
+              Leuven    LEG0000             Demerdal    LEG0600                   Sint Niklaas    LEJ0604
+              Leuven    LEG0000             Demerdal    LEG0600                         Rillke    LEM0604
+              Leuven    LEG0000             Hageland    LEG0400                       Paradiso    LEG0402
+              Leuven    LEG0000             Hageland    LEG0400                    Hatsjekidee    LEG0403
+              Leuven    LEG0000             Hageland    LEG0400                           Mais    LEG0405
+              Leuven    LEG0000             Hageland    LEG0400                 Scherpenheuvel    LEG0406
+              Leuven    LEG0000             Hageland    LEG0400                       De Keten    LEG0407
+              Leuven    LEG0000             Hageland    LEG0400                       Webbekom    LEG0409
+              Leuven    LEG0000             Hageland    LEG0400                      Sint Bavo    LEJ0404
+              Leuven    LEG0000             Hageland    LEG0400                 Sint Lutgardis    LEM0404
+           Antwerpen     AG0000                  Zac     AG0400                         Pleplo     AG0103
+           Antwerpen     AG0000                  Zac     AG0400                           Lore     AG0104
+           Antwerpen     AG0000                  Zac     AG0400                        Dolfijn     AG0108
+           Antwerpen     AG0000                  Zac     AG0400               Sint Jan Vianney     AG0401
+           Antwerpen     AG0000                  Zac     AG0400                 't Allemanneke     AG0402
+           Antwerpen     AG0000                  Zac     AG0400                      Don Bosco     AG0403
+           Antwerpen     AG0000                  Zac     AG0400                    Jong Valaar     AG0405
+           Antwerpen     AG0000                  Zac     AG0400                      Sint Bavo     AG0407
+           Antwerpen     AG0000                  Zac     AG0400                          Jowen     AG0408
+           Antwerpen     AG0000                  Zac     AG0400                       Sentroem     AJ0409
+           Antwerpen     AG0000                  Zac     AG0400                        Klinker     AM0409
+           Antwerpen     AG0000                 Lach     AG0200                           WOKA     AG0201
+           Antwerpen     AG0000                 Lach     AG0200                          Josto     AG0202
+           Antwerpen     AG0000                 Lach     AG0200                         Toreke     AG0203
+           Antwerpen     AG0000                 Lach     AG0200                            Jap     AG0204
+           Antwerpen     AG0000                 Lach     AG0200                         Icarus     AG0207
+           Antwerpen     AG0000                 Lach     AG0200                       Broechem     AG0209
+           Antwerpen     AG0000                 Lach     AG0200                           Stam     AG0211
+           Antwerpen     AG0000                 Lach     AG0200                         Fonske     AJ0210
+           Antwerpen     AG0000                 Lach     AG0200                        Fientje     AM0210
+           Antwerpen     AG0000                  Pol     AG0500                          Tempo     AG0502
+           Antwerpen     AG0000                  Pol     AG0500                        Kristal     AG0503
+           Antwerpen     AG0000                  Pol     AG0500                           Joka     AG0504
+           Antwerpen     AG0000                  Pol     AG0500               Jez Zilverenhoek     AG0506
+           Antwerpen     AG0000                  Pol     AG0500                   De Kievitjes     AG0507
+           Antwerpen     AG0000                  Pol     AG0500          Don Bosco Putte-grens     AJ0505
+           Antwerpen     AG0000                  Pol     AG0500                 Sint Dionysius     AM0505
+           Antwerpen     AG0000                 Pink     AG0800               Sloepi Nieuwmoer     AG0801
+           Antwerpen     AG0000                 Pink     AG0800                         Mejoca     AG0802
+           Antwerpen     AG0000                 Pink     AG0800                        Gniffel     AG0803
+           Antwerpen     AG0000                 Pink     AG0800                     Happy Dorp     AG0804
+           Antwerpen     AG0000                 Pink     AG0800                          Si-jo     AG0805
+           Antwerpen     AG0000                 Pink     AG0800                           MYIN     AG0808
+           Antwerpen     AG0000                 Pink     AG0800                           Joho     AJ0807
+           Antwerpen     AG0000                 Pink     AG0800               Onze Lieve Vrouw     AM0806
+           Antwerpen     AG0000                 Pink     AG0800                    Klavertje 4     AM0807
+           Antwerpen     AG0000          GEWEST GLIM     AG0700                         Frelus     AG0701
+           Antwerpen     AG0000          GEWEST GLIM     AG0700                         Feniks     AG0704
+           Antwerpen     AG0000          GEWEST GLIM     AG0700                   JOKE-SCINDAL     AG0706
+           Antwerpen     AG0000          GEWEST GLIM     AG0700                           Waks     AG0709
+           Antwerpen     AG0000          GEWEST GLIM     AG0700                  Sint Antonius     AJ0702
+           Antwerpen     AG0000          GEWEST GLIM     AG0700                          Gieke     AJ0708
+           Antwerpen     AG0000          GEWEST GLIM     AG0700               Heilige Antonius     AM0702
+           Antwerpen     AG0000          GEWEST GLIM     AG0700                      Don Bosco     AM0708
+           Antwerpen     AG0000                  Zip     AG0300                       Terdonck     AG0302
+           Antwerpen     AG0000                  Zip     AG0300                      Don Bosco     AG0304
+           Antwerpen     AG0000                  Zip     AG0300                           Bart     AG0306
+           Antwerpen     AG0000                  Zip     AG0300                      Tom & Sam     AG0308
+           Antwerpen     AG0000                  Zip     AG0300         Sint Jozef Bloemendaal     AG0309
+           Antwerpen     AG0000                  Zip     AG0300                      Antoontje     AG0312
+           Antwerpen     AG0000                  Zip     AG0300                       Sint Job     AG0313
+           Antwerpen     AG0000                  Zip     AG0300             Brasschaat Centrum     AG0901
+           Antwerpen     AG0000                  Zip     AG0300       Kaart Jongens En Meisjes     AG0902
+           Antwerpen     AG0000                  Zip     AG0300                       Bethanie     AG0903
+           Antwerpen     AG0000                  Zip     AG0300                       Driehoek     AG0904
+           Antwerpen     AG0000                  Zip     AG0300                    Ekeren Donk     AG0907
+           Antwerpen     AG0000                  Zip     AG0300             Sint Jozef Jongens     AJ0303
+           Antwerpen     AG0000                  Zip     AG0300                  Sint-filippus     AJ0310
+           Antwerpen     AG0000                  Zip     AG0300                    Sloratokels     AJ0311
+           Antwerpen     AG0000                  Zip     AG0300                Sint Franciscus     AM0301
+           Antwerpen     AG0000                  Zip     AG0300             Sint-jozef Meisjes     AM0303
+           Antwerpen     AG0000                  Zip     AG0300                  Sint Filippus     AM0310
+           Antwerpen     AG0000                  Zip     AG0300                         Divora     AM0311
+             Brussel     BG0000                 Zizo     BG0200                          Meise     BG0205
+             Brussel     BG0000                 Zizo     BG0200                       Malderen     BG0207
+             Brussel     BG0000                 Zizo     BG0200                       Malegijs     BG0212
+             Brussel     BG0000                 Zizo     BG0200                  Sint Martinus     bg0214
+             Brussel     BG0000                 Zizo     BG0200                         Flater     BJ0201
+             Brussel     BG0000                 Zizo     BG0200                      Eversheim     BJ0202
+             Brussel     BG0000                 Zizo     BG0200 Chirojongens Londerzeel Centrum     BJ0204
+             Brussel     BG0000                 Zizo     BG0200                 Chiro Westrode     BJ0206
+             Brussel     BG0000                 Zizo     BG0200                       Apollo 8     BJ0208
+             Brussel     BG0000                 Zizo     BG0200                          Klaas     BJ0209
+             Brussel     BG0000                 Zizo     BG0200                   Sint Niklaas     BJ0213
+             Brussel     BG0000                 Zizo     BG0200                         Katoke     BM0201
+             Brussel     BG0000                 Zizo     BG0200                      Eversheim     BM0202
+             Brussel     BG0000                 Zizo     BG0200                     Londerzeel     BM0204
+             Brussel     BG0000                 Zizo     BG0200                 Chiro Westrode     BM0206
+             Brussel     BG0000                 Zizo     BG0200                        Sjaloom     BM0208
+             Brussel     BG0000                 Zizo     BG0200             Chiromeisjes Klaas     BM0209
+             Brussel     BG0000                 Zizo     BG0200                            Pol     BM0210
+             Brussel     BG0000                 Zizo     BG0200                     Sint Agnes     BM0213
+             Brussel     BG0000                  Ket     BG0100               Spirit-elckerlyc     BG0102
+             Brussel     BG0000                  Ket     BG0100                      Jijippeke     BG0107
+             Brussel     BG0000                  Ket     BG0100                         Sagnoh     BG0113
+             Brussel     BG0000                  Ket     BG0100        Kristus Koning Mutsaard     BG0114
+             Brussel     BG0000                  Ket     BG0100                      St-anneke     BG0117
+             Brussel     BG0000                  Ket     BG0100                       Oudergem     BG0120
+             Brussel     BG0000                  Ket     BG0100                          Wacko     BG0124
+             Brussel     BG0000                  Ket     BG0100                            H20     BG0125
+             Brussel     BG0000                  Ket     BG0100               Chiro Schaarbeek     BG0126
+             Brussel     BG0000                  Ket     BG0100                         Koraal     BJ0104
+             Brussel     BG0000                  Ket     BG0100                         Radium     BM0104
+             Brussel     BG0000                  Ket     BG0100                   Bint Meisjes     BM0109
+             Brussel     BG0000                 West     BG0500                      Windekind     BG0501
+             Brussel     BG0000                 West     BG0500                       Kreatien     BG0503
+             Brussel     BG0000                 West     BG0500                        Bodegem     BG0507
+             Brussel     BG0000                 West     BG0500                         Hakilo     BG0508
+             Brussel     BG0000                 West     BG0500              Vrolick Elkerlick     BG0509
+             Brussel     BG0000                 West     BG0500                           KKOS     BG0511
+             Brussel     BG0000                 West     BG0500                      Don Bosco     BJ0501
+             Brussel     BG0000                 West     BG0500                        Lombeek     BJ0502
+             Brussel     BG0000                 West     BG0500                          Amigo     BJ0504
+             Brussel     BG0000                 West     BG0500                        Kapelle     BJ0505
+             Brussel     BG0000                 West     BG0500                        Jokonta     BJ0506
+             Brussel     BG0000                 West     BG0500                           Iris     BJ0515
+             Brussel     BG0000                 West     BG0500                        Lombeek     BM0502
+             Brussel     BG0000                 West     BG0500                       Pro-jong     BM0504
+             Brussel     BG0000                 West     BG0500                        Kapelle     BM0505
+             Brussel     BG0000                 West     BG0500                        Allegro     BM0506
+             Brussel     BG0000                 West     BG0500                          Savio     BM0512
+             Brussel     BG0000                 West     BG0500                      Walfergem     BM0513
+             Brussel     BG0000                 West     BG0500                           Iris     BM0515
+             Brussel     BG0000           Zonienrand     BG0300 Sint Jan Berchmens - Sint Stefaan     BG0301
+             Brussel     BG0000           Zonienrand     BG0300                         MIKMAK     BG0302
+             Brussel     BG0000           Zonienrand     BG0300                        Stokkel     BG0303
+             Brussel     BG0000           Zonienrand     BG0300                  Bam! Kraainem     BG0304
+             Brussel     BG0000           Zonienrand     BG0300                 Chiro Zaventem     BG0305
+             Brussel     BG0000           Zonienrand     BG0300                       Maleizen     BG0306
+             Brussel     BG0000           Zonienrand     BG0300                  Berkenbloesem     BG0307
+             Brussel     BG0000           Zonienrand     BG0300              Reinaertkadolleke     BG0309
+             Brussel     BG0000           Zonienrand     BG0300                 Chiro Duisburg     BG0313
+             Brussel     BG0000           Zonienrand     BG0300                         Iserna     BG0316
+             Brussel     BG0000           Zonienrand     BG0300                         Bosuil     BJ0311
+             Brussel     BG0000           Zonienrand     BG0300                  T Sonienjonck     BM0311
+             Brussel     BG0000           Zonienrand     BG0300                  Sint Martinus     BM0317
+             Brussel     BG0000   Zoetgeur  Randstad     BG0600                       De Kring     BG0601
+             Brussel     BG0000   Zoetgeur  Randstad     BG0600                    Heilig Hart     BG0602
+             Brussel     BG0000   Zoetgeur  Randstad     BG0600                           Joep     bg0604
+             Brussel     BG0000   Zoetgeur  Randstad     BG0600                       Far West     BG0606
+             Brussel     BG0000   Zoetgeur  Randstad     BG0600                      Sikambers     BG0609
+             Brussel     BG0000   Zoetgeur  Randstad     BG0600                       Splinter     BG0610
+             Brussel     BG0000   Zoetgeur  Randstad     BG0600                 Sint Tarcitius     BJ0607
+             Brussel     BG0000   Zoetgeur  Randstad     BG0600                        Pechies     BM0603
+             Brussel     BG0000   Zoetgeur  Randstad     BG0600                    Gidi Diegem     BM0607
+             Brussel     BG0000   Zoetgeur  Randstad     BG0600                     Hamburgers     BM0609
+             Brussel     BG0000         Pajottenland     BG0700                          Bever     BG0704
+             Brussel     BG0000         Pajottenland     BG0700                        Rif Raf     BG0706
+             Brussel     BG0000         Pajottenland     BG0700                       Albatros     BG0708
+             Brussel     BG0000         Pajottenland     BG0700                      KARREVELD     BG0710
+             Brussel     BG0000         Pajottenland     BG0700                        Were-di     BJ0701
+             Brussel     BG0000         Pajottenland     BG0700                        Amigo S     BJ0702
+             Brussel     BG0000         Pajottenland     BG0700                       Uidekrij     BJ0703
+             Brussel     BG0000         Pajottenland     BG0700                         Lennik     BJ0705
+             Brussel     BG0000         Pajottenland     BG0700                    Sint Pieter     BJ0707
+             Brussel     BG0000         Pajottenland     BG0700                        Castrum     BJ0712
+             Brussel     BG0000         Pajottenland     BG0700                        Amigo's     BM0702
+             Brussel     BG0000         Pajottenland     BG0700                      Windekind     BM0703
+             Brussel     BG0000         Pajottenland     BG0700                         Lennik     BM0705
+             Brussel     BG0000         Pajottenland     BG0700                    Sint Pieter     BM0707
+             Brussel     BG0000         Pajottenland     BG0700                          Heije     BM0712
+             Brussel     BG0000          Zennevallei     BG0400                    Smasjh Jeko     BG0406
+             Brussel     BG0000          Zennevallei     BG0400                Ringo Huizingen     BG0407
+             Brussel     BG0000          Zennevallei     BG0400                          Sjoen     BG0408
+             Brussel     BG0000          Zennevallei     BG0400                         Snoopy     BG0409
+             Brussel     BG0000          Zennevallei     BG0400                   Negenmanneke     BG0410
+             Brussel     BG0000          Zennevallei     BG0400                        Sjaloom     BG0411
+             Brussel     BG0000          Zennevallei     BG0400                      Esperanto     BG0414
+             Brussel     BG0000          Zennevallei     BG0400                       Sint Jan     BJ0403
+             Brussel     BG0000          Zennevallei     BG0400                        Sabbath     BJ0404
+             Brussel     BG0000          Zennevallei     BG0400                   De Vroentjes     BJ0405
+             Brussel     BG0000          Zennevallei     BG0400                         Kadasj     BJ0413
+             Brussel     BG0000          Zennevallei     BG0400                         Eureka     BJ0415
+             Brussel     BG0000          Zennevallei     BG0400                     Kroesjpers     BM0403
+             Brussel     BG0000          Zennevallei     BG0400                           Oika     BM0404
+             Brussel     BG0000          Zennevallei     BG0400                         Idoena     BM0405
+             Brussel     BG0000          Zennevallei     BG0400                          Alcha     BM0413
+             Brussel     BG0000          Zennevallei     BG0400                       Fantomas     BM0415
+            Reinaert     OG2000         Reinaertland     OG2200                  Inter-jeugdig     OG2203
+            Reinaert     OG2000         Reinaertland     OG2200                       Saleghem     OG2204
+            Reinaert     OG2000         Reinaertland     OG2200                        Judocus     OG2205
+            Reinaert     OG2000         Reinaertland     OG2200                        Juventa     OJ2201
+            Reinaert     OG2000         Reinaertland     OG2200                   Sint-andreas     OJ2202
+            Reinaert     OG2000         Reinaertland     OG2200                            Wij     OJ2208
+            Reinaert     OG2000         Reinaertland     OG2200                     Hermelinde     OM2201
+            Reinaert     OG2000         Reinaertland     OG2200                     SINT AGNES     OM2202
+            Reinaert     OG2000         Reinaertland     OG2200                        Alleman     OM2208
+            Reinaert     OG2000             Wetteren     OG2500                    Den Averaan     OG2501
+            Reinaert     OG2000             Wetteren     OG2500                       't Rotje     OG2507
+            Reinaert     OG2000             Wetteren     OG2500                      Hadewijch     OG2508
+            Reinaert     OG2000             Wetteren     OG2500              Chiro Overschelde     OG2509
+            Reinaert     OG2000             Wetteren     OG2500                Chiro Kwatrecht     OG2510
+            Reinaert     OG2000             Wetteren     OG2500                           Jeko     OG2512
+            Reinaert     OG2000             Wetteren     OG2500                       Juventud     OJ2511
+            Reinaert     OG2000             Wetteren     OG2500                    Sint Gerolf     OJ2514
+            Reinaert     OG2000             Wetteren     OG2500                      Hermeline     OM2503
+            Reinaert     OG2000             Wetteren     OG2500                      Sint Anna     OM2511
+            Reinaert     OG2000             Wetteren     OG2500                 Sint Lutgardis     OM2514
+            Reinaert     OG2000          Scheldeland     OG2300                   Chiro Burcht     og2311
+            Reinaert     OG2000          Scheldeland     OG2300                    Chiro Kallo     OG2312
+            Reinaert     OG2000          Scheldeland     OG2300                    SINT GEROLF     OJ2301
+            Reinaert     OG2000          Scheldeland     OG2300                        Beveren     OJ2302
+            Reinaert     OG2000          Scheldeland     OG2300                         ALTENA     OJ2304
+            Reinaert     OG2000          Scheldeland     OG2300                          Inzet     OJ2306
+            Reinaert     OG2000          Scheldeland     OG2300                       Vrachijo     OJ2309
+            Reinaert     OG2000          Scheldeland     OG2300                 Kristus Koning     OJ2310
+            Reinaert     OG2000          Scheldeland     OG2300                         Ieweko     OM2301
+            Reinaert     OG2000          Scheldeland     OG2300                  Sint Martinus     OM2302
+            Reinaert     OG2000          Scheldeland     OG2300                   Sint Lutgard     OM2303
+            Reinaert     OG2000          Scheldeland     OG2300                       Adelheid     OM2304
+            Reinaert     OG2000          Scheldeland     OG2300                     De Spiraal     OM2305
+            Reinaert     OG2000          Scheldeland     OG2300                     Intervoran     OM2306
+            Reinaert     OG2000          Scheldeland     OG2300                      Windekind     OM2310
+            Reinaert     OG2000               Rondom     OG2400                   OVERAL TEMSE     OG2411
+            Reinaert     OG2000               Rondom     OG2400                          Pripo     OG2413
+            Reinaert     OG2000               Rondom     OG2400                     Komverdrom     OJ2402
+            Reinaert     OG2000               Rondom     OG2400                       Staderas     OJ2406
+            Reinaert     OG2000               Rondom     OG2400                          Kriko     OM2401
+            Reinaert     OG2000               Rondom     OG2400                        Jomokri     OM2402
+            Reinaert     OG2000               Rondom     OG2400                       Staderas     OM2406
+            Reinaert     OG2000               Rondom     OG2400                           Iris     OM2407
+            Reinaert     OG2000                Aymon     OG2100                          Tiboe     OG2112
+            Reinaert     OG2000                Aymon     OG2100                           Bobo     OG2119
+            Reinaert     OG2000                Aymon     OG2100                       Ommekaar     OG2120
+            Reinaert     OG2000                Aymon     OG2100                        Krikojo     OJ2106
+            Reinaert     OG2000                Aymon     OG2100                      Don Bosco     OJ2107
+            Reinaert     OG2000                Aymon     OG2100                         Knudde     OJ2108
+            Reinaert     OG2000                Aymon     OG2100             Sint Jan Berchmans     OJ2109
+            Reinaert     OG2000                Aymon     OG2100                           Hemo     OJ2110
+            Reinaert     OG2000                Aymon     OG2100                          Kadee     OJ2111
+            Reinaert     OG2000                Aymon     OG2100                   Heilig Kruis     OJ2114
+            Reinaert     OG2000                Aymon     OG2100                        Sperato     OJ2115
+            Reinaert     OG2000                Aymon     OG2100                          Jochi     OJ2118
+            Reinaert     OG2000                Aymon     OG2100                         Kreale     OM2103
+            Reinaert     OG2000                Aymon     OG2100                      Sonneveld     OM2106
+            Reinaert     OG2000                Aymon     OG2100                         Sagevo     OM2107
+            Reinaert     OG2000                Aymon     OG2100                      Pimpernel     OM2108
+            Reinaert     OG2000                Aymon     OG2100                      Elckerlyc     OM2109
+            Reinaert     OG2000                Aymon     OG2100                           Hemo     OM2110
+            Reinaert     OG2000                Aymon     OG2100                            Ejo     OM2111
+            Reinaert     OG2000                Aymon     OG2100                     Spodaspeza     OM2115
+            Reinaert     OG2000                Aymon     OG2100                         Jochim     OM2118
+              Kempen     KG0000            Kwarekken     KG0400                       De Keten     KG0404
+              Kempen     KG0000            Kwarekken     KG0400                    Klein-vorst     KG0405
+              Kempen     KG0000            Kwarekken     KG0400                          Frits     KG0407
+              Kempen     KG0000            Kwarekken     KG0400                   Sint Michiel     KG0409
+              Kempen     KG0000            Kwarekken     KG0400                         Rafiki     KG0411
+              Kempen     KG0000            Kwarekken     KG0400                 Chiro Eindhout     KG0413
+              Kempen     KG0000            Kwarekken     KG0400                 Hee Doe Je Mee     KJ0401
+              Kempen     KG0000            Kwarekken     KG0400                   Sint-servaas     KJ0403
+              Kempen     KG0000            Kwarekken     KG0400                       Albatros     KJ0406
+              Kempen     KG0000            Kwarekken     KG0400                        Kontakt     KJ0408
+              Kempen     KG0000            Kwarekken     KG0400           Sint Hubertus Ramsel     KJ0410
+              Kempen     KG0000            Kwarekken     KG0400                   Sint Michiel     KJ0412
+              Kempen     KG0000            Kwarekken     KG0400                Kom In De Kring     KM0401
+              Kempen     KG0000            Kwarekken     KG0400                         Kreato     KM0402
+              Kempen     KG0000            Kwarekken     KG0400                   Sint Servaas     KM0403
+              Kempen     KG0000            Kwarekken     KG0400                     De Schakel     KM0406
+              Kempen     KG0000            Kwarekken     KG0400                        Sjaloom     KM0408
+              Kempen     KG0000            Kwarekken     KG0400           Sint Hubertus Ramsel     KM0410
+              Kempen     KG0000            Kwarekken     KG0400                          DAKAN     KM0412
+              Kempen     KG0000                 Noke     KG0500         Sint-Jozef Rijkevorsel     KG0501
+              Kempen     KG0000                 Noke     KG0500                  SINT MARTINUS     KG0505
+              Kempen     KG0000                 Noke     KG0500              Chiro Rijkevorsel     KG0508
+              Kempen     KG0000                 Noke     KG0500                          Nelto     KG0510
+              Kempen     KG0000                 Noke     KG0500                   Sint Michiel     KJ0503
+              Kempen     KG0000                 Noke     KG0500                       Sint Jan     KJ0504
+              Kempen     KG0000                 Noke     KG0500                Sint Laurentius     KJ0506
+              Kempen     KG0000                 Noke     KG0500   Jongenschiro Sint-willibrord     KJ0507
+              Kempen     KG0000                 Noke     KG0500                        Chiloen     KJ0509
+              Kempen     KG0000                 Noke     KG0500                           Meer     KJ0511
+              Kempen     KG0000                 Noke     KG0500                   Sint Michiel     KM0503
+              Kempen     KG0000                 Noke     KG0500                   Sint Lutgard     KM0504
+              Kempen     KG0000                 Noke     KG0500                Sint Willibrord     KM0507
+              Kempen     KG0000                 Noke     KG0500                       LOENHOUT     KM0509
+              Kempen     KG0000                 Noke     KG0500                    Marckendael     KM0511
+              Kempen     KG0000            Taxandria     KG0100                      Don Bosco     KG0101
+              Kempen     KG0000            Taxandria     KG0100                           Vonk     KG0104
+              Kempen     KG0000            Taxandria     KG0100                           Jopi     KG0105
+              Kempen     KG0000            Taxandria     KG0100                       DE VRAAI     KG0106
+              Kempen     KG0000            Taxandria     KG0100                     Sint Jozef     KG0107
+              Kempen     KG0000            Taxandria     KG0100                 Sint Apollonia     KG0110
+              Kempen     KG0000            Taxandria     KG0100                  Sint Hubertus     KJ0102
+              Kempen     KG0000            Taxandria     KG0100                   De Zwaantjes     KJ0109
+              Kempen     KG0000            Taxandria     KG0100                    Heitrotters     KJ0111
+              Kempen     KG0000            Taxandria     KG0100                         Weelde     KJ0112
+              Kempen     KG0000            Taxandria     KG0100                  Sint Martinus     KJ0113
+              Kempen     KG0000            Taxandria     KG0100          O L Vrouw Van Vreugde     KM0102
+              Kempen     KG0000            Taxandria     KG0100                   DE ZWAANTJES     KM0109
+              Kempen     KG0000            Taxandria     KG0100                    Heitrotters     KM0111
+              Kempen     KG0000            Taxandria     KG0100                     Sint Agnes     KM0113
+              Kempen     KG0000            Taxandria     KG0100            Heidebiekens Poppel     KM0115
+              Kempen     KG0000                Zesje     KG0600                 Kringel  Elsum     KG0607
+              Kempen     KG0000                Zesje     KG0600                            Bel     KG0608
+              Kempen     KG0000                Zesje     KG0600                           BERG     KG0612
+              Kempen     KG0000                Zesje     KG0600                   Chiro Gestel     KG0613
+              Kempen     KG0000                Zesje     KG0600                         Jomesa     KJ0601
+              Kempen     KG0000                Zesje     KG0600                        Akspejo     KJ0602
+              Kempen     KG0000                Zesje     KG0600                         Alowio     KJ0603
+              Kempen     KG0000                Zesje     KG0600                         Zammel     KJ0606
+              Kempen     KG0000                Zesje     KG0600                  Geel Ten Aard     KJ0609
+              Kempen     KG0000                Zesje     KG0600                   Sint Wilbort     KJ0611
+              Kempen     KG0000                Zesje     KG0600                         Jomesa     KM0601
+              Kempen     KG0000                Zesje     KG0600                        Akspejo     KM0602
+              Kempen     KG0000                Zesje     KG0600                  Branie Holven     KM0603
+              Kempen     KG0000                Zesje     KG0600                      Mozaikske     KM0604
+              Kempen     KG0000                Zesje     KG0600                         Zammel     KM0606
+              Kempen     KG0000                Zesje     KG0600                       Ten Aard     KM0609
+              Kempen     KG0000                Zesje     KG0600                    Sint Wivina     KM0611
+              Kempen     KG0000         Bremstampers     KG0200               Onze Lieve Vrouw     KG0202
+              Kempen     KG0000         Bremstampers     KG0200                      Vorselaar     KG0203
+              Kempen     KG0000         Bremstampers     KG0200                      Morkhoven     KG0204
+              Kempen     KG0000         Bremstampers     KG0200        Onze Lieve Vrouw Bouwel     KG0207
+              Kempen     KG0000         Bremstampers     KG0200                        Centrum     KG0210
+              Kempen     KG0000         Bremstampers     KG0200                      Sint Bavo     KJ0205
+              Kempen     KG0000         Bremstampers     KG0200                        Keratos     KJ0206
+              Kempen     KG0000         Bremstampers     KG0200                      Don Bosco     KJ0211
+              Kempen     KG0000         Bremstampers     KG0200     Onze Lieve Vrouw Op T Zand     KM0205
+              Kempen     KG0000         Bremstampers     KG0200                    Sint Pieter     KM0206
+              Kempen     KG0000         Bremstampers     KG0200                          Lille     KM0209
+              Kempen     KG0000         Bremstampers     KG0200       Onze Lieve Vrouw (gierle     KM0211
+              Kempen     KG0000               Zilato     KG0300                      Milojeugd     KG0303
+              Kempen     KG0000               Zilato     KG0300                    Mimo Epoesa     KG0304
+              Kempen     KG0000               Zilato     KG0300                       Mol-rauw     KG0313
+              Kempen     KG0000               Zilato     KG0300         Hulsen (sint-hubertus)     KG0317
+              Kempen     KG0000               Zilato     KG0300                        T Olmke     KG0318
+              Kempen     KG0000               Zilato     KG0300                       Albatros     KJ0302
+              Kempen     KG0000               Zilato     KG0300                       Ambiorix     KJ0306
+              Kempen     KG0000               Zilato     KG0300                         JOWILE     KJ0310
+              Kempen     KG0000               Zilato     KG0300                      Speratoka     KJ0311
+              Kempen     KG0000               Zilato     KG0300                       Albatros     KM0302
+              Kempen     KG0000               Zilato     KG0300                        Paragon     KM0306
+              Kempen     KG0000               Zilato     KG0300                       Sprankel     KM0307
+              Kempen     KG0000               Zilato     KG0300                        Gorabos     KM0308
+              Kempen     KG0000               Zilato     KG0300                         Jowile     KM0310
+              Kempen     KG0000               Zilato     KG0300                        Sjaloom     KM0311
+              Kempen     KG0000               Zilato     KG0300                   Sint Andreas     KM0312
+          Heuvelland     OG3000           Leiestreek     OG3200                          Singa     OJ3204
+          Heuvelland     OG3000           Leiestreek     OG3200                          Sjima     OJ3206
+          Heuvelland     OG3000           Leiestreek     OG3200                          Kadol     OM3201
+          Heuvelland     OG3000           Leiestreek     OG3200                          Kanjo     OM3202
+          Heuvelland     OG3000           Leiestreek     OG3200                      Vlinderia     OM3204
+          Heuvelland     OG3000           Leiestreek     OG3200                           HITO     OM3206
+          Heuvelland     OG3000                Aalst     OG3100                  Sint Kristien     OG3106
+          Heuvelland     OG3000                Aalst     OG3100                          Popov     OG3111
+          Heuvelland     OG3000                Aalst     OG3100                    Atrejoe Vzw     OG3122
+          Heuvelland     OG3000                Aalst     OG3100                 Sint Lutgardis     OG3125
+          Heuvelland     OG3000                Aalst     OG3100                      Maeva vzw     OJ3101
+          Heuvelland     OG3000                Aalst     OG3100                        Faidoli     OJ3110
+          Heuvelland     OG3000                Aalst     OG3100                    De Belhamel     OJ3116
+          Heuvelland     OG3000                Aalst     OG3100                   Sint Stefaan     OJ3118
+          Heuvelland     OG3000                Aalst     OG3100                        Jospaai     OJ3120
+          Heuvelland     OG3000                Aalst     OG3100                        Sjaloom     OM3101
+          Heuvelland     OG3000                Aalst     OG3100                       Gentiaan     OM3102
+          Heuvelland     OG3000                Aalst     OG3100                        JARGILL     OM3107
+          Heuvelland     OG3000                Aalst     OG3100                           Nele     OM3108
+          Heuvelland     OG3000                Aalst     OG3100                  Sinte Goedele     OM3109
+          Heuvelland     OG3000                Aalst     OG3100                      Marjolijn     OM3110
+          Heuvelland     OG3000                Aalst     OG3100                 Sint Lutgardis     OM3112
+          Heuvelland     OG3000                Aalst     OG3100                    Harbalorifa     OM3113
+          Heuvelland     OG3000                Aalst     OG3100                     Sint Lieve     OM3116
+          Heuvelland     OG3000                Aalst     OG3100                      Eglantier     OM3118
+          Heuvelland     OG3000                Aalst     OG3100                         Klimop     OM3120
+          Heuvelland     OG3000                Vl'ar     OG3400                    Ondergronse     OG3401
+          Heuvelland     OG3000                Vl'ar     OG3400                       Jkrruien     OG3402
+          Heuvelland     OG3000                Vl'ar     OG3400       St Martinus-h Bernadette     OG3409
+          Heuvelland     OG3000                Vl'ar     OG3400                           Eine     OG3410
+          Heuvelland     OG3000                Vl'ar     OG3400                         BEVERE     OG3411
+          Heuvelland     OG3000                Vl'ar     OG3400                        Chifomi     OG3412
+          Heuvelland     OG3000           Denderland     OG3300                      Regenboog     OG3303
+          Heuvelland     OG3000           Denderland     OG3300                     Sint Agnes     OG3306
+          Heuvelland     OG3000           Denderland     OG3300                        Elegast     OG3307
+          Heuvelland     OG3000           Denderland     OG3300                         Jokido     OG3311
+          Heuvelland     OG3000           Denderland     OG3300                         Moevia     OG3315
+          Heuvelland     OG3000           Denderland     OG3300                        Parkiet     OG3316
+          Heuvelland     OG3000           Denderland     OG3300                    Sint Bartel     OJ3302
+          Heuvelland     OG3000           Denderland     OG3300                      Leeuwerik     OJ3304
+          Heuvelland     OG3000           Denderland     OG3300                        Sjaloom     OJ3313
+          Heuvelland     OG3000           Denderland     OG3300                    Sint Bartel     OM3302
+          Heuvelland     OG3000           Denderland     OG3300                      Windekind     OM3304
+          Heuvelland     OG3000           Denderland     OG3300                           Flos     OM3313
+          Heuvelland     OG3000             Zottegem     OG3500                   Sint Andries     OG3503
+          Heuvelland     OG3000             Zottegem     OG3500                    Heilig Hart     OG3505
+          Heuvelland     OG3000             Zottegem     OG3500                          Okido     OG3506
+          Heuvelland     OG3000             Zottegem     OG3500              St-mattheus Zwalm     OG3507
+          Heuvelland     OG3000             Zottegem     OG3500                   Sint Katrien     OG3510
+          Heuvelland     OG3000             Zottegem     OG3500                  Sint Martinus     OJ3509
+          Heuvelland     OG3000             Zottegem     OG3500                     Sint Jozef     OJ3511
+          Heuvelland     OG3000             Zottegem     OG3500                  Sint Martinus     OM3509
+          Heuvelland     OG3000             Zottegem     OG3500                 Sint Lutgardis     OM3511
+             Roeland     OG1000             Houtland     OG1500                        Vannoes     OG1503
+             Roeland     OG1000             Houtland     OG1500                            Pao     OG1504
+             Roeland     OG1000             Houtland     OG1500                       Ommekeer     OG1505
+             Roeland     OG1000             Houtland     OG1500                     Waarschoot     OG1506
+             Roeland     OG1000             Houtland     OG1500                     Komkomerin     OG1508
+             Roeland     OG1000             Houtland     OG1500                       Ierlinck     OG1510
+             Roeland     OG1000             Houtland     OG1500                     Sint Jozef     OG1511
+             Roeland     OG1000             Houtland     OG1500                     Sint Joris     OJ1507
+             Roeland     OG1000             Houtland     OG1500                         Innejo     OM1507
+             Roeland     OG1000             Houtland     OG1500                        Ekyrpak     OM1512
+             Roeland     OG1000            Grenskant     OG1600                        Magneet     OG1602
+             Roeland     OG1000            Grenskant     OG1600                       Assenede     OG1604
+             Roeland     OG1000            Grenskant     OG1600                           Brug     OJ1601
+             Roeland     OG1000            Grenskant     OG1600                    Sint Paulus     OJ1609
+             Roeland     OG1000            Grenskant     OG1600                        Samjole     OM1601
+             Roeland     OG1000            Grenskant     OG1600                         WEWEKO     OM1605
+             Roeland     OG1000            Grenskant     OG1600                      Pollyanna     OM1606
+             Roeland     OG1000            Grenskant     OG1600                     Beukenhout     OM1607
+             Roeland     OG1000            Grenskant     OG1600                        Sjaloom     OM1609
+             Roeland     OG1000          Scheldekant     OG1400                    AMBO v.z.w.     OG1404
+             Roeland     OG1000          Scheldekant     OG1400                       Gontrode     OG1405
+             Roeland     OG1000          Scheldekant     OG1400                     Sint Agnes     OG1411
+             Roeland     OG1000          Scheldekant     OG1400                       TREFPUNT     OJ1402
+             Roeland     OG1000          Scheldekant     OG1400                    Scheldering     OJ1403
+             Roeland     OG1000          Scheldekant     OG1400                        Were Di     OJ1412
+             Roeland     OG1000          Scheldekant     OG1400                   Scheldebloem     OM1402
+             Roeland     OG1000          Scheldekant     OG1400                       Geertrui     OM1403
+             Roeland     OG1000          Scheldekant     OG1400                       TEL AVIV     OM1406
+             Roeland     OG1000          Scheldekant     OG1400                         Jokido     OM1408
+             Roeland     OG1000          Scheldekant     OG1400                         Klimop     OM1412
+             Roeland     OG1000           Meersvliet     OG1300                         Ludiek     OG1302
+             Roeland     OG1000           Meersvliet     OG1300                     Lovendegem     OG1303
+             Roeland     OG1000           Meersvliet     OG1300                          Gecko     OG1304
+             Roeland     OG1000           Meersvliet     OG1300                   TIJL EN NELE     OG1308
+             Roeland     OG1000           Meersvliet     OG1300                        Tiejamo     OG1309
+             Roeland     OG1000           Meersvliet     OG1300                      Kierewiet     OG1311
+             Roeland     OG1000           Meersvliet     OG1300             Sint Jan Berchmans     OJ1301
+             Roeland     OG1000           Meersvliet     OG1300               Onze Lieve Vrouw     OM1301
+             Roeland     OG1000           Meersvliet     OG1300                   De Kaproenen     OM1310
+             Roeland     OG1000             Goorland     OG1200      Sint Paulus En Malpertuus     OG1203
+             Roeland     OG1000             Goorland     OG1200          Sint Daniel Beervelde     OG1204
+             Roeland     OG1000             Goorland     OG1200                       Reinaert     OG1205
+             Roeland     OG1000             Goorland     OG1200                    Oude Bareel     OG1206
+             Roeland     OG1000             Goorland     OG1200                    Heilig Hart     OG1207
+             Roeland     OG1000             Goorland     OG1200                       Sint Jan     OG1216
+             Roeland     OG1000             Goorland     OG1200                          TOTEM     OG1217
+             Roeland     OG1000             Goorland     OG1200                   Sint Amandus     OJ1201
+             Roeland     OG1000             Goorland     OG1200   Onze Lieve Vrouw Van Lourdes     OJ1202
+             Roeland     OG1000             Goorland     OG1200                   Sint Amandus     OM1201
+             Roeland     OG1000             Goorland     OG1200   ONZE LIEVE VROUW VAN LOURDES     OM1202
+             Roeland     OG1000             Goorland     OG1200                  De Zuildekens     OM1210
+             Limburg     LG0000             Sprankel     LG0600                          Fugem     LG0603
+             Limburg     LG0000             Sprankel     LG0600                    Sint Petrus     LG0612
+             Limburg     LG0000             Sprankel     LG0600                 Vrolijke Kring     LG0614
+             Limburg     LG0000             Sprankel     LG0600                 Sint Lambertus     LG0615
+             Limburg     LG0000             Sprankel     LG0600    Chirojongens Don Bosco Stal     LJ0601
+             Limburg     LG0000             Sprankel     LG0600                       Spratoka     LJ0602
+             Limburg     LG0000             Sprankel     LG0600                Sint Franciscus     LJ0604
+             Limburg     LG0000             Sprankel     LG0600                            Wij     LJ0605
+             Limburg     LG0000             Sprankel     LG0600                     Fonteintje     LJ0606
+             Limburg     LG0000             Sprankel     LG0600                      Reflector     LJ0607
+             Limburg     LG0000             Sprankel     LG0600                 Sint Lambertus     LJ0609
+             Limburg     LG0000             Sprankel     LG0600                 Dominiek Savio     LJ0610
+             Limburg     LG0000             Sprankel     LG0600                  Sint Gerardus     LM0601
+             Limburg     LG0000             Sprankel     LG0600                Sint Vincentius     LM0602
+             Limburg     LG0000             Sprankel     LG0600                Sint Franciscus     LM0604
+             Limburg     LG0000             Sprankel     LG0600                   Sint Brigida     LM0605
+             Limburg     LG0000             Sprankel     LG0600                     Fonteintje     LM0606
+             Limburg     LG0000             Sprankel     LG0600                    Heilig Hart     LM0607
+             Limburg     LG0000             Sprankel     LG0600                 Sint Lutgardis     LM0609
+             Limburg     LG0000             Sprankel     LG0600                  Maria Goretti     LM0610
+             Limburg     LG0000             Langeman     LG0800                       SINT JAN     LG0804
+             Limburg     LG0000             Langeman     LG0800               Kuringen Centrum     LG0805
+             Limburg     LG0000             Langeman     LG0800                           OLVA     LG0806
+             Limburg     LG0000             Langeman     LG0800                   Uilenspiegel     LG0808
+             Limburg     LG0000             Langeman     LG0800                         Joento     LG0812
+             Limburg     LG0000             Langeman     LG0800 Chirojongens Sint Lambertus Kiewit     LJ0803
+             Limburg     LG0000             Langeman     LG0800          Sint- Lambrechts-herk     LJ0807
+             Limburg     LG0000             Langeman     LG0800                     Sint Jozef     LJ0811
+             Limburg     LG0000             Langeman     LG0800                         Jokadi     LJ0813
+             Limburg     LG0000             Langeman     LG0800 Chiro St Jan Berchmans Zonhoven Centrum     LJ0814
+             Limburg     LG0000             Langeman     LG0800                         Kiewit     LM0803
+             Limburg     LG0000             Langeman     LG0800          Chiromeisjes Halveweg     LM0811
+             Limburg     LG0000             Langeman     LG0800                         Mikado     LM0813
+             Limburg     LG0000               Mejoge     LG0500 Don Bosco Zonnewende Zwartberg     LG0503
+             Limburg     LG0000               Mejoge     LG0500                        Bokrijk     LG0506
+             Limburg     LG0000               Mejoge     LG0500     Sint Gerolf (genk-centrum)     LJ0501
+             Limburg     LG0000               Mejoge     LG0500          Bret-Gelieren jongens     LJ0502
+             Limburg     LG0000               Mejoge     LG0500                    Sint Paulus     LJ0505
+             Limburg     LG0000               Mejoge     LG0500                      Kris-kras     LM0501
+             Limburg     LG0000               Mejoge     LG0500          Bret-Gelieren Meisjes     LM0502
+             Limburg     LG0000               Mejoge     LG0500                      Don Bosco     LM0505
+             Limburg     LG0000               Mejoge     LG0500                        Mozaiek     LM0509
+             Limburg     LG0000            In T Sant     LG0200                        Wauberg     LG0202
+             Limburg     LG0000            In T Sant     LG0200                       Kaulille     LG0203
+             Limburg     LG0000            In T Sant     LG0200                      Gruitrode     LG0207
+             Limburg     LG0000            In T Sant     LG0200   Chiro St. Aldegondis As-Niel     LG0209
+             Limburg     LG0000            In T Sant     LG0200                          Lozen     LG0213
+             Limburg     LG0000            In T Sant     LG0200                     SINT TRUDO     LJ0201
+             Limburg     LG0000            In T Sant     LG0200                 Sint Tarcitius     LJ0211
+             Limburg     LG0000            In T Sant     LG0200                    Sint Imelda     LM0201
+             Limburg     LG0000            In T Sant     LG0200                  Breughelchiro     LM0204
+             Limburg     LG0000            In T Sant     LG0200                    Vreugdeland     LM0208
+             Limburg     LG0000            In T Sant     LG0200                        Schakel     LM0211
+             Limburg     LG0000             Kroinjel     LG1000                 Sint Christina     LG1006
+             Limburg     LG0000             Kroinjel     LG1000                        Engroli     LG1008
+             Limburg     LG0000             Kroinjel     LG1000                Bloei Graafland     LG1010
+             Limburg     LG0000             Kroinjel     LG1000                  Chirobloesems     LG1011
+             Limburg     LG0000             Kroinjel     LG1000                        eNWÃ©KA     LG1012
+             Limburg     LG0000             Kroinjel     LG1000                      Harlekijn     LG1014
+             Limburg     LG0000             Kroinjel     LG1000                  Wilduraantjes     LG1017
+             Limburg     LG0000             Kroinjel     LG1000                     SANKT VITH     LG1101
+             Limburg     LG0000             Kroinjel     LG1000   CHIROJONGENS RVM SINT-MARTEN     LJ1002
+             Limburg     LG0000             Kroinjel     LG1000                  Jongens Wijer     LJ1016
+             Limburg     LG0000             Kroinjel     LG1000                    Sint Marten     LM1002
+             Limburg     LG0000             Kroinjel     LG1000                      Sint Rita     LM1005
+             Limburg     LG0000             Kroinjel     LG1000            chiro meisjes wijer     LM1016
+             Limburg     LG0000              Snorkel     LG0700                   TIJL EN NELE     LG0703
+             Limburg     LG0000              Snorkel     LG0700                        Genebos     LG0704
+             Limburg     LG0000              Snorkel     LG0700     Chiro-KSA Berg-Tessenderlo     LG0705
+             Limburg     LG0000              Snorkel     LG0700                       Jib Looi     LG0706
+             Limburg     LG0000              Snorkel     LG0700             Leouki Meldert Vzw     LG0711
+             Limburg     LG0000              Snorkel     LG0700                         Avanti     LG0712
+             Limburg     LG0000              Snorkel     LG0700                    Chiro Halen     LG0714
+             Limburg     LG0000              Snorkel     LG0700                   Sint Andreas     LG0715
+             Limburg     LG0000              Snorkel     LG0700                          Arika     LG0716
+             Limburg     LG0000              Snorkel     LG0700                     Sint Joris     LJ0713
+             Limburg     LG0000              Snorkel     LG0700                           Idoe     LM0707
+             Limburg     LG0000              Snorkel     LG0700                  Sint Amandina     LM0713
+             Limburg     LG0000                Kluts     LG0400                          Akori     LG0402
+             Limburg     LG0000                Kluts     LG0400                   MAASMECHELEN     LG0403
+             Limburg     LG0000                Kluts     LG0400                         Gromme     LG0404
+             Limburg     LG0000                Kluts     LG0400                    Proosterbos     LG0405
+             Limburg     LG0000                Kluts     LG0400     Onze Lieve Vrouw Eglantier     LG0407
+             Limburg     LG0000                Kluts     LG0400                 Sint Mauritius     LG0409
+             Limburg     LG0000                Kluts     LG0400                   Sint Albanus     LG0410
+             Limburg     LG0000                Kluts     LG0400                  Sint Martinus     LG0413
+             Limburg     LG0000                Kluts     LG0400                         Jooske     LG0414
+             Limburg     LG0000                Kluts     LG0400        Chirojongens Sint-jozef     LJ0408
+             Limburg     LG0000                Kluts     LG0400     Pjzb Parochiale Jeugdgroep     LJ0416
+             Limburg     LG0000                Kluts     LG0400              G.a.j. - Sprokkel     LJ0417
+             Limburg     LG0000                Kluts     LG0400                        Meilach     LM0406
+             Limburg     LG0000                Kluts     LG0400                    Meisjes Eik     LM0408
+             Limburg     LG0000            Raffifant     LG0900                           Ludi     LG0902
+             Limburg     LG0000            Raffifant     LG0900                          Troot     LG0904
+             Limburg     LG0000            Raffifant     LG0900                     ATERSTAOSE     LG0909
+             Limburg     LG0000            Raffifant     LG0900                       Spratike     LG0914
+             Limburg     LG0000            Raffifant     LG0900       Chirojongens Rooierheide     LJ0901
+             Limburg     LG0000            Raffifant     LG0900                    Sint Pieter     LJ0903
+             Limburg     LG0000            Raffifant     LG0900                  Sint Hubertus     LJ0906
+             Limburg     LG0000            Raffifant     LG0900                     Sint Jozef     LJ0908
+             Limburg     LG0000            Raffifant     LG0900       Chiromeisjes Rooierheide     LM0901
+             Limburg     LG0000            Raffifant     LG0900                          Okapi     LM0903
+             Limburg     LG0000            Raffifant     LG0900                  Sint Hubertus     LM0906
+             Limburg     LG0000            Raffifant     LG0900               Onze Lieve Vrouw     LM0908
+             Limburg     LG0000            Raffifant     LG0900                Centrum Hoeselt     LM0916
+             Limburg     LG0000                  Hey     LG0300                       MAGODOBO     LG0304
+             Limburg     LG0000                  Hey     LG0300                  Sint Martinus     LJ0301
+             Limburg     LG0000                  Hey     LG0300      Sint Monulfus & Gondulfus     LJ0302
+             Limburg     LG0000                  Hey     LG0300                        Jomensa     LJ0305
+             Limburg     LG0000                  Hey     LG0300                        Jochimo     LJ0306
+             Limburg     LG0000                  Hey     LG0300                 SINT LUTGARDIS     LM0302
+             Limburg     LG0000                  Hey     LG0300                 Sint Lutgardis     LM0305
+             Limburg     LG0000                  Hey     LG0300                       T Dorpke     LM0306
+             Limburg     LG0000                  Hey     LG0300     Chiromeisjes Sint-martinus     LM0307
+             Limburg     LG0000                  Hey     LG0300               Sint Pieter Elen     LM0308
+             Limburg     LG0000                  Hey     LG0300                 Sint Lutgardes     LM0309
+             Limburg     LG0000        Kaboetsjistan     LG0100                 Sint Tarcitius     LG0102
+             Limburg     LG0000        Kaboetsjistan     LG0100                       Sint Jan     LG0103
+             Limburg     LG0000        Kaboetsjistan     LG0100                  Clara En Sooj     LG0109
+             Limburg     LG0000        Kaboetsjistan     LG0100                       Jonathan     LG0114
+             Limburg     LG0000        Kaboetsjistan     LG0100                  Sint Martinus     LJ0108
+             Limburg     LG0000        Kaboetsjistan     LG0100               Jeugd In Werking     LJ0110
+             Limburg     LG0000        Kaboetsjistan     LG0100 Chirojongens Sint Laurentius Hamont     LJ0111
+             Limburg     LG0000        Kaboetsjistan     LG0100                 Sint Lambertus     LJ0112
+             Limburg     LG0000        Kaboetsjistan     LG0100                       Jeugd Nu     LM0104
+             Limburg     LG0000        Kaboetsjistan     LG0100                 Sint Lutgardis     LM0108
+             Limburg     LG0000        Kaboetsjistan     LG0100                         Avanti     LM0110
+             Limburg     LG0000        Kaboetsjistan     LG0100                           Hajo     LM0111
+             Limburg     LG0000        Kaboetsjistan     LG0100                     Sint Agnes     LM0112
+             Limburg     LG0000        Kaboetsjistan     LG0100                         SAMOWE     LM0113

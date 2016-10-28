@@ -29,11 +29,11 @@ public class UnitController {
     @Autowired
     private ChiroUnitService unitService;
     
-    @Autowired
-    private RegistrationParticipantService registrationParticipantsService;
+//    @Autowired
+//    private RegistrationParticipantService registrationParticipantsService;
 
-    @Autowired
-    private UserService userService;
+//    @Autowired
+//    private UserService userService;
 
     @RequestMapping(method = RequestMethod.GET, params = {"gewest"})
     public List<ChiroUnit> allGewestUnits() {
@@ -66,11 +66,13 @@ public class UnitController {
     
     @RequestMapping(value = "/{stamNummer}/participants", method = RequestMethod.GET)
     public List<RegistrationParticipant>findRegisteredParticipantsByGroup(@PathVariable("stamNummer") String stamNumber){
-    	return registrationParticipantsService.findParticipantsByGroup(stamNumber);
+    	//return registrationParticipantsService.findParticipantsByGroup(stamNumber);
+    	return unitService.findParticipantsByChiroUnit(stamNumber);
     }
     
     @RequestMapping(value = "/{stamNummer}/volunteers", method = RequestMethod.GET)
     public List<RegistrationVolunteer>findRegisteredVolunteersByGroup(@PathVariable("stamNummer") String stamNumber){
-    	return registrationParticipantsService.findVolunteersByGroup(stamNumber);
+    	//return registrationParticipantsService.findVolunteersByGroup(stamNumber);
+    	return unitService.findVolunteersByChiroUnit(stamNumber);
     }
 }
