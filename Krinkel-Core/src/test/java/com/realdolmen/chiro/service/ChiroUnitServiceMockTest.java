@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RunWith(MockitoJUnitRunner.class)
-public class ChiroUnitServiceTest {
+public class ChiroUnitServiceMockTest {
 
     @InjectMocks
     private ChiroUnitService unitService;

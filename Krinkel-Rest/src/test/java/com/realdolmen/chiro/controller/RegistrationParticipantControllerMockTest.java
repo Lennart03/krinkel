@@ -12,22 +12,29 @@ import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
-import java.util.Calendar;
+//import java.util.Calendar;
 
 import static org.hibernate.validator.internal.util.Contracts.assertNotNull;
 import static org.junit.Assert.assertEquals;
 
+import java.util.Calendar;
+
 public class RegistrationParticipantControllerMockTest extends MockMvcTest {
+
+	private static final String STAMNUMMER = "AG0001";
     private RegistrationParticipant participant;
     private RegistrationVolunteer volunteer;
+    
 
     @Autowired
     private RegistrationParticipantRepository repo;
 
     private int nParticipants = 0;
+    
 
     @Before
     public void setUp(){
+         //Participant
         MockitoAnnotations.initMocks(this);
 
         // Participant
@@ -36,7 +43,7 @@ public class RegistrationParticipantControllerMockTest extends MockMvcTest {
 
         participant = new RegistrationParticipant(
                 "386283", "astrid@mail.do", "Astrid", "Deckers", c.getTime(),
-                "AG0001", Gender.WOMAN, EventRole.LEADER, Eatinghabbit.VEGI
+                STAMNUMMER, Gender.WOMAN, EventRole.LEADER, Eatinghabbit.VEGI
         );
         participant.setAddress(new Address("My Street", "2", 1252, "My City"));
 
@@ -45,12 +52,13 @@ public class RegistrationParticipantControllerMockTest extends MockMvcTest {
 
         volunteer = new RegistrationVolunteer(
                 "386283", "aster.deckers@example.org", "Aster", "Deckers", c.getTime(),
-                "AG0001", Gender.MAN, EventRole.LEADER, Eatinghabbit.VEGI,
+                STAMNUMMER, Gender.MAN, EventRole.LEADER, Eatinghabbit.VEGI,
                 CampGround.ANTWERPEN,
                 new VolunteerFunction(VolunteerFunction.Preset.KRINKEL_EDITORIAL)
         );
         volunteer.setAddress(new Address("-", "-", 1500, "-"));
-
+//    	participant = RegistrationParticipantMother.createBasicRegistrationParticipant();
+//    	volunteer = RegistrationVolunteerMother.createBasicRegistrationVolunteer();
 
         this.nParticipants = repo.findAll().size();
     }

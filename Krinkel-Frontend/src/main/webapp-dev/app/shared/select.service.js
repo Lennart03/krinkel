@@ -8,7 +8,6 @@ export class SelectService {
     }
 
     getColleague() {
-        console.log("check pay status bitch");
         console.log(this.colleague);
         return this.colleague;
     }

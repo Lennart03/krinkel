@@ -35,7 +35,7 @@ INSERT INTO registration_participant (dtype,id,ad_number,city, house_number, pos
 social_promotion, eatinghabbit, email, first_name, gender, last_name, remarks_food, medical_remarks, remarks,
 event_role, buddy, stamnumber, status, phone_number, camp_ground, other, preset, registered_by)
 VALUES('RegistrationVolunteer', '60', '876543', 'Brussel', '123', '1000', 'Veldstraat', '1995-08-21', false, 'FISHANDMEAT',
-                              'email@test.be', 'Jos', 'MAN', 'Flodder', '', '', '', 'VOLUNTEER', false, 'AG /0103', 'TO_BE_PAID', 1, 'KEMPEN', '', 'CAMPGROUND', '876543');
+                              'email@test.be', 'Jos', 'MAN', 'Flodder', '', '', '', 'VOLUNTEER', false, 'AG /0103', 'CONFIRMED', 1, 'KEMPEN', '', 'CAMPGROUND', '876543');
 
 INSERT INTO pre_camp VALUES (10, '2017-08-21');
 INSERT INTO pre_camp VALUES (20, '2017-08-22');
