@@ -7,6 +7,10 @@ import com.realdolmen.chiro.repository.RegistrationParticipantRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.expression.Expression;
+import org.springframework.expression.ExpressionParser;
+import org.springframework.expression.spel.standard.SpelExpressionParser;
+import org.springframework.security.access.prepost.PostAuthorize;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 
@@ -15,7 +19,8 @@ import java.util.List;
 
 @Service
 public class RegistrationParticipantService {
-	public static final Integer PRICE_IN_EUROCENTS = 11000;
+	public final static Integer PRICE_IN_EUROCENTS = 11000;
+
 
 	private Logger logger = LoggerFactory.getLogger(RegistrationParticipantService.class);
 
