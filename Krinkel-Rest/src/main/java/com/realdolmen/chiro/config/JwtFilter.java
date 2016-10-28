@@ -52,7 +52,7 @@ public class JwtFilter extends GenericFilterBean {
 
         try {
             final Claims claims = Jwts.parser()
-                                    .setSigningKey("MATHIASISNOOB")
+                                    .setSigningKey("QMSLDKNmihknknihMSD64S5E8IYOPZ3OKJJJNINHSDFQ")
                                     .parseClaimsJws(token)
                                     .getBody();
             request.setAttribute("claims", claims);

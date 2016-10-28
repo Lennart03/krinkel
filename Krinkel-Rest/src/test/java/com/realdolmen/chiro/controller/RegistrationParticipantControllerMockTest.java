@@ -79,7 +79,7 @@ public class RegistrationParticipantControllerMockTest extends MockMvcTest {
     }
 
     @Test
-    public void savingRegistrationWithDuplicateADNumberFails() throws Exception {
+    public void savingRegistrationWithDuplicateADNumberUpdatesData() throws Exception {
         String jsonPayload = json(participant);
 
         mockMvc()
@@ -97,7 +97,7 @@ public class RegistrationParticipantControllerMockTest extends MockMvcTest {
                         MockMvcRequestBuilders.post("/api/participants")
                                 .contentType(MediaType.APPLICATION_JSON_UTF8)
                                 .content(jsonPayload))
-                .andExpect(MockMvcResultMatchers.status().is4xxClientError());
+                .andExpect(MockMvcResultMatchers.status().is2xxSuccessful());
 
         assertEquals(nParticipants+1, repo.findAll().size());
     }

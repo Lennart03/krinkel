@@ -1,33 +1,22 @@
 /*@ngInject*/
 class SuccessMessageController {
-    constructor(AuthService, $location) {
+    constructor($location, AuthService) {
         this.AuthService = AuthService;
         this.$location = $location;
         window.scrollTo(0, 0);
 
-        if (this.AuthService.getLoggedinUser() == null) {
-            this.$location.path('/login');
-        } else {
-            try {
-                var currentUser;
-                this.AuthService.getUserDetails().then((resp) => {
-                    currentUser = resp;
-                });
-                if (currentUser === undefined) {
-                    this.$location.path('/home');
-                }
-                if (currentUser.registered && currentUser.hasPaid) {
-                } else {
-                    this.$location.path('/home')
-                }
-            } catch (exception) {
-
-            }
-        }
+        // if (this.AuthService.getLoggedinUser() == null) {
+        //     this.$location.path('/login');
+        // } else {
+        //     this.AuthService.getCurrentUserDetails(this.AuthService.getLoggedinUser().adnummer).then((resp) => {
+        //         if (resp.registered == false || resp.hasPaid == false) {
+        //             $location.path('/home');
+        //         }
+        //     });
+        // }
     }
 
     $onInit() {
-        this.title = "Hoera!"
     }
 }
 

@@ -96,25 +96,55 @@ class RegisterController {
     }
 
 
+
     $onInit() {
         if (this.AuthService.getLoggedinUser() == null) {
             this.$location.path('/');
         }
 
+
+        /**
+         * Prefilling the form when subscribing others
+         */
         if (this.SelectService.getColleague() !== undefined) {
+            var colleague = this.SelectService.getColleague();
             this.newPerson = {
-                adNumber: this.SelectService.getColleague().adNumber
+                adNumber: this.SelectService.colleague.adNumber,
+                firstName: colleague.firstname,
+                lastName: colleague.lastname,
+                email: colleague.email,
+                job: "Aanbod nationale kampgrond"
             };
             this.SelectService.setSelectedFlag(true);
-            console.log("From select");
         } else {
-            console.log("Not from selectx");
             var user = this.StorageService.getUser();
-            if (user) {
+            console.log("Logging user in else");
+            console.log(user);
+            if (user && user.email === this.AuthService.getLoggedinUser().email) {
                 this.newPerson = user;
             } else {
-                this.newPerson = {};
-                this.newPerson.job = "Aanbod nationale kampgrond";
+
+
+                /**
+                 * Prefilling the form when subscribing yourself
+                 */
+                // if (this.SelectService.getSelectedFlag() === false) {
+                    var loggedInUser = this.AuthService.getLoggedinUser();
+
+                    this.newPerson = {
+                        adNumber: loggedInUser.adnummer,
+                        job: "Aanbod nationale kampgrond",
+                        firstName: loggedInUser.firstname,
+                        lastName: loggedInUser.lastname,
+                        email: loggedInUser.email,
+                    };
+                    this.details2.name = "1234";
+                // }
+
+                console.log("Logging the new person here");
+                console.log("======================");
+                console.log(this.newPerson);
+                // this.newPerson.job = "Aanbod nationale kampgrond";
             }
         }
 
