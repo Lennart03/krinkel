@@ -11,6 +11,7 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
@@ -31,6 +32,7 @@ public class UserService {
     @Autowired
     private JwtConfiguration jwtConfig;
 
+    @PreAuthorize("@UserServiceSecurity.hasPermissionToGetUser(#adNumber)")
     public User getUser(String adNumber) {
 
         User u = adapter.getChiroUser(adNumber);

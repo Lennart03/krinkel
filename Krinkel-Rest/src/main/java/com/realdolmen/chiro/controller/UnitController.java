@@ -57,9 +57,6 @@ public class UnitController {
     }
 
     @RequestMapping(value = "/{stam}", method = RequestMethod.GET)
-    // TODO: Move authorisation to Service layer
-    //@PreAuthorize("#stam == 'LEG0000'")
-    //@PreAuthorize("#stam eq @userService.currentUser.normalizedStamNumber")
     public ChiroUnit singleUnit(@PathVariable("stam") String stam) {
         return unitService.find(stam);
     }

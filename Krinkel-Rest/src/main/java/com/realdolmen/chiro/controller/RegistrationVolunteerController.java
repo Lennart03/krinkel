@@ -1,7 +1,7 @@
 package com.realdolmen.chiro.controller;
 
 import com.realdolmen.chiro.controller.validation.EnableRestErrorHandling;
-import com.realdolmen.chiro.domain.*;
+import com.realdolmen.chiro.domain.RegistrationVolunteer;
 import com.realdolmen.chiro.mspservice.MultiSafePayService;
 import com.realdolmen.chiro.service.RegistrationVolunteerService;
 import org.slf4j.Logger;
@@ -10,14 +10,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.util.Arrays;
-import java.util.Calendar;
-import java.util.Date;
 
 @RestController
 @EnableRestErrorHandling
@@ -101,34 +101,33 @@ public class RegistrationVolunteerController {
         return new ResponseEntity<>(headers, HttpStatus.CREATED);
     }
 
-    @RequestMapping(method = RequestMethod.GET, value = "/api/volunteers", produces = "application/json")
-    public
-    @ResponseBody
-    RegistrationVolunteer retrieve() {
-
-        Calendar c = Calendar.getInstance();
-        c.set(1995, Calendar.AUGUST, 5);
-
-        RegistrationVolunteer volunteer = new RegistrationVolunteer(
-                "123456789", "example@acme.com", "Aster", "Deckers", c.getTime(),
-                "AG0001", Gender.MAN, EventRole.LEADER, Eatinghabbit.VEGI,
-                CampGround.ANTWERPEN,
-                new VolunteerFunction(VolunteerFunction.Preset.KRINKEL_EDITORIAL)
-        );
-
-        PreCamp preCamp = new PreCamp();
-        preCamp.setId(1);
-        preCamp.setDate(new Date());
-        volunteer.addPreCamp(preCamp);
-
-        volunteer.setLanguage(
-                Arrays.asList(
-                        Language.ENGLISH,
-                        Language.SPANISH
-                )
-        );
-
-        volunteer.setAddress(new Address("-", "-", 1500, "-"));
-        return volunteer;
-    }
+    //TODO CHECK IF WE EVEN NEED THIS METHOD. I MARKED IT AS A COMMENT
+//    @RequestMapping(method = RequestMethod.GET, value = "/api/volunteers", produces = "application/json")
+//    public @ResponseBody RegistrationVolunteer retrieve() {
+//
+//        Calendar c = Calendar.getInstance();
+//        c.set(1995, Calendar.AUGUST, 5);
+//
+//        RegistrationVolunteer volunteer = new RegistrationVolunteer(
+//                "123456789", "example@acme.com", "Aster", "Deckers", c.getTime(),
+//                "AG0001", Gender.MAN, EventRole.LEADER, Eatinghabbit.VEGI,
+//                CampGround.ANTWERPEN,
+//                new VolunteerFunction(VolunteerFunction.Preset.KRINKEL_EDITORIAL)
+//        );
+//
+//        PreCamp preCamp = new PreCamp();
+//        preCamp.setId(1);
+//        preCamp.setDate(new Date());
+//        volunteer.addPreCamp(preCamp);
+//
+//        volunteer.setLanguage(
+//                Arrays.asList(
+//                        Language.ENGLISH,
+//                        Language.SPANISH
+//                )
+//        );
+//
+//        volunteer.setAddress(new Address("-", "-", 1500, "-"));
+//        return volunteer;
+//    }
 }
