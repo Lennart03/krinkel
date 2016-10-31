@@ -19,8 +19,16 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-
+    /**
+     * Security has to stay here instead of userService.getUser(...) since cas also uses that method.
+     * If you want secure it in the service I wish you the best of luck.
+     *
+     * @param adNumber
+     * @return
+     * @throws UserNotfoundException
+     */
     @RequestMapping(method = RequestMethod.GET, value = "/api/users/{adNumber}")
+    @PreAuthorize("@UserControllerSecurity.hasPermissionToGetUser(#adNumber)")
     public User getUser(@PathVariable("adNumber") String adNumber) throws UserNotfoundException {
         User u = userService.getUser(adNumber);
 

@@ -50,6 +50,13 @@ public class UnitController {
         return unitService.findAll();
     }
 
+    /**
+     * method used in the frondend when getting the colleagues. (select person to enroll in krinkel)
+     *
+     * @param stamletters first part of stamnumber
+     * @param stamnummers second part of stamnumber
+     * @return users with same stamnumber
+     */
     @RequestMapping(value = "{stamletters}/{stamnummers}/users")
     public List<User> getUnitUserList(@PathVariable("stamletters") String stamletters, @PathVariable("stamnummers") String stamnummers) {
         String stamnr = stamletters + "/" + stamnummers;

@@ -124,7 +124,7 @@ public class ChiroUnitService {
 	}
 
 	@PreAuthorize("@ChiroUnitServiceSecurity.hasPermissionToGetColleagues(#stamnr)")
-	@PostFilter("@ChiroUnitServiceSecurity.hasPersmissionToSeeColleaggues(filterObject.)")
+//	@PostFilter("@ChiroUnitServiceSecurity.hasPersmissionToSeeColleaggues(filterObject.)")
 	public List<User> getUnitUsers(String stamnr) {
 		return adapter.getColleagues(stamnr);
 	}
