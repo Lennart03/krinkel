@@ -19,7 +19,6 @@ public class GraphController {
     @Autowired
     private GraphChiroService graphChiroService;
 
-    @PreAuthorize("false")
     @RequestMapping("/api/graph/sun")
     public GraphChiroUnit getGraphSun() {
         return graphChiroService.summary();
