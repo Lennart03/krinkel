@@ -27,9 +27,7 @@ public class RegistrationParticipantRepositoryTest extends SpringIntegrationTest
 		assertNotNull(participant);
 		assertEquals("Jos", participant.getFirstName());
 		RegistrationVolunteer volunteer = (RegistrationVolunteer)participant;
-		CampGround campGround = volunteer.getCampGround();
-		String s = campGround.toString();
-		assertEquals("KEMPEN", s);
+		assertEquals(CampGround.KEMPEN, volunteer.getCampGround());
 		assertEquals(VolunteerFunction.Preset.CAMPGROUND, volunteer.getFunction().getPreset());
 	}
 	
