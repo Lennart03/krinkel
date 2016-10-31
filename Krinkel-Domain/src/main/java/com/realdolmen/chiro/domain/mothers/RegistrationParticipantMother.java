@@ -14,6 +14,10 @@ public class RegistrationParticipantMother {
     }
 
     public static RegistrationParticipant createBasicRegistrationParticipant(){
+        return RegistrationParticipantMother.basicRegistrationParticipantBuilder().build();
+    }
+
+    public static RegistrationParticipant.RegistrationParticipantBuilder basicRegistrationParticipantBuilder(){
         Calendar c = Calendar.getInstance();
         c.set(1979, Calendar.SEPTEMBER, 19);
 
@@ -33,6 +37,6 @@ public class RegistrationParticipantMother {
                         new Address("Little Whinging street","32", 1380, "Waterloo")
                 );
 
-        return builder.build();
+        return builder;
     }
 }

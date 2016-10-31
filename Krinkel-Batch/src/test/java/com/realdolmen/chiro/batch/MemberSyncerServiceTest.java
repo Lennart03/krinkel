@@ -51,7 +51,7 @@ public class MemberSyncerServiceTest extends SpringIntegrationTest {
     @Test
     public void syncUsersToChiroDBSendsEveryFoundParticipantToUserAdapter() {
         //setup
-        List<RegistrationParticipant> participants = new ArrayList<RegistrationParticipant>();
+        List<RegistrationParticipant> participants = new ArrayList<>();
         participants.add(new RegistrationParticipant());
         participants.add(new RegistrationParticipant());
         participants.add(new RegistrationParticipant());
@@ -66,7 +66,7 @@ public class MemberSyncerServiceTest extends SpringIntegrationTest {
 
     @Test
     public void syncUsersToChiroDBDoesNothingWhenNoParticipantsWereFound() {
-        Mockito.when(repo.findAll()).thenReturn(new ArrayList<RegistrationParticipant>());
+        Mockito.when(repo.findAll()).thenReturn(new ArrayList<>());
 
         service.syncUsersToChiroDB();
         Mockito.verifyNoMoreInteractions(adapter);

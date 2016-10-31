@@ -113,6 +113,7 @@ public class RegistrationParticipant {
         this.medicalRemarks = builder.medicalRemarks;
         this.remarks = builder.remarks;
         this.phoneNumber = builder.phoneNumber;
+        this.language = builder.language;
     }
 
     public boolean isRegisteredByOther(){

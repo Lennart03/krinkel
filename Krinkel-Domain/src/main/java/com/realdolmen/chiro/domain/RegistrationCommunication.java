@@ -31,6 +31,15 @@ public class RegistrationCommunication {
 	@Min(0)
 	private int communicationAttempt;
 
+	public RegistrationCommunication() {
+	}
+
+	public RegistrationCommunication(String adNumber, SendStatus status, int communicationAttempt) {
+		this.adNumber = adNumber;
+		this.status = status;
+		this.communicationAttempt = communicationAttempt;
+	}
+
 	public Long getId() {
 		return id;
 	}
