@@ -32,7 +32,6 @@ public class UserService {
     @Autowired
     private JwtConfiguration jwtConfig;
 
-    @PreAuthorize("@UserServiceSecurity.hasPermissionToGetUser(#adNumber)")
     public User getUser(String adNumber) {
 
         User u = adapter.getChiroUser(adNumber);

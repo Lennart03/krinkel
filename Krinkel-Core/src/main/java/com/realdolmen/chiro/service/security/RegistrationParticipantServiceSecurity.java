@@ -5,7 +5,9 @@ import com.realdolmen.chiro.domain.SecurityRole;
 import com.realdolmen.chiro.domain.User;
 import com.realdolmen.chiro.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
+@Component("RegistrationParticipantServiceSecurity")
 public class RegistrationParticipantServiceSecurity {
     @Autowired
     UserService userService;

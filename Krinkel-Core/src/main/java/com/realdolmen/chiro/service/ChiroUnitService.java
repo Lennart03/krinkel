@@ -11,6 +11,8 @@ import com.realdolmen.chiro.repository.ChiroUnitRepository;
 import com.realdolmen.chiro.repository.RegistrationParticipantRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PostFilter;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
@@ -121,6 +123,8 @@ public class ChiroUnitService {
 		return stam.replace("/", "").replace("\\s", "").replace(" ", "");
 	}
 
+	@PreAuthorize("@ChiroUnitServiceSecurity.hasPermissionToGetColleagues(#stamnr)")
+	@PostFilter("@ChiroUnitServiceSecurity.hasPersmissionToSeeColleaggues(filterObject.)")
 	public List<User> getUnitUsers(String stamnr) {
 		return adapter.getColleagues(stamnr);
 	}
