@@ -8,7 +8,7 @@ export class StorageService {
     }
 
     getUser() {
-        if (localStorage.getItem('savedData') == null || localStorage.getItem('savedData') == undefined) {
+        if (localStorage.getItem('savedData') === 'undefined'|| localStorage.getItem('savedData') == null ) {
             return;
         } else {
             // TODO: FIX BUG: set preCamp & postCamp to be empty when loaded because the Materialize select can't load it (to avoid confusion)
