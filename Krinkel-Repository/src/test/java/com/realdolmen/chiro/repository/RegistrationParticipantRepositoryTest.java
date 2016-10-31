@@ -36,7 +36,6 @@ public class RegistrationParticipantRepositoryTest extends SpringIntegrationTest
 	@Test
 	public void shouldReturnAParticipant(){
 		RegistrationParticipant participant = registrationParticipantRepository.findByAdNumber(AD_NUMBER);
-		System.out.println(AD_NUMBER);
 		assertNotNull(participant);
 	}
 
@@ -46,6 +45,5 @@ public class RegistrationParticipantRepositoryTest extends SpringIntegrationTest
 				registrationParticipantRepository.findRegistrationParticipantsWithStatusPAID();
 		assertNotNull(participants);
 		assertEquals(1, participants.size());
-		System.out.println(participants.size());
 	}
 }
