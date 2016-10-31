@@ -20,6 +20,8 @@ class UnitsController {
         }
     }
 
+
+
     openUsers(verbond) {
         this.unitLevel = verbond.naam;
         this.userDetails = true;
@@ -88,7 +90,6 @@ class UnitsController {
         // });
         verbonden.forEach((r) => {
             this.KrinkelService.getParticipantsForUnit(r.stamnummer).then((results) => {
-                console.log(results + "***");
             })
         })
     }
