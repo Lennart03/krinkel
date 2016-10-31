@@ -8,8 +8,6 @@ import javax.validation.ConstraintViolation;
 import java.util.Date;
 import java.util.Set;
 
-import static org.junit.Assert.assertTrue;
-
 public class RegistrationVolunteerTest extends BeanValidatorTest{
 
     @Test
