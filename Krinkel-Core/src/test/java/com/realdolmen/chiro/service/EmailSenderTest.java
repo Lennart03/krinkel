@@ -26,7 +26,7 @@ import static org.junit.Assert.*;
 @ContextConfiguration(classes={com.realdolmen.chiro.config.TestConfig.class})
 public class EmailSenderTest extends SpringIntegrationTest {
 	private static final String EMAIL_SUBJECT = "Bevestiging inschrijving krinkel";
-	private static final String EMAIL_FROM = "inschrijvingen@krinkel.be";
+	//private static final String EMAIL_FROM = "inschrijvingen@krinkel.be";
 	private static final String EMAIL_TO = "Mathew.Perry@someEmail.com";
 	private static final String AD_NUMBER_1 = "12345";
 	private static final String AD_NUMBER_2 = "22345";

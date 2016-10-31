@@ -78,7 +78,10 @@ public class RegistrationParticipantService {
 	}
 
 	public List<RegistrationParticipant> findParticipantsByGroup(String stamNumber) {
-		List<RegistrationParticipant> participants = registrationParticipantRepository.findParticipantsByGroup(stamNumber);
+		List<RegistrationParticipant> participants = registrationParticipantRepository.findParticipantsByGroupWithStatusConfirmedOrPaid(stamNumber);
+//=======
+//		List<RegistrationParticipant> participants = registrationParticipantRepository.findParticipantsByGroup(stamNumber);
+//>>>>>>> devel
 		List<RegistrationParticipant> results = new ArrayList<>();
 		for (RegistrationParticipant participant : participants) {
 			if (!(participant instanceof RegistrationVolunteer)) {
@@ -89,7 +92,10 @@ public class RegistrationParticipantService {
 	}
 
 	public List<RegistrationVolunteer> findVolunteersByGroup(String stamNumber) {
-		List<RegistrationParticipant> participants = registrationParticipantRepository.findParticipantsByGroup(stamNumber);
+		List<RegistrationParticipant> participants = registrationParticipantRepository.findParticipantsByGroupWithStatusConfirmedOrPaid(stamNumber);
+//=======
+//		List<RegistrationParticipant> participants = registrationParticipantRepository.findParticipantsByGroup(stamNumber);
+//>>>>>>> devel
 		List<RegistrationVolunteer> results = new ArrayList<>();
 		for (RegistrationParticipant participant : participants) {
 			if (participant instanceof RegistrationVolunteer) {
