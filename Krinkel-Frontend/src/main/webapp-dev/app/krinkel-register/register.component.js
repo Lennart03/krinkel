@@ -95,6 +95,65 @@ class RegisterController {
         }
     }
 
+    prefillColleague() {
+        var colleague = this.SelectService.getColleague();
+
+        console.log(colleague);
+        this.KrinkelService.getContactFromChiro(colleague.adNumber).then((resp) => {
+            var chiroContact = resp[0];
+
+            this.newPerson = {
+                adNumber: loggedInUser.adnummer,
+                job: "Aanbod nationale kampgrond",
+                firstName: chiroContact.first_name,
+                lastName: chiroContact.last_name,
+                email: chiroContact.email,
+                birthDate: chiroContact.birth_date,
+                phone: chiroContact.phone.replace('-', '')
+            };
+            console.log(chiroContact);
+        });
+
+
+
+        this.SelectService.setSelectedFlag(true);
+    }
+    prefillSelf() {
+        var loggedInUser = this.AuthService.getLoggedinUser();
+        this.KrinkelService.getContactFromChiro(loggedInUser.adnummer).then((resp) => {
+            console.log("CHIRO");
+            console.log(resp);
+            var chiroContact = resp[0];
+            if (resp.size != 0) {
+                this.newPerson = {
+                    adNumber: loggedInUser.adnummer,
+                    job: "Aanbod nationale kampgrond",
+                    firstName: chiroContact.first_name,
+                    lastName: chiroContact.last_name,
+                    email: chiroContact.email,
+                    birthDate: chiroContact.birth_date,
+                    phone: chiroContact.phone.replace('-', ''),
+                };
+                this.details2.name = chiroContact.postal_code;
+
+
+
+                this.details.address_components = [];
+                this.details.address_components.push({
+                    long_name:chiroContact.street_address
+                });
+
+
+                this.details3.vicinity = chiroContact.city;
+
+                console.log("Logging the new person here");
+                console.log("======================");
+                console.log(this.newPerson);
+            }
+        });
+    }
+
+
 
 
     $onInit() {
@@ -107,44 +166,21 @@ class RegisterController {
          * Prefilling the form when subscribing others
          */
         if (this.SelectService.getColleague() !== undefined) {
-            var colleague = this.SelectService.getColleague();
-            this.newPerson = {
-                adNumber: this.SelectService.colleague.adNumber,
-                firstName: colleague.firstname,
-                lastName: colleague.lastname,
-                email: colleague.email,
-                job: "Aanbod nationale kampgrond"
-            };
-            this.SelectService.setSelectedFlag(true);
+            this.prefillColleague();
+
         } else {
+
             var user = this.StorageService.getUser();
             console.log("Logging user in else");
             console.log(user);
             if (user && user.email === this.AuthService.getLoggedinUser().email) {
                 this.newPerson = user;
             } else {
-
-
                 /**
                  * Prefilling the form when subscribing yourself
                  */
-                // if (this.SelectService.getSelectedFlag() === false) {
-                    var loggedInUser = this.AuthService.getLoggedinUser();
+                this.prefillSelf();
 
-                    this.newPerson = {
-                        adNumber: loggedInUser.adnummer,
-                        job: "Aanbod nationale kampgrond",
-                        firstName: loggedInUser.firstname,
-                        lastName: loggedInUser.lastname,
-                        email: loggedInUser.email,
-                    };
-                    this.details2.name = "1234";
-                // }
-
-                console.log("Logging the new person here");
-                console.log("======================");
-                console.log(this.newPerson);
-                // this.newPerson.job = "Aanbod nationale kampgrond";
             }
         }
 

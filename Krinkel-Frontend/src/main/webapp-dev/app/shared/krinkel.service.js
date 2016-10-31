@@ -117,6 +117,12 @@ export class KrinkelService {
             return resp.data;
         });
     }
+
+    getContactFromChiro(adNumber) {
+        return this.$http.get(`${this.BASEURL}/api/contact/` + adNumber).then((resp) => {
+            return resp.data.values;
+        });
+    }
 }
 
 KrinkelService.$inject = ['$http', '$log', 'BASEURL'];
