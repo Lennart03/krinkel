@@ -27,7 +27,9 @@ public class ChiroContactController {
     @RequestMapping("/api/contact/{adNumber}")
     public String getContact(@PathVariable Integer adNumber) {
         try {
-            return chiroContactService.getContact(adNumber);
+            //TODO CHANGE THE NEXT LINE, THIS IS DUMMY! CHIRO STUFF DOESN'T WORK YET, NO RESULTS OTHERWISE
+            return chiroContactService.getContact(308986);
+//            return chiroContactService.getContact(adNumber);
         } catch (URISyntaxException e) {
             throw new InvalidAdNumber();
         }
