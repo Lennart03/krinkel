@@ -1,5 +1,6 @@
 package com.realdolmen.chiro.service.security;
 
+import com.realdolmen.chiro.domain.SecurityRole;
 import com.realdolmen.chiro.domain.User;
 import com.realdolmen.chiro.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,5 +21,17 @@ public class ChiroUnitServiceSecurity {
         User currentUser = userService.getCurrentUser();
 
         return currentUser != null && currentUser.getStamnummer().equals(stamnummer);
+    }
+
+    public boolean hasPermissionToGetVolunteers(){
+        User currentUser = userService.getCurrentUser();
+
+        return currentUser != null && currentUser.getRole().equals(SecurityRole.ADMIN);
+    }
+
+    public boolean hasPermissionToGetParticipants(){
+        User currentUser = userService.getCurrentUser();
+
+        return currentUser != null && currentUser.getRole().equals(SecurityRole.ADMIN);
     }
 }

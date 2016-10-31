@@ -67,13 +67,25 @@ public class UnitController {
     public ChiroUnit singleUnit(@PathVariable("stam") String stam) {
         return unitService.find(stam);
     }
-    
+
+    /**
+     * method used to fill the table with the participant data (allergies and stuff)
+     *
+     * @param stamNumber
+     * @return participants within the unit with the specified stamNumber
+     */
     @RequestMapping(value = "/{stamNummer}/participants", method = RequestMethod.GET)
     public List<RegistrationParticipant>findRegisteredParticipantsByGroup(@PathVariable("stamNummer") String stamNumber){
     	//return registrationParticipantsService.findParticipantsByGroup(stamNumber);
     	return unitService.findParticipantsByChiroUnit(stamNumber);
     }
-    
+
+    /**
+     * method used to fill the table with the volunteer data (allergies and stuff)
+     *
+     * @param stamNumber
+     * @return volunteers within the unit with the specified stamNumber
+     */
     @RequestMapping(value = "/{stamNummer}/volunteers", method = RequestMethod.GET)
     public List<RegistrationVolunteer>findRegisteredVolunteersByGroup(@PathVariable("stamNummer") String stamNumber){
     	//return registrationParticipantsService.findVolunteersByGroup(stamNumber);

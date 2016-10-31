@@ -129,6 +129,7 @@ public class ChiroUnitService {
 		return adapter.getColleagues(stamnr);
 	}
 
+	@PreAuthorize("@ChiroUnitServiceSecurity.hasPermissionToGetParticipants()")
 	public List<RegistrationParticipant> findParticipantsByChiroUnit(String stamnummer) {
 		ChiroUnit unit = this.find(stamnummer);
 		return loopOverRegisteredParticipantsFor(stamnummer, unit);
@@ -157,6 +158,7 @@ public class ChiroUnitService {
 		return participants;
 	}
 
+	@PreAuthorize("@ChiroUnitServiceSecurity.hasPermissionToGetVolunteers()")
 	public List<RegistrationVolunteer> findVolunteersByChiroUnit(String stamnummer) {
 		ChiroUnit unit = this.find(stamnummer);
 		return loopOverRegisteredVolunteersFor(stamnummer, unit);
