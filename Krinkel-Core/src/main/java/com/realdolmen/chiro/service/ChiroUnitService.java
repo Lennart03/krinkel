@@ -94,6 +94,7 @@ public class ChiroUnitService {
 		return combinedUnits;
 	}
 
+	@PreAuthorize("@ChiroUnitServiceSecurity.hasPermissionToFindVerbonden()")
 	public List<ChiroUnit> findVerbondUnits() {
 		return this.verbondUnits;
 	}
@@ -102,6 +103,7 @@ public class ChiroUnitService {
 		return this.gewestUnits;
 	}
 
+	@PreAuthorize("@ChiroUnitServiceSecurity.hasPermissionToFindUnits()")
 	public ChiroUnit find(String stam) {
 		List<ChiroUnit> units = this.findAll();
 		ChiroUnit unit = this.findByStam(units, stam);
@@ -123,12 +125,13 @@ public class ChiroUnitService {
 		return stam.replace("/", "").replace("\\s", "").replace(" ", "");
 	}
 
-	@PreAuthorize("@ChiroUnitServiceSecurity.hasPermissionToGetColleagues(#stamnr)")
-//	@PostFilter("@ChiroUnitServiceSecurity.hasPersmissionToSeeColleaggues(filterObject.)")
+	@PreAuthorize("@ChiroUnitServiceSecurity.hasPermissionToGetColleagues()")
+	@PostFilter("@ChiroUnitServiceSecurity.hasPersmissionToSeeColleaggues(filterObject.stamnummer)")
 	public List<User> getUnitUsers(String stamnr) {
 		return adapter.getColleagues(stamnr);
 	}
 
+	@PreAuthorize("@ChiroUnitServiceSecurity.hasPermissionToGetParticipants()")
 	public List<RegistrationParticipant> findParticipantsByChiroUnit(String stamnummer) {
 		ChiroUnit unit = this.find(stamnummer);
 		return loopOverRegisteredParticipantsFor(stamnummer, unit);
@@ -157,6 +160,7 @@ public class ChiroUnitService {
 		return participants;
 	}
 
+	@PreAuthorize("@ChiroUnitServiceSecurity.hasPermissionToGetVolunteers()")
 	public List<RegistrationVolunteer> findVolunteersByChiroUnit(String stamnummer) {
 		ChiroUnit unit = this.find(stamnummer);
 		return loopOverRegisteredVolunteersFor(stamnummer, unit);
