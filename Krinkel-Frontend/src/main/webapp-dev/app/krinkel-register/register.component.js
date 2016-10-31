@@ -108,11 +108,13 @@ class RegisterController {
          */
         if (this.SelectService.getColleague() !== undefined) {
             var colleague = this.SelectService.getColleague();
+            var loggedInUser = this.AuthService.getLoggedinUser();
             this.newPerson = {
                 adNumber: this.SelectService.colleague.adNumber,
                 firstName: colleague.firstname,
                 lastName: colleague.lastname,
                 email: colleague.email,
+                emailSubscriber: loggedInUser.email,
                 job: "Aanbod nationale kampgrond"
             };
             this.SelectService.setSelectedFlag(true);

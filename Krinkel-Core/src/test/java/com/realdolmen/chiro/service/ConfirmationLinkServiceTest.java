@@ -48,7 +48,8 @@ public class ConfirmationLinkServiceTest {
                 "AG0104",
                 Gender.WOMAN,
                 EventRole.ASPI,
-                Eatinghabbit.VEGI
+                Eatinghabbit.VEGI,
+                "aster.deckers@example.org"
         );
         this.participant.setStatus(Status.PAID);
     }

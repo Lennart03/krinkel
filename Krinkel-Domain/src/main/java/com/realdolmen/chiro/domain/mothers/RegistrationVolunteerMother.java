@@ -17,7 +17,7 @@ public class RegistrationVolunteerMother {
                 "386283", "aster.deckers@example.org", "Aster", "Deckers", c.getTime(),
                 "AG0001", Gender.MAN, EventRole.LEADER, Eatinghabbit.VEGI,
                 CampGround.ANTWERPEN,
-                new VolunteerFunction(VolunteerFunction.Preset.KRINKEL_EDITORIAL)
+                new VolunteerFunction(VolunteerFunction.Preset.KRINKEL_EDITORIAL), "aster.deckers@example.org"
         );
         volunteer.setAddress(new Address("-", "-", 1500, "-"));
 

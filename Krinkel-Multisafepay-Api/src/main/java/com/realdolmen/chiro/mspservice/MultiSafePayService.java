@@ -74,7 +74,7 @@ public class MultiSafePayService {
 
     public static String getCurrentTimeStamp() {
         Long test = new Date().getTime();
-        return  "-" + test;
+        return "-" + test;
     }
 
     /**
@@ -128,7 +128,12 @@ public class MultiSafePayService {
         customer.put("country", "BE");
 
         customer.put("phone", participant.getPhoneNumber());
-        customer.put("email", participant.getEmail());
+
+        if (participant.getEmailSubscriber() != null) {
+            customer.put("email", participant.getEmailSubscriber());
+        } else {
+            customer.put("email", participant.getEmail());
+        }
 
 
         JSONObject jsonObject = new JSONObject();

@@ -2,6 +2,7 @@ package com.realdolmen.chiro.service;
 
 import java.util.concurrent.Future;
 
+import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 
 import com.realdolmen.chiro.domain.*;
@@ -60,6 +61,8 @@ public class EmailSenderServiceImpl implements EmailSenderService {
                 logger.warn("Attempted to make a duplicate confirmation link");
             }
         }
+
+        ctx.setVariable("isMailToSubscriber",false);
         ctx.setVariable("confirmationLink", url);
 
         String emailText = thymeleaf.process("email", ctx);
@@ -71,17 +74,33 @@ public class EmailSenderServiceImpl implements EmailSenderService {
         try {
             MimeMessageHelper helper = new MimeMessageHelper(message, true);
 
-            helper.setText(emailText, true);
-            helper.setFrom(EMAIL_FROM);
-            helper.setTo(participant.getEmail());
-            helper.setSubject(EMAIL_SUBJECT);
-            helper.addInline("logo", image);
+            String emailTo = participant.getEmail();
+            helper = setHelper(helper,emailText,image,emailTo);
+
             logger.info("trying to send confirmation email to: " + participant.getEmail());
             mailSender.send(message);
+
+            if (participant.isRegisteredByOther() && participant.getEmailSubscriber() != null) {
+
+                ctx.setVariable("isMailToSubscriber",true);
+
+                emailText = thymeleaf.process("email", ctx);
+                logger.info("text: "+emailText);
+                logger.info("and trying to email to: " + participant.getEmailSubscriber());
+                emailTo = participant.getEmailSubscriber();
+
+                helper = new MimeMessageHelper(message, true);
+                helper = setHelper(helper,emailText,image,emailTo);
+
+                mailSender.send(message);
+            }
 
             registrationCommunication.setStatus(SendStatus.SENT);
             registrationCommunicationRepository.save(registrationCommunication);
             logger.info("sending confirmation email to: " + participant.getEmail() + " succeeded");
+            if ( participant.getEmailSubscriber() != null) {
+            logger.info("sending email to: " + participant.getEmailSubscriber() + " succeeded");
+            }
             return new AsyncResult<String>("ok");
         } catch (Exception e) {
             registrationCommunication.setStatus(SendStatus.FAILED);
@@ -91,6 +110,7 @@ public class EmailSenderServiceImpl implements EmailSenderService {
             return new AsyncResult<String>("notOk");
         }
     }
+
 
     private RegistrationParticipant fillInEmptyFields(RegistrationParticipant participant) {
         if (participant.getMedicalRemarks() == null)
@@ -109,4 +129,12 @@ public class EmailSenderServiceImpl implements EmailSenderService {
         return participant;
     }
 
+    public MimeMessageHelper setHelper(MimeMessageHelper helper, String emailText, ClassPathResource image, String emailTo) throws MessagingException {
+        helper.setText(emailText, true);
+        helper.setFrom(EMAIL_FROM);
+        helper.setTo(emailTo);
+        helper.setSubject(EMAIL_SUBJECT);
+        helper.addInline("logo", image);
+        return helper;
+    }
 }

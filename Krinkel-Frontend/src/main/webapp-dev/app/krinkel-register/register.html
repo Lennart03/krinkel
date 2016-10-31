@@ -96,7 +96,7 @@
                        ng-autocomplete details="$ctrl.details2"
                        options="$ctrl.optionsPostalCode" required placeholder="..."
                        required/>
-                {{$ctrl.extractFromAdress($ctrl.details2.address_components )}}
+
                 <label for="postal_code">Postcode *</label>
                 <p ng-show="personForm.postalCode.$invalid && personForm.postalCode.$touched" class="error"><i
                     class="material-icons">error_outline</i> Postcode is verplicht</p>
@@ -108,7 +108,7 @@
                 <input id="city" name="city" type="text" class="validate" ng-model="$ctrl.details3.vicinity" required
                        ng-autocomplete
                        options="$ctrl.optionsStad" details="$ctrl.details3" required placeholder="..."/>
-                {{$ctrl.extractFromAdress($ctrl.details3.address_components )}}
+
                 <label for="city">Gemeente *</label>
                 <p ng-show="personForm.city.$invalid && personForm.city.$touched" class="error"><i
                     class="material-icons">error_outline</i>

@@ -28,6 +28,7 @@ public class EmailSenderTest extends SpringIntegrationTest {
 	private static final String EMAIL_SUBJECT = "Bevestiging inschrijving krinkel";
 	//private static final String EMAIL_FROM = "inschrijvingen@krinkel.be";
 	private static final String EMAIL_TO = "Mathew.Perry@someEmail.com";
+	private static final String EMAIL_SUBSCRIBER = "Jennifer.Hewitt@someEmail.com";
 	private static final String AD_NUMBER_1 = "12345";
 	private static final String AD_NUMBER_2 = "22345";
 	private static final String FIRST_NAME = "Mathew";
@@ -69,6 +70,7 @@ public class EmailSenderTest extends SpringIntegrationTest {
 		registrationParticipant.setLastName(LAST_NAME);
 		registrationParticipant.setAdNumber(AD_NUMBER_1);
 		registrationParticipant.setEmail(EMAIL_TO);
+		registrationParticipant.setEmailSubscriber(EMAIL_SUBSCRIBER);
 		registrationParticipant.setGender(MALE);
 		Address address= new Address(STREET, HOUSE_NUMBER, POSTAL_CODE, CITY);
 		registrationParticipant.setAddress(address);
@@ -79,6 +81,7 @@ public class EmailSenderTest extends SpringIntegrationTest {
 		registrationVolunteer.setLastName(LAST_NAME);
 		registrationVolunteer.setAdNumber(AD_NUMBER_2);
 		registrationVolunteer.setEmail(EMAIL_TO);
+		registrationVolunteer.setEmailSubscriber(EMAIL_SUBSCRIBER);
 		registrationVolunteer.setAddress(address);
 		registrationVolunteer.setGender(MALE);
 		registrationVolunteer.setFunction(new VolunteerFunction(Preset.KRINKEL_EDITORIAL));

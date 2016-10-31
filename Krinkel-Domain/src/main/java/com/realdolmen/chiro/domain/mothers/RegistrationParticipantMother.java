@@ -22,6 +22,7 @@ public class RegistrationParticipantMother {
 
         builder.adNumber("778899")
                 .email("hermione@hogwarts.example")
+                .emailSubscriber("aster.deckers@example.org")
                 .firstName("Hermione")
                 .lastName("Granger")
                 .birthdate(c.getTime())
