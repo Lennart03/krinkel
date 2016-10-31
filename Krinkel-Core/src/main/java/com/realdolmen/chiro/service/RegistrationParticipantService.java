@@ -36,7 +36,7 @@ public class RegistrationParticipantService {
 	@Autowired
 	private MultiSafePayService mspService;
 
-	@PreAuthorize("@mySecurityService.hasPermissionToSaveParticipant(#participant)")
+	@PreAuthorize("@RegistrationParticipantServiceSecurity.hasPermissionToSaveParticipant(#participant)")
 	public RegistrationParticipant save(RegistrationParticipant participant){
 		User chiroUser = userService.getUser(participant.getAdNumber());
 		RegistrationParticipant participantFromOurDB = registrationParticipantRepository.findByAdNumber(participant.getAdNumber());

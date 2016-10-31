@@ -24,7 +24,7 @@ public class RegistrationVolunteerService {
     @Autowired
     private ChiroUserAdapter adapter;
 
-    @PreAuthorize("@mySecurityService.hasPermissionToSaveVolunteer(#volunteer)")
+    @PreAuthorize("@RegistrationVolunteerServiceSecurity.hasPermissionToSaveVolunteer(#volunteer)")
     public RegistrationVolunteer save(RegistrationVolunteer volunteer){
         User chiroUser = adapter.getChiroUser(volunteer.getAdNumber());
         RegistrationVolunteer volunteerFromOurDB = repository.findByAdNumber(volunteer.getAdNumber());
