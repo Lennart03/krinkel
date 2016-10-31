@@ -15,4 +15,10 @@ public class ChiroUnitServiceSecurity {
 
         return currentUser != null;
     }
+
+    public boolean hasPersmissionToSeeColleaggues(String stamnummer){
+        User currentUser = userService.getCurrentUser();
+
+        return currentUser != null && currentUser.getStamnummer().equals(stamnummer);
+    }
 }

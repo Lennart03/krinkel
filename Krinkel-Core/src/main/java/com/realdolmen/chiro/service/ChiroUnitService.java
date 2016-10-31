@@ -123,8 +123,8 @@ public class ChiroUnitService {
 		return stam.replace("/", "").replace("\\s", "").replace(" ", "");
 	}
 
-	@PreAuthorize("@ChiroUnitServiceSecurity.hasPermissionToGetColleagues(#stamnr)")
-//	@PostFilter("@ChiroUnitServiceSecurity.hasPersmissionToSeeColleaggues(filterObject.)")
+	@PreAuthorize("@ChiroUnitServiceSecurity.hasPermissionToGetColleagues()")
+	@PostFilter("@ChiroUnitServiceSecurity.hasPersmissionToSeeColleaggues(filterObject.stamnummer)")
 	public List<User> getUnitUsers(String stamnr) {
 		return adapter.getColleagues(stamnr);
 	}
