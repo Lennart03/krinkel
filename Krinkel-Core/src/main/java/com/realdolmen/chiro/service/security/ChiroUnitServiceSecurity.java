@@ -34,4 +34,16 @@ public class ChiroUnitServiceSecurity {
 
         return currentUser != null && currentUser.getRole().equals(SecurityRole.ADMIN);
     }
+
+    public boolean hasPermissionToFindUnits(){
+        User currentUser = userService.getCurrentUser();
+//
+        return currentUser != null && currentUser.getRole().equals(SecurityRole.ADMIN);
+    }
+
+    public boolean hasPermissionToFindVerbonden(){
+        User currentUser = userService.getCurrentUser();
+
+        return currentUser != null && currentUser.getRole().equals(SecurityRole.ADMIN);
+    }
 }

@@ -94,6 +94,7 @@ public class ChiroUnitService {
 		return combinedUnits;
 	}
 
+	@PreAuthorize("@ChiroUnitServiceSecurity.hasPermissionToFindVerbonden()")
 	public List<ChiroUnit> findVerbondUnits() {
 		return this.verbondUnits;
 	}
@@ -102,6 +103,7 @@ public class ChiroUnitService {
 		return this.gewestUnits;
 	}
 
+	@PreAuthorize("@ChiroUnitServiceSecurity.hasPermissionToFindUnits()")
 	public ChiroUnit find(String stam) {
 		List<ChiroUnit> units = this.findAll();
 		ChiroUnit unit = this.findByStam(units, stam);
