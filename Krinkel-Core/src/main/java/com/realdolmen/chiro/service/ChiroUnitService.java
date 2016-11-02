@@ -4,20 +4,17 @@ import com.realdolmen.chiro.chiro_api.ChiroUserAdapter;
 import com.realdolmen.chiro.domain.RegistrationParticipant;
 import com.realdolmen.chiro.domain.RegistrationVolunteer;
 import com.realdolmen.chiro.domain.User;
-import com.realdolmen.chiro.domain.VolunteerFunction;
 import com.realdolmen.chiro.domain.units.ChiroUnit;
 import com.realdolmen.chiro.domain.units.RawChiroUnit;
 import com.realdolmen.chiro.repository.ChiroUnitRepository;
-import com.realdolmen.chiro.repository.RegistrationParticipantRepository;
 
+import com.realdolmen.chiro.util.StamNumberTrimmer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collector;
-import java.util.stream.Collectors;
 
 /**
  * TODO: Move to separate module?
@@ -29,6 +26,9 @@ import java.util.stream.Collectors;
  */
 @Service
 public class ChiroUnitService {
+
+	@Autowired
+	private StamNumberTrimmer stamNumberTrimmer;
 
 	@Autowired
 	private ChiroUnitRepository repository;
@@ -56,29 +56,34 @@ public class ChiroUnitService {
 		/* Fix StamNumbers */
 		verbondUnits = repository.findAllVerbonden();
 		for (ChiroUnit verbondUnit : verbondUnits) {
-			verbondUnit.setStam(trimStam(verbondUnit.getStam()));
+			String normalizedStam = stamNumberTrimmer.trim(verbondUnit.getStam());
+			verbondUnit.setStam(normalizedStam);
 		}
 
 		/* Fix StamNumbers */
 		gewestUnits = repository.findAllGewesten();
 		for (ChiroUnit gewestUnit : gewestUnits) {
-			gewestUnit.setStam(trimStam(gewestUnit.getStam()));
+			String normalizedStam = stamNumberTrimmer.trim(gewestUnit.getStam());
+			gewestUnit.setStam(normalizedStam);
 		}
 
 		List<ChiroUnit> chiroUnits = new ArrayList<>();
 		// Convert all low level groups
 		for (RawChiroUnit rawUnit : repository.findAll()) {
-			ChiroUnit unit = new ChiroUnit(trimStam(rawUnit.getStamNumber()), rawUnit.getName());
+			ChiroUnit unit = new ChiroUnit(
+					stamNumberTrimmer.trim(rawUnit.getStamNumber()),
+					rawUnit.getName()
+			);
 
-			ChiroUnit gewest = findByStam(gewestUnits, trimStam(rawUnit.getGewest()));
+			ChiroUnit gewest = findByStam(gewestUnits, stamNumberTrimmer.trim(rawUnit.getGewest()));
 			gewest.getLower().add(unit);
-			gewest.setUpper(findByStam(verbondUnits, trimStam(rawUnit.getVerbond())));
+			gewest.setUpper(findByStam(verbondUnits, stamNumberTrimmer.trim(rawUnit.getVerbond())));
 			unit.setUpper(gewest);
 			chiroUnits.add(unit);
 		}
 
 		for (ChiroUnit gewestUnit : gewestUnits) {
-			ChiroUnit verbond = findByStam(verbondUnits, trimStam(gewestUnit.getUpper().getStam()));
+			ChiroUnit verbond = findByStam(verbondUnits, stamNumberTrimmer.trim(gewestUnit.getUpper().getStam()));
 			verbond.getLower().add(gewestUnit);
 		}
 
@@ -115,10 +120,6 @@ public class ChiroUnitService {
 			}
 		}
 		return null;
-	}
-
-	private String trimStam(String stam) {
-		return stam.replace("/", "").replace("\\s", "").replace(" ", "");
 	}
 
 	public List<User> getUnitUsers(String stamnr) {
