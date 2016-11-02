@@ -26,18 +26,23 @@ public class VolunteerFunction {
         
         private String description;
     	
-    	private Preset(String description){
-    		this.setDescription(description);
+    	Preset(String description){
+    		this.description = description;
     	}
 
 		public String getDescription() {
 			return description;
 		}
-
-		public void setDescription(String description) {
-			this.description = description;
-		}
     }
+
+
+    @Enumerated(EnumType.STRING)
+    private Preset preset = null;
+
+    /**
+     * Custom defined
+     */
+    private String other = null;
 
     public VolunteerFunction(){}
 
@@ -54,14 +59,6 @@ public class VolunteerFunction {
         this.preset = Preset.CUSTOM;
         this.other = other;
     }
-
-    @Enumerated(EnumType.STRING)
-    private Preset preset = null;
-
-    /**
-     * Custom defined
-     */
-    private String other = null;
 
     public Preset getPreset() {
         return preset;
