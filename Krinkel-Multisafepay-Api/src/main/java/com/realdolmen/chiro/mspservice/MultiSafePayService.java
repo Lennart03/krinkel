@@ -8,6 +8,7 @@ import com.realdolmen.chiro.mspdto.StatusDto;
 import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.*;
 import org.springframework.http.converter.StringHttpMessageConverter;
 import org.springframework.stereotype.Service;
@@ -22,8 +23,9 @@ import java.util.HashMap;
 
 @Service
 public class MultiSafePayService {
-    private static final String URL = "https://testapi.multisafepay.com/v1/json/orders";
-    private static final String API_KEY = "a9026c8f9a1d49da542dd2f51d702a4442612e54";
+    @Autowired
+    private MultiSafePayConfiguration configuration;
+
     private RestTemplate restTemplate = new RestTemplate();
 
     private Logger logger = LoggerFactory.getLogger(MultiSafePayService.class);
@@ -45,7 +47,7 @@ public class MultiSafePayService {
         headers.setContentType(MediaType.APPLICATION_JSON);
         HttpEntity<String> entity = new HttpEntity<>(jsonObject.toString(), headers);
         System.out.println(entity.getBody());
-        String url = URL + "?api_key=" + API_KEY;
+        String url = configuration.getURL() + "?api_key=" + configuration.getApiKey();
 
 
         try {
@@ -163,7 +165,7 @@ public class MultiSafePayService {
 
     public boolean orderIsPaid(String testOrderId) {
         boolean res = false;
-        String url = URL + "/" + testOrderId + "?api_key=" + API_KEY;
+        String url = configuration.getURL() + "/" + testOrderId + "?api_key=" + configuration.getApiKey();
         ResponseEntity<StatusDto> response = restTemplate.exchange(url, HttpMethod.GET, null, StatusDto.class);
         Data data = response.getBody().getData();
         if (data != null && data.getStatus().equals("completed"))

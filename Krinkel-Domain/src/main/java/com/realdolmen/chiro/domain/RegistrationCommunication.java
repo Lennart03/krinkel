@@ -26,10 +26,10 @@ public class RegistrationCommunication {
 	
 	@NotNull
 	@Enumerated(EnumType.STRING)
-	private SendStatus status;
+	private SendStatus status = SendStatus.WAITING;
 	
 	@Min(0)
-	private int communicationAttempt;
+	private int communicationAttempt = 0;
 
 	public RegistrationCommunication() {
 	}
