@@ -85,7 +85,7 @@ public class EmailSenderServiceImpl implements EmailSenderService {
                 ctx.setVariable("isMailToSubscriber",true);
 
                 emailText = thymeleaf.process("email", ctx);
-                logger.info("text: "+emailText);
+
                 logger.info("and trying to email to: " + participant.getEmailSubscriber());
                 emailTo = participant.getEmailSubscriber();
 
