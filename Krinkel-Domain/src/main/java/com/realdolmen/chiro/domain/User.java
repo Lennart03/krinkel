@@ -118,6 +118,7 @@ public class User {
     }
 
     public String getNormalizedStamNumber(){
+        
         return this.getStamnummer().replace("/", "")
                                    .replace(" ", "");
 
