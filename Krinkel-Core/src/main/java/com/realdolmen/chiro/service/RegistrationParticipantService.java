@@ -77,11 +77,16 @@ public class RegistrationParticipantService {
 		}
 	}
 
+	/**
+	 * Return a list of all participants within the specified group which
+	 * have a registration status of Confirmed or Paid.
+	 *
+	 * Only returns pure participants. Volunteers are ignored.
+	 *
+	 * @param stamNumber Identifier of the group.
+     */
 	public List<RegistrationParticipant> findParticipantsByGroup(String stamNumber) {
 		List<RegistrationParticipant> participants = registrationParticipantRepository.findParticipantsByGroupWithStatusConfirmedOrPaid(stamNumber);
-//=======
-//		List<RegistrationParticipant> participants = registrationParticipantRepository.findParticipantsByGroup(stamNumber);
-//>>>>>>> devel
 		List<RegistrationParticipant> results = new ArrayList<>();
 		for (RegistrationParticipant participant : participants) {
 			if (!(participant instanceof RegistrationVolunteer)) {
@@ -91,11 +96,14 @@ public class RegistrationParticipantService {
 		return results;
 	}
 
+	/**
+	 * Return of all volunteers within the specified group which
+	 * have a registration status of Confirmed or Paid.
+	 *
+	 * @param stamNumber
+     */
 	public List<RegistrationVolunteer> findVolunteersByGroup(String stamNumber) {
 		List<RegistrationParticipant> participants = registrationParticipantRepository.findParticipantsByGroupWithStatusConfirmedOrPaid(stamNumber);
-//=======
-//		List<RegistrationParticipant> participants = registrationParticipantRepository.findParticipantsByGroup(stamNumber);
-//>>>>>>> devel
 		List<RegistrationVolunteer> results = new ArrayList<>();
 		for (RegistrationParticipant participant : participants) {
 			if (participant instanceof RegistrationVolunteer) {
