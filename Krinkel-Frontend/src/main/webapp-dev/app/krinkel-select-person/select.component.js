@@ -18,7 +18,11 @@ class KrinkelSelectController {
         this.SelectService.setSelectedFlag(false);
         this.AuthService.getUserDetails().then((resp) => {
             this.KrinkelService.getColleagues(resp.stamnummer).then((resp) => {
-                this.colleagues = resp;
+                console.log("LOGGING THE COLLEAGUES FROM CHIRO YO");
+
+
+                resp.forEach(p => this.colleagues.push(JSON.parse(p)));
+                console.log(this.colleagues);
             });
         });
 

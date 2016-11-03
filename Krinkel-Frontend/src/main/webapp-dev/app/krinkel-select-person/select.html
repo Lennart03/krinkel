@@ -1,10 +1,15 @@
 <div class="collection">
+    <!--<a ng-click="$ctrl.selectPerson(colleague)"-->
+       <!--ng-repeat="colleague in $ctrl.colleagues"-->
+       <!--class="collection-item"-->
+       <!--ng-if="colleague.adNumber != $ctrl.AuthService.getLoggedinUser().adnummer &&colleague.hasPaid == false">-->
+        <!--{{colleague.firstname}} {{colleague.lastname}}<br/>-->
+        <!--stamnummer: {{colleague.stamnummer}} adnummer: {{colleague.adNumber}}-->
+    <!--</a>-->
     <a ng-click="$ctrl.selectPerson(colleague)"
        ng-repeat="colleague in $ctrl.colleagues"
-       class="collection-item"
-       ng-if="colleague.adNumber != $ctrl.AuthService.getLoggedinUser().adnummer &&colleague.hasPaid == false">
-        {{colleague.firstname}} {{colleague.lastname}}<br/>
-        stamnummer: {{colleague.stamnummer}} adnummer: {{colleague.adNumber}}
+       class="collection-item">
+        {{colleague.first_name}} {{colleague.last_name}}<br/>
+        adnummer: {{colleague.adnr}}
     </a>
 </div>
-
