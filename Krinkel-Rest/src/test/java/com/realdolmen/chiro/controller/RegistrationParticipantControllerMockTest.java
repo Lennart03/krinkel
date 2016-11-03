@@ -2,12 +2,18 @@ package com.realdolmen.chiro.controller;
 
 import com.realdolmen.chiro.domain.*;
 import com.realdolmen.chiro.repository.RegistrationParticipantRepository;
+import com.realdolmen.chiro.service.UserService;
 import com.realdolmen.chiro.spring_test.MockMvcTest;
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
@@ -16,6 +22,7 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import static org.hibernate.validator.internal.util.Contracts.assertNotNull;
 import static org.junit.Assert.assertEquals;
+import static org.mockito.Mockito.when;
 
 import java.util.Calendar;
 
@@ -61,6 +68,12 @@ public class RegistrationParticipantControllerMockTest extends MockMvcTest {
 //    	volunteer = RegistrationVolunteerMother.createBasicRegistrationVolunteer();
 
         this.nParticipants = repo.findAll().size();
+        //TODO USE THIS
+//        Authentication authentication = Mockito.mock(Authentication.class);
+//        when(authentication.isAuthenticated()).thenReturn(true);
+//        SecurityContext securityContext = Mockito.mock(SecurityContext.class);
+//        when(securityContext.getAuthentication()).thenReturn(authentication);
+//        SecurityContextHolder.setContext(securityContext);
     }
 
     @Test
