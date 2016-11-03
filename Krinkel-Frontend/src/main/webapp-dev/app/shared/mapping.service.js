@@ -29,6 +29,7 @@ export class MapperService {
             phoneNumber: data.phone,
             campGround: data.campGround.toUpperCase(),
             email: data.email,
+            emailSubscriber: data.emailSubscriber,
             eventRole: 'VOLUNTEER',
         };
 
@@ -109,6 +110,7 @@ export class MapperService {
         var participant = {
             // adNumber: Math.floor(Math.random() * 100000), // FOR TESTING
             email: data.email,
+            emailSubscriber: data.emailSubscriber,
             firstName: data.firstName,
             lastName: data.lastName,
             address: {

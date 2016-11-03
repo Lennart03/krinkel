@@ -23,7 +23,7 @@ public class MultiSafePayServiceTest extends SpringIntegrationTest {
     @Before
     public void setUp() {
         address = new Address("rttr", "3", 1600, "test");
-        p = new RegistrationParticipant("123", "jos@example.com", "Joske", "Vermeulen", new Date(), "AB 12/34", Gender.MAN, EventRole.ASPI, null);
+        p = new RegistrationParticipant("123", "jos@example.com", "Joske", "Vermeulen", new Date(), "AB 12/34", Gender.MAN, EventRole.ASPI, null, "aster.deckers@example.org");
         p.setAddress(address);
         v = new RegistrationVolunteer();
 

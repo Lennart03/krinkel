@@ -17,9 +17,7 @@ import org.springframework.web.client.RestTemplate;
 
 import java.nio.charset.Charset;
 import java.security.InvalidParameterException;
-import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.HashMap;
 
 @Service
 public class MultiSafePayService {
@@ -74,9 +72,9 @@ public class MultiSafePayService {
         return res;
     }
 
-    public static String getCurrentTimeStamp() {
+    private static String getCurrentTimeStamp() {
         Long test = new Date().getTime();
-        return  "-" + test;
+        return "-" + test;
     }
 
     /**
@@ -130,7 +128,12 @@ public class MultiSafePayService {
         customer.put("country", "BE");
 
         customer.put("phone", participant.getPhoneNumber());
-        customer.put("email", participant.getEmail());
+
+        if (participant.getEmailSubscriber() != null) {
+            customer.put("email", participant.getEmailSubscriber());
+        } else {
+            customer.put("email", participant.getEmail());
+        }
 
 
         JSONObject jsonObject = new JSONObject();

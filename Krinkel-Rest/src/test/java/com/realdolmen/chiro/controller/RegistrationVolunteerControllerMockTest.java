@@ -36,7 +36,7 @@ public class RegistrationVolunteerControllerMockTest extends MockMvcTest {
 
         participant = new RegistrationParticipant(
                 "386283", "astrid@mail.any", "Maia", "Van Op Beeck", c.getTime(),
-                "AG0001", Gender.WOMAN, EventRole.ASPI, Eatinghabbit.FISHANDMEAT
+                "AG0001", Gender.WOMAN, EventRole.ASPI, Eatinghabbit.FISHANDMEAT, "aster.deckers@example.org"
         );
         participant.setAddress(new Address("My Street", "2", 1252, "My City"));
 
@@ -46,7 +46,7 @@ public class RegistrationVolunteerControllerMockTest extends MockMvcTest {
                 "386283", "aster.deckers@example.org", "Aster", "Deckers", c.getTime(),
                 "AG0001", Gender.MAN, EventRole.LEADER, Eatinghabbit.VEGI,
                 CampGround.ANTWERPEN,
-                new VolunteerFunction(VolunteerFunction.Preset.KRINKEL_EDITORIAL)
+                new VolunteerFunction(VolunteerFunction.Preset.KRINKEL_EDITORIAL), "aster.deckers@example.org"
         );
         volunteer.setAddress(new Address("-", "-", 1500, "-"));
 

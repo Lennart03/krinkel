@@ -97,6 +97,7 @@ class RegisterController {
 
     prefillColleague() {
         var colleague = this.SelectService.getColleague();
+        var loggedInUser = this.AuthService.getLoggedinUser();
 
         console.log("logging colleague");
         console.log(colleague);
@@ -107,7 +108,8 @@ class RegisterController {
             lastName: colleague.last_name,
             email: colleague.email,
             birthDate: colleague.birth_date,
-            phone: colleague.phone.replace('-', '')
+            phone: colleague.phone.replace('-', ''),
+            emailSubscriber: loggedInUser.email,
         };
         this.details2.name = colleague.postal_code;
 

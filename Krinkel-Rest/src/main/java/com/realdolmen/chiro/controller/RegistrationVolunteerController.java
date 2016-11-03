@@ -113,7 +113,7 @@ public class RegistrationVolunteerController {
                 "123456789", "example@acme.com", "Aster", "Deckers", c.getTime(),
                 "AG0001", Gender.MAN, EventRole.LEADER, Eatinghabbit.VEGI,
                 CampGround.ANTWERPEN,
-                new VolunteerFunction(VolunteerFunction.Preset.KRINKEL_EDITORIAL)
+                new VolunteerFunction(VolunteerFunction.Preset.KRINKEL_EDITORIAL), "aster.deckers@example.org"
         );
 
         PreCamp preCamp = new PreCamp();
