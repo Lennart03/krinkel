@@ -51,6 +51,13 @@ public class UserService {
         return u;
     }
 
+    public RegistrationParticipant getRegistrationParticipant(String adNumber) {
+        RegistrationParticipant participant = repo.findByAdNumber(adNumber);
+
+        return participant;
+    }
+
+
     private void setSecurityRole(User u) {
         if (u.getStamnummer() == null) return;
         if (u.getRole() != null && u.getRole() == SecurityRole.ADMIN) return;

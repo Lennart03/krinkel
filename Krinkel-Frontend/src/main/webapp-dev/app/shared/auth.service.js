@@ -84,6 +84,10 @@ export class AuthService {
         });
     }
 
+    /**
+     * This function returns the user details. The call to the server only happens ONCE, after it resolves it'll return cached data to reduce load.
+     * @returns {*}
+     */
     getUserDetails() {
         if (this.userDetailsCallMade) {
             if (this.userDetailsCallReturned) {

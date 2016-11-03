@@ -98,26 +98,32 @@ class RegisterController {
     prefillColleague() {
         var colleague = this.SelectService.getColleague();
 
+        console.log("logging colleague");
         console.log(colleague);
-        this.KrinkelService.getContactFromChiro(colleague.adNumber).then((resp) => {
-            var chiroContact = resp[0];
+        this.newPerson = {
+            adNumber: colleague.adnummer,
+            job: "Aanbod nationale kampgrond",
+            firstName: colleague.first_name,
+            lastName: colleague.last_name,
+            email: colleague.email,
+            birthDate: colleague.birth_date,
+            phone: colleague.phone.replace('-', '')
+        };
+        this.details2.name = colleague.postal_code;
 
-            this.newPerson = {
-                adNumber: loggedInUser.adnummer,
-                job: "Aanbod nationale kampgrond",
-                firstName: chiroContact.first_name,
-                lastName: chiroContact.last_name,
-                email: chiroContact.email,
-                birthDate: chiroContact.birth_date,
-                phone: chiroContact.phone.replace('-', '')
-            };
-            console.log(chiroContact);
+
+        this.details.address_components = [];
+        this.details.address_components.push({
+            long_name: colleague.street_address
         });
 
+
+        this.details3.vicinity = colleague.city;
 
 
         this.SelectService.setSelectedFlag(true);
     }
+
     prefillSelf() {
         var loggedInUser = this.AuthService.getLoggedinUser();
         this.KrinkelService.getContactFromChiro(loggedInUser.adnummer).then((resp) => {
@@ -137,10 +143,9 @@ class RegisterController {
                 this.details2.name = chiroContact.postal_code;
 
 
-
                 this.details.address_components = [];
                 this.details.address_components.push({
-                    long_name:chiroContact.street_address
+                    long_name: chiroContact.street_address
                 });
 
 
@@ -152,8 +157,6 @@ class RegisterController {
             }
         });
     }
-
-
 
 
     $onInit() {

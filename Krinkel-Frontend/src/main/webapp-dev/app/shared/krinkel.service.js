@@ -42,14 +42,8 @@ export class KrinkelService {
         });
     }
 
-    // getColleagues(adNumber){
-    //     return this.$http.get(`${this.BASEURL}/api/colleagues?ad=${adNumber}`).then((resp) => {
-    //         return resp.data;
-    //     })
-    // }
-
-    getColleagues(stamnummer){
-        return this.$http.get(`${this.BASEURL}/api/units/${stamnummer}/users`).then((resp) => {
+    getColleagues(){
+        return this.$http.get(`${this.BASEURL}/api/colleagues`).then((resp) => {
             return resp.data;
         })
     }
@@ -88,17 +82,6 @@ export class KrinkelService {
             return resp.data;
         })
     }
-
-    // getMovies(title) {
-    //   return this.$http.get(`${this.BASEURL}/online?title=${title}`).then((resp) => {
-    //     return resp.data;
-    //   });
-    // }
-    // postMovie(imdbid){
-    //   return this.$http.post(`${this.BASEURL}`, {imdbId: imdbid}).then((resp) => {
-    //     return resp.data;
-    //   });
-    // }
 
     getGraphSunInfo() {
         return this.$http.get(`${this.BASEURL}/api/graph/sun`).then((resp) => {
