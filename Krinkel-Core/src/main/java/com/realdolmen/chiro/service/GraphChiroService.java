@@ -10,6 +10,7 @@ import com.realdolmen.chiro.repository.LoginLoggerRepository;
 import com.realdolmen.chiro.repository.RegistrationParticipantRepository;
 import com.realdolmen.chiro.util.StamNumberTrimmer;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -29,6 +30,7 @@ public class GraphChiroService {
     @Autowired
     private StamNumberTrimmer stamNumberTrimmer;
 
+    @PreAuthorize("@GraphChiroServiceSecurity.hasPermissionToMakeStatusGraph()")
     public StatusChiroUnit getStatusChiro(){
         StatusChiroUnit status = new StatusChiroUnit();
         participantRepository.findAll().forEach(r -> {
@@ -64,6 +66,7 @@ public class GraphChiroService {
         return status;
     }
 
+    @PreAuthorize("@GraphChiroServiceSecurity.hasPermissionToMakeSunGraph()")
     public GraphChiroUnit summary() {
         GraphChiroUnit root = new GraphChiroUnit("Inschrijvingen", null, new ArrayList<GraphChiroUnit>());
 //
@@ -108,10 +111,11 @@ public class GraphChiroService {
         return participants + volunteers;
     }
 
-
     private List<RawChiroUnit> findAll() {
         return repository.findAll();
     }
+
+    @PreAuthorize("@GraphChiroServiceSecurity.hasPermissionToGetLoginData()")
     public List<GraphLoginCount> getLoginData(){
         return loggerRepository.crunchData();
     }

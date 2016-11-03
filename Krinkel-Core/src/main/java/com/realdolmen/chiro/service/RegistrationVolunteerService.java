@@ -8,6 +8,7 @@ import com.realdolmen.chiro.domain.User;
 import com.realdolmen.chiro.repository.RegistrationVolunteerRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -23,17 +24,8 @@ public class RegistrationVolunteerService {
     @Autowired
     private ChiroUserAdapter adapter;
 
-    public RegistrationVolunteer save(RegistrationVolunteer registration) {
-        User chiroUser = adapter.getChiroUser(registration.getAdNumber());
-        if(repository.findByAdNumber(registration.getAdNumber()) == null && chiroUser != null) {
-            String stamnummer = chiroUser.getStamnummer();
-            registration.setStamnumber(stamnummer);
-            return repository.save(registration);
-        }
-        return null;
-    }
-
-    public RegistrationVolunteer saveArne(RegistrationVolunteer volunteer){
+    @PreAuthorize("@RegistrationVolunteerServiceSecurity.hasPermissionToSaveVolunteer(#volunteer)")
+    public RegistrationVolunteer save(RegistrationVolunteer volunteer){
         User chiroUser = adapter.getChiroUser(volunteer.getAdNumber());
         RegistrationVolunteer volunteerFromOurDB = repository.findByAdNumber(volunteer.getAdNumber());
 

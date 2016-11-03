@@ -72,13 +72,20 @@ export class KrinkelService {
     }
 
     getParticipantsForUnit(stamNummer) {
-        return this.$http.get(`${this.BASEURL}/api/participants/${stamNummer}`).then((resp) => {
+        // return this.$http.get(`${this.BASEURL}/api/participants/${stamNummer}`).then((resp) => {
+        return this.$http.get(`${this.BASEURL}/api/units/${stamNummer}`).then((resp) => {
             return resp.data;
         });
     }
 
-    getUsersOfUnit(stamNummer){
-        return this.$http.get(`${this.BASEURL}/api/participants/info/${stamNummer}`).then((resp) => {
+    getParticipantsOfUnit(stamNummer){
+        return this.$http.get(`${this.BASEURL}/api/units/${stamNummer}/participants`).then((resp) => {
+            return resp.data;
+        })
+    }
+
+    getVolunteersOfUnit(stamNummer){
+        return this.$http.get(`${this.BASEURL}/api/units/${stamNummer}/volunteers`).then((resp) => {
             return resp.data;
         })
     }

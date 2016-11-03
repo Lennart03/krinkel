@@ -6,6 +6,7 @@ import com.realdolmen.chiro.domain.mothers.RegistrationVolunteerMother;
 import com.realdolmen.chiro.spring_test.MockMvcTest;
 import org.hamcrest.Matchers;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -18,6 +19,7 @@ import java.util.Calendar;
 import static org.hibernate.validator.internal.util.Contracts.assertNotNull;
 import static org.junit.Assert.assertEquals;
 
+@Ignore
 public class RegistrationVolunteerControllerMockTest extends MockMvcTest {
 
     private RegistrationVolunteer volunteer;
