@@ -131,19 +131,24 @@ export class MapperService {
             phoneNumber: data.phone,
         };
 
-        this.$log.debug("outside selectedflqg");
-        this.$log.debug(this.SelectService.getColleague());
-        // if (this.SelectService.getSelectedFlag()) {
 
-        console.log(data.email, this.AuthService.getLoggedinUser().email);
-        if (data.email != this.AuthService.getLoggedinUser().email) {
-            this.$log.debug(this.SelectService.getColleague());
-            this.$log.debug("ppp");
-            participant.adNumber = this.SelectService.getColleague().adnr;
-        } else {
-            this.$log.debug("not in if selectedflqg");
+        console.log("Logging stoof");
+        console.log(this.SelectService.getColleague(), this.AuthService.getLoggedinUser());
+        if (this.SelectService.getColleague() == undefined) {
+            console.log("in subscribe self");
             participant.adNumber = this.AuthService.getLoggedinUser().adnummer;
+        } else {
+            console.log("in subscribe other");
+            participant.adNumber = this.SelectService.getColleague().adnr;
         }
+        // if (data.email != this.AuthService.getLoggedinUser().email) {
+        //     this.$log.debug(this.SelectService.getColleague());
+        //     this.$log.debug("ppp");
+        //     participant.adNumber = this.SelectService.getColleague().adnr;
+        // } else {
+        //     this.$log.debug("not in if selectedflqg");
+        //     participant.adNumber = this.AuthService.getLoggedinUser().adnummer;
+        // }
 
         if (data.buddy) {
             participant.language = data.languages;
