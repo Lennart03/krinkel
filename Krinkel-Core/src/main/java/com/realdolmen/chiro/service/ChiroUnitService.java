@@ -160,7 +160,6 @@ public class ChiroUnitService {
 				});
 			}
 		}
-		System.err.println(participants.size());
 		unit.setParticipantsCount(participants.size());
 		return participants;
 	}

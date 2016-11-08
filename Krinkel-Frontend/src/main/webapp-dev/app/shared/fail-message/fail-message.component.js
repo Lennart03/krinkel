@@ -19,10 +19,8 @@ class FailMessageController {
                     this.$location.path('/home');
                 }
                 if (currentUser.registered && currentUser.hasPaid) {
-                    console.log("test");
                     this.$location.path('/success');
                 } else if (currentUser.registered && !currentUser.hasPaid) {
-                    console.log("test2");
                 } else {
                     this.$location.path('/home')
                 }
