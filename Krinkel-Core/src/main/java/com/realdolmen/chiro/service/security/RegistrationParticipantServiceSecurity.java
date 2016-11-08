@@ -29,7 +29,7 @@ public class RegistrationParticipantServiceSecurity {
         /**
          * TODO TODO TODO THIS IS DUMMY, REPLACE BY LINE ABOVE
          */
-        return currentUser != null && (currentUser.getRole().equals(SecurityRole.ADMIN) ||
+        return currentUser != null && (participant.getAdNumber().equals(currentUser.getAdNumber()) || currentUser.getRole().equals(SecurityRole.ADMIN) ||
                 chiroColleagueService.isColleague(221826, Integer.parseInt(participant.getAdNumber())));
     }
 }
