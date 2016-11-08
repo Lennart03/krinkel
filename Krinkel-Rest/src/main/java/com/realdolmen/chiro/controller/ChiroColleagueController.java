@@ -23,6 +23,8 @@ public class ChiroColleagueController {
     private UserService userService;
 
 
+
+
     @RequestMapping("/api/colleagues")
     public List<String> getColleagues() {
         try {

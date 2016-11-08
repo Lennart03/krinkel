@@ -133,10 +133,13 @@ export class MapperService {
 
         this.$log.debug("outside selectedflqg");
         this.$log.debug(this.SelectService.getColleague());
-        if (this.SelectService.getSelectedFlag()) {
+        // if (this.SelectService.getSelectedFlag()) {
+
+        console.log(data.email, this.AuthService.getLoggedinUser().email);
+        if (data.email != this.AuthService.getLoggedinUser().email) {
             this.$log.debug(this.SelectService.getColleague());
             this.$log.debug("ppp");
-            participant.adNumber = this.SelectService.getColleague().adNumber;
+            participant.adNumber = this.SelectService.getColleague().adnr;
         } else {
             this.$log.debug("not in if selectedflqg");
             participant.adNumber = this.AuthService.getLoggedinUser().adnummer;
@@ -165,6 +168,8 @@ export class MapperService {
         } else if (data.rank === 'Aspi') {
             participant.eventRole = 'ASPI';
         }
+        console.log("LOGGING PARTICIPANT ONE MORE FOREVER NO MOAR");
+        console.log(participant);
         return participant;
     }
 

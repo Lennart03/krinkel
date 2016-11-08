@@ -38,16 +38,16 @@ public class RegistrationParticipantService {
 
 	@PreAuthorize("@RegistrationParticipantServiceSecurity.hasPermissionToSaveParticipant(#participant)")
 	public RegistrationParticipant save(RegistrationParticipant participant){
-		User chiroUser = userService.getUser(participant.getAdNumber());
+//		User chiroUser = userService.getUser(participant.getAdNumber());
 		RegistrationParticipant participantFromOurDB = registrationParticipantRepository.findByAdNumber(participant.getAdNumber());
 
-		if(participantFromOurDB == null && chiroUser != null){
-			String stamnummer = chiroUser.getStamnummer();
+		if(participantFromOurDB == null){
+//			String stamnummer = chiroUser.getStamnummer();
 			User currentUser = userService.getCurrentUser();
-			participant.setStamnumber(stamnummer);
+//			participant.setStamnumber(stamnummer);
 			participant.setRegisteredBy(currentUser.getAdNumber());
 			return registrationParticipantRepository.save(participant);
-		} else if (participantFromOurDB != null && participantFromOurDB.getStatus().equals(Status.TO_BE_PAID) && chiroUser!=null){
+		} else if (participantFromOurDB != null && participantFromOurDB.getStatus().equals(Status.TO_BE_PAID)){
 			participant.setId(participantFromOurDB.getId());
 			User currentUser = userService.getCurrentUser();
 			participantFromOurDB.setRegisteredBy(currentUser.getAdNumber());
