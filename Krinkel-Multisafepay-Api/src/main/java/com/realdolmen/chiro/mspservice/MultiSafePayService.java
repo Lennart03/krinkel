@@ -40,11 +40,9 @@ public class MultiSafePayService {
         if (!createPaymentParamsAreValid(participant.getAdNumber(), amount))
             throw new InvalidParameterException("cannot create a payment with those params");
         JSONObject jsonObject = this.createPaymentJsonObject(participant, amount);
-        System.out.println(jsonObject.toString());
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
         HttpEntity<String> entity = new HttpEntity<>(jsonObject.toString(), headers);
-        System.out.println(entity.getBody());
         String url = configuration.getURL() + "?api_key=" + configuration.getApiKey();
 
 

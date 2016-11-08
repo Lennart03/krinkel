@@ -130,13 +130,11 @@ public class EmailSenderTest extends SpringIntegrationTest {
 		MimeMessage email1 = emails[0];
 		MimeMessage email2 = emails[1];
 		String body = GreenMailUtil.getBody(email2);
-		System.out.println(body.trim());
 		javax.mail.Address[] addressesMail1 = email1.getAllRecipients();
 		javax.mail.Address[] addressesMail2 = email2.getAllRecipients();
 		assertEquals(EMAIL_TO, addressesMail1[0].toString());
 		assertEquals(EMAIL_TO, addressesMail2[0].toString());
 		assertEquals(EMAIL_SUBJECT, emails[0].getSubject());
-		System.out.println(emails[1].getFrom().toString());
 		assertEquals(EMAIL_SUBJECT, emails[1].getSubject());
 	}
 	

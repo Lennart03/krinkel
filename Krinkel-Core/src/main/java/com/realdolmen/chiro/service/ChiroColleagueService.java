@@ -123,9 +123,7 @@ public class ChiroColleagueService {
 
 
         for (JsonNode value : values) {
-            System.out.println(value);
             if (value.get("adnr").asInt() == colleagueAdNumber) {
-                System.out.println("AdNR is valid");
                 isColleague = true;
                 break;
             }
