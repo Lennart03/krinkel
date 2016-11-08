@@ -19,7 +19,6 @@ public class RegistrationParticipantServiceSecurity {
     public boolean hasPermissionToSaveParticipant(RegistrationParticipant participant){
 //        Boolean areColleagues = false;
         User currentUser = userService.getCurrentUser();
-//        User chiroUser = userService.getUser(participant.getAdNumber());
 //        if(currentUser != null){
 //            areColleagues = chiroColleagueService.isColleague(currentUser.getAdNumber(), participant.getAdNumber());
 //        }

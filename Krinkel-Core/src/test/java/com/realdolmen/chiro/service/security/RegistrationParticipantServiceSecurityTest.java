@@ -46,7 +46,7 @@ public class RegistrationParticipantServiceSecurityTest {
         currentUser.setRole(SecurityRole.GROEP);
 
         Mockito.when(userService.getCurrentUser()).thenReturn(currentUser);
-        Mockito.when(chiroColleagueService.isColleague(currentUser.getAdNumber(),registrationParticipant.getAdNumber())).thenReturn(false);
+        Mockito.when(chiroColleagueService.isColleague(Integer.parseInt(currentUser.getAdNumber()), Integer.parseInt(registrationParticipant.getAdNumber()))).thenReturn(false);
 
         boolean b = registrationParticipantServiceSecurity.hasPermissionToSaveParticipant(registrationParticipant);
 
@@ -63,7 +63,7 @@ public class RegistrationParticipantServiceSecurityTest {
         currentUser.setRole(SecurityRole.GROEP);
 
         Mockito.when(userService.getCurrentUser()).thenReturn(currentUser);
-        Mockito.when(chiroColleagueService.isColleague(currentUser.getAdNumber(),registrationParticipant.getAdNumber())).thenReturn(true);
+        Mockito.when(chiroColleagueService.isColleague(Integer.parseInt(currentUser.getAdNumber()), Integer.parseInt(registrationParticipant.getAdNumber()))).thenReturn(true);
 
         boolean b = registrationParticipantServiceSecurity.hasPermissionToSaveParticipant(registrationParticipant);
 
@@ -80,7 +80,7 @@ public class RegistrationParticipantServiceSecurityTest {
         currentUser.setRole(SecurityRole.ADMIN);
 
         Mockito.when(userService.getCurrentUser()).thenReturn(currentUser);
-        Mockito.when(chiroColleagueService.isColleague(currentUser.getAdNumber(),registrationParticipant.getAdNumber())).thenReturn(false);
+        Mockito.when(chiroColleagueService.isColleague(Integer.parseInt(currentUser.getAdNumber()), Integer.parseInt(registrationParticipant.getAdNumber()))).thenReturn(false);
 
         boolean b = registrationParticipantServiceSecurity.hasPermissionToSaveParticipant(registrationParticipant);
 
@@ -97,7 +97,7 @@ public class RegistrationParticipantServiceSecurityTest {
         currentUser.setRole(SecurityRole.ADMIN);
 
         Mockito.when(userService.getCurrentUser()).thenReturn(currentUser);
-        Mockito.when(chiroColleagueService.isColleague(currentUser.getAdNumber(),registrationParticipant.getAdNumber())).thenReturn(true);
+        Mockito.when(chiroColleagueService.isColleague(Integer.parseInt(currentUser.getAdNumber()), Integer.parseInt(registrationParticipant.getAdNumber()))).thenReturn(true);
 
         boolean b = registrationParticipantServiceSecurity.hasPermissionToSaveParticipant(registrationParticipant);
 
