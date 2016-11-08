@@ -17,10 +17,10 @@ public class ChiroUnitServiceSecurity {
         return currentUser != null;
     }
 
-    public boolean hasPersmissionToSeeColleaggues(String stamnummer){
+    public boolean hasPermissionToSeeColleagues(User user){
         User currentUser = userService.getCurrentUser();
 
-        return currentUser != null && currentUser.getStamnummer().equals(stamnummer);
+        return currentUser != null && currentUser.getStamnummer().equals(user.getStamnummer());
     }
 
     public boolean hasPermissionToGetVolunteers(){
@@ -37,7 +37,7 @@ public class ChiroUnitServiceSecurity {
 
     public boolean hasPermissionToFindUnits(){
         User currentUser = userService.getCurrentUser();
-//
+
         return currentUser != null && currentUser.getRole().equals(SecurityRole.ADMIN);
     }
 

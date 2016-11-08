@@ -12,9 +12,6 @@ public class GraphChiroServiceSecurity {
     @Autowired
     UserService userService;
 
-    @Autowired
-    ChiroUnitService chiroUnitService;
-
     public boolean hasPermissionToMakeSunGraph(){
         User currentUser = userService.getCurrentUser();
 

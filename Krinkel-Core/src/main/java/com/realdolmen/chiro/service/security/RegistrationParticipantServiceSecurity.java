@@ -17,8 +17,12 @@ public class RegistrationParticipantServiceSecurity {
     private ChiroColleagueService chiroColleagueService;
 
     public boolean hasPermissionToSaveParticipant(RegistrationParticipant participant){
+//        Boolean areColleagues = false;
         User currentUser = userService.getCurrentUser();
 //        User chiroUser = userService.getUser(participant.getAdNumber());
+//        if(currentUser != null){
+//            areColleagues = chiroColleagueService.isColleague(currentUser.getAdNumber(), participant.getAdNumber());
+//        }
 
 //        return currentUser != null && (currentUser.getRole().equals(SecurityRole.ADMIN) ||
 //                chiroColleagueService.isColleague(Integer.parseInt(currentUser.getAdNumber()), Integer.parseInt(participant.getAdNumber())));
