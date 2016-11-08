@@ -7,22 +7,13 @@ class KrinkelSelectController {
         this.SelectService = SelectService;
         this.colleagues = [];
         this.userDetails2;
-
-        console.log("user details hier:");
-
-        console.log(this.getUserDetails());
-
     }
 
     $onInit(){
         this.SelectService.setSelectedFlag(false);
         this.AuthService.getUserDetails().then((resp) => {
             this.KrinkelService.getColleagues(resp.stamnummer).then((resp) => {
-                console.log("LOGGING THE COLLEAGUES FROM CHIRO YO");
-
-
                 resp.forEach(p => this.colleagues.push(JSON.parse(p)));
-                console.log(this.colleagues);
             });
         });
 
@@ -35,8 +26,6 @@ class KrinkelSelectController {
     }
     getUserDetails() {
 
-        // console.log("user details:");
-        // console.log(this.userDetails2);
     }
 }
 

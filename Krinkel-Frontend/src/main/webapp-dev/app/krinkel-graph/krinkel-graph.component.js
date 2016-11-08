@@ -61,7 +61,6 @@ class KrinkelGraphController {
             for (var i = 0; i < length; i++) {
                 var date = new Date( results[i].date.replace( /(\d{2})-(\d{2})-(\d{4})/, "$2/$1/$3") );
                 values[i] = [date, results[i].count];
-                console.log(values);
             }
             this.lineData = [
                 {

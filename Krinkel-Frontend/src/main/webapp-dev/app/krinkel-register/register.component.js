@@ -99,8 +99,6 @@ class RegisterController {
         var colleague = this.SelectService.getColleague();
         var loggedInUser = this.AuthService.getLoggedinUser();
 
-        console.log("logging colleague");
-        console.log(colleague);
         this.newPerson = {
             adNumber: colleague.adnummer,
             job: "Aanbod nationale kampgrond",
@@ -129,8 +127,6 @@ class RegisterController {
     prefillSelf() {
         var loggedInUser = this.AuthService.getLoggedinUser();
         this.KrinkelService.getContactFromChiro(loggedInUser.adnummer).then((resp) => {
-            console.log("CHIRO");
-            console.log(resp);
             var chiroContact = resp[0];
             if (resp.size != 0) {
                 this.newPerson = {
@@ -153,9 +149,6 @@ class RegisterController {
 
                 this.details3.vicinity = chiroContact.city;
 
-                console.log("Logging the new person here");
-                console.log("======================");
-                console.log(this.newPerson);
             }
         });
     }
@@ -176,8 +169,6 @@ class RegisterController {
         } else {
 
             var user = this.StorageService.getUser();
-            console.log("Logging user in else");
-            console.log(user);
             if (user && user.email === this.AuthService.getLoggedinUser().email) {
                 this.newPerson = user;
             } else {
@@ -212,7 +203,6 @@ class RegisterController {
         // this.newPerson = this.StorageService.getUser();
 
         this.errorMessages = document.getElementsByClassName("error");
-        // console.log(document.getElementsByClassName("error"));
     }
 
     functionCallAfterDOMRender() {

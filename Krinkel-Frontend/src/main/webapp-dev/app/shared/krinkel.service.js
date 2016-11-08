@@ -1,6 +1,5 @@
 export class KrinkelService {
-    constructor($http, $log, BASEURL) {
-        this.$log = $log;
+    constructor($http, BASEURL) {
         this.$http = $http;
         this.BASEURL = BASEURL;
     }
@@ -19,19 +18,12 @@ export class KrinkelService {
 
     postVolunteer(user) {
         return this.$http.post(`${this.BASEURL}/api/volunteers`, user).then((resp) => {
-            this.$log.debug("Printing volunteer POST response");
-            this.$log.debug(resp);
-            this.$log.debug(resp.headers);
-            this.$log.debug(resp.headers().location);
             return resp;
         });
     }
 
     postParticipant(user) {
         return this.$http.post(`${this.BASEURL}/api/participants`, user).then((resp) => {
-            this.$log.debug("Printing participant POST response");
-            this.$log.debug(resp.headers);
-            this.$log.debug(resp.headers().location);
             return resp;
         });
     }
@@ -53,8 +45,7 @@ export class KrinkelService {
                          .then((resp) => {
                                     return resp.data;
                                 }, (resp) => {
-                                    this.$log.debug("logging resp");
-                                    this.$log.debug(resp);
+
                                 });
     }
 
@@ -115,4 +106,4 @@ export class KrinkelService {
     }
 }
 
-KrinkelService.$inject = ['$http', '$log', 'BASEURL'];
+KrinkelService.$inject = ['$http', 'BASEURL'];

@@ -1,13 +1,10 @@
 export class AuthService {
-    constructor($window, $log, KrinkelService, $timeout) {
+    constructor($window, KrinkelService, $timeout) {
         this.$window = $window;
         this.KrinkelService = KrinkelService;
         this.$timeout = $timeout;
 
         this.getUserFromStorage();
-        this.$log = $log;
-        this.$log.debug("logged in user:");
-        this.$log.debug(this.getLoggedinUser());
 
         this.userDetailsCallMade = false;
         this.userDetailsCallReturned = false;
@@ -111,6 +108,6 @@ export class AuthService {
     }
 }
 
-AuthService.$inject = ['$window', '$log', 'KrinkelService', '$timeout'];
+AuthService.$inject = ['$window', 'KrinkelService', '$timeout'];
 
 
