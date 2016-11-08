@@ -138,3 +138,9 @@ body {
 :-ms-input-placeholder { /* IE 10+ */
     color: #333;
 }
+
+#logo-container{
+    background-image: url("res/logo.svg");
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+}
