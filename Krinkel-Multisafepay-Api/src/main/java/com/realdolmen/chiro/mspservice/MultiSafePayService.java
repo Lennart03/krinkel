@@ -105,13 +105,8 @@ public class MultiSafePayService {
      * }
      */
     private JSONObject createPaymentJsonObject(RegistrationParticipant participant, Integer amount) {
-        JSONObject paymentOptions = new JSONObject();
+        JSONObject paymentOptions = configuration.getPaymentOptions();
         JSONObject customer = new JSONObject();
-
-        //TODO: update this with correct urls (use profiles for dev, test & production)
-        paymentOptions.put("notification_url", "https://krinkel.be/notify");
-        paymentOptions.put("redirect_url", "http://localhost:8080/payment/success");
-        paymentOptions.put("cancel_url", "http://localhost:8080/payment/failure");
 
         customer.put("locale", "nl_BE");
         customer.put("first_name", participant.getFirstName());
