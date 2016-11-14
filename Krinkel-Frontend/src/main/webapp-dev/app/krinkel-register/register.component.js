@@ -100,7 +100,7 @@ class RegisterController {
         var loggedInUser = this.AuthService.getLoggedinUser();
 
         this.newPerson = {
-            adNumber: colleague.adnummer,
+            adNumber: colleague.adnr,
             job: "Aanbod nationale kampgrond",
             firstName: colleague.first_name,
             lastName: colleague.last_name,
@@ -108,6 +108,8 @@ class RegisterController {
             birthDate: colleague.birth_date,
             phone: colleague.phone.replace('-', ''),
             emailSubscriber: loggedInUser.email,
+            gender: colleague.gender_id,
+            rank: colleague.afdeling.toUpperCase()
         };
 
         this.KrinkelService.getPloegen(colleague.adnr).then((resp) => {
@@ -143,6 +145,8 @@ class RegisterController {
                     email: chiroContact.email,
                     birthDate: chiroContact.birth_date,
                     phone: chiroContact.phone.replace('-', ''),
+                    gender: chiroContact.gender_id,
+                    rank: chiroContact.afdeling.toUpperCase()
                 };
 
                 this.KrinkelService.getPloegen(loggedInUser.adnummer).then((resp) => {

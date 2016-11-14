@@ -156,9 +156,9 @@
                 <!--<i class="material-icons prefix">perm_identity</i>-->
                 <select name="gender" ng-model="$ctrl.newPerson.gender" class="browser-default" required>
                     <option value="" disabled selected>Geslacht *</option>
-                    <option value="Vrouw">Vrouw</option>
-                    <option value="Man">Man</option>
-                    <option value="X">X</option>
+                    <option value="1">Vrouw</option>
+                    <option value="2">Man</option>
+                    <option value="0">X</option>
                 </select>
                 <p ng-show="personForm.gender.$invalid && personForm.gender.$touched" class="error">
                     <i class="material-icons">error_outline</i>
@@ -170,9 +170,9 @@
                 <!--<i class="material-icons prefix">mood</i>-->
                 <select name="rank" ng-model="$ctrl.newPerson.rank" class="browser-default" required>
                     <option value="" disabled selected>In '16-17' was ik *</option>
-                    <option value="Aspi">Aspi</option>
-                    <option value="Leider">Leid(st)er</option>
-                    <option value="Begeleider">Volwassen begeleider</option>
+                    <option value="A">Aspi</option>
+                    <option value="L">Leid(st)er</option>
+                    <option value="VB">Volwassen begeleider</option>
                 </select>
                 <!--<label>In '16-17' was ik:</label>-->
                 <p ng-show="personForm.rank.$invalid && personForm.rank.$touched" class="error">

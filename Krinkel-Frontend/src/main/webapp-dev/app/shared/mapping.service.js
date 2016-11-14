@@ -33,11 +33,11 @@ export class MapperService {
         };
 
         var genderTemp = data.gender.toLowerCase();
-        if (genderTemp === 'man') {
+        if (genderTemp == '2') {
             volunteer.gender = data.gender.toUpperCase();
-        } else if (genderTemp === 'vrouw') {
+        } else if (genderTemp == '1') {
             volunteer.gender = 'WOMAN';
-        } else if (genderTemp === 'x') {
+        } else if (genderTemp == '0') {
             volunteer.gender = data.gender.toUpperCase();
         }
 
@@ -148,21 +148,23 @@ export class MapperService {
             participant.language = [];
         }
         var genderTemp = data.gender.toLowerCase();
-        if (genderTemp === 'man') {
+        if (genderTemp == '2') {
             participant.gender = data.gender.toUpperCase();
-        } else if (genderTemp === 'vrouw') {
+        } else if (genderTemp == '1') {
             participant.gender = 'WOMAN';
-        } else if (genderTemp === 'x') {
+        } else if (genderTemp == '0') {
             participant.gender = data.gender.toUpperCase();
         }
 
-        if (data.rank === 'Leider') {
+        if (data.rank === 'L') {
             participant.eventRole = 'LEADER';
-        } else if (data.rank === 'Begeleider') {
+        } else if (data.rank === 'VB') {
             participant.eventRole = 'MENTOR';
-        } else if (data.rank === 'Aspi') {
+        } else if (data.rank === 'A') {
             participant.eventRole = 'ASPI';
         }
+        console.log("LOGGING THE PARTICIPANT 123123");
+        console.log(participant);
         return participant;
     }
 
