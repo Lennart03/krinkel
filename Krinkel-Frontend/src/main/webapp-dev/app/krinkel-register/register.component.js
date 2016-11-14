@@ -100,7 +100,7 @@ class RegisterController {
         var loggedInUser = this.AuthService.getLoggedinUser();
 
         this.newPerson = {
-            adNumber: colleague.adnummer,
+            adNumber: colleague.adnr,
             job: "Aanbod nationale kampgrond",
             firstName: colleague.first_name,
             lastName: colleague.last_name,
