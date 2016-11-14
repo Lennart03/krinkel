@@ -1,5 +1,6 @@
 package com.realdolmen.chiro.controller;
 
+import com.realdolmen.chiro.config.SecurityFilterTestConfig;
 import com.realdolmen.chiro.domain.*;
 import com.realdolmen.chiro.repository.RegistrationParticipantRepository;
 import com.realdolmen.chiro.service.UserService;
@@ -15,6 +16,7 @@ import org.springframework.http.MediaType;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
@@ -27,7 +29,7 @@ import static org.mockito.Mockito.when;
 
 import java.util.Calendar;
 
-@Ignore
+@ContextConfiguration(classes = {SecurityFilterTestConfig.class})
 public class RegistrationParticipantControllerMockTest extends MockMvcTest {
 
 	private static final String STAMNUMMER = "AG0001";
@@ -70,12 +72,13 @@ public class RegistrationParticipantControllerMockTest extends MockMvcTest {
 //    	volunteer = RegistrationVolunteerMother.createBasicRegistrationVolunteer();
 
         this.nParticipants = repo.findAll().size();
-        //TODO USE THIS
-//        Authentication authentication = Mockito.mock(Authentication.class);
-//        when(authentication.isAuthenticated()).thenReturn(true);
-//        SecurityContext securityContext = Mockito.mock(SecurityContext.class);
-//        when(securityContext.getAuthentication()).thenReturn(authentication);
-//        SecurityContextHolder.setContext(securityContext);
+
+        //TODO Use this in some other test class where the actual security constraints are tested.
+        //        Authentication authentication = Mockito.mock(Authentication.class);
+        //        when(authentication.isAuthenticated()).thenReturn(true);
+        //        SecurityContext securityContext = Mockito.mock(SecurityContext.class);
+        //        when(securityContext.getAuthentication()).thenReturn(authentication);
+        //        SecurityContextHolder.setContext(securityContext);
     }
 
     @Test
