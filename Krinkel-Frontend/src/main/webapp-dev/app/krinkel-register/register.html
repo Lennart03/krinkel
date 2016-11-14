@@ -59,7 +59,7 @@
         </div>
 
         <div class="row">
-            <div class="input-field col s12 m10">
+            <div class="input-field col s12">
                 <i class="material-icons prefix">home</i>
                 <!--$ctrl.newPerson.street-->
                 <input name="street" type="text" class="validate" id="street"
@@ -70,20 +70,20 @@
 
                 {{$ctrl.extractFromAdress($ctrl.details.address_components )}}
 
-                <label for="street">Straat *</label>
+                <label for="street">Straat en huisnummer *</label>
                 <p ng-show="personForm.street.$invalid && personForm.street.$touched" class="error"><i
                     class="material-icons">error_outline</i>
                     Straatnaam is verplicht</p>
             </div>
 
-            <div class="input-field col s6 m2">
-                <i class="material-icons prefix">home</i>
-                <input id="building" name="building" type="text" class="validate" ng-model="$ctrl.newPerson.building"
-                       required>
-                <label for="building">Huisnummer *</label>
-                <p ng-show="personForm.building.$invalid && personForm.building.$touched" class="error"><i
-                    class="material-icons">error_outline</i> Huisnummer is verplicht</p>
-            </div>
+            <!--<div class="input-field col s6 m2">-->
+                <!--<i class="material-icons prefix">home</i>-->
+                <!--<input id="building" name="building" type="text" class="validate" ng-model="$ctrl.newPerson.building"-->
+                       <!--required>-->
+                <!--<label for="building">Huisnummer *</label>-->
+                <!--<p ng-show="personForm.building.$invalid && personForm.building.$touched" class="error"><i-->
+                    <!--class="material-icons">error_outline</i> Huisnummer is verplicht</p>-->
+            <!--</div>-->
         </div>
 
         <div class="row">

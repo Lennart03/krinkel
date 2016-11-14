@@ -12,7 +12,7 @@ export class MapperService {
             lastName: data.lastName,
             address: {
                 street: data.street,
-                houseNumber: data.building,
+                // houseNumber: data.building,
                 postalCode: data.postalCode,
                 city: data.city
             },
@@ -114,7 +114,7 @@ export class MapperService {
             lastName: data.lastName,
             address: {
                 street: data.street,
-                houseNumber: data.building,
+                // houseNumber: data.building,
                 postalCode: data.postalCode,
                 city: data.city
             },
