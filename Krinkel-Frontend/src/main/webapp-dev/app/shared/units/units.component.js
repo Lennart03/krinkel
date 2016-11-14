@@ -20,6 +20,8 @@ class UnitsController {
         }
     }
 
+
+
     openUsers(verbond) {
         this.unitLevel = verbond.naam;
         this.userDetails = true;
@@ -27,24 +29,44 @@ class UnitsController {
         this.volunteerDetails = false;
         this.participants = [];
         this.volunteers = [];
-        this.KrinkelService.getUsersOfUnit(verbond.stamnummer).then((results) => {
-            angular.forEach(results[0], (value, index) => {
-                value.participant = "Deelnemer";
-                value.eatinghabbit = this.MapperService.mapEatingHabbit(value.eatinghabbit);
-                value.campGround = this.MapperService.mapCampground(value.campGround);
-                this.participants.push(value);
-            });
-            angular.forEach(results[1], (value, index) => {
-                value.participant = "Vrijwilliger";
-                value.function.preset = this.MapperService.mapVolunteerFunction(value.function.preset);
-                value.eatinghabbit = this.MapperService.mapEatingHabbit(value.eatinghabbit);
-                value.campGround = this.MapperService.mapCampground(value.campGround);
-                if (value.function.preset == "CUSTOM"){
-                    value.function.preset = value.function.other;
-                }
-                this.volunteers.push(value);
+        this.KrinkelService.getParticipantsOfUnit(verbond.stamnummer).then((results) => {
+            results.forEach((r) => {
+                r.participant = "Deelnemer";
+                r.eatinghabbit = this.MapperService.mapEatingHabbit(value.eatinghabbit);
+                r.campGround = this.MapperService.mapCampground(value.campGround);
+                this.participants.push(r);
             });
         });
+        this.KrinkelService.getVolunteersOfUnit(verbond.stamnummer).then((results) => {
+            results.forEach((r) => {
+                r.participant = "Vrijwilliger";
+                r.function.preset = this.MapperService.mapVolunteerFunction(value.function.preset);
+                r.eatinghabbit = this.MapperService.mapEatingHabbit(value.eatinghabbit);
+                r.campGround = this.MapperService.mapCampground(value.campGround);
+                if (r.function.preset == "CUSTOM"){
+                    r.function.preset = r.function.other;
+                }
+                this.volunteers.push(r);
+            })
+        });
+
+            // angular.forEach(results[0], (value, index) => {
+            //     value.participant = "Deelnemer";
+            //     value.eatinghabbit = this.MapperService.mapEatingHabbit(value.eatinghabbit);
+            //     value.campGround = this.MapperService.mapCampground(value.campGround);
+            //     this.participants.push(value);
+            // });
+        //     angular.forEach(results[1], (value, index) => {
+        //         value.participant = "Vrijwilliger";
+        //         value.function.preset = this.MapperService.mapVolunteerFunction(value.function.preset);
+        //         value.eatinghabbit = this.MapperService.mapEatingHabbit(value.eatinghabbit);
+        //         value.campGround = this.MapperService.mapCampground(value.campGround);
+        //         if (value.function.preset == "CUSTOM"){
+        //             value.function.preset = value.function.other;
+        //         }
+        //         this.volunteers.push(value);
+        //     });
+        // });
     }
 
     openVerbond(verbond) {
@@ -60,12 +82,16 @@ class UnitsController {
     }
 
     getParticipantsForUnit(verbonden) {
-        angular.forEach(verbonden, (value, index) => {
-            this.KrinkelService.getParticipantsForUnit(value.stamnummer).then((results) => {
-                value.amountParticipants = results[0];
-                value.amountVolunteers = results[1];
+        // angular.forEach(verbonden, (value, index) => {
+        //     this.KrinkelService.getParticipantsForUnit(value.stamnummer).then((results) => {
+        //         value.amountParticipants = results[0];
+        //         value.amountVolunteers = results[1];
+        //     })
+        // });
+        verbonden.forEach((r) => {
+            this.KrinkelService.getParticipantsForUnit(r.stamnummer).then((results) => {
             })
-        });
+        })
     }
 
     goToPrevious(verbond) {

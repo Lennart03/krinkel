@@ -116,4 +116,11 @@ public class User {
     public void setHasPaid(boolean hasPaid) {
         this.hasPaid = hasPaid;
     }
+
+    public String getNormalizedStamNumber(){
+        
+        return this.getStamnummer().replace("/", "")
+                                   .replace(" ", "");
+
+    }
 }

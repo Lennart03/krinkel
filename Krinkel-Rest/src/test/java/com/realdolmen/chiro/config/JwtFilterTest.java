@@ -7,7 +7,6 @@ import org.junit.Test;
 import javax.servlet.http.Cookie;
 
 public class JwtFilterTest {
-    private Cookie cookie;
     private Cookie[] cookies;
     private JwtFilter jwtFilter;
 
@@ -15,9 +14,9 @@ public class JwtFilterTest {
 
     @Before
     public void setUp(){
-        cookie = new Cookie("Authorization", AUTHCOOKIE);
-        cookies = new Cookie[1];
-        cookies[0] = cookie;
+        Cookie cookie = new Cookie("Authorization", AUTHCOOKIE);
+        cookies = new Cookie[]{cookie};
+
         jwtFilter = new JwtFilter();
     }
 

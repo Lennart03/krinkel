@@ -1,42 +1,3 @@
--- noinspection SqlDialectInspectionForFile
--- noinspection SqlNoDataSourceInspectionForFile
-
-INSERT INTO registration_participant (dtype,id,ad_number,city, house_number, postal_code, street, birthdate,
-social_promotion, eatinghabbit, email, first_name, gender, last_name, remarks_food, medical_remarks, remarks,
-event_role, buddy, stamnumber, status, phone_number, camp_ground, other, preset, registered_by)
-VALUES('RegistrationParticipant', '10', '123456', 'Brussel', '123', '1000', 'Veldstraat', '1995-08-21', false, 'FISHANDMEAT',
-                              'email@test.be', 'Johnny', 'MAN', 'Flodder', 'food remarks', 'medical remarks', 'remarks', 'ASPI', false, 'AG /0103', 'TO_BE_PAID', 1, '', '', '', '123456');
-
-INSERT INTO registration_participant (dtype,id,ad_number,city, house_number, postal_code, street, birthdate,
-social_promotion, eatinghabbit, email, first_name, gender, last_name, remarks_food, medical_remarks, remarks,
-event_role, buddy, stamnumber, status, phone_number, camp_ground, other, preset, registered_by)
-VALUES('RegistrationParticipant', '20', '234567', 'Brussel', '123', '1000', 'Veldstraat', '1995-08-21', false, 'FISHANDMEAT',
-                              'email@test.be', 'Kees', 'MAN', 'Flodder', '', '', '', 'ASPI', false, 'BG /0301', 'TO_BE_PAID', 1, '', '', '', '234567');
-
-INSERT INTO registration_participant (dtype,id,ad_number,city, house_number, postal_code, street, birthdate,
-social_promotion, eatinghabbit, email, first_name, gender, last_name, remarks_food, medical_remarks, remarks,
-event_role, buddy, stamnumber, status, phone_number, camp_ground, other, preset, registered_by)
-VALUES('RegistrationParticipant', '30', '345678', 'Brussel', '123', '1000', 'Veldstraat', '1995-08-21', false, 'FISHANDMEAT',
-                              'email@test.be', 'Ma', 'WOMAN', 'Flodder', '', '', '', 'ASPI', false, 'AG /0103', 'CONFIRMED', 1, '', '', '', '345678');
-
-INSERT INTO registration_participant (dtype,id,ad_number,city, house_number, postal_code, street, birthdate,
-social_promotion, eatinghabbit, email, first_name, gender, last_name, remarks_food, medical_remarks, remarks,
-event_role, buddy, stamnumber, status, phone_number, camp_ground, other, preset, registered_by)
-VALUES('RegistrationParticipant', '40', '456789', 'Brussel', '123', '1000', 'Veldstraat', '1995-08-21', false, 'FISHANDMEAT',
-                              'email@test.be', 'Cees', 'WOMAN', 'Flodder', '', '', '', 'ASPI', false, 'LEG/0101', 'PAID', 1, '', '', '',  '456789');
-
-INSERT INTO registration_participant (dtype,id,ad_number,city, house_number, postal_code, street, birthdate,
-social_promotion, eatinghabbit, email, first_name, gender, last_name, remarks_food, medical_remarks, remarks,
-event_role, buddy, stamnumber, status, phone_number, camp_ground, other, preset, registered_by)
-VALUES('RegistrationParticipant', '50', '987654', 'Brussel', '123', '1000', 'Veldstraat', '1995-08-21', false, 'FISHANDMEAT',
-                              'email@test.be', 'Frederik', 'MAN', 'Flodder', '', '', '', 'ASPI', false, 'AG /0202', 'CONFIRMED', 1, '', '', '', '987654');
-
-INSERT INTO registration_participant (dtype,id,ad_number,city, house_number, postal_code, street, birthdate,
-social_promotion, eatinghabbit, email, first_name, gender, last_name, remarks_food, medical_remarks, remarks,
-event_role, buddy, stamnumber, status, phone_number, camp_ground, other, preset, registered_by)
-VALUES('RegistrationVolunteer', '60', '876543', 'Brussel', '123', '1000', 'Veldstraat', '1995-08-21', false, 'FISHANDMEAT',
-                              'email@test.be', 'Jos', 'MAN', 'Flodder', '', '', '', 'VOLUNTEER', false, 'AG /0103', 'TO_BE_PAID', 1, 'KEMPEN', '', 'CAMPGROUND', '876543');
-
 INSERT INTO pre_camp VALUES (10, '2017-08-21');
 INSERT INTO pre_camp VALUES (20, '2017-08-22');
 INSERT INTO pre_camp VALUES (30, '2017-08-23');
@@ -46,16 +7,6 @@ INSERT INTO post_camp VALUES (60, '2017-08-31');
 INSERT INTO post_camp VALUES (70, '2017-09-01');
 INSERT INTO post_camp VALUES (80, '2017-09-02');
 
-DROP TABLE IF EXISTS groepen;
-CREATE TABLE groepen (
-    `groep_naam` VARCHAR(41),
-    `groep_stamnr` VARCHAR(8),
-    `gewest_stamnr` VARCHAR(8),
-    `gewest_naam` VARCHAR(20),
-    `verbond_stamnr` VARCHAR(9),
-    `verbond_naam` VARCHAR(15),
-    PRIMARY KEY(`groep_stamnr`)
-);
 INSERT INTO login_log (id,ad_number,stamp) VALUES (1,'123456',{d '2016-10-01'});
 INSERT INTO login_log (id,ad_number,stamp) VALUES (2,'123456',{d '2016-10-02'});
 INSERT INTO login_log (id,ad_number,stamp) VALUES (3,'654321',{d '2016-10-02'});
@@ -69,6 +20,17 @@ INSERT INTO login_log (id,ad_number,stamp) VALUES (10,'123856',{d '2016-10-04'})
 INSERT INTO login_log (id,ad_number,stamp) VALUES (11,'133456',{d '2016-10-07'});
 INSERT INTO login_log (id,ad_number,stamp) VALUES (12,'126556',{d '2016-10-07'});
 
+
+DROP TABLE IF EXISTS groepen;
+CREATE TABLE groepen (
+    `groep_naam` VARCHAR(41),
+    `groep_stamnr` VARCHAR(8),
+    `gewest_stamnr` VARCHAR(8),
+    `gewest_naam` VARCHAR(20),
+    `verbond_stamnr` VARCHAR(9),
+    `verbond_naam` VARCHAR(15),
+    PRIMARY KEY(`groep_stamnr`)
+);
 
 INSERT INTO groepen VALUES ('Pleplo','AG /0103','AG /0400','Zac','AG /0000','Antwerpen');
 INSERT INTO groepen VALUES ('Lore','AG /0104','AG /0400','Zac','AG /0000','Antwerpen');

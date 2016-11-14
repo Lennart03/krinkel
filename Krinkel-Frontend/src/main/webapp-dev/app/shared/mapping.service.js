@@ -1,6 +1,5 @@
 export class MapperService {
-    constructor($log, AuthService, SelectService) {
-        this.$log = $log;
+    constructor( AuthService, SelectService) {
         this.AuthService = AuthService;
         this.SelectService = SelectService;
     }
@@ -13,7 +12,7 @@ export class MapperService {
             lastName: data.lastName,
             address: {
                 street: data.street,
-                houseNumber: data.building,
+                // houseNumber: data.building,
                 postalCode: data.postalCode,
                 city: data.city
             },
@@ -29,15 +28,16 @@ export class MapperService {
             phoneNumber: data.phone,
             campGround: data.campGround.toUpperCase(),
             email: data.email,
+            emailSubscriber: data.emailSubscriber,
             eventRole: 'VOLUNTEER',
         };
 
         var genderTemp = data.gender.toLowerCase();
-        if (genderTemp === 'man') {
+        if (genderTemp == '2') {
             volunteer.gender = data.gender.toUpperCase();
-        } else if (genderTemp === 'vrouw') {
+        } else if (genderTemp == '1') {
             volunteer.gender = 'WOMAN';
-        } else if (genderTemp === 'x') {
+        } else if (genderTemp == '0') {
             volunteer.gender = data.gender.toUpperCase();
         }
 
@@ -109,11 +109,12 @@ export class MapperService {
         var participant = {
             // adNumber: Math.floor(Math.random() * 100000), // FOR TESTING
             email: data.email,
+            emailSubscriber: data.emailSubscriber,
             firstName: data.firstName,
             lastName: data.lastName,
             address: {
                 street: data.street,
-                houseNumber: data.building,
+                // houseNumber: data.building,
                 postalCode: data.postalCode,
                 city: data.city
             },
@@ -129,40 +130,41 @@ export class MapperService {
             phoneNumber: data.phone,
         };
 
-        this.$log.debug("outside selectedflqg");
-        this.$log.debug(this.SelectService.getColleague());
-        if (this.SelectService.getSelectedFlag()) {
-            this.$log.debug(this.SelectService.getColleague());
-            this.$log.debug("ppp");
-            participant.adNumber = this.SelectService.getColleague().adNumber;
-        } else {
-            this.$log.debug("not in if selectedflqg");
+
+        if (this.SelectService.getColleague() == undefined) {
             participant.adNumber = this.AuthService.getLoggedinUser().adnummer;
+        } else {
+            participant.adNumber = this.SelectService.getColleague().adnr;
         }
+        // if (data.email != this.AuthService.getLoggedinUser().email) {
+        //     participant.adNumber = this.SelectService.getColleague().adnr;
+        // } else {
+        //     participant.adNumber = this.AuthService.getLoggedinUser().adnummer;
+        // }
 
         if (data.buddy) {
             participant.language = data.languages;
         } else {
             participant.language = [];
         }
-        this.$log.debug("languages:");
-        this.$log.debug(data.languages);
         var genderTemp = data.gender.toLowerCase();
-        if (genderTemp === 'man') {
+        if (genderTemp == '2') {
             participant.gender = data.gender.toUpperCase();
-        } else if (genderTemp === 'vrouw') {
+        } else if (genderTemp == '1') {
             participant.gender = 'WOMAN';
-        } else if (genderTemp === 'x') {
+        } else if (genderTemp == '0') {
             participant.gender = data.gender.toUpperCase();
         }
 
-        if (data.rank === 'Leider') {
+        if (data.rank === 'L') {
             participant.eventRole = 'LEADER';
-        } else if (data.rank === 'Begeleider') {
+        } else if (data.rank === 'VB') {
             participant.eventRole = 'MENTOR';
-        } else if (data.rank === 'Aspi') {
+        } else if (data.rank === 'A') {
             participant.eventRole = 'ASPI';
         }
+        console.log("LOGGING THE PARTICIPANT 123123");
+        console.log(participant);
         return participant;
     }
 
@@ -315,7 +317,7 @@ export class MapperService {
     }
 }
 
-MapperService.$inject = ['$log', 'AuthService', 'SelectService'];
+MapperService.$inject = ['AuthService', 'SelectService'];
 
 
 /**

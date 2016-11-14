@@ -10,134 +10,134 @@ import javax.validation.ConstraintViolation;
 import java.util.Calendar;
 import java.util.Set;
 
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 public class RegistrationParticipantTest extends BeanValidatorTest{
 
-    private RegistrationParticipant particpant;
+    private RegistrationParticipant participant;
 
     @Before
     public void setUp(){
-        this.particpant = RegistrationParticipantMother.createBasicRegistrationParticipant();
+        this.participant = RegistrationParticipantMother.createBasicRegistrationParticipant();
     }
 
     @Test
     public void firstNameWithLengthOf2CharactersShouldBeValid(){
-        particpant.setFirstName("Jo");
-        Set<ConstraintViolation<RegistrationParticipant>> violations = validator().validateProperty(particpant, "firstName");
+        participant.setFirstName("Jo");
+        Set<ConstraintViolation<RegistrationParticipant>> violations = validator().validateProperty(participant, "firstName");
         Assert.assertTrue(violations.isEmpty());
     }
 
     @Test
     public void firstNameWithNormalValueShouldBeValid(){
-        particpant.setFirstName("Hermione");
-        Set<ConstraintViolation<RegistrationParticipant>> violations = validator().validateProperty(particpant, "firstName");
+        participant.setFirstName("Hermione");
+        Set<ConstraintViolation<RegistrationParticipant>> violations = validator().validateProperty(participant, "firstName");
         Assert.assertTrue(violations.isEmpty());
     }
 
     @Test
     public void firstNameShorterThan2CharactersShouldNotBeValid(){
-        particpant.setFirstName("H");
-        Set<ConstraintViolation<RegistrationParticipant>> violations = validator().validateProperty(particpant, "firstName");
+        participant.setFirstName("H");
+        Set<ConstraintViolation<RegistrationParticipant>> violations = validator().validateProperty(participant, "firstName");
         Assert.assertEquals(1, violations.size());
     }
 
     @Test
     public void lastNameWithLengthOf2CharactersShouldBeValid(){
-        particpant.setLastName("Me");
-        Set<ConstraintViolation<RegistrationParticipant>> violations = validator().validateProperty(particpant, "lastName");
+        participant.setLastName("Me");
+        Set<ConstraintViolation<RegistrationParticipant>> violations = validator().validateProperty(participant, "lastName");
         Assert.assertTrue(violations.isEmpty());
     }
 
     @Test
     public void lastNameWithNormalValueShouldBeValid(){
-        particpant.setLastName("Granger");
-        Set<ConstraintViolation<RegistrationParticipant>> violations = validator().validateProperty(particpant, "lastName");
+        participant.setLastName("Granger");
+        Set<ConstraintViolation<RegistrationParticipant>> violations = validator().validateProperty(participant, "lastName");
         Assert.assertTrue(violations.isEmpty());
     }
 
     @Test
     public void lastNameShorterThan2CharactersShouldNotBeValid(){
-        particpant.setLastName("M");
-        Set<ConstraintViolation<RegistrationParticipant>> violations = validator().validateProperty(particpant, "lastName");
+        participant.setLastName("M");
+        Set<ConstraintViolation<RegistrationParticipant>> violations = validator().validateProperty(participant, "lastName");
         Assert.assertEquals(1, violations.size());
     }
 
     @Test
     public void emailAddressEmptyShouldBeInvalid(){
-        particpant.setEmail("");
-        Set<ConstraintViolation<RegistrationParticipant>> violations = validator().validateProperty(particpant, "email");
+        participant.setEmail("");
+        Set<ConstraintViolation<RegistrationParticipant>> violations = validator().validateProperty(participant, "email");
         Assert.assertEquals(1, violations.size());
     }
 
     @Test
     public void emailAddressNullShouldBeInvalid(){
-        particpant.setEmail(null);
-        Set<ConstraintViolation<RegistrationParticipant>> violations = validator().validateProperty(particpant, "email");
+        participant.setEmail(null);
+        Set<ConstraintViolation<RegistrationParticipant>> violations = validator().validateProperty(participant, "email");
         Assert.assertEquals(1, violations.size());
     }
 
     @Test
     public void validPhoneNumberShouldBeValid(){
-        particpant.setPhoneNumber("016539999");
-        Set<ConstraintViolation<RegistrationParticipant>> violations = validator().validateProperty(particpant, "phoneNumber");
+        participant.setPhoneNumber("016539999");
+        Set<ConstraintViolation<RegistrationParticipant>> violations = validator().validateProperty(participant, "phoneNumber");
         Assert.assertTrue(violations.isEmpty());
     }
 
     @Test
     public void phoneNumberWithSpacesShouldBeValid(){
-        particpant.setPhoneNumber("016 53 99 99");
-        Set<ConstraintViolation<RegistrationParticipant>> violations = validator().validateProperty(particpant, "phoneNumber");
+        participant.setPhoneNumber("016 53 99 99");
+        Set<ConstraintViolation<RegistrationParticipant>> violations = validator().validateProperty(participant, "phoneNumber");
         Assert.assertTrue(violations.isEmpty());
     }
 
     @Test
     public void phoneNumberWithCountryCodeShouldBeValid(){
-        particpant.setPhoneNumber("+3216539999");
-        Set<ConstraintViolation<RegistrationParticipant>> violations = validator().validateProperty(particpant, "phoneNumber");
+        participant.setPhoneNumber("+3216539999");
+        Set<ConstraintViolation<RegistrationParticipant>> violations = validator().validateProperty(participant, "phoneNumber");
         Assert.assertTrue(violations.isEmpty());
     }
 
     @Test
     public void mobilePhoneAsPhoneNumberWithCountryCodeShouldBeValid(){
-        particpant.setPhoneNumber("+32486987654");
+        Set<ConstraintViolation<RegistrationParticipant>> violations;
 
-        Set<ConstraintViolation<RegistrationParticipant>> violations = validator().validateProperty(particpant, "phoneNumber");
+        participant.setPhoneNumber("+32486987654");
+        violations = validator().validateProperty(participant, "phoneNumber");
         Assert.assertTrue(violations.isEmpty());
 
-        particpant.setPhoneNumber("+32488336677");
-        violations = validator().validateProperty(particpant, "phoneNumber");
+        participant.setPhoneNumber("+32488336677");
+        violations = validator().validateProperty(participant, "phoneNumber");
         Assert.assertTrue(violations.isEmpty());
 
-        particpant.setPhoneNumber("+32460336677");
-        violations = validator().validateProperty(particpant, "phoneNumber");
+        participant.setPhoneNumber("+32460336677");
+        violations = validator().validateProperty(participant, "phoneNumber");
         Assert.assertTrue(violations.isEmpty());
 
-        particpant.setPhoneNumber("+32473446677");
-        violations = validator().validateProperty(particpant, "phoneNumber");
+        participant.setPhoneNumber("+32473446677");
+        violations = validator().validateProperty(participant, "phoneNumber");
         Assert.assertTrue(violations.isEmpty());
 
-        particpant.setPhoneNumber("+32493446677");
-        violations = validator().validateProperty(particpant, "phoneNumber");
+        participant.setPhoneNumber("+32493446677");
+        violations = validator().validateProperty(participant, "phoneNumber");
         Assert.assertTrue(violations.isEmpty());
 
-        particpant.setPhoneNumber("+32453446677");
-        violations = validator().validateProperty(particpant, "phoneNumber");
+        participant.setPhoneNumber("+32453446677");
+        violations = validator().validateProperty(participant, "phoneNumber");
         Assert.assertTrue(violations.isEmpty());
     }
 
     @Test
     public void mobilePhoneAsPhoneNumberShouldBeValid(){
-        particpant.setPhoneNumber("04869876");
-        Set<ConstraintViolation<RegistrationParticipant>> violations = validator().validateProperty(particpant, "phoneNumber");
+        participant.setPhoneNumber("04869876");
+        Set<ConstraintViolation<RegistrationParticipant>> violations = validator().validateProperty(participant, "phoneNumber");
         Assert.assertTrue(violations.isEmpty());
     }
 
     @Test
     public void incorrectPhoneNumberShouldBeInvalid(){
-        particpant.setPhoneNumber("-5sdfmoklsfjkljia");
-        Set<ConstraintViolation<RegistrationParticipant>> violations = validator().validateProperty(particpant, "phoneNumber");
+        participant.setPhoneNumber("-5sdfmoklsfjkljia");
+        Set<ConstraintViolation<RegistrationParticipant>> violations = validator().validateProperty(participant, "phoneNumber");
         Assert.assertEquals(1, violations.size());
     }
 
@@ -146,8 +146,8 @@ public class RegistrationParticipantTest extends BeanValidatorTest{
         Calendar c = Calendar.getInstance();
         c.set(1999, Calendar.APRIL, 1);
 
-        particpant.setBirthdate(c.getTime());
-        Set<ConstraintViolation<RegistrationParticipant>> violations = validator().validateProperty(particpant, "birthdate");
+        participant.setBirthdate(c.getTime());
+        Set<ConstraintViolation<RegistrationParticipant>> violations = validator().validateProperty(participant, "birthdate");
         assertTrue(violations.isEmpty());
     }
 
@@ -156,8 +156,8 @@ public class RegistrationParticipantTest extends BeanValidatorTest{
         Calendar c = Calendar.getInstance();
         c.add(Calendar.YEAR, 10); // I have travelled some 10 years into the future.
 
-        particpant.setBirthdate(c.getTime());
-        Set<ConstraintViolation<RegistrationParticipant>> violations = validator().validateProperty(particpant, "birthdate");
+        participant.setBirthdate(c.getTime());
+        Set<ConstraintViolation<RegistrationParticipant>> violations = validator().validateProperty(participant, "birthdate");
         Assert.assertEquals(1, violations.size());
     }
 }

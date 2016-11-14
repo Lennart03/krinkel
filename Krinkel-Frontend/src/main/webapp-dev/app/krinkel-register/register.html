@@ -59,7 +59,7 @@
         </div>
 
         <div class="row">
-            <div class="input-field col s12 m10">
+            <div class="input-field col s12">
                 <i class="material-icons prefix">home</i>
                 <!--$ctrl.newPerson.street-->
                 <input name="street" type="text" class="validate" id="street"
@@ -70,20 +70,20 @@
 
                 {{$ctrl.extractFromAdress($ctrl.details.address_components )}}
 
-                <label for="street">Straat *</label>
+                <label for="street">Straat en huisnummer *</label>
                 <p ng-show="personForm.street.$invalid && personForm.street.$touched" class="error"><i
                     class="material-icons">error_outline</i>
                     Straatnaam is verplicht</p>
             </div>
 
-            <div class="input-field col s6 m2">
-                <i class="material-icons prefix">home</i>
-                <input id="building" name="building" type="text" class="validate" ng-model="$ctrl.newPerson.building"
-                       required>
-                <label for="building">Huisnummer *</label>
-                <p ng-show="personForm.building.$invalid && personForm.building.$touched" class="error"><i
-                    class="material-icons">error_outline</i> Huisnummer is verplicht</p>
-            </div>
+            <!--<div class="input-field col s6 m2">-->
+                <!--<i class="material-icons prefix">home</i>-->
+                <!--<input id="building" name="building" type="text" class="validate" ng-model="$ctrl.newPerson.building"-->
+                       <!--required>-->
+                <!--<label for="building">Huisnummer *</label>-->
+                <!--<p ng-show="personForm.building.$invalid && personForm.building.$touched" class="error"><i-->
+                    <!--class="material-icons">error_outline</i> Huisnummer is verplicht</p>-->
+            <!--</div>-->
         </div>
 
         <div class="row">
@@ -96,7 +96,7 @@
                        ng-autocomplete details="$ctrl.details2"
                        options="$ctrl.optionsPostalCode" required placeholder="..."
                        required/>
-                {{$ctrl.extractFromAdress($ctrl.details2.address_components )}}
+
                 <label for="postal_code">Postcode *</label>
                 <p ng-show="personForm.postalCode.$invalid && personForm.postalCode.$touched" class="error"><i
                     class="material-icons">error_outline</i> Postcode is verplicht</p>
@@ -108,7 +108,7 @@
                 <input id="city" name="city" type="text" class="validate" ng-model="$ctrl.details3.vicinity" required
                        ng-autocomplete
                        options="$ctrl.optionsStad" details="$ctrl.details3" required placeholder="..."/>
-                {{$ctrl.extractFromAdress($ctrl.details3.address_components )}}
+
                 <label for="city">Gemeente *</label>
                 <p ng-show="personForm.city.$invalid && personForm.city.$touched" class="error"><i
                     class="material-icons">error_outline</i>
@@ -144,9 +144,9 @@
                 <!--<i class="material-icons prefix">perm_identity</i>-->
                 <select name="gender" ng-model="$ctrl.newPerson.gender" class="browser-default" required>
                     <option value="" disabled selected>Geslacht *</option>
-                    <option value="Vrouw">Vrouw</option>
-                    <option value="Man">Man</option>
-                    <option value="X">X</option>
+                    <option value="1">Vrouw</option>
+                    <option value="2">Man</option>
+                    <option value="0">X</option>
                 </select>
                 <p ng-show="personForm.gender.$invalid && personForm.gender.$touched" class="error">
                     <i class="material-icons">error_outline</i>
@@ -158,9 +158,9 @@
                 <!--<i class="material-icons prefix">mood</i>-->
                 <select name="rank" ng-model="$ctrl.newPerson.rank" class="browser-default" required>
                     <option value="" disabled selected>In '16-17' was ik *</option>
-                    <option value="Aspi">Aspi</option>
-                    <option value="Leider">Leid(st)er</option>
-                    <option value="Begeleider">Volwassen begeleider</option>
+                    <option value="A">Aspi</option>
+                    <option value="L">Leid(st)er</option>
+                    <option value="VB">Volwassen begeleider</option>
                 </select>
                 <!--<label>In '16-17' was ik:</label>-->
                 <p ng-show="personForm.rank.$invalid && personForm.rank.$touched" class="error">
@@ -229,7 +229,7 @@
 
                     <div ng-show="$ctrl.newPerson.buddy">
                         <select ng-show="$ctrl.newPerson.buddy" multiple ng-required="$ctrl.newPerson.buddy" ng-model="$ctrl.newPerson.languages">
-                            <option value="" disabled selected>Selecteer je talen</option>
+                            <option value="" disabled selected>Selecteer je talen*</option>
                             <option value="ENGLISH">Engels</option>
                             <option value="FRENCH">Frans</option>
                             <option value="SPANISH">Spaans</option>
@@ -319,7 +319,7 @@
                 <p>
                     <input class="with-gap" name="group3" type="radio" id="Krinkelredactie"
                            ng-model="$ctrl.newPerson.job" value="Krinkelredactie"/>
-                    <label for="Krinkelredactie">Krinkelredactie</label>
+                    <label for="Krinkelredactie">Klinkerredactie</label>
                 </p>
 
                 <p>
@@ -421,7 +421,7 @@
             </div>
         </div>
 
-        <div class="row">
+        <div class="row" ng-if="!$ctrl.SelectService.getSelectedFlag()">
             <div class="col s12">
                 <div>
                     <!--<i class="small material-icons prefix">mood</i>-->
@@ -446,9 +446,9 @@
         </p>
 
         <p>
-            Heb je extra ondersteuning nodig tijdens de spelen, verplaatsingen of andere taken? Laat het hier dan zeker
+            Heb je extra ondersteuning nodig tijdens de spelen, verplaatsingen of andere taken? Laat het dan zeker
             weten zodat we samen naar oplossingen
-            kunnen zoeken. Je kan ons ook contacteren op 03/231 07 95 of <a href="mailto:info@krinkel.be">info@krinkel.be</a>.
+            kunnen zoeken. Je kan ons contacteren op 03/231 07 95 of <a href="mailto:info@krinkel.be">info@krinkel.be</a>.
         </p>
 
         <button href="#modal4" class="btn waves-effect waves-light modal-trigger"  name="action"
@@ -468,7 +468,8 @@
                 <p>De prijs voor deelnemers is €110</p>
             </div>
             <div class="modal-footer">
-                <button type="submit" class=" modal-action modal-close waves-effect waves-green btn-flat">OK</button>
+                <button type="submit" class=" modal-action modal-close waves-effect btn-flat">OK</button>
+                <a href="" class="modal-action modal-close waves-effect btn-flat">CANCEL</a>
             </div>
         </div>
     </form>

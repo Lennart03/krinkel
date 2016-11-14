@@ -1,10 +1,9 @@
 package com.realdolmen.chiro.service;
 
-import com.realdolmen.chiro.domain.EventRole;
-import com.realdolmen.chiro.domain.LoginLog;
+import com.realdolmen.chiro.config.CasConfiguration;
+import com.realdolmen.chiro.config.JwtConfiguration;
 import com.realdolmen.chiro.domain.SecurityRole;
 import com.realdolmen.chiro.domain.User;
-import com.realdolmen.chiro.repository.LoginLoggerRepository;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -20,17 +19,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.xml.bind.DatatypeConverter;
 import java.util.Date;
 
-/**
- * Created by WVDAZ49 on 12/10/2016.
- */
 @Service
 public class CASService {
-
-    public static final String CASURL = "https://login.chiro.be/cas/login?service=http://localhost:8080/api/cas";
-    public static final String JWT_SECRET = "MATHIASISNOOB";
+    @Autowired
+    private CasConfiguration configuration;
 
     @Autowired
-    private LoginLoggerRepository loggerRepo;
+    private JwtConfiguration jwtConfig;
 
     @Autowired
     private UserService userService;
@@ -42,27 +37,28 @@ public class CASService {
 
     public final User validate(String ticket) {
         AttributePrincipal principal = null;
-        String casServerUrl = "https://login.chiro.be/cas/";
-        Cas20ProxyTicketValidator sv = new Cas20ProxyTicketValidator(casServerUrl);
+        Cas20ProxyTicketValidator sv = new Cas20ProxyTicketValidator(configuration.getBaseCasUrl());
         sv.setAcceptAnyProxy(true);
+
         try {
-            String legacyServerServiceUrl = "http://localhost:8080/api/cas";
-            Assertion a = sv.validate(ticket, legacyServerServiceUrl);
+            Assertion a = sv.validate(ticket, configuration.getServiceUrl());
             principal = a.getPrincipal();
         } catch (TicketValidationException e) {
             throw new SecurityException("Ticket could not be validated");
         }
+
         if (principal != null) {
             // TODO: in an ideal world, cookie should only contain ad-number (and mayhaps role)
-            return userService.getUser(principal.getAttributes().get("ad_nummer").toString());
+            return userService.getUser(
+                    principal.getAttributes().get("ad_nummer").toString()
+            );
         }
         return null;
     }
 
     public Boolean hasRole(final SecurityRole[] roles, final HttpServletRequest request) {
-
         Claims claims = Jwts.parser()
-                .setSigningKey(DatatypeConverter.parseBase64Binary(JWT_SECRET))
+                .setSigningKey(DatatypeConverter.parseBase64Binary(jwtConfig.getJwtSecret()))
                 .parseClaimsJws(getTokenFromCookie(request.getCookies())).getBody();
         if (claims != null) {
             for(SecurityRole role:roles){
@@ -73,6 +69,7 @@ public class CASService {
         }
         return false;
     }
+
     public Cookie createCookie(String jwt){
         Cookie myCookie = new Cookie("Authorization", jwt);
         myCookie.setPath("/");
@@ -89,21 +86,16 @@ public class CASService {
         return null;
     }
 
-    public String createToken(User data) {
-        newLogin(data);
+    public String createToken(User user) {
+        //newLogin(data);
         return Jwts.builder()
-                .setSubject(data.getUsername())
-                .claim("firstname", data.getFirstname())
-                .claim("lastname", data.getLastname())
-                .claim("adnummer", data.getAdNumber())
-                .claim("email", data.getEmail())
-                .claim("role", data.getRole())
+                .setSubject(user.getUsername())
+                .claim("firstname", user.getFirstname())
+                .claim("lastname", user.getLastname())
+                .claim("adnummer", user.getAdNumber())
+                .claim("email", user.getEmail())
+                .claim("role", user.getRole())
                 .setIssuedAt(new Date())
-                .signWith(SignatureAlgorithm.HS256, JWT_SECRET).compact();
+                .signWith(SignatureAlgorithm.HS256, jwtConfig.getJwtSecret()).compact();
     }
-
-    public void newLogin(User user) {
-        loggerRepo.save(new LoginLog(user.getAdNumber()));
-    }
-
 }

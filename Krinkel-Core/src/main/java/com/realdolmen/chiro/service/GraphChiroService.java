@@ -8,7 +8,9 @@ import com.realdolmen.chiro.domain.units.StatusChiroUnit;
 import com.realdolmen.chiro.repository.ChiroUnitRepository;
 import com.realdolmen.chiro.repository.LoginLoggerRepository;
 import com.realdolmen.chiro.repository.RegistrationParticipantRepository;
+import com.realdolmen.chiro.util.StamNumberTrimmer;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -25,6 +27,10 @@ public class GraphChiroService {
     @Autowired
     private LoginLoggerRepository loggerRepository;
 
+    @Autowired
+    private StamNumberTrimmer stamNumberTrimmer;
+
+    @PreAuthorize("@GraphChiroServiceSecurity.hasPermissionToMakeStatusGraph()")
     public StatusChiroUnit getStatusChiro(){
         StatusChiroUnit status = new StatusChiroUnit();
         participantRepository.findAll().forEach(r -> {
@@ -60,6 +66,7 @@ public class GraphChiroService {
         return status;
     }
 
+    @PreAuthorize("@GraphChiroServiceSecurity.hasPermissionToMakeSunGraph()")
     public GraphChiroUnit summary() {
         GraphChiroUnit root = new GraphChiroUnit("Inschrijvingen", null, new ArrayList<GraphChiroUnit>());
 //
@@ -97,18 +104,18 @@ public class GraphChiroService {
     }
 
     private Integer findParticipants(String stamNumber) {
-        String stamNumber1 = stamNumber.substring(0,2);
-        String stamNumber2 = stamNumber.substring(4);
-        stamNumber = stamNumber1 + stamNumber2;
-        int participants = participantService.findParticipantsByGroup(stamNumber).size();
-        int volunteers = participantService.findVolunteersByGroup(stamNumber).size();
+        String normalizedStamNumber = stamNumberTrimmer.trim(stamNumber);
+
+        int participants = participantService.findParticipantsByGroup(normalizedStamNumber).size();
+        int volunteers = participantService.findVolunteersByGroup(normalizedStamNumber).size();
         return participants + volunteers;
     }
-
 
     private List<RawChiroUnit> findAll() {
         return repository.findAll();
     }
+
+    @PreAuthorize("@GraphChiroServiceSecurity.hasPermissionToGetLoginData()")
     public List<GraphLoginCount> getLoginData(){
         return loggerRepository.crunchData();
     }

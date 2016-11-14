@@ -29,7 +29,6 @@ public class PageAccessTest extends TestChromeBrowser {
     public void testPageTitleInBrowser() {
         driver().navigate().to("http://localhost:3000");
         String strPageTitle = driver().getTitle();
-        System.out.println("Page title: - " + strPageTitle);
         Assert.assertTrue(strPageTitle.equalsIgnoreCase("Krinkel"), "Page title doesn't match");
     }
 
@@ -71,7 +70,6 @@ public class PageAccessTest extends TestChromeBrowser {
         driver().findElement(By.id("password")).clear();
         driver().findElement(By.id("password")).sendKeys("lolo");
         driver().findElement(By.name("btn_login")).click();
-        System.out.println(isElementPresent(By.id("toast-container")));
         assertTrue("Failed login", isElementPresent(By.id("toast-container")));
     }
 }

@@ -5,14 +5,10 @@ class WelcomeMessageController {
         this.AuthService = AuthService;
 
         this.AuthService.getCurrentUserDetails(this.AuthService.getLoggedinUser().adnummer).then((resp) => {
-            console.log(resp);
             if (resp.registered && resp.hasPaid) {
-                console.log("true true");
                 this.$location.path('/success');
             }
-        }, (resp) => {
-            console.log("failed");
-            console.log(resp);
+        }, () => {
         })
     }
 

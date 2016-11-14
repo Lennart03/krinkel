@@ -1,6 +1,5 @@
 export class KrinkelService {
-    constructor($http, $log, BASEURL) {
-        this.$log = $log;
+    constructor($http, BASEURL) {
         this.$http = $http;
         this.BASEURL = BASEURL;
     }
@@ -19,19 +18,12 @@ export class KrinkelService {
 
     postVolunteer(user) {
         return this.$http.post(`${this.BASEURL}/api/volunteers`, user).then((resp) => {
-            this.$log.debug("Printing volunteer POST response");
-            this.$log.debug(resp);
-            this.$log.debug(resp.headers);
-            this.$log.debug(resp.headers().location);
             return resp;
         });
     }
 
     postParticipant(user) {
         return this.$http.post(`${this.BASEURL}/api/participants`, user).then((resp) => {
-            this.$log.debug("Printing participant POST response");
-            this.$log.debug(resp.headers);
-            this.$log.debug(resp.headers().location);
             return resp;
         });
     }
@@ -42,14 +34,8 @@ export class KrinkelService {
         });
     }
 
-    // getColleagues(adNumber){
-    //     return this.$http.get(`${this.BASEURL}/api/colleagues?ad=${adNumber}`).then((resp) => {
-    //         return resp.data;
-    //     })
-    // }
-
-    getColleagues(stamnummer){
-        return this.$http.get(`${this.BASEURL}/api/units/${stamnummer}/users`).then((resp) => {
+    getColleagues(){
+        return this.$http.get(`${this.BASEURL}/api/colleagues`).then((resp) => {
             return resp.data;
         })
     }
@@ -59,8 +45,7 @@ export class KrinkelService {
                          .then((resp) => {
                                     return resp.data;
                                 }, (resp) => {
-                                    this.$log.debug("logging resp");
-                                    this.$log.debug(resp);
+
                                 });
     }
 
@@ -78,27 +63,23 @@ export class KrinkelService {
     }
 
     getParticipantsForUnit(stamNummer) {
-        return this.$http.get(`${this.BASEURL}/api/participants/${stamNummer}`).then((resp) => {
+        // return this.$http.get(`${this.BASEURL}/api/participants/${stamNummer}`).then((resp) => {
+        return this.$http.get(`${this.BASEURL}/api/units/${stamNummer}`).then((resp) => {
             return resp.data;
         });
     }
 
-    getUsersOfUnit(stamNummer){
-        return this.$http.get(`${this.BASEURL}/api/participants/info/${stamNummer}`).then((resp) => {
+    getParticipantsOfUnit(stamNummer){
+        return this.$http.get(`${this.BASEURL}/api/units/${stamNummer}/participants`).then((resp) => {
             return resp.data;
         })
     }
 
-    // getMovies(title) {
-    //   return this.$http.get(`${this.BASEURL}/online?title=${title}`).then((resp) => {
-    //     return resp.data;
-    //   });
-    // }
-    // postMovie(imdbid){
-    //   return this.$http.post(`${this.BASEURL}`, {imdbId: imdbid}).then((resp) => {
-    //     return resp.data;
-    //   });
-    // }
+    getVolunteersOfUnit(stamNummer){
+        return this.$http.get(`${this.BASEURL}/api/units/${stamNummer}/volunteers`).then((resp) => {
+            return resp.data;
+        })
+    }
 
     getGraphSunInfo() {
         return this.$http.get(`${this.BASEURL}/api/graph/sun`).then((resp) => {
@@ -117,6 +98,12 @@ export class KrinkelService {
             return resp.data;
         });
     }
+
+    getContactFromChiro(adNumber) {
+        return this.$http.get(`${this.BASEURL}/api/contact/` + adNumber).then((resp) => {
+            return resp.data.values;
+        });
+    }
 }
 
-KrinkelService.$inject = ['$http', '$log', 'BASEURL'];
+KrinkelService.$inject = ['$http', 'BASEURL'];

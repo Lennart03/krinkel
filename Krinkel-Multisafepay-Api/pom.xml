@@ -11,7 +11,6 @@
 
     <artifactId>krinkelmultisafepayapi</artifactId>
 
-
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -33,6 +32,16 @@
         <dependency>
             <groupId>com.realdolmen.chiro</groupId>
             <artifactId>Krinkel-Domain</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.realdolmen.chiro</groupId>
+            <artifactId>Krinkel-Test-Base</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.h2database</groupId>
+            <artifactId>h2</artifactId>
         </dependency>
     </dependencies>
 </project>

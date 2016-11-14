@@ -101,10 +101,9 @@ public class RegistrationVolunteerController {
         return new ResponseEntity<>(headers, HttpStatus.CREATED);
     }
 
+    //TODO CHECK IF WE EVEN NEED THIS METHOD. WE NEED IT
     @RequestMapping(method = RequestMethod.GET, value = "/api/volunteers", produces = "application/json")
-    public
-    @ResponseBody
-    RegistrationVolunteer retrieve() {
+    public @ResponseBody RegistrationVolunteer retrieve() {
 
         Calendar c = Calendar.getInstance();
         c.set(1995, Calendar.AUGUST, 5);
@@ -113,7 +112,7 @@ public class RegistrationVolunteerController {
                 "123456789", "example@acme.com", "Aster", "Deckers", c.getTime(),
                 "AG0001", Gender.MAN, EventRole.LEADER, Eatinghabbit.VEGI,
                 CampGround.ANTWERPEN,
-                new VolunteerFunction(VolunteerFunction.Preset.KRINKEL_EDITORIAL)
+                new VolunteerFunction(VolunteerFunction.Preset.KRINKEL_EDITORIAL), "aster.deckers@example.org"
         );
 
         PreCamp preCamp = new PreCamp();

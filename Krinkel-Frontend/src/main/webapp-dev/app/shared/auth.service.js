@@ -1,13 +1,10 @@
 export class AuthService {
-    constructor($window, $log, KrinkelService, $timeout) {
+    constructor($window, KrinkelService, $timeout) {
         this.$window = $window;
         this.KrinkelService = KrinkelService;
         this.$timeout = $timeout;
 
         this.getUserFromStorage();
-        this.$log = $log;
-        this.$log.debug("logged in user:");
-        this.$log.debug(this.getLoggedinUser());
 
         this.userDetailsCallMade = false;
         this.userDetailsCallReturned = false;
@@ -84,6 +81,10 @@ export class AuthService {
         });
     }
 
+    /**
+     * This function returns the user details. The call to the server only happens ONCE, after it resolves it'll return cached data to reduce load.
+     * @returns {*}
+     */
     getUserDetails() {
         if (this.userDetailsCallMade) {
             if (this.userDetailsCallReturned) {
@@ -107,6 +108,6 @@ export class AuthService {
     }
 }
 
-AuthService.$inject = ['$window', '$log', 'KrinkelService', '$timeout'];
+AuthService.$inject = ['$window', 'KrinkelService', '$timeout'];
 
 

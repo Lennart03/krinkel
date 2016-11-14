@@ -8,20 +8,22 @@ import com.realdolmen.chiro.mspdto.StatusDto;
 import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.*;
+import org.springframework.http.converter.StringHttpMessageConverter;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 
+import java.nio.charset.Charset;
 import java.security.InvalidParameterException;
-import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.HashMap;
 
 @Service
 public class MultiSafePayService {
-    private static final String URL = "https://testapi.multisafepay.com/v1/json/orders";
-    private static final String API_KEY = "a9026c8f9a1d49da542dd2f51d702a4442612e54";
+    @Autowired
+    private MultiSafePayConfiguration configuration;
+
     private RestTemplate restTemplate = new RestTemplate();
 
     private Logger logger = LoggerFactory.getLogger(MultiSafePayService.class);
@@ -38,21 +40,20 @@ public class MultiSafePayService {
         if (!createPaymentParamsAreValid(participant.getAdNumber(), amount))
             throw new InvalidParameterException("cannot create a payment with those params");
         JSONObject jsonObject = this.createPaymentJsonObject(participant, amount);
-
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
         HttpEntity<String> entity = new HttpEntity<>(jsonObject.toString(), headers);
-
-        String url = URL + "?api_key=" + API_KEY;
+        String url = configuration.getURL() + "?api_key=" + configuration.getApiKey();
 
 
         try {
+            restTemplate.getMessageConverters()
+                    .add(0, new StringHttpMessageConverter(Charset.forName("UTF-8")));
             ResponseEntity<OrderDto> response = restTemplate.exchange(url, HttpMethod.POST, entity, OrderDto.class);
             return response.getBody();
         } catch (HttpClientErrorException ex) {
             // Assume failure to be due  to a duplicate OrderID.
-            logger.warn("Request to Payment Site failed with status " + ex.getStatusCode().value());
-
+            logger.warn("Request to Payment Site failed with status " + ex.getMessage());
             throw new InvalidPaymentOrderIdException();
         }
     }
@@ -69,9 +70,9 @@ public class MultiSafePayService {
         return res;
     }
 
-    public static String getCurrentTimeStamp() {
+    private static String getCurrentTimeStamp() {
         Long test = new Date().getTime();
-        return  "-" + test;
+        return "-" + test;
     }
 
     /**
@@ -104,13 +105,8 @@ public class MultiSafePayService {
      * }
      */
     private JSONObject createPaymentJsonObject(RegistrationParticipant participant, Integer amount) {
-        JSONObject paymentOptions = new JSONObject();
+        JSONObject paymentOptions = configuration.getPaymentOptions();
         JSONObject customer = new JSONObject();
-
-        //TODO: update this with correct urls (use profiles for dev, test & production)
-        paymentOptions.put("notification_url", "https://krinkel.be/notify");
-        paymentOptions.put("redirect_url", "http://localhost:8080/payment/success");
-        paymentOptions.put("cancel_url", "http://localhost:8080/payment/failure");
 
         customer.put("locale", "nl_BE");
         customer.put("first_name", participant.getFirstName());
@@ -125,7 +121,12 @@ public class MultiSafePayService {
         customer.put("country", "BE");
 
         customer.put("phone", participant.getPhoneNumber());
-        customer.put("email", participant.getEmail());
+
+        if (participant.getEmailSubscriber() != null) {
+            customer.put("email", participant.getEmailSubscriber());
+        } else {
+            customer.put("email", participant.getEmail());
+        }
 
 
         JSONObject jsonObject = new JSONObject();
@@ -160,7 +161,7 @@ public class MultiSafePayService {
 
     public boolean orderIsPaid(String testOrderId) {
         boolean res = false;
-        String url = URL + "/" + testOrderId + "?api_key=" + API_KEY;
+        String url = configuration.getURL() + "/" + testOrderId + "?api_key=" + configuration.getApiKey();
         ResponseEntity<StatusDto> response = restTemplate.exchange(url, HttpMethod.GET, null, StatusDto.class);
         Data data = response.getBody().getData();
         if (data != null && data.getStatus().equals("completed"))

@@ -27,9 +27,9 @@
 2. Run "npm install"
 3. Run "gulp serve"
 
-## Build with integration tests enabled
+## Build with integration tests disabled
 
-    mvn clean package -Dintegration
+    mvn clean package -DskipIntegration
 
 ## Build a single Maven Submodule
 
@@ -74,3 +74,20 @@ This will Authenticate and save following user in AuthService:
         role: "ADMIN",
         sub: "wannes386293"
     }
+    
+    
+## Switching profiles
+
+The following three profiles are available:
+
+* development : During coding
+* production : The real thing
+* test : Unit testing
+
+The default profile is `development`.
+
+Each profile loads `application.properties` which defines the settings  common to all environments. 
+In addition a `application-<profile>.properties` is loaded with specific settings for the profile.
+These properties files can be found in **Krinkel-App-Config** for common, `development` and `production`; and **Krinkel-Test-Base** for `test`.
+
+You can set the profile at runtime by launching the executable the following parameter: `-Dspring.profiles.active=production|development|test`

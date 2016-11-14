@@ -95,26 +95,92 @@ class RegisterController {
         }
     }
 
+    prefillColleague() {
+        var colleague = this.SelectService.getColleague();
+        var loggedInUser = this.AuthService.getLoggedinUser();
+
+        this.newPerson = {
+            adNumber: colleague.adnummer,
+            job: "Aanbod nationale kampgrond",
+            firstName: colleague.first_name,
+            lastName: colleague.last_name,
+            email: colleague.email,
+            birthDate: colleague.birth_date,
+            phone: colleague.phone.replace('-', ''),
+            emailSubscriber: loggedInUser.email,
+            gender: colleague.gender_id,
+            rank: colleague.afdeling.toUpperCase()
+        };
+        this.details2.name = colleague.postal_code;
+
+
+        this.details.address_components = [];
+        this.details.address_components.push({
+            long_name: colleague.street_address
+        });
+
+
+        this.details3.vicinity = colleague.city;
+
+
+        this.SelectService.setSelectedFlag(true);
+    }
+
+    prefillSelf() {
+        var loggedInUser = this.AuthService.getLoggedinUser();
+        this.KrinkelService.getContactFromChiro(loggedInUser.adnummer).then((resp) => {
+            var chiroContact = resp[0];
+            if (resp.size != 0) {
+                this.newPerson = {
+                    adNumber: loggedInUser.adnummer,
+                    job: "Aanbod nationale kampgrond",
+                    firstName: chiroContact.first_name,
+                    lastName: chiroContact.last_name,
+                    email: chiroContact.email,
+                    birthDate: chiroContact.birth_date,
+                    phone: chiroContact.phone.replace('-', ''),
+                    gender: chiroContact.gender_id,
+                    rank: chiroContact.afdeling.toUpperCase()
+                };
+                this.details2.name = chiroContact.postal_code;
+
+
+                this.details.address_components = [];
+                this.details.address_components.push({
+                    long_name: chiroContact.street_address
+                });
+
+
+                this.details3.vicinity = chiroContact.city;
+
+            }
+        });
+    }
+
 
     $onInit() {
         if (this.AuthService.getLoggedinUser() == null) {
             this.$location.path('/');
         }
 
+
+        /**
+         * Prefilling the form when subscribing others
+         */
         if (this.SelectService.getColleague() !== undefined) {
-            this.newPerson = {
-                adNumber: this.SelectService.getColleague().adNumber
-            };
-            this.SelectService.setSelectedFlag(true);
-            console.log("From select");
+            this.prefillColleague();
+
         } else {
-            console.log("Not from selectx");
+
             var user = this.StorageService.getUser();
-            if (user) {
+            if (user && user.email === this.AuthService.getLoggedinUser().email) {
                 this.newPerson = user;
             } else {
-                this.newPerson = {};
-                this.newPerson.job = "Aanbod nationale kampgrond";
+                /**
+                 * Prefilling the form when subscribing yourself
+                 */
+                this.prefillSelf();
+
             }
         }
 
@@ -141,7 +207,6 @@ class RegisterController {
         // this.newPerson = this.StorageService.getUser();
 
         this.errorMessages = document.getElementsByClassName("error");
-        // console.log(document.getElementsByClassName("error"));
     }
 
     functionCallAfterDOMRender() {

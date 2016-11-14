@@ -37,6 +37,9 @@ public class RegistrationParticipant {
     @NotBlank
     private String email;
 
+    @Email
+    private String emailSubscriber;
+
     @Embedded
     @Valid
     @NotNull
@@ -83,9 +86,10 @@ public class RegistrationParticipant {
 
     public RegistrationParticipant() {}
 
-    public RegistrationParticipant(String adNumber, String email, String firstName, String lastName, Date birthdate, String stamnumber, Gender gender, EventRole eventRole, Eatinghabbit eatinghabbit) {
+    public RegistrationParticipant(String adNumber, String email, String firstName, String lastName, Date birthdate, String stamnumber, Gender gender, EventRole eventRole, Eatinghabbit eatinghabbit,String emailSubscriber) {
         this.adNumber = adNumber;
         this.email = email;
+        this.emailSubscriber = email;
         this.firstName = firstName;
         this.lastName = lastName;
         this.birthdate = birthdate;
@@ -98,6 +102,7 @@ public class RegistrationParticipant {
     private RegistrationParticipant(RegistrationParticipant.RegistrationParticipantBuilder builder) {
         this.adNumber = builder.adNumber;
         this.email = builder.email;
+        this.emailSubscriber = builder.emailSubscriber;
         this.firstName = builder.firstName;
         this.lastName = builder.lastName;
         this.birthdate = builder.birthdate;
@@ -113,6 +118,7 @@ public class RegistrationParticipant {
         this.medicalRemarks = builder.medicalRemarks;
         this.remarks = builder.remarks;
         this.phoneNumber = builder.phoneNumber;
+        this.language = builder.language;
     }
 
     public boolean isRegisteredByOther(){
@@ -263,6 +269,14 @@ public class RegistrationParticipant {
         this.email = email;
     }
 
+    public String getEmailSubscriber() {
+        return emailSubscriber;
+    }
+
+    public void setEmailSubscriber(String emailSubscriber) {
+        this.emailSubscriber = emailSubscriber;
+    }
+
     public Status getStatus() {
         return status;
     }
@@ -284,6 +298,7 @@ public class RegistrationParticipant {
         private String firstName;
         private String lastName;
         private String email;
+        private String emailSubscriber;
         private Address address;
         private Date birthdate;
         private String stamnumber;
@@ -320,6 +335,11 @@ public class RegistrationParticipant {
 
         public RegistrationParticipantBuilder email(String email) {
             this.email = email;
+            return this;
+        }
+
+        public RegistrationParticipantBuilder emailSubscriber(String emailSubscriber) {
+            this.emailSubscriber = emailSubscriber;
             return this;
         }
 

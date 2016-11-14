@@ -26,10 +26,19 @@ public class RegistrationCommunication {
 	
 	@NotNull
 	@Enumerated(EnumType.STRING)
-	private SendStatus status;
+	private SendStatus status = SendStatus.WAITING;
 	
 	@Min(0)
-	private int communicationAttempt;
+	private int communicationAttempt = 0;
+
+	public RegistrationCommunication() {
+	}
+
+	public RegistrationCommunication(String adNumber, SendStatus status, int communicationAttempt) {
+		this.adNumber = adNumber;
+		this.status = status;
+		this.communicationAttempt = communicationAttempt;
+	}
 
 	public Long getId() {
 		return id;

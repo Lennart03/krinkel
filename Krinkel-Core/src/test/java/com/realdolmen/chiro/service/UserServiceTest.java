@@ -1,6 +1,7 @@
 package com.realdolmen.chiro.service;
 
 import com.realdolmen.chiro.chiro_api.ChiroUserAdapter;
+import com.realdolmen.chiro.config.JwtConfiguration;
 import com.realdolmen.chiro.domain.RegistrationParticipant;
 import com.realdolmen.chiro.domain.SecurityRole;
 import com.realdolmen.chiro.domain.Status;
@@ -20,10 +21,8 @@ import org.mockito.runners.MockitoJUnitRunner;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 
-import java.util.Arrays;
 import java.util.Date;
 
-import static com.realdolmen.chiro.service.CASService.JWT_SECRET;
 import static org.mockito.Mockito.times;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -40,6 +39,9 @@ public class UserServiceTest {
     @Mock
     private RegistrationParticipantRepository repo;
 
+    @Mock
+    private JwtConfiguration jwtConfig;
+
     private final static String TEST_AD_NUMBER = "apiuehf54aiawuef";
     private User u = new User();
 
@@ -47,6 +49,7 @@ public class UserServiceTest {
     @Before
     public void setUp(){
         u.setAdNumber(TEST_AD_NUMBER);
+        Mockito.when(jwtConfig.getJwtSecret()).thenReturn("TEST");
     }
 
 
@@ -163,7 +166,7 @@ public class UserServiceTest {
                 .setSubject("username")
                 .claim("adnummer", u.getAdNumber())
                 .setIssuedAt(new Date())
-                .signWith(SignatureAlgorithm.HS256, JWT_SECRET).compact();
+                .signWith(SignatureAlgorithm.HS256, jwtConfig.getJwtSecret()).compact();
         Cookie cookie = new Cookie("Authorization",jwt);
         Cookie[]cookies =new Cookie[]{cookie};
         Mockito.when(httpServletRequest.getCookies()).thenReturn(cookies);

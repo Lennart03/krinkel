@@ -1,34 +1,51 @@
 package com.realdolmen.chiro.controller;
 
+import com.realdolmen.chiro.config.SecurityFilterTestConfig;
 import com.realdolmen.chiro.domain.*;
 import com.realdolmen.chiro.repository.RegistrationParticipantRepository;
 import com.realdolmen.chiro.service.UserService;
+import com.realdolmen.chiro.spring_test.MockMvcTest;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
-import java.util.Calendar;
+//import java.util.Calendar;
 
 import static org.hibernate.validator.internal.util.Contracts.assertNotNull;
 import static org.junit.Assert.assertEquals;
+import static org.mockito.Mockito.when;
 
+import java.util.Calendar;
+
+@ContextConfiguration(classes = {SecurityFilterTestConfig.class})
 public class RegistrationParticipantControllerMockTest extends MockMvcTest {
+
+	private static final String STAMNUMMER = "AG0001";
     private RegistrationParticipant participant;
     private RegistrationVolunteer volunteer;
+    
 
     @Autowired
     private RegistrationParticipantRepository repo;
 
     private int nParticipants = 0;
+    
 
     @Before
     public void setUp(){
+         //Participant
         MockitoAnnotations.initMocks(this);
 
         // Participant
@@ -37,7 +54,7 @@ public class RegistrationParticipantControllerMockTest extends MockMvcTest {
 
         participant = new RegistrationParticipant(
                 "386283", "astrid@mail.do", "Astrid", "Deckers", c.getTime(),
-                "AG0001", Gender.WOMAN, EventRole.LEADER, Eatinghabbit.VEGI
+                STAMNUMMER, Gender.WOMAN, EventRole.LEADER, Eatinghabbit.VEGI, "aster.deckers@example.org"
         );
         participant.setAddress(new Address("My Street", "2", 1252, "My City"));
 
@@ -46,14 +63,22 @@ public class RegistrationParticipantControllerMockTest extends MockMvcTest {
 
         volunteer = new RegistrationVolunteer(
                 "386283", "aster.deckers@example.org", "Aster", "Deckers", c.getTime(),
-                "AG0001", Gender.MAN, EventRole.LEADER, Eatinghabbit.VEGI,
+                STAMNUMMER, Gender.MAN, EventRole.LEADER, Eatinghabbit.VEGI,
                 CampGround.ANTWERPEN,
-                new VolunteerFunction(VolunteerFunction.Preset.KRINKEL_EDITORIAL)
+                new VolunteerFunction(VolunteerFunction.Preset.KRINKEL_EDITORIAL), "aster.deckers@example.org"
         );
         volunteer.setAddress(new Address("-", "-", 1500, "-"));
-
+//    	participant = RegistrationParticipantMother.createBasicRegistrationParticipant();
+//    	volunteer = RegistrationVolunteerMother.createBasicRegistrationVolunteer();
 
         this.nParticipants = repo.findAll().size();
+
+        //TODO Use this in some other test class where the actual security constraints are tested.
+        //        Authentication authentication = Mockito.mock(Authentication.class);
+        //        when(authentication.isAuthenticated()).thenReturn(true);
+        //        SecurityContext securityContext = Mockito.mock(SecurityContext.class);
+        //        when(securityContext.getAuthentication()).thenReturn(authentication);
+        //        SecurityContextHolder.setContext(securityContext);
     }
 
     @Test
@@ -72,7 +97,7 @@ public class RegistrationParticipantControllerMockTest extends MockMvcTest {
     }
 
     @Test
-    public void savingRegistrationWithDuplicateADNumberFails() throws Exception {
+    public void savingRegistrationWithDuplicateADNumberUpdatesData() throws Exception {
         String jsonPayload = json(participant);
 
         mockMvc()
@@ -90,7 +115,7 @@ public class RegistrationParticipantControllerMockTest extends MockMvcTest {
                         MockMvcRequestBuilders.post("/api/participants")
                                 .contentType(MediaType.APPLICATION_JSON_UTF8)
                                 .content(jsonPayload))
-                .andExpect(MockMvcResultMatchers.status().is4xxClientError());
+                .andExpect(MockMvcResultMatchers.status().is2xxSuccessful());
 
         assertEquals(nParticipants+1, repo.findAll().size());
     }

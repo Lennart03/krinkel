@@ -25,20 +25,19 @@ public class RegistrationVolunteer extends RegistrationParticipant {
     /**
      * Zero or many PreCamp moments.
      */
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     private List<PreCamp> preCampList = new ArrayList<>();
 
     /**
      * Zero or many PostCamp moments.
      */
-
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     private List<PostCamp> postCampList = new ArrayList<>();
 
     public RegistrationVolunteer() {}
 
-    public RegistrationVolunteer(String adNumber, String email, String firstName, String lastName, Date birthdate, String stamnumber, Gender gender, EventRole eventRole, Eatinghabbit eatinghabbit, CampGround campGround, VolunteerFunction function) {
-        super(adNumber, email, firstName, lastName, birthdate, stamnumber, gender, eventRole, eatinghabbit);
+    public RegistrationVolunteer(String adNumber, String email, String firstName, String lastName, Date birthdate, String stamnumber, Gender gender, EventRole eventRole, Eatinghabbit eatinghabbit, CampGround campGround, VolunteerFunction function,String emailSubscriber) {
+        super(adNumber, email, firstName, lastName, birthdate, stamnumber, gender, eventRole, eatinghabbit,emailSubscriber);
         this.campGround = campGround;
         this.function = function;
     }

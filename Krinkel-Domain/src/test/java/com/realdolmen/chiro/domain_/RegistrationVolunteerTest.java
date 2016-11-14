@@ -8,8 +8,6 @@ import javax.validation.ConstraintViolation;
 import java.util.Date;
 import java.util.Set;
 
-import static org.junit.Assert.assertTrue;
-
 public class RegistrationVolunteerTest extends BeanValidatorTest{
 
     @Test
@@ -18,7 +16,7 @@ public class RegistrationVolunteerTest extends BeanValidatorTest{
                 "123456789", "aster.deckers@example.com", "Aster", "Deckers", new Date(),
                 "AG0001", Gender.MAN, EventRole.LEADER, Eatinghabbit.VEGI,
                 CampGround.ANTWERPEN,
-                new VolunteerFunction(VolunteerFunction.Preset.KRINKEL_EDITORIAL)
+                new VolunteerFunction(VolunteerFunction.Preset.KRINKEL_EDITORIAL), "aster.deckers@example.org"
         );
         volunteer.setAddress(
                 new Address("-", "-", 1500, "-")
