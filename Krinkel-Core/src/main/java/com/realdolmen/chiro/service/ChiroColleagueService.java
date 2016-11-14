@@ -57,7 +57,7 @@ public class ChiroColleagueService {
                 RegistrationParticipant participant = userService.getRegistrationParticipant(v.get("adnr").asText());
 
                 if (participant != null) {
-                    if (participant.getStatus() == Status.PAID) {
+                    if (participant.getStatus() == Status.PAID || participant.getStatus() == Status.CONFIRMED) {
                         return;
                     }
                 }
