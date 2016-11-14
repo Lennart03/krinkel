@@ -100,7 +100,7 @@ class RegisterController {
         var loggedInUser = this.AuthService.getLoggedinUser();
 
         this.newPerson = {
-            adNumber: colleague.adnummer,
+            adNumber: colleague.adnr,
             job: "Aanbod nationale kampgrond",
             firstName: colleague.first_name,
             lastName: colleague.last_name,
@@ -111,6 +111,12 @@ class RegisterController {
             gender: colleague.gender_id,
             rank: colleague.afdeling.toUpperCase()
         };
+
+        this.KrinkelService.getPloegen(colleague.adnr).then((resp) => {
+            this.options = resp;
+            this.newPerson.group = this.options[0];
+        });
+
         this.details2.name = colleague.postal_code;
 
 
@@ -142,6 +148,11 @@ class RegisterController {
                     gender: chiroContact.gender_id,
                     rank: chiroContact.afdeling.toUpperCase()
                 };
+
+                this.KrinkelService.getPloegen(loggedInUser.adnummer).then((resp) => {
+                    this.options = resp;
+                    this.newPerson.group = this.options[0];
+                });
                 this.details2.name = chiroContact.postal_code;
 
 

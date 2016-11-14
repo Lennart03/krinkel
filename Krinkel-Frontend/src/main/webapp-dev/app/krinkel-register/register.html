@@ -131,13 +131,25 @@
             </div>
         </div>
 
+        <!--<div class="row">-->
+            <!--<div class="input-field col s12">-->
+                <!--<i class="material-icons prefix">mood</i>-->
+                <!--<input type="text" id="group" class="autocomplete validate" ng-model="$ctrl.newPerson.group" required>-->
+                <!--<label for="group">Chirogroep *</label>-->
+            <!--</div>-->
+        <!--</div>-->
+
         <div class="row">
             <div class="input-field col s12">
-                <i class="material-icons prefix">mood</i>
-                <input type="text" id="group" class="autocomplete validate" ng-model="$ctrl.newPerson.group" required>
-                <label for="group">Chirogroep *</label>
+                <!--<i class="material-icons prefix">mood</i>-->
+                <select ng-options="o as o for o in $ctrl.options" name="group" ng-model="$ctrl.newPerson.group" class="browser-default" required>
+                </select>
+                <p ng-show="personForm.group.$invalid && personForm.group.$touched" class="error">
+                    <i class="material-icons">error_outline</i>
+                    Verplicht</p>
             </div>
         </div>
+
 
         <div class="row">
             <div class="input-field col s12 m6">
