@@ -108,6 +108,8 @@ class RegisterController {
             birthDate: colleague.birth_date,
             phone: colleague.phone.replace('-', ''),
             emailSubscriber: loggedInUser.email,
+            gender: colleague.gender_id,
+            rank: colleague.afdeling.toUpperCase()
         };
         this.details2.name = colleague.postal_code;
 
@@ -137,6 +139,8 @@ class RegisterController {
                     email: chiroContact.email,
                     birthDate: chiroContact.birth_date,
                     phone: chiroContact.phone.replace('-', ''),
+                    gender: chiroContact.gender_id,
+                    rank: chiroContact.afdeling.toUpperCase()
                 };
                 this.details2.name = chiroContact.postal_code;
 
