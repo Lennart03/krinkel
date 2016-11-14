@@ -109,6 +109,12 @@ class RegisterController {
             phone: colleague.phone.replace('-', ''),
             emailSubscriber: loggedInUser.email,
         };
+
+        this.KrinkelService.getPloegen(colleague.adnr).then((resp) => {
+            this.options = resp;
+            this.newPerson.group = this.options[0];
+        });
+
         this.details2.name = colleague.postal_code;
 
 
@@ -138,6 +144,11 @@ class RegisterController {
                     birthDate: chiroContact.birth_date,
                     phone: chiroContact.phone.replace('-', ''),
                 };
+
+                this.KrinkelService.getPloegen(loggedInUser.adnummer).then((resp) => {
+                    this.options = resp;
+                    this.newPerson.group = this.options[0];
+                });
                 this.details2.name = chiroContact.postal_code;
 
 
