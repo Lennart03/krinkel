@@ -17,7 +17,7 @@ export class MapperService {
                 city: data.city
             },
             birthdate: data.birthDate,
-            stamnumber: Math.floor(Math.random() * 100000), //TODO When Chiro API Available.
+            stamnumber: data.group.split(":")[0],
             buddy: data.buddy,
             language: [], // data.languages
             eatinghabbit: data.dietary,
@@ -119,7 +119,7 @@ export class MapperService {
                 city: data.city
             },
             birthdate: data.birthDate,
-            stamnumber: Math.floor(Math.random() * 100000), //TODO NON-RANDOM
+            stamnumber: data.group.split(":")[0],
             buddy: data.buddy,
             // language: data.languages,
             eatinghabbit: data.dietary,
