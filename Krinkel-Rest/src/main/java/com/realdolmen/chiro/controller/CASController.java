@@ -20,16 +20,29 @@ public class CASController {
     @Autowired
     private CasConfiguration casConfiguration;
 
+    @RequestMapping(value = "/login", method = RequestMethod.GET)
+    public String loginRedirect(HttpServletRequest request) throws IOException {
+        // if logged in, redirect to angular to not trigger weird shizzle
+        if (request.getHeader("Authorization")!=null){
+            System.out.println("user wants to log in but already has authentication header");
+            return "redirect:/index.html";
+        } else {
+            // Redirect to CAS server so the user can login.
+            System.out.println("redirecting user to login service");
+            return "redirect:" + casConfiguration.getCasRedirectUrl();
+        }
+    }
+
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public String viewer(HttpServletRequest request) throws IOException {
         if (request.getHeader("Authorization")!=null){
             return "redirect:/index.html";
-        }
-        else {
-            // Redirect to CAS server so the user can login.
-            return "redirect:" + casConfiguration.getCasRedirectUrl();
+        } else {
+            return "redirect:/site/index.html";
         }
     }
+
+
 
     @RequestMapping(value = "/api/cas", method = RequestMethod.GET)
     public void casRedirect(@RequestParam String ticket, HttpServletResponse response) throws IOException {

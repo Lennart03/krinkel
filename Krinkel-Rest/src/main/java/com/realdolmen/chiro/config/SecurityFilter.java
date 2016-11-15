@@ -26,6 +26,7 @@ public class SecurityFilter extends WebSecurityConfigurerAdapter {
                 //.antMatchers("/api/**") //UNCOMMENT THIS FOR TESTING ON PORT 3000
                 .antMatchers("/res/*")
                 .antMatchers("/site/**")
+                .antMatchers("/login")
                 .regexMatchers("/");
     }
 
