@@ -400,9 +400,6 @@ a[x-apple-data-detectors] {
 																							<div th:case="false">neen</div>
 																						</td>
 																						<td th:if="${participant.buddy}"><b>Talen:</b></td>
-																						<!--  <td><ul class="lang">
-                                                                                        <li th:each="lang : ${participant.language}" th:text="${lang.description}"></li>
-                                                                                    </ul></td> -->
 																						<td><th:block
 																								th:each="lang, iter:${participant.language}">
 																								<th:block th:text="${lang.description}"></th:block>
