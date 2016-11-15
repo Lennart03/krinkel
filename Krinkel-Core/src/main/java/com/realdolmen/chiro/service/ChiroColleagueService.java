@@ -28,13 +28,13 @@ public class ChiroColleagueService {
     @Autowired
     private UserService userService;
 
-    @Value("${chiro.api.url}")
+    @Value("${chiro_url}")
     private String chiroUrl;
 
-    @Value("${chiro.api.apikey}")
+    @Value("${chiro_api_key}")
     private String apiKey;
 
-    @Value("${chiro.api.key}")
+    @Value("${chiro_key}")
     private String chiroKey;
 
 
