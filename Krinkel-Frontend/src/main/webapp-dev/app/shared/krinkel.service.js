@@ -104,6 +104,12 @@ export class KrinkelService {
             return resp.data.values;
         });
     }
+
+    getPloegen(adNumber){
+        return this.$http.get(`${this.BASEURL}/api/ploegen/${adNumber}`).then((resp) => {
+            return resp.data;
+        });
+    }
 }
 
 KrinkelService.$inject = ['$http', 'BASEURL'];
