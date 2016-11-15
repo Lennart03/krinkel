@@ -14,9 +14,10 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class RegistrationVolunteerService {
-    @Value("${price_participant}")
 
-    public Integer PRICE_IN_EUROCENTS = 6000;
+    @Value("${price.volunteer}")
+    public Integer PRICE_IN_EUROCENTS;
+
 
 	@Autowired
 	private RegistrationVolunteerRepository repository;

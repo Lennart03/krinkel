@@ -22,8 +22,8 @@ import java.util.List;
 public class RegistrationParticipantService {
 
 
-	@Value("${price_volunteer}")
-	public Integer PRICE_IN_EUROCENTS;
+	@Value("${price.participant}")
+	private Integer PRICE_IN_EUROCENTS;
 
 
 	private Logger logger = LoggerFactory.getLogger(RegistrationParticipantService.class);
@@ -122,5 +122,9 @@ public class RegistrationParticipantService {
 			}
 		}
 		return results;
+	}
+
+	public Integer getPRICE_IN_EUROCENTS() {
+		return PRICE_IN_EUROCENTS;
 	}
 }
