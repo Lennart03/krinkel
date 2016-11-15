@@ -1,562 +1,737 @@
-<!doctype html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:v="urn:schemas-microsoft-com:vml"
-      xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:th="http://www.thymeleaf.org">
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:v="urn:schemas-microsoft-com:vml"
+	xmlns:o="urn:schemas-microsoft-com:office:office"
+	xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1"/>
-    <title>Welkom bij Krinkel</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Welkom bij Krinkel</title>
 
-    <style type="text/css">
-        /*////// RESET STYLES //////*/
-        #bodyTableInfo td {
-            height: 100%;
-            margin: 0;
-            padding: 0 10px 0 0;
-            width: 100%;
-        }
+<style type="text/css">
+/*////// RESET STYLES //////*/
+#bodyTableInfo td {
+	height: 100%;
+	margin: 0;
+	padding: 0 10px 0 0;
+	width: 100%;
+}
 
-        a {
-            color: rgb(49, 150, 131);
-            text-decoration: underline;
-        }
+a {
+	color: rgb(49, 150, 131);
+	text-decoration: underline;
+}
 
-        p {
-            margin: 10px 0;
-            padding: 0;
-            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-            line-height: 24px;
-            text-align: left;
-        }
+p {
+	margin: 10px 0;
+	padding: 0;
+	font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+	line-height: 24px;
+	text-align: left;
+}
 
-        table {
-            border-collapse: collapse;
-        }
+table {
+	border-collapse: collapse;
+}
 
-        h1, h2, h3, h4, h5, h6 {
-            display: block;
-            margin: 0;
-            padding: 0;
-        }
+h1, h2, h3, h4, h5, h6 {
+	display: block;
+	margin: 0;
+	padding: 0;
+}
 
-        img, a img {
-            border: 0;
-            height: auto;
-            outline: none;
-            text-decoration: none;
-        }
+img, a img {
+	border: 0;
+	height: auto;
+	outline: none;
+	text-decoration: none;
+}
 
-        body, #bodyTable, #bodyCell {
-            height: 100%;
-            margin: 0;
-            padding: 0;
-            width: 100%;
-        }
+body, #bodyTable, #bodyCell {
+	height: 100%;
+	margin: 0;
+	padding: 0;
+	width: 100%;
+}
 
-        /*////// CLIENT-SPECIFIC STYLES //////*/
-        #outlook a {
-            padding: 0;
-        }
+/*////// CLIENT-SPECIFIC STYLES //////*/
+#outlook a {
+	padding: 0;
+}
 
-        /* Force Outlook 2007 and up to provide a "view in browser" message. */
-        @-ms-viewport {
-            width: device-width;
-        }
+/* Force Outlook 2007 and up to provide a "view in browser" message. */
+@
+-ms-viewport {
+	width: device-width;
+}
 
-        /* Force IE "snap mode" to render widths normally. */
-        img {
-            -ms-interpolation-mode: bicubic;
-        }
+/* Force IE "snap mode" to render widths normally. */
+img {
+	-ms-interpolation-mode: bicubic;
+}
 
-        /* Force IE to smoothly render resized images. */
-        table {
-            mso-table-lspace: 0pt;
-            mso-table-rspace: 0pt;
-        }
+/* Force IE to smoothly render resized images. */
+table {
+	mso-table-lspace: 0pt;
+	mso-table-rspace: 0pt;
+}
 
-        /* Remove spacing between tables in Outlook Desktop. */
-        .ReadMsgBody {
-            width: 100%;
-        }
+/* Remove spacing between tables in Outlook Desktop. */
+.ReadMsgBody {
+	width: 100%;
+}
 
-        .ExternalClass {
-            width: 100%;
-        }
+.ExternalClass {
+	width: 100%;
+}
 
-        /* Force Outlook.com to display emails at full width. */
-        p, a, li, td, blockquote {
-            mso-line-height-rule: exactly;
-        }
+/* Force Outlook.com to display emails at full width. */
+p, a, li, td, blockquote {
+	mso-line-height-rule: exactly;
+}
 
-        /* Force Outlook Desktop to render line heights as they're originally set. */
-        a[href^="tel"], a[href^="sms"] {
-            color: inherit;
-            cursor: default;
-            text-decoration: none;
-        }
+/* Force Outlook Desktop to render line heights as they're originally set. */
+a[href^="tel"], a[href^="sms"] {
+	color: inherit;
+	cursor: default;
+	text-decoration: none;
+}
 
-        /* Force mobile devices to inherit declared link styles. */
-        p, a, li, td, body, table, blockquote {
-            -ms-text-size-adjust: 100%;
-            -webkit-text-size-adjust: 100%;
-        }
+/* Force mobile devices to inherit declared link styles. */
+p, a, li, td, body, table, blockquote {
+	-ms-text-size-adjust: 100%;
+	-webkit-text-size-adjust: 100%;
+}
 
-        /* Prevent Windows- and Webkit-based platforms from changing declared text sizes. */
-        .ExternalClass, .ExternalClass p, .ExternalClass td, .ExternalClass div, .ExternalClass span, .ExternalClass font {
-            line-height: 100%;
-        }
+/* Prevent Windows- and Webkit-based platforms from changing declared text sizes. */
+.ExternalClass, .ExternalClass p, .ExternalClass td, .ExternalClass div,
+	.ExternalClass span, .ExternalClass font {
+	line-height: 100%;
+}
 
-        /* Force Outlook.com to display line heights normally. */
-        a[x-apple-data-detectors] {
-            color: inherit !important;
-            text-decoration: none !important;
-            font-size: inherit !important;
-            font-family: inherit !important;
-            font-weight: inherit !important;
-            line-height: inherit !important;
-        }
+/* Force Outlook.com to display line heights normally. */
+a[x-apple-data-detectors] {
+	color: inherit !important;
+	text-decoration: none !important;
+	font-size: inherit !important;
+	font-family: inherit !important;
+	font-weight: inherit !important;
+	line-height: inherit !important;
+}
 
-        /* Force iOS devices to heed link styles set in CSS. */
+/* Force iOS devices to heed link styles set in CSS. */
+#footerContent a {
+	color: #B7B7B7 !important;
+}
 
-        #footerContent a {
-            color: #B7B7B7 !important;
-        }
+/*////// MOBILE STYLES //////*/
+@media only screen and (max-width: 480px) {
+	body {
+		width: 100% !important;
+		min-width: 100% !important;
+	}
+	h1 {
+		font-size: 24px !important;
+	}
+	#templateHeader {
+		padding-right: 20px !important;
+		padding-left: 20px !important;
+	}
+	#headerContainer {
+		padding-right: 0 !important;
+		padding-left: 0 !important;
+	}
+	#headerTable {
+		border-top-left-radius: 0 !important;
+		border-top-right-radius: 0 !important;
+	}
+	#headerTable td {
+		padding-top: 30px !important;
+	}
+	#bodyContainer {
+		padding-right: 20px !important;
+		padding-left: 20px !important;
+	}
+	#bodyContent {
+		padding-right: 0 !important;
+	}
+	#footerContent p {
+		border-bottom: 1px solid #E5E5E5;
+		font-size: 14px !important;
+		padding-bottom: 40px !important;
+	}
+	.utilityLink {
+		border-bottom: 1px solid #E5E5E5;
+		display: block;
+		font-size: 13px !important;
+		padding-top: 20px;
+		padding-bottom: 20px;
+		text-decoration: none !important;
+	}
+	.mobileHide {
+		display: none;
+		visibility: hidden;
+	}
+}
 
-        /*////// MOBILE STYLES //////*/
-        @media only screen and (max-width: 480px) {
-            body {
-                width: 100% !important;
-                min-width: 100% !important;
-            }
+@media screen {
+	@font-face {
+		/* latin */
+		font-family: 'Open Sans';
+		font-style: normal;
+		font-weight: 400;
+		src: local('Open Sans'), local('OpenSans'),
+			url(http://fonts.gstatic.com/s/opensans/v10/cJZKeOuBrn4kERxqtaUH3ZBw1xU1rKptJj_0jans920.woff2)
+			format('woff2');
+		unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02C6, U+02DA, U+02DC,
+			U+2000-206F, U+2074, U+20AC, U+2212, U+2215, U+E0FF, U+EFFD, U+F000;
+	}
+	@font-face {
+		/* latin */
+		font-family: 'Open Sans';
+		font-style: normal;
+		font-weight: 700;
+		src: local('Open Sans Bold'), local('OpenSans-Bold'),
+			url(http://fonts.gstatic.com/s/opensans/v10/k3k702ZOKiLJc3WVjuplzBampu5_7CjHW5spxoeN3Vs.woff2)
+			format('woff2');
+		unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02C6, U+02DA, U+02DC,
+			U+2000-206F, U+2074, U+20AC, U+2212, U+2215, U+E0FF, U+EFFD, U+F000;
+	}
+	@font-face {
+		/* latin-ext */
+		font-family: 'Open Sans';
+		font-style: normal;
+		font-weight: 400;
+		src: local('Open Sans'), local('OpenSans'),
+			url(http://fonts.gstatic.com/s/opensans/v10/u-WUoqrET9fUeobQW7jkRZBw1xU1rKptJj_0jans920.woff2)
+			format('woff2');
+		unicode-range: U+0100-024F, U+1E00-1EFF, U+20A0-20AB, U+20AD-20CF,
+			U+2C60-2C7F, U+A720-A7FF;
+	}
+	@font-face {
+		/* latin-ext */
+		font-family: 'Open Sans';
+		font-style: normal;
+		font-weight: 700;
+		src: local('Open Sans Bold'), local('OpenSans-Bold'),
+			url(http://fonts.gstatic.com/s/opensans/v10/k3k702ZOKiLJc3WVjuplzCYtBUPDK3WL7KRKS_3q7OE.woff2)
+			format('woff2');
+		unicode-range: U+0100-024F, U+1E00-1EFF, U+20A0-20AB, U+20AD-20CF,
+			U+2C60-2C7F, U+A720-A7FF;
+	}
+	*, td {
+		font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial,
+			sans-serif !important;
+	}
+}
+</style>
 
-            h1 {
-                font-size: 24px !important;
-            }
-
-            #templateHeader {
-                padding-right: 20px !important;
-                padding-left: 20px !important;
-            }
-
-            #headerContainer {
-                padding-right: 0 !important;
-                padding-left: 0 !important;
-            }
-
-            #headerTable {
-                border-top-left-radius: 0 !important;
-                border-top-right-radius: 0 !important;
-            }
-
-            #headerTable td {
-                padding-top: 30px !important;
-            }
-
-            #bodyContainer {
-                padding-right: 20px !important;
-                padding-left: 20px !important;
-            }
-
-            #bodyContent {
-                padding-right: 0 !important;
-            }
-
-            #footerContent p {
-                border-bottom: 1px solid #E5E5E5;
-                font-size: 14px !important;
-                padding-bottom: 40px !important;
-            }
-
-            .utilityLink {
-                border-bottom: 1px solid #E5E5E5;
-                display: block;
-                font-size: 13px !important;
-                padding-top: 20px;
-                padding-bottom: 20px;
-                text-decoration: none !important;
-            }
-
-            .mobileHide {
-                display: none;
-                visibility: hidden;
-            }
-        }
-
-        @media screen {
-            @font-face {
-                /* latin */
-                font-family: 'Open Sans';
-                font-style: normal;
-                font-weight: 400;
-                src: local('Open Sans'),
-                local('OpenSans'),
-                url(http://fonts.gstatic.com/s/opensans/v10/cJZKeOuBrn4kERxqtaUH3ZBw1xU1rKptJj_0jans920.woff2) format('woff2');
-                unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2212, U+2215, U+E0FF, U+EFFD, U+F000;
-            }
-
-            @font-face {
-                /* latin */
-                font-family: 'Open Sans';
-                font-style: normal;
-                font-weight: 700;
-                src: local('Open Sans Bold'),
-                local('OpenSans-Bold'),
-                url(http://fonts.gstatic.com/s/opensans/v10/k3k702ZOKiLJc3WVjuplzBampu5_7CjHW5spxoeN3Vs.woff2) format('woff2');
-                unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2212, U+2215, U+E0FF, U+EFFD, U+F000;
-            }
-
-            @font-face {
-                /* latin-ext */
-                font-family: 'Open Sans';
-                font-style: normal;
-                font-weight: 400;
-                src: local('Open Sans'),
-                local('OpenSans'),
-                url(http://fonts.gstatic.com/s/opensans/v10/u-WUoqrET9fUeobQW7jkRZBw1xU1rKptJj_0jans920.woff2) format('woff2');
-                unicode-range: U+0100-024F, U+1E00-1EFF, U+20A0-20AB, U+20AD-20CF, U+2C60-2C7F, U+A720-A7FF;
-            }
-
-            @font-face {
-                /* latin-ext */
-                font-family: 'Open Sans';
-                font-style: normal;
-                font-weight: 700;
-                src: local('Open Sans Bold'),
-                local('OpenSans-Bold'),
-                url(http://fonts.gstatic.com/s/opensans/v10/k3k702ZOKiLJc3WVjuplzCYtBUPDK3WL7KRKS_3q7OE.woff2) format('woff2');
-                unicode-range: U+0100-024F, U+1E00-1EFF, U+20A0-20AB, U+20AD-20CF, U+2C60-2C7F, U+A720-A7FF;
-            }
-
-            *, td {
-                font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif !important;
-            }
-        }
-    </style>
 </head>
 <body>
-<center>
-    <table align="center" border="0" cellpadding="0" cellspacing="0" height="100%" width="100%" id="bodyTable">
-        <tr>
-            <td align="center" id="bodyCell" valign="top">
-                <!-- BEGIN TEMPLATE // -->
-                <table width="100%" border="0" cellspacing="0" cellpadding="0">
-                    <tr>
-                        <td align="center" id="templateHeader" valign="top"
-                            style="padding-right:30px;padding-left:30px;background-color:rgb(49,150,131);"
-                            bgcolor="#319683">
-                            <!--[if gte mso 9]>
+	<center>
+		<table align="center" border="0" cellpadding="0" cellspacing="0"
+			height="100%" width="100%" id="bodyTable">
+			<tr>
+				<td align="center" id="bodyCell" valign="top">
+					<!-- BEGIN TEMPLATE // -->
+					<table width="100%" border="0" cellspacing="0" cellpadding="0">
+						<tr>
+							<td align="center" id="templateHeader" valign="top"
+								style="padding-right: 30px; padding-left: 30px; background-color: rgb(49, 150, 131);"
+								bgcolor="#319683">
+								<!--[if gte mso 9]>
                             <table align="center" border="0" cellspacing="0" cellpadding="0" width="400">
                                 <tr>
                                     <td align="center" valign="top" width="400">
                             <![endif]-->
-                            <table width="100%" align="center" class="emailContainer" style="max-width:800px;"
-                                   border="0" cellspacing="0" cellpadding="0">
+								<table width="100%" align="center" class="emailContainer"
+									style="max-width: 800px;" border="0" cellspacing="0"
+									cellpadding="0">
 
-                                <tr>
-                                    <td align="center" id="logoContainer" valign="top"
-                                        style="padding-top:40px;padding-bottom:20px;">
-                                        <img alt="logo" width="80" src="cid:logo"/>
-                                    </td>
-                                </tr>
+									<tr>
+										<td align="center" id="logoContainer" valign="top"
+											style="padding-top: 40px; padding-bottom: 20px;"><img
+											alt="logo" width="80" src="cid:logo" /></td>
+									</tr>
 
-                            </table>
-                            <!--[if gte mso 9]>
+								</table> <!--[if gte mso 9]>
                             </td>
                             </tr>
                             </table>
                             <![endif]-->
-                        </td>
-                    </tr>
-                    <tr>
-                        <td align="center" id="templateBody" valign="top">
-                            <table width="100%" align="center" border="0" cellspacing="0" cellpadding="0">
+							</td>
+						</tr>
+						<tr>
+							<td align="center" id="templateBody" valign="top">
+								<table width="100%" align="center" border="0" cellspacing="0"
+									cellpadding="0">
 
-                                <tr>
-                                    <td align="center" valign="top">
-                                        <!--[if gte mso 9]>
+									<tr>
+										<td align="center" valign="top">
+											<!--[if gte mso 9]>
                                         <table align="center" border="0" cellspacing="0" cellpadding="0" width="700">
                                             <tr>
                                                 <td align="center" valign="top" width="700">
                                         <![endif]-->
-                                        <table width="100%" align="center" class="emailContainer"
-                                               style="max-width:800px;" border="0" cellspacing="0" cellpadding="0">
+											<table width="100%" align="center" class="emailContainer"
+												style="max-width: 800px;" border="0" cellspacing="0"
+												cellpadding="0">
 
-                                            <tr>
-                                                <td valign="top" width="100%"
-                                                    style="padding-right:70px; padding-left:40px;" id="bodyContainer">
-                                                    <table align="left" border="0" cellpadding="0" cellspacing="0"
-                                                           width="100%">
+												<tr>
+													<td valign="top" width="100%"
+														style="padding-right: 70px; padding-left: 40px;"
+														id="bodyContainer">
+														<table align="left" border="0" cellpadding="0"
+															cellspacing="0" width="100%">
 
-                                                        <tr>
-                                                            <td align="left" id="bodyContent" valign="top">
-                                                                <table width="100%" align="center" border="0"
-                                                                       cellspacing="0" cellpadding="0">
-                                                                    <!-- BEGIN Hoera // -->
-                                                                    <tr>
-                                                                        <td align="left" valign="top"
-                                                                            style="padding-bottom:40px;">
-                                                                            <br/>
-                                                                            <h1 style="text-align:left;color:rgb(115,115,115);padding-top:30px;font-family:'Helvetica Neue', Helvetica, Arial, sans-serif;font-weight:700;margin-top:0px;">
-                                                                                Hoera!</h1>
-                                                                            <div th:switch="${isMailToSubscriber}">
-                                                                                <p th:case="false">
-                                                                                    Dag <span th:text="${participant.firstName}"></span>! Je bent
-                                                                                    succesvol ingeschreven <span th:if='${isVolunteer}'>als	medewerker</span> voor Krinkel. Je betaling is gelukt en we hebben je
-                                                                                    gegevens ontvangen. Hieronder vind je de gegevens die je invulde. Wil
-                                                                                    je iets veranderen aan je inschrijving? Laat het weten via
-                                                                                    inschrijvingen@krinkel.be.
-                                                                                </p>
-                                                                                <p th:case="true">
-                                                                                    Hallo! Je hebt <span th:text="${participant.firstName}"></span>
-                                                                                    succesvol ingeschreven <span th:if='${isVolunteer}'>als	medewerker</span> voor Krinkel. Je betaling is gelukt en we hebben je
-                                                                                    gegevens ontvangen. Hieronder vind je de gegevens die je invulde. Wil
-                                                                                    je iets veranderen aan je inschrijving? Laat het weten via
-                                                                                    inschrijvingen@krinkel.be.
-                                                                                </p>
+															<tr>
+																<td align="left" id="bodyContent" valign="top">
+																	<table width="100%" align="center" border="0"
+																		cellspacing="0" cellpadding="0">
+																		<!-- BEGIN Hoera // -->
+																		<tr>
+																			<td align="left" valign="top"
+																				style="padding-bottom: 40px;"><br />
+																				<h1
+																					style="text-align: left; color: rgb(115, 115, 115); padding-top: 30px; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-weight: 700; margin-top: 0px;">
+																					Hoera!</h1>
+																				<div th:switch="${isMailToSubscriber}">
+																					<p th:case="false">
+																						Dag <span th:text="${participant.firstName}"></span>!
+																						Je bent succesvol ingeschreven <span
+																							th:if='${isVolunteer}'>als medewerker</span> voor
+																						Krinkel. Je betaling is gelukt en we hebben je
+																						gegevens ontvangen. Hieronder vind je de gegevens
+																						die je invulde. Wil je iets veranderen aan je
+																						inschrijving? Laat het weten via
+																						inschrijvingen@krinkel.be.
+																					</p>
+																					<p th:case="true">
+																						Hallo! Je hebt <span
+																							th:text="${participant.firstName}"></span>
+																						succesvol ingeschreven <span
+																							th:if='${isVolunteer}'>als medewerker</span> voor
+																						Krinkel. Je betaling is gelukt en we hebben je
+																						gegevens ontvangen. Hieronder vind je de gegevens
+																						die je invulde. Wil je iets veranderen aan je
+																						inschrijving? Laat het weten via
+																						inschrijvingen@krinkel.be.
+																					</p>
 
-                                                                            </div>
-                                                                            <table width="100%" align="center"
-                                                                                   id="bodyTableInfo" border="0"
-                                                                                   style="height:100%;">
-                                                                                <tr>
-                                                                                    <td><b>Naam:</b></td>
-                                                                                    <td th:text="${participant.firstName}"></td>
-                                                                                    <td><b>Achternaam:</b></td>
-                                                                                    <td th:text="${participant.lastName}"></td>
-                                                                                </tr>
-                                                                                <tr>
-                                                                                    <td><b>Email:</b></td>
-                                                                                    <td th:text="${participant.email}"></td>
-                                                                                    <td><b>Telefoonnummer:</b></td>
-                                                                                    <td th:text="${participant.phoneNumber}"></td>
+																				</div>
+																				<table width="100%" align="center"
+																					id="bodyTableInfo" border="0" style="height: 100%;">
+																					<tr>
+																						<td><b>Naam:</b></td>
+																						<td th:text="${participant.firstName}"></td>
+																						<td><b>Achternaam:</b></td>
+																						<td th:text="${participant.lastName}"></td>
+																					</tr>
+																					<tr>
+																						<td><b>Email:</b></td>
+																						<td th:text="${participant.email}"></td>
+																						<td><b>Telefoonnummer:</b></td>
+																						<td th:text="${participant.phoneNumber}"></td>
 
-                                                                                </tr>
-                                                                                <tr>
-                                                                                    <td><b>Straat en huisnummer:</b></td>
-                                                                                    <td
-                                                                                            th:text="${participant.address.street} + ', ' + ${participant.address.houseNumber}"></td>
-                                                                                    <td><b>Postcode en Gemeente:</b></td>
-                                                                                    <td
-                                                                                            th:text="${participant.address.postalCode} + ', ' + ${participant.address.city}"></td>
+																					</tr>
+																					<tr>
+																						<td><b>Straat en huisnummer:</b></td>
+																						<td
+																							th:text="${participant.address.street} + ', ' + ${participant.address.houseNumber}"></td>
+																						<td><b>Postcode en Gemeente:</b></td>
+																						<td
+																							th:text="${participant.address.postalCode} + ', ' + ${participant.address.city}"></td>
 
-                                                                                </tr>
-                                                                                <tr>
-                                                                                    <td><b>Geboortedatum:</b></td>
-                                                                                    <td th:text="${participant.birthdate}"></td>
-                                                                                    <td><b>Stamnummer:</b></td>
-                                                                                    <td th:text="${participant.stamnumber}"></td>
+																					</tr>
+																					<tr>
+																						<td><b>Geboortedatum:</b></td>
+																						<td th:text="${participant.birthdate}"></td>
+																						<td><b>Stamnummer:</b></td>
+																						<td th:text="${participant.stamnumber}"></td>
 
-                                                                                </tr>
-                                                                                <tr>
-                                                                                    <td><b>Geslacht:</b></td>
-                                                                                    <td th:if="${participant.gender != null}" th:text="${participant.gender.description}"></td>
-                                                                                    <td><b>Functie:</b></td>
-                                                                                    <td th:if="${participant.eventRole != null}" th:text="${participant.eventRole.description}"></td>
+																					</tr>
+																					<tr>
+																						<td><b>Geslacht:</b></td>
+																						<td th:if="${participant.gender != null}"
+																							th:text="${participant.gender.description}"></td>
+																						<td><b>Functie:</b></td>
+																						<td th:if="${participant.eventRole != null}"
+																							th:text="${participant.eventRole.description}"></td>
 
-                                                                                </tr>
-                                                                                <tr th:if="${isVolunteer}">
-                                                                                    <td><b>Kampgrond:</b></td>
-                                                                                    <td th:if="${participant.campGround != null}" th:text="${participant.campGround.description}"></td>
-                                                                                    <td></td>
-                                                                                    <td></td>
+																					</tr>
+																					<tr th:if="${isVolunteer}">
+																						<td><b>Kampgrond:</b></td>
+																						<td th:if="${participant.campGround != null}"
+																							th:text="${participant.campGround.description}"></td>
+																						<td></td>
+																						<td></td>
 
-                                                                                </tr>
-                                                                                <tr th:if="${isVolunteer}">
-                                                                                    <td><b>Voorwacht:</b></td>
-                                                                                    <td><ul>
-                                                                                        <li th:each="preCamp : ${participant.preCampList}"
-                                                                                            th:text="${preCamp.toString()}"></li>
-                                                                                    </ul></td>
-                                                                                    <td><b>Nawacht:</b></td>
-                                                                                    <td><ul>
-                                                                                        <li th:each="postCamp : ${participant.postCampList}"
-                                                                                            th:text="${postCamp.toString()}"></li>
-                                                                                    </ul></td>
+																					</tr>
+																					<tr th:if="${isVolunteer}">
+																						<td><b>Voorwacht:</b></td>
+																						<td><ul>
+																								<li
+																									th:each="preCamp : ${participant.preCampList}"
+																									th:text="${preCamp.toString()}"></li>
+																							</ul></td>
+																						<td><b>Nawacht:</b></td>
+																						<td><ul>
+																								<li
+																									th:each="postCamp : ${participant.postCampList}"
+																									th:text="${postCamp.toString()}"></li>
+																							</ul></td>
 
-                                                                                </tr>
-                                                                                <tr th:if="${isVolunteer}">
-                                                                                    <td><b>Vrijwilligersfunctie:</b></td>
-                                                                                    <td >
-                                                                                        <div th:if="${participant.function.other}==null" th:text="${participant.function.preset.description}"></div>
-                                                                                        <div th:if="${participant.function.other}!=null" th:text="${participant.function.other}"></div>
-                                                                                    </td>
+																					</tr>
+																					<tr th:if="${isVolunteer}">
+																						<td><b>Vrijwilligersfunctie:</b></td>
+																						<td>
+																							<div th:if="${participant.function.other}==null"
+																								th:text="${participant.function.preset.description}"></div>
+																							<div th:if="${participant.function.other}!=null"
+																								th:text="${participant.function.other}"></div>
+																						</td>
 
-                                                                                </tr>
-                                                                                <tr>
-                                                                                    <td><b>Buddy:</b></td>
-                                                                                    <td th:switch="${participant.buddy}">
-                                                                                        <div th:case="true">ja</div>
-                                                                                        <div th:case="false">neen</div>
-                                                                                    </td>
-                                                                                    <td th:if="${participant.buddy}"><b>Talen:</b></td>
-                                                                                    <td><ul>
-                                                                                        <li th:each="lang : ${participant.language}" th:text="${lang.description}"></li>
-                                                                                    </ul></td>
-
-                                                                                </tr>
-                                                                                <tr>
-                                                                                    <td><b>Sociale promotie:</b></td>
-                                                                                    <td th:switch="${participant.socialPromotion}">
-                                                                                        <div th:case="true">ja</div>
-                                                                                        <div th:case="false">neen</div></td>
-                                                                                    <td><b>Voorkeur maaltijden:</b></td>
-                                                                                    <td th:if="${participant.eatinghabbit != null}" th:text="${participant.eatinghabbit.description}"></td>
-
-
-                                                                                </tr>
-                                                                                <tr>
-                                                                                    <td><b>Opmerkingen maaltijden:</b></td>
-                                                                                    <td th:text="${participant.remarksFood}"></td>
-                                                                                </tr>
-                                                                                <tr>
-                                                                                    <td><b>Medische opmerkingen:</b></td>
-                                                                                    <td th:text="${participant.medicalRemarks}"></td>
-                                                                                </tr>
-                                                                                <tr>
-                                                                                    <td><b>Andere opmerkingen:</b></td>
-                                                                                    <td th:text="${participant.remarks}"></td>
-                                                                                </tr>
-
-                                                                            </table>
-
-
-                                                                            <div th:switch="${isVolunteer}">
-                                                                                <p th:case="false">We verwachten je op 25 augustus in Merksplas en
-                                                                                    je gaat moe, maar voldaan weer naar huis in de namiddag van 30
-                                                                                    augustus. Exacte uren, welke trein je kan nemen, een meeneemlijstje:
-                                                                                    die info krijg je nog via mail eind juli. Hou ook zeker de website in
-                                                                                    de gaten, daar ga je steeds meer te weten kunnen komen.</p>
-                                                                                <p th:case="true">Extra info over Krinkel krijg je nog via de
-                                                                                    trekker van je kampgrond of werkgroep en via mail eind juli. Hou ook
-                                                                                    zeker de website in de gaten, daar ga je steeds meer te weten kunnen
-                                                                                    komen.</p>
-                                                                            </div>
+																					</tr>
+																					<tr>
+																						<td><b>Buddy:</b></td>
+																						<td th:switch="${participant.buddy}">
+																							<div th:case="true">ja</div>
+																							<div th:case="false">neen</div>
+																						</td>
+																						<td th:if="${participant.buddy}"><b>Talen:</b></td>
+																						<td><th:block
+																								th:each="lang, iter:${participant.language}">
+																								<th:block th:text="${lang.description}"></th:block>
+																								<th:block th:if="${!iter.last}">, </th:block>
+																							</th:block></td>
+																					</tr>
+																					<tr>
+																						<td><b>Sociale promotie:</b></td>
+																						<td th:switch="${participant.socialPromotion}">
+																							<div th:case="true">ja</div>
+																							<div th:case="false">neen</div>
+																						</td>
+																						<td><b>Voorkeur maaltijden:</b></td>
+																						<td th:if="${participant.eatinghabbit != null}"
+																							th:text="${participant.eatinghabbit.description}"></td>
 
 
-                                                                            <p>Kan je wegens een geldige reden niet meer mee op Krinkel? Dan
-                                                                                kun je je uitschrijven. Je krijgt dan het hele bedrag teruggestort.
-                                                                                Geldige redenen voor uitschrijven zijn:</p>
-                                                                            <ul>
-                                                                                <li>Herexamens. Je schrijft je uit voor x augustus.</li>
-                                                                                <li>Huwelijken, of andere belangrijke familiale momenten zijn ook
-                                                                                    geldige redenen om je uit te schrijven. Krinkel tijdelijk verlaten
-                                                                                    kan niet. Je schrijft je uit voor x augustus.</li>
-                                                                                <li>Overlijdens in de familie.</li>
-                                                                                <li>Ziekte of ongeval met doktersattest.</li>
-                                                                                <li>Vakantie die plots wordt ingetrokken door de werkgever.</li>
-                                                                            </ul>
-                                                                            <p>
-                                                                                Neem hiervoor contact met ons op via <a
-                                                                                    href="mailto:inschrijvingen@krinkel.be">inschrijvingen@krinkel.be</a>
-                                                                                of <b>03/231 07 95.</b>
-                                                                            </p>
+																					</tr>
+																					<tr>
+																						<td><b>Opmerkingen maaltijden:</b></td>
+																						<td th:text="${participant.remarksFood}"></td>
+																					</tr>
+																					<tr>
+																						<td><b>Medische opmerkingen:</b></td>
+																						<td th:text="${participant.medicalRemarks}"></td>
+																					</tr>
+																					<tr>
+																						<td><b>Andere opmerkingen:</b></td>
+																						<td th:text="${participant.remarks}"></td>
+																					</tr>
 
-                                                                            <p>Tot op Krinkel!</p>
-                                                                        </td>
-                                                                    </tr>
-                                                                    <!-- END Hoera // -->
+																				</table>
 
-                                                                    <!-- BEGIN BevestiginsLink // -->
-                                                                    <tr th:if="${not isMailToSubscriber and participant.isRegisteredByOther()}">
-                                                                        <td align="center" style="padding-bottom:60px;" valign="top">
-                                                                            <table align="center" border="0" cellpadding="0" cellspacing="0" width="100%">
-                                                                                <tr> <td align="center"> <span>Ga je hiermee akkoord klik dan op:</span></td></tr>
-                                                                                <tr>
-                                                                                    <td align="center" valign="middle">
-                                                                                        <table align="center" border="0" cellspacing="0" cellpadding="0" style="width:200px" width="200">
-                                                                                            <tr>
-                                                                                                <td align="center" bgcolor="#6DC6DD" style="padding:20px;" valign="top">
-                                                                                                    <a th:href="${confirmationLink}" target="_blank" style="background-color:#6DC6DD; border-collapse:separate; border-top:20px solid #6DC6DD; border-right:40px solid #6DC6DD; border-bottom:20px solid #6DC6DD; border-left:40px solid #6DC6DD; border-radius:3px; color:#FFFFFF; display:inline-block; font-family:'Helvetica Neue', Helvetica, Arial, sans-serif; font-size:16px; font-weight:600; letter-spacing:.3px; text-decoration:none;">Bevestigen</a>
 
-                                                                                                </td>
-                                                                                            </tr>
-                                                                                        </table>
+																				<div th:switch="${isVolunteer}">
+																					<p th:case="false">We verwachten je op 25
+																						augustus in Merksplas en je gaat moe, maar voldaan
+																						weer naar huis in de namiddag van 30 augustus.
+																						Exacte uren, welke trein je kan nemen, een
+																						meeneemlijstje: die info krijg je nog via mail
+																						eind juli. Hou ook zeker de website in de gaten,
+																						daar ga je steeds meer te weten kunnen komen.</p>
+																					<p th:case="true">Extra info over Krinkel krijg
+																						je nog via de trekker van je kampgrond of
+																						werkgroep en via mail eind juli. Hou ook zeker de
+																						website in de gaten, daar ga je steeds meer te
+																						weten kunnen komen.</p>
+																				</div>
 
-                                                                                    </td>
-                                                                                </tr>
-                                                                            </table>
-                                                                        </td>
-                                                                    </tr>
-                                                                    <!-- END BevestiginsLink // -->
 
-                                                                    <!-- BEGIN Algemene voorwaarden // -->
-                                                                    <tr th:if="${not isMailToSubscriber and participant.isRegisteredByOther() }">
-                                                                        <td align="left" valign="top"
-                                                                            style="padding-top:10px;padding-bottom:40px;">
-                                                                            <div >
-                                                                                <h4 style="text-align:center;color:rgb(115,115,115);line-height:24px;padding-top:0px;font-family:'Helvetica Neue', Helvetica, Arial, sans-serif;font-weight:700;margin-top:0px;">
-                                                                                    Algemene voorwaarden</h4>
-                                                                                <p><b>Informatie vanwege de organisator: </b>Krinkel wordt georganiseerd door Chirojeugd Vlaanderen vzw, Kipdorp 30, 2000 Antwerpen, ondernemingsnummer 04515.651.928, telefoon 03/231.07.95, email: <a href="mailto:info@krinkel.be">info@krinkel.be</a>.</p>
-                                                                                <p><b>Verloop van Krinkel: </b>De deelnemer zal de richtlijnen van de organisatie in verband met de veiligheid, het verloop van Krinkel, het groepsgebeuren dienen te volgen. Bij overtreding van deze richtlijnen, kan een deelnemer uitgesloten worden van verdere deelneming zonder aanspraak te kunnen maken op een schadevergoeding of terugbetaling  van een gedeelte van de deelnameprijs. </p>
-                                                                                <p><b>Bagage: </b>De organisatie is niet aansprakelijk voor verlies, diefstal of beschadiging van (onderdelen van) bagage.</p>
-                                                                                <p><b>Informatie vanwege de deelnemer: </b>De deelnemer moet de organisatie (Chirojeugd Vlaanderen vzw) alle nuttige inlichtingen verstrekken die hem uitdrukkelijk gevraagd worden of die redelijkerwijze een invloed kunnen hebben op het goede verloop van Krinkel. Wanneer de deelnemer verkeerde inlichtingen verstrekt en dit tot extra kosten leidt voor de organisatie (Chirojeugd Vlaanderen vzw), mogen die kosten in rekening worden gebracht.</p>
-                                                                                <p><b>Herroeping door de deelnemer: </b>De deelnemer kan te allen tijde het contract geheel of gedeeltelijk verbreken/herroepen. Indien de deelnemer het contract wenst te herroepen wegens een aan hem toe te rekenen omstandigheid, vergoedt hij de schade die de organisatie (Chirojeugd Vlaanderen vzw) lijdt ten gevolge van de herroeping (zoals hieronder verder forfaitair bepaald).</p>
-                                                                                <p><b>Tarieven herroeping: </b>De deelnemer heeft het recht om binnen een termijn van 14 dagen zonder opgave van redenen de overeenkomst kosteloos te herroepen. De herroepingstermijn verstrijkt 14 dagen na de dag van inschrijving via de website www.krinkel.be.Een kosteloze herroeping is ook mogelijk bij herexamens, ziekte en/of ongeval, overlijden van bloedverwanten in op­/neergaande lijn, overlijden van broers of zussen of gelijkgestelden of de onmogelijkheid om verlof te krijgen van de werkgever. Hiervoor wordt wel vereist dat de deelnemer een origineel attest meestuurt zijnde een attest van school mét vermelding van de data van herexamens, een doktersbriefje, een overlijdensbrief of een attest van de werkgever dat de deelnemer als werknemer in de onmogelijkheid is om verlof te krijgen.</p>
-                                                                                <p>De schadevergoeding bij verbreking door de deelnemer werd door organisatie (Chirojeugd Vlaanderen vzw) als volgt forfaitair vastgelegd: <ol><li>verbreking tot 1 juli 2017 een administratieve kost van 15 euro</li><li>verbreking van 1 juli 2017 tot  6 augustus 2017 50% van de deelnameprijs</li><li>vanaf 6 augustus 2017: 100% van de deelnameprijs</li></ol></p>
-                                                                                <p><b>Modaliteiten herroeping: </b>Om het herroepingsrecht uit te oefenen, moet de deelnemer de organisatie (Chirojeugd Vlaanderen vzw) via een ondubbelzinnige schriftelijke verklaring op de hoogte stellen van zijn beslissing de overeenkomst te herroepen. Dit kan uitsluitend door een schrijven per post te richten aan bovenstaand adres. De deelnemer kan hiervoor gebruikmaken van het bijgevoegde modelformulier voor herroeping, maar is hiertoe niet verplicht. Bij dezelfde zending moeten ook de stavingsstukken gevoegd worden, zijnde een overlijdensbrief, een attest van school mét vermelding van de data van herexamens, een doktersbriefje of een attest van de werkgever dat de deelnemer als werknemer in de onmogelijkheid is om verlof te krijgen.</p>
-                                                                                <p>Om de herroepingstermijn na te leven volstaat het om zijn mededeling betreffende het uitoefenen van het herroepingsrecht te verzenden voordat de herroepingstermijn is verstreken. </p>
-                                                                                <p><b>Gevolgen van de herroeping: </b>Als de deelnemer de overeenkomst herroept, ontvangt hij alle betalingen die hij tot op dat moment heeft gedaan, onverwijld van de organisatie (Chirojeugd Vlaanderen vzw) terug. De organisatie betaalt hem terug met hetzelfde betaalmiddel als waarmee de deelnemer de oorspronkelijke transactie heeft verricht, tenzij de deelnemer uitdrukkelijk anderszins heeft verzocht; in ieder geval zullen de deelnemer voor zulke terugbetaling geen kosten in rekening worden gebracht. De deelnemer kan het modelformulier voor herroeping via de website www.krinkel.be vinden.</p>
-                                                                                <p><b>Klachtenregeling</b></p>
-                                                                                <p>1. Vóór de start van Krinkel: Indien de deelnemer een klacht heeft voor de start van Krinkel moet hij deze zo snel mogelijk per aangetekend schrijven of tegen ontvangstbewijs indienen bij de organisatie (Chirojeugd Vlaanderen vzw).</p>
-                                                                                <p>2. Tijdens Krinkel: Klachten tijdens de uitvoering van het contract moet de deelnemer zo spoedig mogelijk ter plaatse, op een gepaste en bewijskrachtige manier, melden, zodat naar een oplossing kan worden gezocht. Daarvoor moet hij zich ­ in deze volgorde ­ wenden tot een vertegenwoordiger van de organisatie van Krinkel, of een vertegenwoordiger van zijn gewest of verbond, of ten slotte rechtstreeks tot Chirojeugd Vlaanderen vzw.</p>
-                                                                                <p>3. Na Krinkel: Werd een klacht ter plaatse niet bevredigend opgelost of kon de deelnemer onmogelijk ter plaatse een klacht formuleren, dan moet hij uiterlijk één maand na het einde van Krinkel bij de organisatie of anders bij Chirojeugd Vlaanderen vzw per aangetekend schrijven of tegen ontvangstbewijs een klacht indienen.</p>
-                                                                                <p><b>Privacy</b></p>
-                                                                                <p>De deelnemer neemt er kennis van dat er tijdens Krinkel beeldmateriaal kan gemaakt worden en gaat ermee akkoord dat dit beeldmateriaal op websites of in publicaties van Chirojeugd Vlaanderen of aanverwante organisaties wordt gebruikt binnen het kader van de doelstellingen van de vereniging. Bent u als deelnemer toch van mening dat een foto ongeoorloofd werd gepubliceerd, dan kan de deelnemer altijd vragen om te foto of het beeldmateriaal te verwijderen. Hiervoor kan de vraag gericht worden naar <a href="mailto:info@krinkel.be">info@krinkel.be</a>.</p>
-                                                                            </div>
-                                                                        </td>
-                                                                    </tr>
-                                                                    <!-- END Algemene voorwaarden // -->
-                                                                </table>
-                                                            </td>
-                                                        </tr>
+																				<p>Kan je wegens een geldige reden niet meer mee
+																					op Krinkel? Dan kun je je uitschrijven. Je krijgt
+																					dan het hele bedrag teruggestort. Geldige redenen
+																					voor uitschrijven zijn:</p>
+																				<ul>
+																					<li>Herexamens. Je schrijft je uit voor x
+																						augustus.</li>
+																					<li>Huwelijken, of andere belangrijke
+																						familiale momenten zijn ook geldige redenen om je
+																						uit te schrijven. Krinkel tijdelijk verlaten kan
+																						niet. Je schrijft je uit voor x augustus.</li>
+																					<li>Overlijdens in de familie.</li>
+																					<li>Ziekte of ongeval met doktersattest.</li>
+																					<li>Vakantie die plots wordt ingetrokken door
+																						de werkgever.</li>
+																				</ul>
+																				<p>
+																					Neem hiervoor contact met ons op via <a
+																						href="mailto:inschrijvingen@krinkel.be">inschrijvingen@krinkel.be</a>
+																					of <b>03/231 07 95.</b>
+																				</p>
 
-                                                        <!-- BEGIN Footer // -->
-                                                        <tr>
-                                                            <td align="center" valign="top"
-                                                                style="padding-bottom:60px;">
-                                                                <table width="100%" align="center"
-                                                                       style="border-radius:4px;border-collapse:separate;background-color:rgb(242,242,242);"
-                                                                       bgcolor="#f2f2f2" border="0" cellspacing="0"
-                                                                       cellpadding="0">
+																				<p>Tot op Krinkel!</p></td>
+																		</tr>
+																		<!-- END Hoera // -->
 
-                                                                    <tr>
-                                                                        <td align="center" valign="middle"
-                                                                            style="padding:20px;">
-                                                                            <p style="text-align:left;color:rgb(115,115,115);line-height:24px;padding-top:0px;font-family:'Helvetica Neue', Helvetica, Arial, sans-serif;font-size:16px;font-weight:700;margin-top:0px;">
-                                                                                Nog algemene Krinkelvragen?</p>
-                                                                            <p style="text-align:left;color:rgb(115,115,115);line-height:24px;padding-top:0px;font-family:'Helvetica Neue', Helvetica, Arial, sans-serif;font-size:16px;font-weight:400;margin-top:0px;">
-                                                                                Dan kan je terecht op <a
-                                                                                    href="mailto:info@krinkel.be">info@krinkel.be</a>.
-                                                                            </p>
-                                                                        </td>
-                                                                    </tr>
+																		<!-- BEGIN BevestiginsLink // -->
+																		<tr
+																			th:if="${not isMailToSubscriber and participant.isRegisteredByOther()}">
+																			<td align="center" style="padding-bottom: 60px;"
+																				valign="top">
+																				<table align="center" border="0" cellpadding="0"
+																					cellspacing="0" width="100%">
+																					<tr>
+																						<td align="center"><span>Ga je hiermee
+																								akkoord klik dan op:</span></td>
+																					</tr>
+																					<tr>
+																						<td align="center" valign="middle">
+																							<table align="center" border="0" cellspacing="0"
+																								cellpadding="0" style="width: 200px" width="200">
+																								<tr>
+																									<td align="center" bgcolor="#6DC6DD"
+																										style="padding: 20px;" valign="top"><a
+																										th:href="${confirmationLink}" target="_blank"
+																										style="background-color: #6DC6DD; border-collapse: separate; border-top: 20px solid #6DC6DD; border-right: 40px solid #6DC6DD; border-bottom: 20px solid #6DC6DD; border-left: 40px solid #6DC6DD; border-radius: 3px; color: #FFFFFF; display: inline-block; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 600; letter-spacing: .3px; text-decoration: none;">Bevestigen</a>
 
-                                                                </table>
-                                                            </td>
-                                                        </tr>
-                                                        <!-- END Footer // -->
-                                                    </table>
-                                                </td>
-                                            </tr>
+																									</td>
+																								</tr>
+																							</table>
 
-                                        </table>
-                                        <!--[if gte mso 9]>
+																						</td>
+																					</tr>
+																				</table>
+																			</td>
+																		</tr>
+																		<!-- END BevestiginsLink // -->
+
+																		<!-- BEGIN Algemene voorwaarden // -->
+																		<tr
+																			th:if="${not isMailToSubscriber and participant.isRegisteredByOther() }">
+																			<td align="left" valign="top"
+																				style="padding-top: 10px; padding-bottom: 40px;">
+																				<div>
+																					<h4
+																						style="text-align: center; color: rgb(115, 115, 115); line-height: 24px; padding-top: 0px; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-weight: 700; margin-top: 0px;">
+																						Algemene voorwaarden</h4>
+																					<p>
+																						<b>Informatie vanwege de organisator: </b>Krinkel
+																						wordt georganiseerd door Chirojeugd Vlaanderen
+																						vzw, Kipdorp 30, 2000 Antwerpen,
+																						ondernemingsnummer 04515.651.928, telefoon
+																						03/231.07.95, email: <a
+																							href="mailto:info@krinkel.be">info@krinkel.be</a>.
+																					</p>
+																					<p>
+																						<b>Verloop van Krinkel: </b>De deelnemer zal de
+																						richtlijnen van de organisatie in verband met de
+																						veiligheid, het verloop van Krinkel, het
+																						groepsgebeuren dienen te volgen. Bij overtreding
+																						van deze richtlijnen, kan een deelnemer
+																						uitgesloten worden van verdere deelneming zonder
+																						aanspraak te kunnen maken op een schadevergoeding
+																						of terugbetaling van een gedeelte van de
+																						deelnameprijs.
+																					</p>
+																					<p>
+																						<b>Bagage: </b>De organisatie is niet
+																						aansprakelijk voor verlies, diefstal of
+																						beschadiging van (onderdelen van) bagage.
+																					</p>
+																					<p>
+																						<b>Informatie vanwege de deelnemer: </b>De
+																						deelnemer moet de organisatie (Chirojeugd
+																						Vlaanderen vzw) alle nuttige inlichtingen
+																						verstrekken die hem uitdrukkelijk gevraagd worden
+																						of die redelijkerwijze een invloed kunnen hebben
+																						op het goede verloop van Krinkel. Wanneer de
+																						deelnemer verkeerde inlichtingen verstrekt en dit
+																						tot extra kosten leidt voor de organisatie
+																						(Chirojeugd Vlaanderen vzw), mogen die kosten in
+																						rekening worden gebracht.
+																					</p>
+																					<p>
+																						<b>Herroeping door de deelnemer: </b>De deelnemer
+																						kan te allen tijde het contract geheel of
+																						gedeeltelijk verbreken/herroepen. Indien de
+																						deelnemer het contract wenst te herroepen wegens
+																						een aan hem toe te rekenen omstandigheid, vergoedt
+																						hij de schade die de organisatie (Chirojeugd
+																						Vlaanderen vzw) lijdt ten gevolge van de
+																						herroeping (zoals hieronder verder forfaitair
+																						bepaald).
+																					</p>
+																					<p>
+																						<b>Tarieven herroeping: </b>De deelnemer heeft het
+																						recht om binnen een termijn van 14 dagen zonder
+																						opgave van redenen de overeenkomst kosteloos te
+																						herroepen. De herroepingstermijn verstrijkt 14
+																						dagen na de dag van inschrijving via de website
+																						www.krinkel.be.Een kosteloze herroeping is ook
+																						mogelijk bij herexamens, ziekte en/of ongeval,
+																						overlijden van bloedverwanten in op­/neergaande
+																						lijn, overlijden van broers of zussen of
+																						gelijkgestelden of de onmogelijkheid om verlof te
+																						krijgen van de werkgever. Hiervoor wordt wel
+																						vereist dat de deelnemer een origineel attest
+																						meestuurt zijnde een attest van school mét
+																						vermelding van de data van herexamens, een
+																						doktersbriefje, een overlijdensbrief of een attest
+																						van de werkgever dat de deelnemer als werknemer in
+																						de onmogelijkheid is om verlof te krijgen.
+																					</p>
+																					<p>De schadevergoeding bij verbreking door de
+																						deelnemer werd door organisatie (Chirojeugd
+																						Vlaanderen vzw) als volgt forfaitair vastgelegd:
+																					<ol>
+																						<li>verbreking tot 1 juli 2017 een
+																							administratieve kost van 15 euro</li>
+																						<li>verbreking van 1 juli 2017 tot 6 augustus
+																							2017 50% van de deelnameprijs</li>
+																						<li>vanaf 6 augustus 2017: 100% van de
+																							deelnameprijs</li>
+																					</ol>
+																					</p>
+																					<p>
+																						<b>Modaliteiten herroeping: </b>Om het
+																						herroepingsrecht uit te oefenen, moet de deelnemer
+																						de organisatie (Chirojeugd Vlaanderen vzw) via een
+																						ondubbelzinnige schriftelijke verklaring op de
+																						hoogte stellen van zijn beslissing de overeenkomst
+																						te herroepen. Dit kan uitsluitend door een
+																						schrijven per post te richten aan bovenstaand
+																						adres. De deelnemer kan hiervoor gebruikmaken van
+																						het bijgevoegde modelformulier voor herroeping,
+																						maar is hiertoe niet verplicht. Bij dezelfde
+																						zending moeten ook de stavingsstukken gevoegd
+																						worden, zijnde een overlijdensbrief, een attest
+																						van school mét vermelding van de data van
+																						herexamens, een doktersbriefje of een attest van
+																						de werkgever dat de deelnemer als werknemer in de
+																						onmogelijkheid is om verlof te krijgen.
+																					</p>
+																					<p>Om de herroepingstermijn na te leven
+																						volstaat het om zijn mededeling betreffende het
+																						uitoefenen van het herroepingsrecht te verzenden
+																						voordat de herroepingstermijn is verstreken.</p>
+																					<p>
+																						<b>Gevolgen van de herroeping: </b>Als de
+																						deelnemer de overeenkomst herroept, ontvangt hij
+																						alle betalingen die hij tot op dat moment heeft
+																						gedaan, onverwijld van de organisatie (Chirojeugd
+																						Vlaanderen vzw) terug. De organisatie betaalt hem
+																						terug met hetzelfde betaalmiddel als waarmee de
+																						deelnemer de oorspronkelijke transactie heeft
+																						verricht, tenzij de deelnemer uitdrukkelijk
+																						anderszins heeft verzocht; in ieder geval zullen
+																						de deelnemer voor zulke terugbetaling geen kosten
+																						in rekening worden gebracht. De deelnemer kan het
+																						modelformulier voor herroeping via de website
+																						www.krinkel.be vinden.
+																					</p>
+																					<p>
+																						<b>Klachtenregeling</b>
+																					</p>
+																					<p>1. Vóór de start van Krinkel: Indien de
+																						deelnemer een klacht heeft voor de start van
+																						Krinkel moet hij deze zo snel mogelijk per
+																						aangetekend schrijven of tegen ontvangstbewijs
+																						indienen bij de organisatie (Chirojeugd Vlaanderen
+																						vzw).</p>
+																					<p>2. Tijdens Krinkel: Klachten tijdens de
+																						uitvoering van het contract moet de deelnemer zo
+																						spoedig mogelijk ter plaatse, op een gepaste en
+																						bewijskrachtige manier, melden, zodat naar een
+																						oplossing kan worden gezocht. Daarvoor moet hij
+																						zich ­ in deze volgorde ­ wenden tot een
+																						vertegenwoordiger van de organisatie van Krinkel,
+																						of een vertegenwoordiger van zijn gewest of
+																						verbond, of ten slotte rechtstreeks tot Chirojeugd
+																						Vlaanderen vzw.</p>
+																					<p>3. Na Krinkel: Werd een klacht ter plaatse
+																						niet bevredigend opgelost of kon de deelnemer
+																						onmogelijk ter plaatse een klacht formuleren, dan
+																						moet hij uiterlijk één maand na het einde van
+																						Krinkel bij de organisatie of anders bij
+																						Chirojeugd Vlaanderen vzw per aangetekend
+																						schrijven of tegen ontvangstbewijs een klacht
+																						indienen.</p>
+																					<p>
+																						<b>Privacy</b>
+																					</p>
+																					<p>
+																						De deelnemer neemt er kennis van dat er tijdens
+																						Krinkel beeldmateriaal kan gemaakt worden en gaat
+																						ermee akkoord dat dit beeldmateriaal op websites
+																						of in publicaties van Chirojeugd Vlaanderen of
+																						aanverwante organisaties wordt gebruikt binnen het
+																						kader van de doelstellingen van de vereniging.
+																						Bent u als deelnemer toch van mening dat een foto
+																						ongeoorloofd werd gepubliceerd, dan kan de
+																						deelnemer altijd vragen om te foto of het
+																						beeldmateriaal te verwijderen. Hiervoor kan de
+																						vraag gericht worden naar <a
+																							href="mailto:info@krinkel.be">info@krinkel.be</a>.
+																					</p>
+																				</div>
+																			</td>
+																		</tr>
+																		<!-- END Algemene voorwaarden // -->
+																	</table>
+																</td>
+															</tr>
+
+															<!-- BEGIN Footer // -->
+															<tr>
+																<td align="center" valign="top"
+																	style="padding-bottom: 60px;">
+																	<table width="100%" align="center"
+																		style="border-radius: 4px; border-collapse: separate; background-color: rgb(242, 242, 242);"
+																		bgcolor="#f2f2f2" border="0" cellspacing="0"
+																		cellpadding="0">
+
+																		<tr>
+																			<td align="center" valign="middle"
+																				style="padding: 20px;">
+																				<p
+																					style="text-align: left; color: rgb(115, 115, 115); line-height: 24px; padding-top: 0px; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 700; margin-top: 0px;">
+																					Nog algemene Krinkelvragen?</p>
+																				<p
+																					style="text-align: left; color: rgb(115, 115, 115); line-height: 24px; padding-top: 0px; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 400; margin-top: 0px;">
+																					Dan kan je terecht op <a
+																						href="mailto:info@krinkel.be">info@krinkel.be</a>.
+																				</p>
+																			</td>
+																		</tr>
+
+																	</table>
+																</td>
+															</tr>
+															<!-- END Footer // -->
+														</table>
+													</td>
+												</tr>
+
+											</table> <!--[if gte mso 9]>
                                         </td>
                                         </tr>
                                         </table>
                                         <![endif]-->
-                                    </td>
-                                </tr>
+										</td>
+									</tr>
 
-                            </table>
-                        </td>
-                    </tr>
+								</table>
+							</td>
+						</tr>
 
-                </table>
-            </td>
-        </tr>
+					</table>
+				</td>
+			</tr>
 
-    </table>
-</center>
+		</table>
+	</center>
 </body>
 </html>
