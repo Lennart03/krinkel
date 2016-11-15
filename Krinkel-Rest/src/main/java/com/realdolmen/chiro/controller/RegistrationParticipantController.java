@@ -70,7 +70,7 @@ public class RegistrationParticipantController {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
 
-        Integer price = registrationParticipantService.PRICE_IN_EUROCENTS;
+        Integer price = registrationParticipantService.getPRICE_IN_EUROCENTS();
         String paymentUrl = mspService.getParticipantPaymentUri(resultingParticipant, price);
         HttpHeaders headers = new HttpHeaders();
         headers.setLocation(new URI(paymentUrl));
