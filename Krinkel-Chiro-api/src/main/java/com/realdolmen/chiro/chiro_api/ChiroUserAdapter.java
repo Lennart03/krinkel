@@ -41,7 +41,10 @@ public class ChiroUserAdapter {
         wannes.setRole(SecurityRole.ADMIN);
         users.add(wannes);
         users.add(new User("386288", "mathias.bulte@realdolmen.com", "Mathias", "Bult", "LEG/0607"));
-        users.add(new User("169314", "arne.knockaert@realdolmen.com", "Arne", "Knockaert", "LEG/0607"));
+//        users.add(new User("169314", "arne.knockaert@realdolmen.com", "Arne", "Knockaert", "LEG/0607"));
+        User arne = new User("169314", "arne.knockaert@realdolmen.com", "Arne", "Knockaert", "LEG/0607");
+        arne.setRole(SecurityRole.ADMIN);
+        users.add(arne);
         users.add(new User("386291", "timothy.leduc@realdolmen.com", "Timothy", "Leduc", "LEG/0607"));
     }
 
