@@ -23,6 +23,8 @@ public class JwtFilter extends GenericFilterBean {
 
     private Logger logger = LoggerFactory.getLogger(JwtFilter.class);
 
+    private JwtConfiguration jwtConfiguration;
+
     @Override
     public void doFilter(final ServletRequest req,
                          final ServletResponse res,
@@ -51,8 +53,9 @@ public class JwtFilter extends GenericFilterBean {
         }
 
         try {
+            String secret = jwtConfiguration.getJwtSecret();
             final Claims claims = Jwts.parser()
-                                    .setSigningKey("QMSLDKNmihknknihMSD64S5E8IYOPZ3OKJJJNINHSDFQ")
+                                    .setSigningKey(secret)
                                     .parseClaimsJws(token)
                                     .getBody();
             request.setAttribute("claims", claims);
@@ -76,4 +79,11 @@ public class JwtFilter extends GenericFilterBean {
         return null;
     }
 
+    public JwtConfiguration getJwtConfiguration() {
+        return jwtConfiguration;
+    }
+
+    public void setJwtConfiguration(JwtConfiguration jwtConfiguration) {
+        this.jwtConfiguration = jwtConfiguration;
+    }
 }

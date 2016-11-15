@@ -32,17 +32,17 @@ class UnitsController {
         this.KrinkelService.getParticipantsOfUnit(verbond.stamnummer).then((results) => {
             results.forEach((r) => {
                 r.participant = "Deelnemer";
-                r.eatinghabbit = this.MapperService.mapEatingHabbit(value.eatinghabbit);
-                r.campGround = this.MapperService.mapCampground(value.campGround);
+                r.eatinghabbit = this.MapperService.mapEatingHabbit(r.eatinghabbit);
+                r.campGround = this.MapperService.mapCampground(r.campGround);
                 this.participants.push(r);
             });
         });
         this.KrinkelService.getVolunteersOfUnit(verbond.stamnummer).then((results) => {
             results.forEach((r) => {
                 r.participant = "Vrijwilliger";
-                r.function.preset = this.MapperService.mapVolunteerFunction(value.function.preset);
-                r.eatinghabbit = this.MapperService.mapEatingHabbit(value.eatinghabbit);
-                r.campGround = this.MapperService.mapCampground(value.campGround);
+                r.function.preset = this.MapperService.mapVolunteerFunction(r.function.preset);
+                r.eatinghabbit = this.MapperService.mapEatingHabbit(r.eatinghabbit);
+                r.campGround = this.MapperService.mapCampground(r.campGround);
                 if (r.function.preset == "CUSTOM"){
                     r.function.preset = r.function.other;
                 }

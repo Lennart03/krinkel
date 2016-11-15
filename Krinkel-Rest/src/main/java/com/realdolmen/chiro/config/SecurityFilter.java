@@ -1,5 +1,6 @@
 package com.realdolmen.chiro.config;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.configuration.EnableGlobalAuthentication;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
@@ -14,6 +15,9 @@ import org.springframework.security.web.authentication.www.BasicAuthenticationFi
 @Configuration
 public class SecurityFilter extends WebSecurityConfigurerAdapter {
 
+    @Autowired
+    private JwtConfiguration jwtConfiguration;
+
     @Override
     public void configure(WebSecurity web) throws Exception {
         web
@@ -27,9 +31,12 @@ public class SecurityFilter extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(final HttpSecurity http) throws Exception {
+        JwtFilter jwtFilter = new JwtFilter();
+        jwtFilter.setJwtConfiguration(jwtConfiguration);
+
         http
                 .csrf().disable()
-                .addFilterBefore(new JwtFilter(), BasicAuthenticationFilter.class)
+                .addFilterBefore(jwtFilter, BasicAuthenticationFilter.class)
                 .sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
     }
