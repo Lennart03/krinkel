@@ -26,7 +26,7 @@ public class EmailBatchService {
 	@Autowired
 	private RegistrationParticipantRepository registrationParticipantRepository;
 
-	@Scheduled(cron = "*/30 * * * * *")
+	@Scheduled(cron = "${mail.cron.timer}")
 	public void sendEmails() {
 		logger.info("email batch service running...");
 		List<RegistrationCommunication> regComs = registrationCommunicationRepository.findAllWaitingAndFailed();
