@@ -41,7 +41,7 @@ public class ChiroUserAdapter {
 
     @PostConstruct
     public void setUp() {
-        baseUrl = chiroUrl + "?key=" + key + "&api_key=" + apiKey + "&entity=Light&action=inschrijven&json=%7B%22adnr%22:";
+        baseUrl = chiroUrl + "?key=" + key + "&api_key=" + apiKey + "&entity=Light&action=inschrijven";
     }
 
 
@@ -89,9 +89,10 @@ public class ChiroUserAdapter {
 
     private URI constructRequestUri(RegistrationParticipant participant) throws URISyntaxException {
         StringBuilder uriBuilder = new StringBuilder(baseUrl + "&json=%7B%22adnr%22:" + participant.getAdNumber());
+        uriBuilder.append(",%22event_id%22:" + eventCode);
 
         if (participant instanceof RegistrationVolunteer)
-            uriBuilder.append(",%22adnr%22:" + eventCode);
+            uriBuilder.append(",%22role_id%22:2");
 
         uriBuilder.append("%7D");
 
