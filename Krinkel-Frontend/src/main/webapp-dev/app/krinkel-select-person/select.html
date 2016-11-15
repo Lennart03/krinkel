@@ -1,4 +1,6 @@
-<div class="collection">
+<spinner loading="$ctrl.isLoading"></spinner>
+
+<div class="collection" ng-show="!$ctrl.isLoading">
     <a ng-click="$ctrl.selectPerson(colleague)"
        ng-repeat="colleague in $ctrl.colleagues"
        class="collection-item">

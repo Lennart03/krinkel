@@ -7,6 +7,7 @@ class KrinkelSelectController {
         this.SelectService = SelectService;
         this.colleagues = [];
         this.userDetails2;
+        this.isLoading = true;
     }
 
     $onInit(){
@@ -14,6 +15,7 @@ class KrinkelSelectController {
         this.AuthService.getUserDetails().then((resp) => {
             this.KrinkelService.getColleagues(resp.stamnummer).then((resp) => {
                 resp.forEach(p => this.colleagues.push(JSON.parse(p)));
+                this.isLoading = false;
             });
         });
 
