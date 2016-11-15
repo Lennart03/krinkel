@@ -77,6 +77,10 @@ public class RegistrationParticipant {
     @Enumerated(EnumType.STRING)
     private Status status = Status.TO_BE_PAID;
 
+
+    @Enumerated(EnumType.STRING)
+    private SyncStatus syncStatus = SyncStatus.UNSYNCED;
+
     /**
      * Only numbers, spaces and optionally a '+' sign are allowed.
      * Front end does more thorough checking.
@@ -291,6 +295,14 @@ public class RegistrationParticipant {
 
     public void setRegisteredBy(String registeredBy) {
         this.registeredBy = registeredBy;
+    }
+
+    public SyncStatus getSyncStatus() {
+        return syncStatus;
+    }
+
+    public void setSyncStatus(SyncStatus syncStatus) {
+        this.syncStatus = syncStatus;
     }
 
     public static class RegistrationParticipantBuilder {

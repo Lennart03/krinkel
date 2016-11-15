@@ -8,12 +8,16 @@ import com.realdolmen.chiro.domain.User;
 import com.realdolmen.chiro.repository.RegistrationVolunteerRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 
 @Service
 public class RegistrationVolunteerService {
-    public final static Integer PRICE_IN_EUROCENTS = 6000;
+
+    @Value("${price.volunteer}")
+    public Integer PRICE_IN_EUROCENTS;
+
 
 	@Autowired
 	private RegistrationVolunteerRepository repository;

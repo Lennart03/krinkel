@@ -1,17 +1,48 @@
 package com.realdolmen.chiro.chiro_api;
 
 import com.realdolmen.chiro.domain.RegistrationParticipant;
+import com.realdolmen.chiro.domain.RegistrationVolunteer;
 import com.realdolmen.chiro.domain.SecurityRole;
 import com.realdolmen.chiro.domain.User;
+import org.slf4j.Logger;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
+import org.springframework.web.client.RestTemplate;
 
+import javax.annotation.PostConstruct;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
 
 @Component
 public class ChiroUserAdapter {
 
+    private Logger logger = org.slf4j.LoggerFactory.getLogger(ChiroUserAdapter.class);
+
+
+    @Value("${chiro_url}")
+    private String chiroUrl;
+
+    @Value("${chiro_api_key}")
+    private String apiKey;
+
+    @Value("${chiro_key}")
+    private String key;
+
+
+    @Value("${chiro_event_code}")
+    private String eventCode;
+
+    private String baseUrl;
+
     private List<User> users;
+
+
+    @PostConstruct
+    public void setUp() {
+        baseUrl = chiroUrl + "?key=" + key + "&api_key=" + apiKey + "&entity=Light&action=inschrijven&json=%7B%22adnr%22:";
+    }
 
 
     public ChiroUserAdapter() {
@@ -48,8 +79,26 @@ public class ChiroUserAdapter {
         users.add(new User("386291", "timothy.leduc@realdolmen.com", "Timothy", "Leduc", "LEG/0607"));
     }
 
-    public void syncUser(RegistrationParticipant participant) {
-        System.out.print(participant.toString());
+    public void syncUser(RegistrationParticipant participant) throws URISyntaxException {
+        // Throws exception when the URL isn't valid, no further checks necessary because of this.
+        URI uri = constructRequestUri(participant);
+        logger.info("Performing sync call with URI: " + uri.toString());
+
+        // Perform call
+        RestTemplate restTemplate = new RestTemplate();
+        restTemplate.getForEntity(uri, String.class)
+                .getBody();
+    }
+
+    private URI constructRequestUri(RegistrationParticipant participant) throws URISyntaxException {
+        StringBuilder uriBuilder = new StringBuilder(baseUrl + "&json=%7B%22adnr%22:" + participant.getAdNumber());
+
+        if (participant instanceof RegistrationVolunteer)
+            uriBuilder.append(",%22adnr%22:" + eventCode);
+
+        uriBuilder.append("%7D");
+
+        return new URI(uriBuilder.toString());
     }
 
     public User getChiroUser(String adNumber) {

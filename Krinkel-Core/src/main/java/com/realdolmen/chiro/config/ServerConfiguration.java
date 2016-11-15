@@ -1,10 +1,10 @@
-package com.realdolmen.chiro.service;
+package com.realdolmen.chiro.config;
 
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
-@Service
-public class ServerInfoService {
+@Component
+public class ServerConfiguration {
 
     @Value("${server.hostname}")
     private String serverHostname;
