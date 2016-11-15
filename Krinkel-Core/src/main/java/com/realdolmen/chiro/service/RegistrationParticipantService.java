@@ -119,4 +119,14 @@ public class RegistrationParticipantService {
 		}
 		return results;
 	}
+
+    public List<RegistrationParticipant> getSyncReadyParticipants() {
+        return registrationParticipantRepository.findRegistrationParticipantsWithStatusUnsyncedAndConfirmed();
+    }
+
+    public void setUserToSynced(String adnumber) {
+		RegistrationParticipant user = registrationParticipantRepository.findByAdNumber(adnumber);
+		if (user.getStatus() == Status.CONFIRMED)
+			user.setSyncStatus(SyncStatus.SYNCED);
+	}
 }
