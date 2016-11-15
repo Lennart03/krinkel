@@ -8,7 +8,7 @@ class UnitsController {
     $onInit() {
         this.KrinkelService.getVerbonden().then((results) => {
             this.verbonden = results;
-            this.getParticipantsForUnit(this.verbonden);
+            // this.getParticipantsForUnit(this.verbonden);
         });
     }
 
@@ -49,24 +49,6 @@ class UnitsController {
                 this.volunteers.push(r);
             })
         });
-
-            // angular.forEach(results[0], (value, index) => {
-            //     value.participant = "Deelnemer";
-            //     value.eatinghabbit = this.MapperService.mapEatingHabbit(value.eatinghabbit);
-            //     value.campGround = this.MapperService.mapCampground(value.campGround);
-            //     this.participants.push(value);
-            // });
-        //     angular.forEach(results[1], (value, index) => {
-        //         value.participant = "Vrijwilliger";
-        //         value.function.preset = this.MapperService.mapVolunteerFunction(value.function.preset);
-        //         value.eatinghabbit = this.MapperService.mapEatingHabbit(value.eatinghabbit);
-        //         value.campGround = this.MapperService.mapCampground(value.campGround);
-        //         if (value.function.preset == "CUSTOM"){
-        //             value.function.preset = value.function.other;
-        //         }
-        //         this.volunteers.push(value);
-        //     });
-        // });
     }
 
     openVerbond(verbond) {
@@ -76,23 +58,27 @@ class UnitsController {
             this.verbond = results;
 
             if (results.onderliggende_stamnummers != 0) {
-                this.getParticipantsForUnit(this.verbonden);
+                // this.getParticipantsForUnit(this.verbonden);
             }
         });
     }
 
-    getParticipantsForUnit(verbonden) {
-        // angular.forEach(verbonden, (value, index) => {
-        //     this.KrinkelService.getParticipantsForUnit(value.stamnummer).then((results) => {
-        //         value.amountParticipants = results[0];
-        //         value.amountVolunteers = results[1];
-        //     })
-        // });
-        verbonden.forEach((r) => {
-            this.KrinkelService.getParticipantsForUnit(r.stamnummer).then((results) => {
-            })
-        })
-    }
+    // getParticipantsForUnit(verbonden) {
+    //     // angular.forEach(verbonden, (value, index) => {
+    //     //     this.KrinkelService.getParticipantsForUnit(value.stamnummer).then((results) => {
+    //     //         value.amountParticipants = results[0];
+    //     //         value.amountVolunteers = results[1];
+    //     //     })
+    //     // });
+    //     verbonden.forEach((r) => {
+    //         this.KrinkelService.getParticipantsOfUnit(r.stamnummer).then((results) => {
+    //             this.verbonden.aantal_ingeschreven_deelnemers = results;
+    //         });
+    //         this.KrinkelService.getVolunteersOfUnit(r.stamnummer).then((results) => {
+    //             this.verbonden.aantal_ingeschreven_vrijwilligers = results;
+    //         });
+    //     })
+    // }
 
     goToPrevious(verbond) {
         this.unitLevel = null;
@@ -107,7 +93,7 @@ class UnitsController {
         } else {
             this.KrinkelService.getVerbonden().then((results) => {
                 this.verbonden = results;
-                this.getParticipantsForUnit(this.verbonden);
+                // this.getParticipantsForUnit(this.verbonden);
             });
         }
     }

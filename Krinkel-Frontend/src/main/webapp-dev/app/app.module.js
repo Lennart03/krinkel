@@ -19,6 +19,7 @@ import {UnitsComponent} from './shared/units/units.component'
 import {KrinkelSelectComponent} from './krinkel-select-person/select.component';
 import {FailMessageComponent} from './shared/fail-message/fail-message.component';
 import {VoorwaardenComponent} from './shared/voorwaarden/voorwaarden.component';
+import {LoadingSpinnerComponent} from './shared/loading-spinner/loading-spinner.component';
 
 //pages
 import {KrinkelHomepageComponent} from './krinkel-homepage/krinkel-homepage.component';
@@ -46,6 +47,7 @@ export default angular
     .component('krinkelSelect', KrinkelSelectComponent)
     .component('units', UnitsComponent)
     .component('failMessage', FailMessageComponent)
+    .component('spinner', LoadingSpinnerComponent)
     //pages
     .component('krinkelHomepage', KrinkelHomepageComponent)
     .component('register', RegisterComponent)
