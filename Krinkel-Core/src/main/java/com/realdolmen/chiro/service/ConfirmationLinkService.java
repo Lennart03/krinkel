@@ -1,5 +1,6 @@
 package com.realdolmen.chiro.service;
 
+import com.realdolmen.chiro.config.ServerConfiguration;
 import com.realdolmen.chiro.domain.ConfirmationLink;
 import com.realdolmen.chiro.domain.RegistrationParticipant;
 import com.realdolmen.chiro.domain.Status;
@@ -21,7 +22,7 @@ public class ConfirmationLinkService {
     private RegistrationParticipantRepository registrationParticipantRepository;
 
     @Autowired
-    private ServerInfoService serverInfoService;
+    private ServerConfiguration serverConfiguration;
 
     private String generateToken() {
         UUID token = UUID.randomUUID();
@@ -63,8 +64,8 @@ public class ConfirmationLinkService {
     }
 
     public String generateURLFromConfirmationLink(ConfirmationLink link){
-        return "http://" + serverInfoService.getServerHostname() +
-                        ":" + serverInfoService.getServerPort() +
+        return "http://" + serverConfiguration.getServerHostname() +
+                        ":" + serverConfiguration.getServerPort() +
                 "/confirmation?ad=" + link.getAdNumber() + "&token=" + link.getToken();
     }
 }
