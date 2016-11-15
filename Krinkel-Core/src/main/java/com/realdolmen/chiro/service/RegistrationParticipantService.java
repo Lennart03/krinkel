@@ -126,7 +126,9 @@ public class RegistrationParticipantService {
 
     public void setUserToSynced(String adnumber) {
 		RegistrationParticipant user = registrationParticipantRepository.findByAdNumber(adnumber);
-		if (user.getStatus() == Status.CONFIRMED)
+		if (user.getStatus() == Status.CONFIRMED) {
 			user.setSyncStatus(SyncStatus.SYNCED);
+			registrationParticipantRepository.save(user);
+		}
 	}
 }

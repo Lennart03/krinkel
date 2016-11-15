@@ -12,7 +12,7 @@ public interface RegistrationParticipantRepository extends JpaRepository<Registr
 	@Query("SELECT r FROM RegistrationParticipant r WHERE r.status = 'PAID'")
 	List<RegistrationParticipant> findRegistrationParticipantsWithStatusPAID();
 
-    @Query("SELECT r FROM RegistrationParticipant r WHERE r.status = 'CONFIRMED' and sync_status = 'PAID'")
+    @Query("SELECT r FROM RegistrationParticipant r WHERE r.status = 'CONFIRMED' and sync_status = 'UNSYNCED'")
     List<RegistrationParticipant> findRegistrationParticipantsWithStatusUnsyncedAndConfirmed();
 	
     @Query("SELECT p FROM RegistrationParticipant p WHERE " +

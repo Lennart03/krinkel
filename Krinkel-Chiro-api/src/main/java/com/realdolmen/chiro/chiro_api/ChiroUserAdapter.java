@@ -45,7 +45,7 @@ public class ChiroUserAdapter {
         users.add(new User("386291", "timothy.leduc@realdolmen.com", "Timothy", "Leduc", "LEG/0607"));
     }
 
-    public void syncUser(RegistrationParticipant participant) {
+    public void syncUser(RegistrationParticipant participant) throws Exception {
         System.out.print(participant.toString());
     }
 
