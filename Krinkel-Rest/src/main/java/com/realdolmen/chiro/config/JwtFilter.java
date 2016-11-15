@@ -11,13 +11,17 @@ import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 /**
  * JSON Web Tokens Security Filter.
+ *
+ * Usage:
+ * JwtFilter filter = new JwtFilter();
+ * filter.setJwtConfiguration(jwtConfig);
+ *
  */
 public class JwtFilter extends GenericFilterBean {
 
@@ -25,58 +29,31 @@ public class JwtFilter extends GenericFilterBean {
 
     private JwtConfiguration jwtConfiguration;
 
+    private AuthTokenFinder authTokenFinder = new AuthTokenFinder();
+
     @Override
     public void doFilter(final ServletRequest req,
                          final ServletResponse res,
                          final FilterChain chain) throws IOException, ServletException {
         final HttpServletRequest request = (HttpServletRequest) req;
         final HttpServletResponse response = (HttpServletResponse) res;
-        final String authHeader = request.getHeader("Authorization");
-        String authCookieToken = null;
-        if(request.getCookies()!=null){
-             authCookieToken = getTokenFromCookie(request.getCookies());
-        }
-
-        String token;
-        if (authHeader == null || !authHeader.startsWith("Bearer ")) {
-            //second way of authentication is with the cookie set by the server
-            if(authCookieToken!=null){
-                token = authCookieToken;
-            }
-            else{
-                response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-                return;
-            }
-        }
-        else{
-            token = authHeader.substring(7); // The part after "Bearer "
-        }
 
         try {
+            AuthToken authToken = authTokenFinder.findAuthenticationToken(request);
+
             String secret = jwtConfiguration.getJwtSecret();
             final Claims claims = Jwts.parser()
-                                    .setSigningKey(secret)
-                                    .parseClaimsJws(token)
-                                    .getBody();
+                .setSigningKey(secret)
+                .parseClaimsJws(authToken.getValue())
+                .getBody();
             request.setAttribute("claims", claims);
+
+            chain.doFilter(req, res);
         }
-        catch (final SignatureException e) {
+        catch (final SignatureException | AuthTokenNotFoundException e) {
+            logger.debug("Invalid login attempt");
             response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
         }
-        chain.doFilter(req, res);
-    }
-
-    /**
-     * @param cookies List of cookies from the request
-     * @return Authorization cookie value (JWT)
-     */
-    protected String getTokenFromCookie(Cookie[] cookies){
-        for(Cookie cookie : cookies){
-            if(cookie.getName().equals("Authorization")){
-                return cookie.getValue();
-            }
-        }
-        return null;
     }
 
     public JwtConfiguration getJwtConfiguration() {
