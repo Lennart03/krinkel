@@ -14,14 +14,14 @@ import java.net.URISyntaxException;
  */
 @Service
 public class ChiroContactService {
-    @Value("${chiro_url}")
+    @Value("${chiro.api.url}")
     private String chiroUrl;
 
-    @Value("${chiro_api_key}")
+    @Value("${chiro.api.apikey}")
     private String apiKey;
 
-    @Value("${chiro_key}")
-    private String key;
+    @Value("${chiro.api.key}")
+    private String chiroKey;
 
 
     /**
@@ -35,7 +35,7 @@ public class ChiroContactService {
          * "https://cividev.chiro.be/sites/all/modules/civicrm/extern/rest.php?key=2340f8603072358ffc23f5459ef92f88&api_key=vooneih8oo1XepeiduGh&entity=Light&action=getcontact&json=%7B%22adnr%22:" + adNumber + "%7D";
          */
 
-        String url = chiroUrl + "?key=" + key + "&api_key=" + apiKey + "&entity=Light&action=getcontact&json=%7B%22adnr%22:" + adNumber + "%7D";
+        String url = chiroUrl + "?key=" + chiroKey + "&api_key=" + apiKey + "&entity=Light&action=getcontact&json=%7B%22adnr%22:" + adNumber + "%7D";
 
         // Throws exception when the URL isn't valid, no further checks necessary because of this.
         URI uri = new URI(url);

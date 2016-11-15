@@ -1,16 +1,13 @@
 package com.realdolmen.chiro.service;
 
-import com.fasterxml.jackson.core.JsonFactory;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.realdolmen.chiro.domain.RegistrationParticipant;
 import com.realdolmen.chiro.domain.Status;
-import com.realdolmen.chiro.domain.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.jackson.JsonComponent;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -31,14 +28,14 @@ public class ChiroColleagueService {
     @Autowired
     private UserService userService;
 
-    @Value("${chiro_url}")
+    @Value("${chiro.api.url}")
     private String chiroUrl;
 
-    @Value("${chiro_api_key}")
+    @Value("${chiro.api.apikey}")
     private String apiKey;
 
-    @Value("${chiro_key}")
-    private String key;
+    @Value("${chiro.api.key}")
+    private String chiroKey;
 
 
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
@@ -90,7 +87,7 @@ public class ChiroColleagueService {
          * "https://cividev.chiro.be/sites/all/modules/civicrm/extern/rest.php?key=2340f8603072358ffc23f5459ef92f88&api_key=vooneih8oo1XepeiduGh&entity=Light&action=getcollega&json=%7B%22adnr%22:" + adNumber + "%7D";
          */
 
-        String url = chiroUrl + "?key=" + key + "&api_key=" + apiKey + "&entity=Light&action=getcollega&json=%7B%22adnr%22:" + adNumber + "%7D";
+        String url = chiroUrl + "?key=" + chiroKey + "&api_key=" + apiKey + "&entity=Light&action=getcollega&json=%7B%22adnr%22:" + adNumber + "%7D";
 
         /**
          * Throws exception when the URL isn't valid, no further checks necessary because of this.

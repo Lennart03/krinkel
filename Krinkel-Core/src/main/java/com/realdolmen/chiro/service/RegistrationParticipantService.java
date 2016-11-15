@@ -7,6 +7,7 @@ import com.realdolmen.chiro.repository.RegistrationParticipantRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.expression.Expression;
 import org.springframework.expression.ExpressionParser;
 import org.springframework.expression.spel.standard.SpelExpressionParser;
@@ -19,7 +20,10 @@ import java.util.List;
 
 @Service
 public class RegistrationParticipantService {
-	public final static Integer PRICE_IN_EUROCENTS = 11000;
+
+
+	@Value("${price.participant}")
+	private Integer PRICE_IN_EUROCENTS;
 
 
 	private Logger logger = LoggerFactory.getLogger(RegistrationParticipantService.class);
@@ -130,5 +134,9 @@ public class RegistrationParticipantService {
 			user.setSyncStatus(SyncStatus.SYNCED);
 			registrationParticipantRepository.save(user);
 		}
+	}
+
+	public Integer getPRICE_IN_EUROCENTS() {
+		return PRICE_IN_EUROCENTS;
 	}
 }
