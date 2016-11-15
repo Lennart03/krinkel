@@ -4,6 +4,7 @@ import com.realdolmen.chiro.chiro_api.ChiroUserAdapter;
 import com.realdolmen.chiro.configuration.ApplicationConfiguration;
 import com.realdolmen.chiro.domain.RegistrationParticipant;
 import com.realdolmen.chiro.repository.RegistrationParticipantRepository;
+import com.realdolmen.chiro.service.RegistrationParticipantService;
 import com.realdolmen.chiro.spring_test.SpringIntegrationTest;
 import org.junit.Before;
 import org.junit.Test;
@@ -11,6 +12,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
+import org.mockito.internal.matchers.Any;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.TaskScheduler;
 import org.springframework.test.context.ContextConfiguration;
@@ -33,7 +35,7 @@ public class MemberSyncerServiceTest extends SpringIntegrationTest {
     private ChiroUserAdapter adapter;
 
     @Mock
-    private RegistrationParticipantRepository repo;
+    private RegistrationParticipantService participantService;
 
     @InjectMocks
     private MemberSyncerService service;
@@ -49,7 +51,7 @@ public class MemberSyncerServiceTest extends SpringIntegrationTest {
     }
 
     @Test
-    public void syncUsersToChiroDBSendsEveryFoundParticipantToUserAdapter() {
+    public void syncUsersToChiroDBSendsEveryFoundParticipantToUserAdapter() throws Exception {
         //setup
         List<RegistrationParticipant> participants = new ArrayList<>();
         participants.add(new RegistrationParticipant());
@@ -57,18 +59,41 @@ public class MemberSyncerServiceTest extends SpringIntegrationTest {
         participants.add(new RegistrationParticipant());
         participants.add(new RegistrationParticipant());
 
-        Mockito.when(repo.findAll()).thenReturn(participants);
+        Mockito.when(participantService.getSyncReadyParticipants()).thenReturn(participants);
 
         //actual test
         service.syncUsersToChiroDB();
         Mockito.verify(adapter, times(participants.size())).syncUser(any(RegistrationParticipant.class));
+        Mockito.verify(participantService, times(participants.size())).setUserToSynced(any(String.class));
     }
 
     @Test
     public void syncUsersToChiroDBDoesNothingWhenNoParticipantsWereFound() {
-        Mockito.when(repo.findAll()).thenReturn(new ArrayList<>());
+        Mockito.when(participantService.getSyncReadyParticipants()).thenReturn(new ArrayList<>());
 
         service.syncUsersToChiroDB();
         Mockito.verifyNoMoreInteractions(adapter);
     }
+
+    @Test
+    public void syncUsersToChiroDBDoesNothingWhenSyncingThrowsError() throws Exception {
+        //setup
+        RegistrationParticipant registrationParticipant = new RegistrationParticipant();
+        List<RegistrationParticipant> participants = new ArrayList<>();
+        participants.add(new RegistrationParticipant());
+        participants.add(new RegistrationParticipant());
+        participants.add(new RegistrationParticipant());
+        participants.add(new RegistrationParticipant());
+        participants.add(registrationParticipant);
+
+
+        Mockito.when(participantService.getSyncReadyParticipants()).thenReturn(participants);
+        Mockito.doThrow(new Exception()).when(adapter).syncUser(registrationParticipant);
+
+        service.syncUsersToChiroDB();
+        Mockito.verify(adapter, times(participants.size())).syncUser(any(RegistrationParticipant.class));
+        Mockito.verify(participantService, times(participants.size() - 1)).setUserToSynced(any(String.class));
+    }
+
+
 }
