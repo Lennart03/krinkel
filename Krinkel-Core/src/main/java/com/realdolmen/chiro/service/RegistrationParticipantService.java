@@ -48,6 +48,8 @@ public class RegistrationParticipantService {
 		if(participantFromOurDB == null){
 //			String stamnummer = chiroUser.getStamnummer();
 			User currentUser = userService.getCurrentUser();
+			System.out.println("souting adNumber in SAVE");
+			System.out.println(currentUser.getAdNumber());
 //			participant.setStamnumber(stamnummer);
 			participant.setRegisteredBy(currentUser.getAdNumber());
 			return registrationParticipantRepository.save(participant);
