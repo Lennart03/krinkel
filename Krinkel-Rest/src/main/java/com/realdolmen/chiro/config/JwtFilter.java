@@ -51,7 +51,7 @@ public class JwtFilter extends GenericFilterBean {
             chain.doFilter(req, res);
         }
         catch (final SignatureException | AuthTokenNotFoundException e) {
-            logger.debug("Invalid login attempt");
+            logger.debug("Invalid login attempt: " + e.getMessage());
             response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
         }
     }

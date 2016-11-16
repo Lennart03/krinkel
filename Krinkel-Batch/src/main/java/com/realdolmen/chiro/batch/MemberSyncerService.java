@@ -28,7 +28,7 @@ public class MemberSyncerService {
      * This done through a batch job so that when a sync fails, it can be done again. On succes, the user will also
      * get the status SYNCED.
      */
-    @Scheduled(cron = "0/30 * * * * *")
+    @Scheduled(cron = "${sync.cron.timer}")
     public void syncUsersToChiroDB() {
         List<RegistrationParticipant> all = service.getSyncReadyParticipants();
 
