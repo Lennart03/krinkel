@@ -32,6 +32,8 @@ public class UserService {
     @Autowired
     private JwtConfiguration jwtConfig;
 
+    private User currentUser;
+
     public User getUser(String adNumber) {
 
         User u = adapter.getChiroUser(adNumber);
@@ -77,21 +79,31 @@ public class UserService {
     }
 
     public User getCurrentUser(HttpServletRequest context){
-        Claims claims = Jwts.parser()
-                .setSigningKey(DatatypeConverter.parseBase64Binary(jwtConfig.getJwtSecret()))
-                .parseClaimsJws(getTokenFromCookie(context.getCookies())).getBody();
+        /**
+         * Old stuff
+         */
+//        Claims claims = Jwts.parser()
+//                .setSigningKey(DatatypeConverter.parseBase64Binary(jwtConfig.getJwtSecret()))
+//                .parseClaimsJws(getTokenFromCookie(context.getCookies())).getBody();
+//
+//
+//        String adnumber = claims.get("adnummer").toString();
+//
+//        return this.getUser(adnumber);
 
-
-        String adnumber = claims.get("adnummer").toString();
-
-        return this.getUser(adnumber);
+        return getCurrentUser();
     }
 
     public User getCurrentUser(){
-        ServletRequestAttributes requestAttributes = (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
-        HttpServletRequest context = requestAttributes.getRequest();
-        return this.getCurrentUser(context);
+        return currentUser;
+//        ServletRequestAttributes requestAttributes = (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
+//        HttpServletRequest context = requestAttributes.getRequest();
+//        return this.getCurrentUser(context);
     }
+    public void setCurrentUser(User currentUser){
+        this.currentUser = currentUser;
+    }
+
 
     protected String getTokenFromCookie(Cookie[] cookies){
         for(Cookie cookie : cookies){

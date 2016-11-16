@@ -10,8 +10,11 @@ class TopNavController {
     }
 
     getUserDetails() {
+        console.log("IN details");
         this.AuthService.getUserDetails().then((resp) => {
             this.userDetails = resp;
+            console.log("In return");
+            console.log(resp);
         });
         return this.userDetails;
     }

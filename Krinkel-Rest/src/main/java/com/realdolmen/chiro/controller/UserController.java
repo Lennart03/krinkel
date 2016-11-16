@@ -30,10 +30,12 @@ public class UserController {
     @RequestMapping(method = RequestMethod.GET, value = "/api/users/{adNumber}")
     @PreAuthorize("@UserControllerSecurity.hasPermissionToGetUser(#adNumber)")
     public User getUser(@PathVariable("adNumber") String adNumber) throws UserNotfoundException {
-        User u = userService.getUser(adNumber);
+//        User u = userService.getUser(adNumber);
 
-        if ( u == null )
+        User u = userService.getCurrentUser();
+        if ( u == null ) {
             throw new UserNotfoundException();
+        }
 
         return u;
     }

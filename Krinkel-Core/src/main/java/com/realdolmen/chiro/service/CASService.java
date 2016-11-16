@@ -46,12 +46,33 @@ public class CASService {
         } catch (TicketValidationException e) {
             throw new SecurityException("Ticket could not be validated");
         }
-
         if (principal != null) {
+
+            /**
+             * Instead of getting stuff from ChiroUserAdapter which is mock data, getting it from the principal which is exposed above ;)
+             */
+
+            String firstName = principal.getAttributes().get("first_name").toString();
+            String lastName = principal.getAttributes().get("last_name").toString();
+            String adNumber = principal.getAttributes().get("ad_nummer").toString();
+            String email = principal.getAttributes().get("mail").toString();
+
+
+            User user = new User();
+
+            user.setFirstname(firstName);
+            user.setLastname(lastName);
+            user.setAdNumber(adNumber);
+            user.setEmail(email);
+
+            user.setRole(SecurityRole.ADMIN);
+            userService.setCurrentUser(user);
+
+            return user;
             // TODO: in an ideal world, cookie should only contain ad-number (and mayhaps role)
-            return userService.getUser(
-                    principal.getAttributes().get("ad_nummer").toString()
-            );
+//            return userService.getUser(
+//                    principal.getAttributes().get("ad_nummer").toString()
+//            );
         }
         return null;
     }
