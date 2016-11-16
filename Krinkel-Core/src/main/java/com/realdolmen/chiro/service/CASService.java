@@ -18,6 +18,7 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.xml.bind.DatatypeConverter;
 import java.util.Date;
+import java.util.List;
 
 @Service
 public class CASService {
@@ -29,6 +30,9 @@ public class CASService {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private ChiroPloegService chiroPloegService;
 
     public String validateTicket(String ticket) {
         User user = validate(ticket);
@@ -65,7 +69,9 @@ public class CASService {
             user.setAdNumber(adNumber);
             user.setEmail(email);
 
-            user.setRole(SecurityRole.ADMIN);
+            List<String> stamNumbers = chiroPloegService.getStamNumbers(adNumber);
+            user.setRole(userService.getHighestSecurityRole(stamNumbers));
+
             userService.setCurrentUser(user);
 
             return user;

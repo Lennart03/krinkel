@@ -19,6 +19,7 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.xml.bind.DatatypeConverter;
+import java.util.List;
 
 @Service("userService")
 @Profile("!test")
@@ -76,6 +77,29 @@ public class UserService {
         } else {
             u.setRole(SecurityRole.GROEP);
         }
+    }
+
+    public SecurityRole getSecurityRole(String stamNumber){
+        if (stamNumber.matches("NAT\\/0000")) {
+            return SecurityRole.NATIONAAL;
+        } else if (stamNumber.matches("[A-Z]+ /0000")) {
+            return SecurityRole.VERBOND;
+        } else if (stamNumber.matches("[A-Z]{3}/[0-9]{2}00") || stamNumber.matches("[A-Z]{2} /[0-9]{2}00")) {
+            return SecurityRole.GEWEST;
+        } else {
+            return SecurityRole.GROEP;
+        }
+    }
+
+
+    public SecurityRole getHighestSecurityRole(List<String> stamNumbers){
+        SecurityRole highestRole = SecurityRole.GROEP;
+        for(String currentStamNumber: stamNumbers){
+            if(getSecurityRole(currentStamNumber).getValue() > highestRole.getValue()){
+                highestRole = getSecurityRole(currentStamNumber);
+            }
+        }
+        return highestRole;
     }
 
     public User getCurrentUser(HttpServletRequest context){
