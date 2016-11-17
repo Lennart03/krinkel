@@ -45,7 +45,7 @@ public class UserService {
             if (participant != null) {
                 u.setRegistered(true);
 
-                if (participant.getStatus() == Status.PAID)
+                if (participant.getStatus().equals(Status.PAID) || participant.getStatus().equals(Status.CONFIRMED))
                     u.setHasPaid(true);
             }
 

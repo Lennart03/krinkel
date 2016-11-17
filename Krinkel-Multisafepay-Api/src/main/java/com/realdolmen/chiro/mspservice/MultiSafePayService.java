@@ -61,12 +61,15 @@ public class MultiSafePayService {
     private boolean createPaymentParamsAreValid(String orderId, Integer amount) {
         boolean res = true;
 
-        if (orderId == null)
+        if (orderId == null) {
+            logger.error("orderId payment = null");
             res = false;
+        }
 
-        if (amount == null || amount < 0)
+        if (amount == null || amount < 0) {
+            logger.error("amount payment = null or negative");
             res = false;
-
+        }
         return res;
     }
 
