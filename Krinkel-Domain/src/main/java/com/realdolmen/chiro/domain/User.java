@@ -117,10 +117,10 @@ public class User {
         this.hasPaid = hasPaid;
     }
 
-    public String getNormalizedStamNumber(){
-        
-        return this.getStamnummer().replace("/", "")
-                                   .replace(" ", "");
-
-    }
+//    public String getNormalizedStamNumber(){
+//
+//        return this.getStamnummer().replace("/", "")
+//                                   .replace(" ", "");
+//
+//    }
 }

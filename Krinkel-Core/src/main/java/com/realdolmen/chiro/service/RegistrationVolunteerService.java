@@ -30,14 +30,14 @@ public class RegistrationVolunteerService {
 
     @PreAuthorize("@RegistrationVolunteerServiceSecurity.hasPermissionToSaveVolunteer(#volunteer)")
     public RegistrationVolunteer save(RegistrationVolunteer volunteer){
-        User chiroUser = adapter.getChiroUser(volunteer.getAdNumber());
+//        User chiroUser = adapter.getChiroUser(volunteer.getAdNumber());
         RegistrationVolunteer volunteerFromOurDB = repository.findByAdNumber(volunteer.getAdNumber());
 
-        if(volunteerFromOurDB == null && chiroUser != null) {
-            String stamnummer = chiroUser.getStamnummer();
-            volunteer.setStamnumber(stamnummer);
+        if(volunteerFromOurDB == null) {
+//            String stamnummer = chiroUser.getStamnummer();
+//            volunteer.setStamnumber(stamnummer);
             return repository.save(volunteer);
-        } else if (volunteerFromOurDB != null && volunteerFromOurDB.getStatus().equals(Status.TO_BE_PAID) && chiroUser != null){
+        } else if (volunteerFromOurDB != null && volunteerFromOurDB.getStatus().equals(Status.TO_BE_PAID)){
             volunteer.setId(volunteerFromOurDB.getId());
             return repository.save(volunteer);
         } else if (volunteerFromOurDB != null && (volunteerFromOurDB.getStatus().equals(Status.PAID))|| volunteerFromOurDB.getStatus().equals(Status.CONFIRMED)){

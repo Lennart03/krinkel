@@ -19,6 +19,7 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.xml.bind.DatatypeConverter;
+import java.util.List;
 
 @Service("userService")
 @Profile("!test")
@@ -31,6 +32,8 @@ public class UserService {
 
     @Autowired
     private JwtConfiguration jwtConfig;
+
+    private User currentUser;
 
     public User getUser(String adNumber) {
 
@@ -76,22 +79,55 @@ public class UserService {
         }
     }
 
+    public SecurityRole getSecurityRole(String stamNumber){
+        if (stamNumber.matches("NAT\\/0000")) {
+            return SecurityRole.NATIONAAL;
+        } else if (stamNumber.matches("[A-Z]+ /0000")) {
+            return SecurityRole.VERBOND;
+        } else if (stamNumber.matches("[A-Z]{3}/[0-9]{2}00") || stamNumber.matches("[A-Z]{2} /[0-9]{2}00")) {
+            return SecurityRole.GEWEST;
+        } else {
+            return SecurityRole.GROEP;
+        }
+    }
+
+
+    public SecurityRole getHighestSecurityRole(List<String> stamNumbers){
+        SecurityRole highestRole = SecurityRole.GROEP;
+        for(String currentStamNumber: stamNumbers){
+            if(getSecurityRole(currentStamNumber).getValue() > highestRole.getValue()){
+                highestRole = getSecurityRole(currentStamNumber);
+            }
+        }
+        return highestRole;
+    }
+
     public User getCurrentUser(HttpServletRequest context){
-        Claims claims = Jwts.parser()
-                .setSigningKey(DatatypeConverter.parseBase64Binary(jwtConfig.getJwtSecret()))
-                .parseClaimsJws(getTokenFromCookie(context.getCookies())).getBody();
+        /**
+         * Old stuff
+         */
+//        Claims claims = Jwts.parser()
+//                .setSigningKey(DatatypeConverter.parseBase64Binary(jwtConfig.getJwtSecret()))
+//                .parseClaimsJws(getTokenFromCookie(context.getCookies())).getBody();
+//
+//
+//        String adnumber = claims.get("adnummer").toString();
+//
+//        return this.getUser(adnumber);
 
-
-        String adnumber = claims.get("adnummer").toString();
-
-        return this.getUser(adnumber);
+        return getCurrentUser();
     }
 
     public User getCurrentUser(){
-        ServletRequestAttributes requestAttributes = (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
-        HttpServletRequest context = requestAttributes.getRequest();
-        return this.getCurrentUser(context);
+        return currentUser;
+//        ServletRequestAttributes requestAttributes = (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
+//        HttpServletRequest context = requestAttributes.getRequest();
+//        return this.getCurrentUser(context);
     }
+    public void setCurrentUser(User currentUser){
+        this.currentUser = currentUser;
+    }
+
 
     protected String getTokenFromCookie(Cookie[] cookies){
         for(Cookie cookie : cookies){

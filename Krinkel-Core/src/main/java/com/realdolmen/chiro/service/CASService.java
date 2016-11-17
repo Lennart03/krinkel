@@ -17,7 +17,9 @@ import org.springframework.stereotype.Service;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.xml.bind.DatatypeConverter;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Service
 public class CASService {
@@ -30,12 +32,22 @@ public class CASService {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private ChiroPloegService chiroPloegService;
+
     public String validateTicket(String ticket) {
         User user = validate(ticket);
         return createToken(user);
     }
 
     public final User validate(String ticket) {
+        //TODO remove this hardcoded list of admins
+        List<String> adminAdNumbers = new ArrayList<>();
+//        adminAdNumbers.add("152504");
+//        adminAdNumbers.add("109318");
+        adminAdNumbers.add("169314");
+        adminAdNumbers.add("386288");
+
         AttributePrincipal principal = null;
         Cas20ProxyTicketValidator sv = new Cas20ProxyTicketValidator(configuration.getBaseCasUrl());
         sv.setAcceptAnyProxy(true);
@@ -46,12 +58,39 @@ public class CASService {
         } catch (TicketValidationException e) {
             throw new SecurityException("Ticket could not be validated");
         }
-
         if (principal != null) {
+
+            /**
+             * Instead of getting stuff from ChiroUserAdapter which is mock data, getting it from the principal which is exposed above ;)
+             */
+
+            String firstName = principal.getAttributes().get("first_name").toString();
+            String lastName = principal.getAttributes().get("last_name").toString();
+            String adNumber = principal.getAttributes().get("ad_nummer").toString();
+            String email = principal.getAttributes().get("mail").toString();
+
+
+            User user = new User();
+
+            user.setFirstname(firstName);
+            user.setLastname(lastName);
+            user.setAdNumber(adNumber);
+            user.setEmail(email);
+
+            if(adminAdNumbers.contains(adNumber)){
+                user.setRole(SecurityRole.ADMIN);
+            } else {
+                List<String> stamNumbers = chiroPloegService.getStamNumbers(adNumber);
+                user.setRole(userService.getHighestSecurityRole(stamNumbers));
+            }
+
+            userService.setCurrentUser(user);
+
+            return user;
             // TODO: in an ideal world, cookie should only contain ad-number (and mayhaps role)
-            return userService.getUser(
-                    principal.getAttributes().get("ad_nummer").toString()
-            );
+//            return userService.getUser(
+//                    principal.getAttributes().get("ad_nummer").toString()
+//            );
         }
         return null;
     }
