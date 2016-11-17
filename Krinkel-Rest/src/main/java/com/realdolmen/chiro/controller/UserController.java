@@ -40,6 +40,20 @@ public class UserController {
         return u;
     }
 
+    @RequestMapping(method = RequestMethod.GET, value = "/api/user")
+    public User getUser() throws UserNotfoundException {
+//        User u = userService.getUser(adNumber);
+
+        User u = userService.getCurrentUser();
+        if ( u == null ) {
+            throw new UserNotfoundException();
+        }
+
+        System.out.println(u.getEmail());
+        return u;
+    }
+
+
     @ResponseStatus(HttpStatus.NOT_FOUND)
     public class UserNotfoundException extends RuntimeException {
         public UserNotfoundException() {

@@ -23,7 +23,7 @@ public class SecurityFilter extends WebSecurityConfigurerAdapter {
         web
                 .ignoring()
                 .antMatchers("/api/cas")
-                .antMatchers("/api/**") //UNCOMMENT THIS FOR TESTING ON PORT 3000
+                //.antMatchers("/api/**") // NEVER EVER UNCOMMENT THIS. PREVIOUSLY USED FOR DEV ON PORT 3000, THIS WILL SCREW EVERYTHING UP NOW.
                 .antMatchers("/res/*")
                 .antMatchers("/site/**")
                 .antMatchers("/login")

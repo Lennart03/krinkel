@@ -21,8 +21,10 @@ import java.util.List;
 @Service
 public class RegistrationParticipantService {
 
+
 	@Value("${price.participant}")
 	private Integer PRICE_IN_EUROCENTS;
+
 
 	private Logger logger = LoggerFactory.getLogger(RegistrationParticipantService.class);
 
@@ -44,19 +46,18 @@ public class RegistrationParticipantService {
 		RegistrationParticipant participantFromOurDB = registrationParticipantRepository
 				.findByAdNumber(participant.getAdNumber());
 
-		if (participantFromOurDB == null) {
-			// String stamnummer = chiroUser.getStamnummer();
+		if(participantFromOurDB == null){
+//			String stamnummer = chiroUser.getStamnummer();
 			User currentUser = userService.getCurrentUser();
-			// participant.setStamnumber(stamnummer);
+//			participant.setStamnumber(stamnummer);
 			participant.setRegisteredBy(currentUser.getAdNumber());
 			return registrationParticipantRepository.save(participant);
-		} else if (participantFromOurDB != null && participantFromOurDB.getStatus().equals(Status.TO_BE_PAID)) {
+		} else if (participantFromOurDB != null && participantFromOurDB.getStatus().equals(Status.TO_BE_PAID)){
 			participant.setId(participantFromOurDB.getId());
 			User currentUser = userService.getCurrentUser();
 			participantFromOurDB.setRegisteredBy(currentUser.getAdNumber());
 			return registrationParticipantRepository.save(participant);
-		} else if (participantFromOurDB != null && (participantFromOurDB.getStatus().equals(Status.PAID))
-				|| participantFromOurDB.getStatus().equals(Status.CONFIRMED)) {
+		} else if (participantFromOurDB != null && (participantFromOurDB.getStatus().equals(Status.PAID)) || participantFromOurDB.getStatus().equals(Status.CONFIRMED)){
 			return null;
 		}
 		return null;

@@ -17,7 +17,9 @@ import org.springframework.stereotype.Service;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.xml.bind.DatatypeConverter;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Service
 public class CASService {
@@ -30,12 +32,22 @@ public class CASService {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private ChiroPloegService chiroPloegService;
+
     public String validateTicket(String ticket) {
         User user = validate(ticket);
         return createToken(user);
     }
 
     public final User validate(String ticket) {
+        //TODO remove this hardcoded list of admins
+        List<String> adminAdNumbers = new ArrayList<>();
+//        adminAdNumbers.add("152504");
+//        adminAdNumbers.add("109318");
+        adminAdNumbers.add("169314");
+        adminAdNumbers.add("386288");
+
         AttributePrincipal principal = null;
         Cas20ProxyTicketValidator sv = new Cas20ProxyTicketValidator(configuration.getBaseCasUrl());
         sv.setAcceptAnyProxy(true);
@@ -65,7 +77,13 @@ public class CASService {
             user.setAdNumber(adNumber);
             user.setEmail(email);
 
-            user.setRole(SecurityRole.ADMIN);
+            if(adminAdNumbers.contains(adNumber)){
+                user.setRole(SecurityRole.ADMIN);
+            } else {
+                List<String> stamNumbers = chiroPloegService.getStamNumbers(adNumber);
+                user.setRole(userService.getHighestSecurityRole(stamNumbers));
+            }
+
             userService.setCurrentUser(user);
 
             return user;
