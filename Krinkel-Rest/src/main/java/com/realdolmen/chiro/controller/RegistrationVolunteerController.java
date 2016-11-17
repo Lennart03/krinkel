@@ -92,7 +92,7 @@ public class RegistrationVolunteerController {
         }
 
 
-        Integer price = registrationVolunteerService.PRICE_IN_EUROCENTS;
+        Integer price = registrationVolunteerService.getPRICE_IN_EUROCENTS();
         String paymentUrl = mspService.getVolunteerPaymentUri(resultingVolunteer, price);
         HttpHeaders headers = new HttpHeaders();
         headers.setLocation(new URI(paymentUrl));

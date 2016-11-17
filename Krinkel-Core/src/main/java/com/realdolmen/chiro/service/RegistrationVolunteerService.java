@@ -16,26 +16,25 @@ import org.springframework.stereotype.Service;
 public class RegistrationVolunteerService {
 
     @Value("${price.volunteer}")
-    public Integer PRICE_IN_EUROCENTS;
+    private Integer PRICE_IN_EUROCENTS;
 
 
 	@Autowired
 	private RegistrationVolunteerRepository repository;
-	
-	@Autowired
-	private RegistrationCommunicationRepository registrationCommunicationRepository;
 
     @Autowired
-    private ChiroUserAdapter adapter;
+    private UserService userService;
 
     @PreAuthorize("@RegistrationVolunteerServiceSecurity.hasPermissionToSaveVolunteer(#volunteer)")
     public RegistrationVolunteer save(RegistrationVolunteer volunteer){
 //        User chiroUser = adapter.getChiroUser(volunteer.getAdNumber());
         RegistrationVolunteer volunteerFromOurDB = repository.findByAdNumber(volunteer.getAdNumber());
+        volunteer.setRegisteredBy(volunteer.getAdNumber());
 
         if(volunteerFromOurDB == null) {
 //            String stamnummer = chiroUser.getStamnummer();
 //            volunteer.setStamnumber(stamnummer);
+            userService.updateCurrentUserRegisteredStatus();
             return repository.save(volunteer);
         } else if (volunteerFromOurDB != null && volunteerFromOurDB.getStatus().equals(Status.TO_BE_PAID)){
             volunteer.setId(volunteerFromOurDB.getId());
@@ -44,5 +43,9 @@ public class RegistrationVolunteerService {
             return null;
         }
         return null;
+    }
+
+    public Integer getPRICE_IN_EUROCENTS() {
+        return PRICE_IN_EUROCENTS;
     }
 }

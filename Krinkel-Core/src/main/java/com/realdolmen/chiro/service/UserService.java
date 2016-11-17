@@ -137,4 +137,16 @@ public class UserService {
         }
         return null;
     }
+
+    public void updateCurrentUserPayStatus() {
+        User user = getCurrentUser();
+        user.setHasPaid(true);
+        setCurrentUser(user);
+    }
+
+    public void updateCurrentUserRegisteredStatus() {
+        User user = getCurrentUser();
+        user.setRegistered(true);
+        setCurrentUser(user);
+    }
 }

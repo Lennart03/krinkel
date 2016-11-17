@@ -2,7 +2,9 @@ package com.realdolmen.chiro.service;
 
 import com.realdolmen.chiro.config.CasConfiguration;
 import com.realdolmen.chiro.config.JwtConfiguration;
+import com.realdolmen.chiro.domain.RegistrationParticipant;
 import com.realdolmen.chiro.domain.SecurityRole;
+import com.realdolmen.chiro.domain.Status;
 import com.realdolmen.chiro.domain.User;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
@@ -41,13 +43,6 @@ public class CASService {
     }
 
     public final User validate(String ticket) {
-        //TODO remove this hardcoded list of admins
-        List<String> adminAdNumbers = new ArrayList<>();
-//        adminAdNumbers.add("152504");
-//        adminAdNumbers.add("109318");
-        adminAdNumbers.add("169314");
-        adminAdNumbers.add("386288");
-
         AttributePrincipal principal = null;
         Cas20ProxyTicketValidator sv = new Cas20ProxyTicketValidator(configuration.getBaseCasUrl());
         sv.setAcceptAnyProxy(true);
@@ -60,39 +55,62 @@ public class CASService {
         }
         if (principal != null) {
 
-            /**
+            /*
              * Instead of getting stuff from ChiroUserAdapter which is mock data, getting it from the principal which is exposed above ;)
              */
-
-            String firstName = principal.getAttributes().get("first_name").toString();
-            String lastName = principal.getAttributes().get("last_name").toString();
             String adNumber = principal.getAttributes().get("ad_nummer").toString();
-            String email = principal.getAttributes().get("mail").toString();
-
 
             User user = new User();
+            RegistrationParticipant registrationParticipantFromOurDB = userService.getRegistrationParticipant(adNumber);
 
-            user.setFirstname(firstName);
-            user.setLastname(lastName);
-            user.setAdNumber(adNumber);
-            user.setEmail(email);
+            if(registrationParticipantFromOurDB !=null){
+                user.setFirstname(registrationParticipantFromOurDB.getFirstName());
+                user.setLastname(registrationParticipantFromOurDB.getLastName());
+                user.setAdNumber(registrationParticipantFromOurDB.getAdNumber());
+                user.setEmail(registrationParticipantFromOurDB.getEmail());
 
-            if(adminAdNumbers.contains(adNumber)){
-                user.setRole(SecurityRole.ADMIN);
+                if(registrationParticipantFromOurDB.getStatus().equals(Status.PAID)||registrationParticipantFromOurDB.getStatus().equals(Status.CONFIRMED)){
+                    user.setHasPaid(true);
+                }else {
+                    user.setHasPaid(false);
+                }
+
+                user.setRegistered(true);
             } else {
-                List<String> stamNumbers = chiroPloegService.getStamNumbers(adNumber);
-                user.setRole(userService.getHighestSecurityRole(stamNumbers));
+                String firstName = principal.getAttributes().get("first_name").toString();
+                String lastName = principal.getAttributes().get("last_name").toString();
+                String email = principal.getAttributes().get("mail").toString();
+
+                user.setFirstname(firstName);
+                user.setLastname(lastName);
+                user.setAdNumber(adNumber);
+                user.setEmail(email);
+                user.setRegistered(false);
+                user.setHasPaid(false);
             }
 
+            user.setRole(setCorrectSecurityRole(adNumber));
             userService.setCurrentUser(user);
 
             return user;
-            // TODO: in an ideal world, cookie should only contain ad-number (and mayhaps role)
-//            return userService.getUser(
-//                    principal.getAttributes().get("ad_nummer").toString()
-//            );
         }
         return null;
+    }
+
+    private SecurityRole setCorrectSecurityRole(String adNumber){
+        //TODO remove this hardcoded list of admins
+        List<String> adminAdNumbers = new ArrayList<>();
+//        adminAdNumbers.add("152504");
+//        adminAdNumbers.add("109318");
+        adminAdNumbers.add("169314");
+        adminAdNumbers.add("386288");
+
+        if(adminAdNumbers.contains(adNumber)){
+            return SecurityRole.ADMIN;
+        } else {
+            List<String> stamNumbers = chiroPloegService.getStamNumbers(adNumber);
+            return userService.getHighestSecurityRole(stamNumbers);
+        }
     }
 
     public Boolean hasRole(final SecurityRole[] roles, final HttpServletRequest request) {
