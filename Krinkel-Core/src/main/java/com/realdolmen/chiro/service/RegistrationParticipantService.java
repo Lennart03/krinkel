@@ -42,15 +42,15 @@ public class RegistrationParticipantService {
 
 	@PreAuthorize("@RegistrationParticipantServiceSecurity.hasPermissionToSaveParticipant(#participant)")
 	public RegistrationParticipant save(RegistrationParticipant participant) {
-		// User chiroUser = userService.getUser(participant.getAdNumber());
 		RegistrationParticipant participantFromOurDB = registrationParticipantRepository
 				.findByAdNumber(participant.getAdNumber());
 
 		if(participantFromOurDB == null){
-//			String stamnummer = chiroUser.getStamnummer();
 			User currentUser = userService.getCurrentUser();
-//			participant.setStamnumber(stamnummer);
 			participant.setRegisteredBy(currentUser.getAdNumber());
+			if (participant.getAdNumber().equals(participant.getRegisteredBy())) {
+				userService.updateCurrentUserRegisteredStatus();
+			}
 			return registrationParticipantRepository.save(participant);
 		} else if (participantFromOurDB != null && participantFromOurDB.getStatus().equals(Status.TO_BE_PAID)){
 			participant.setId(participantFromOurDB.getId());
@@ -74,6 +74,7 @@ public class RegistrationParticipantService {
 			if (mspService.orderIsPaid(testOrderId)) {
 				if (participant.getAdNumber().equals(participant.getRegisteredBy())) {
 					participant.setStatus(Status.CONFIRMED);
+					userService.updateCurrentUserPayStatus();
 				} else {
 					participant.setStatus(Status.PAID);
 				}
