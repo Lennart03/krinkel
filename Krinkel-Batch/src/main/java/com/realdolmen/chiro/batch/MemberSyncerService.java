@@ -38,14 +38,14 @@ public class MemberSyncerService {
             logger.info("found " + all.size() + " participants");
 
             for (RegistrationParticipant participant: all) {
-                logger.info("Syncing participant with id: " + participant.getId());
+                logger.info("Syncing participant with id: " + participant.getId() + " and ad number " + participant.getAdNumber());
 
                 try {
                     adapter.syncUser(participant);
                     service.setUserToSynced(participant.getAdNumber());
-                    logger.info("succesfully synced user with id " + participant.getId());
+                    logger.info("succesfully synced user with id " + participant.getId() + " and ad number " + participant.getAdNumber());
                 } catch (Exception e) {
-                    logger.info("Failed to sync participant with " + participant.getId());
+                    logger.info("Failed to sync participant with " + participant.getId() + " and ad number " + participant.getAdNumber());
                 }
             }
         }

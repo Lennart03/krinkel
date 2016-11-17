@@ -21,10 +21,8 @@ import java.util.List;
 @Service
 public class RegistrationParticipantService {
 
-
 	@Value("${price.participant}")
 	private Integer PRICE_IN_EUROCENTS;
-
 
 	private Logger logger = LoggerFactory.getLogger(RegistrationParticipantService.class);
 
@@ -41,22 +39,24 @@ public class RegistrationParticipantService {
 	private MultiSafePayService mspService;
 
 	@PreAuthorize("@RegistrationParticipantServiceSecurity.hasPermissionToSaveParticipant(#participant)")
-	public RegistrationParticipant save(RegistrationParticipant participant){
-//		User chiroUser = userService.getUser(participant.getAdNumber());
-		RegistrationParticipant participantFromOurDB = registrationParticipantRepository.findByAdNumber(participant.getAdNumber());
+	public RegistrationParticipant save(RegistrationParticipant participant) {
+		// User chiroUser = userService.getUser(participant.getAdNumber());
+		RegistrationParticipant participantFromOurDB = registrationParticipantRepository
+				.findByAdNumber(participant.getAdNumber());
 
-		if(participantFromOurDB == null){
-//			String stamnummer = chiroUser.getStamnummer();
+		if (participantFromOurDB == null) {
+			// String stamnummer = chiroUser.getStamnummer();
 			User currentUser = userService.getCurrentUser();
-//			participant.setStamnumber(stamnummer);
+			// participant.setStamnumber(stamnummer);
 			participant.setRegisteredBy(currentUser.getAdNumber());
 			return registrationParticipantRepository.save(participant);
-		} else if (participantFromOurDB != null && participantFromOurDB.getStatus().equals(Status.TO_BE_PAID)){
+		} else if (participantFromOurDB != null && participantFromOurDB.getStatus().equals(Status.TO_BE_PAID)) {
 			participant.setId(participantFromOurDB.getId());
 			User currentUser = userService.getCurrentUser();
 			participantFromOurDB.setRegisteredBy(currentUser.getAdNumber());
 			return registrationParticipantRepository.save(participant);
-		} else if (participantFromOurDB != null && (participantFromOurDB.getStatus().equals(Status.PAID)) || participantFromOurDB.getStatus().equals(Status.CONFIRMED)){
+		} else if (participantFromOurDB != null && (participantFromOurDB.getStatus().equals(Status.PAID))
+				|| participantFromOurDB.getStatus().equals(Status.CONFIRMED)) {
 			return null;
 		}
 		return null;
@@ -71,8 +71,12 @@ public class RegistrationParticipantService {
 			logger.info("found participant " + participant.getAdNumber());
 
 			if (mspService.orderIsPaid(testOrderId)) {
-				participant.setStatus(Status.PAID);
-				logger.info("participant " + participant.getAdNumber() + " on status 'PAID'");
+				if (participant.getAdNumber().equals(participant.getRegisteredBy())) {
+					participant.setStatus(Status.CONFIRMED);
+				} else {
+					participant.setStatus(Status.PAID);
+				}
+				logger.info("participant " + participant.getAdNumber() + " on status '" + participant.getStatus().toString() + "'");
 
 				RegistrationCommunication registrationCommunication = new RegistrationCommunication();
 				registrationCommunication.setStatus(SendStatus.WAITING);
@@ -89,15 +93,17 @@ public class RegistrationParticipantService {
 	}
 
 	/**
-	 * Return a list of all participants within the specified group which
-	 * have a registration status of Confirmed or Paid.
+	 * Return a list of all participants within the specified group which have a
+	 * registration status of Confirmed or Paid.
 	 *
 	 * Only returns pure participants. Volunteers are ignored.
 	 *
-	 * @param stamNumber Identifier of the group.
-     */
+	 * @param stamNumber
+	 *            Identifier of the group.
+	 */
 	public List<RegistrationParticipant> findParticipantsByGroup(String stamNumber) {
-		List<RegistrationParticipant> participants = registrationParticipantRepository.findParticipantsByGroupWithStatusConfirmedOrPaid(stamNumber);
+		List<RegistrationParticipant> participants = registrationParticipantRepository
+				.findParticipantsByGroupWithStatusConfirmedOrPaid(stamNumber);
 		List<RegistrationParticipant> results = new ArrayList<>();
 		for (RegistrationParticipant participant : participants) {
 			if (!(participant instanceof RegistrationVolunteer)) {
@@ -108,13 +114,14 @@ public class RegistrationParticipantService {
 	}
 
 	/**
-	 * Return of all volunteers within the specified group which
-	 * have a registration status of Confirmed or Paid.
+	 * Return of all volunteers within the specified group which have a
+	 * registration status of Confirmed or Paid.
 	 *
 	 * @param stamNumber
-     */
+	 */
 	public List<RegistrationVolunteer> findVolunteersByGroup(String stamNumber) {
-		List<RegistrationParticipant> participants = registrationParticipantRepository.findParticipantsByGroupWithStatusConfirmedOrPaid(stamNumber);
+		List<RegistrationParticipant> participants = registrationParticipantRepository
+				.findParticipantsByGroupWithStatusConfirmedOrPaid(stamNumber);
 		List<RegistrationVolunteer> results = new ArrayList<>();
 		for (RegistrationParticipant participant : participants) {
 			if (participant instanceof RegistrationVolunteer) {
@@ -124,11 +131,11 @@ public class RegistrationParticipantService {
 		return results;
 	}
 
-    public List<RegistrationParticipant> getSyncReadyParticipants() {
-        return registrationParticipantRepository.findRegistrationParticipantsWithStatusUnsyncedAndConfirmed();
-    }
+	public List<RegistrationParticipant> getSyncReadyParticipants() {
+		return registrationParticipantRepository.findRegistrationParticipantsWithStatusUnsyncedAndConfirmed();
+	}
 
-    public void setUserToSynced(String adnumber) {
+	public void setUserToSynced(String adnumber) {
 		RegistrationParticipant user = registrationParticipantRepository.findByAdNumber(adnumber);
 		if (user.getStatus() == Status.CONFIRMED) {
 			user.setSyncStatus(SyncStatus.SYNCED);
