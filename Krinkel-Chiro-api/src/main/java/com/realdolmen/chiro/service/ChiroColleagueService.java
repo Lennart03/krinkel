@@ -25,8 +25,6 @@ import java.util.List;
 @Service
 public class ChiroColleagueService {
 
-    @Autowired
-    private UserService userService;
 
     @Value("${chiro_url}")
     private String chiroUrl;
@@ -45,40 +43,40 @@ public class ChiroColleagueService {
      * adNmber for test = 308986
      * @return JSON from Chiro
      */
-    public List<String> getColleagues(Integer adNumber) throws URISyntaxException {
+    public String getColleagues(Integer adNumber) throws URISyntaxException {
         List<String> listOfAvailableColleagues = new ArrayList<>();
 
 
         /**
          * Throws exception when the URL isn't valid, no further checks necessary because of this.
          */
-        String body = getColleaguesFromChiro(adNumber);
-
-        ObjectMapper mapper = new ObjectMapper();
-
-
-        try {
-            JsonNode jsonNode = mapper.readTree(body);
-            JsonNode values = jsonNode.get("values");
-
-            values.forEach(v -> {
-                RegistrationParticipant participant = userService.getRegistrationParticipant(v.get("adnr").asText());
-
-                if (participant != null) {
-                    if (participant.getStatus() == Status.PAID || participant.getStatus() == Status.CONFIRMED) {
-                        return;
-                    }
-                }
-
-                listOfAvailableColleagues.add(v.toString());
-            });
-
-        } catch (IOException e) {
-            // Chiro API borked..
-            logger.error("Chiro API probably broken again.");
-        }
-
-        return listOfAvailableColleagues;
+        return getColleaguesFromChiro(adNumber);
+//
+//        ObjectMapper mapper = new ObjectMapper();
+//
+//
+//        try {
+//            JsonNode jsonNode = mapper.readTree(body);
+//            JsonNode values = jsonNode.get("values");
+//
+//            values.forEach(v -> {
+//                RegistrationParticipant participant = userService.getRegistrationParticipant(v.get("adnr").asText());
+//
+//                if (participant != null) {
+//                    if (participant.getStatus() == Status.PAID || participant.getStatus() == Status.CONFIRMED) {
+//                        return;
+//                    }
+//                }
+//
+//                listOfAvailableColleagues.add(v.toString());
+//            });
+//
+//        } catch (IOException e) {
+//            // Chiro API borked..
+//            logger.error("Chiro API probably broken again.");
+//        }
+//
+//        return listOfAvailableColleagues;
     }
 
     private String getColleaguesFromChiro(Integer adNumber) throws URISyntaxException {

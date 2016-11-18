@@ -63,15 +63,15 @@ public class CASService {
             User user = new User();
             RegistrationParticipant registrationParticipantFromOurDB = userService.getRegistrationParticipant(adNumber);
 
-            if(registrationParticipantFromOurDB !=null){
+            if (registrationParticipantFromOurDB != null) {
                 user.setFirstname(registrationParticipantFromOurDB.getFirstName());
                 user.setLastname(registrationParticipantFromOurDB.getLastName());
                 user.setAdNumber(registrationParticipantFromOurDB.getAdNumber());
                 user.setEmail(registrationParticipantFromOurDB.getEmail());
 
-                if(registrationParticipantFromOurDB.getStatus().equals(Status.PAID)||registrationParticipantFromOurDB.getStatus().equals(Status.CONFIRMED)){
+                if (registrationParticipantFromOurDB.getStatus().equals(Status.PAID) || registrationParticipantFromOurDB.getStatus().equals(Status.CONFIRMED)) {
                     user.setHasPaid(true);
-                }else {
+                } else {
                     user.setHasPaid(false);
                 }
 
@@ -97,7 +97,7 @@ public class CASService {
         return null;
     }
 
-    private SecurityRole setCorrectSecurityRole(String adNumber){
+    private SecurityRole setCorrectSecurityRole(String adNumber) {
         //TODO remove this hardcoded list of admins
         List<String> adminAdNumbers = new ArrayList<>();
 //        adminAdNumbers.add("152504");
@@ -105,7 +105,7 @@ public class CASService {
         adminAdNumbers.add("169314");
         adminAdNumbers.add("386288");
 
-        if(adminAdNumbers.contains(adNumber)){
+        if (adminAdNumbers.contains(adNumber)) {
             return SecurityRole.ADMIN;
         } else {
             List<String> stamNumbers = chiroPloegService.getStamNumbers(adNumber);
@@ -118,7 +118,7 @@ public class CASService {
                 .setSigningKey(DatatypeConverter.parseBase64Binary(jwtConfig.getJwtSecret()))
                 .parseClaimsJws(getTokenFromCookie(request.getCookies())).getBody();
         if (claims != null) {
-            for(SecurityRole role:roles){
+            for (SecurityRole role : roles) {
                 if (claims.get("role").toString().equals(role.toString())) {
                     return true;
                 }
@@ -127,7 +127,7 @@ public class CASService {
         return false;
     }
 
-    public Cookie createCookie(String jwt){
+    public Cookie createCookie(String jwt) {
         Cookie myCookie = new Cookie("Authorization", jwt);
         myCookie.setPath("/");
         myCookie.setMaxAge(-1);

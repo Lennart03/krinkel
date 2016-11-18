@@ -81,6 +81,7 @@ public class RegistrationParticipant {
     @Enumerated(EnumType.STRING)
     private SyncStatus syncStatus = SyncStatus.UNSYNCED;
 
+
     /**
      * Only numbers, spaces and optionally a '+' sign are allowed.
      * Front end does more thorough checking.

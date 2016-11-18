@@ -16,8 +16,8 @@ import java.util.List;
 @RestController
 public class ChiroColleagueController {
 
-    @Autowired
-    private ChiroColleagueService chiroColleagueService;
+//    @Autowired
+//    private ChiroColleagueService chiroColleagueService;
 
     @Autowired
     private UserService userService;
@@ -29,7 +29,7 @@ public class ChiroColleagueController {
     public List<String> getColleagues() {
         try {
             //TODO CHANGE THE NEXT LINE, THIS IS DUMMY! CHIRO STUFF DOESN'T WORK YET, NO RESULTS OTHERWISE
-            return chiroColleagueService.getColleagues(221826);
+            return userService.getColleagues(221826);
 //            return chiroColleagueService.getColleagues(
 //                    Integer.parseInt(
 //                            userService.getCurrentUser().getAdNumber()));
