@@ -33,7 +33,7 @@ public class MemberSyncerService {
         List<RegistrationParticipant> all = service.getSyncReadyParticipants();
 
         if (all.isEmpty()) {
-            logger.info("Couldn't find any registrations for participants");
+//            logger.info("Couldn't find any registrations for participants");
         } else {
             logger.info("found " + all.size() + " participants");
 

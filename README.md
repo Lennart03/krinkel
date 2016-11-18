@@ -5,6 +5,8 @@
 ## Module dependencies
 ![alt tag](http://i.imgur.com/Pj9z23V.png)
 
+## ERD
+![alt tag](http://i.imgur.com/dyYmUBP.png)
 
 
 ## Links
