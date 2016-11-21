@@ -29,12 +29,12 @@ export class AuthService {
         return this.user.role;
     }
 
-    //TODO: make this into a real thing(with rest call)
-    getRegistrationStatus() {
-        this.getUserFromStorage();
-        //return this.user.subscribed;
-        return false;
-    }
+    //TODO: remove
+    // getRegistrationStatus() {
+    //     this.getUserFromStorage();
+    //     //return this.user.subscribed;
+    //     return false;
+    // }
 
     getUserFromStorage() {
         var jwt = this.getToken('Authorization');

@@ -101,30 +101,6 @@ public class RegistrationParticipantServiceTest {
     }
 
     @Test
-    public void saveShouldAskChiroAdapterForStamnrOfParticipantBeingSaved() {
-        Mockito.when(userService.getUser(TEST_AD_NUMBER)).thenReturn(user);
-        Mockito.when(userService.getCurrentUser()).thenReturn(user);
-        Mockito.when(repo.findByAdNumber(TEST_AD_NUMBER)).thenReturn(null);
-
-        // make repo save method return its argument
-        Mockito.when(repo.save(Mockito.any(RegistrationParticipant.class))).thenAnswer(new Answer<RegistrationParticipant>() {
-            @Override
-            public RegistrationParticipant answer(InvocationOnMock invocation) throws Throwable {
-                Object[] args = invocation.getArguments();
-                return (RegistrationParticipant) args[0];
-            }
-        });
-
-        participant.setAdNumber(TEST_AD_NUMBER);
-        participant.setStamnumber("aojefaef;hjpaioefj");
-
-        RegistrationParticipant p = registrationParticipantService.save(participant);
-        Mockito.verify(userService, times(1)).getUser(TEST_AD_NUMBER);
-        Assert.assertEquals(TEST_STAMNR, p.getStamnumber());
-    }
-
-
-    @Test
     public void updatePaymentStatusCallsMultiSafePayServiceWithCorrectOrderId() {
         Mockito.when(repo.findByAdNumber(TEST_AD_NUMBER)).thenReturn(participant);
         registrationParticipantService.updatePaymentStatus(TEST_ORDER_ID);

@@ -2,8 +2,8 @@ package com.realdolmen.chiro.controller;
 
 import com.realdolmen.chiro.config.SecurityFilterTestConfig;
 import com.realdolmen.chiro.domain.*;
-import com.realdolmen.chiro.repository.RegistrationVolunteerRepository;
 import com.realdolmen.chiro.domain.mothers.RegistrationVolunteerMother;
+import com.realdolmen.chiro.repository.RegistrationVolunteerRepository;
 import com.realdolmen.chiro.spring_test.MockMvcTest;
 import org.hamcrest.Matchers;
 import org.junit.Before;
@@ -58,12 +58,6 @@ public class RegistrationVolunteerControllerMockTest extends MockMvcTest {
     }
 
     @Test
-    public void resultingJSONShouldUseCorrectDateFormat() throws Exception {
-        mockMvc().perform(MockMvcRequestBuilders.get("/api/volunteers"))
-                .andExpect(MockMvcResultMatchers.content().string(Matchers.containsString("\"birthdate\":\"1995-08-05\",")));
-    }
-
-    @Test
     public void saveMethodCreatesNewRegistration() throws Exception {
         String jsonPayload = json(volunteer);
 
@@ -79,9 +73,7 @@ public class RegistrationVolunteerControllerMockTest extends MockMvcTest {
     }
 
     @Test
-    @Ignore
-    // TODO: Reevaluate life goals and fix this test.
-    public void savingRegistrationWithDuplicateADNumberFails() throws Exception {
+    public void savingRegistrationWithDuplicateADNumberDoesNotFailWhileNotPaid() throws Exception {
         String jsonPayload = json(volunteer);
 
         mockMvc()
@@ -99,7 +91,7 @@ public class RegistrationVolunteerControllerMockTest extends MockMvcTest {
                         MockMvcRequestBuilders.post("/api/volunteers")
                                 .contentType(MediaType.APPLICATION_JSON_UTF8)
                                 .content(jsonPayload))
-                .andExpect(MockMvcResultMatchers.status().is4xxClientError());
+                .andExpect(MockMvcResultMatchers.status().is2xxSuccessful());
 
         assertEquals(nVolunteers+1, repo.findAll().size());
     }
