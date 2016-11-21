@@ -6,9 +6,9 @@
 
     <div ng-if="$ctrl.AuthService.getLoggedinUser() != null">
         <!--<li>-->
-            <!--<a class="subheader">-->
-                <!--Inschrijven-->
-            <!--</a>-->
+        <!--<a class="subheader">-->
+        <!--Inschrijven-->
+        <!--</a>-->
         <!--</li>-->
         <li class="collection-item" ng-if="$ctrl.getUserDetails().hasPaid == false">
             <a href="/register-participant">
@@ -46,7 +46,7 @@
         </li>
 
         <!--<li>-->
-            <!--<br/>-->
+        <!--<br/>-->
         <!--</li>-->
         <li>
             <div class="divider">
@@ -61,17 +61,21 @@
         <li>
             <br/>
         </li>
-        <li class="logo">
+        <a href="http://www.realdolmen.com/" target="_blank">
             <div class="center-align col l12">
-                <object data="http://www.realdolmen.com/themes/itr_theme/images/dest/svg/sprite/individual/logo.svg" type="image/svg+xml">
-                    <!--<img src="yourfallback.jpg" />-->
-                </object>
+
+                <img src="http://www.realdolmen.com/themes/itr_theme/images/dest/svg/sprite/individual/logo.svg"/>
+                <!--<object data="http://www.realdolmen.com/themes/itr_theme/images/dest/svg/sprite/individual/logo.svg"-->
+                <!--type="image/svg+xml">-->
+                <!--&lt;!&ndash;<img src="yourfallback.jpg" />&ndash;&gt;-->
+                <!--</object>-->
+
                 <!--<div id="rd-logo" class="col l12 bottom brand-logo">-->
-                    <!--&lt;!&ndash;<img src={require("../../../res/r.jpg")} class="bottom" style="">&ndash;&gt;-->
+                <!--&lt;!&ndash;<img src={require("../../../res/r.jpg")} class="bottom" style="">&ndash;&gt;-->
                 <!--</div>-->
             </div>
-            <!--<a id="logo-container-rd"  class="brand-logo"></a>-->
-        </li>
+        </a>
+        <!--<a id="logo-container-rd"  class="brand-logo"></a>-->
 
     </div>
 
