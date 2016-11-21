@@ -19,6 +19,7 @@ public class LoginLogAdvice {
 
     /**
      * Register that a login has occurred for reporting purposes.
+     *
      * @param user
      */
     @Before("execution(String com.realdolmen.chiro.service.CASService.createToken(com.realdolmen.chiro.domain.User)) && args(user)")

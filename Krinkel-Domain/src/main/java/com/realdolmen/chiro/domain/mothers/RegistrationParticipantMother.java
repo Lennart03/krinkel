@@ -9,15 +9,15 @@ import java.util.Calendar;
  */
 public class RegistrationParticipantMother {
 
-    private RegistrationParticipantMother(){
+    private RegistrationParticipantMother() {
         // Hide constructor.
     }
 
-    public static RegistrationParticipant createBasicRegistrationParticipant(){
+    public static RegistrationParticipant createBasicRegistrationParticipant() {
         return RegistrationParticipantMother.basicRegistrationParticipantBuilder().build();
     }
 
-    public static RegistrationParticipant.RegistrationParticipantBuilder basicRegistrationParticipantBuilder(){
+    public static RegistrationParticipant.RegistrationParticipantBuilder basicRegistrationParticipantBuilder() {
         Calendar c = Calendar.getInstance();
         c.set(1979, Calendar.SEPTEMBER, 19);
 
@@ -35,7 +35,7 @@ public class RegistrationParticipantMother {
                 .eatinghabbit(Eatinghabbit.VEGI)
                 .role(EventRole.ASPI)
                 .address(
-                        new Address("Little Whinging street","32", 1380, "Waterloo")
+                        new Address("Little Whinging street", "32", 1380, "Waterloo")
                 );
 
         return builder;

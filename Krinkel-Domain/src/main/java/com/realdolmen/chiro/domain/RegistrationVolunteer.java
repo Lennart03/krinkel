@@ -34,10 +34,11 @@ public class RegistrationVolunteer extends RegistrationParticipant {
     @ManyToMany(fetch = FetchType.EAGER)
     private List<PostCamp> postCampList = new ArrayList<>();
 
-    public RegistrationVolunteer() {}
+    public RegistrationVolunteer() {
+    }
 
-    public RegistrationVolunteer(String adNumber, String email, String firstName, String lastName, Date birthdate, String stamnumber, Gender gender, EventRole eventRole, Eatinghabbit eatinghabbit, CampGround campGround, VolunteerFunction function,String emailSubscriber) {
-        super(adNumber, email, firstName, lastName, birthdate, stamnumber, gender, eventRole, eatinghabbit,emailSubscriber);
+    public RegistrationVolunteer(String adNumber, String email, String firstName, String lastName, Date birthdate, String stamnumber, Gender gender, EventRole eventRole, Eatinghabbit eatinghabbit, CampGround campGround, VolunteerFunction function, String emailSubscriber) {
+        super(adNumber, email, firstName, lastName, birthdate, stamnumber, gender, eventRole, eatinghabbit, emailSubscriber);
         this.campGround = campGround;
         this.function = function;
     }
@@ -74,11 +75,11 @@ public class RegistrationVolunteer extends RegistrationParticipant {
         this.postCampList = postCampList;
     }
 
-    public void addPostCamp(PostCamp postCamp){
+    public void addPostCamp(PostCamp postCamp) {
         this.postCampList.add(postCamp);
     }
 
-    public void addPreCamp(PreCamp preCamp){
+    public void addPreCamp(PreCamp preCamp) {
         this.preCampList.add(preCamp);
     }
 }

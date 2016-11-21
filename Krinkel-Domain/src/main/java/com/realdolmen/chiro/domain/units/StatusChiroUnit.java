@@ -4,12 +4,12 @@ package com.realdolmen.chiro.domain.units;
  * Created by WVDAZ49 on 13/10/2016.
  */
 public class StatusChiroUnit {
-    private Integer participantsConfirmed=0;
-    private Integer volunteersConfirmed=0;
-    private Integer participantsNotConfirmed=0;
-    private Integer volunteersNotConfirmed=0;
-    private Integer participantsNotPaid=0;
-    private Integer volunteersNotPaid=0;
+    private Integer participantsConfirmed = 0;
+    private Integer volunteersConfirmed = 0;
+    private Integer participantsNotConfirmed = 0;
+    private Integer volunteersNotConfirmed = 0;
+    private Integer participantsNotPaid = 0;
+    private Integer volunteersNotPaid = 0;
 
     public StatusChiroUnit() {
     }

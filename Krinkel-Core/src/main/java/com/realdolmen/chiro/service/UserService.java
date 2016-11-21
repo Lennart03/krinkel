@@ -33,30 +33,18 @@ public class UserService {
 
     private User currentUser;
 
-    //TODO this is only used in (wrong) tests. It has to go
+    // TODO
+    // TODO
+    // TODO
+    // TODO
+    // TODO this is only used in (wrong) tests. It has to go
     public User getUser(String adNumber) {
-//
-//        User u = adapter.getChiroUser(adNumber);
-//
-//        if (u != null) {
-//            RegistrationParticipant participant = repo.findByAdNumber(u.getAdNumber());
-//
-//            if (participant != null) {
-//                u.setRegistered(true);
-//
-//                if (participant.getStatus().equals(Status.PAID) || participant.getStatus().equals(Status.CONFIRMED))
-//                    u.setHasPaid(true);
-//            }
-//
-//            this.setSecurityRole(u);
-//        }
-
-//        return u;
         return null;
     }
 
     /**
      * get a participant or volunteer from our DB
+     *
      * @param adNumber
      * @return a participant or volunteer from our DB
      */
@@ -66,7 +54,7 @@ public class UserService {
         return participant;
     }
 
-    public SecurityRole getSecurityRole(String stamNumber){
+    public SecurityRole getSecurityRole(String stamNumber) {
         if (stamNumber.matches("NAT\\/0000")) {
             return SecurityRole.NATIONAAL;
         } else if (stamNumber.matches("[A-Z]+ /0000")) {
@@ -81,13 +69,14 @@ public class UserService {
 
     /**
      * get the securityRole with the most privileges
+     *
      * @param stamNumbers
      * @return securityRole with the most privileges
      */
-    public SecurityRole getHighestSecurityRole(List<String> stamNumbers){
+    public SecurityRole getHighestSecurityRole(List<String> stamNumbers) {
         SecurityRole highestRole = SecurityRole.GROEP;
-        for(String currentStamNumber: stamNumbers){
-            if(getSecurityRole(currentStamNumber).getValue() > highestRole.getValue()){
+        for (String currentStamNumber : stamNumbers) {
+            if (getSecurityRole(currentStamNumber).getValue() > highestRole.getValue()) {
                 highestRole = getSecurityRole(currentStamNumber);
             }
         }
@@ -97,25 +86,27 @@ public class UserService {
 
     /**
      * This is legacy code, just let it be
+     *
      * @param context
      * @return current user
      */
-    public User getCurrentUser(HttpServletRequest context){
+    public User getCurrentUser(HttpServletRequest context) {
         return getCurrentUser();
     }
 
     /**
      * @return current user
      */
-    public User getCurrentUser(){
+    public User getCurrentUser() {
         return currentUser;
     }
 
     /**
      * set the current user. we do this to avoid using the db to much
+     *
      * @param currentUser
      */
-    public void setCurrentUser(User currentUser){
+    public void setCurrentUser(User currentUser) {
         this.currentUser = currentUser;
     }
 
@@ -140,6 +131,7 @@ public class UserService {
 
     /**
      * Get colleagues from ChiroColleagueService and remove the colleagues who are already subscribed.
+     *
      * @param adNumber
      * @return
      * @throws URISyntaxException
@@ -155,8 +147,6 @@ public class UserService {
         try {
             JsonNode jsonNode = mapper.readTree(body);
             JsonNode values = jsonNode.get("values");
-
-
 
 
             values.forEach(v -> {

@@ -12,10 +12,9 @@ public class StamNumberTrimmer {
      * @return Normalized stamNumber or empty string if the input is null.
      */
     public String trim(String stam) {
-        if(stam == null){
+        if (stam == null) {
             return "";
-        }
-        else {
+        } else {
             return stam.replace("/", "")
                     .replace("\\s", "")
                     .replace(" ", "");

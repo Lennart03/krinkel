@@ -17,16 +17,15 @@ public class AuthTokenFinder {
         final String authHeader = request.getHeader("Authorization");
 
         String token;
-        if(authHeader != null && authHeader.startsWith("Bearer ")){
+        if (authHeader != null && authHeader.startsWith("Bearer ")) {
             token = authHeader.substring(7); // The part after "Bearer "
-        }
-        else{
+        } else {
             Cookie authenticationCookie = getAuthenticationCookie(request.getCookies());
             String authCookieToken = authenticationCookie.getValue();
             token = authCookieToken;
         }
 
-        if(token == null){
+        if (token == null) {
             throw new AuthTokenNotFoundException("No authentication header or cookie found");
         }
 
@@ -42,7 +41,7 @@ public class AuthTokenFinder {
     protected Cookie getAuthenticationCookie(Cookie[] cookies) throws AuthTokenNotFoundException {
         Cookie authCookie = null;
 
-        if(cookies != null) {
+        if (cookies != null) {
             for (Cookie cookie : cookies) {
                 if (cookie.getName().equals("Authorization")) {
                     authCookie = cookie;
@@ -50,10 +49,9 @@ public class AuthTokenFinder {
             }
         }
 
-        if(authCookie != null){
+        if (authCookie != null) {
             return authCookie;
-        }
-        else {
+        } else {
             throw new AuthTokenNotFoundException("No authentication header or cookie found");
         }
     }

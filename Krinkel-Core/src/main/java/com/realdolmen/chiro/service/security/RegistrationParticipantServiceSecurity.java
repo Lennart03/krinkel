@@ -16,7 +16,7 @@ public class RegistrationParticipantServiceSecurity {
     @Autowired
     private ChiroColleagueService chiroColleagueService;
 
-    public boolean hasPermissionToSaveParticipant(RegistrationParticipant participant){
+    public boolean hasPermissionToSaveParticipant(RegistrationParticipant participant) {
 //        Boolean areColleagues = false;
         User currentUser = userService.getCurrentUser();
 //        if(currentUser != null){

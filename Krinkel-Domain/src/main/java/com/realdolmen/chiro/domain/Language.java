@@ -7,7 +7,7 @@ public enum Language {
 
     private String description;
 
-    private Language(String description){
+    private Language(String description) {
         this.description = description;
     }
 

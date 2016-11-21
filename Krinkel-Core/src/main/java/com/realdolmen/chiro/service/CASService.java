@@ -37,11 +37,18 @@ public class CASService {
     @Autowired
     private ChiroPloegService chiroPloegService;
 
+
+
     public String validateTicket(String ticket) {
         User user = validate(ticket);
         return createToken(user);
     }
 
+    /**
+     * Validates the CAS ticket. The current CAS user is set from this method.
+     * @param ticket
+     * @return
+     */
     public final User validate(String ticket) {
         AttributePrincipal principal = null;
         Cas20ProxyTicketValidator sv = new Cas20ProxyTicketValidator(configuration.getBaseCasUrl());
@@ -55,7 +62,7 @@ public class CASService {
         }
         if (principal != null) {
 
-            /*
+            /**
              * Instead of getting stuff from ChiroUserAdapter which is mock data, getting it from the principal which is exposed above ;)
              */
             String adNumber = principal.getAttributes().get("ad_nummer").toString();
@@ -63,12 +70,18 @@ public class CASService {
             User user = new User();
             RegistrationParticipant registrationParticipantFromOurDB = userService.getRegistrationParticipant(adNumber);
 
+            /**
+             *  Checks if the logged in user is in our DB (user has already paid or at least tried to pay)
+             */
             if (registrationParticipantFromOurDB != null) {
                 user.setFirstname(registrationParticipantFromOurDB.getFirstName());
                 user.setLastname(registrationParticipantFromOurDB.getLastName());
                 user.setAdNumber(registrationParticipantFromOurDB.getAdNumber());
                 user.setEmail(registrationParticipantFromOurDB.getEmail());
 
+                /**
+                 * Set hasPaid based on status
+                 */
                 if (registrationParticipantFromOurDB.getStatus().equals(Status.PAID) || registrationParticipantFromOurDB.getStatus().equals(Status.CONFIRMED)) {
                     user.setHasPaid(true);
                 } else {
@@ -77,6 +90,9 @@ public class CASService {
 
                 user.setRegistered(true);
             } else {
+                /**
+                 * Reached when the logged in user is not in our DB (this means he hasn't tried to pay yet)
+                 */
                 String firstName = principal.getAttributes().get("first_name").toString();
                 String lastName = principal.getAttributes().get("last_name").toString();
                 String email = principal.getAttributes().get("mail").toString();
@@ -97,8 +113,13 @@ public class CASService {
         return null;
     }
 
+    /**
+     * Sets the correct security role of the currently logged in user
+     * @param adNumber
+     * @return
+     */
     private SecurityRole setCorrectSecurityRole(String adNumber) {
-        //TODO remove this hardcoded list of admins
+        //TODO change this hardcoded list of admins (in db & stuff)
         List<String> adminAdNumbers = new ArrayList<>();
 //        adminAdNumbers.add("152504");
 //        adminAdNumbers.add("109318");
@@ -112,6 +133,8 @@ public class CASService {
             return userService.getHighestSecurityRole(stamNumbers);
         }
     }
+
+
 
     public Boolean hasRole(final SecurityRole[] roles, final HttpServletRequest request) {
         Claims claims = Jwts.parser()
@@ -144,7 +167,6 @@ public class CASService {
     }
 
     public String createToken(User user) {
-        //newLogin(data);
         return Jwts.builder()
                 .setSubject(user.getUsername())
                 .claim("firstname", user.getFirstname())

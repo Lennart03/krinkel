@@ -13,63 +13,63 @@ import javax.validation.constraints.NotNull;
 import org.hibernate.validator.constraints.NotBlank;
 
 @Entity
-@Table(name="registration_communication")
+@Table(name = "registration_communication")
 public class RegistrationCommunication {
-	
-	@Id
-	@GeneratedValue
-	private Long id;
-	
-	@Column(unique = true)
-	@NotBlank
+
+    @Id
+    @GeneratedValue
+    private Long id;
+
+    @Column(unique = true)
+    @NotBlank
     private String adNumber;
-	
-	@NotNull
-	@Enumerated(EnumType.STRING)
-	private SendStatus status = SendStatus.WAITING;
-	
-	@Min(0)
-	private int communicationAttempt = 0;
 
-	public RegistrationCommunication() {
-	}
+    @NotNull
+    @Enumerated(EnumType.STRING)
+    private SendStatus status = SendStatus.WAITING;
 
-	public RegistrationCommunication(String adNumber, SendStatus status, int communicationAttempt) {
-		this.adNumber = adNumber;
-		this.status = status;
-		this.communicationAttempt = communicationAttempt;
-	}
+    @Min(0)
+    private int communicationAttempt = 0;
 
-	public Long getId() {
-		return id;
-	}
-	
-	public void setId(Long id) {
-		this.id = id;
-	}
+    public RegistrationCommunication() {
+    }
 
-	public String getAdNumber() {
-		return adNumber;
-	}
+    public RegistrationCommunication(String adNumber, SendStatus status, int communicationAttempt) {
+        this.adNumber = adNumber;
+        this.status = status;
+        this.communicationAttempt = communicationAttempt;
+    }
 
-	public void setAdNumber(String adNumber) {
-		this.adNumber = adNumber;
-	}
+    public Long getId() {
+        return id;
+    }
 
-	public SendStatus getStatus() {
-		return status;
-	}
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-	public void setStatus(SendStatus status) {
-		this.status = status;
-	}
+    public String getAdNumber() {
+        return adNumber;
+    }
 
-	public int getCommunicationAttempt() {
-		return communicationAttempt;
-	}
+    public void setAdNumber(String adNumber) {
+        this.adNumber = adNumber;
+    }
 
-	public void setCommunicationAttempt(int communicationAttempt) {
-		this.communicationAttempt = communicationAttempt;
-	}
+    public SendStatus getStatus() {
+        return status;
+    }
+
+    public void setStatus(SendStatus status) {
+        this.status = status;
+    }
+
+    public int getCommunicationAttempt() {
+        return communicationAttempt;
+    }
+
+    public void setCommunicationAttempt(int communicationAttempt) {
+        this.communicationAttempt = communicationAttempt;
+    }
 
 }

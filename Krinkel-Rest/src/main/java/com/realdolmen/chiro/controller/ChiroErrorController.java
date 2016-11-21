@@ -11,7 +11,7 @@ import java.io.IOException;
  * This controller will catch all 404 errors on the server and redirect to root.
  */
 @RestController
-public class ChiroErrorController implements ErrorController{
+public class ChiroErrorController implements ErrorController {
     private static final String PATH = "/error";
 
     @RequestMapping(value = PATH)

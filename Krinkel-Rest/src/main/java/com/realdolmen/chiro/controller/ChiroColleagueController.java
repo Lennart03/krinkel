@@ -16,13 +16,8 @@ import java.util.List;
 @RestController
 public class ChiroColleagueController {
 
-//    @Autowired
-//    private ChiroColleagueService chiroColleagueService;
-
     @Autowired
     private UserService userService;
-
-
 
 
     @RequestMapping("/api/colleagues")

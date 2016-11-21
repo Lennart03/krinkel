@@ -21,17 +21,16 @@ import javax.servlet.http.HttpServletResponse;
  */
 @Component
 @Aspect
-public class  AuthRoleFilter {
+public class AuthRoleFilter {
     @Autowired
     private CASService service;
 
     @Around(value = "@annotation(annotation)")
-    public Object checkAuthRole(final ProceedingJoinPoint jp,final AuthRole annotation) throws Throwable {
+    public Object checkAuthRole(final ProceedingJoinPoint jp, final AuthRole annotation) throws Throwable {
         HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes()).getRequest();
-        if(!service.hasRole(annotation.roles(), request)){
+        if (!service.hasRole(annotation.roles(), request)) {
             throw new SecurityException();
-        }
-        else{
+        } else {
             return jp.proceed();
         }
     }

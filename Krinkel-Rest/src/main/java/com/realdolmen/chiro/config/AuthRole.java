@@ -10,6 +10,7 @@ import java.lang.annotation.Target;
 
 /**
  * Example:
+ *
  * @AuthRole(role = { SecurityRole.ADMIN })
  * public void someMethod(){}
  */

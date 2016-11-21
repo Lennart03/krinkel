@@ -89,9 +89,10 @@ public class RegistrationParticipant {
     @Pattern(regexp = "^\\+*[0-9\\s]*$")
     private String phoneNumber;
 
-    public RegistrationParticipant() {}
+    public RegistrationParticipant() {
+    }
 
-    public RegistrationParticipant(String adNumber, String email, String firstName, String lastName, Date birthdate, String stamnumber, Gender gender, EventRole eventRole, Eatinghabbit eatinghabbit,String emailSubscriber) {
+    public RegistrationParticipant(String adNumber, String email, String firstName, String lastName, Date birthdate, String stamnumber, Gender gender, EventRole eventRole, Eatinghabbit eatinghabbit, String emailSubscriber) {
         this.adNumber = adNumber;
         this.email = email;
         this.emailSubscriber = email;
@@ -126,7 +127,7 @@ public class RegistrationParticipant {
         this.language = builder.language;
     }
 
-    public boolean isRegisteredByOther(){
+    public boolean isRegisteredByOther() {
         return !this.getAdNumber().equals(this.registeredBy);
     }
 
@@ -327,7 +328,7 @@ public class RegistrationParticipant {
         private Status status = Status.TO_BE_PAID;
         private String phoneNumber;
 
-        public RegistrationParticipant build(){
+        public RegistrationParticipant build() {
             return new RegistrationParticipant(this);
         }
 

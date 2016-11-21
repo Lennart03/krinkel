@@ -1,6 +1,6 @@
 package com.realdolmen.chiro.domain;
 
-public enum  SecurityRole {
+public enum SecurityRole {
     ADMIN(4),
     NATIONAAL(3),
     VERBOND(2),
@@ -9,11 +9,11 @@ public enum  SecurityRole {
 
     private int value;
 
-    private SecurityRole(int value){
+    private SecurityRole(int value) {
         this.value = value;
     }
 
-    public int getValue(){
+    public int getValue() {
         return value;
     }
 }

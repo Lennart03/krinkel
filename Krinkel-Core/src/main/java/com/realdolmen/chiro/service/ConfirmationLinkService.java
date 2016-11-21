@@ -40,14 +40,14 @@ public class ConfirmationLinkService {
     public boolean checkToken(String adNumber, String token) {
         boolean isSuccess = false;
         ConfirmationLink confirmationLink = confirmationLinkRepository.findByAdNumber(adNumber);
-        if(confirmationLink == null){
+        if (confirmationLink == null) {
             return isSuccess;
         }
 
         if (confirmationLink.getToken().equals(token)) {
             RegistrationParticipant registration = registrationParticipantRepository.findByAdNumber(adNumber);
 
-            if(registration.getStatus().equals(Status.PAID)){
+            if (registration.getStatus().equals(Status.PAID)) {
                 registration.setStatus(Status.CONFIRMED);
                 registrationParticipantRepository.save(registration);
                 isSuccess = true;
@@ -57,15 +57,15 @@ public class ConfirmationLinkService {
     }
 
     public ConfirmationLink createConfirmationLink(String adNumber) throws DuplicateEntryException {
-        if(confirmationLinkRepository.findByAdNumber(adNumber) != null){
+        if (confirmationLinkRepository.findByAdNumber(adNumber) != null) {
             throw new DuplicateEntryException("Confirmation link for this AD number already exists!");
         }
-        return confirmationLinkRepository.save( new ConfirmationLink(adNumber, this.generateToken()));
+        return confirmationLinkRepository.save(new ConfirmationLink(adNumber, this.generateToken()));
     }
 
-    public String generateURLFromConfirmationLink(ConfirmationLink link){
+    public String generateURLFromConfirmationLink(ConfirmationLink link) {
         return "http://" + serverConfiguration.getServerHostname() +
-                        ":" + serverConfiguration.getServerPort() +
+                ":" + serverConfiguration.getServerPort() +
                 "/confirmation?ad=" + link.getAdNumber() + "&token=" + link.getToken();
     }
 }
