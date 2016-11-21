@@ -1,4 +1,4 @@
-package com.realdolmen.chiro.config;
+package com.realdolmen.chiro.auth;
 
 public class AuthTokenNotFoundException extends Exception {
 

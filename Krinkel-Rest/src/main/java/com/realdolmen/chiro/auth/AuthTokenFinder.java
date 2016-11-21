@@ -1,4 +1,7 @@
-package com.realdolmen.chiro.config;
+package com.realdolmen.chiro.auth;
+
+import com.realdolmen.chiro.auth.AuthToken;
+import com.realdolmen.chiro.auth.AuthTokenNotFoundException;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;

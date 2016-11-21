@@ -1,20 +1,16 @@
-package com.realdolmen.chiro.config;
+package com.realdolmen.chiro.auth;
 
+import com.realdolmen.chiro.auth.AuthRole;
 import com.realdolmen.chiro.service.CASService;
-import com.realdolmen.chiro.service.UserService;
-import org.aopalliance.intercept.Joinpoint;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
-import org.springframework.web.context.request.ServletWebRequest;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 /**
  * Checks the role of the logged in user for methods annotated with @AuthRole.

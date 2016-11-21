@@ -1,4 +1,4 @@
-package com.realdolmen.chiro.config;
+package com.realdolmen.chiro.auth;
 
 import com.realdolmen.chiro.domain.EventRole;
 import com.realdolmen.chiro.domain.SecurityRole;

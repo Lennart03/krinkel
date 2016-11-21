@@ -1,5 +1,8 @@
 package com.realdolmen.chiro.config;
 
+import com.realdolmen.chiro.auth.AuthToken;
+import com.realdolmen.chiro.auth.AuthTokenFinder;
+import com.realdolmen.chiro.auth.AuthTokenNotFoundException;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureException;
