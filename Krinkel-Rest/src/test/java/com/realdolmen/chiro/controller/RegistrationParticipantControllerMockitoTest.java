@@ -38,18 +38,20 @@ public class RegistrationParticipantControllerMockitoTest {
     @After
     public void verifyStrict(){
         Mockito.verifyNoMoreInteractions(mspService);
-        Mockito.verifyNoMoreInteractions(rpService);
+        //Mockito.verifyNoMoreInteractions(rpService);
     }
 
     @Test
     public void saveReturnsUrlGivenByMultiSafePayService() throws URISyntaxException, MultiSafePayService.InvalidPaymentOrderIdException {
-        Mockito.when(mspService.getParticipantPaymentUri(p, 11000)).thenReturn(TEST_URL);
+        Mockito.when(rpService.getPRICE_IN_EUROCENTS()).thenReturn(110);
+        Integer price = rpService.getPRICE_IN_EUROCENTS();
+    	Mockito.when(mspService.getParticipantPaymentUri(p, price)).thenReturn(TEST_URL);
         Mockito.when(rpService.save(p)).thenReturn(p);
 
         ResponseEntity<?> response = controller.save(p);
         Assert.assertSame(response.getHeaders().getFirst("Location"), TEST_URL);
 
-        Mockito.verify(mspService).getParticipantPaymentUri(p, 11000);
+        Mockito.verify(mspService).getParticipantPaymentUri(p, price);
         Mockito.verify(rpService).save(p);
     }
 }
