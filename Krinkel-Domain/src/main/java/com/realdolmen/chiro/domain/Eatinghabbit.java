@@ -7,7 +7,7 @@ public enum Eatinghabbit {
 
     private String description;
 
-    private Eatinghabbit(String description){
+    private Eatinghabbit(String description) {
         this.description = description;
     }
 

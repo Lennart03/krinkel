@@ -1,4 +1,4 @@
-package com.realdolmen.chiro.config;
+package com.realdolmen.chiro.auth;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -7,7 +7,6 @@ import javax.servlet.http.Cookie;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
 
 public class AuthTokenFinderTest {
     private Cookie[] cookies;

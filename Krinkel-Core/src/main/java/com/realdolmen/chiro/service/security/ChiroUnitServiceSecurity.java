@@ -11,37 +11,37 @@ public class ChiroUnitServiceSecurity {
     @Autowired
     UserService userService;
 
-    public boolean hasPermissionToGetColleagues(){
+    public boolean hasPermissionToGetColleagues() {
         User currentUser = userService.getCurrentUser();
 
         return currentUser != null;
     }
 
-    public boolean hasPermissionToSeeColleagues(User user){
+    public boolean hasPermissionToSeeColleagues(User user) {
         User currentUser = userService.getCurrentUser();
 
         return currentUser != null && currentUser.getStamnummer().equals(user.getStamnummer());
     }
 
-    public boolean hasPermissionToGetVolunteers(){
+    public boolean hasPermissionToGetVolunteers() {
         User currentUser = userService.getCurrentUser();
 
         return currentUser != null && currentUser.getRole().equals(SecurityRole.ADMIN);
     }
 
-    public boolean hasPermissionToGetParticipants(){
+    public boolean hasPermissionToGetParticipants() {
         User currentUser = userService.getCurrentUser();
 
         return currentUser != null && currentUser.getRole().equals(SecurityRole.ADMIN);
     }
 
-    public boolean hasPermissionToFindUnits(){
+    public boolean hasPermissionToFindUnits() {
         User currentUser = userService.getCurrentUser();
 
         return currentUser != null && currentUser.getRole().equals(SecurityRole.ADMIN);
     }
 
-    public boolean hasPermissionToFindVerbonden(){
+    public boolean hasPermissionToFindVerbonden() {
         User currentUser = userService.getCurrentUser();
 
         return currentUser != null && currentUser.getRole().equals(SecurityRole.ADMIN);

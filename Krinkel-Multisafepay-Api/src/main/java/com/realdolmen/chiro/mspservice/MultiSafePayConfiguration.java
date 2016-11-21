@@ -42,7 +42,7 @@ public class MultiSafePayConfiguration {
         return cancelUrl;
     }
 
-    public JSONObject getPaymentOptions(){
+    public JSONObject getPaymentOptions() {
         JSONObject paymentOptions = new JSONObject();
         paymentOptions.put("notification_url", this.getNotificationUrl());
         paymentOptions.put("redirect_url", this.getRedirectUrl());

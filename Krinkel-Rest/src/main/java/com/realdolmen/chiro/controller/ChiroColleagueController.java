@@ -17,19 +17,14 @@ import java.util.List;
 public class ChiroColleagueController {
 
     @Autowired
-    private ChiroColleagueService chiroColleagueService;
-
-    @Autowired
     private UserService userService;
-
-
 
 
     @RequestMapping("/api/colleagues")
     public List<String> getColleagues() {
         try {
             //TODO CHANGE THE NEXT LINE, THIS IS DUMMY! CHIRO STUFF DOESN'T WORK YET, NO RESULTS OTHERWISE
-            return chiroColleagueService.getColleagues(221826);
+            return userService.getColleagues(221826);
 //            return chiroColleagueService.getColleagues(
 //                    Integer.parseInt(
 //                            userService.getCurrentUser().getAdNumber()));

@@ -22,8 +22,7 @@ public class CASController {
 
     @RequestMapping(value = "/login", method = RequestMethod.GET)
     public String loginRedirect(HttpServletRequest request) throws IOException {
-        // if logged in, redirect to angular to not trigger weird shizzle
-        if (request.getHeader("Authorization")!=null){
+        if (request.getHeader("Authorization") != null) {
             System.out.println("user wants to log in but already has authentication header");
             return "redirect:/index.html";
         } else {
@@ -35,7 +34,7 @@ public class CASController {
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public String viewer(HttpServletRequest request) throws IOException {
-        if (request.getHeader("Authorization")!=null){
+        if (request.getHeader("Authorization") != null) {
             return "redirect:/index.html";
         } else {
             return "redirect:/site/index.html";
@@ -43,11 +42,10 @@ public class CASController {
     }
 
 
-
     @RequestMapping(value = "/api/cas", method = RequestMethod.GET)
     public void casRedirect(@RequestParam String ticket, HttpServletResponse response) throws IOException {
         String jwt = service.validateTicket(ticket);
-        if (jwt != null){
+        if (jwt != null) {
             response.addCookie(service.createCookie(jwt));
             response.setHeader("Authorization", jwt);
             response.sendRedirect("/index.html");

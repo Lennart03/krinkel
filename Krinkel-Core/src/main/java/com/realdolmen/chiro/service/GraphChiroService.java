@@ -20,10 +20,13 @@ import java.util.List;
 public class GraphChiroService {
     @Autowired
     private ChiroUnitRepository repository;
+
     @Autowired
     private RegistrationParticipantRepository participantRepository;
+
     @Autowired
     private RegistrationParticipantService participantService;
+
     @Autowired
     private LoginLoggerRepository loggerRepository;
 
@@ -31,11 +34,11 @@ public class GraphChiroService {
     private StamNumberTrimmer stamNumberTrimmer;
 
     @PreAuthorize("@GraphChiroServiceSecurity.hasPermissionToMakeStatusGraph()")
-    public StatusChiroUnit getStatusChiro(){
+    public StatusChiroUnit getStatusChiro() {
         StatusChiroUnit status = new StatusChiroUnit();
         participantRepository.findAll().forEach(r -> {
-            if(r.getEventRole().equals(EventRole.VOLUNTEER)){
-                switch (r.getStatus()){
+            if (r.getEventRole().equals(EventRole.VOLUNTEER)) {
+                switch (r.getStatus()) {
                     case PAID:
                         status.setVolunteersNotConfirmed(status.getVolunteersNotConfirmed() + 1);
                         break;
@@ -47,7 +50,7 @@ public class GraphChiroService {
                         break;
                 }
             } else {
-                switch (r.getStatus()){
+                switch (r.getStatus()) {
                     case PAID:
                         status.setParticipantsNotConfirmed(status.getParticipantsNotConfirmed() + 1);
                         break;
@@ -116,7 +119,7 @@ public class GraphChiroService {
     }
 
     @PreAuthorize("@GraphChiroServiceSecurity.hasPermissionToGetLoginData()")
-    public List<GraphLoginCount> getLoginData(){
+    public List<GraphLoginCount> getLoginData() {
         return loggerRepository.crunchData();
     }
 }

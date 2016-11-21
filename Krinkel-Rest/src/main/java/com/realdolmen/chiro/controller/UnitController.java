@@ -28,18 +28,6 @@ public class UnitController {
 
     @Autowired
     private ChiroUnitService unitService;
-    
-//    @Autowired
-//    private RegistrationParticipantService registrationParticipantsService;
-
-//    @Autowired
-//    private UserService userService;
-
-    //TODO CHECK IF WE EVEN NEED THIS
-//    @RequestMapping(method = RequestMethod.GET, params = {"gewest"})
-//    public List<ChiroUnit> allGewestUnits() {
-//        return unitService.findGewestUnits();
-//    }
 
     /**
      * first thing you see in the table (the list of verbonden)
@@ -50,11 +38,6 @@ public class UnitController {
         return unitService.findVerbondUnits();
     }
 
-    //TODO CHECK IF WE EVEN NEED THIS
-//    @RequestMapping(value = "", method = RequestMethod.GET)
-//    public List<ChiroUnit> units() {
-//        return unitService.findAll();
-//    }
 
     /**
      * method used in the frondend when getting the colleagues. (select person to enroll in krinkel)
@@ -87,7 +70,6 @@ public class UnitController {
      */
     @RequestMapping(value = "/{stamNummer}/participants", method = RequestMethod.GET)
     public List<RegistrationParticipant>findRegisteredParticipantsByGroup(@PathVariable("stamNummer") String stamNumber){
-    	//return registrationParticipantsService.findParticipantsByGroup(stamNumber);
     	return unitService.findParticipantsByChiroUnit(stamNumber);
     }
 
@@ -99,7 +81,6 @@ public class UnitController {
      */
     @RequestMapping(value = "/{stamNummer}/volunteers", method = RequestMethod.GET)
     public List<RegistrationVolunteer>findRegisteredVolunteersByGroup(@PathVariable("stamNummer") String stamNumber){
-    	//return registrationParticipantsService.findVolunteersByGroup(stamNumber);
     	return unitService.findVolunteersByChiroUnit(stamNumber);
     }
 }

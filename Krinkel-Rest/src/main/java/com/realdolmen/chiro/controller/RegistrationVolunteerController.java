@@ -101,7 +101,7 @@ public class RegistrationVolunteerController {
         return new ResponseEntity<>(headers, HttpStatus.CREATED);
     }
 
-    //TODO CHECK IF WE EVEN NEED THIS METHOD. WE NEED IT
+    //TODO CHECK IF WE EVEN NEED THIS METHOD.
     @RequestMapping(method = RequestMethod.GET, value = "/api/volunteers", produces = "application/json")
     public @ResponseBody RegistrationVolunteer retrieve() {
 

@@ -9,12 +9,12 @@ import java.util.List;
 public interface RegistrationParticipantRepository extends JpaRepository<RegistrationParticipant, Long> {
     RegistrationParticipant findByAdNumber(String adNumber);
 
-	@Query("SELECT r FROM RegistrationParticipant r WHERE r.status = 'PAID'")
-	List<RegistrationParticipant> findRegistrationParticipantsWithStatusPAID();
+    @Query("SELECT r FROM RegistrationParticipant r WHERE r.status = 'PAID'")
+    List<RegistrationParticipant> findRegistrationParticipantsWithStatusPAID();
 
     @Query("SELECT r FROM RegistrationParticipant r WHERE r.status = 'CONFIRMED' and sync_status = 'UNSYNCED'")
     List<RegistrationParticipant> findRegistrationParticipantsWithStatusUnsyncedAndConfirmed();
-	
+
     @Query("SELECT p FROM RegistrationParticipant p WHERE " +
             "(SUBSTRING(p.stamnumber, 1, 2) = SUBSTRING(?1, 1, 2)" +
             "OR SUBSTRING(p.stamnumber, 1, 3) = SUBSTRING(?1, 1, 3))" +

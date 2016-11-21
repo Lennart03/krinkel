@@ -9,7 +9,7 @@ import java.util.Calendar;
  */
 public class RegistrationVolunteerMother {
 
-    public static RegistrationVolunteer createBasicRegistrationVolunteer(){
+    public static RegistrationVolunteer createBasicRegistrationVolunteer() {
         Calendar c = Calendar.getInstance();
         c.set(1995, Calendar.AUGUST, 5);
 
@@ -24,12 +24,12 @@ public class RegistrationVolunteerMother {
         return volunteer;
     }
 
-    public static RegistrationVolunteer createRegistrationVolunteerWithManyPreCamps(){
+    public static RegistrationVolunteer createRegistrationVolunteerWithManyPreCamps() {
         RegistrationVolunteer volunteer = RegistrationVolunteerMother.createBasicRegistrationVolunteer();
 
 
         Calendar c = Calendar.getInstance();
-        c.set(2017,Calendar.AUGUST,21,0,0,0);
+        c.set(2017, Calendar.AUGUST, 21, 0, 0, 0);
 
         PreCamp pre = new PreCamp();
 
@@ -38,7 +38,7 @@ public class RegistrationVolunteerMother {
 
         volunteer.addPreCamp(pre);
 
-        c.set(2017, Calendar.AUGUST, 22,0,0,0);
+        c.set(2017, Calendar.AUGUST, 22, 0, 0, 0);
 
         pre = new PreCamp();
         pre.setId(20);

@@ -1,4 +1,4 @@
-package com.realdolmen.chiro.config;
+package com.realdolmen.chiro.auth;
 
 import com.realdolmen.chiro.domain.EventRole;
 import com.realdolmen.chiro.domain.SecurityRole;
@@ -10,6 +10,7 @@ import java.lang.annotation.Target;
 
 /**
  * Example:
+ *
  * @AuthRole(role = { SecurityRole.ADMIN })
  * public void someMethod(){}
  */

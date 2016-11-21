@@ -1,11 +1,15 @@
 <ul id="slide-out" class="side-nav fixed">
     <li class="logo">
         <a id="logo-container" ng-click="$ctrl.go()" class="brand-logo">
-            <!--<object id="front-page-logo" type="image/svg+xml" data="../../../res/logo.svg">Your browser does not support SVG</object>-->
         </a>
     </li>
 
     <div ng-if="$ctrl.AuthService.getLoggedinUser() != null">
+        <!--<li>-->
+            <!--<a class="subheader">-->
+                <!--Inschrijven-->
+            <!--</a>-->
+        <!--</li>-->
         <li class="collection-item" ng-if="$ctrl.getUserDetails().hasPaid == false">
             <a href="/register-participant">
                 <i class="material-icons">person_add</i> Schrijf je in
@@ -41,18 +45,39 @@
             </a>
         </li>
 
+        <!--<li>-->
+            <!--<br/>-->
+        <!--</li>-->
         <li>
-            <br/>
+            <div class="divider">
+            </div>
         </li>
-
         <li class="collection-item">
             <a ng-click="$ctrl.logout()" href="#">
                 <i class="material-icons">exit_to_app</i>Afmelden
             </a>
         </li>
+
+        <li>
+            <br/>
+        </li>
+        <li class="logo">
+            <div class="center-align col l12">
+                <object data="http://www.realdolmen.com/themes/itr_theme/images/dest/svg/sprite/individual/logo.svg" type="image/svg+xml">
+                    <!--<img src="yourfallback.jpg" />-->
+                </object>
+                <!--<div id="rd-logo" class="col l12 bottom brand-logo">-->
+                    <!--&lt;!&ndash;<img src={require("../../../res/r.jpg")} class="bottom" style="">&ndash;&gt;-->
+                <!--</div>-->
+            </div>
+            <!--<a id="logo-container-rd"  class="brand-logo"></a>-->
+        </li>
+
     </div>
 
     <div class="setlocked" ng-if="$ctrl.AuthService.getLoggedinUser() == null">
         <i class="material-icons large lockicon">lock</i>
     </div>
+
+
 </ul>

@@ -1,5 +1,8 @@
 package com.realdolmen.chiro.config;
 
+import com.realdolmen.chiro.auth.AuthToken;
+import com.realdolmen.chiro.auth.AuthTokenFinder;
+import com.realdolmen.chiro.auth.AuthTokenNotFoundException;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureException;
@@ -17,11 +20,10 @@ import java.io.IOException;
 
 /**
  * JSON Web Tokens Security Filter.
- *
+ * <p>
  * Usage:
  * JwtFilter filter = new JwtFilter();
  * filter.setJwtConfiguration(jwtConfig);
- *
  */
 public class JwtFilter extends GenericFilterBean {
 
@@ -43,14 +45,13 @@ public class JwtFilter extends GenericFilterBean {
 
             String secret = jwtConfiguration.getJwtSecret();
             final Claims claims = Jwts.parser()
-                .setSigningKey(secret)
-                .parseClaimsJws(authToken.getValue())
-                .getBody();
+                    .setSigningKey(secret)
+                    .parseClaimsJws(authToken.getValue())
+                    .getBody();
             request.setAttribute("claims", claims);
 
             chain.doFilter(req, res);
-        }
-        catch (final SignatureException | AuthTokenNotFoundException e) {
+        } catch (final SignatureException | AuthTokenNotFoundException e) {
             logger.debug("Invalid login attempt: " + e.getMessage());
             response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
         }

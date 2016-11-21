@@ -18,28 +18,24 @@ public class RegistrationVolunteerService {
     @Value("${price.volunteer}")
     private Integer PRICE_IN_EUROCENTS;
 
-
-	@Autowired
-	private RegistrationVolunteerRepository repository;
+    @Autowired
+    private RegistrationVolunteerRepository repository;
 
     @Autowired
     private UserService userService;
 
     @PreAuthorize("@RegistrationVolunteerServiceSecurity.hasPermissionToSaveVolunteer(#volunteer)")
-    public RegistrationVolunteer save(RegistrationVolunteer volunteer){
-//        User chiroUser = adapter.getChiroUser(volunteer.getAdNumber());
+    public RegistrationVolunteer save(RegistrationVolunteer volunteer) {
         RegistrationVolunteer volunteerFromOurDB = repository.findByAdNumber(volunteer.getAdNumber());
         volunteer.setRegisteredBy(volunteer.getAdNumber());
 
-        if(volunteerFromOurDB == null) {
-//            String stamnummer = chiroUser.getStamnummer();
-//            volunteer.setStamnumber(stamnummer);
+        if (volunteerFromOurDB == null) {
             userService.updateCurrentUserRegisteredStatus();
             return repository.save(volunteer);
-        } else if (volunteerFromOurDB != null && volunteerFromOurDB.getStatus().equals(Status.TO_BE_PAID)){
+        } else if (volunteerFromOurDB != null && volunteerFromOurDB.getStatus().equals(Status.TO_BE_PAID)) {
             volunteer.setId(volunteerFromOurDB.getId());
             return repository.save(volunteer);
-        } else if (volunteerFromOurDB != null && (volunteerFromOurDB.getStatus().equals(Status.PAID))|| volunteerFromOurDB.getStatus().equals(Status.CONFIRMED)){
+        } else if (volunteerFromOurDB != null && (volunteerFromOurDB.getStatus().equals(Status.PAID)) || volunteerFromOurDB.getStatus().equals(Status.CONFIRMED)) {
             return null;
         }
         return null;

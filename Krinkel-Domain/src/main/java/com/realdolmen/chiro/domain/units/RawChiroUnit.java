@@ -6,26 +6,26 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="groepen")
+@Table(name = "groepen")
 public class RawChiroUnit {
 
-    @Column(name="groep_stamnr")
+    @Column(name = "groep_stamnr")
     @Id
     private String stamNumber;
 
-    @Column(name="groep_naam")
+    @Column(name = "groep_naam")
     private String name;
 
-    @Column(name="gewest_stamnr")
+    @Column(name = "gewest_stamnr")
     private String gewest;
 
-    @Column(name="gewest_naam")
+    @Column(name = "gewest_naam")
     private String gewestName;
 
-    @Column(name="verbond_stamnr")
+    @Column(name = "verbond_stamnr")
     private String verbond;
 
-    @Column(name="verbond_naam")
+    @Column(name = "verbond_naam")
     private String verbondName;
 
     public RawChiroUnit() {

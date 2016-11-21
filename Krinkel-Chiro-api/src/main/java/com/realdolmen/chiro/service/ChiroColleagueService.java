@@ -2,11 +2,8 @@ package com.realdolmen.chiro.service;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.realdolmen.chiro.domain.RegistrationParticipant;
-import com.realdolmen.chiro.domain.Status;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -14,9 +11,6 @@ import org.springframework.web.client.RestTemplate;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.util.ArrayList;
-import java.util.List;
-
 /**
  *
  * Contacts the Chiro API to get colleagues of currently logged in user.
@@ -25,8 +19,6 @@ import java.util.List;
 @Service
 public class ChiroColleagueService {
 
-    @Autowired
-    private UserService userService;
 
     @Value("${chiro_url}")
     private String chiroUrl;
@@ -41,49 +33,14 @@ public class ChiroColleagueService {
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     /**
-     * GET JSON from Chiro, no need to map this to an object because it's only used in the frontend.
-     * adNmber for test = 308986
+     * GETs colleagues from the Chiro API
+     *
+     * Throws exception when the URL isn't valid, checks further above are necessary because of this.
      * @return JSON from Chiro
      */
-    public List<String> getColleagues(Integer adNumber) throws URISyntaxException {
-        List<String> listOfAvailableColleagues = new ArrayList<>();
-
-
+    public String getColleagues(Integer adNumber) throws URISyntaxException {
         /**
-         * Throws exception when the URL isn't valid, no further checks necessary because of this.
-         */
-        String body = getColleaguesFromChiro(adNumber);
-
-        ObjectMapper mapper = new ObjectMapper();
-
-
-        try {
-            JsonNode jsonNode = mapper.readTree(body);
-            JsonNode values = jsonNode.get("values");
-
-            values.forEach(v -> {
-                RegistrationParticipant participant = userService.getRegistrationParticipant(v.get("adnr").asText());
-
-                if (participant != null) {
-                    if (participant.getStatus() == Status.PAID || participant.getStatus() == Status.CONFIRMED) {
-                        return;
-                    }
-                }
-
-                listOfAvailableColleagues.add(v.toString());
-            });
-
-        } catch (IOException e) {
-            // Chiro API borked..
-            logger.error("Chiro API probably broken again.");
-        }
-
-        return listOfAvailableColleagues;
-    }
-
-    private String getColleaguesFromChiro(Integer adNumber) throws URISyntaxException {
-        /**
-          * Example URL
+         * Example URL
          * "https://cividev.chiro.be/sites/all/modules/civicrm/extern/rest.php?key=2340f8603072358ffc23f5459ef92f88&api_key=vooneih8oo1XepeiduGh&entity=Light&action=getcollega&json=%7B%22adnr%22:" + adNumber + "%7D";
          */
 
@@ -99,17 +56,23 @@ public class ChiroColleagueService {
         String body = restTemplate.getForEntity(uri,
                 String.class).getBody();
 
+
         return body;
     }
 
 
+    /**
+     * Checks if two adNumbers are colleagues.
+     * @param ownAdNumber - current user's adNumber
+     * @param colleagueAdNumber adNumber of the user he's subscribing
+     * @return
+     */
     public Boolean isColleague(Integer ownAdNumber, Integer colleagueAdNumber) {
         String colleagues = null;
         Boolean isColleague = false;
 
-
         try {
-             colleagues = getColleaguesFromChiro(ownAdNumber);
+             colleagues = getColleagues(ownAdNumber);
         } catch (URISyntaxException e) {
             e.printStackTrace();
         }
@@ -118,8 +81,6 @@ public class ChiroColleagueService {
             return false;
         }
         ObjectMapper mapper = new ObjectMapper();
-
-
 
         JsonNode jsonNode = null;
 
@@ -130,7 +91,6 @@ public class ChiroColleagueService {
             e.printStackTrace();
         }
 
-
         JsonNode values = jsonNode.get("values");
 
 
@@ -140,8 +100,6 @@ public class ChiroColleagueService {
                 break;
             }
         }
-
-
 
         return isColleague;
     }

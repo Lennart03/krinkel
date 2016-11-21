@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 @ControllerAdvice
 public class GlobalControllerAdvice {
     @ExceptionHandler(AccessDeniedException.class)
-    public ResponseEntity<?> log(){
+    public ResponseEntity<?> log() {
         return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
     }
 

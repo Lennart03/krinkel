@@ -2,7 +2,6 @@ package com.realdolmen.chiro.domain;
 
 /**
  * 'Kampgrond'
- *
  */
 public enum CampGround {
     ANTWERPEN("Antwerpen"),
@@ -17,18 +16,18 @@ public enum CampGround {
     REINAERT("Reinaert"),
     NATIONAAL("Nationaal"),
     INTERNATIONAAL("Internationaal");
-	
-	private String description;
-	
-	private CampGround(String description){
-		this.setDescription(description);
-	}
 
-	public String getDescription() {
-		return description;
-	}
+    private String description;
 
-	public void setDescription(String description) {
-		this.description = description;
-	}
+    private CampGround(String description) {
+        this.setDescription(description);
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
 }

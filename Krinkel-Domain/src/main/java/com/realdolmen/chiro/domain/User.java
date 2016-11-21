@@ -1,7 +1,6 @@
 package com.realdolmen.chiro.domain;
 
 
-
 public class User {
 
     private SecurityRole role;
@@ -109,7 +108,7 @@ public class User {
         return hasPaid;
     }
 
-    public boolean getHasPaid(){
+    public boolean getHasPaid() {
         return hasPaid;
     }
 
@@ -117,10 +116,4 @@ public class User {
         this.hasPaid = hasPaid;
     }
 
-//    public String getNormalizedStamNumber(){
-//
-//        return this.getStamnummer().replace("/", "")
-//                                   .replace(" ", "");
-//
-//    }
 }

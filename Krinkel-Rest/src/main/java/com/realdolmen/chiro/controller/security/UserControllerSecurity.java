@@ -10,7 +10,7 @@ public class UserControllerSecurity {
     @Autowired
     UserService userService;
 
-    public boolean hasPermissionToGetUser(String adNumber){
+    public boolean hasPermissionToGetUser(String adNumber) {
         User currentUser = userService.getCurrentUser();
         return currentUser != null && currentUser.getAdNumber().equals(adNumber);
     }

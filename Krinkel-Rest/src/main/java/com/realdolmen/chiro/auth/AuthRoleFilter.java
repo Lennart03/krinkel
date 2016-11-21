@@ -1,37 +1,32 @@
-package com.realdolmen.chiro.config;
+package com.realdolmen.chiro.auth;
 
+import com.realdolmen.chiro.auth.AuthRole;
 import com.realdolmen.chiro.service.CASService;
-import com.realdolmen.chiro.service.UserService;
-import org.aopalliance.intercept.Joinpoint;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
-import org.springframework.web.context.request.ServletWebRequest;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 /**
  * Checks the role of the logged in user for methods annotated with @AuthRole.
  */
 @Component
 @Aspect
-public class  AuthRoleFilter {
+public class AuthRoleFilter {
     @Autowired
     private CASService service;
 
     @Around(value = "@annotation(annotation)")
-    public Object checkAuthRole(final ProceedingJoinPoint jp,final AuthRole annotation) throws Throwable {
+    public Object checkAuthRole(final ProceedingJoinPoint jp, final AuthRole annotation) throws Throwable {
         HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes()).getRequest();
-        if(!service.hasRole(annotation.roles(), request)){
+        if (!service.hasRole(annotation.roles(), request)) {
             throw new SecurityException();
-        }
-        else{
+        } else {
             return jp.proceed();
         }
     }
