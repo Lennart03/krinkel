@@ -13,6 +13,9 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
 import org.springframework.http.ResponseEntity;
+
+import static org.mockito.Mockito.times;
+
 import java.net.URISyntaxException;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -38,18 +41,18 @@ public class RegistrationVolunteerControllerMockitoTest {
     @After
     public void verifyStrict(){
         Mockito.verifyNoMoreInteractions(mspService);
-        Mockito.verifyNoMoreInteractions(rvService);
     }
 
     @Test
     public void saveReturnsUrlGivenByMultiSafePayService() throws URISyntaxException, MultiSafePayService.InvalidPaymentOrderIdException {
-        Mockito.when(mspService.getVolunteerPaymentUri(v, 6000)).thenReturn(TEST_URL);
         Mockito.when(rvService.save(v)).thenReturn(v);
-
+        Mockito.when(rvService.getPRICE_IN_EUROCENTS()).thenReturn(60);
+        Integer price = rvService.getPRICE_IN_EUROCENTS();
+        Mockito.when(mspService.getVolunteerPaymentUri(v, price)).thenReturn(TEST_URL);
         ResponseEntity<?> response = controller.save(v);
         Assert.assertSame(response.getHeaders().getFirst("Location"), TEST_URL);
-
-        Mockito.verify(mspService).getVolunteerPaymentUri(v, 6000);
+        
+        Mockito.verify(mspService).getVolunteerPaymentUri(v, price);
         Mockito.verify(rvService).save(v);
     }
 }
