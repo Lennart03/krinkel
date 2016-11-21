@@ -88,7 +88,7 @@ export class MapperService {
                 break;
             case 'OTHER':
                 return 'CUSTOM';
-                break; // TODO OTHER
+                break;
         }
 
         /**
@@ -168,7 +168,6 @@ export class MapperService {
         return participant;
     }
 
-    // TODO Make endpoint in backend to retrieve dates
     mapPreCampToObject(listOfPreCamp) {
         if (listOfPreCamp !== undefined) {
             var preCamp = {
@@ -202,7 +201,6 @@ export class MapperService {
         }
     }
 
-    // TODO Make endpoint in backend to retrieve dates
     mapPostCampToObject(listOfPostCamp) {
         if (listOfPostCamp !== undefined) {
             var postCamp = {
@@ -257,7 +255,7 @@ export class MapperService {
                 break;
             case 'CUSTOM':
                 return 'CUSTOM';
-                break; // TODO OTHER
+                break;
         }
     }
 

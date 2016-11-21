@@ -18,6 +18,7 @@ import org.springframework.scheduling.TaskScheduler;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.util.Assert;
 
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -88,7 +89,7 @@ public class MemberSyncerServiceTest extends SpringIntegrationTest {
 
 
         Mockito.when(participantService.getSyncReadyParticipants()).thenReturn(participants);
-        Mockito.doThrow(new Exception()).when(adapter).syncUser(registrationParticipant);
+        Mockito.doThrow(new URISyntaxException("","")).when(adapter).syncUser(registrationParticipant);
 
         service.syncUsersToChiroDB();
         Mockito.verify(adapter, times(participants.size())).syncUser(any(RegistrationParticipant.class));

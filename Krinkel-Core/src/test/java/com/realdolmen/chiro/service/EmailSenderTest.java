@@ -145,7 +145,7 @@ public class EmailSenderTest extends SpringIntegrationTest {
 		MimeMessage[] emails = smtpServer.getReceivedMessages();
 		MimeMessage email1 = emails[0];
 		String body = GreenMailUtil.getBody(email1);
-		assertTrue(body.contains(CUSTOM_FUNCTION));
+		assertTrue(body.contains("jobke"));
 	}
 	@Test
 	public void shouldNotContainPresetFunction() throws MessagingException {
@@ -165,7 +165,7 @@ public class EmailSenderTest extends SpringIntegrationTest {
 		MimeMessage[] emails = smtpServer.getReceivedMessages();
 		MimeMessage email1 = emails[0];
 		String body = GreenMailUtil.getBody(email1);
-		assertTrue(body.contains(VOL_FUNCTION1.getPreset().getDescription()));
+		assertTrue(body.contains("trekker"));
 	}
 	
 	/**
