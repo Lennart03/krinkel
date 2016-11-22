@@ -34,11 +34,11 @@ export class MapperService {
 
         var genderTemp = data.gender.toLowerCase();
         if (genderTemp == '2') {
-            volunteer.gender = data.gender.toUpperCase();
+            volunteer.gender = 'MAN';
         } else if (genderTemp == '1') {
             volunteer.gender = 'WOMAN';
         } else if (genderTemp == '0') {
-            volunteer.gender = data.gender.toUpperCase();
+            volunteer.gender = 'X';
         }
 
         var mappedJob = this.mapJob(data.job);
@@ -51,6 +51,8 @@ export class MapperService {
         } else {
             volunteer.function = {
                 preset: mappedJob
+
+
             };
         }
 
@@ -149,11 +151,11 @@ export class MapperService {
         }
         var genderTemp = data.gender.toLowerCase();
         if (genderTemp == '2') {
-            participant.gender = data.gender.toUpperCase();
+            participant.gender = 'MAN';
         } else if (genderTemp == '1') {
             participant.gender = 'WOMAN';
         } else if (genderTemp == '0') {
-            participant.gender = data.gender.toUpperCase();
+            participant.gender = 'X'
         }
 
         if (data.rank === 'L') {
