@@ -10,6 +10,7 @@ import com.realdolmen.chiro.repository.ChiroUnitRepository;
 
 import com.realdolmen.chiro.util.StamNumberTrimmer;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PostAuthorize;
 import org.springframework.security.access.prepost.PostFilter;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
@@ -118,6 +119,7 @@ public class ChiroUnitService {
      * @param stam
      * @return
      */
+    @PostFilter("@ChiroUnitServiceSecurity.hasPermissionToSeeUnits(filterObject)")
     public List<ChiroUnit> findSubUnits(String stam) {
         List<ChiroUnit> units = this.findAll();
         ChiroUnit unit = this.findByStam(units, stam);
@@ -159,6 +161,12 @@ public class ChiroUnitService {
         return loopOverRegisteredParticipantsFor(stamnummer, unit);
     }
 
+    @PreAuthorize("@ChiroUnitServiceSecurity.hasPermissionToGetVolunteers()")
+    public List<RegistrationVolunteer> findVolunteersByChiroUnit(String stamnummer) {
+        ChiroUnit unit = this.find(stamnummer);
+        return loopOverRegisteredVolunteersFor(stamnummer, unit);
+    }
+
     private List<RegistrationParticipant> loopOverRegisteredParticipantsFor(String stamnummer, ChiroUnit unit) {
 //		ChiroUnit unit = this.find(stamnummer);
         List<RegistrationParticipant> participants = new ArrayList<>();
@@ -179,12 +187,6 @@ public class ChiroUnitService {
         }
         unit.setParticipantsCount(participants.size());
         return participants;
-    }
-
-    @PreAuthorize("@ChiroUnitServiceSecurity.hasPermissionToGetVolunteers()")
-    public List<RegistrationVolunteer> findVolunteersByChiroUnit(String stamnummer) {
-        ChiroUnit unit = this.find(stamnummer);
-        return loopOverRegisteredVolunteersFor(stamnummer, unit);
     }
 
     private List<RegistrationVolunteer> loopOverRegisteredVolunteersFor(String stamnummer, ChiroUnit unit) {

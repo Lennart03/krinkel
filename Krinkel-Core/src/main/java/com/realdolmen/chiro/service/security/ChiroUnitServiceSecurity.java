@@ -3,7 +3,7 @@ package com.realdolmen.chiro.service.security;
 import com.realdolmen.chiro.domain.SecurityRole;
 import com.realdolmen.chiro.domain.User;
 import com.realdolmen.chiro.domain.units.ChiroUnit;
-import com.realdolmen.chiro.service.ChiroPloegService;
+import com.realdolmen.chiro.service.ChiroUnitService;
 import com.realdolmen.chiro.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -14,7 +14,7 @@ public class ChiroUnitServiceSecurity {
     UserService userService;
 
     @Autowired
-    ChiroPloegService chiroPloegService;
+    ChiroUnitService chiroUnitService;
 
     public boolean hasPermissionToGetColleagues() {
         User currentUser = userService.getCurrentUser();
@@ -53,29 +53,67 @@ public class ChiroUnitServiceSecurity {
         return currentUser != null;
     }
 
+    //TODO change .split to regex
+    //TODO use switch
     public boolean hasPermissionToSeeVerbonden(ChiroUnit chiroUnit) {
         User currentUser = userService.getCurrentUser();
         SecurityRole currentUserRole = currentUser.getRole();
+        String lettersOfVerbondStamNumber;
+        String  normalStamNumber = currentUser.getStamnummer().replace(" /","");
 
         if (currentUserRole.equals(SecurityRole.ADMIN) || currentUserRole.equals(SecurityRole.NATIONAAL)) {
             return true;
         } else {
-            String substring = currentUser.getStamnummer().substring(0, 2);
+
+
+
+
+            if(normalStamNumber.startsWith("OG")|normalStamNumber.startsWith("LEG")){
+                lettersOfVerbondStamNumber = normalStamNumber.substring(0,3);
+            } else {
+                lettersOfVerbondStamNumber = normalStamNumber.substring(0,2);
+            }
             String chiroUnitStam = chiroUnit.getStam();
-            return chiroUnitStam.contains(substring);
+
+            return chiroUnitStam.startsWith(lettersOfVerbondStamNumber);
         }
     }
 
     public boolean hasPermissionToSeeUnits(ChiroUnit chiroUnit) {
         User currentUser = userService.getCurrentUser();
+
+        if (chiroUnit.getStam().endsWith("00")) {
+            return hasPermissionToSeeGewesten(currentUser, chiroUnit);
+        } else {
+            return hasPermissionToSeeGroepen(currentUser,chiroUnit);
+
+        }
+    }
+
+    //TODO use regex
+    //TODO use switch?
+    private boolean hasPermissionToSeeGewesten(User currentUser, ChiroUnit chiroUnit){
         SecurityRole currentUserRole = currentUser.getRole();
-        System.out.println(chiroUnit.getStam());
+        String currentUserStam = currentUser.getStamnummer();
 
-//        if (chiroUnit.getStam().endsWith("00")) {
-//        } else {
-//
-//        }
+        if (currentUserRole.equals(SecurityRole.ADMIN) || currentUserRole.equals(SecurityRole.NATIONAAL) || currentUserRole.equals(SecurityRole.VERBOND)) {
+            return true;
+        } else {
+            String beginOfStamNumber = currentUserStam.replace(" /", "").substring(0, 4);
+            return chiroUnit.getStam().startsWith(beginOfStamNumber);
+        }
+    }
 
-        return true;
+    //TODO use regex
+    //TODO use switch?
+    private boolean hasPermissionToSeeGroepen(User currentUser, ChiroUnit chiroUnit){
+        SecurityRole currentUserRole = currentUser.getRole();
+        String currentUserStam = currentUser.getStamnummer();
+
+        if(currentUserRole.equals(SecurityRole.ADMIN) || currentUserRole.equals(SecurityRole.NATIONAAL) || currentUserRole.equals(SecurityRole.VERBOND) || currentUserRole.equals(SecurityRole.GEWEST)){
+            return true;
+        } else {
+            return currentUserStam.replace(" /","").equals(chiroUnit.getStam());
+        }
     }
 }
