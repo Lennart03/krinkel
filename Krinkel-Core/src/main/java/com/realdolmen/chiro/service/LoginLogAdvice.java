@@ -10,8 +10,8 @@ import org.aspectj.lang.annotation.Before;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-@Component
 @Aspect
+@Component
 public class LoginLogAdvice {
 
     @Autowired
@@ -25,9 +25,7 @@ public class LoginLogAdvice {
     @Before("execution(String com.realdolmen.chiro.service.CASService.createToken(com.realdolmen.chiro.domain.User)) && args(user)")
     public void registerLoginAfterTokenCreation(User user) {
         loginLoggerRepository.save(
-                new LoginLog(
-                        user.getAdNumber()
-                )
+                new LoginLog(user.getAdNumber(), user.getStamnummer())
         );
     }
 }

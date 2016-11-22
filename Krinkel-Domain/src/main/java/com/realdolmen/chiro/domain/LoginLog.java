@@ -17,11 +17,14 @@ public class LoginLog {
     @Temporal(TemporalType.DATE)
     private Date stamp;
 
+    private String stamNumber;
+
     public LoginLog() {
     }
 
-    public LoginLog(String adNumber) {
+    public LoginLog(String adNumber, String stamNumber) {
         this.adNumber = adNumber;
+        this.stamNumber = stamNumber;
         this.stamp = new Date();
     }
 
@@ -33,13 +36,6 @@ public class LoginLog {
         this.id = id;
     }
 
-    public String getAdNummer() {
-        return adNumber;
-    }
-
-    public void setAdNummer(String adNummer) {
-        this.adNumber = adNummer;
-    }
 
     public Date getStamp() {
         return stamp;
@@ -47,5 +43,21 @@ public class LoginLog {
 
     public void setStamp(Date stamp) {
         this.stamp = stamp;
+    }
+
+    public String getAdNumber() {
+        return adNumber;
+    }
+
+    public void setAdNumber(String adNumber) {
+        this.adNumber = adNumber;
+    }
+
+    public String getStamNumber() {
+        return stamNumber;
+    }
+
+    public void setStamNumber(String stamNumber) {
+        this.stamNumber = stamNumber;
     }
 }

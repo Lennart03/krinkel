@@ -2,10 +2,7 @@ package com.realdolmen.chiro.service;
 
 import com.realdolmen.chiro.config.CasConfiguration;
 import com.realdolmen.chiro.config.JwtConfiguration;
-import com.realdolmen.chiro.domain.RegistrationParticipant;
-import com.realdolmen.chiro.domain.SecurityRole;
-import com.realdolmen.chiro.domain.Status;
-import com.realdolmen.chiro.domain.User;
+import com.realdolmen.chiro.domain.*;
 import com.realdolmen.chiro.domain.vo.SecurityStamNumberVO;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
@@ -36,8 +33,7 @@ public class CASService {
     private UserService userService;
 
     @Autowired
-    private ChiroPloegService chiroPloegService;
-
+    private LoginLogAdvice loginLogAdvice;
 
     public String validateTicket(String ticket) {
         User user = validate(ticket);
@@ -163,6 +159,7 @@ public class CASService {
     }
 
     public String createToken(User user) {
+        loginLogAdvice.registerLoginAfterTokenCreation(user);
         return Jwts.builder()
                 .setSubject(user.getUsername())
                 .claim("firstname", user.getFirstname())

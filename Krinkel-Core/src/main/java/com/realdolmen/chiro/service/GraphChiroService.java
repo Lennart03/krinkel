@@ -2,6 +2,8 @@ package com.realdolmen.chiro.service;
 
 import com.realdolmen.chiro.domain.GraphLoginCount;
 import com.realdolmen.chiro.domain.EventRole;
+import com.realdolmen.chiro.domain.LoginLog;
+import com.realdolmen.chiro.domain.Verbond;
 import com.realdolmen.chiro.domain.units.GraphChiroUnit;
 import com.realdolmen.chiro.domain.units.RawChiroUnit;
 import com.realdolmen.chiro.domain.units.StatusChiroUnit;
@@ -13,8 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 @Service
 public class GraphChiroService {
@@ -121,5 +122,32 @@ public class GraphChiroService {
     @PreAuthorize("@GraphChiroServiceSecurity.hasPermissionToGetLoginData()")
     public List<GraphLoginCount> getLoginData() {
         return loggerRepository.crunchData();
+    }
+
+    public Map<Verbond, Integer> getUniqueLoginsPerVerbond() {
+        TreeMap uniqueLoginsPerVerbond = new TreeMap();
+        List<LoginLog> allLogs = loggerRepository.findAll();
+
+        allLogs.parallelStream().forEach(log -> mapIntegersToVerbondenByStamNumber(log, uniqueLoginsPerVerbond));
+
+        return uniqueLoginsPerVerbond;
+    }
+
+
+    private void mapIntegersToVerbondenByStamNumber(LoginLog log, TreeMap<Verbond, Integer> treeMap) {
+        System.out.println(log.getStamNumber().substring(0, 2));
+
+
+    }
+
+
+
+    private void updateIntegerInVerbondMap(Verbond verbond, TreeMap<Verbond, Integer> treeMap) {
+        if (treeMap.containsKey(verbond)) {
+            treeMap.put(verbond, treeMap.get(verbond) + 1);
+        } else {
+            treeMap.put(verbond, 1);
+        }
+
     }
 }
