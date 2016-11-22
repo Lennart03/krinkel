@@ -137,7 +137,9 @@ public class GraphChiroService {
     private void mapIntegersToVerbondenByStamNumber(LoginLog log, TreeMap<Verbond, Integer> treeMap) {
         System.out.println(log.getStamNumber().substring(0, 2));
 
+        Verbond verbondFromStamNumber = Verbond.getVerbondFromStamNumber(log.getStamNumber());
 
+        updateIntegerInVerbondMap(verbondFromStamNumber, treeMap);
     }
 
 
