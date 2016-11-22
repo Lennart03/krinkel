@@ -4,16 +4,16 @@ package com.realdolmen.chiro.domain;
  * Created by MBTAZ48 on 22/11/2016.
  */
 public enum Verbond {
-    WEST_VLAANDEREN,
-    MECHELEN,
-    LEUVEN,
-    ANTWERPEN,
-    BRUSSEL,
-    REINAERT,
-    KEMPEN,
-    HEUVELLAND,
-    ROELAND,
-    LIMBURG;
+    WEST_VLAANDEREN("West-Vlaanderen"),
+    MECHELEN("Mechelen"),
+    LEUVEN("Leuven"),
+    ANTWERPEN("Antwerpen"),
+    BRUSSEL("Brussel"),
+    REINAERT("Reinaert"),
+    KEMPEN("Kempen"),
+    HEUVELLAND("Heuvelland"),
+    ROELAND("Roeland"),
+    LIMBURG("Limburg");
 
 
     public static Verbond getVerbondFromStamNumber(String stamNumber) {
@@ -61,6 +61,16 @@ public enum Verbond {
             default:
                 throw new RuntimeException("Verbond in statistics switch not found. Implement it.");
         }
+    }
+
+    private String verbondName;
+
+    Verbond(String verbondName) {
+        this.verbondName = verbondName;
+    }
+
+    public String getVerbondName(){
+        return verbondName;
     }
 
 }
