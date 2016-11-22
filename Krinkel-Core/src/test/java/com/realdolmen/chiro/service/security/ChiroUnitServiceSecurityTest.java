@@ -65,59 +65,59 @@ public class ChiroUnitServiceSecurityTest {
         Assert.assertEquals(true, b);
     }
 
-    @Test
-    public void hasPermissionToGetVolunteersReturnsFalseWhenNoLoggedInUser(){
-        boolean b = chiroUnitServiceSecurity.hasPermissionToGetVolunteers();
-
-        Assert.assertEquals(false, b);
-    }
-
-    @Test
-    public void hasPermissionToGetVolunteersReturnsFalseWhenRoleNotAdmin(){
-        User currentUser = new User();
-        currentUser.setRole(SecurityRole.GROEP);
-        Mockito.when(userService.getCurrentUser()).thenReturn(currentUser);
-
-        boolean b = chiroUnitServiceSecurity.hasPermissionToGetVolunteers();
-        Assert.assertEquals(false, b);
-    }
-
-    @Test
-    public void hasPermissionToGetVolunteersReturnsTrueWhenRoleAdmin(){
-        User currentUser = new User();
-        currentUser.setRole(SecurityRole.ADMIN);
-        Mockito.when(userService.getCurrentUser()).thenReturn(currentUser);
-
-        boolean b = chiroUnitServiceSecurity.hasPermissionToGetVolunteers();
-        Assert.assertEquals(true, b);
-    }
-
-    @Test
-    public void hasPermissionToGetParticipantsReturnsFalseWhenNoLoggedInUser(){
-        boolean b = chiroUnitServiceSecurity.hasPermissionToGetParticipants();
-
-        Assert.assertEquals(false, b);
-    }
-
-    @Test
-    public void hasPermissionToGetParticipantsReturnsFalseWhenRoleNotAdmin(){
-        User currentUser = new User();
-        currentUser.setRole(SecurityRole.GROEP);
-        Mockito.when(userService.getCurrentUser()).thenReturn(currentUser);
-
-        boolean b = chiroUnitServiceSecurity.hasPermissionToGetParticipants();
-        Assert.assertEquals(false, b);
-    }
-
-    @Test
-    public void hasPermissionToGetParticipantsReturnsTrueWhenRoleAdmin(){
-        User currentUser = new User();
-        currentUser.setRole(SecurityRole.ADMIN);
-        Mockito.when(userService.getCurrentUser()).thenReturn(currentUser);
-
-        boolean b = chiroUnitServiceSecurity.hasPermissionToGetParticipants();
-        Assert.assertEquals(true, b);
-    }
+//    @Test
+//    public void hasPermissionToGetVolunteersReturnsFalseWhenNoLoggedInUser(){
+//        boolean b = chiroUnitServiceSecurity.hasPermissionToGetVolunteers();
+//
+//        Assert.assertEquals(false, b);
+//    }
+//
+//    @Test
+//    public void hasPermissionToGetVolunteersReturnsFalseWhenRoleNotAdmin(){
+//        User currentUser = new User();
+//        currentUser.setRole(SecurityRole.GROEP);
+//        Mockito.when(userService.getCurrentUser()).thenReturn(currentUser);
+//
+//        boolean b = chiroUnitServiceSecurity.hasPermissionToGetVolunteers();
+//        Assert.assertEquals(false, b);
+//    }
+//
+//    @Test
+//    public void hasPermissionToGetVolunteersReturnsTrueWhenRoleAdmin(){
+//        User currentUser = new User();
+//        currentUser.setRole(SecurityRole.ADMIN);
+//        Mockito.when(userService.getCurrentUser()).thenReturn(currentUser);
+//
+//        boolean b = chiroUnitServiceSecurity.hasPermissionToGetVolunteers();
+//        Assert.assertEquals(true, b);
+//    }
+//
+//    @Test
+//    public void hasPermissionToGetParticipantsReturnsFalseWhenNoLoggedInUser(){
+//        boolean b = chiroUnitServiceSecurity.hasPermissionToGetParticipants();
+//
+//        Assert.assertEquals(false, b);
+//    }
+//
+//    @Test
+//    public void hasPermissionToGetParticipantsReturnsFalseWhenRoleNotAdmin(){
+//        User currentUser = new User();
+//        currentUser.setRole(SecurityRole.GROEP);
+//        Mockito.when(userService.getCurrentUser()).thenReturn(currentUser);
+//
+//        boolean b = chiroUnitServiceSecurity.hasPermissionToGetParticipants();
+//        Assert.assertEquals(false, b);
+//    }
+//
+//    @Test
+//    public void hasPermissionToGetParticipantsReturnsTrueWhenRoleAdmin(){
+//        User currentUser = new User();
+//        currentUser.setRole(SecurityRole.ADMIN);
+//        Mockito.when(userService.getCurrentUser()).thenReturn(currentUser);
+//
+//        boolean b = chiroUnitServiceSecurity.hasPermissionToGetParticipants();
+//        Assert.assertEquals(true, b);
+//    }
 
     @Test
     public void hasPermissionToFindUnitsReturnsFalseWhenNoLoggedInUser(){
