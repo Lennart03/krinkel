@@ -2,6 +2,8 @@ package com.realdolmen.chiro.service.security;
 
 import com.realdolmen.chiro.domain.SecurityRole;
 import com.realdolmen.chiro.domain.User;
+import com.realdolmen.chiro.domain.units.ChiroUnit;
+import com.realdolmen.chiro.service.ChiroPloegService;
 import com.realdolmen.chiro.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -10,6 +12,9 @@ import org.springframework.stereotype.Component;
 public class ChiroUnitServiceSecurity {
     @Autowired
     UserService userService;
+
+    @Autowired
+    ChiroPloegService chiroPloegService;
 
     public boolean hasPermissionToGetColleagues() {
         User currentUser = userService.getCurrentUser();
@@ -41,9 +46,36 @@ public class ChiroUnitServiceSecurity {
         return currentUser != null && currentUser.getRole().equals(SecurityRole.ADMIN);
     }
 
+    //ChiroUnitService.findVerbondUnits()
     public boolean hasPermissionToFindVerbonden() {
         User currentUser = userService.getCurrentUser();
 
-        return currentUser != null && currentUser.getRole().equals(SecurityRole.ADMIN);
+        return currentUser != null;
+    }
+
+    public boolean hasPermissionToSeeVerbonden(ChiroUnit chiroUnit) {
+        User currentUser = userService.getCurrentUser();
+        SecurityRole currentUserRole = currentUser.getRole();
+
+        if (currentUserRole.equals(SecurityRole.ADMIN) || currentUserRole.equals(SecurityRole.NATIONAAL)) {
+            return true;
+        } else {
+            String substring = currentUser.getStamnummer().substring(0, 2);
+            String chiroUnitStam = chiroUnit.getStam();
+            return chiroUnitStam.contains(substring);
+        }
+    }
+
+    public boolean hasPermissionToSeeUnits(ChiroUnit chiroUnit) {
+        User currentUser = userService.getCurrentUser();
+        SecurityRole currentUserRole = currentUser.getRole();
+        System.out.println(chiroUnit.getStam());
+
+//        if (chiroUnit.getStam().endsWith("00")) {
+//        } else {
+//
+//        }
+
+        return true;
     }
 }

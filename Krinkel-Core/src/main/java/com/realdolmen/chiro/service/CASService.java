@@ -6,6 +6,7 @@ import com.realdolmen.chiro.domain.RegistrationParticipant;
 import com.realdolmen.chiro.domain.SecurityRole;
 import com.realdolmen.chiro.domain.Status;
 import com.realdolmen.chiro.domain.User;
+import com.realdolmen.chiro.domain.vo.SecurityStamNumberVO;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -15,7 +16,6 @@ import org.jasig.cas.client.validation.Cas20ProxyTicketValidator;
 import org.jasig.cas.client.validation.TicketValidationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.context.annotation.RequestScope;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -39,7 +39,6 @@ public class CASService {
     private ChiroPloegService chiroPloegService;
 
 
-
     public String validateTicket(String ticket) {
         User user = validate(ticket);
         return createToken(user);
@@ -47,6 +46,7 @@ public class CASService {
 
     /**
      * Validates the CAS ticket. The current CAS user is set from this method.
+     *
      * @param ticket
      * @return
      */
@@ -106,10 +106,13 @@ public class CASService {
                 user.setHasPaid(false);
             }
 
+            SecurityStamNumberVO securityStamNumberVO = findHighestSecurityAndStamNumber(adNumber);
 
+            user.setRole(securityStamNumberVO.getHighestRole());
+            user.setStamnummer(securityStamNumberVO.getHighestStamNumber());
 
-
-            user.setRole(setCorrectSecurityRole(adNumber));
+//            user.setRole(SecurityRole.ADMIN);
+//            user.setStamnummer("MG /0113");
             userService.setCurrentUser(user);
 
             return user;
@@ -117,12 +120,7 @@ public class CASService {
         return null;
     }
 
-    /**
-     * Sets the correct security role of the currently logged in user
-     * @param adNumber
-     * @return
-     */
-    private SecurityRole setCorrectSecurityRole(String adNumber) {
+    private SecurityStamNumberVO findHighestSecurityAndStamNumber(String adNumber) {
         //TODO change this hardcoded list of admins (in db & stuff)
         List<String> adminAdNumbers = new ArrayList<>();
 //        adminAdNumbers.add("152504");
@@ -130,14 +128,8 @@ public class CASService {
         adminAdNumbers.add("169314");
         adminAdNumbers.add("386288");
 
-        if (adminAdNumbers.contains(adNumber)) {
-            return SecurityRole.ADMIN;
-        } else {
-            List<String> stamNumbers = chiroPloegService.getStamNumbers(adNumber);
-            return userService.getHighestSecurityRole(stamNumbers);
-        }
+        return userService.getHighestSecurityRoleAndStamNumber(adNumber, adminAdNumbers);
     }
-
 
 
     public Boolean hasRole(final SecurityRole[] roles, final HttpServletRequest request) {

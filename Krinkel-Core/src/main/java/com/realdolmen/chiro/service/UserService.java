@@ -7,6 +7,7 @@ import com.realdolmen.chiro.domain.RegistrationParticipant;
 import com.realdolmen.chiro.domain.SecurityRole;
 import com.realdolmen.chiro.domain.Status;
 import com.realdolmen.chiro.domain.User;
+import com.realdolmen.chiro.domain.vo.SecurityStamNumberVO;
 import com.realdolmen.chiro.repository.RegistrationParticipantRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,7 +15,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
 import org.springframework.jdbc.core.CallableStatementCallback;
 import org.springframework.stereotype.Service;
-import org.springframework.web.context.annotation.SessionScope;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
@@ -31,6 +31,9 @@ public class UserService {
 
     @Autowired
     private ChiroColleagueService chiroColleagueService;
+
+    @Autowired
+    private ChiroPloegService chiroPloegService;
 
     @Autowired
     private CASCurrentlyLoggedInUserComponent CASCurrentlyLoggedInUserComponent;
@@ -79,15 +82,15 @@ public class UserService {
      * @param stamNumbers
      * @return securityRole with the most privileges
      */
-    public SecurityRole getHighestSecurityRole(List<String> stamNumbers) {
-        SecurityRole highestRole = SecurityRole.GROEP;
-        for (String currentStamNumber : stamNumbers) {
-            if (getSecurityRole(currentStamNumber).getValue() > highestRole.getValue()) {
-                highestRole = getSecurityRole(currentStamNumber);
-            }
-        }
-        return highestRole;
-    }
+//    public SecurityRole getHighestSecurityRole(List<String> stamNumbers) {
+//        SecurityRole highestRole = SecurityRole.GROEP;
+//        for (String currentStamNumber : stamNumbers) {
+//            if (getSecurityRole(currentStamNumber).getValue() > highestRole.getValue()) {
+//                highestRole = getSecurityRole(currentStamNumber);
+//            }
+//        }
+//        return highestRole;
+//    }
 
 
     /**
@@ -174,5 +177,27 @@ public class UserService {
 
 
         return listOfAvailableColleagues;
+    }
+
+    public SecurityStamNumberVO getHighestSecurityRoleAndStamNumber(String adNumber, List<String> adminAdNumbers) {
+        SecurityStamNumberVO securityStamNumberVO = new SecurityStamNumberVO();
+        List<String> stamNumbers = chiroPloegService.getStamNumbers(adNumber);
+
+        SecurityRole highestRole = SecurityRole.GROEP;
+        String highestStamNumber = "";
+        for (String currentStamNumber : stamNumbers) {
+            if (getSecurityRole(currentStamNumber).getValue() >= highestRole.getValue()) {
+                highestRole = getSecurityRole(currentStamNumber);
+                highestStamNumber = currentStamNumber;
+            }
+        }
+
+        securityStamNumberVO.setHighestStamNumber(highestStamNumber);
+        if (adminAdNumbers.contains(adNumber)) {
+             securityStamNumberVO.setHighestRole(SecurityRole.ADMIN);
+        } else {
+            securityStamNumberVO.setHighestRole(highestRole);
+        }
+        return securityStamNumberVO;
     }
 }

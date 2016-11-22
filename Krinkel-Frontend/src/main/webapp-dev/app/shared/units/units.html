@@ -35,7 +35,7 @@
     </thead>
 
     <tbody>
-    <tr ng-repeat="verbond in $ctrl.verbonden" ng-click="$ctrl.openExtraInfo(verbond)">
+    <tr ng-repeat="verbond in $ctrl.verbonden track by $index" ng-click="$ctrl.openExtraInfo(verbond)">
         <td>
             {{verbond.naam}}
         </td>
@@ -62,12 +62,12 @@
     </tr>
     </thead>
     <tbody>
-    <tr ng-repeat="participant in $ctrl.participants">
+    <tr ng-repeat="participant in $ctrl.participants track by $index" >
         <td>
             {{participant.firstName}} {{participant.lastName}}
         </td>
         <td>
-            {{participant.address.street}} {{participant.address.houseNumber}}
+            {{participant.address.street}}
         </td>
         <td>
             {{participant.address.city}}
@@ -96,7 +96,7 @@
     </tr>
     </thead>
     <tbody>
-    <tr ng-repeat="volunteer in $ctrl.volunteers">
+    <tr ng-repeat="volunteer in $ctrl.volunteers track by $index">
         <td>
             {{volunteer.firstName}} {{volunteer.lastName}}
         </td>

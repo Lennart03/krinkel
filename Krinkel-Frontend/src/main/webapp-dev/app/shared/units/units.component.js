@@ -8,7 +8,6 @@ class UnitsController {
     $onInit() {
         this.KrinkelService.getVerbonden().then((results) => {
             this.verbonden = results;
-            // this.getParticipantsForUnit(this.verbonden);
         });
     }
 
@@ -54,31 +53,10 @@ class UnitsController {
     openVerbond(verbond) {
         this.KrinkelService.getGewestenForVerbond(verbond.stamnummer).then((results) => {
             this.unitLevel = verbond.naam;
-            this.verbonden = results.onderliggende_stamnummers;
-            this.verbond = results;
-
-            if (results.onderliggende_stamnummers != 0) {
-                // this.getParticipantsForUnit(this.verbonden);
-            }
+            this.verbonden = results;
+            this.verbond = verbond;
         });
     }
-
-    // getParticipantsForUnit(verbonden) {
-    //     // angular.forEach(verbonden, (value, index) => {
-    //     //     this.KrinkelService.getParticipantsForUnit(value.stamnummer).then((results) => {
-    //     //         value.amountParticipants = results[0];
-    //     //         value.amountVolunteers = results[1];
-    //     //     })
-    //     // });
-    //     verbonden.forEach((r) => {
-    //         this.KrinkelService.getParticipantsOfUnit(r.stamnummer).then((results) => {
-    //             this.verbonden.aantal_ingeschreven_deelnemers = results;
-    //         });
-    //         this.KrinkelService.getVolunteersOfUnit(r.stamnummer).then((results) => {
-    //             this.verbonden.aantal_ingeschreven_vrijwilligers = results;
-    //         });
-    //     })
-    // }
 
     goToPrevious(verbond) {
         this.unitLevel = null;
@@ -86,14 +64,11 @@ class UnitsController {
         this.participantDetails = false;
         this.volunteerDetails = false;
 
-        if (verbond.bovenliggende_stamnummer != null) {
-            this.openVerbond(verbond.bovenliggende_stamnummer);
-        } else if (!verbond.stamnummer.endsWith("000")) {
-            this.openVerbond(verbond.stamnummer);
+        if(verbond.bovenliggende_stamnummer != null){
+            this.openVerbond(verbond.bovenliggende_stamnummer)
         } else {
             this.KrinkelService.getVerbonden().then((results) => {
                 this.verbonden = results;
-                // this.getParticipantsForUnit(this.verbonden);
             });
         }
     }
