@@ -17,7 +17,7 @@ public enum Verbond {
 
 
     public static Verbond getVerbondFromStamNumber(String stamNumber) {
-        switch (stamNumber.substring(0, 2)) {
+        switch (stamNumber.substring(0, 3)) {
             case "WG0":
             case "WJ0":
             case "WM0":

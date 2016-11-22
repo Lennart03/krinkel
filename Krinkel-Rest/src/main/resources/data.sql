@@ -7,18 +7,18 @@ INSERT INTO post_camp VALUES (60, '2017-08-31') ON DUPLICATE KEY UPDATE id = 60;
 INSERT INTO post_camp VALUES (70, '2017-09-01') ON DUPLICATE KEY UPDATE id = 70;
 INSERT INTO post_camp VALUES (80, '2017-09-02') ON DUPLICATE KEY UPDATE id = 80;
 
-INSERT INTO login_log (id,ad_number,stamp) VALUES (1,'123456',{d '2016-10-01'});
-INSERT INTO login_log (id,ad_number,stamp) VALUES (2,'123456',{d '2016-10-02'});
-INSERT INTO login_log (id,ad_number,stamp) VALUES (3,'654321',{d '2016-10-02'});
-INSERT INTO login_log (id,ad_number,stamp) VALUES (4,'123528',{d '2016-10-03'});
-INSERT INTO login_log (id,ad_number,stamp) VALUES (5,'1688456',{d '2016-10-03'});
-INSERT INTO login_log (id,ad_number,stamp) VALUES (6,'123456',{d '2016-10-04'});
-INSERT INTO login_log (id,ad_number,stamp) VALUES (7,'123456',{d '2016-10-04'});
-INSERT INTO login_log (id,ad_number,stamp) VALUES (8,'144546',{d '2016-10-04'});
-INSERT INTO login_log (id,ad_number,stamp) VALUES (9,'129897',{d '2016-10-04'});
-INSERT INTO login_log (id,ad_number,stamp) VALUES (10,'123856',{d '2016-10-04'});
-INSERT INTO login_log (id,ad_number,stamp) VALUES (11,'133456',{d '2016-10-07'});
-INSERT INTO login_log (id,ad_number,stamp) VALUES (12,'126556',{d '2016-10-07'});
+INSERT INTO login_log (id,ad_number,stam_number,stamp) VALUES (1,'123456','OM1301',{d '2016-10-01'});
+INSERT INTO login_log (id,ad_number,stam_number,stamp) VALUES (2,'123456','OM1301',{d '2016-10-02'});
+INSERT INTO login_log (id,ad_number,stam_number,stamp) VALUES (3,'654321','OM1301',{d '2016-10-02'});
+INSERT INTO login_log (id,ad_number,stam_number,stamp) VALUES (4,'123528','OM1301',{d '2016-10-03'});
+INSERT INTO login_log (id,ad_number,stam_number,stamp) VALUES (5,'1688456','OM1301',{d '2016-10-03'});
+INSERT INTO login_log (id,ad_number,stam_number,stamp) VALUES (6,'123456','OM1301',{d '2016-10-04'});
+INSERT INTO login_log (id,ad_number,stam_number,stamp) VALUES (7,'123456','OM1301',{d '2016-10-04'});
+INSERT INTO login_log (id,ad_number,stam_number,stamp) VALUES (8,'144546','OM1301',{d '2016-10-04'});
+INSERT INTO login_log (id,ad_number,stam_number,stamp) VALUES (9,'129897','OM1301',{d '2016-10-04'});
+INSERT INTO login_log (id,ad_number,stam_number,stamp) VALUES (10,'123856','OM1301',{d '2016-10-04'});
+INSERT INTO login_log (id,ad_number,stam_number,stamp) VALUES (11,'133456','OM1301',{d '2016-10-07'});
+INSERT INTO login_log (id,ad_number,stam_number,stamp) VALUES (12,'126556','OM1301',{d '2016-10-07'});
 
 
 DROP TABLE IF EXISTS groepen;

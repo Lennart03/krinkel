@@ -124,7 +124,7 @@ public class GraphChiroService {
         return loggerRepository.crunchData();
     }
 
-    public Map<Verbond, Integer> getUniqueLoginsPerVerbond() {
+    public TreeMap<Verbond, Integer> getUniqueLoginsPerVerbond() {
         TreeMap uniqueLoginsPerVerbond = new TreeMap();
         List<LoginLog> allLogs = loggerRepository.findAll();
 
@@ -135,8 +135,6 @@ public class GraphChiroService {
 
 
     private void mapIntegersToVerbondenByStamNumber(LoginLog log, TreeMap<Verbond, Integer> treeMap) {
-        System.out.println(log.getStamNumber().substring(0, 2));
-
         Verbond verbondFromStamNumber = Verbond.getVerbondFromStamNumber(log.getStamNumber());
 
         updateIntegerInVerbondMap(verbondFromStamNumber, treeMap);

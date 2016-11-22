@@ -1,6 +1,7 @@
 package com.realdolmen.chiro.controller;
 
 import com.realdolmen.chiro.domain.GraphLoginCount;
+import com.realdolmen.chiro.domain.Verbond;
 import com.realdolmen.chiro.domain.units.GraphChiroUnit;
 import com.realdolmen.chiro.domain.units.StatusChiroUnit;
 import com.realdolmen.chiro.service.GraphChiroService;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.TreeMap;
 
 
 @RestController
@@ -32,5 +34,9 @@ public class GraphController {
     @RequestMapping("/api/graph/login")
     public List<GraphLoginCount> getLoginData() {
         return graphChiroService.getLoginData();
+    }
+    @RequestMapping("/api/graph/uniqueLoginsPerVerbond")
+    public TreeMap<Verbond, Integer> getUniqueLoginsPerVerbond() {
+        return graphChiroService.getUniqueLoginsPerVerbond();
     }
 }
