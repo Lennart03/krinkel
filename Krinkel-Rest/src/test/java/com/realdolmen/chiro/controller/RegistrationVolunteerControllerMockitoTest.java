@@ -26,7 +26,7 @@ public class RegistrationVolunteerControllerMockitoTest {
     @Mock
     private RegistrationVolunteerService rvService;
 
-    private static String TEST_URL = "apeiofjoiaejfoioijagrapioejfleiofja";  //gibberish so test won't pass by accident
+    private String TEST_URL = "apeiofjoiaejfoioijagrapioejfleiofja";  //gibberish so test won't pass by accident
     private RegistrationVolunteer v;
 
     @Before
