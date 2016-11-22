@@ -15,6 +15,7 @@ import org.jasig.cas.client.validation.Cas20ProxyTicketValidator;
 import org.jasig.cas.client.validation.TicketValidationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.context.annotation.RequestScope;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -104,6 +105,9 @@ public class CASService {
                 user.setRegistered(false);
                 user.setHasPaid(false);
             }
+
+
+
 
             user.setRole(setCorrectSecurityRole(adNumber));
             userService.setCurrentUser(user);
