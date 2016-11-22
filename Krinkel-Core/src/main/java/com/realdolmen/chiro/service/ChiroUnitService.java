@@ -99,7 +99,12 @@ public class ChiroUnitService {
         return combinedUnits;
     }
 
+    /**
+     * first thing you see in the table (the list of verbonden)
+     * @return list of alle verbonden
+     */
     @PreAuthorize("@ChiroUnitServiceSecurity.hasPermissionToFindVerbonden()")
+    @PostFilter("@ChiroUnitServiceSecurity.hasPermissionToSeeVerbonden(filterObject)")
     public List<ChiroUnit> findVerbondUnits() {
         return this.verbondUnits;
     }
@@ -108,7 +113,19 @@ public class ChiroUnitService {
         return this.gewestUnits;
     }
 
-    @PreAuthorize("@ChiroUnitServiceSecurity.hasPermissionToFindUnits()")
+    /**
+     * used in the table to get all the gewesten en groepen
+     * @param stam
+     * @return
+     */
+    public List<ChiroUnit> findSubUnits(String stam) {
+        List<ChiroUnit> units = this.findAll();
+        ChiroUnit unit = this.findByStam(units, stam);
+        loopOverRegisteredParticipantsFor(stam, unit);
+        loopOverRegisteredVolunteersFor(stam, unit);
+        return unit.getLower();
+    }
+
     public ChiroUnit find(String stam) {
         List<ChiroUnit> units = this.findAll();
         ChiroUnit unit = this.findByStam(units, stam);
@@ -131,7 +148,7 @@ public class ChiroUnitService {
     }
 
     @PreAuthorize("@ChiroUnitServiceSecurity.hasPermissionToGetColleagues()")
-    @PostFilter("@ChiroUnitServiceSecurity.hasPersmissionToSeeColleagues(filterObject)")
+    @PostFilter("@ChiroUnitServiceSecurity.hasPermissionToSeeColleagues(filterObject)")
     public List<User> getUnitUsers(String stamnr) {
         return adapter.getColleagues(stamnr);
     }
@@ -192,7 +209,7 @@ public class ChiroUnitService {
     }
 
     private boolean hasNoLowerLevelUnits(ChiroUnit unit) {
-        // return unit.getLower() == null;
+//         return unit.getLower() == null;
         return unit.getLower().isEmpty();
     }
 
