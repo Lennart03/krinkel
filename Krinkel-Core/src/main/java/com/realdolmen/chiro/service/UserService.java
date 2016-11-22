@@ -2,6 +2,7 @@ package com.realdolmen.chiro.service;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.realdolmen.chiro.component.CASCurrentlyLoggedInUserComponent;
 import com.realdolmen.chiro.domain.RegistrationParticipant;
 import com.realdolmen.chiro.domain.SecurityRole;
 import com.realdolmen.chiro.domain.Status;
@@ -12,6 +13,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
+import org.springframework.jdbc.core.CallableStatementCallback;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
@@ -33,9 +35,12 @@ public class UserService {
     @Autowired
     private ChiroPloegService chiroPloegService;
 
+    @Autowired
+    private CASCurrentlyLoggedInUserComponent CASCurrentlyLoggedInUserComponent;
+
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
-    private User currentUser;
+
 
     // TODO
     // TODO
@@ -102,16 +107,16 @@ public class UserService {
      * @return current user
      */
     public User getCurrentUser() {
-        return currentUser;
+        return CASCurrentlyLoggedInUserComponent.getCurrentUser();
     }
 
     /**
-     * set the current user. we do this to avoid using the db to much
+     * set the current user. we do this to avoid using the db too much
      *
      * @param currentUser
      */
     public void setCurrentUser(User currentUser) {
-        this.currentUser = currentUser;
+        CASCurrentlyLoggedInUserComponent.setCurrentUser(currentUser);
     }
 
 
@@ -137,7 +142,7 @@ public class UserService {
      * Get colleagues from ChiroColleagueService and remove the colleagues who are already subscribed.
      *
      * @param adNumber
-     * @return
+     * @return returns JSON, we don't need to use these in the backend so we can filter the subscribed users and return the leftovers as JSON.
      * @throws URISyntaxException
      */
     public List<String> getColleagues(int adNumber) throws URISyntaxException {
