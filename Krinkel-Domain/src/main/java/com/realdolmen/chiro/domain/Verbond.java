@@ -4,16 +4,16 @@ package com.realdolmen.chiro.domain;
  * Created by MBTAZ48 on 22/11/2016.
  */
 public enum Verbond {
-    WEST_VLAANDEREN("West-Vlaanderen"),
-    MECHELEN("Mechelen"),
-    LEUVEN("Leuven"),
-    ANTWERPEN("Antwerpen"),
-    BRUSSEL("Brussel"),
-    REINAERT("Reinaert"),
-    KEMPEN("Kempen"),
-    HEUVELLAND("Heuvelland"),
-    ROELAND("Roeland"),
-    LIMBURG("Limburg");
+    WEST_VLAANDEREN("WG0000"),
+    MECHELEN("MG0000"),
+    LEUVEN("LEG0000"),
+    ANTWERPEN("AG0000"),
+    BRUSSEL("BG0000"),
+    REINAERT("OG2000"),
+    KEMPEN("KG0000"),
+    HEUVELLAND("OG3000"),
+    ROELAND("OG1000"),
+    LIMBURG("LG0000");
 
 
     public static Verbond getVerbondFromStamNumber(String stamNumber) {
@@ -63,14 +63,14 @@ public enum Verbond {
         }
     }
 
-    private String verbondName;
+    private String stam;
 
-    Verbond(String verbondName) {
-        this.verbondName = verbondName;
+    Verbond(String stam) {
+        this.stam = stam;
     }
 
-    public String getVerbondName(){
-        return verbondName;
+    public String getStam(){
+        return stam;
     }
 
 }

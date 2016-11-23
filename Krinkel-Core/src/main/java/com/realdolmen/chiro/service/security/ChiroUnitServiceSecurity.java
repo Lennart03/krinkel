@@ -4,10 +4,16 @@ import com.realdolmen.chiro.domain.SecurityRole;
 import com.realdolmen.chiro.domain.User;
 import com.realdolmen.chiro.domain.Verbond;
 import com.realdolmen.chiro.domain.units.ChiroUnit;
+import com.realdolmen.chiro.domain.vo.RolesAndUpperClasses;
 import com.realdolmen.chiro.service.ChiroUnitService;
 import com.realdolmen.chiro.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 @Component("ChiroUnitServiceSecurity")
 public class ChiroUnitServiceSecurity {
@@ -16,6 +22,63 @@ public class ChiroUnitServiceSecurity {
 
     @Autowired
     ChiroUnitService chiroUnitService;
+
+    //ChiroUnitService.findVerbondUnits()
+    public boolean hasPermissionToFindVerbonden() {
+        User currentUser = userService.getCurrentUser();
+
+        return currentUser != null;
+    }
+
+    public boolean hasPermissionToSeeVerbonden(ChiroUnit chiroUnit) {
+        //get current user and some shit he has
+        User currentUser = userService.getCurrentUser();
+        Map<String, RolesAndUpperClasses> rolesAndUpperClassesByStam = currentUser.getRolesAndUpperClassesByStam();
+        String currentUserStamNumber = currentUser.getStamnummer();
+        List<SecurityRole> securityRolesWithAccesToData = new ArrayList<>();
+        securityRolesWithAccesToData.add(SecurityRole.NATIONAAL);
+
+        //role only gets set when admin but you never know
+        //admin may see all verbonden
+        if (currentUser.getRole() != null && currentUser.getRole().equals(SecurityRole.ADMIN)) {
+            return true;
+            //if map size=1 there is only one role
+            //if map size=1 there is only one stamnummer => only one verbond
+            //can see verbond if nationaal or you are in a groep of the verbond
+        } else if (rolesAndUpperClassesByStam.size() == 1) {
+            Verbond verbondOfUser = Verbond.getVerbondFromStamNumber(currentUserStamNumber);
+            return chiroUnit.getStam().equals(verbondOfUser.getStam()) || rolesAndUpperClassesByStam.get(currentUserStamNumber).getSecurityRole().equals(SecurityRole.NATIONAAL);
+            // there may be multiple roles
+            // may be in multiple verbonden
+        } else if (rolesAndUpperClassesByStam.size() > 1) {
+            return testMethod(rolesAndUpperClassesByStam, chiroUnit, securityRolesWithAccesToData);
+        } else {
+            return false;
+        }
+    }
+
+    private boolean testMethod(Map<String, RolesAndUpperClasses> rolesAndUpperClassesByStam, ChiroUnit chiroUnit, List<SecurityRole> securityRolesWithAccesToData) {
+        List<SecurityRole> allSecurityRoles = new ArrayList<>();
+        List<String> allVerbondenStamNumbers = new ArrayList<>();
+        boolean isInVerbond = false;
+        boolean hasCorrectRole = false;
+
+        for (Map.Entry<String, RolesAndUpperClasses> entry : rolesAndUpperClassesByStam.entrySet()) {
+            if (!entry.getKey().startsWith("NAT")) {
+                allVerbondenStamNumbers.add(Verbond.getVerbondFromStamNumber(entry.getKey()).getStam());
+            }
+            allSecurityRoles.add(entry.getValue().getSecurityRole());
+        }
+        if (allVerbondenStamNumbers.contains(chiroUnit.getStam())) {
+            isInVerbond = true;
+        }
+        List<SecurityRole> common = allSecurityRoles.stream().filter(securityRolesWithAccesToData::contains).collect(Collectors.toList());
+        if (!common.isEmpty()) {
+            hasCorrectRole = true;
+        }
+        return isInVerbond || hasCorrectRole;
+    }
+
 
     public boolean hasPermissionToGetColleagues() {
         User currentUser = userService.getCurrentUser();
@@ -45,27 +108,6 @@ public class ChiroUnitServiceSecurity {
         User currentUser = userService.getCurrentUser();
 
         return currentUser != null && currentUser.getRole().equals(SecurityRole.ADMIN);
-    }
-
-    //ChiroUnitService.findVerbondUnits()
-    public boolean hasPermissionToFindVerbonden() {
-        User currentUser = userService.getCurrentUser();
-
-        return currentUser != null;
-    }
-
-    public boolean hasPermissionToSeeVerbonden(ChiroUnit chiroUnit) {
-        User currentUser = userService.getCurrentUser();
-        SecurityRole currentUserRole = currentUser.getRole();
-        String currentUserStamNumber = currentUser.getStamnummer();
-
-        if (currentUserRole.equals(SecurityRole.ADMIN) || currentUserRole.equals(SecurityRole.NATIONAAL)) {
-            return true;
-        } else if (currentUserRole.equals(SecurityRole.VERBOND) || currentUserRole.equals(SecurityRole.GEWEST) || currentUserRole.equals(SecurityRole.GROEP)) {
-            Verbond verbondOfUser = Verbond.getVerbondFromStamNumber(currentUserStamNumber);
-            return chiroUnit.getName().equals(verbondOfUser.getVerbondName());
-        }
-        return false;
     }
 
     public boolean hasPermissionToSeeUnits(ChiroUnit chiroUnit) {
