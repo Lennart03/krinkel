@@ -2,8 +2,11 @@ package com.realdolmen.chiro.service;
 
 import com.realdolmen.chiro.config.CasConfiguration;
 import com.realdolmen.chiro.config.JwtConfiguration;
-import com.realdolmen.chiro.domain.*;
-import com.realdolmen.chiro.domain.vo.SecurityStamNumberVO;
+import com.realdolmen.chiro.domain.RegistrationParticipant;
+import com.realdolmen.chiro.domain.SecurityRole;
+import com.realdolmen.chiro.domain.Status;
+import com.realdolmen.chiro.domain.User;
+import com.realdolmen.chiro.domain.vo.StamNumbersRolesVO;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -102,13 +105,22 @@ public class CASService {
                 user.setHasPaid(false);
             }
 
-            SecurityStamNumberVO securityStamNumberVO = findHighestSecurityAndStamNumber(adNumber);
+            StamNumbersRolesVO stamNumbersRolesVO = findAllStamNumbersAndRoles(adNumber);
 
-            user.setRole(securityStamNumberVO.getHighestRole());
-            user.setStamnummer(securityStamNumberVO.getHighestStamNumber());
+            user.setRolesAndUpperClassesByStam(stamNumbersRolesVO.getRolesAndUpperClassesByStam());
+            user.setStamnummer(stamNumbersRolesVO.getStamNumber());
 
-//            user.setRole(SecurityRole.ADMIN);
-//            user.setStamnummer("MG /0113");
+            //TODO remake this so it uses the db
+            List<String> adminAdNumbers = new ArrayList<>();
+            adminAdNumbers.add("152504");
+            adminAdNumbers.add("109318");
+            adminAdNumbers.add("169314");
+            adminAdNumbers.add("386288");
+
+            if(adminAdNumbers.contains(adNumber)){
+                user.setRole(SecurityRole.ADMIN);
+            }
+
             userService.setCurrentUser(user);
 
             return user;
@@ -116,15 +128,8 @@ public class CASService {
         return null;
     }
 
-    private SecurityStamNumberVO findHighestSecurityAndStamNumber(String adNumber) {
-        //TODO change this hardcoded list of admins (in db & stuff)
-        List<String> adminAdNumbers = new ArrayList<>();
-//        adminAdNumbers.add("152504");
-//        adminAdNumbers.add("109318");
-        adminAdNumbers.add("169314");
-        adminAdNumbers.add("386288");
-
-        return userService.getHighestSecurityRoleAndStamNumber(adNumber, adminAdNumbers);
+    private StamNumbersRolesVO findAllStamNumbersAndRoles(String adNumber) {
+        return userService.getAllStamnumbersRolesAndUpperUnits(adNumber);
     }
 
 

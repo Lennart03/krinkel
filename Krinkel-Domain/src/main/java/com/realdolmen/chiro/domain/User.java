@@ -1,6 +1,10 @@
 package com.realdolmen.chiro.domain;
 
 
+import com.realdolmen.chiro.domain.vo.RolesAndUpperClasses;
+
+import java.util.Map;
+
 public class User {
 
     private SecurityRole role;
@@ -12,6 +16,7 @@ public class User {
     private boolean hasPaid;
     private String stamnummer;
     private String username;
+    private Map<String, RolesAndUpperClasses> rolesAndUpperClassesByStam;
 
     public User() {
     }
@@ -116,4 +121,11 @@ public class User {
         this.hasPaid = hasPaid;
     }
 
+    public Map<String, RolesAndUpperClasses> getRolesAndUpperClassesByStam() {
+        return rolesAndUpperClassesByStam;
+    }
+
+    public void setRolesAndUpperClassesByStam(Map<String, RolesAndUpperClasses> rolesAndUpperClassesByStam) {
+        this.rolesAndUpperClassesByStam = rolesAndUpperClassesByStam;
+    }
 }
