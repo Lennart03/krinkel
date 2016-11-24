@@ -74,32 +74,37 @@ public class ChiroPloegService {
     public Map<String, String> getStamNumbers(String adNumber) {
         String url = "https://cividev.chiro.be/sites/all/modules/civicrm/extern/rest.php?key=2340f8603072358ffc23f5459ef92f88&api_key=vooneih8oo1XepeiduGh&entity=Light&action=getploeg&json=%7B%22adnr%22:" + 308986 + "%7D";
         Map<String, String> stamNumbers = new TreeMap<>();
-        try {
-            URI uri = new URI(url);
-
-            RestTemplate restTemplate = new RestTemplate();
-            String body = restTemplate.getForEntity(uri, String.class)
-                    .getBody();
-
-            ObjectMapper mapper = new ObjectMapper();
-
-            try {
-                JsonNode jsonNode = mapper.readTree(body);
-                JsonNode values = jsonNode.get("values");
-
-                for (JsonNode v : values) {
-                    String stamNumber = v.get("stamnr").asText();
-                    String upperStamNumber = v.get("bovenliggende").asText();
-
-                    stamNumbers.put(stamNumber, upperStamNumber);
-                }
-
-            } catch (IOException e) {
-                logger.error("chiro API error");
-            }
-        } catch (URISyntaxException e) {
-            logger.error(e.getMessage());
-        }
+//        try {
+//            URI uri = new URI(url);
+//
+//            RestTemplate restTemplate = new RestTemplate();
+//            String body = restTemplate.getForEntity(uri, String.class)
+//                    .getBody();
+//
+//            ObjectMapper mapper = new ObjectMapper();
+//
+//            try {
+//                JsonNode jsonNode = mapper.readTree(body);
+//                JsonNode values = jsonNode.get("values");
+//
+//                for (JsonNode v : values) {
+//                    String stamNumber = v.get("stamnr").asText();
+//                    String upperStamNumber = v.get("bovenliggende").asText();
+//
+//                    stamNumbers.put(stamNumber, upperStamNumber);
+//                }
+//
+//            } catch (IOException e) {
+//                logger.error("chiro API error");
+//            }
+//        } catch (URISyntaxException e) {
+//            logger.error(e.getMessage());
+//        }
+//        stamNumbers.put("MG /0104","MG0100");
+        stamNumbers.put("AG /0103","AG0400");
+        stamNumbers.put("KG /0000", "KG0000");
+        stamNumbers.put("MG /0600", "KG0000");
+//        stamNumbers.put("LG /0000","LG0000");
         return stamNumbers;
     }
 

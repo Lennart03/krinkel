@@ -47,17 +47,18 @@ public class ChiroUnitServiceSecurity {
             //can see verbond if nationaal or you are in a groep of the verbond
         } else if (rolesAndUpperClassesByStam.size() == 1) {
             Verbond verbondOfUser = Verbond.getVerbondFromStamNumber(currentUserStamNumber);
-            return chiroUnit.getStam().equals(verbondOfUser.getStam()) || rolesAndUpperClassesByStam.get(currentUserStamNumber).getSecurityRole().equals(SecurityRole.NATIONAAL);
+            return chiroUnit.getStam().equals(verbondOfUser.getStam()) || securityRolesWithAccesToData.contains(rolesAndUpperClassesByStam.get(currentUserStamNumber).getSecurityRole());
             // there may be multiple roles
             // may be in multiple verbonden
         } else if (rolesAndUpperClassesByStam.size() > 1) {
-            return testMethod(rolesAndUpperClassesByStam, chiroUnit, securityRolesWithAccesToData);
+            return checkMultipleStamNumbersForPermissionToSeeVerbond(rolesAndUpperClassesByStam, chiroUnit, securityRolesWithAccesToData);
         } else {
             return false;
         }
     }
 
-    private boolean testMethod(Map<String, RolesAndUpperClasses> rolesAndUpperClassesByStam, ChiroUnit chiroUnit, List<SecurityRole> securityRolesWithAccesToData) {
+
+    private boolean checkMultipleStamNumbersForPermissionToSeeVerbond(Map<String, RolesAndUpperClasses> rolesAndUpperClassesByStam, ChiroUnit chiroUnit, List<SecurityRole> securityRolesWithAccesToData) {
         List<SecurityRole> allSecurityRoles = new ArrayList<>();
         List<String> allVerbondenStamNumbers = new ArrayList<>();
         boolean isInVerbond = false;
@@ -77,6 +78,89 @@ public class ChiroUnitServiceSecurity {
             hasCorrectRole = true;
         }
         return isInVerbond || hasCorrectRole;
+    }
+
+    public boolean hasPermissionToSeeUnits(ChiroUnit chiroUnit) {
+        User currentUser = userService.getCurrentUser();
+
+        if (chiroUnit.getStam().endsWith("00")) {
+            return hasPermissionToSeeGewesten(currentUser, chiroUnit);
+        } else {
+            return hasPermissionToSeeGroepen(currentUser, chiroUnit);
+        }
+    }
+
+
+    private boolean hasPermissionToSeeGewesten(User currentUser, ChiroUnit chiroUnit) {
+        //get current user and some shit he has
+        Map<String, RolesAndUpperClasses> rolesAndUpperClassesByStam = currentUser.getRolesAndUpperClassesByStam();
+        String currentUserStamNumber = currentUser.getStamnummer();
+        List<SecurityRole> securityRolesWithAccesToData = new ArrayList<>();
+        securityRolesWithAccesToData.add(SecurityRole.NATIONAAL);
+        securityRolesWithAccesToData.add(SecurityRole.VERBOND);
+
+        if (currentUser.getRole() != null && currentUser.getRole().equals(SecurityRole.ADMIN)) {
+            return true;
+        } else if (rolesAndUpperClassesByStam.size() == 1) {
+            if (securityRolesWithAccesToData.contains(rolesAndUpperClassesByStam.get(currentUserStamNumber).getSecurityRole())) {
+                return true;
+            } else if (chiroUnit.getStam().equals(rolesAndUpperClassesByStam.get(currentUserStamNumber).getStamNumberUpperUnit())) {
+                return true;
+            } else if (chiroUnit.getStam().equals(currentUserStamNumber)) {
+                return true;
+            } else {
+                return false;
+            }
+        } else if (rolesAndUpperClassesByStam.size() > 1) {
+            return checkMultipleStamNumbersForPermissionToSeeGewest(rolesAndUpperClassesByStam, chiroUnit, securityRolesWithAccesToData);
+        } else {
+            return false;
+        }
+    }
+
+    private boolean checkMultipleStamNumbersForPermissionToSeeGewest(Map<String, RolesAndUpperClasses> rolesAndUpperClassesByStam, ChiroUnit chiroUnit, List<SecurityRole> securityRolesWithAccesToData) {
+        for (Map.Entry<String, RolesAndUpperClasses> entry : rolesAndUpperClassesByStam.entrySet()) {
+            if (entry.getValue().getSecurityRole().equals(SecurityRole.NATIONAAL)) {
+                return true;
+            } else if (entry.getKey().equals(chiroUnit.getStam())) {
+                return true;
+            } else if (entry.getValue().getStamNumberUpperUnit().equals(chiroUnit.getStam())){
+                return true;
+            } else if (Verbond.getVerbondFromStamNumber(entry.getKey()).getStam().equals(chiroUnit.getStam())){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private boolean hasPermissionToSeeGroepen(User currentUser, ChiroUnit chiroUnit) {
+        //get current user and some shit he has
+        Map<String, RolesAndUpperClasses> rolesAndUpperClassesByStam = currentUser.getRolesAndUpperClassesByStam();
+        String currentUserStamNumber = currentUser.getStamnummer();
+        List<SecurityRole> securityRolesWithAccesToData = new ArrayList<>();
+        securityRolesWithAccesToData.add(SecurityRole.NATIONAAL);
+        securityRolesWithAccesToData.add(SecurityRole.VERBOND);
+        securityRolesWithAccesToData.add(SecurityRole.GEWEST);
+
+        if (currentUser.getRole() != null && currentUser.getRole().equals(SecurityRole.ADMIN)) {
+            return true;
+        } else if (rolesAndUpperClassesByStam.size() == 1) {
+            return securityRolesWithAccesToData.contains(rolesAndUpperClassesByStam.get(currentUserStamNumber).getSecurityRole()) || chiroUnit.getStam().equals(rolesAndUpperClassesByStam.get(currentUserStamNumber).getStamNumberUpperUnit());
+        } else if (rolesAndUpperClassesByStam.size() > 1) {
+            return testmethod(rolesAndUpperClassesByStam, chiroUnit, securityRolesWithAccesToData);
+        } else {
+            return false;
+        }
+    }
+
+    private boolean testmethod(Map<String, RolesAndUpperClasses> rolesAndUpperClassesByStam, ChiroUnit chiroUnit, List<SecurityRole> securityRolesWithAccesToData) {
+//        for (Map.Entry<String, RolesAndUpperClasses> entry : rolesAndUpperClassesByStam.entrySet()) {
+//            if (securityRolesWithAccesToData.contains(entry.getValue().getSecurityRole()) | entry.getValue().getStamNumberUpperUnit().equals(chiroUnit.getStam()) | chiroUnit.getUpper().getStam().equals(entry.getKey())) {
+//                return true;
+//            }
+//        }
+//        return false;
+        return true;
     }
 
 
@@ -110,41 +194,5 @@ public class ChiroUnitServiceSecurity {
         return currentUser != null && currentUser.getRole().equals(SecurityRole.ADMIN);
     }
 
-    public boolean hasPermissionToSeeUnits(ChiroUnit chiroUnit) {
-        User currentUser = userService.getCurrentUser();
 
-        if (chiroUnit.getStam().endsWith("00")) {
-            return hasPermissionToSeeGewesten(currentUser, chiroUnit);
-        } else {
-            return hasPermissionToSeeGroepen(currentUser, chiroUnit);
-
-        }
-    }
-
-    //TODO use regex
-    //TODO use switch?
-    private boolean hasPermissionToSeeGewesten(User currentUser, ChiroUnit chiroUnit) {
-        SecurityRole currentUserRole = currentUser.getRole();
-        String currentUserStam = currentUser.getStamnummer();
-
-        if (currentUserRole.equals(SecurityRole.ADMIN) || currentUserRole.equals(SecurityRole.NATIONAAL) || currentUserRole.equals(SecurityRole.VERBOND)) {
-            return true;
-        } else {
-            String beginOfStamNumber = currentUserStam.replace(" /", "").substring(0, 4);
-            return chiroUnit.getStam().startsWith(beginOfStamNumber);
-        }
-    }
-
-    //TODO use regex
-    //TODO use switch?
-    private boolean hasPermissionToSeeGroepen(User currentUser, ChiroUnit chiroUnit) {
-        SecurityRole currentUserRole = currentUser.getRole();
-        String currentUserStam = currentUser.getStamnummer();
-
-        if (currentUserRole.equals(SecurityRole.ADMIN) || currentUserRole.equals(SecurityRole.NATIONAAL) || currentUserRole.equals(SecurityRole.VERBOND) || currentUserRole.equals(SecurityRole.GEWEST)) {
-            return true;
-        } else {
-            return currentUserStam.replace(" /", "").equals(chiroUnit.getStam());
-        }
-    }
 }
