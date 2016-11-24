@@ -8,6 +8,8 @@ import org.springframework.data.jpa.repository.Query;
 import java.util.List;
 
 public interface LoginLoggerRepository extends JpaRepository<LoginLog, Long> {
+	
+	List<LoginLog> findByAdNumber(String adNumber);
 
     @Query("SELECT NEW com.realdolmen.chiro.domain.GraphLoginCount(l.stamp, count(DISTINCT l.adNumber), l.stamNumber)" +
             "FROM LoginLog l " +

@@ -22,7 +22,7 @@ import java.util.Date;
 import java.util.List;
 
 @Service
-public class CASService {
+public class CASService{
     @Autowired
     private CasConfiguration configuration;
 
@@ -35,17 +35,17 @@ public class CASService {
     @Autowired
     private LoginLogAdvice loginLogAdvice;
 
+    /* (non-Javadoc)
+	 * @see com.realdolmen.chiro.service.CASService#validateTicket(java.lang.String)
+	 */
     public String validateTicket(String ticket) {
         User user = validate(ticket);
         return createToken(user);
     }
 
-    /**
-     * Validates the CAS ticket. The current CAS user is set from this method.
-     *
-     * @param ticket
-     * @return
-     */
+    /* (non-Javadoc)
+	 * @see com.realdolmen.chiro.service.CASService#validate(java.lang.String)
+	 */
     public final User validate(String ticket) {
         AttributePrincipal principal = null;
         Cas20ProxyTicketValidator sv = new Cas20ProxyTicketValidator(configuration.getBaseCasUrl());
@@ -128,6 +128,9 @@ public class CASService {
     }
 
 
+    /* (non-Javadoc)
+	 * @see com.realdolmen.chiro.service.CASService#hasRole(com.realdolmen.chiro.domain.SecurityRole[], javax.servlet.http.HttpServletRequest)
+	 */
     public Boolean hasRole(final SecurityRole[] roles, final HttpServletRequest request) {
         Claims claims = Jwts.parser()
                 .setSigningKey(DatatypeConverter.parseBase64Binary(jwtConfig.getJwtSecret()))
@@ -142,6 +145,9 @@ public class CASService {
         return false;
     }
 
+    /* (non-Javadoc)
+	 * @see com.realdolmen.chiro.service.CASService#createCookie(java.lang.String)
+	 */
     public Cookie createCookie(String jwt) {
         Cookie myCookie = new Cookie("Authorization", jwt);
         myCookie.setPath("/");
@@ -158,8 +164,11 @@ public class CASService {
         return null;
     }
 
+    /* (non-Javadoc)
+	 * @see com.realdolmen.chiro.service.CASService#createToken(com.realdolmen.chiro.domain.User)
+	 */
     public String createToken(User user) {
-        loginLogAdvice.registerLoginAfterTokenCreation(user);
+        //loginLogAdvice.registerLoginAfterTokenCreation(user);  Why is this? This is done automatically by loginLogAdvice
         return Jwts.builder()
                 .setSubject(user.getUsername())
                 .claim("firstname", user.getFirstname())
