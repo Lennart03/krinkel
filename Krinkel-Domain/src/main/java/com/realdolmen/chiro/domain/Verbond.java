@@ -17,49 +17,74 @@ public enum Verbond {
 
 
     public static Verbond getVerbondFromStamNumber(String stamNumber) {
-        switch (stamNumber.substring(0, 3)) {
-            case "WG0":
-            case "WJ0":
-            case "WM0":
+        /**
+         * Most stamNumbers are length 6, except for Leuven which is 7. The stamNumbers with OG's also have to be checked by the first 3 letters. That's why this logic is here.
+         */
+        if (stamNumber.length() == 6) {
+            if (stamNumber.startsWith("O")) {
+                return switchVerbondOnFirst3Letters(stamNumber);
+            }
+            return switchVerbondOnFirst2Letters(stamNumber);
+
+        } else if (stamNumber.length() == 7) {
+            return switchVerbondOnFirst3Letters(stamNumber);
+        } else {
+            throw new RuntimeException("Invalid adNumber length in Verbond.getVerbondFromStamNumber()");
+        }
+    }
+
+    private static Verbond switchVerbondOnFirst2Letters(String stamNumber) {
+        switch (stamNumber.substring(0, 2).toUpperCase()) {
+            case "WG":
+            case "WJ":
+            case "WM":
                 return Verbond.WEST_VLAANDEREN;
-            case "MG0":
-            case "MM0":
-            case "MJ0":
+            case "MG":
+            case "MM":
+            case "MJ":
                 return Verbond.MECHELEN;
+            case "AG":
+            case "AJ":
+            case "AM":
+                return Verbond.ANTWERPEN;
+            case "BG":
+            case "BJ":
+            case "BM":
+                return Verbond.BRUSSEL;
+            case "KG":
+            case "KJ":
+            case "KM":
+                return Verbond.KEMPEN;
+            case "LG":
+            case "LJ":
+            case "LM":
+                return Verbond.LIMBURG;
+            default:
+                throw new RuntimeException("Verbond " + stamNumber.substring(0, 2).toUpperCase() + " in statistics switch not found. Implement it.");
+        }
+
+    }
+
+    private static Verbond switchVerbondOnFirst3Letters(String stamNumber) {
+        switch (stamNumber.substring(0, 3).toUpperCase()) {
             case "LEG":
             case "LEJ":
             case "LEM":
                 return Verbond.LEUVEN;
-            case "AG0":
-            case "AJ0":
-            case "AM0":
-                return Verbond.ANTWERPEN;
-            case "BG0":
-            case "BJ0":
-            case "BM0":
-                return Verbond.BRUSSEL;
-            case "OG2":
-            case "OJ2":
-            case "OM2":
-                return Verbond.REINAERT;
-            case "KG0":
-            case "KJ0":
-            case "KM0":
-                return Verbond.KEMPEN;
-            case "OG3":
-            case "OJ3":
-            case "OM3":
-                return Verbond.HEUVELLAND;
             case "OG1":
             case "OJ1":
             case "OM1":
                 return Verbond.ROELAND;
-            case "LG0":
-            case "LJ0":
-            case "LM0":
-                return Verbond.LIMBURG;
+            case "OG3":
+            case "OJ3":
+            case "OM3":
+                return Verbond.HEUVELLAND;
+            case "OG2":
+            case "OJ2":
+            case "OM2":
+                return Verbond.REINAERT;
             default:
-                throw new RuntimeException("Verbond in statistics switch not found. Implement it.");
+                throw new RuntimeException("Verbond " + stamNumber.substring(0, 3).toUpperCase() + " in statistics switch not found. Implement it.");
         }
     }
 
