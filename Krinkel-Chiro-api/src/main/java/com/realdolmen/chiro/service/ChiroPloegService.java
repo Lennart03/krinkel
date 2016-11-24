@@ -101,9 +101,9 @@ public class ChiroPloegService {
 //            logger.error(e.getMessage());
 //        }
 //        stamNumbers.put("MG /0104","MG0100");
-        stamNumbers.put("AG /0103","AG0400");
-        stamNumbers.put("KG /0000", "KG0000");
-        stamNumbers.put("MG /0600", "KG0000");
+        stamNumbers.put("AG /0103","AG0400"); //groep
+        stamNumbers.put("KG /0000", "KG0000"); //verbond
+        stamNumbers.put("MG /0700", "MG0000"); //gewest
 //        stamNumbers.put("LG /0000","LG0000");
         return stamNumbers;
     }
