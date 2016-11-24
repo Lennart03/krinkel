@@ -105,10 +105,10 @@ public class CASService {
             SecurityStamNumberVO securityStamNumberVO = findHighestSecurityAndStamNumber(adNumber);
 
             user.setRole(securityStamNumberVO.getHighestRole());
-            user.setStamnummer(securityStamNumberVO.getHighestStamNumber());
+//            user.setStamnummer(securityStamNumberVO.getHighestStamNumber());
 
 //            user.setRole(SecurityRole.ADMIN);
-//            user.setStamnummer("MG /0113");
+            user.setStamnummer("MG0113");
             userService.setCurrentUser(user);
 
             return user;
