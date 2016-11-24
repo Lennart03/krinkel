@@ -1,7 +1,7 @@
 import 'angular';
 
 import 'angular-route';
-import 'ng-autocomplete'
+import 'ng-autocomplete';
 import {appConfig} from './app.config';
 import {KrinkelService} from './shared/krinkel.service';
 import {StorageService} from './shared/storage.service.js';

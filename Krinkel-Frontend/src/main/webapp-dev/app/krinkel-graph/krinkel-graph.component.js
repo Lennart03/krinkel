@@ -62,7 +62,6 @@ class KrinkelGraphController {
 
                     tempObject.key = key;
                     tempObject.values = this.mapValuesToChartStructure(valuesOfKey);
-                    console.log(tempObject);
 
 
                     outputArray.push(tempObject);
