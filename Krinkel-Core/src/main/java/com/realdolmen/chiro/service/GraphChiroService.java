@@ -12,6 +12,7 @@ import com.realdolmen.chiro.repository.LoginLoggerRepository;
 import com.realdolmen.chiro.repository.RegistrationParticipantRepository;
 import com.realdolmen.chiro.util.StamNumberTrimmer;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 
@@ -73,12 +74,17 @@ public class GraphChiroService {
     @PreAuthorize("@GraphChiroServiceSecurity.hasPermissionToMakeSunGraph()")
     public GraphChiroUnit summary() {
         GraphChiroUnit root = new GraphChiroUnit("Inschrijvingen", null, new ArrayList<GraphChiroUnit>());
-//
+
         boolean verbondadded;
         boolean gewestadded;
 
-        for (int i = 0; i < findAll().size(); i++) {
-            RawChiroUnit raw = findAll().get(i);
+
+        /**
+         * VERY long execution time. Changed the multiple findAll() to one findAll(), which reduced the execution time from ~8 seconds to ~2.5 seconds.
+         */
+        List<RawChiroUnit> all = findAll();
+        for (int i = 0; i < all.size(); i++) {
+            RawChiroUnit raw = all.get(i);
             verbondadded = false;
             gewestadded = false;
             for (GraphChiroUnit r : root.getChildren()) {
@@ -124,30 +130,46 @@ public class GraphChiroService {
         return loggerRepository.crunchData();
     }
 
-    public TreeMap<Verbond, Integer> getUniqueLoginsPerVerbond() {
-        TreeMap uniqueLoginsPerVerbond = new TreeMap();
+    public SortedMap<Verbond, SortedMap<String, Integer>> getUniqueLoginsPerVerbond() {
+        TreeMap<Verbond, SortedMap<String, Integer>> uniqueLoginsPerVerbond = new TreeMap<>();
+        fillMapWithAllVerbonden(uniqueLoginsPerVerbond);
+
         List<LoginLog> allLogs = loggerRepository.findAll();
 
-        allLogs.parallelStream().forEach(log -> mapIntegersToVerbondenByStamNumber(log, uniqueLoginsPerVerbond));
+        allLogs.parallelStream().forEach(log -> mapLoginLogs(log, uniqueLoginsPerVerbond));
 
         return uniqueLoginsPerVerbond;
     }
 
-
-    private void mapIntegersToVerbondenByStamNumber(LoginLog log, TreeMap<Verbond, Integer> treeMap) {
+    private void mapLoginLogs(LoginLog log, SortedMap<Verbond, SortedMap<String, Integer>> treeMap) {
         Verbond verbondFromStamNumber = Verbond.getVerbondFromStamNumber(log.getStamNumber());
 
-        updateIntegerInVerbondMap(verbondFromStamNumber, treeMap);
+        SortedMap<String, Integer> dateIntegerSortedMap = fillMapWithDateToLoginCount(log.getStamp().toString(), treeMap.get(verbondFromStamNumber));
+
+        treeMap.put(verbondFromStamNumber, dateIntegerSortedMap);
     }
 
 
 
-    private void updateIntegerInVerbondMap(Verbond verbond, TreeMap<Verbond, Integer> treeMap) {
-        if (treeMap.containsKey(verbond)) {
-            treeMap.put(verbond, treeMap.get(verbond) + 1);
-        } else {
-            treeMap.put(verbond, 1);
-        }
 
+    private SortedMap<String, Integer> fillMapWithDateToLoginCount(String date, SortedMap<String, Integer> map) {
+        if (map.containsKey(date)) {
+            map.put(date, map.get(date) + 1);
+        } else {
+            map.put(date, 1);
+        }
+        return map;
+    }
+
+    /**
+     * Initializes a newly created SortedMap with all Verbonden in it.
+     * No checks necessary because this method should only be used on empty maps.
+     * @param map
+     */
+    private void fillMapWithAllVerbonden(SortedMap<Verbond, SortedMap<String, Integer>> map) {
+        for (Verbond verbond : Verbond.values()) {
+            TreeMap<String, Integer> uniqueLoginsPerDate = new TreeMap<>();
+            map.put(verbond, uniqueLoginsPerDate);
+        }
     }
 }

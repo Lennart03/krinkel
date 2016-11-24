@@ -94,7 +94,7 @@ export class KrinkelService {
     }
 
     getGraphLoginInfo() {
-        return this.$http.get(`${this.BASEURL}/api/graph/login`).then((resp) => {
+        return this.$http.get(`${this.BASEURL}/api/graph/uniqueLoginsPerVerbond`).then((resp) => {
             return resp.data;
         });
     }

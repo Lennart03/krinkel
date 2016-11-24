@@ -12,7 +12,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Date;
 import java.util.List;
+import java.util.SortedMap;
 import java.util.TreeMap;
 
 
@@ -36,7 +38,7 @@ public class GraphController {
         return graphChiroService.getLoginData();
     }
     @RequestMapping("/api/graph/uniqueLoginsPerVerbond")
-    public TreeMap<Verbond, Integer> getUniqueLoginsPerVerbond() {
+    public SortedMap<Verbond, SortedMap<String, Integer>> getUniqueLoginsPerVerbond() {
         return graphChiroService.getUniqueLoginsPerVerbond();
     }
 }
