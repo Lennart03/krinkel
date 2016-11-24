@@ -1,6 +1,9 @@
 class KrinkelGraphController {
     constructor(KrinkelService) {
         this.KrinkelService = KrinkelService;
+        this.getDataForSunBurst();
+        this.getDataForStatus();
+        this.getDataForLogin();
     }
 
     getDataForSunBurst() {
@@ -12,7 +15,6 @@ class KrinkelGraphController {
 
     getDataForStatus() {
         this.KrinkelService.getGraphStatusInfo().then((results) => {
-
             this.barData = [
                 {
                     key: "Bevestigd deelnemer",
@@ -50,31 +52,59 @@ class KrinkelGraphController {
 
     getDataForLogin() {
         this.KrinkelService.getGraphLoginInfo().then((results) => {
-            var values = [];
-            var length= 0;
-            for(var key in results) {
-                if(results.hasOwnProperty(key)){
-                    length++;
+            // this.lineData = results;
+            var outputArray = [];
+
+            for (var key in results) {
+                if (results.hasOwnProperty(key)) {
+                    var tempObject = {};
+                    var valuesOfKey = results[key];
+
+                    tempObject.key = key;
+                    tempObject.values = this.mapValuesToChartStructure(valuesOfKey);
+                    console.log(tempObject);
+
+
+                    outputArray.push(tempObject);
                 }
             }
 
-            for (var i = 0; i < length; i++) {
-                var date = new Date( results[i].date.replace( /(\d{2})-(\d{2})-(\d{4})/, "$2/$1/$3") );
-                values[i] = [date, results[i].count];
-            }
-            this.lineData = [
-                {
-                    key: "Aantal login\'s: ",
-                    values: values
-                }
-            ];
+            this.lineData = outputArray;
+            // var values = [];
+            // var length= 0;
+            // for(var key in results) {
+            //     if(results.hasOwnProperty(key)){
+            //         length++;
+            //     }
+            // }
+            //
+            // for (var i = 0; i < length; i++) {
+            //     var date = new Date( results[i].date.replace( /(\d{2})-(\d{2})-(\d{4})/, "$2/$1/$3") );
+            //     values[i] = [date, results[i].count];
+            // }
+            // this.lineData = [
+            //     {
+            //         key: "Aantal login\'s: ",
+            //         values: values
+            //     }
+            // ];
         });
     }
 
+    mapValuesToChartStructure(valuesOfKey) {
+        var tempArray = [];
+        for (var keyOfValue in valuesOfKey) {
+            if (valuesOfKey.hasOwnProperty(keyOfValue)) {
+                tempArray.push([keyOfValue, valuesOfKey[keyOfValue]]);
+            }
+        }
+        return tempArray;
+    }
+
     $onInit() {
-        this.getDataForSunBurst();
-        this.getDataForStatus();
-        this.getDataForLogin();
+        // this.getDataForSunBurst();
+        // this.getDataForStatus();
+        // this.getDataForLogin();
         this.test = "sunburstChart";
 
         //sunburst------------------
@@ -93,10 +123,56 @@ class KrinkelGraphController {
         };
         //show no data found sunburst
         this.sunBurstData = [];
-        //loginchart----------------------------------------------
+        /**
+         * Old login chart*
+         */
+        // this.lineOptions = {
+        //     chart: {
+        //         type: 'stackedAreaChart',
+        //         height: 450,
+        //         margin: {
+        //             top: 20,
+        //             right: 20,
+        //             bottom: 30,
+        //             left: 40
+        //         },
+        //         x: function (d) {
+        //             return d[0];
+        //         },
+        //         y: function (d) {
+        //             return d[1];
+        //         },
+        //         showControls: false,
+        //         useVoronoi: false,
+        //         clipEdge: true,
+        //         duration: 100,
+        //         useInteractiveGuideline: true,
+        //         xAxis: {
+        //             showMaxMin: false,
+        //             tickFormat: function (d) {
+        //                 return d3.time.format('%x')(new Date(d))
+        //             }
+        //         },
+        //         yAxis: {
+        //             tickFormat: function (d) {
+        //                 return d3.format(',.0f')(d);
+        //             }
+        //         },
+        //         zoom: {
+        //             enabled: false,
+        //             scaleExtent: [1, 10],
+        //             useFixedDomain: false,
+        //             useNiceScale: false,
+        //             horizontalOff: false,
+        //             verticalOff: false,
+        //             unzoomEventType: 'dblclick.zoom'
+        //         }
+        //     }
+        // };
+
         this.lineOptions = {
             chart: {
-                type: 'stackedAreaChart',
+                type: 'multiBarChart',
                 height: 450,
                 margin: {
                     top: 20,
@@ -110,11 +186,11 @@ class KrinkelGraphController {
                 y: function (d) {
                     return d[1];
                 },
-                showControls: false,
                 useVoronoi: false,
                 clipEdge: true,
                 duration: 100,
                 useInteractiveGuideline: true,
+                stacked: true,
                 xAxis: {
                     showMaxMin: false,
                     tickFormat: function (d) {
@@ -123,16 +199,16 @@ class KrinkelGraphController {
                 },
                 yAxis: {
                     tickFormat: function (d) {
-                        return d3.format(',.0f')(d);
+                        return d;
                     }
                 },
                 zoom: {
-                    enabled: false,
+                    enabled: true,
                     scaleExtent: [1, 10],
                     useFixedDomain: false,
                     useNiceScale: false,
                     horizontalOff: false,
-                    verticalOff: false,
+                    verticalOff: true,
                     unzoomEventType: 'dblclick.zoom'
                 }
             }
