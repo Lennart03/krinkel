@@ -9,6 +9,7 @@ import com.realdolmen.chiro.domain.Status;
 import com.realdolmen.chiro.domain.User;
 import com.realdolmen.chiro.domain.vo.SecurityStamNumberVO;
 import com.realdolmen.chiro.repository.RegistrationParticipantRepository;
+import com.realdolmen.chiro.util.StamNumberTrimmer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,6 +38,9 @@ public class UserService {
 
     @Autowired
     private CASCurrentlyLoggedInUserComponent CASCurrentlyLoggedInUserComponent;
+
+    @Autowired
+    private StamNumberTrimmer stamNumberTrimmer;
 
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
@@ -192,7 +196,7 @@ public class UserService {
             }
         }
 
-        securityStamNumberVO.setHighestStamNumber(highestStamNumber);
+        securityStamNumberVO.setHighestStamNumber(stamNumberTrimmer.trim(highestStamNumber));
         if (adminAdNumbers.contains(adNumber)) {
              securityStamNumberVO.setHighestRole(SecurityRole.ADMIN);
         } else {

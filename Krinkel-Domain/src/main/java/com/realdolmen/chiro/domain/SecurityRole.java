@@ -9,7 +9,7 @@ public enum SecurityRole {
 
     private int value;
 
-    private SecurityRole(int value) {
+    SecurityRole(int value) {
         this.value = value;
     }
 
