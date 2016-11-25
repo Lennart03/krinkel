@@ -119,6 +119,8 @@ public class CASService {
 
             if(adminAdNumbers.contains(adNumber)){
                 user.setRole(SecurityRole.ADMIN);
+            } else {
+                user.setRole(SecurityRole.GROEP);
             }
 
             userService.setCurrentUser(user);

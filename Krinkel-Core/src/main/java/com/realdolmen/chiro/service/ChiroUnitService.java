@@ -119,6 +119,7 @@ public class ChiroUnitService {
      * @param stam
      * @return
      */
+    @PreAuthorize("@ChiroUnitServiceSecurity.hasPermissionToFindUnits()")
     @PostFilter("@ChiroUnitServiceSecurity.hasPermissionToSeeUnits(filterObject)")
     public List<ChiroUnit> findSubUnits(String stam) {
         List<ChiroUnit> units = this.findAll();
@@ -126,6 +127,30 @@ public class ChiroUnitService {
         loopOverRegisteredParticipantsFor(stam, unit);
         loopOverRegisteredVolunteersFor(stam, unit);
         return unit.getLower();
+    }
+
+    /**
+     * used in the table to get all the participants and their data
+     * @param stamnummer
+     * @return
+     */
+    @PreAuthorize("@ChiroUnitServiceSecurity.hasPermissionToGetParticipants()")
+    @PostFilter("@ChiroUnitServiceSecurity.hasPermissionToSeeParticipants(filterObject)")
+    public List<RegistrationParticipant> findParticipantsByChiroUnit(String stamnummer) {
+        ChiroUnit unit = this.find(stamnummer);
+        return loopOverRegisteredParticipantsFor(stamnummer, unit);
+    }
+
+    /**
+     * used in the table to get all the volunteers and their data
+     * @param stamnummer
+     * @return
+     */
+    @PreAuthorize("@ChiroUnitServiceSecurity.hasPermissionToGetVolunteers()")
+//    @PostFilter("@ChiroUnitServiceSecurity.hasPermissionToSeeParticipants(filterObject)")
+    public List<RegistrationVolunteer> findVolunteersByChiroUnit(String stamnummer) {
+        ChiroUnit unit = this.find(stamnummer);
+        return loopOverRegisteredVolunteersFor(stamnummer, unit);
     }
 
     public ChiroUnit find(String stam) {
@@ -153,18 +178,6 @@ public class ChiroUnitService {
     @PostFilter("@ChiroUnitServiceSecurity.hasPermissionToSeeColleagues(filterObject)")
     public List<User> getUnitUsers(String stamnr) {
         return adapter.getColleagues(stamnr);
-    }
-
-    @PreAuthorize("@ChiroUnitServiceSecurity.hasPermissionToGetParticipants()")
-    public List<RegistrationParticipant> findParticipantsByChiroUnit(String stamnummer) {
-        ChiroUnit unit = this.find(stamnummer);
-        return loopOverRegisteredParticipantsFor(stamnummer, unit);
-    }
-
-    @PreAuthorize("@ChiroUnitServiceSecurity.hasPermissionToGetVolunteers()")
-    public List<RegistrationVolunteer> findVolunteersByChiroUnit(String stamnummer) {
-        ChiroUnit unit = this.find(stamnummer);
-        return loopOverRegisteredVolunteersFor(stamnummer, unit);
     }
 
     private List<RegistrationParticipant> loopOverRegisteredParticipantsFor(String stamnummer, ChiroUnit unit) {

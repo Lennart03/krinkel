@@ -1,5 +1,6 @@
 package com.realdolmen.chiro.service.security;
 
+import com.realdolmen.chiro.domain.RegistrationParticipant;
 import com.realdolmen.chiro.domain.SecurityRole;
 import com.realdolmen.chiro.domain.User;
 import com.realdolmen.chiro.domain.Verbond;
@@ -45,7 +46,7 @@ public class ChiroUnitServiceSecurity {
             //if map size=1 there is only one role
             //if map size=1 there is only one stamnummer => only one verbond
             //can see verbond if nationaal or you are in a groep of the verbond
-        } else if (rolesAndUpperClassesByStam.size() == 1) {
+        } else if (rolesAndUpperClassesByStam.size() == 1 && !currentUserStamNumber.startsWith("NAT")) {
             Verbond verbondOfUser = Verbond.getVerbondFromStamNumber(currentUserStamNumber);
             return chiroUnit.getStam().equals(verbondOfUser.getStam()) || securityRolesWithAccesToData.contains(rolesAndUpperClassesByStam.get(currentUserStamNumber).getSecurityRole());
             // there may be multiple roles
@@ -184,6 +185,76 @@ public class ChiroUnitServiceSecurity {
         return false;
     }
 
+    public boolean hasPermissionToGetParticipants() {
+        User currentUser = userService.getCurrentUser();
+        String currentUserStamNumber = currentUser.getStamnummer();
+        Map<String, RolesAndUpperClasses> rolesAndUpperClassesByStam = currentUser.getRolesAndUpperClassesByStam();
+        List<SecurityRole> securityRolesWithAcces = new ArrayList<>();
+        securityRolesWithAcces.add(SecurityRole.ADMIN);
+        securityRolesWithAcces.add(SecurityRole.GROEP);
+
+        if (rolesAndUpperClassesByStam.size() == 1) {
+            return securityRolesWithAcces.contains(rolesAndUpperClassesByStam.get(currentUserStamNumber).getSecurityRole());
+        } else if (rolesAndUpperClassesByStam.size() > 1) {
+            for (Map.Entry<String, RolesAndUpperClasses> entry : rolesAndUpperClassesByStam.entrySet()) {
+                if (securityRolesWithAcces.contains(entry.getValue().getSecurityRole())) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    public boolean hasPermissionToSeeParticipants(RegistrationParticipant registrationParticipant) {
+        User currentUser = userService.getCurrentUser();
+        String registrationParticipantNormalStamNumber = registrationParticipant.getStamnumber().replace(" /", "");
+        Map<String, RolesAndUpperClasses> rolesAndUpperClassesByStam = currentUser.getRolesAndUpperClassesByStam();
+
+        if (rolesAndUpperClassesByStam.size() == 1) {
+            if (currentUser.getRole().equals(SecurityRole.ADMIN) || currentUser.getAdNumber().equals(registrationParticipant.getAdNumber())) {//check if you are a admin or you are the user
+                return true;
+            } else if (currentUser.getStamnummer().equals(registrationParticipantNormalStamNumber)) {
+                registrationParticipant.setEatinghabbit(null);
+                registrationParticipant.setMedicalRemarks("");
+                return true;
+            } else {
+                return false;
+            }
+        } else if (rolesAndUpperClassesByStam.size() > 1) {
+            for (Map.Entry<String, RolesAndUpperClasses> entry : rolesAndUpperClassesByStam.entrySet()) {
+                if (SecurityRole.ADMIN.equals(currentUser.getRole()) || currentUser.getAdNumber().equals(registrationParticipant.getAdNumber())) {
+                    return true;
+                } else if (entry.getKey().equals(registrationParticipantNormalStamNumber)) {
+                    registrationParticipant.setEatinghabbit(null);
+                    registrationParticipant.setMedicalRemarks("");
+                    return true;
+                }
+            }
+            return false;
+        }
+        return false;
+    }
+
+    public boolean hasPermissionToFindUnits() {
+        User currentUser = userService.getCurrentUser();
+
+        return currentUser != null;
+    }
+
+    public boolean hasPermissionToGetVolunteers() {
+        return true;
+    }
+
+
+
+
+
+
+
+
+
+
+
 
     public boolean hasPermissionToGetColleagues() {
         User currentUser = userService.getCurrentUser();
@@ -195,24 +266,6 @@ public class ChiroUnitServiceSecurity {
         User currentUser = userService.getCurrentUser();
 
         return currentUser != null && currentUser.getStamnummer().equals(user.getStamnummer());
-    }
-
-    public boolean hasPermissionToGetVolunteers() {
-        User currentUser = userService.getCurrentUser();
-
-        return currentUser != null && currentUser.getRole().equals(SecurityRole.ADMIN);
-    }
-
-    public boolean hasPermissionToGetParticipants() {
-        User currentUser = userService.getCurrentUser();
-
-        return currentUser != null && currentUser.getRole().equals(SecurityRole.ADMIN);
-    }
-
-    public boolean hasPermissionToFindUnits() {
-        User currentUser = userService.getCurrentUser();
-
-        return currentUser != null && currentUser.getRole().equals(SecurityRole.ADMIN);
     }
 
 

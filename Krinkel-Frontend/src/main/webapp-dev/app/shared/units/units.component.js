@@ -14,7 +14,7 @@ class UnitsController {
     openExtraInfo(verbond) {
         this.openVerbond(verbond);
 
-        if (!verbond.stamnummer.endsWith("00") && this.AuthService.getUserRole() === 'ADMIN') {
+        if (!verbond.stamnummer.endsWith("00")) {
             this.openUsers(verbond);
         }
     }
