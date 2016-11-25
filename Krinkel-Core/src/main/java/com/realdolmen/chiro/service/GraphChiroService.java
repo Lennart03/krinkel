@@ -16,7 +16,9 @@ import org.springframework.data.domain.Sort;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 
+import javax.jws.soap.SOAPBinding;
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class GraphChiroService {
@@ -136,7 +138,16 @@ public class GraphChiroService {
 
         List<LoginLog> allLogs = loggerRepository.findAll();
 
+        List<String> distinctStamps = loggerRepository.findDistinctStamps()
+                .stream()
+                .map(Date::toString)
+                .collect(Collectors.toList());
+
         allLogs.parallelStream().forEach(log -> mapLoginLogs(log, uniqueLoginsPerVerbond));
+
+        uniqueLoginsPerVerbond.forEach((key, value) -> {
+            uniqueLoginsPerVerbond.put(key, fillMapWithZeroValuesOnDaysWhereThereAreNoLogins(value, distinctStamps));
+        });
 
         return uniqueLoginsPerVerbond;
     }
@@ -149,8 +160,19 @@ public class GraphChiroService {
         treeMap.put(verbondFromStamNumber, dateIntegerSortedMap);
     }
 
-
-
+    private SortedMap<String, Integer> fillMapWithZeroValuesOnDaysWhereThereAreNoLogins(SortedMap<String, Integer> sortedMap, List<String> distinctStamps) {
+        if (sortedMap.size() != distinctStamps.size()) {
+            distinctStamps.parallelStream().forEach(stamp -> {
+                if (!sortedMap.containsKey(stamp)) {
+                    sortedMap.put(stamp, 0);
+                }
+            });
+        }
+        /**
+         * I know it refers to the same object, but I prefer this way of coding because it looks cleaner to me
+         */
+        return sortedMap;
+    }
 
     private SortedMap<String, Integer> fillMapWithDateToLoginCount(String date, SortedMap<String, Integer> map) {
         if (map.containsKey(date)) {
@@ -164,6 +186,7 @@ public class GraphChiroService {
     /**
      * Initializes a newly created SortedMap with all Verbonden in it.
      * No checks necessary because this method should only be used on empty maps.
+     *
      * @param map
      */
     private void fillMapWithAllVerbonden(SortedMap<Verbond, SortedMap<String, Integer>> map) {

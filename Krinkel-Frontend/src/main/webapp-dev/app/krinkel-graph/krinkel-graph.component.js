@@ -52,8 +52,8 @@ class KrinkelGraphController {
 
     getDataForLogin() {
         this.KrinkelService.getGraphLoginInfo().then((results) => {
-            // this.lineData = results;
             var outputArray = [];
+            var allDatesInArray = [];
 
             for (var key in results) {
                 if (results.hasOwnProperty(key)) {
@@ -69,24 +69,7 @@ class KrinkelGraphController {
             }
 
             this.lineData = outputArray;
-            // var values = [];
-            // var length= 0;
-            // for(var key in results) {
-            //     if(results.hasOwnProperty(key)){
-            //         length++;
-            //     }
-            // }
-            //
-            // for (var i = 0; i < length; i++) {
-            //     var date = new Date( results[i].date.replace( /(\d{2})-(\d{2})-(\d{4})/, "$2/$1/$3") );
-            //     values[i] = [date, results[i].count];
-            // }
-            // this.lineData = [
-            //     {
-            //         key: "Aantal login\'s: ",
-            //         values: values
-            //     }
-            // ];
+
         });
     }
 
@@ -180,12 +163,15 @@ class KrinkelGraphController {
                     left: 40
                 },
                 x: function (d) {
-                    return d[0];
+                    if (d != undefined) {
+                        return d[0];
+                    }
                 },
                 y: function (d) {
-                    return d[1];
+                    if (d != undefined) {
+                        return d[1];
+                    }
                 },
-                useVoronoi: false,
                 clipEdge: true,
                 duration: 100,
                 useInteractiveGuideline: true,
@@ -200,18 +186,10 @@ class KrinkelGraphController {
                     tickFormat: function (d) {
                         return d;
                     }
-                },
-                zoom: {
-                    enabled: true,
-                    scaleExtent: [1, 10],
-                    useFixedDomain: false,
-                    useNiceScale: false,
-                    horizontalOff: false,
-                    verticalOff: true,
-                    unzoomEventType: 'dblclick.zoom'
                 }
             }
         };
+
 
         this.lineData = [];
         //barchart ------------------- chart.tooltip.valueFormatter(function(d){return d.toFixed(4)});
