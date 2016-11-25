@@ -38,7 +38,7 @@ public class ChiroUnitServiceSecurity {
 
         //role only gets set when admin but you never know
         //admin may see all verbonden
-        if (currentUser.getRole() != null && currentUser.getRole().equals(SecurityRole.ADMIN)) {
+        if (currentUser.getRole().equals(SecurityRole.ADMIN)) {
             return true;
             //if map size=1 there is only one role
             //if map size=1 there is only one stamnummer => only one verbond
@@ -54,7 +54,6 @@ public class ChiroUnitServiceSecurity {
             return false;
         }
     }
-
 
     private boolean checkMultipleStamNumbersForPermissionToSeeVerbond(Map<String, RolesAndUpperClasses> rolesAndUpperClassesByStam, ChiroUnit chiroUnit, List<SecurityRole> securityRolesWithAccesToData) {
         List<SecurityRole> allSecurityRoles = new ArrayList<>();
@@ -97,7 +96,7 @@ public class ChiroUnitServiceSecurity {
         securityRolesWithAccesToData.add(SecurityRole.NATIONAAL);
         securityRolesWithAccesToData.add(SecurityRole.VERBOND);
 
-        if (currentUser.getRole() != null && currentUser.getRole().equals(SecurityRole.ADMIN)) {
+        if (currentUser.getRole().equals(SecurityRole.ADMIN)) {
             return true;
         } else if (rolesAndUpperClassesByStam.size() == 1) {
             return checkStamNumberForPermissionToSeeGewest(rolesAndUpperClassesByStam, chiroUnit, securityRolesWithAccesToData, currentUserStamNumber);
@@ -109,11 +108,11 @@ public class ChiroUnitServiceSecurity {
     }
 
     private boolean checkStamNumberForPermissionToSeeGewest(Map<String, RolesAndUpperClasses> rolesAndUpperClassesByStam, ChiroUnit chiroUnit, List<SecurityRole> securityRolesWithAccesToData, String currentUserStamNumber) {
-        if (securityRolesWithAccesToData.contains(rolesAndUpperClassesByStam.get(currentUserStamNumber).getSecurityRole())) {
+        if (securityRolesWithAccesToData.contains(rolesAndUpperClassesByStam.get(currentUserStamNumber).getSecurityRole())) {//you have the correct role
             return true;
-        } else if (chiroUnit.getStam().equals(rolesAndUpperClassesByStam.get(currentUserStamNumber).getStamNumberUpperUnit())) {
+        } else if (chiroUnit.getStam().equals(rolesAndUpperClassesByStam.get(currentUserStamNumber).getStamNumberUpperUnit())) {//you are in this gewest
             return true;
-        } else if (chiroUnit.getStam().equals(currentUserStamNumber)) {
+        } else if (chiroUnit.getStam().equals(currentUserStamNumber)) {//you are this gewest
             return true;
         } else {
             return false;
@@ -124,11 +123,11 @@ public class ChiroUnitServiceSecurity {
         for (Map.Entry<String, RolesAndUpperClasses> entry : rolesAndUpperClassesByStam.entrySet()) {
             if (entry.getValue().getSecurityRole().equals(SecurityRole.NATIONAAL)) {
                 return true;
-            } else if (entry.getKey().equals(chiroUnit.getStam())) { //hier kijk je of je het gewest bent
+            } else if (entry.getKey().equals(chiroUnit.getStam())) { //you are this gewest
                 return true;
-            } else if (entry.getKey().equals(chiroUnit.getUpper().getStam())) { //hier kijk je of je het verbond bent
+            } else if (entry.getKey().equals(chiroUnit.getUpper().getStam())) { //you are its verbond
                 return true;
-            } else if (entry.getValue().getStamNumberUpperUnit().equals(chiroUnit.getStam())) {//kijk of je groep in het gewest zit
+            } else if (entry.getValue().getStamNumberUpperUnit().equals(chiroUnit.getStam())) {//you are in this gewest
                 return true;
             }
         }
@@ -214,11 +213,11 @@ public class ChiroUnitServiceSecurity {
         if (rolesAndUpperClassesByStam.size() == 1) {
             return currentUser.getRole().equals(SecurityRole.ADMIN) || securityRolesWithAcces.contains(rolesAndUpperClassesByStam.get(currentUserStamNumber).getSecurityRole());
         } else if (rolesAndUpperClassesByStam.size() > 1) {
-            if(currentUser.getRole().equals(SecurityRole.ADMIN)){
+            if (currentUser.getRole().equals(SecurityRole.ADMIN)) {
                 return true;
             }
             for (Map.Entry<String, RolesAndUpperClasses> entry : rolesAndUpperClassesByStam.entrySet()) {
-                if(securityRolesWithAcces.contains(entry.getValue().getSecurityRole())){
+                if (securityRolesWithAcces.contains(entry.getValue().getSecurityRole())) {
                     return true;
                 }
             }
@@ -243,7 +242,7 @@ public class ChiroUnitServiceSecurity {
                 return false;
             }
         } else if (rolesAndUpperClassesByStam.size() > 1) {
-            if(SecurityRole.ADMIN.equals(currentUser.getRole())){
+            if (SecurityRole.ADMIN.equals(currentUser.getRole())) {
                 return true;
             }
             for (Map.Entry<String, RolesAndUpperClasses> entry : rolesAndUpperClassesByStam.entrySet()) {
@@ -283,7 +282,7 @@ public class ChiroUnitServiceSecurity {
                 return true;
             }
             for (Map.Entry<String, RolesAndUpperClasses> entry : rolesAndUpperClassesByStam.entrySet()) {
-                if(currentUser.getAdNumber().equals(registrationVolunteer.getAdNumber())){
+                if (currentUser.getAdNumber().equals(registrationVolunteer.getAdNumber())) {
                     return true;
                 }
             }
