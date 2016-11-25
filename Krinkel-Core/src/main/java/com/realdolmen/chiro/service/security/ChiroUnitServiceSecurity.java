@@ -1,9 +1,6 @@
 package com.realdolmen.chiro.service.security;
 
-import com.realdolmen.chiro.domain.RegistrationParticipant;
-import com.realdolmen.chiro.domain.SecurityRole;
-import com.realdolmen.chiro.domain.User;
-import com.realdolmen.chiro.domain.Verbond;
+import com.realdolmen.chiro.domain.*;
 import com.realdolmen.chiro.domain.units.ChiroUnit;
 import com.realdolmen.chiro.domain.vo.RolesAndUpperClasses;
 import com.realdolmen.chiro.service.ChiroUnitService;
@@ -194,7 +191,7 @@ public class ChiroUnitServiceSecurity {
         securityRolesWithAcces.add(SecurityRole.GROEP);
 
         if (rolesAndUpperClassesByStam.size() == 1) {
-            return securityRolesWithAcces.contains(rolesAndUpperClassesByStam.get(currentUserStamNumber).getSecurityRole());
+            return currentUser.getRole().equals(SecurityRole.ADMIN) || securityRolesWithAcces.contains(rolesAndUpperClassesByStam.get(currentUserStamNumber).getSecurityRole());
         } else if (rolesAndUpperClassesByStam.size() > 1) {
             for (Map.Entry<String, RolesAndUpperClasses> entry : rolesAndUpperClassesByStam.entrySet()) {
                 if (securityRolesWithAcces.contains(entry.getValue().getSecurityRole())) {
@@ -204,6 +201,31 @@ public class ChiroUnitServiceSecurity {
         }
         return false;
     }
+
+    public boolean hasPermissionToGetVolunteers() {
+        User currentUser = userService.getCurrentUser();
+        String currentUserStamNumber = currentUser.getStamnummer();
+        Map<String, RolesAndUpperClasses> rolesAndUpperClassesByStam = currentUser.getRolesAndUpperClassesByStam();
+        List<SecurityRole> securityRolesWithAcces = new ArrayList<>();
+        securityRolesWithAcces.add(SecurityRole.ADMIN);
+        securityRolesWithAcces.add(SecurityRole.VERBOND);
+        securityRolesWithAcces.add(SecurityRole.GROEP);
+
+        if (rolesAndUpperClassesByStam.size() == 1) {
+            return currentUser.getRole().equals(SecurityRole.ADMIN) || securityRolesWithAcces.contains(rolesAndUpperClassesByStam.get(currentUserStamNumber).getSecurityRole());
+        } else if (rolesAndUpperClassesByStam.size() > 1) {
+            if(currentUser.getRole().equals(SecurityRole.ADMIN)){
+                return true;
+            }
+            for (Map.Entry<String, RolesAndUpperClasses> entry : rolesAndUpperClassesByStam.entrySet()) {
+                if(securityRolesWithAcces.contains(entry.getValue().getSecurityRole())){
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
 
     public boolean hasPermissionToSeeParticipants(RegistrationParticipant registrationParticipant) {
         User currentUser = userService.getCurrentUser();
@@ -221,12 +243,47 @@ public class ChiroUnitServiceSecurity {
                 return false;
             }
         } else if (rolesAndUpperClassesByStam.size() > 1) {
+            if(SecurityRole.ADMIN.equals(currentUser.getRole())){
+                return true;
+            }
             for (Map.Entry<String, RolesAndUpperClasses> entry : rolesAndUpperClassesByStam.entrySet()) {
-                if (SecurityRole.ADMIN.equals(currentUser.getRole()) || currentUser.getAdNumber().equals(registrationParticipant.getAdNumber())) {
+                if (currentUser.getAdNumber().equals(registrationParticipant.getAdNumber())) {
                     return true;
                 } else if (entry.getKey().equals(registrationParticipantNormalStamNumber)) {
                     registrationParticipant.setEatinghabbit(null);
                     registrationParticipant.setMedicalRemarks("");
+                    return true;
+                }
+            }
+            return false;
+        }
+        return false;
+    }
+
+    public boolean hasPermissionToSeeVolunteers(RegistrationVolunteer registrationVolunteer) {
+        User currentUser = userService.getCurrentUser();
+        String registrationVolunteerNormalStamNumber = registrationVolunteer.getStamnumber().replace(" /", "");
+        Map<String, RolesAndUpperClasses> rolesAndUpperClassesByStam = currentUser.getRolesAndUpperClassesByStam();
+
+        if (rolesAndUpperClassesByStam.size() == 1) {
+            if (SecurityRole.ADMIN.equals(currentUser.getRole())) {
+                return true;
+            } else if (rolesAndUpperClassesByStam.get(registrationVolunteerNormalStamNumber).getSecurityRole().equals(SecurityRole.VERBOND)) {
+                registrationVolunteer.setAddress(null);
+                registrationVolunteer.setEatinghabbit(null);
+                registrationVolunteer.setMedicalRemarks("");
+                registrationVolunteer.setFunction(null);
+                registrationVolunteer.setCampGround(null);
+                return true;
+            } else if (registrationVolunteer.getAdNumber().equals(currentUser.getAdNumber())) {
+                return true;
+            }
+        } else if (rolesAndUpperClassesByStam.size() > 1) {
+            if (currentUser.getRole().equals(SecurityRole.ADMIN)) {
+                return true;
+            }
+            for (Map.Entry<String, RolesAndUpperClasses> entry : rolesAndUpperClassesByStam.entrySet()) {
+                if(currentUser.getAdNumber().equals(registrationVolunteer.getAdNumber())){
                     return true;
                 }
             }
@@ -240,20 +297,6 @@ public class ChiroUnitServiceSecurity {
 
         return currentUser != null;
     }
-
-    public boolean hasPermissionToGetVolunteers() {
-        return true;
-    }
-
-
-
-
-
-
-
-
-
-
 
 
     public boolean hasPermissionToGetColleagues() {

@@ -147,7 +147,7 @@ public class ChiroUnitService {
      * @return
      */
     @PreAuthorize("@ChiroUnitServiceSecurity.hasPermissionToGetVolunteers()")
-//    @PostFilter("@ChiroUnitServiceSecurity.hasPermissionToSeeParticipants(filterObject)")
+    @PostFilter("@ChiroUnitServiceSecurity.hasPermissionToSeeVolunteers(filterObject)")
     public List<RegistrationVolunteer> findVolunteersByChiroUnit(String stamnummer) {
         ChiroUnit unit = this.find(stamnummer);
         return loopOverRegisteredVolunteersFor(stamnummer, unit);
