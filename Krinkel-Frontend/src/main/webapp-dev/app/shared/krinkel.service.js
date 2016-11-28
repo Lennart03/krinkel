@@ -98,6 +98,11 @@ export class KrinkelService {
             return resp.data;
         });
     }
+    getGraphLoginCurrent() {
+        return this.$http.get(`${this.BASEURL}/api/graph/uniqueLoginsPerVerbondLastTwoWeeks`).then((resp) => {
+            return resp.data;
+        });
+    }
 
     getContactFromChiro(adNumber) {
         return this.$http.get(`${this.BASEURL}/api/contact/` + adNumber).then((resp) => {
