@@ -18,9 +18,6 @@ public class ChiroUnitServiceSecurity {
     @Autowired
     UserService userService;
 
-    @Autowired
-    ChiroUnitService chiroUnitService;
-
     //ChiroUnitService.findVerbondUnits()
     public boolean hasPermissionToFindVerbonden() {
         User currentUser = userService.getCurrentUser();
@@ -40,12 +37,14 @@ public class ChiroUnitServiceSecurity {
         //admin may see all verbonden
         if (currentUser.getRole().equals(SecurityRole.ADMIN)) {
             return true;
+        } else if (rolesAndUpperClassesByStam.size() == 1 && currentUserStamNumber.startsWith("NAT")){
+            return true;
             //if map size=1 there is only one role
             //if map size=1 there is only one stamnummer => only one verbond
             //can see verbond if nationaal or you are in a groep of the verbond
         } else if (rolesAndUpperClassesByStam.size() == 1 && !currentUserStamNumber.startsWith("NAT")) {
             Verbond verbondOfUser = Verbond.getVerbondFromStamNumber(currentUserStamNumber);
-            return chiroUnit.getStam().equals(verbondOfUser.getStam()) || securityRolesWithAccesToData.contains(rolesAndUpperClassesByStam.get(currentUserStamNumber).getSecurityRole());
+            return chiroUnit.getStam().equals(verbondOfUser.getStam());
             // there may be multiple roles
             // may be in multiple verbonden
         } else if (rolesAndUpperClassesByStam.size() > 1) {
@@ -190,7 +189,7 @@ public class ChiroUnitServiceSecurity {
         securityRolesWithAcces.add(SecurityRole.GROEP);
 
         if (rolesAndUpperClassesByStam.size() == 1) {
-            return currentUser.getRole().equals(SecurityRole.ADMIN) || securityRolesWithAcces.contains(rolesAndUpperClassesByStam.get(currentUserStamNumber).getSecurityRole());
+            return securityRolesWithAcces.contains(rolesAndUpperClassesByStam.get(currentUserStamNumber).getSecurityRole());
         } else if (rolesAndUpperClassesByStam.size() > 1) {
             for (Map.Entry<String, RolesAndUpperClasses> entry : rolesAndUpperClassesByStam.entrySet()) {
                 if (securityRolesWithAcces.contains(entry.getValue().getSecurityRole())) {
