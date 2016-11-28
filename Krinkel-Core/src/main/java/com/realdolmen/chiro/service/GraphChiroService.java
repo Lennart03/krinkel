@@ -11,12 +11,15 @@ import com.realdolmen.chiro.repository.ChiroUnitRepository;
 import com.realdolmen.chiro.repository.LoginLoggerRepository;
 import com.realdolmen.chiro.repository.RegistrationParticipantRepository;
 import com.realdolmen.chiro.util.StamNumberTrimmer;
+import com.sun.javaws.exceptions.InvalidArgumentException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 
 import javax.jws.soap.SOAPBinding;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -128,20 +131,41 @@ public class GraphChiroService {
     }
 
     @PreAuthorize("@GraphChiroServiceSecurity.hasPermissionToGetLoginData()")
-    public List<GraphLoginCount> getLoginData() {
-        return loggerRepository.crunchData();
+    public SortedMap getLoginDataFromLastTwoWeeks() {
+        return getUniqueLoginsPerVerbond(true);
     }
 
-    public SortedMap<Verbond, SortedMap<String, Integer>> getUniqueLoginsPerVerbond() {
+    @PreAuthorize("@GraphChiroServiceSecurity.hasPermissionToGetLoginData()")
+    public SortedMap getLoginData() {
+        return getUniqueLoginsPerVerbond(false);
+    }
+
+
+    private SortedMap<Verbond, SortedMap<String, Integer>> getUniqueLoginsPerVerbond(Boolean lastTwoWeeks) {
         TreeMap<Verbond, SortedMap<String, Integer>> uniqueLoginsPerVerbond = new TreeMap<>();
+        List<LoginLog> allLogs = null;
+        List<String> distinctStamps;
+
         fillMapWithAllVerbonden(uniqueLoginsPerVerbond);
 
-        List<LoginLog> allLogs = loggerRepository.findAll();
+        if (lastTwoWeeks) {
+            Date startDate = Date.from(LocalDate.now().minusWeeks(2).atStartOfDay(ZoneId.systemDefault()).toInstant());
+            Date now = new Date();
 
-        List<String> distinctStamps = loggerRepository.findDistinctStamps()
-                .stream()
-                .map(Date::toString)
-                .collect(Collectors.toList());
+            allLogs = loggerRepository.findLogsBetweenDates(startDate, now);
+
+            distinctStamps = loggerRepository.findDistinctStamps(startDate, now)
+                    .stream()
+                    .map(Date::toString)
+                    .collect(Collectors.toList());
+        } else {
+            allLogs = loggerRepository.findAll();
+            distinctStamps = loggerRepository.findDistinctStamps()
+                    .stream()
+                    .map(Date::toString)
+                    .collect(Collectors.toList());
+        }
+
 
         allLogs.parallelStream().forEach(log -> mapLoginLogs(log, uniqueLoginsPerVerbond));
 
@@ -185,7 +209,7 @@ public class GraphChiroService {
 
     /**
      * Initializes a newly created SortedMap with all Verbonden in it.
-     * No checks necessary because this method should only be used on empty maps.
+     * This method should only be used on empty maps.
      *
      * @param map
      */

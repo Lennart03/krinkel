@@ -33,12 +33,13 @@ public class GraphController {
         return graphChiroService.getStatusChiro();
     }
 
-    @RequestMapping("/api/graph/login")
-    public List<GraphLoginCount> getLoginData() {
-        return graphChiroService.getLoginData();
-    }
+
     @RequestMapping("/api/graph/uniqueLoginsPerVerbond")
     public SortedMap<Verbond, SortedMap<String, Integer>> getUniqueLoginsPerVerbond() {
-        return graphChiroService.getUniqueLoginsPerVerbond();
+        return graphChiroService.getLoginData();
+    }
+    @RequestMapping("/api/graph/uniqueLoginsPerVerbondLastTwoWeeks")
+    public SortedMap<Verbond, SortedMap<String, Integer>> getUniqueLoginsPerVerbondLastTwoWeeks() {
+        return graphChiroService.getLoginDataFromLastTwoWeeks();
     }
 }

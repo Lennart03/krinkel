@@ -4,6 +4,7 @@ class KrinkelGraphController {
         this.getDataForSunBurst();
         this.getDataForStatus();
         this.getDataForLogin();
+        this.getDataForLoginLastWeeks();
     }
 
     getDataForSunBurst() {
@@ -52,25 +53,32 @@ class KrinkelGraphController {
 
     getDataForLogin() {
         this.KrinkelService.getGraphLoginInfo().then((results) => {
-            var outputArray = [];
-            var allDatesInArray = [];
-
-            for (var key in results) {
-                if (results.hasOwnProperty(key)) {
-                    var tempObject = {};
-                    var valuesOfKey = results[key];
-
-                    tempObject.key = key;
-                    tempObject.values = this.mapValuesToChartStructure(valuesOfKey);
-
-
-                    outputArray.push(tempObject);
-                }
-            }
-
-            this.lineData = outputArray;
-
+            this.lineData = this.mapServerJSONToChartJSON(results);
         });
+    }
+
+    getDataForLoginLastWeeks() {
+        this.KrinkelService.getGraphLoginCurrent().then((results) => {
+            this.lineDataLastWeeks = this.mapServerJSONToChartJSON(results);
+        });
+    }
+
+    mapServerJSONToChartJSON(results) {
+        var outputArray = [];
+
+        for (var key in results) {
+            if (results.hasOwnProperty(key)) {
+                var tempObject = {};
+                var valuesOfKey = results[key];
+
+                tempObject.key = key;
+                tempObject.values = this.mapValuesToChartStructure(valuesOfKey);
+
+
+                outputArray.push(tempObject);
+            }
+        }
+        return outputArray;
     }
 
     mapValuesToChartStructure(valuesOfKey) {
@@ -228,6 +236,8 @@ class KrinkelGraphController {
         };
         this.barData = [];
     }
+
+
 }
 
 export var KrinkelGraphComponent = {
