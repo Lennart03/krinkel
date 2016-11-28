@@ -25,7 +25,7 @@ import java.util.Date;
 import java.util.List;
 
 @Service
-public class CASService {
+public class CASService{
     @Autowired
     private CasConfiguration configuration;
 
@@ -110,7 +110,6 @@ public class CASService {
             user.setRolesAndUpperClassesByStam(stamNumbersRolesVO.getRolesAndUpperClassesByStam());
             user.setStamnummer(stamNumbersRolesVO.getStamNumber());
 
-            //TODO remake this so it uses the db
             List<String> adminAdNumbers = new ArrayList<>();
             adminAdNumbers.add("152504");
             adminAdNumbers.add("109318");
