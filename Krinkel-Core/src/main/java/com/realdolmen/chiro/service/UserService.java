@@ -15,6 +15,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
@@ -131,6 +132,7 @@ public class UserService {
      * @return returns JSON, we don't need to use these in the backend so we can filter the subscribed users and return the leftovers as JSON.
      * @throws URISyntaxException
      */
+    @PreAuthorize("@UserServiceSecurity.hasPermissionToGetColleagues()")
     public List<String> getColleagues(int adNumber) throws URISyntaxException {
         List<String> listOfAvailableColleagues = new ArrayList<>();
 

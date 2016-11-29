@@ -1,6 +1,5 @@
 package com.realdolmen.chiro.service;
 
-import com.realdolmen.chiro.domain.GraphLoginCount;
 import com.realdolmen.chiro.domain.EventRole;
 import com.realdolmen.chiro.domain.LoginLog;
 import com.realdolmen.chiro.domain.Verbond;
@@ -11,13 +10,10 @@ import com.realdolmen.chiro.repository.ChiroUnitRepository;
 import com.realdolmen.chiro.repository.LoginLoggerRepository;
 import com.realdolmen.chiro.repository.RegistrationParticipantRepository;
 import com.realdolmen.chiro.util.StamNumberTrimmer;
-import com.sun.javaws.exceptions.InvalidArgumentException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Sort;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 
-import javax.jws.soap.SOAPBinding;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.*;
