@@ -100,34 +100,4 @@ public class RegistrationVolunteerController {
 
         return new ResponseEntity<>(headers, HttpStatus.CREATED);
     }
-
-//    TODO remove THIS METHOD.
-//    @RequestMapping(method = RequestMethod.GET, value = "/api/volunteers", produces = "application/json")
-//    public @ResponseBody RegistrationVolunteer retrieve() {
-//
-//        Calendar c = Calendar.getInstance();
-//        c.set(1995, Calendar.AUGUST, 5);
-//
-//        RegistrationVolunteer volunteer = new RegistrationVolunteer(
-//                "123456789", "example@acme.com", "Aster", "Deckers", c.getTime(),
-//                "AG0001", Gender.MAN, EventRole.LEADER, Eatinghabbit.VEGI,
-//                CampGround.ANTWERPEN,
-//                new VolunteerFunction(VolunteerFunction.Preset.KRINKEL_EDITORIAL), "aster.deckers@example.org"
-//        );
-//
-//        PreCamp preCamp = new PreCamp();
-//        preCamp.setId(1);
-//        preCamp.setDate(new Date());
-//        volunteer.addPreCamp(preCamp);
-//
-//        volunteer.setLanguage(
-//                Arrays.asList(
-//                        Language.ENGLISH,
-//                        Language.SPANISH
-//                )
-//        );
-//
-//        volunteer.setAddress(new Address("-", "-", 1500, "-"));
-//        return volunteer;
-//    }
 }

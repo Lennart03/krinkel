@@ -15,7 +15,7 @@ import java.io.IOException;
 @Controller
 public class CASController {
     @Autowired
-    private CASService service;
+    private CASService casService;
 
     @Autowired
     private CasConfiguration casConfiguration;
@@ -27,7 +27,7 @@ public class CASController {
             return "redirect:/index.html";
         } else {
             // Redirect to CAS server so the user can login.
-            System.out.println("redirecting user to login service");
+            System.out.println("redirecting user to login casService");
             return "redirect:" + casConfiguration.getCasRedirectUrl();
         }
     }
@@ -44,9 +44,9 @@ public class CASController {
 
     @RequestMapping(value = "/api/cas", method = RequestMethod.GET)
     public void casRedirect(@RequestParam String ticket, HttpServletResponse response) throws IOException {
-        String jwt = service.validateTicket(ticket);
+        String jwt = casService.validateTicket(ticket);
         if (jwt != null) {
-            response.addCookie(service.createCookie(jwt));
+            response.addCookie(casService.createCookie(jwt));
             response.setHeader("Authorization", jwt);
             response.sendRedirect("/index.html");
         }
