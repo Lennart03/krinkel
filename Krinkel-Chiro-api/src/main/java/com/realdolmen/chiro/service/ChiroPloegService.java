@@ -61,7 +61,7 @@ public class ChiroPloegService {
             JsonNode values = jsonNode.get("values");
 
             for (JsonNode v : values) {
-                ploegen.add(v.get("stamnr").asText() + ": " + v.get("name").asText());
+                ploegen.add(v.get("stamnr").asText().replace(" /","") + ": " + v.get("name").asText());
             }
 
         } catch (IOException e) {

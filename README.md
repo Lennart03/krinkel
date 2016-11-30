@@ -46,15 +46,49 @@ Only builds one of the submodules, not everything:
 
 
 ## Overview of API Endpoints
+### ChiroColleagueController
 
 | Method   | URL                                           | Description
 | -------- |:---------------------------------------------:|:---------------------------
-| POST     | $HOSTNAME:$PORT/api/participants              | Register a new Participant (Deelnemer)
-| POST     | $HOSTNAME:$PORT/api/volunteers                | Register a new Volunteer (Medewerker)
-| GET      | $HOSTNAME:$PORT/api/units                     | List of all groups.
-| GET      | $HOSTNAME:$PORT/api/units/{stamnummer}        | Info of the group identified by {stamnummer}
+| GET      | $HOSTNAME:$PORT/api/colleagues                | Get all colleagues by current User adNumber
 
-## /api/units/{stamnummer}
+### ChiroContactController
+| Method   | URL                                           | Description
+| -------- |:---------------------------------------------:|:---------------------------
+| GET      | $HOSTNAME:$PORT/api/contact/{adNumber}        | Get information about current User from chiro
+
+### ChiroPloegController
+| Method   | URL                                           | Description
+| -------- |:---------------------------------------------:|:---------------------------
+| GET      | $HOSTNAME:$PORT/api/ploegen/{adNumber}        | Get all ploegen by adNumber from chiro
+
+### GraphController
+| Method   | URL                                                          | Description (all angular-nvd3)
+| -------- |:------------------------------------------------------------:|:---------------------------
+| GET      | $HOSTNAME:$PORT/api/graph/sun                                | make Sunburst Chart 
+| GET      | $HOSTNAME:$PORT/api/graph/status                             | make Pie Chart
+| GET      | $HOSTNAME:$PORT/api/graph/uniqueLoginsPerVerbond             | make MuliBar Chart with all login data
+| GET      | $HOSTNAME:$PORT/api/graph/uniqueLoginsPerVerbondLastTwoWeeks | make MuliBar Chart with off last two weeks
+
+### RegistrationParticipantController
+| Method   | URL                                           | Description
+| -------- |:---------------------------------------------:|:---------------------------
+| POST     | $HOSTNAME:$PORT/api/participants              | Register a new Participant (Deelnemer)
+
+### RegistrationVolunteerController
+| Method   | URL                                           | Description
+| -------- |:---------------------------------------------:|:---------------------------
+| POST     | $HOSTNAME:$PORT/api/volunteers                | Register a new Volunteer (Medewerker)
+
+### UnitController
+| Method   | URL                                           | Description
+| -------- |:---------------------------------------------:|:---------------------------
+| GET      | $HOSTNAME:$PORT/api/units                           | Get alle Verbonden
+| GET      | $HOSTNAME:$PORT/api/units/{stam}                    | Get alle Gewest/Groepen by stamNumber
+| GET      | $HOSTNAME:$PORT/api/units/{stamNumber}/participants | Get alle participants by stamNumber groep
+| GET      | $HOSTNAME:$PORT/api/units/{stamNumber}/volunteers   | Get alle volunteers by stamNumber groep
+
+## /api/units/{stam}
 Should return the following info:
 
     {
