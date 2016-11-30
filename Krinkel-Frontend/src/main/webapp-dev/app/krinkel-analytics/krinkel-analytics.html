@@ -1,2 +1,2 @@
-<a class="waves-effect waves-light btn right" href="/graph">Bekijk Grafieken</a>
+<a class="waves-effect waves-light btn right" href="/graph" ng-if="$ctrl.AuthService.getUserRole() === 'ADMIN'">Bekijk Grafieken</a>
 <units></units>

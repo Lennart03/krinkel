@@ -239,8 +239,9 @@
                         </div>
                     </div>
 
+
                     <div ng-show="$ctrl.newPerson.buddy">
-                        <select ng-show="$ctrl.newPerson.buddy" multiple ng-required="$ctrl.newPerson.buddy" ng-model="$ctrl.newPerson.languages">
+                        <select ng-show="$ctrl.newPerson.buddy" multiple ng-required="$ctrl.newPerson.buddy" ng-model="$ctrl.newPerson.languages" ng-class="{'teal white-text': $ctrl.newPerson.languages.length != undefined, 'red white-text': $ctrl.newPerson.languages.length == undefined}">
                             <option value="" disabled selected>Selecteer je talen*</option>
                             <option value="ENGLISH">Engels</option>
                             <option value="FRENCH">Frans</option>

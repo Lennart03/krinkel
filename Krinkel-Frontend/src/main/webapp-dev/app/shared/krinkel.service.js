@@ -1,7 +1,8 @@
 export class KrinkelService {
-    constructor($http, BASEURL) {
+    constructor($http, BASEURL, $window) {
         this.$http = $http;
         this.BASEURL = BASEURL;
+        this.$window = $window;
     }
 
     getCasUrl(){
@@ -96,6 +97,10 @@ export class KrinkelService {
     getGraphLoginInfo() {
         return this.$http.get(`${this.BASEURL}/api/graph/uniqueLoginsPerVerbond`).then((resp) => {
             return resp.data;
+        }, (resp) => {
+            Materialize.toast('I am a turd!', 4000);
+
+            this.$window.location.reload();
         });
     }
     getGraphLoginCurrent() {
@@ -117,4 +122,4 @@ export class KrinkelService {
     }
 }
 
-KrinkelService.$inject = ['$http', 'BASEURL'];
+KrinkelService.$inject = ['$http', 'BASEURL', '$window'];

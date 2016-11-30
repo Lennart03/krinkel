@@ -43,8 +43,6 @@ public class UserController {
         if (u == null) {
             throw new UserNotfoundException();
         }
-
-        System.out.println(u.getEmail());
         return u;
     }
 
