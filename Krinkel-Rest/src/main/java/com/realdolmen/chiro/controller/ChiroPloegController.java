@@ -13,6 +13,11 @@ public class ChiroPloegController {
     @Autowired
     private ChiroPloegService chiroPloegService;
 
+    /**
+     * used when a participant enrolls, gets all ploegen he's in
+     * @param adNumber
+     * @return
+     */
     @RequestMapping(method = RequestMethod.GET, value = "/api/ploegen/{adNumber}")
     public List<String> getPloegen(@PathVariable Integer adNumber) {
         try {

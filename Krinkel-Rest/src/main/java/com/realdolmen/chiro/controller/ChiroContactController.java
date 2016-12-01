@@ -23,13 +23,15 @@ public class ChiroContactController {
     @Autowired
     private ChiroContactService chiroContactService;
 
-
+    /**
+     * used to prefill the form
+     * @param adNumber
+     * @return
+     */
     @RequestMapping("/api/contact/{adNumber}")
     public String getContact(@PathVariable Integer adNumber) {
         try {
-            //TODO CHANGE THE NEXT LINE, THIS IS DUMMY! CHIRO STUFF DOESN'T WORK YET, NO RESULTS OTHERWISE
-            return chiroContactService.getContact(308986);
-//            return chiroContactService.getContact(adNumber);
+            return chiroContactService.getContact(adNumber);
         } catch (URISyntaxException e) {
             throw new InvalidAdNumber();
         }
