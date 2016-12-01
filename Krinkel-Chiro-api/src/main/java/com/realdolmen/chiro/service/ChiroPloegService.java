@@ -60,11 +60,16 @@ public class ChiroPloegService {
             JsonNode jsonNode = mapper.readTree(body);
             JsonNode values = jsonNode.get("values");
 
-            for (JsonNode v : values) {
-                ploegen.add(v.get("stamnr").asText().replace(" /","") + ": " + v.get("name").asText());
-            }
-
-        } catch (IOException e) {
+            values.forEach(v->{
+                ploegen.add(v.toString());
+            });
+        }
+//
+//            for (JsonNode v : values) {
+//                ploegen.add(v.get("stamnr").asText().replace(" /","") + ": " + v.get("name").asText());
+//            }
+//
+        catch (IOException e) {
             logger.error("chiro API error");
         }
 
