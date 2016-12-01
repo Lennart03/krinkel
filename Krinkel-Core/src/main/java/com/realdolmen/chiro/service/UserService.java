@@ -46,11 +46,6 @@ public class UserService {
 
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
-    // TODO this is only used in (wrong) tests. It has to go
-    public User getUser(String adNumber) {
-        return null;
-    }
-
     /**
      * get a participant or volunteer from our DB
      *

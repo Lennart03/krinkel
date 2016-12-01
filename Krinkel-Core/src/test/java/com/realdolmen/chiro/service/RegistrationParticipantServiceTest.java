@@ -6,7 +6,6 @@ import com.realdolmen.chiro.domain.Gender;
 import com.realdolmen.chiro.domain.RegistrationParticipant;
 import com.realdolmen.chiro.repository.RegistrationParticipantRepository;
 import com.realdolmen.chiro.repository.RegistrationCommunicationRepository;
-import com.realdolmen.chiro.chiro_api.ChiroUserAdapter;
 import com.realdolmen.chiro.domain.*;
 import com.realdolmen.chiro.mspservice.MultiSafePayService;
 import org.junit.Assert;
@@ -16,9 +15,7 @@ import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.invocation.InvocationOnMock;
 import org.mockito.runners.MockitoJUnitRunner;
-import org.mockito.stubbing.Answer;
 
 import java.util.Date;
 
@@ -33,11 +30,11 @@ public class RegistrationParticipantServiceTest {
     private RegistrationParticipantService registrationParticipantService;
 
     @Mock
-    private RegistrationParticipantRepository repo;
+    private RegistrationParticipantRepository registrationParticipantRepository;
 
     @Mock
-    private MultiSafePayService mspService;
-    
+    private MultiSafePayService multiSafePayService;
+
     @Mock
     private RegistrationCommunicationRepository registrationCommunicationRepository;
 
@@ -45,6 +42,7 @@ public class RegistrationParticipantServiceTest {
     private UserService userService;
 
     private RegistrationParticipant participant;
+    private RegistrationParticipant registrationParticipantFromOurDB;
     private User user;
 
     public final static String TEST_AD_NUMBER = "123456";
@@ -63,6 +61,8 @@ public class RegistrationParticipantServiceTest {
         participant.setBirthdate(new Date());
         participant.setStatus(Status.TO_BE_PAID);
 
+        registrationParticipantFromOurDB = new RegistrationParticipant();
+
         Address address = new Address();
         address.setCity("REET");
         address.setHouseNumber("69");
@@ -77,53 +77,104 @@ public class RegistrationParticipantServiceTest {
 
 
     @Test
-    public void saveShouldReturnParticipantAfter() {
-        Mockito.when(repo.save(participant)).thenReturn(participant);
-        Mockito.when(userService.getUser(participant.getAdNumber())).thenReturn(user);
+    public void saveShouldReturnParticipantAfterWhenNotInOurDB() {
+        Mockito.when(registrationParticipantRepository.save(participant)).thenReturn(participant);
         Mockito.when(userService.getCurrentUser()).thenReturn(user);
 
         Assert.assertSame(participant, registrationParticipantService.save(participant));
 
-        Mockito.verify(repo).save(participant);
+        Mockito.verify(registrationParticipantRepository).save(participant);
     }
 
-
     @Test
-    public void saveShouldReturnNULLWhenExisting() {
-        Mockito.when(repo.findByAdNumber("ADNUMMER")).thenReturn(null);
-        Mockito.when(userService.getUser(participant.getAdNumber())).thenReturn(user);
+    public void savaShouldReturnParticipantWhenInOurDBAndNotPaid(){
+        Mockito.when(registrationParticipantRepository.save(participant)).thenReturn(participant);
+        registrationParticipantFromOurDB.setStatus(Status.TO_BE_PAID);
+        Mockito.when(registrationParticipantRepository.findByAdNumber("ADNUMMER")).thenReturn(registrationParticipantFromOurDB);
         Mockito.when(userService.getCurrentUser()).thenReturn(user);
 
-        registrationParticipantService.save(participant);
+        Assert.assertSame(participant, registrationParticipantService.save(participant));
+
+        Mockito.verify(registrationParticipantRepository).save(participant);
+    }
+
+    @Test
+    public void savaShouldReturnNullWhenInOurDBAndPaid(){
+        Mockito.when(registrationParticipantRepository.save(participant)).thenReturn(participant);
+        registrationParticipantFromOurDB.setStatus(Status.PAID);
+        Mockito.when(registrationParticipantRepository.findByAdNumber("ADNUMMER")).thenReturn(registrationParticipantFromOurDB);
+        Mockito.when(userService.getCurrentUser()).thenReturn(user);
 
         Assert.assertSame(null, registrationParticipantService.save(participant));
-        Mockito.verify(repo, times(2)).save(participant);
+
+        Mockito.verify(registrationParticipantRepository).findByAdNumber("ADNUMMER");
+        Mockito.verify(registrationParticipantRepository, times(0)).save(participant);
+
+    }
+
+    @Test
+    public void saveShouldReturnNullWhenInOurDBAndConfirmed(){
+        Mockito.when(registrationParticipantRepository.save(participant)).thenReturn(participant);
+        registrationParticipantFromOurDB.setStatus(Status.CONFIRMED);
+        Mockito.when(registrationParticipantRepository.findByAdNumber("ADNUMMER")).thenReturn(registrationParticipantFromOurDB);
+        Mockito.when(userService.getCurrentUser()).thenReturn(user);
+
+        Assert.assertSame(null, registrationParticipantService.save(participant));
+
+        Mockito.verify(registrationParticipantRepository).findByAdNumber("ADNUMMER");
+        Mockito.verify(registrationParticipantRepository, times(0)).save(participant);
+    }
+
+    @Test
+    public void saveSetsRegisteredStatusWhenSavingOwn(){
+        user.setAdNumber("ADNUMMER");
+        Mockito.when(registrationParticipantRepository.save(participant)).thenReturn(participant);
+        Mockito.when(userService.getCurrentUser()).thenReturn(user);
+
+        Assert.assertSame(participant, registrationParticipantService.save(participant));
+
+        Mockito.verify(registrationParticipantRepository).save(participant);
+        Mockito.verify(userService).getCurrentUser();
     }
 
     @Test
     public void updatePaymentStatusCallsMultiSafePayServiceWithCorrectOrderId() {
-        Mockito.when(repo.findByAdNumber(TEST_AD_NUMBER)).thenReturn(participant);
+        Mockito.when(registrationParticipantRepository.findByAdNumber(TEST_AD_NUMBER)).thenReturn(participant);
         registrationParticipantService.updatePaymentStatus(TEST_ORDER_ID);
 
-        Mockito.verify(mspService, times(1)).orderIsPaid(TEST_ORDER_ID);
+        Mockito.verify(multiSafePayService, times(1)).orderIsPaid(TEST_ORDER_ID);
     }
 
     @Test
     public void updatePaymentStatusSetsStatusToPaidWhenMultisafepayStatusIsCompleted() {
-        Mockito.when(mspService.orderIsPaid(anyString())).thenReturn(true);
-        Mockito.when(repo.findByAdNumber(TEST_AD_NUMBER)).thenReturn(participant);
+        Mockito.when(multiSafePayService.orderIsPaid(anyString())).thenReturn(true);
+        Mockito.when(registrationParticipantRepository.findByAdNumber(TEST_AD_NUMBER)).thenReturn(participant);
+        Mockito.when(registrationCommunicationRepository.findByAdNumber("ADNUMMER")).thenReturn(null);
 
         registrationParticipantService.updatePaymentStatus(TEST_ORDER_ID);
-        Mockito.verify(repo, times(1)).findByAdNumber(TEST_AD_NUMBER);
-        Mockito.verify(repo, times(1)).save(participant);
+        Mockito.verify(registrationParticipantRepository, times(1)).findByAdNumber(TEST_AD_NUMBER);
+        Mockito.verify(registrationParticipantRepository, times(1)).save(participant);
         Assert.assertEquals(Status.PAID, participant.getStatus());
     }
 
     @Test
     public void updatePaymentStatusCallsRepositoryWithAdNumber() {
-        Mockito.when(repo.findByAdNumber(TEST_AD_NUMBER)).thenReturn(participant);
+        Mockito.when(registrationParticipantRepository.findByAdNumber(TEST_AD_NUMBER)).thenReturn(participant);
         registrationParticipantService.updatePaymentStatus(TEST_ORDER_ID);
-        Mockito.verify(repo, times(1)).findByAdNumber(TEST_AD_NUMBER);
-        Mockito.verify(mspService, times(1)).orderIsPaid(TEST_ORDER_ID);
+        Mockito.verify(registrationParticipantRepository, times(1)).findByAdNumber(TEST_AD_NUMBER);
+        Mockito.verify(multiSafePayService, times(1)).orderIsPaid(TEST_ORDER_ID);
+    }
+
+    @Test
+    public void updatePaymentStatusSetStatusToConfirmedWhenOwn(){
+        participant.setRegisteredBy("ADNUMMER");
+        Mockito.when(multiSafePayService.orderIsPaid(anyString())).thenReturn(true);
+        Mockito.when(registrationParticipantRepository.findByAdNumber(TEST_AD_NUMBER)).thenReturn(participant);
+        Mockito.when(registrationCommunicationRepository.findByAdNumber("ADNUMMER")).thenReturn(null);
+
+        registrationParticipantService.updatePaymentStatus(TEST_ORDER_ID);
+        Mockito.verify(registrationParticipantRepository, times(1)).findByAdNumber(TEST_AD_NUMBER);
+        Mockito.verify(registrationParticipantRepository, times(1)).save(participant);
+        Assert.assertEquals(Status.CONFIRMED, participant.getStatus());
     }
 }
