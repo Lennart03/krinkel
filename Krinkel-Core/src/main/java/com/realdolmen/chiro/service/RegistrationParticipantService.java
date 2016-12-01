@@ -8,10 +8,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.expression.Expression;
-import org.springframework.expression.ExpressionParser;
-import org.springframework.expression.spel.standard.SpelExpressionParser;
-import org.springframework.security.access.prepost.PostAuthorize;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 
@@ -38,7 +34,7 @@ public class RegistrationParticipantService {
     private UserService userService;
 
     @Autowired
-    private MultiSafePayService mspService;
+    private MultiSafePayService multiSafePayService;
 
     @PreAuthorize("@RegistrationParticipantServiceSecurity.hasPermissionToSaveParticipant(#participant)")
     public RegistrationParticipant save(RegistrationParticipant participant) {
@@ -71,7 +67,7 @@ public class RegistrationParticipantService {
         if (participant != null) {
             logger.info("found participant " + participant.getAdNumber());
 
-            if (mspService.orderIsPaid(testOrderId)) {
+            if (multiSafePayService.orderIsPaid(testOrderId)) {
                 if (participant.getAdNumber().equals(participant.getRegisteredBy())) {
                     participant.setStatus(Status.CONFIRMED);
                     userService.updateCurrentUserPayStatus();

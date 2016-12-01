@@ -2,7 +2,6 @@ package com.realdolmen.chiro.controller;
 
 import com.realdolmen.chiro.domain.RegistrationParticipant;
 import com.realdolmen.chiro.domain.RegistrationVolunteer;
-import com.realdolmen.chiro.domain.User;
 import com.realdolmen.chiro.domain.units.ChiroUnit;
 import com.realdolmen.chiro.service.ChiroUnitService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,13 +12,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
-/**
- * /units  = Everything and alles
- * /units?verbond = Alleen verbonden
- * /units?gewest = Alleen gewesten.
- * /units/{stam} = Eén groep.
- * /units/{stamletters}/{stamnummers}/users = all users with given stamnummer ({stamletters}/{stamnummers} = stamnummer)
- */
 @RestController
 @RequestMapping(value = "/api/units", produces = "application/json")
 public class UnitController {
@@ -35,20 +27,6 @@ public class UnitController {
     @RequestMapping(value = "", method = RequestMethod.GET, params = {"verbond"})
     public List<ChiroUnit> allVerbondUnits() {
         return unitService.findVerbondUnits();
-    }
-
-
-    /**
-     * method used in the frondend when getting the colleagues. (select person to enroll in krinkel)
-     *
-     * @param stamletters first part of stamnumber
-     * @param stamnummers second part of stamnumber
-     * @return users with same stamnumber
-     */
-    @RequestMapping(value = "{stamletters}/{stamnummers}/users")
-    public List<User> getUnitUserList(@PathVariable("stamletters") String stamletters, @PathVariable("stamnummers") String stamnummers) {
-        String stamnr = stamletters + "/" + stamnummers;
-        return unitService.getUnitUsers(stamnr);
     }
 
     /**

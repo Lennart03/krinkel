@@ -30,7 +30,7 @@ import java.util.Map;
 public class UserService {
 
     @Autowired
-    private RegistrationParticipantRepository repo;
+    private RegistrationParticipantRepository registrationParticipantRepository;
 
     @Autowired
     private ChiroColleagueService chiroColleagueService;
@@ -46,11 +46,6 @@ public class UserService {
 
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
-
-    // TODO
-    // TODO
-    // TODO
-    // TODO
     // TODO this is only used in (wrong) tests. It has to go
     public User getUser(String adNumber) {
         return null;
@@ -63,7 +58,7 @@ public class UserService {
      * @return a participant or volunteer from our DB
      */
     public RegistrationParticipant getRegistrationParticipant(String adNumber) {
-        RegistrationParticipant participant = repo.findByAdNumber(adNumber);
+        RegistrationParticipant participant = registrationParticipantRepository.findByAdNumber(adNumber);
 
         return participant;
     }

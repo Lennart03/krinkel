@@ -40,16 +40,6 @@ public class UnitControllerMockitoTest {
         Mockito.verifyNoMoreInteractions(userService);
         //Mockito.verifyNoMoreInteractions(unitService);
     }
-
-    @Test
-    public void getUnitUserListReturnsListGivenByUserService() {
-        List<User> list = new ArrayList<>();
-        Mockito.when(unitService.getUnitUsers(TEST_STAMNR)).thenReturn(list);
-        List<User> unitUserList = unitController.getUnitUserList(TEST_STAMLETTERS, TEST_STAMCIJFERS);
-        Assert.assertSame(list, unitUserList);
-
-        Mockito.verify(unitService).getUnitUsers(TEST_STAMNR);
-    }
     
     @Test
     public void findRegisteredParticipantsByGroupReturnsListOfParticipants(){

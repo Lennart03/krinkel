@@ -22,16 +22,16 @@ import java.util.stream.Collectors;
 @Service
 public class GraphChiroService {
     @Autowired
-    private ChiroUnitRepository repository;
+    private ChiroUnitRepository chiroUnitRepository;
 
     @Autowired
-    private RegistrationParticipantRepository participantRepository;
+    private RegistrationParticipantRepository registrationParticipantRepository;
 
     @Autowired
-    private RegistrationParticipantService participantService;
+    private RegistrationParticipantService registrationParticipantService;
 
     @Autowired
-    private LoginLoggerRepository loggerRepository;
+    private LoginLoggerRepository loginLoggerRepository;
 
     @Autowired
     private StamNumberTrimmer stamNumberTrimmer;
@@ -39,7 +39,7 @@ public class GraphChiroService {
     @PreAuthorize("@GraphChiroServiceSecurity.hasPermissionToMakeStatusGraph()")
     public StatusChiroUnit getStatusChiro() {
         StatusChiroUnit status = new StatusChiroUnit();
-        participantRepository.findAll().forEach(r -> {
+        registrationParticipantRepository.findAll().forEach(r -> {
             if (r.getEventRole().equals(EventRole.VOLUNTEER)) {
                 switch (r.getStatus()) {
                     case PAID:
@@ -117,13 +117,13 @@ public class GraphChiroService {
     private Integer findParticipants(String stamNumber) {
         String normalizedStamNumber = stamNumberTrimmer.trim(stamNumber);
 
-        int participants = participantService.findParticipantsByGroup(normalizedStamNumber).size();
-        int volunteers = participantService.findVolunteersByGroup(normalizedStamNumber).size();
+        int participants = registrationParticipantService.findParticipantsByGroup(normalizedStamNumber).size();
+        int volunteers = registrationParticipantService.findVolunteersByGroup(normalizedStamNumber).size();
         return participants + volunteers;
     }
 
     private List<RawChiroUnit> findAll() {
-        return repository.findAll();
+        return chiroUnitRepository.findAll();
     }
 
     @PreAuthorize("@GraphChiroServiceSecurity.hasPermissionToGetLoginData()")
@@ -148,15 +148,15 @@ public class GraphChiroService {
             Date startDate = Date.from(LocalDate.now().minusWeeks(2).atStartOfDay(ZoneId.systemDefault()).toInstant());
             Date now = new Date();
 
-            allLogs = loggerRepository.findLogsBetweenDates(startDate, now);
+            allLogs = loginLoggerRepository.findLogsBetweenDates(startDate, now);
 
-            distinctStamps = loggerRepository.findDistinctStamps(startDate, now)
+            distinctStamps = loginLoggerRepository.findDistinctStamps(startDate, now)
                     .stream()
                     .map(Date::toString)
                     .collect(Collectors.toList());
         } else {
-            allLogs = loggerRepository.findAll();
-            distinctStamps = loggerRepository.findDistinctStamps()
+            allLogs = loginLoggerRepository.findAll();
+            distinctStamps = loginLoggerRepository.findDistinctStamps()
                     .stream()
                     .map(Date::toString)
                     .collect(Collectors.toList());

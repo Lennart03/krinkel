@@ -29,13 +29,6 @@ export class AuthService {
         return this.user.role;
     }
 
-    //TODO: remove
-    // getRegistrationStatus() {
-    //     this.getUserFromStorage();
-    //     //return this.user.subscribed;
-    //     return false;
-    // }
-
     getUserFromStorage() {
         var jwt = this.getToken('Authorization');
         if (jwt!= undefined && jwt.indexOf('.') !=-1) {
