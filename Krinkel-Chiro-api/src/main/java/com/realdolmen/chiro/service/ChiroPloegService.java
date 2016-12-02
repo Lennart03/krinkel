@@ -60,10 +60,9 @@ public class ChiroPloegService {
             JsonNode jsonNode = mapper.readTree(body);
             JsonNode values = jsonNode.get("values");
 
-            for (JsonNode v : values) {
-                ploegen.add(v.get("stamnr").asText().replace(" /","") + ": " + v.get("name").asText());
-            }
-
+            values.forEach(v -> {
+                ploegen.add(v.toString());
+            });
         } catch (IOException e) {
             logger.error("chiro API error");
         }
@@ -72,7 +71,8 @@ public class ChiroPloegService {
     }
 
     public Map<String, String> getStamNumbers(String adNumber) {
-        String url = "https://cividev.chiro.be/sites/all/modules/civicrm/extern/rest.php?key=2340f8603072358ffc23f5459ef92f88&api_key=vooneih8oo1XepeiduGh&entity=Light&action=getploeg&json=%7B%22adnr%22:" + 308986 + "%7D";
+        //TODO use adNumber variable and not hardcoded 308986
+        String url = chiroUrl + "?key=" + chiroKey + "&api_key=" + apiKey + "&entity=Light&action=getploeg&json=%7B%22adnr%22:" + 308986 + "%7D";
         Map<String, String> stamNumbers = new TreeMap<>();
         try {
             URI uri = new URI(url);

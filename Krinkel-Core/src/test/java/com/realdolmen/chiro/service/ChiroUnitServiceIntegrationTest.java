@@ -117,7 +117,6 @@ public class ChiroUnitServiceIntegrationTest extends SpringIntegrationTest {
 								out.write(info);
 								out.newLine();
 							} catch (IOException e) {
-								// TODO Auto-generated catch block
 								e.printStackTrace();
 							}
 						}else{
@@ -125,7 +124,6 @@ public class ChiroUnitServiceIntegrationTest extends SpringIntegrationTest {
 								out.write("no lower level");
 								out.newLine();
 							} catch (IOException e) {
-								// TODO Auto-generated catch block
 								e.printStackTrace();
 							}
 						}
@@ -135,10 +133,8 @@ public class ChiroUnitServiceIntegrationTest extends SpringIntegrationTest {
 		} catch (
 
 		FileNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}

@@ -2,9 +2,6 @@ package com.realdolmen.chiro.service;
 
 import com.realdolmen.chiro.domain.RegistrationVolunteer;
 import com.realdolmen.chiro.domain.Status;
-import com.realdolmen.chiro.repository.RegistrationCommunicationRepository;
-import com.realdolmen.chiro.chiro_api.ChiroUserAdapter;
-import com.realdolmen.chiro.domain.User;
 import com.realdolmen.chiro.repository.RegistrationVolunteerRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,22 +16,22 @@ public class RegistrationVolunteerService {
     private Integer PRICE_IN_EUROCENTS;
 
     @Autowired
-    private RegistrationVolunteerRepository repository;
+    private RegistrationVolunteerRepository registrationVolunteerRepository;
 
     @Autowired
     private UserService userService;
 
     @PreAuthorize("@RegistrationVolunteerServiceSecurity.hasPermissionToSaveVolunteer(#volunteer)")
     public RegistrationVolunteer save(RegistrationVolunteer volunteer) {
-        RegistrationVolunteer volunteerFromOurDB = repository.findByAdNumber(volunteer.getAdNumber());
+        RegistrationVolunteer volunteerFromOurDB = registrationVolunteerRepository.findByAdNumber(volunteer.getAdNumber());
         volunteer.setRegisteredBy(volunteer.getAdNumber());
 
         if (volunteerFromOurDB == null) {
             userService.updateCurrentUserRegisteredStatus();
-            return repository.save(volunteer);
+            return registrationVolunteerRepository.save(volunteer);
         } else if (volunteerFromOurDB != null && volunteerFromOurDB.getStatus().equals(Status.TO_BE_PAID)) {
             volunteer.setId(volunteerFromOurDB.getId());
-            return repository.save(volunteer);
+            return registrationVolunteerRepository.save(volunteer);
         } else if (volunteerFromOurDB != null && (volunteerFromOurDB.getStatus().equals(Status.PAID)) || volunteerFromOurDB.getStatus().equals(Status.CONFIRMED)) {
             return null;
         }

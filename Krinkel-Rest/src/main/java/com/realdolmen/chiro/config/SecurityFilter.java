@@ -32,6 +32,7 @@ public class SecurityFilter extends WebSecurityConfigurerAdapter {
                 .antMatchers("/res/*")
                 .antMatchers("/site/**")
                 .antMatchers("/login")
+                .antMatchers("/confirmation")
                 .regexMatchers("/");
     }
 

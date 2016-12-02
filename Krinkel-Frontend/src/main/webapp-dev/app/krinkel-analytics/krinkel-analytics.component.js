@@ -1,6 +1,7 @@
 class KrinkelAnalyticsController{
-    constructor(KrinkelService){
+    constructor(KrinkelService, AuthService){
         this.KrinkelService = KrinkelService;
+        this.AuthService = AuthService;
     }
 
     $onInit(){
@@ -12,4 +13,4 @@ export var KrinkelAnalyticsComponent = {
     controller: KrinkelAnalyticsController
 };
 
-KrinkelAnalyticsComponent.$inject = ['KrinkelService'];
+KrinkelAnalyticsComponent.$inject = ['KrinkelService', 'AuthService'];

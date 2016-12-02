@@ -17,7 +17,7 @@ export class MapperService {
                 city: data.city
             },
             birthdate: data.birthDate,
-            stamnumber: data.group.split(":")[0],
+            stamnumber: data.group,
             buddy: data.buddy,
             language: [], // data.languages
             eatinghabbit: data.dietary,
@@ -121,7 +121,7 @@ export class MapperService {
                 city: data.city
             },
             birthdate: data.birthDate,
-            stamnumber: data.group.split(":")[0],
+            stamnumber: data.group,
             buddy: data.buddy,
             // language: data.languages,
             eatinghabbit: data.dietary,

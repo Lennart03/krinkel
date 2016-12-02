@@ -113,8 +113,11 @@ class RegisterController {
         };
 
         this.KrinkelService.getPloegen(colleague.adnr).then((resp) => {
-            this.options = resp;
-            this.newPerson.group = this.options[0];
+            this.options = [];
+            resp.forEach((r) => {
+                this.options.push(JSON.parse(r));
+            });
+            this.newPerson.group = this.options[0].stamnr;
         });
 
         this.details2.name = colleague.postal_code;
@@ -150,8 +153,11 @@ class RegisterController {
                 };
 
                 this.KrinkelService.getPloegen(loggedInUser.adnummer).then((resp) => {
-                    this.options = resp;
-                    this.newPerson.group = this.options[0];
+                    this.options = [];
+                    resp.forEach((r) => {
+                        this.options.push(JSON.parse(r));
+                    });
+                    this.newPerson.group = this.options[0].stamnr;
                 });
                 this.details2.name = chiroContact.postal_code;
 

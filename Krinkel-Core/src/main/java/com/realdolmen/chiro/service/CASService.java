@@ -27,10 +27,10 @@ import java.util.List;
 @Service
 public class CASService{
     @Autowired
-    private CasConfiguration configuration;
+    private CasConfiguration casConfiguration;
 
     @Autowired
-    private JwtConfiguration jwtConfig;
+    private JwtConfiguration jwtConfiguration;
 
     @Autowired
     private UserService userService;
@@ -51,11 +51,11 @@ public class CASService{
      */
     public final User validate(String ticket) {
         AttributePrincipal principal = null;
-        Cas20ProxyTicketValidator sv = new Cas20ProxyTicketValidator(configuration.getBaseCasUrl());
+        Cas20ProxyTicketValidator sv = new Cas20ProxyTicketValidator(casConfiguration.getBaseCasUrl());
         sv.setAcceptAnyProxy(true);
 
         try {
-            Assertion a = sv.validate(ticket, configuration.getServiceUrl());
+            Assertion a = sv.validate(ticket, casConfiguration.getServiceUrl());
             principal = a.getPrincipal();
         } catch (TicketValidationException e) {
             throw new SecurityException("Ticket could not be validated");
@@ -110,11 +110,12 @@ public class CASService{
             user.setRolesAndUpperClassesByStam(stamNumbersRolesVO.getRolesAndUpperClassesByStam());
             user.setStamnummer(stamNumbersRolesVO.getStamNumber());
 
+            //TODO change so it's not hardcoded
             List<String> adminAdNumbers = new ArrayList<>();
             adminAdNumbers.add("152504");
             adminAdNumbers.add("109318");
+            //TODO remove this one, it's me (arne)
             adminAdNumbers.add("169314");
-            adminAdNumbers.add("386288");
 
             if(adminAdNumbers.contains(adNumber)){
                 user.setRole(SecurityRole.ADMIN);
@@ -136,7 +137,7 @@ public class CASService{
 
     public Boolean hasRole(final SecurityRole[] roles, final HttpServletRequest request) {
         Claims claims = Jwts.parser()
-                .setSigningKey(DatatypeConverter.parseBase64Binary(jwtConfig.getJwtSecret()))
+                .setSigningKey(DatatypeConverter.parseBase64Binary(jwtConfiguration.getJwtSecret()))
                 .parseClaimsJws(getTokenFromCookie(request.getCookies())).getBody();
         if (claims != null) {
             for (SecurityRole role : roles) {
@@ -174,6 +175,6 @@ public class CASService{
                 .claim("email", user.getEmail())
                 .claim("role", user.getRole())
                 .setIssuedAt(new Date())
-                .signWith(SignatureAlgorithm.HS256, jwtConfig.getJwtSecret()).compact();
+                .signWith(SignatureAlgorithm.HS256, jwtConfiguration.getJwtSecret()).compact();
     }
 }

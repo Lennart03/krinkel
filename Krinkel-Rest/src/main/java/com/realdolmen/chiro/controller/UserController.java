@@ -19,35 +19,18 @@ public class UserController {
     private UserService userService;
 
     /**
-     * Security has to stay here instead of userService.getUser(...) since cas also uses that method.
-     * If you want secure it in the service I wish you the best of luck.
-     *
-     * @param adNumber
+     * Get the current loggedIn user, no params needed since we cache the user in the userService
      * @return
      * @throws UserNotfoundException
      */
-    @RequestMapping(method = RequestMethod.GET, value = "/api/users/{adNumber}")
-    @PreAuthorize("@UserControllerSecurity.hasPermissionToGetUser(#adNumber)")
-    public User getUser(@PathVariable("adNumber") String adNumber) throws UserNotfoundException {
-        User u = userService.getCurrentUser();
-        if (u == null) {
-            throw new UserNotfoundException();
-        }
-
-        return u;
-    }
-
     @RequestMapping(method = RequestMethod.GET, value = "/api/user")
     public User getUser() throws UserNotfoundException {
         User u = userService.getCurrentUser();
         if (u == null) {
             throw new UserNotfoundException();
         }
-
-        System.out.println(u.getEmail());
         return u;
     }
-
 
     @ResponseStatus(HttpStatus.NOT_FOUND)
     public class UserNotfoundException extends RuntimeException {

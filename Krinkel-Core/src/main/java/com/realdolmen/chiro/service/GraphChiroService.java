@@ -22,16 +22,16 @@ import java.util.stream.Collectors;
 @Service
 public class GraphChiroService {
     @Autowired
-    private ChiroUnitRepository repository;
+    private ChiroUnitRepository chiroUnitRepository;
 
     @Autowired
-    private RegistrationParticipantRepository participantRepository;
+    private RegistrationParticipantRepository registrationParticipantRepository;
 
     @Autowired
-    private RegistrationParticipantService participantService;
+    private RegistrationParticipantService registrationParticipantService;
 
     @Autowired
-    private LoginLoggerRepository loggerRepository;
+    private LoginLoggerRepository loginLoggerRepository;
 
     @Autowired
     private StamNumberTrimmer stamNumberTrimmer;
@@ -39,7 +39,7 @@ public class GraphChiroService {
     @PreAuthorize("@GraphChiroServiceSecurity.hasPermissionToMakeStatusGraph()")
     public StatusChiroUnit getStatusChiro() {
         StatusChiroUnit status = new StatusChiroUnit();
-        participantRepository.findAll().forEach(r -> {
+        registrationParticipantRepository.findAll().forEach(r -> {
             if (r.getEventRole().equals(EventRole.VOLUNTEER)) {
                 switch (r.getStatus()) {
                     case PAID:
@@ -76,64 +76,66 @@ public class GraphChiroService {
     public GraphChiroUnit summary() {
         GraphChiroUnit root = new GraphChiroUnit("Inschrijvingen", null, new ArrayList<GraphChiroUnit>());
 
-        boolean verbondadded;
-        boolean gewestadded;
+        List<RawChiroUnit> allChiroUnits = findAll();
 
+        for (RawChiroUnit chiroUnit : allChiroUnits) {
+            //check if verbond exists
+            if (getGraphChiroUnitByLowerUnitName(root.getChildren(), chiroUnit.getVerbondName()) == null) {
+                GraphChiroUnit verbond = new GraphChiroUnit(chiroUnit.getVerbondName(), null, new ArrayList<GraphChiroUnit>());
+                GraphChiroUnit gewest = new GraphChiroUnit(chiroUnit.getGewestName(), null, new ArrayList<GraphChiroUnit>());
+                GraphChiroUnit groep = new GraphChiroUnit(chiroUnit.getName(), findParticipants(chiroUnit.getStamNumber()), null);
 
-        /**
-         * VERY long execution time. Changed the multiple findAll() to one findAll(), which reduced the execution time from ~8 seconds to ~2.5 seconds.
-         */
-        List<RawChiroUnit> all = findAll();
-        for (int i = 0; i < all.size(); i++) {
-            RawChiroUnit raw = all.get(i);
-            verbondadded = false;
-            gewestadded = false;
-            for (GraphChiroUnit r : root.getChildren()) {
+                gewest.getChildren().add(groep);
+                verbond.getChildren().add(gewest);
+                root.getChildren().add(verbond);
+            } else {
+                GraphChiroUnit verbond = getGraphChiroUnitByLowerUnitName(root.getChildren(), chiroUnit.getVerbondName());
+                //check if gewest exists
+                if (getGraphChiroUnitByLowerUnitName(verbond.getChildren(), chiroUnit.getGewestName()) == null) {
+                    GraphChiroUnit gewest = new GraphChiroUnit(chiroUnit.getGewestName(), null, new ArrayList<GraphChiroUnit>());
+                    GraphChiroUnit groep = new GraphChiroUnit(chiroUnit.getName(), findParticipants(chiroUnit.getStamNumber()), null);
 
-                if (r.getName().equals(raw.getVerbondName())) {
-                    verbondadded = true;
-                    for (GraphChiroUnit r2 : r.getChildren()) {
-                        if (r2.getName().equals(raw.getGewestName())) {
-                            gewestadded = true;
-                            r2.getChildren().add(new GraphChiroUnit(raw.getName(), findParticipants(raw.getStamNumber()), null));
-                        }
-                    }
-                    if (!gewestadded) {
-                        r.getChildren().add(new GraphChiroUnit(raw.getGewestName(), null, new ArrayList<GraphChiroUnit>()));
-                        i--;
-                    }
+                    gewest.getChildren().add(groep);
+                    verbond.getChildren().add(gewest);
+                } else {
+                    GraphChiroUnit verbondForGroep = getGraphChiroUnitByLowerUnitName(root.getChildren(), chiroUnit.getVerbondName());
+                    GraphChiroUnit gewestForGroep = getGraphChiroUnitByLowerUnitName(verbondForGroep.getChildren(), chiroUnit.getGewestName());
+
+                    GraphChiroUnit groep = new GraphChiroUnit(chiroUnit.getName(), findParticipants(chiroUnit.getStamNumber()), null);
+                    gewestForGroep.getChildren().add(groep);
                 }
-
-            }
-
-            if (!verbondadded) {
-                root.getChildren().add(new GraphChiroUnit(raw.getVerbondName(), null, new ArrayList<GraphChiroUnit>()));
-                i--;
             }
         }
         return root;
     }
 
+    private GraphChiroUnit getGraphChiroUnitByLowerUnitName(List<GraphChiroUnit> units, String unitName) {
+        for (GraphChiroUnit unit : units) {
+            if (unit.getName().equals(unitName)) {
+                return unit;
+            }
+        }
+        return null;
+    }
+
     private Integer findParticipants(String stamNumber) {
         String normalizedStamNumber = stamNumberTrimmer.trim(stamNumber);
 
-        int participants = participantService.findParticipantsByGroup(normalizedStamNumber).size();
-        int volunteers = participantService.findVolunteersByGroup(normalizedStamNumber).size();
+        int participants = registrationParticipantService.findParticipantsByGroup(normalizedStamNumber).size();
+        int volunteers = registrationParticipantService.findVolunteersByGroup(normalizedStamNumber).size();
         return participants + volunteers;
     }
 
     private List<RawChiroUnit> findAll() {
-        return repository.findAll();
+        return chiroUnitRepository.findAll();
     }
 
-    @SuppressWarnings("rawtypes")
-	@PreAuthorize("@GraphChiroServiceSecurity.hasPermissionToGetLoginData()")
+    @PreAuthorize("@GraphChiroServiceSecurity.hasPermissionToGetLoginData()")
     public SortedMap getLoginDataFromLastTwoWeeks() {
         return getUniqueLoginsPerVerbond(true);
     }
 
-    @SuppressWarnings("rawtypes")
-	@PreAuthorize("@GraphChiroServiceSecurity.hasPermissionToGetLoginData()")
+    @PreAuthorize("@GraphChiroServiceSecurity.hasPermissionToGetLoginData()")
     public SortedMap getLoginData() {
         return getUniqueLoginsPerVerbond(false);
     }
@@ -150,15 +152,15 @@ public class GraphChiroService {
             Date startDate = Date.from(LocalDate.now().minusWeeks(2).atStartOfDay(ZoneId.systemDefault()).toInstant());
             Date now = new Date();
 
-            allLogs = loggerRepository.findLogsBetweenDates(startDate, now);
+            allLogs = loginLoggerRepository.findLogsBetweenDates(startDate, now);
 
-            distinctStamps = loggerRepository.findDistinctStamps(startDate, now)
+            distinctStamps = loginLoggerRepository.findDistinctStamps(startDate, now)
                     .stream()
                     .map(Date::toString)
                     .collect(Collectors.toList());
         } else {
-            allLogs = loggerRepository.findAll();
-            distinctStamps = loggerRepository.findDistinctStamps()
+            allLogs = loginLoggerRepository.findAll();
+            distinctStamps = loginLoggerRepository.findDistinctStamps()
                     .stream()
                     .map(Date::toString)
                     .collect(Collectors.toList());
@@ -190,7 +192,7 @@ public class GraphChiroService {
                 }
             });
         }
-        /**
+        /*
          * I know it refers to the same object, but I prefer this way of coding because it looks cleaner to me
          */
         return sortedMap;

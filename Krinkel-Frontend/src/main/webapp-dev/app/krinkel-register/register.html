@@ -142,7 +142,7 @@
         <div class="row">
             <div class="input-field col s12">
                 <!--<i class="material-icons prefix">mood</i>-->
-                <select ng-options="o as o for o in $ctrl.options" name="group" ng-model="$ctrl.newPerson.group" class="browser-default" required>
+                <select ng-options="o.stamnr as o.stamnr + ': ' + o.name for o in $ctrl.options" name="group" ng-model="$ctrl.newPerson.group" class="browser-default" required>
                 </select>
                 <p ng-show="personForm.group.$invalid && personForm.group.$touched" class="error">
                     <i class="material-icons">error_outline</i>
@@ -239,8 +239,9 @@
                         </div>
                     </div>
 
+
                     <div ng-show="$ctrl.newPerson.buddy">
-                        <select ng-show="$ctrl.newPerson.buddy" multiple ng-required="$ctrl.newPerson.buddy" ng-model="$ctrl.newPerson.languages">
+                        <select ng-show="$ctrl.newPerson.buddy" multiple ng-required="$ctrl.newPerson.buddy" ng-model="$ctrl.newPerson.languages" ng-class="{'teal white-text': $ctrl.newPerson.languages.length != undefined, 'red white-text': $ctrl.newPerson.languages.length == undefined}">
                             <option value="" disabled selected>Selecteer je talen*</option>
                             <option value="ENGLISH">Engels</option>
                             <option value="FRENCH">Frans</option>

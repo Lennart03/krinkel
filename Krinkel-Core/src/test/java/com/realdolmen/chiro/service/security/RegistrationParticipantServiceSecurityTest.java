@@ -54,7 +54,6 @@ public class RegistrationParticipantServiceSecurityTest {
         Assert.assertEquals(false, b);
     }
 
-    @Ignore
     @Test
     public void hasPermissionToSaveParticipantReturnsTrueWhenColleagues(){
         RegistrationParticipant registrationParticipant = new RegistrationParticipant();
@@ -65,7 +64,7 @@ public class RegistrationParticipantServiceSecurityTest {
         currentUser.setRole(SecurityRole.GROEP);
 
         Mockito.when(userService.getCurrentUser()).thenReturn(currentUser);
-        Mockito.when(chiroColleagueService.isColleague(Integer.parseInt(currentUser.getAdNumber()), Integer.parseInt(registrationParticipant.getAdNumber()))).thenReturn(true);
+        Mockito.when(chiroColleagueService.isColleague(221826, Integer.parseInt(registrationParticipant.getAdNumber()))).thenReturn(true);
 
         boolean b = registrationParticipantServiceSecurity.hasPermissionToSaveParticipant(registrationParticipant);
 

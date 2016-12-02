@@ -14,21 +14,26 @@ import static org.mockito.Mockito.times;
 @RunWith(MockitoJUnitRunner.class)
 public class PaymentWebControllerTest {
     @InjectMocks
-    private PaymentWebController controller;
+    private PaymentWebController paymentWebController;
 
     @Mock
-    private RegistrationParticipantService service;
+    private RegistrationParticipantService registrationParticipantService;
 
     private final static String TEST_ORDER_ID = "abc123";
 
     @After
     public void verifyStrict(){
-        Mockito.verifyNoMoreInteractions(service);
+        Mockito.verifyNoMoreInteractions(registrationParticipantService);
     }
 
     @Test
     public void paymentSuccessCallsServiceToUpdateParticipantPaymentStatusWithOrderId() {
-        controller.paymentSuccess(TEST_ORDER_ID);
-        Mockito.verify(service, times(1)).updatePaymentStatus(TEST_ORDER_ID);
+        paymentWebController.paymentSuccess(TEST_ORDER_ID);
+        Mockito.verify(registrationParticipantService, times(1)).updatePaymentStatus(TEST_ORDER_ID);
+    }
+
+    @Test
+    public void paymentFailureDoesNothingAtAll() {
+        paymentWebController.paymentFailure(TEST_ORDER_ID);
     }
 }

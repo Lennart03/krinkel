@@ -2,7 +2,6 @@ package com.realdolmen.chiro.controller;
 
 import com.realdolmen.chiro.domain.RegistrationParticipant;
 import com.realdolmen.chiro.domain.RegistrationVolunteer;
-import com.realdolmen.chiro.domain.User;
 import com.realdolmen.chiro.domain.units.ChiroUnit;
 import com.realdolmen.chiro.service.ChiroUnitService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,19 +12,12 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
-/**
- * /units  = Everything and alles
- * /units?verbond = Alleen verbonden
- * /units?gewest = Alleen gewesten.
- * /units/{stam} = Eén groep.
- * /units/{stamletters}/{stamnummers}/users = all users with given stamnummer ({stamletters}/{stamnummers} = stamnummer)
- */
 @RestController
 @RequestMapping(value = "/api/units", produces = "application/json")
 public class UnitController {
 
     @Autowired
-    private ChiroUnitService unitService;
+    private ChiroUnitService chiroUnitService;
 
     /**
      * first thing you see in the table (the list of verbonden)
@@ -34,21 +26,7 @@ public class UnitController {
      */
     @RequestMapping(value = "", method = RequestMethod.GET, params = {"verbond"})
     public List<ChiroUnit> allVerbondUnits() {
-        return unitService.findVerbondUnits();
-    }
-
-
-    /**
-     * method used in the frondend when getting the colleagues. (select person to enroll in krinkel)
-     *
-     * @param stamletters first part of stamnumber
-     * @param stamnummers second part of stamnumber
-     * @return users with same stamnumber
-     */
-    @RequestMapping(value = "{stamletters}/{stamnummers}/users")
-    public List<User> getUnitUserList(@PathVariable("stamletters") String stamletters, @PathVariable("stamnummers") String stamnummers) {
-        String stamnr = stamletters + "/" + stamnummers;
-        return unitService.getUnitUsers(stamnr);
+        return chiroUnitService.findVerbondUnits();
     }
 
     /**
@@ -59,7 +37,7 @@ public class UnitController {
      */
     @RequestMapping(value = "/{stam}", method = RequestMethod.GET)
     public List<ChiroUnit> subUnits(@PathVariable("stam") String stam) {
-        return unitService.findSubUnits(stam);
+        return chiroUnitService.findSubUnits(stam);
     }
 
     /**
@@ -70,7 +48,7 @@ public class UnitController {
      */
     @RequestMapping(value = "/{stamNummer}/participants", method = RequestMethod.GET)
     public List<RegistrationParticipant> findRegisteredParticipantsByGroup(@PathVariable("stamNummer") String stamNumber) {
-        return unitService.findParticipantsByChiroUnit(stamNumber);
+        return chiroUnitService.findParticipantsByChiroUnit(stamNumber);
     }
 
     /**
@@ -81,6 +59,6 @@ public class UnitController {
      */
     @RequestMapping(value = "/{stamNummer}/volunteers", method = RequestMethod.GET)
     public List<RegistrationVolunteer> findRegisteredVolunteersByGroup(@PathVariable("stamNummer") String stamNumber) {
-        return unitService.findVolunteersByChiroUnit(stamNumber);
+        return chiroUnitService.findVolunteersByChiroUnit(stamNumber);
     }
 }

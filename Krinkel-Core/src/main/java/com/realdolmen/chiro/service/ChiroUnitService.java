@@ -1,16 +1,12 @@
 package com.realdolmen.chiro.service;
 
-import com.realdolmen.chiro.chiro_api.ChiroUserAdapter;
 import com.realdolmen.chiro.domain.RegistrationParticipant;
 import com.realdolmen.chiro.domain.RegistrationVolunteer;
-import com.realdolmen.chiro.domain.User;
 import com.realdolmen.chiro.domain.units.ChiroUnit;
 import com.realdolmen.chiro.domain.units.RawChiroUnit;
 import com.realdolmen.chiro.repository.ChiroUnitRepository;
-
 import com.realdolmen.chiro.util.StamNumberTrimmer;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.prepost.PostAuthorize;
 import org.springframework.security.access.prepost.PostFilter;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
@@ -19,14 +15,6 @@ import javax.annotation.PostConstruct;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * TODO: Move to separate module?
- * <p>
- * Mock for an as of yet unavailable Chiro REST API.
- * <p>
- * Maps organisational information about Chiro Groups to a format suitable for
- * the REST endpoint.
- */
 @Service
 public class ChiroUnitService {
 
@@ -34,10 +22,7 @@ public class ChiroUnitService {
     private StamNumberTrimmer stamNumberTrimmer;
 
     @Autowired
-    private ChiroUnitRepository repository;
-
-    @Autowired
-    private ChiroUserAdapter adapter;
+    private ChiroUnitRepository chiroUnitRepository;
 
     @Autowired
     private RegistrationParticipantService registrationParticipantService;
@@ -57,14 +42,14 @@ public class ChiroUnitService {
         }
 
 		/* Fix StamNumbers */
-        verbondUnits = repository.findAllVerbonden();
+        verbondUnits = chiroUnitRepository.findAllVerbonden();
         for (ChiroUnit verbondUnit : verbondUnits) {
             String normalizedStam = stamNumberTrimmer.trim(verbondUnit.getStam());
             verbondUnit.setStam(normalizedStam);
         }
 
 		/* Fix StamNumbers */
-        gewestUnits = repository.findAllGewesten();
+        gewestUnits = chiroUnitRepository.findAllGewesten();
         for (ChiroUnit gewestUnit : gewestUnits) {
             String normalizedStam = stamNumberTrimmer.trim(gewestUnit.getStam());
             gewestUnit.setStam(normalizedStam);
@@ -72,7 +57,7 @@ public class ChiroUnitService {
 
         List<ChiroUnit> chiroUnits = new ArrayList<>();
         // Convert all low level groups
-        for (RawChiroUnit rawUnit : repository.findAll()) {
+        for (RawChiroUnit rawUnit : chiroUnitRepository.findAll()) {
             ChiroUnit unit = new ChiroUnit(
                     stamNumberTrimmer.trim(rawUnit.getStamNumber()),
                     rawUnit.getName()
@@ -168,16 +153,6 @@ public class ChiroUnitService {
             }
         }
         return null;
-    }
-
-    private String trimStam(String stam) {
-        return stam.replace("/", "").replace("\\s", "").replace(" ", "");
-    }
-
-    @PreAuthorize("@ChiroUnitServiceSecurity.hasPermissionToGetColleagues()")
-    @PostFilter("@ChiroUnitServiceSecurity.hasPermissionToSeeColleagues(filterObject)")
-    public List<User> getUnitUsers(String stamnr) {
-        return adapter.getColleagues(stamnr);
     }
 
     private List<RegistrationParticipant> loopOverRegisteredParticipantsFor(String stamnummer, ChiroUnit unit) {

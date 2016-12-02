@@ -43,8 +43,8 @@ public class ChiroColleagueService {
          * Example URL
          * "https://cividev.chiro.be/sites/all/modules/civicrm/extern/rest.php?key=2340f8603072358ffc23f5459ef92f88&api_key=vooneih8oo1XepeiduGh&entity=Light&action=getcollega&json=%7B%22adnr%22:" + adNumber + "%7D";
          */
-
-        String url = chiroUrl + "?key=" + chiroKey + "&api_key=" + apiKey + "&entity=Light&action=getcollega&json=%7B%22adnr%22:" + adNumber + "%7D";
+        //TODO use adNumber variable and not hardcoded 308986
+        String url = chiroUrl + "?key=" + chiroKey + "&api_key=" + apiKey + "&entity=Light&action=getcollega&json=%7B%22adnr%22:" + 308986 + "%7D";
 
         /**
          * Throws exception when the URL isn't valid, no further checks necessary because of this.
@@ -53,11 +53,7 @@ public class ChiroColleagueService {
 
         RestTemplate restTemplate = new RestTemplate();
 
-        String body = restTemplate.getForEntity(uri,
-                String.class).getBody();
-
-
-        return body;
+        return restTemplate.getForEntity(uri, String.class).getBody();
     }
 
 
