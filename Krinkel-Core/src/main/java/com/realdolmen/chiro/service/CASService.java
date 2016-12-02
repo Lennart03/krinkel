@@ -110,11 +110,12 @@ public class CASService{
             user.setRolesAndUpperClassesByStam(stamNumbersRolesVO.getRolesAndUpperClassesByStam());
             user.setStamnummer(stamNumbersRolesVO.getStamNumber());
 
+            //TODO change so it's not hardcoded
             List<String> adminAdNumbers = new ArrayList<>();
             adminAdNumbers.add("152504");
             adminAdNumbers.add("109318");
+            //TODO remove this one, it's me (arne)
             adminAdNumbers.add("169314");
-            adminAdNumbers.add("386288");
 
             if(adminAdNumbers.contains(adNumber)){
                 user.setRole(SecurityRole.ADMIN);
