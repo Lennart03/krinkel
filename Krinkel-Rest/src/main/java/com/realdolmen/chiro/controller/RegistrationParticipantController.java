@@ -10,7 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -27,7 +26,7 @@ public class RegistrationParticipantController {
     private RegistrationParticipantService registrationParticipantService;
 
     @Autowired
-    private MultiSafePayService mspService;
+    private MultiSafePayService multiSafePayService;
 
     /**
      * Returns HTTP status 201 Created when registration has succeeded.
@@ -71,7 +70,7 @@ public class RegistrationParticipantController {
         }
 
         Integer price = registrationParticipantService.getPRICE_IN_EUROCENTS();
-        String paymentUrl = mspService.getParticipantPaymentUri(resultingParticipant, price);
+        String paymentUrl = multiSafePayService.getParticipantPaymentUri(resultingParticipant, price);
         HttpHeaders headers = new HttpHeaders();
         headers.setLocation(new URI(paymentUrl));
         logger.info("New registration created.");

@@ -17,7 +17,7 @@ import java.util.List;
 public class UnitController {
 
     @Autowired
-    private ChiroUnitService unitService;
+    private ChiroUnitService chiroUnitService;
 
     /**
      * first thing you see in the table (the list of verbonden)
@@ -26,7 +26,7 @@ public class UnitController {
      */
     @RequestMapping(value = "", method = RequestMethod.GET, params = {"verbond"})
     public List<ChiroUnit> allVerbondUnits() {
-        return unitService.findVerbondUnits();
+        return chiroUnitService.findVerbondUnits();
     }
 
     /**
@@ -37,7 +37,7 @@ public class UnitController {
      */
     @RequestMapping(value = "/{stam}", method = RequestMethod.GET)
     public List<ChiroUnit> subUnits(@PathVariable("stam") String stam) {
-        return unitService.findSubUnits(stam);
+        return chiroUnitService.findSubUnits(stam);
     }
 
     /**
@@ -48,7 +48,7 @@ public class UnitController {
      */
     @RequestMapping(value = "/{stamNummer}/participants", method = RequestMethod.GET)
     public List<RegistrationParticipant> findRegisteredParticipantsByGroup(@PathVariable("stamNummer") String stamNumber) {
-        return unitService.findParticipantsByChiroUnit(stamNumber);
+        return chiroUnitService.findParticipantsByChiroUnit(stamNumber);
     }
 
     /**
@@ -59,6 +59,6 @@ public class UnitController {
      */
     @RequestMapping(value = "/{stamNummer}/volunteers", method = RequestMethod.GET)
     public List<RegistrationVolunteer> findRegisteredVolunteersByGroup(@PathVariable("stamNummer") String stamNumber) {
-        return unitService.findVolunteersByChiroUnit(stamNumber);
+        return chiroUnitService.findVolunteersByChiroUnit(stamNumber);
     }
 }

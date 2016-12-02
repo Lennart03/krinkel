@@ -15,9 +15,6 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.util.Arrays;
-import java.util.Calendar;
-import java.util.Date;
 
 @RestController
 @EnableRestErrorHandling
@@ -29,7 +26,7 @@ public class RegistrationVolunteerController {
     private RegistrationVolunteerService registrationVolunteerService;
 
     @Autowired
-    private MultiSafePayService mspService;
+    private MultiSafePayService multiSafePayService;
 
     /**
      * Returns HTTP status 201 Created when registration has succeeded.
@@ -93,7 +90,7 @@ public class RegistrationVolunteerController {
 
 
         Integer price = registrationVolunteerService.getPRICE_IN_EUROCENTS();
-        String paymentUrl = mspService.getVolunteerPaymentUri(resultingVolunteer, price);
+        String paymentUrl = multiSafePayService.getVolunteerPaymentUri(resultingVolunteer, price);
         HttpHeaders headers = new HttpHeaders();
         headers.setLocation(new URI(paymentUrl));
         logger.info("New Registration for Volunteer created.");
