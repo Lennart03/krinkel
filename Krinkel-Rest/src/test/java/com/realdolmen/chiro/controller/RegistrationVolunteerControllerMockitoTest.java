@@ -1,8 +1,10 @@
 package com.realdolmen.chiro.controller;
 
 import com.realdolmen.chiro.domain.RegistrationVolunteer;
+import com.realdolmen.chiro.domain.User;
 import com.realdolmen.chiro.mspservice.MultiSafePayService;
 import com.realdolmen.chiro.service.RegistrationVolunteerService;
+import com.realdolmen.chiro.service.UserService;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -14,45 +16,50 @@ import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
 import org.springframework.http.ResponseEntity;
 
-import static org.mockito.Mockito.times;
-
 import java.net.URISyntaxException;
 
 @RunWith(MockitoJUnitRunner.class)
 public class RegistrationVolunteerControllerMockitoTest {
     @InjectMocks
-    private RegistrationVolunteerController controller;
+    private RegistrationVolunteerController registrationVolunteerController;
 
     @Mock
-    private MultiSafePayService mspService;
+    private MultiSafePayService multiSafePayService;
 
     @Mock
-    private RegistrationVolunteerService rvService;
+    private RegistrationVolunteerService registrationVolunteerService;
+
+    @Mock
+    private UserService userService;
 
     private String TEST_URL = "apeiofjoiaejfoioijagrapioejfleiofja";  //gibberish so test won't pass by accident
     private RegistrationVolunteer v;
+    private User currentUser;
 
     @Before
     public void setUp() {
         v = new RegistrationVolunteer();
         v.setAdNumber("abc123");
+
+        currentUser = new User();
     }
 
     @After
-    public void verifyStrict(){
-        Mockito.verifyNoMoreInteractions(mspService);
+    public void verifyStrict() {
+        Mockito.verifyNoMoreInteractions(multiSafePayService);
     }
 
     @Test
     public void saveReturnsUrlGivenByMultiSafePayService() throws URISyntaxException, MultiSafePayService.InvalidPaymentOrderIdException {
-        Mockito.when(rvService.save(v)).thenReturn(v);
-        Mockito.when(rvService.getPRICE_IN_EUROCENTS()).thenReturn(60);
-        Integer price = rvService.getPRICE_IN_EUROCENTS();
-        Mockito.when(mspService.getVolunteerPaymentUri(v, price)).thenReturn(TEST_URL);
-        ResponseEntity<?> response = controller.save(v);
+        Mockito.when(registrationVolunteerService.save(v)).thenReturn(v);
+        Mockito.when(registrationVolunteerService.getPRICE_IN_EUROCENTS()).thenReturn(60);
+        Integer price = registrationVolunteerService.getPRICE_IN_EUROCENTS();
+        Mockito.when(multiSafePayService.getVolunteerPaymentUri(v, price, currentUser)).thenReturn(TEST_URL);
+        Mockito.when(userService.getCurrentUser()).thenReturn(currentUser);
+        ResponseEntity<?> response = registrationVolunteerController.save(v);
         Assert.assertSame(response.getHeaders().getFirst("Location"), TEST_URL);
-        
-        Mockito.verify(mspService).getVolunteerPaymentUri(v, price);
-        Mockito.verify(rvService).save(v);
+
+        Mockito.verify(multiSafePayService).getVolunteerPaymentUri(v, price, currentUser);
+        Mockito.verify(registrationVolunteerService).save(v);
     }
 }

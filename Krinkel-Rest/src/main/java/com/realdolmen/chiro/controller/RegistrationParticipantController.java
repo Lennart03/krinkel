@@ -2,8 +2,10 @@ package com.realdolmen.chiro.controller;
 
 import com.realdolmen.chiro.controller.validation.EnableRestErrorHandling;
 import com.realdolmen.chiro.domain.RegistrationParticipant;
+import com.realdolmen.chiro.domain.User;
 import com.realdolmen.chiro.mspservice.MultiSafePayService;
 import com.realdolmen.chiro.service.RegistrationParticipantService;
+import com.realdolmen.chiro.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +29,9 @@ public class RegistrationParticipantController {
 
     @Autowired
     private MultiSafePayService multiSafePayService;
+
+    @Autowired
+    private UserService userService;
 
     /**
      * Returns HTTP status 201 Created when registration has succeeded.
@@ -64,13 +69,14 @@ public class RegistrationParticipantController {
     @RequestMapping(method = RequestMethod.POST, value = "/api/participants", consumes = "application/json")
     public ResponseEntity<?> save(@Valid @RequestBody RegistrationParticipant participant) throws URISyntaxException, MultiSafePayService.InvalidPaymentOrderIdException {
         RegistrationParticipant resultingParticipant = registrationParticipantService.save(participant);
+        User currentUser = userService.getCurrentUser();
 
         if (resultingParticipant == null) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
 
         Integer price = registrationParticipantService.getPRICE_IN_EUROCENTS();
-        String paymentUrl = multiSafePayService.getParticipantPaymentUri(resultingParticipant, price);
+        String paymentUrl = multiSafePayService.getParticipantPaymentUri(resultingParticipant, price, currentUser);
         HttpHeaders headers = new HttpHeaders();
         headers.setLocation(new URI(paymentUrl));
         logger.info("New registration created.");

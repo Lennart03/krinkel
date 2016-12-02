@@ -4,6 +4,7 @@ import com.realdolmen.chiro.controller.validation.EnableRestErrorHandling;
 import com.realdolmen.chiro.domain.*;
 import com.realdolmen.chiro.mspservice.MultiSafePayService;
 import com.realdolmen.chiro.service.RegistrationVolunteerService;
+import com.realdolmen.chiro.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +28,9 @@ public class RegistrationVolunteerController {
 
     @Autowired
     private MultiSafePayService multiSafePayService;
+
+    @Autowired
+    private UserService userService;
 
     /**
      * Returns HTTP status 201 Created when registration has succeeded.
@@ -83,6 +87,8 @@ public class RegistrationVolunteerController {
     @RequestMapping(method = RequestMethod.POST, value = "/api/volunteers", consumes = "application/json")
     public ResponseEntity<?> save(@Valid @RequestBody RegistrationVolunteer volunteer) throws URISyntaxException, MultiSafePayService.InvalidPaymentOrderIdException {
         RegistrationVolunteer resultingVolunteer = registrationVolunteerService.save(volunteer);
+        User currentUser = userService.getCurrentUser();
+
         if (resultingVolunteer == null) {
             logger.info("Registration for Volunteer failed.");
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -90,7 +96,7 @@ public class RegistrationVolunteerController {
 
 
         Integer price = registrationVolunteerService.getPRICE_IN_EUROCENTS();
-        String paymentUrl = multiSafePayService.getVolunteerPaymentUri(resultingVolunteer, price);
+        String paymentUrl = multiSafePayService.getVolunteerPaymentUri(resultingVolunteer, price, currentUser);
         HttpHeaders headers = new HttpHeaders();
         headers.setLocation(new URI(paymentUrl));
         logger.info("New Registration for Volunteer created.");
