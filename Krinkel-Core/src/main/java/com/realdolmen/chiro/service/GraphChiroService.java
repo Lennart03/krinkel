@@ -79,6 +79,7 @@ public class GraphChiroService {
         List<RawChiroUnit> allChiroUnits = findAll();
 
         for (RawChiroUnit chiroUnit : allChiroUnits) {
+            //check if verbond exists
             if (getGraphChiroUnitByLowerUnitName(root.getChildren(), chiroUnit.getVerbondName()) == null) {
                 GraphChiroUnit verbond = new GraphChiroUnit(chiroUnit.getVerbondName(), null, new ArrayList<GraphChiroUnit>());
                 GraphChiroUnit gewest = new GraphChiroUnit(chiroUnit.getGewestName(), null, new ArrayList<GraphChiroUnit>());
@@ -89,6 +90,7 @@ public class GraphChiroService {
                 root.getChildren().add(verbond);
             } else {
                 GraphChiroUnit verbond = getGraphChiroUnitByLowerUnitName(root.getChildren(), chiroUnit.getVerbondName());
+                //check if gewest exists
                 if (getGraphChiroUnitByLowerUnitName(verbond.getChildren(), chiroUnit.getGewestName()) == null) {
                     GraphChiroUnit gewest = new GraphChiroUnit(chiroUnit.getGewestName(), null, new ArrayList<GraphChiroUnit>());
                     GraphChiroUnit groep = new GraphChiroUnit(chiroUnit.getName(), findParticipants(chiroUnit.getStamNumber()), null);

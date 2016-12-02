@@ -87,7 +87,7 @@ public class RegistrationParticipantServiceTest {
     }
 
     @Test
-    public void savaShouldReturnParticipantWhenInOurDBAndNotPaid(){
+    public void saveShouldReturnParticipantWhenInOurDBAndNotPaid(){
         Mockito.when(registrationParticipantRepository.save(participant)).thenReturn(participant);
         registrationParticipantFromOurDB.setStatus(Status.TO_BE_PAID);
         Mockito.when(registrationParticipantRepository.findByAdNumber("ADNUMMER")).thenReturn(registrationParticipantFromOurDB);
@@ -99,7 +99,7 @@ public class RegistrationParticipantServiceTest {
     }
 
     @Test
-    public void savaShouldReturnNullWhenInOurDBAndPaid(){
+    public void saveShouldReturnNullWhenInOurDBAndPaid(){
         Mockito.when(registrationParticipantRepository.save(participant)).thenReturn(participant);
         registrationParticipantFromOurDB.setStatus(Status.PAID);
         Mockito.when(registrationParticipantRepository.findByAdNumber("ADNUMMER")).thenReturn(registrationParticipantFromOurDB);

@@ -1,8 +1,7 @@
 package com.realdolmen.chiro.service;
 
-import com.realdolmen.chiro.chiro_api.ChiroUserAdapter;
-import com.realdolmen.chiro.domain.RegistrationParticipant;
 import com.realdolmen.chiro.domain.RegistrationVolunteer;
+import com.realdolmen.chiro.domain.Status;
 import com.realdolmen.chiro.domain.User;
 import com.realdolmen.chiro.repository.RegistrationVolunteerRepository;
 import org.junit.Assert;
@@ -12,22 +11,17 @@ import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.invocation.InvocationOnMock;
 import org.mockito.runners.MockitoJUnitRunner;
-import org.mockito.stubbing.Answer;
 
 import static org.mockito.Mockito.times;
 
 @RunWith(MockitoJUnitRunner.class)
 public class RegistrationVolunteerServiceTest {
     @InjectMocks
-    private RegistrationVolunteerService service;
+    private RegistrationVolunteerService registrationVolunteerService;
 
     @Mock
-    private ChiroUserAdapter adapter;
-
-    @Mock
-    private RegistrationVolunteerRepository repo;
+    private RegistrationVolunteerRepository registrationVolunteerRepository;
 
     @Mock
     private UserService userService;
@@ -37,6 +31,7 @@ public class RegistrationVolunteerServiceTest {
 
     private RegistrationVolunteer volunteer;
     private User user;
+    private RegistrationVolunteer registrationVolunteerFromOurDB;
 
 
     @Before
@@ -49,27 +44,56 @@ public class RegistrationVolunteerServiceTest {
         user.setStamnummer(TEST_STAMNR);
         user.setAdNumber(TEST_AD_NUMBER);
         userService.setCurrentUser(user);
+
+        registrationVolunteerFromOurDB = new RegistrationVolunteer();
     }
 
     @Test
-    public void saveShouldAskChiroAdapterForStamnrOfParticipantBeingSaved() {
-        Mockito.when(adapter.getChiroUser(TEST_AD_NUMBER)).thenReturn(user);
-        Mockito.when(repo.findByAdNumber(TEST_AD_NUMBER)).thenReturn(null);
+    public void saveShouldReturnVolunteerAfterWhenNotInOurDB() {
+        Mockito.when(registrationVolunteerRepository.save(volunteer)).thenReturn(volunteer);
+        Mockito.when(userService.getCurrentUser()).thenReturn(user);
 
-        // make repo save method return its argument
-        Mockito.when(repo.save(Mockito.any(RegistrationVolunteer.class))).thenAnswer(new Answer<RegistrationVolunteer>() {
-            @Override
-            public RegistrationVolunteer answer(InvocationOnMock invocation) throws Throwable {
-                Object[] args = invocation.getArguments();
-                return (RegistrationVolunteer) args[0];
-            }
-        });
+        Assert.assertSame(volunteer, registrationVolunteerRepository.save(volunteer));
 
-        volunteer.setAdNumber(TEST_AD_NUMBER);
-        volunteer.setStamnumber("aojefaef;hjpaioefj"); // make sure it's different from what it should be
+        Mockito.verify(registrationVolunteerRepository).save(volunteer);
+    }
 
-        RegistrationParticipant v = service.save(volunteer);
-//        Mockito.verify(adapter, times(1)).getChiroUser(TEST_AD_NUMBER);
-        Assert.assertNotEquals(TEST_STAMNR, v.getStamnumber());
+    @Test
+    public void saveShouldReturnParticipantWhenInOurDBAndNotPaid() {
+        Mockito.when(registrationVolunteerRepository.save(volunteer)).thenReturn(volunteer);
+        registrationVolunteerFromOurDB.setStatus(Status.TO_BE_PAID);
+        Mockito.when(registrationVolunteerRepository.findByAdNumber("123456")).thenReturn(registrationVolunteerFromOurDB);
+        Mockito.when(userService.getCurrentUser()).thenReturn(user);
+
+        Assert.assertSame(volunteer, registrationVolunteerService.save(volunteer));
+
+        Mockito.verify(registrationVolunteerRepository).save(volunteer);
+    }
+
+    @Test
+    public void saveShouldReturnNullWhenInOurDBAndPaid() {
+        Mockito.when(registrationVolunteerRepository.save(volunteer)).thenReturn(volunteer);
+        registrationVolunteerFromOurDB.setStatus(Status.PAID);
+        Mockito.when(registrationVolunteerRepository.findByAdNumber("123456")).thenReturn(registrationVolunteerFromOurDB);
+        Mockito.when(userService.getCurrentUser()).thenReturn(user);
+
+        Assert.assertSame(null, registrationVolunteerService.save(volunteer));
+
+        Mockito.verify(registrationVolunteerRepository).findByAdNumber("123456");
+        Mockito.verify(registrationVolunteerRepository, times(0)).save(volunteer);
+
+    }
+
+    @Test
+    public void saveShouldReturnNullWhenInOurDBAndConfirmed() {
+        Mockito.when(registrationVolunteerRepository.save(volunteer)).thenReturn(volunteer);
+        registrationVolunteerFromOurDB.setStatus(Status.CONFIRMED);
+        Mockito.when(registrationVolunteerRepository.findByAdNumber("123456")).thenReturn(registrationVolunteerFromOurDB);
+        Mockito.when(userService.getCurrentUser()).thenReturn(user);
+
+        Assert.assertSame(null, registrationVolunteerService.save(volunteer));
+
+        Mockito.verify(registrationVolunteerRepository).findByAdNumber("123456");
+        Mockito.verify(registrationVolunteerRepository, times(0)).save(volunteer);
     }
 }
