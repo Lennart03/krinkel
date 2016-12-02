@@ -25,7 +25,7 @@ import java.util.Date;
 import java.util.List;
 
 @Service
-public class CASService{
+public class CASService {
     @Autowired
     private CasConfiguration casConfiguration;
 
@@ -62,47 +62,24 @@ public class CASService{
         }
         if (principal != null) {
 
-            /**
+            /*
              * Instead of getting stuff from ChiroUserAdapter which is mock data, getting it from the principal which is exposed above ;)
              */
             String adNumber = principal.getAttributes().get("ad_nummer").toString();
 
-            User user = new User();
+            User user;
             RegistrationParticipant registrationParticipantFromOurDB = userService.getRegistrationParticipant(adNumber);
 
-            /**
+            /*
              *  Checks if the logged in user is in our DB (user has already paid or at least tried to pay)
              */
             if (registrationParticipantFromOurDB != null) {
-                user.setFirstname(registrationParticipantFromOurDB.getFirstName());
-                user.setLastname(registrationParticipantFromOurDB.getLastName());
-                user.setAdNumber(registrationParticipantFromOurDB.getAdNumber());
-                user.setEmail(registrationParticipantFromOurDB.getEmail());
-
-                /**
-                 * Set hasPaid based on status
-                 */
-                if (registrationParticipantFromOurDB.getStatus().equals(Status.PAID) || registrationParticipantFromOurDB.getStatus().equals(Status.CONFIRMED)) {
-                    user.setHasPaid(true);
-                } else {
-                    user.setHasPaid(false);
-                }
-
-                user.setRegistered(true);
+                user = createUserFromOurDB(registrationParticipantFromOurDB);
             } else {
-                /**
+                /*
                  * Reached when the logged in user is not in our DB (this means he hasn't tried to pay yet)
                  */
-                String firstName = principal.getAttributes().get("first_name").toString();
-                String lastName = principal.getAttributes().get("last_name").toString();
-                String email = principal.getAttributes().get("mail").toString();
-
-                user.setFirstname(firstName);
-                user.setLastname(lastName);
-                user.setAdNumber(adNumber);
-                user.setEmail(email);
-                user.setRegistered(false);
-                user.setHasPaid(false);
+                user = createNewUser(principal, adNumber);
             }
 
             StamNumbersRolesVO stamNumbersRolesVO = findAllStamNumbersAndRoles(adNumber);
@@ -117,7 +94,7 @@ public class CASService{
             //TODO remove this one, it's me (arne)
             adminAdNumbers.add("169314");
 
-            if(adminAdNumbers.contains(adNumber)){
+            if (adminAdNumbers.contains(adNumber)) {
                 user.setRole(SecurityRole.ADMIN);
             } else {
                 user.setRole(SecurityRole.GROEP);
@@ -128,6 +105,43 @@ public class CASService{
             return user;
         }
         return null;
+    }
+
+    private User createUserFromOurDB(RegistrationParticipant registrationParticipant){
+        User user = new User();
+        user.setFirstname(registrationParticipant.getFirstName());
+        user.setLastname(registrationParticipant.getLastName());
+        user.setAdNumber(registrationParticipant.getAdNumber());
+        user.setEmail(registrationParticipant.getEmail());
+
+                /*
+                 * Set hasPaid based on status
+                 */
+        if (registrationParticipant.getStatus().equals(Status.PAID) || registrationParticipant.getStatus().equals(Status.CONFIRMED)) {
+            user.setHasPaid(true);
+        } else {
+            user.setHasPaid(false);
+        }
+
+        user.setRegistered(true);
+
+        return user;
+    }
+
+    private User createNewUser(AttributePrincipal principal, String adNumber){
+        User user = new User();
+        String firstName = principal.getAttributes().get("first_name").toString();
+        String lastName = principal.getAttributes().get("last_name").toString();
+        String email = principal.getAttributes().get("mail").toString();
+
+        user.setFirstname(firstName);
+        user.setLastname(lastName);
+        user.setAdNumber(adNumber);
+        user.setEmail(email);
+        user.setRegistered(false);
+        user.setHasPaid(false);
+
+        return user;
     }
 
     private StamNumbersRolesVO findAllStamNumbersAndRoles(String adNumber) {
@@ -158,7 +172,8 @@ public class CASService{
 
     protected String getTokenFromCookie(Cookie[] cookies) {
         for (Cookie c : cookies) {
-            if (c.getName().equals("Authorization")) {
+            if ("Authorization".equals(c.getName())) {
+//            if (c.getName().equals("Authorization")) {
                 return c.getValue();
             }
         }
