@@ -102,8 +102,10 @@ public class UserService {
      */
     public void updateCurrentUserPayStatus() {
         User user = getCurrentUser();
-        user.setHasPaid(true);
-        setCurrentUser(user);
+        if (user != null) {
+            user.setHasPaid(true);
+            setCurrentUser(user);
+        }
     }
 
     /**
@@ -111,8 +113,10 @@ public class UserService {
      */
     public void updateCurrentUserRegisteredStatus() {
         User user = getCurrentUser();
-        user.setRegistered(true);
-        setCurrentUser(user);
+        if (user != null) {
+            user.setRegistered(true);
+            setCurrentUser(user);
+        }
     }
 
     /**
