@@ -25,12 +25,12 @@ import {LoadingSpinnerComponent} from './shared/loading-spinner/loading-spinner.
 import {KrinkelHomepageComponent} from './krinkel-homepage/krinkel-homepage.component';
 import {KrinkelGraphComponent} from './krinkel-graph/krinkel-graph.component';
 import {KrinkelAnalyticsComponent} from './krinkel-analytics/krinkel-analytics.component';
-
+//TODO : make BASEURL dynamic!!!
 export default angular
     .module('contactsApp', ['ngRoute', 'nvd3', 'ngAutocomplete'])
     .config(appConfig)
     .constant('appVersion', 'BETA')
-    .constant('BASEURL', 'http://localhost:8080')
+    .constant('BASEURL', 'http://rdkrinkeltest.westeurope.cloudapp.azure.com')
     .run((appVersion)=> {
         console.log(`version: ${appVersion}`);
     })

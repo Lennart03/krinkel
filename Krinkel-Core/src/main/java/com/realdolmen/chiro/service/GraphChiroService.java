@@ -126,12 +126,14 @@ public class GraphChiroService {
         return repository.findAll();
     }
 
-    @PreAuthorize("@GraphChiroServiceSecurity.hasPermissionToGetLoginData()")
+    @SuppressWarnings("rawtypes")
+	@PreAuthorize("@GraphChiroServiceSecurity.hasPermissionToGetLoginData()")
     public SortedMap getLoginDataFromLastTwoWeeks() {
         return getUniqueLoginsPerVerbond(true);
     }
 
-    @PreAuthorize("@GraphChiroServiceSecurity.hasPermissionToGetLoginData()")
+    @SuppressWarnings("rawtypes")
+	@PreAuthorize("@GraphChiroServiceSecurity.hasPermissionToGetLoginData()")
     public SortedMap getLoginData() {
         return getUniqueLoginsPerVerbond(false);
     }
