@@ -1,134 +1,157 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-    <parent>
-        <artifactId>Krinkel</artifactId>
-        <groupId>com.realdolmen.chiro</groupId>
-        <version>1.0-SNAPSHOT</version>
-    </parent>
-    <modelVersion>4.0.0</modelVersion>
-    <packaging>jar</packaging>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<properties>
+		<start-class>com.realdolmen.chiro.Application</start-class>
+	</properties>
+	<parent>
+		<artifactId>Krinkel</artifactId>
+		<groupId>com.realdolmen.chiro</groupId>
+		<version>1.0-SNAPSHOT</version>
+	</parent>
+	<modelVersion>4.0.0</modelVersion>
+	<packaging>war</packaging>
 
-    <artifactId>Krinkel-Rest</artifactId>
+	<artifactId>Krinkel-Rest</artifactId>
 
 
-    <dependencies>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-web</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-test</artifactId>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-data-jpa</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-data-rest</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>mysql</groupId>
-            <artifactId>mysql-connector-java</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.h2database</groupId>
-            <artifactId>h2</artifactId>
-        </dependency>
+	<dependencies>
+		<!-- <dependency> -->
+		<!-- <groupId>org.springframework.boot</groupId> -->
+		<!-- <artifactId>spring-boot-autoconfigure</artifactId> -->
+		<!-- </dependency> -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-tomcat</artifactId>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-web</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-test</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-data-jpa</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-data-rest</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.h2database</groupId>
+			<artifactId>h2</artifactId>
+		</dependency>
 
-        <dependency>
-            <groupId>com.realdolmen.chiro</groupId>
-            <artifactId>Krinkel-Domain</artifactId>
-        </dependency>
+		<dependency>
+			<groupId>com.realdolmen.chiro</groupId>
+			<artifactId>Krinkel-Domain</artifactId>
+		</dependency>
 
-        <dependency>
-            <groupId>com.realdolmen.chiro</groupId>
-            <artifactId>Krinkel-Core</artifactId>
-        </dependency>
+		<dependency>
+			<groupId>com.realdolmen.chiro</groupId>
+			<artifactId>Krinkel-Core</artifactId>
+		</dependency>
 
-        <dependency>
-            <groupId>com.realdolmen.chiro</groupId>
-            <artifactId>Krinkel-Test-Base</artifactId>
-        </dependency>
+		<dependency>
+			<groupId>com.realdolmen.chiro</groupId>
+			<artifactId>Krinkel-Test-Base</artifactId>
+		</dependency>
 
-        <dependency>
-            <groupId>com.openpojo</groupId>
-            <artifactId>openpojo</artifactId>
-            <version>0.7.5</version>
-        </dependency>
-    
+		<dependency>
+			<groupId>com.openpojo</groupId>
+			<artifactId>openpojo</artifactId>
+		</dependency>
 
-        <dependency>
-            <groupId>com.realdolmen.chiro</groupId>
-            <artifactId>krinkelmultisafepayapi</artifactId>
-        </dependency>
 
-        <dependency>
-            <groupId>com.realdolmen.chiro</groupId>
-            <artifactId>Krinkel-App-Config</artifactId>
-        </dependency>
+		<dependency>
+			<groupId>com.realdolmen.chiro</groupId>
+			<artifactId>krinkelmultisafepayapi</artifactId>
+		</dependency>
 
-        <dependency>
-            <groupId>io.jsonwebtoken</groupId>
-            <artifactId>jjwt</artifactId>
-            <version>0.7.0</version>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.security</groupId>
-            <artifactId>spring-security-config</artifactId>
-            <version>4.0.3.RELEASE</version>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.security</groupId>
-            <artifactId>spring-security-web</artifactId>
-            <version>4.0.3.RELEASE</version>
-        </dependency>
+		<dependency>
+			<groupId>com.realdolmen.chiro</groupId>
+			<artifactId>Krinkel-App-Config</artifactId>
+		</dependency>
 
-        <dependency>
-            <groupId>com.realdolmen.chiro</groupId>
-            <artifactId>Krinkel-Static</artifactId>
-        </dependency>
+		<dependency>
+			<groupId>io.jsonwebtoken</groupId>
+			<artifactId>jjwt</artifactId>
+			<version>0.7.0</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-config</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-web</artifactId>
+		</dependency>
 
-        <dependency>
-            <groupId>org.thymeleaf</groupId>
-            <artifactId>thymeleaf-spring4</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.realdolmen.chiro</groupId>
-            <artifactId>Krinkel-Chiro-api</artifactId>
-        </dependency>
-    </dependencies>
+		<dependency>
+			<groupId>com.realdolmen.chiro</groupId>
+			<artifactId>Krinkel-Static</artifactId>
+		</dependency>
 
-    <build>
-        <plugins>
-            <plugin>
-                <artifactId>maven-resources-plugin</artifactId>
-                <version>2.7</version>
-                <executions>
-                    <execution>
-                        <id>copy-resources-for-site</id>
-                        <phase>generate-resources</phase>
-                        <goals>
-                            <goal>copy-resources</goal>
-                        </goals>
-                        <configuration>
-                            <outputDirectory>${basedir}/target/classes/static/site</outputDirectory>
-                            <resources>
-                                <resource>
-                                    <directory>../Krinkel-Static/src/main/resources/</directory>
-                                    <filtering>false</filtering>
-                                </resource>
-                            </resources>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
-        </plugins>
-    </build>
+		<dependency>
+			<groupId>org.thymeleaf</groupId>
+			<artifactId>thymeleaf-spring4</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.realdolmen.chiro</groupId>
+			<artifactId>Krinkel-Chiro-api</artifactId>
+		</dependency>
+	</dependencies>
+
+	<build>
+		<finalName>ROOT</finalName>
+		<plugins>
+			<!-- <plugin> -->
+			<!-- <groupId>org.springframework.boot</groupId> -->
+			<!-- <artifactId>spring-boot-maven-plugin</artifactId> -->
+			<!-- <configuration> -->
+			<!-- <mainClass>com.realdolmen.chiro.Application.class</mainClass> -->
+			<!-- <layout>WAR</layout> -->
+			<!-- </configuration> -->
+			<!-- <executions> -->
+			<!-- <execution> -->
+			<!-- <goals> -->
+			<!-- <goal>repackage</goal> -->
+			<!-- </goals> -->
+			<!-- </execution> -->
+			<!-- </executions> -->
+			<!-- </plugin> -->
+			<plugin>
+				<artifactId>maven-resources-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>copy-resources-for-site</id>
+						<phase>generate-resources</phase>
+						<goals>
+							<goal>copy-resources</goal>
+						</goals>
+						<configuration>
+							<outputDirectory>${basedir}/target/classes/static/site</outputDirectory>
+							<resources>
+								<resource>
+									<directory>../Krinkel-Static/src/main/resources/</directory>
+									<filtering>false</filtering>
+								</resource>
+							</resources>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
 
 
 </project>

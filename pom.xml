@@ -14,14 +14,14 @@
         <module>Krinkel-Domain</module>
         <module>Krinkel-Repository</module>
         <module>Krinkel-Core</module>
-        <module>Krinkel-Chiro-api</module>
-        <module>Krinkel-Rest</module>
+        <module>Krinkel-Chiro-api</module>        
         <module>Krinkel-Multisafepay-Api</module>
         <module>Krinkel-Static</module>
         <module>Krinkel-Test-Base</module>
         <module>Krinkel-App-Config</module>
 		<module>Krinkel-Selenium</module>
-	</modules>
+		<module>Krinkel-Rest</module>
+    </modules>
 
 	<properties>
 		<java.version>1.8</java.version>
