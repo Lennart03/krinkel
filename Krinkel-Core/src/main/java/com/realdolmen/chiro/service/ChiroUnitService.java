@@ -14,7 +14,7 @@ import org.springframework.stereotype.Service;
 import javax.annotation.PostConstruct;
 import java.util.ArrayList;
 import java.util.List;
-
+//TODO just remake this whole class
 @Service
 public class ChiroUnitService {
 
@@ -36,6 +36,7 @@ public class ChiroUnitService {
         this.findAll();
     }
 
+    //TODO GET RID OF THIS METHOD, JUST USE THE DB
     public List<ChiroUnit> findAll() {
         if (this.chiroUnits != null) {
             return this.chiroUnits;
@@ -92,7 +93,9 @@ public class ChiroUnitService {
     @PreAuthorize("@ChiroUnitServiceSecurity.hasPermissionToFindVerbonden()")
     @PostFilter("@ChiroUnitServiceSecurity.hasPermissionToSeeVerbonden(filterObject)")
     public List<ChiroUnit> findVerbondUnits() {
-        return this.verbondUnits;
+
+        //TODO this assignment has to stay otherwise the filter adjusts the original one since we kinda hardcode it
+        return new ArrayList<>(this.verbondUnits);
     }
 
     public List<ChiroUnit> findGewestUnits() {
@@ -111,7 +114,9 @@ public class ChiroUnitService {
         ChiroUnit unit = this.findByStam(units, stam);
         loopOverRegisteredParticipantsFor(stam, unit);
         loopOverRegisteredVolunteersFor(stam, unit);
-        return unit.getLower();
+
+        //TODO this assignment has to stay otherwise the filter adjusts the original one since we kinda hardcode it
+        return new ArrayList<>(unit.getLower());
     }
 
     /**
