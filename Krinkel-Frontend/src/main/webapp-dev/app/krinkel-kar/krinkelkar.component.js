@@ -10,8 +10,13 @@ class KrinkelKarController{
     }
 
     init() {
-        var bas = this.KrinkelService.getBasket();
-        this.colleagueList = bas;
+        this.KrinkelService.getBasket().then((data) => {
+            this.colleagueList = data;
+        });
+      /*  var bas = this.KrinkelService.getBasket();
+        console.log(bas.firstName);
+        //console.log(bas.length);
+        this.colleagueList = bas;*/
         //this.colleagueList.push({first_name: "Shenno", last_name:"Willaert"});
         //this.colleagueList.push({first_name: "Shenno2", last_name:"Willaert2"});
 

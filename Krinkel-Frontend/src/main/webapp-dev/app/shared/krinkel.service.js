@@ -185,7 +185,7 @@ export class KrinkelService {
     }
 
     addPersonToBasket(person){
-        console.log(person);
+        //console.log(person);
         return this.$http.post(`${this.BASEURL}/api/basket`, person).then((resp)=>{
            return resp.data;
         });

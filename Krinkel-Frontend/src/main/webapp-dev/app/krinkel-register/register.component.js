@@ -96,6 +96,7 @@ class RegisterController {
     }
 
     prefillColleague() {
+        console.log('prefil COll');
         var colleague = this.SelectService.getColleague();
         var loggedInUser = this.AuthService.getLoggedinUser();
 
@@ -238,11 +239,17 @@ class RegisterController {
     }
 
     addToBasket(person){
-        var self = this;
-        var pperson = this.MapperService.mapParticipant(person);
+        var perzon = person;
+        perzon.city = this.details3.vicinity;
+        perzon.postalCode = this.details2.name;
+        perzon.street = this.details.address_components[0].long_name;
+
+        var mappedPerson = this.MapperService.mapParticipant(perzon);
+        console.log(mappedPerson);
         //add person to cart using service
-        this.KrinkelService.addPersonToBasket(pperson);
-        this.$location.path("/cart");
+        this.KrinkelService.addPersonToBasket(mappedPerson).then(() => {
+            this.$location.path("/cart");
+        });
     }
 
     /**
