@@ -17,6 +17,7 @@ class KrinkelSelectController {
                 resp.forEach(p => this.colleagues.push(JSON.parse(p)));
                 this.isLoading = false;
             });
+
         });
 
 

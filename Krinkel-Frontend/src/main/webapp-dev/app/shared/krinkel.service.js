@@ -177,12 +177,24 @@ export class KrinkelService {
         );
     }
 
+    exportCompleteEntryList(){
+        return this.$http.get(`${this.BASEURL}/api/exportCompleteEntryList`).then((resp) => {
+                return resp.data;
+            },
+            () => {
+                this.popup();
+            }
+        );
+    }
+
     popup() {
         Materialize.toast('Sessie verlopen, binnen 10 seconden herstart de applicatie', 10000, 'red rounded');
         setTimeout(() => {
             this.$window.location.reload();
         }, 10000);
     }
+
+
 }
 
 KrinkelService.$inject = ['$http', 'BASEURL', '$window'];

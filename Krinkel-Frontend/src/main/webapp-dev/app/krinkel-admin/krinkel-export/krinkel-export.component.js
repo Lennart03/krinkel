@@ -1,9 +1,8 @@
 /*@ngInject*/
 class KrinkelExportController {
-    constructor(KrinkelService, $location, ExportController) {
+    constructor(KrinkelService, $location) {
         this.KrinkelService = KrinkelService;
         this.$location = $location;
-        this.ExportController = ExportController;
     }
 
     $onInit() {
@@ -11,7 +10,7 @@ class KrinkelExportController {
     }
 
     exportCompleteEntryList() {
-    /*    this.ExportController.getFile()*/
+        this.KrinkelService.exportCompleteEntryList();
     }
 }
 

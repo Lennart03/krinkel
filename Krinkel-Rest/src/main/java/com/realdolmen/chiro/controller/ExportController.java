@@ -2,6 +2,7 @@ package com.realdolmen.chiro.controller;
 
 import com.realdolmen.chiro.service.ExcelService;
 import com.realdolmen.chiro.service.ExportService;
+import org.apache.poi.util.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,8 +48,10 @@ public class ExportController {
 //        return null;
 //    }
 
-    @RequestMapping(value = "/exporteerVolledigeInschrijvingsLijst", method = RequestMethod.GET)
-    public void getFile(HttpServletResponse response) {
+    @RequestMapping(value = "api/exportCompleteEntryList", method = RequestMethod.GET)
+    public void export(HttpServletResponse response) {
+        System.err.println("INSIDE getFile for completing exporting registration list");
+
         try {
             // get your file as InputStream
 //            InputStream is = new InputStream();
@@ -62,7 +65,7 @@ public class ExportController {
 
             FileInputStream fis = new FileInputStream(file);
             // copy it to response's OutputStream
-            org.apache.commons.io.IOUtils.copy(fis, response.getOutputStream());
+            IOUtils.copy(fis, response.getOutputStream());
             response.flushBuffer();
         } catch (IOException ex) {
 //            log.info("Error writing file to output stream. Filename was '{}'", fileName, ex);
