@@ -50,9 +50,12 @@
             </a>
         </li>
 
-        <!--<li>-->
-        <!--<br/>-->
-        <!--</li>-->
+        <li class="collection-item" ng-if="$ctrl.AuthService.getUserRole() === 'ADMIN'">
+            <a href="/admin">
+                <i class="material-icons">build</i> Admin
+            </a>
+        </li>
+
         <li>
             <div class="divider">
             </div>
