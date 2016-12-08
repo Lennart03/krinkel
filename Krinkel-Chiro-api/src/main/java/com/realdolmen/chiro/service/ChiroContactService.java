@@ -54,7 +54,7 @@ public class ChiroContactService {
      * parse the JSON of the contact to a registrationParticipant
      *
      */
-    public static RegistrationParticipant getRegistrationParticipant(Integer adNumber) throws URISyntaxException {
+    public RegistrationParticipant getRegistrationParticipant(Integer adNumber) throws URISyntaxException {
         //String json = getContact(adNumber);
         String json = "{\"is_error\":0,\"version\":3,\"count\":1,\"id\":0,\"values\":[{\"adnr\":\"308986\",\"first_name\":\"Elise\",\"last_name\":\"Schollaert\",\"afdeling\":\"L\",\"functies\":[\"GG1\",\"GG2\"],\"gender_id\":\"1\",\"birth_date\":\"1978-07-20\",\"street_address\":\"Desselgemstraat 17\",\"postal_code\":\"2240\",\"city\":\"Massenhoven\",\"country\":\"BE\",\"phone\":\"02-0233980\",\"email\":\"120845@example.com\",\"id\":\"301334\"}]}";
 

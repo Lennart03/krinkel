@@ -1,10 +1,36 @@
-<!DOCTYPE html>
-<html>
-<head lang="en">
-    <meta charset="UTF-8">
-    <title></title>
-</head>
-<body>
+<h1>Admin beheer</h1>
 
-</body>
-</html>
+<h2>Lijst van administators</h2>
+
+<spinner loading="$ctrl.isLoading"></spinner>
+
+<div class="collection" ng-show="!$ctrl.isLoading">
+    <a ng-click="$ctrl.selectPerson(colleague)"
+       ng-repeat="admin in $ctrl.admins"
+       class="collection-item">
+        <span class="badge">
+            <button class="waves-effect waves-light btn red" ng-click="$ctrl.deleteAdmin(admin.adNummer)">delete <i class="material-icons" style="vertical-align: bottom">delete</i></button>
+        </span>
+        {{admin.firstname}} {{admin.lastname}}<br/>
+        adnummer: {{admin.adNummer}}
+    </a>
+
+</div>
+
+<p class="flow-text"><i class="material-icons">info_outline</i>
+    Geef het adnummer in om een persoon als admin te maken.
+</p>
+<div class="row">
+    <form class="col s12 m12" novalidate name="createAdmin" ng-submit="$ctrl.searchChiroMember($ctrl.adnumber)">
+        <div class="input-field col s12 m12">
+            <i class="material-icons prefix">perm_identity</i>
+            <input id="adnumber" name="adnumber" type="text" ng-minlength="1"
+                   ng-model="$ctrl.adnumber" required>
+            <label for="adnumber">adnummer</label>
+        </div>
+        <button type="submit" class="btn waves-effect">
+            Maak admin
+            <i class="material-icons right">send</i>
+        </button>
+    </form>
+</div>

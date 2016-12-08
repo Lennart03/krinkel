@@ -177,13 +177,34 @@ export class KrinkelService {
         );
     }
 
+    /**
+     * Used to retrieve all the admins in the application
+     * @returns {*}
+     */
     getAdmins() {
-        return this.$http.get(`${this.BASEURL}/api/admins`).then((resp) => {
-            return resp.data();
+        return this.$http.get(`${this.BASEURL}/api/admin`).then((resp) => {
+                console.log("get admins done");
+                console.log("Data in the response (krinkelservice): ");
+                console.log(resp.data)
+            return resp.data;
         }, () => {
                 this.popup();
             }
         );
+    }
+
+    /**
+     * Requests to give the person admin rights with the given adnumber
+     * @param adNumber unique identiefies given by Chiro
+     */
+    postAdmin(adNumber) {
+        console.log("Posting: " + adNumber);
+        return this.$http.post(`${this.BASEURL}/api/admin/${adNumber}`);
+    }
+
+    deleteAdmin(adNumber) {
+        console.log("Deleting: " +adNumber);
+        return this.$http.post(`${this.BASEURL}/api/admin/delete/${adNumber}`);
     }
 
     popup() {

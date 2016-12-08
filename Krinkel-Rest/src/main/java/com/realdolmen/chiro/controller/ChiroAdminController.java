@@ -23,24 +23,41 @@ public class ChiroAdminController {
 
     @RequestMapping(method = RequestMethod.POST, value = "/api/admin/{adnummer}")
     public String addNewAdmin(@PathVariable Integer adnummer){
+        System.out.println("Retrieved a post request in method addNewAdmin() with parameter: " + adnummer);
         try {
             adminService.addNewAdmin(adnummer);
         } catch (URISyntaxException e) {
             e.printStackTrace();
             return "redirect:/api/admin";
         }
-        return "redirect:/api/admin";
+        return "redirect:/admin";
     }
 
 
     @RequestMapping(method = RequestMethod.GET, value = "/api/admin")
     public List<Admin> getAdmins() {
+        System.out.println("Received get from angular in method getAdmins()");
+        System.out.println("Going to return: " + adminService.getAdmins());
         return adminService.getAdmins();
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/api/admin/{adnummer}")
-    public void getChiroMember(@PathVariable Integer adnummer) {
+    public String getChiroMember(@PathVariable Integer adnummer) {
+        System.out.println("Received get from angular in method getChiroMember()");
+        System.out.println("Parameter is : " + adnummer);
+        try {
+            System.out.println("Retrieve from the adminService: " + adminService.getChiroMember(adnummer));
+            return adminService.getChiroMember(adnummer);
+        } catch (URISyntaxException e) {
+            e.printStackTrace();
+        }
+        return "redirect:/admin";
+    }
 
+    @RequestMapping(method = RequestMethod.POST, value = "api/admin/delete/{adnummer}")
+    public void deleteAdmin(@PathVariable Integer adnummer) {
+        System.out.println("Retrieved a post request in method deleteAdmin() with parameter: " + adnummer);
+        adminService.deleteAdmin(adnummer);
     }
 
 

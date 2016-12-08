@@ -29,6 +29,16 @@ public class Admin {
         return adNummer;
     }
 
+    public Admin() {
+    }
+
+    public Admin(Integer adNummer, String email, String firstname, String lastname) {
+        this.adNummer = adNummer;
+        this.email = email;
+        this.firstname = firstname;
+        this.lastname = lastname;
+    }
+
     public void setAdNummer(Integer adNummer) {
         this.adNummer = adNummer;
     }
