@@ -91,6 +91,7 @@ public class CASService {
             List<String> adminAdNumbers = new ArrayList<>();
             adminAdNumbers.add("152504");
             adminAdNumbers.add("109318");
+            adminAdNumbers.add("396948");
             //TODO remove this one, it's me (arne)
             adminAdNumbers.add("169314");
 

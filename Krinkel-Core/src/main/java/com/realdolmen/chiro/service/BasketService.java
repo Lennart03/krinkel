@@ -27,6 +27,11 @@ public class BasketService {
        return registrationBasketComponent.getUsersInBasket();
     }
 
+    public void removeUserFromBasket(RegistrationParticipant user){
+        //check security
+        registrationBasketComponent.removeUserFromBasket(user);
+    }
+
     public void reset() {
         //check security
         registrationBasketComponent.reset();
