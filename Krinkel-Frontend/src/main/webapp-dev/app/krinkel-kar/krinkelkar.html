@@ -1,5 +1,7 @@
-<a href="/select-participant"><i class="material-icons">add_circle</i></a>
-<table class="bordered highlight responsive-table">
+<div ng-show="$ctrl.colleagueList.length === 0">
+    <p>Tis leeg.</p>
+</div>
+<table class="bordered highlight responsive-table" ng-show="$ctrl.colleagueList.length > 0">
     <thead>
         <tr>
             <th>Naam</th>
@@ -13,3 +15,6 @@
         </tr>
     </tbody>
 </table>
+<div class="add-btn">
+    <a href="/select-participant" class="btn-floating btn-large waves-effect waves-light"><i class="material-icons">add</i></a>
+</div>
