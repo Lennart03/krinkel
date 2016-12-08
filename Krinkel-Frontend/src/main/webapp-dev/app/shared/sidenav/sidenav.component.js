@@ -1,8 +1,9 @@
 /*@ngInject*/
 class SideNavController {
-    constructor(AuthService,$location) {
+    constructor(AuthService,$location,KrinkelService) {
         this.AuthService = AuthService;
         this.$location = $location;
+        this.KrinelService = KrinkelService;
         this.userDetails;
     }
 
@@ -38,4 +39,4 @@ export var SideNavComponent = {
     controller: SideNavController
 };
 
-SideNavComponent.$inject = ['AuthService','$location'];
+SideNavComponent.$inject = ['AuthService','$location','KrinkelService'];

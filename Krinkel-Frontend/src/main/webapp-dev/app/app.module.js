@@ -55,5 +55,5 @@ export default angular
     .component('krinkelAnalytics', KrinkelAnalyticsComponent)
     .component('krinkelGraph', KrinkelGraphComponent)
     .component('voorwaarden', VoorwaardenComponent)
-    .component()
+    .component('registerthomas' , KrinkelThomasComponent)
     .name;
