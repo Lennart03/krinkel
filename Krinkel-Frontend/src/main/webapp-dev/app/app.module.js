@@ -25,6 +25,8 @@ import {LoadingSpinnerComponent} from './shared/loading-spinner/loading-spinner.
 import {KrinkelHomepageComponent} from './krinkel-homepage/krinkel-homepage.component';
 import {KrinkelGraphComponent} from './krinkel-graph/krinkel-graph.component';
 import {KrinkelAnalyticsComponent} from './krinkel-analytics/krinkel-analytics.component';
+import {KrinkelAdminComponent} from './krinkel-admin/krinkel-admin.component';
+
 //TODO : make BASEURL dynamic!!!
 export default angular
     .module('contactsApp', ['ngRoute', 'nvd3', 'ngAutocomplete'])
@@ -48,6 +50,7 @@ export default angular
     .component('units', UnitsComponent)
     .component('failMessage', FailMessageComponent)
     .component('spinner', LoadingSpinnerComponent)
+    .component('krinkelAdmin', KrinkelAdminComponent)
     //pages
     .component('krinkelHomepage', KrinkelHomepageComponent)
     .component('register', RegisterComponent)
