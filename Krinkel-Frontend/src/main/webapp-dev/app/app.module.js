@@ -26,6 +26,7 @@ import {KrinkelHomepageComponent} from './krinkel-homepage/krinkel-homepage.comp
 import {KrinkelGraphComponent} from './krinkel-graph/krinkel-graph.component';
 import {KrinkelAnalyticsComponent} from './krinkel-analytics/krinkel-analytics.component';
 import {KrinkelAdminComponent} from './krinkel-admin/krinkel-admin.component';
+import {KrinkelExportComponent} from './krinkel-admin/krinkel-export/krinkel-export.component';
 
 //TODO : make BASEURL dynamic!!!
 export default angular
@@ -57,4 +58,5 @@ export default angular
     .component('krinkelAnalytics', KrinkelAnalyticsComponent)
     .component('krinkelGraph', KrinkelGraphComponent)
     .component('voorwaarden', VoorwaardenComponent)
+    .component('krinkelExport', KrinkelExportComponent)
     .name;
