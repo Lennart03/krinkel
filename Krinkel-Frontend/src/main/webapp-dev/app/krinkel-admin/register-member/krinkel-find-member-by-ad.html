@@ -5,6 +5,18 @@
     <title></title>
 </head>
 <body>
-
+<div class="row">
+    <form class="col s12 m12" novalidate name="adNummerForm" ng-submit="$ctrl.findByAdNumber(adNumber)">
+        <div class="row">
+            <div class="input-field col s12 m6">
+                <i class="material-icons prefix">perm_identity</i>
+                <input id="ad_nummer" name="firstName" type="text" class="validate" ng-minlength="1" required>
+                <label for="ad_nummer">Adnummer</label>
+                <p ng-show="adNummerForm.$invalid" class="error"><i
+                    class="material-icons">error_outline</i> Geef een Adnummer in</p>
+            </div>
+        </div>
+    </form>
+</div>
 </body>
 </html>
