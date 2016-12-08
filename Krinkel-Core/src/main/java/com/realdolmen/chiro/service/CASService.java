@@ -93,6 +93,10 @@ public class CASService {
             adminAdNumbers.add("109318");
             //TODO remove this one, it's me (arne)
             adminAdNumbers.add("169314");
+            // TODO Chiro remove (Hade)
+            adminAdNumbers.add("396941");
+            // TODO Chiro remove (Jeroen Comp)
+            adminAdNumbers.add("396942");
 
             if (adminAdNumbers.contains(adNumber)) {
                 user.setRole(SecurityRole.ADMIN);
