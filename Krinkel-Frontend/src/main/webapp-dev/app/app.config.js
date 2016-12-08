@@ -31,8 +31,9 @@ export function appConfig($routeProvider, $locationProvider) {
         template: '<krinkel-graph></krinkel-graph>'
     });
 
-    $routeProvider.when('/registerthomas', {
-        template: '<krinkel-admin><register-member></register-member></krinkel-admin>'
+    $routeProvider.when('/find-participant-by-ad', {
+        template: '<krinkel-find-member-by-ad></krinkel-find-member-by-ad>'
+
     });
 
     //Fail page had to go :(

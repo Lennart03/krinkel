@@ -3,23 +3,33 @@
  */
 
 class FindByAdController {
-    constructor($log, $window, $location, ChiroContactService) {
-        this.$log = $log;
-        this.$window = $window;
-        this.$location = $location;
+    constructor(ChiroContactService) {
         this.ChiroContactService = ChiroContactService;
 
         this.participant = {};
     }
 
     findByAdNumber(adNumber) {
-        this.participant = ChiroContactService.getRegistrationParticipant(adNumber);
+        var part = this.ChiroContactService.getRegistrationParticipant(adNumber);
+
+        this.participant = {
+            adNumber: part.adNumber,
+            firstName: part.firstName,
+            lastName: part.lastName,
+            email: part.email,
+            birthDate: part.birthdate,
+            phone: part.phoneNumber.replace('-', ''),
+            gender: part.gender,
+            address: part.address
+        };
     }
 }
-        export
-    var KrinkelTestComponent = {
-        template: require('./krinkel-find-member-by-ad.html'),
-        controller: FindByAdController
-    };
 
-KrinkelTestComponent.$inject = ['ChiroContactService'];
+export var FindByAdComponent = {
+    template: require('./krinkel-find-member-by-ad.html'),
+    controller: FindByAdController
+};
+
+
+FindByAdController.$inject = ['ChiroContactService'];
+
