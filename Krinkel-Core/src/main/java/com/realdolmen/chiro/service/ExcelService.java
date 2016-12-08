@@ -19,10 +19,12 @@ import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.springframework.stereotype.Service;
 
 /**
  * Created by JCPBB69 on 8/12/2016.
  */
+@Service
 public class ExcelService {
 
     // For testing purposes
