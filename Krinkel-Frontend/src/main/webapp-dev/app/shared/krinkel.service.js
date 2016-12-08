@@ -177,6 +177,15 @@ export class KrinkelService {
         );
     }
 
+    getAdmins() {
+        return this.$http.get(`${this.BASEURL}/api/admins`).then((resp) => {
+            return resp.data();
+        }, () => {
+                this.popup();
+            }
+        );
+    }
+
     popup() {
         Materialize.toast('Sessie verlopen, binnen 10 seconden herstart de applicatie', 10000, 'red rounded');
         setTimeout(() => {
