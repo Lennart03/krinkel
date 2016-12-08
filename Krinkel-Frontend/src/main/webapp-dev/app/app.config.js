@@ -27,6 +27,10 @@ export function appConfig($routeProvider, $locationProvider) {
         template: '<krinkel-select></krinkel-select>'
     });
 
+    $routeProvider.when('/cart', {
+       template:'<krinkel-kar></krinkel-kar>'
+    });
+
     $routeProvider.when('/graph', {
         template: '<krinkel-graph></krinkel-graph>'
     });

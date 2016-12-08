@@ -74,22 +74,22 @@ class RegisterController {
         this.newPerson.postalCode = this.details2.name;
         this.newPerson.street = this.details.address_components[0].long_name;
         if (this.type === 'volunteer') {
-            var thiz = this;
+            var self = this;
             this.KrinkelService.postVolunteer(this.MapperService.mapVolunteer(newPerson)).then(function (resp) {
-                thiz.dataIsRemoved = true;
-                thiz.StorageService.removeUser();
-                thiz.$window.location.href = resp.headers().location;
+                self.dataIsRemoved = true;
+                self.StorageService.removeUser();
+                self.$window.location.href = resp.headers().location;
             });
             return;
         }
 
         if (this.type === 'participant') {
-            var thiz = this;
+            var self = this;
             this.KrinkelService.postParticipant(this.MapperService.mapParticipant(newPerson)).then(function (resp) {
-                thiz.dataIsRemoved = true;
-                thiz.StorageService.removeUser();
-                thiz.SelectService.setSelectedFlag(false);
-                thiz.$window.location.href = resp.headers().location;
+                self.dataIsRemoved = true;
+                self.StorageService.removeUser();
+                self.SelectService.setSelectedFlag(false);
+                self.$window.location.href = resp.headers().location;
             });
             return;
         }
@@ -225,7 +225,7 @@ class RegisterController {
 
         this.errorMessages = document.getElementsByClassName("error");
     }
-
+w
     functionCallAfterDOMRender() {
         try {
             Materialize.updateTextFields();
@@ -234,6 +234,11 @@ class RegisterController {
         }
     }
 
+    addToBasket(person){
+        //add person to cart using service
+        this.KrinkelService.addPersonToBasket(person);
+        this.$location.path("/cart");
+    }
 
     /**
      * Not the ideal lifecycle hook to save everything in localstorage, due to time constraints this will have to do for now.
@@ -255,4 +260,17 @@ export var RegisterComponent = {
         type: '@'
     }
 };
+
 RegisterComponent.$inject = ['$log', '$window', 'StorageService', 'MapperService', 'AuthService', 'KrinkelService', '$location', 'SelectService'];
+
+
+export var BasketComponent = {
+    template:require('./addtobasket.html'),
+    controller:RegisterController,
+    bindings : {
+        type:'@'
+    }
+};
+
+BasketComponent.$inject = ['$log', '$window', 'StorageService', 'MapperService', 'AuthService', 'KrinkelService', '$location', 'SelectService'];
+

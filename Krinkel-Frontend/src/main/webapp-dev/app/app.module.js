@@ -20,6 +20,7 @@ import {KrinkelSelectComponent} from './krinkel-select-person/select.component';
 import {FailMessageComponent} from './shared/fail-message/fail-message.component';
 import {VoorwaardenComponent} from './shared/voorwaarden/voorwaarden.component';
 import {LoadingSpinnerComponent} from './shared/loading-spinner/loading-spinner.component';
+import {KrinkelKarComponent} from './krinkel-kar/krinkelkar.component';
 
 //pages
 import {KrinkelHomepageComponent} from './krinkel-homepage/krinkel-homepage.component';
@@ -54,4 +55,5 @@ export default angular
     .component('krinkelAnalytics', KrinkelAnalyticsComponent)
     .component('krinkelGraph', KrinkelGraphComponent)
     .component('voorwaarden', VoorwaardenComponent)
+    .component('krinkelKar', KrinkelKarComponent)
     .name;

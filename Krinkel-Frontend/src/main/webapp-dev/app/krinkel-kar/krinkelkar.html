@@ -1,10 +1,15 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-
-</body>
-</html>
+<a href="/select-participant"><i class="material-icons">add_circle</i></a>
+<table class="bordered highlight responsive-table">
+    <thead>
+        <tr>
+            <th>Naam</th>
+            <th>Bedrag</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr ng-repeat="col in $ctrl.getCurrentList()">
+            <td>{{col.first_name}} {{col.last_name}}</td>
+            <td>&euro; duust</td>
+        </tr>
+    </tbody>
+</table>

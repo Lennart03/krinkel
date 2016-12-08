@@ -177,6 +177,18 @@ export class KrinkelService {
         );
     }
 
+    getBasket(){
+        return this.$http.get(`${this.BASEURL}/api/basket`).then((resp) => {
+            return resp.data;
+        });
+    }
+
+    addPersonToBasket(person){
+        return this.$http.post(`${this.BASEURL}/api/basket`, person).then((resp)=>{
+           return resp.data;
+        });
+    }
+
     popup() {
         Materialize.toast('Sessie verlopen, binnen 10 seconden herstart de applicatie', 10000, 'red rounded');
         setTimeout(() => {
