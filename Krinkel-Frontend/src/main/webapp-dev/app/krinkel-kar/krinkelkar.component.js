@@ -6,13 +6,17 @@ class KrinkelKarController{
         this.KrinkelService = KrinkelService;
         this.AuthService = AuthService;
         this.colleagueList = [];
-        this.colleagueList.push({first_name: "Shenno", last_name:"Willaert", adnr:"1234567"});
+        this.init();
     }
-    getCurrentList(){
-        //get basket from service
-        //return this.colleagueList;
-        return this.KrinkelService.getBasket();
+
+    init() {
+        var bas = this.KrinkelService.getBasket();
+        this.colleagueList = bas;
+        //this.colleagueList.push({first_name: "Shenno", last_name:"Willaert"});
+        //this.colleagueList.push({first_name: "Shenno2", last_name:"Willaert2"});
+
     }
+
 }
 
 export var KrinkelKarComponent = {

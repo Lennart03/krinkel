@@ -10,7 +10,7 @@ export class KrinkelService {
             return resp.data;
         });
     }
-
+    //FIXME post instead of get (security?)
     logIn(user, password) {
         return this.$http.get(`${this.BASEURL}/api/users?user=${user}&password=${password}`).then((resp) => {
             return resp.data;
@@ -181,9 +181,11 @@ export class KrinkelService {
         return this.$http.get(`${this.BASEURL}/api/basket`).then((resp) => {
             return resp.data;
         });
+        //return [{last_name:'Fre', first_name:'De Riek'}];
     }
 
     addPersonToBasket(person){
+        console.log(person);
         return this.$http.post(`${this.BASEURL}/api/basket`, person).then((resp)=>{
            return resp.data;
         });

@@ -186,8 +186,11 @@ class RegisterController {
          */
         if (this.SelectService.getColleague() !== undefined) {
             this.prefillColleague();
+            console.log('coll found');
 
         } else {
+            console.log('coll not found');
+
 
             var user = this.StorageService.getUser();
             if (user && user.email === this.AuthService.getLoggedinUser().email) {
@@ -225,7 +228,7 @@ class RegisterController {
 
         this.errorMessages = document.getElementsByClassName("error");
     }
-w
+
     functionCallAfterDOMRender() {
         try {
             Materialize.updateTextFields();
@@ -235,8 +238,10 @@ w
     }
 
     addToBasket(person){
+        var self = this;
+        var pperson = this.MapperService.mapParticipant(person);
         //add person to cart using service
-        this.KrinkelService.addPersonToBasket(person);
+        this.KrinkelService.addPersonToBasket(pperson);
         this.$location.path("/cart");
     }
 
