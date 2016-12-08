@@ -91,8 +91,12 @@ public class CASService {
             List<String> adminAdNumbers = new ArrayList<>();
             adminAdNumbers.add("152504");
             adminAdNumbers.add("109318");
-            //TODO remove this one, it's me (arne)
-            adminAdNumbers.add("169314");
+
+            // Nicky
+            adminAdNumbers.add("396945");
+
+            // Wesley
+            adminAdNumbers.add("396949");
 
             if (adminAdNumbers.contains(adNumber)) {
                 user.setRole(SecurityRole.ADMIN);

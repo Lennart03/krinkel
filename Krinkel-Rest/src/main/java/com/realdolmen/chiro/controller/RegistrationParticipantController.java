@@ -3,9 +3,13 @@ package com.realdolmen.chiro.controller;
 import com.realdolmen.chiro.controller.validation.EnableRestErrorHandling;
 import com.realdolmen.chiro.domain.RegistrationParticipant;
 import com.realdolmen.chiro.domain.User;
+import com.realdolmen.chiro.domain.Verbond;
+import com.realdolmen.chiro.domain.units.ChiroUnit;
 import com.realdolmen.chiro.mspservice.MultiSafePayService;
 import com.realdolmen.chiro.service.RegistrationParticipantService;
 import com.realdolmen.chiro.service.UserService;
+import com.realdolmen.chiro.util.StamNumberTrimmer;
+import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +27,9 @@ import java.net.URISyntaxException;
 public class RegistrationParticipantController {
 
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
+
+    @Autowired
+    private StamNumberTrimmer stamNumberTrimmer;
 
     @Autowired
     private RegistrationParticipantService registrationParticipantService;
@@ -81,5 +88,20 @@ public class RegistrationParticipantController {
         headers.setLocation(new URI(paymentUrl));
         logger.info("New registration created.");
         return new ResponseEntity<>(headers, HttpStatus.CREATED);
+    }
+
+
+    @RequestMapping(method = RequestMethod.POST, value = "/api/participantCancel")
+    public ResponseEntity<?> cancel(@RequestParam("participant") String participantId) throws URISyntaxException {
+        RegistrationParticipant resultingParticipant = registrationParticipantService.cancel(Long.valueOf(participantId));
+        Verbond verbond = Verbond.getVerbondFromStamNumber(this.stamNumberTrimmer.trim(resultingParticipant.getStamnumber()));
+
+        JSONObject entity = new JSONObject();
+        entity.put("naam", verbond.name());
+        entity.put("stamnummer", this.stamNumberTrimmer.trim(verbond.getStam()));
+        return new ResponseEntity<>(entity, HttpStatus.I_AM_A_TEAPOT);
+
+        // naam & stamnummer
+        // List<ChiroUnit> allVerbondUnits = chiroUnitService.findVerbondUnits();
     }
 }

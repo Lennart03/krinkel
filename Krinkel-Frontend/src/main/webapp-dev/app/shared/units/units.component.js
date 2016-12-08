@@ -22,6 +22,7 @@ class UnitsController {
 
 
     openUsers(verbond) {
+
         this.unitLevel = verbond.naam;
         this.userDetails = true;
         this.participantDetails = true;
@@ -80,6 +81,17 @@ class UnitsController {
         } else if (participant == 'volunteers') {
             this.volunteerDetails = true;
             this.participantDetails = false;
+        }
+    }
+
+
+    putParticipantToCancelled(participantId) {
+        if (participantId != null) {
+            this.KrinkelService.putParticipantToCancelled(participantId).then((result) => {
+                console.log(result.data);
+                let verbondObj = result.data;
+                this.openExtraInfo(verbondObj);
+            });
         }
     }
 }

@@ -47,6 +47,16 @@ export class KrinkelService {
         );
     }
 
+    putParticipantToCancelled(participant) {
+        return this.$http.post(`${this.BASEURL}/api/participantCancel?participant=${participant}`).then((resp) => {
+                return resp.data;
+            },
+            () => {
+                this.popup();
+            }
+        );
+    }
+
     getColleagues() {
         return this.$http.get(`${this.BASEURL}/api/colleagues`).then((resp) => {
                 return resp.data;

@@ -143,4 +143,13 @@ public class RegistrationParticipantService {
     public Integer getPRICE_IN_EUROCENTS() {
         return PRICE_IN_EUROCENTS;
     }
+
+
+    //TODO: Remove possible buddy language record OR pre-/post camp record
+    public RegistrationParticipant cancel(Long participantId) {
+            RegistrationParticipant participant = registrationParticipantRepository.findOne(participantId);
+            participant.setStatus(Status.CANCELLED);
+            return registrationParticipantRepository.save(participant);
+
+    }
 }

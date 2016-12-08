@@ -59,6 +59,7 @@
         <th data-field="city">Gemeente</th>
         <th data-field="eatinghabit">Eetgewoonte</th>
         <th data-field="medicalRemarks">Medische info</th>
+        <th ng-if="$ctrl.AuthService.getUserRole() === 'ADMIN'"><i class="material-icons right icon-green">delete</i></th>
     </tr>
     </thead>
     <tbody>
@@ -77,6 +78,11 @@
         </td>
         <td>
             {{participant.medicalRemarks}}
+        </td>
+        <td ng-if="$ctrl.AuthService.getUserRole() === 'ADMIN'">
+            <a ng-click="$ctrl.putParticipantToCancelled(participant.id)">
+                <i class="material-icons right icon-green">clear</i>
+            </a>
         </td>
     </tr>
     </tbody>
