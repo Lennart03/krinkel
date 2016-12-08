@@ -1,6 +1,7 @@
 package com.realdolmen.chiro.service;
 
 import com.realdolmen.chiro.domain.*;
+import com.realdolmen.chiro.exception.NoParticipantFoundException;
 import com.realdolmen.chiro.mspservice.MultiSafePayService;
 import com.realdolmen.chiro.repository.RegistrationCommunicationRepository;
 import com.realdolmen.chiro.repository.RegistrationParticipantRepository;
@@ -142,5 +143,16 @@ public class RegistrationParticipantService {
 
     public Integer getPRICE_IN_EUROCENTS() {
         return PRICE_IN_EUROCENTS;
+    }
+
+    /*
+    * retrieve a user using his/her ADNumber
+    * */
+    public RegistrationParticipant getRegistrationParticipantByAdNumber(String adNumber) throws NoParticipantFoundException {
+        RegistrationParticipant participant = registrationParticipantRepository.findByAdNumber(adNumber);
+        if (participant == null) {
+            throw new NoParticipantFoundException("No Member found with Ad number ");
+        }
+        return participant;
     }
 }
