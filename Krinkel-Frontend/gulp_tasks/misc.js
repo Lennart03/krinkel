@@ -10,7 +10,7 @@ gulp.task('clean', clean);
 gulp.task('other', other);
 
 function clean() {
-  return del([conf.paths.dist, conf.paths.tmp]);
+  return del([conf.paths.dist, conf.paths.tmp], {force: true});
 }
 
 function other() {
