@@ -45,4 +45,9 @@ public class ChiroContactService {
         return restTemplate.getForEntity(uri, String.class)
                            .getBody();
     }
+
+    public String getContantAndPloeg(Integer adNumber) throws URISyntaxException
+    {
+
+    }
 }

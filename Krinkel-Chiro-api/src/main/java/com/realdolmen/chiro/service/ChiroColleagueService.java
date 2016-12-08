@@ -44,7 +44,7 @@ public class ChiroColleagueService {
          * "https://cividev.chiro.be/sites/all/modules/civicrm/extern/rest.php?key=2340f8603072358ffc23f5459ef92f88&api_key=vooneih8oo1XepeiduGh&entity=Light&action=getcollega&json=%7B%22adnr%22:" + adNumber + "%7D";
          */
         //TODO use adNumber variable and not hardcoded 308986
-        String url = chiroUrl + "?key=" + chiroKey + "&api_key=" + apiKey + "&entity=Light&action=getcollega&json=%7B%22adnr%22:" + 308986 + "%7D";
+        String url = chiroUrl + "?key=" + chiroKey + "&api_key=" + apiKey + "&entity=Light&action=getcollega&json=%7B%22adnr%22:" + 169314 + "%7D";
 
         /**
          * Throws exception when the URL isn't valid, no further checks necessary because of this.
