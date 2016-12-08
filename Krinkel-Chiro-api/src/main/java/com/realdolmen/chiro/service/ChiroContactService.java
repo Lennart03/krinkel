@@ -50,8 +50,6 @@ public class ChiroContactService {
                            .getBody();
     }
 
-<<<<<<< HEAD
-=======
     /**
      * parse the JSON of the contact to a registrationParticipant
      *
@@ -132,5 +130,4 @@ public class ChiroContactService {
         participant.setPhoneNumber(phoneNumber);
         return participant;
     }
->>>>>>> 8c4dd4032676932f36b517f677c73b5b271de4f5
 }
