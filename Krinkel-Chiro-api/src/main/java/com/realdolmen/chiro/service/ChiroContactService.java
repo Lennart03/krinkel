@@ -46,8 +46,4 @@ public class ChiroContactService {
                            .getBody();
     }
 
-    public String getContantAndPloeg(Integer adNumber) throws URISyntaxException
-    {
-
-    }
 }
