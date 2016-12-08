@@ -25,6 +25,14 @@ public class RegistrationBasketComponent {
         return usersInBasket;
     }
 
+    public void removeUserFromBasket(RegistrationParticipant user){
+        if (user == null){
+            throw new IllegalArgumentException("User cannot be null");
+        }
+
+        usersInBasket.remove(user);
+    }
+
     public void reset() {
         usersInBasket.clear();
     }
