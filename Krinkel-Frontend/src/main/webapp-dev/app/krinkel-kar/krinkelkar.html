@@ -27,11 +27,24 @@
 </div>
 <div class="col s1 right">
     <div class="pay-btn">
-        <button value="submit" class="btn right waves-effect waves-light" name="action"
+        <button data-target="modal1" class="btn right waves-effect waves-light modal-trigger" name="action"
                 ng-show="$ctrl.colleagueList.length > 0">
             Betalen
             <i class="material-icons right">send</i>
         </button>
+    </div>
+</div>
+
+<div id="modal1" class="modal">
+    <div class="modal-content">
+        <h4>Is dit uw email adres?</h4>
+        <div class="input-field">
+            <input id="check_email" type="email" class="validate" ng-model="$ctrl.subscriberEmail">
+            <label for="check_email">Email</label>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <a href="#" ng-click="$ctrl.doPayment()" class=" modal-action modal-close waves-effect waves-green btn-flat">Betalen</a>
     </div>
 </div>
 

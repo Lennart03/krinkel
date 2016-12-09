@@ -191,6 +191,13 @@ export class KrinkelService {
         });
     }
 
+    setSubscriberEmailForBasket(emailStr){
+        let email = {email: emailStr};
+        return this.$http.post(`${this.BASEURL}/api/basket/mail`, email).then((resp)=>{
+            return resp.data;
+        });
+    }
+
     removePersonFromBasket(adNumber) {
         return this.$http.get(`${this.BASEURL}/api/basket/delete/${adNumber}`).then((resp) => {
             return resp.data;

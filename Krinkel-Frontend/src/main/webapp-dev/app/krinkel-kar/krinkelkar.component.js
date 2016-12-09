@@ -7,6 +7,7 @@ class KrinkelKarController{
         this.AuthService = AuthService;
         this.colleagueList = [];
         this.participantPrice = 11000;
+        this.subscriberEmail = '';
         this.init();
     }
 
@@ -14,6 +15,8 @@ class KrinkelKarController{
         this.KrinkelService.getBasket().then((data) => {
             this.colleagueList = data;
         });
+        $(".modal-trigger").leanModal();
+        this.subscriberEmail = this.AuthService.getLoggedinUser().email;
     }
 
     deleteColleague(adNumber) {
@@ -22,6 +25,13 @@ class KrinkelKarController{
             console.log('deleted ' + adNumber)
         });
 
+    }
+
+    doPayment(){
+        this.KrinkelService.setSubscriberEmailForBasket(this.subscriberEmail).then(()=>{
+            console.log("added mail");
+            //redirect to payment
+        });
     }
 
 
