@@ -16,7 +16,7 @@ export function appConfig($routeProvider, $locationProvider) {
     });
 
     $routeProvider.when('/register-volunteer', {
-        template: '<register type="volunteer"></register>',
+        template: '<register type="volunteer"></register>'
     });
 
     $routeProvider.when('/analytics', {
@@ -34,6 +34,12 @@ export function appConfig($routeProvider, $locationProvider) {
     $routeProvider.when('/find-participant-by-ad', {
         template: '<krinkel-find-member-by-ad></krinkel-find-member-by-ad>'
     });
+
+    /*$routeProvider.when('/choose-registration-participant', {
+        template: '<krinkel-choose-registration></krinkel-choose-registration>'
+    });*/
+
+
 
     //Fail page had to go :(
     // $routeProvider.when('/fail', {

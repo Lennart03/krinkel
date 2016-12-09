@@ -8,6 +8,7 @@ import {StorageService} from './shared/storage.service.js';
 import {MapperService} from './shared/mapping.service';
 import {SelectService} from './shared/select.service';
 import {AuthService} from './shared/auth.service';
+import {RegisterOtherMemberService} from './shared/register-other-member.service';
 
 //components
 import {WelcomeMessageComponent} from './shared/welcome-message/welcome-message.component'
@@ -25,7 +26,9 @@ import {LoadingSpinnerComponent} from './shared/loading-spinner/loading-spinner.
 import {KrinkelHomepageComponent} from './krinkel-homepage/krinkel-homepage.component';
 import {KrinkelGraphComponent} from './krinkel-graph/krinkel-graph.component';
 import {KrinkelAnalyticsComponent} from './krinkel-analytics/krinkel-analytics.component';
-import {FindByAdComponent} from './krinkel-admin/register-member/krinkel-find-member-by-ad.component';
+import {FindByAdComponent} from './krinkel-admin/register-member/find-member/krinkel-find-member-by-ad.component';
+//import {KrinkelChooseRegistrationMethod} from './krinkel-admin/register-member/choose-registration-method/krinkel-choose-registration-method.component';
+
 
 //TODO : make BASEURL dynamic!!!
 export default angular
@@ -37,6 +40,7 @@ export default angular
         console.log(`version: ${appVersion}`);
     })
     .service('KrinkelService', KrinkelService)
+    .service('RegisterOtherMemberService', RegisterOtherMemberService)
     .service('AuthService', AuthService)
     .service('SelectService', SelectService)
     .service('StorageService', StorageService)
@@ -57,4 +61,5 @@ export default angular
     .component('krinkelGraph', KrinkelGraphComponent)
     .component('voorwaarden', VoorwaardenComponent)
     .component('krinkelFindMemberByAd', FindByAdComponent)
+    //.component('krinkelChooseRegistration', KrinkelChooseRegistrationMethod)
     .name;
