@@ -28,4 +28,6 @@ public interface RegistrationParticipantRepository extends JpaRepository<Registr
 
     )
     List<RegistrationParticipant> findParticipantsByGroupWithStatusConfirmedOrPaid(String s);
+
+//    List<RegistrationParticipant> findParticipantsWithDtypeRegistrationParticipant();
 }
