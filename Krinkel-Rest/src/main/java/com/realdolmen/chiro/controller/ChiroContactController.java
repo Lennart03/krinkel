@@ -1,5 +1,6 @@
 package com.realdolmen.chiro.controller;
 
+import com.realdolmen.chiro.domain.RegistrationParticipant;
 import com.realdolmen.chiro.service.ChiroContactService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.web.ErrorController;
@@ -48,4 +49,12 @@ public class ChiroContactController {
     }
 
 
+    @RequestMapping("/api/participant/{adNumber}")
+    public RegistrationParticipant getParticipant(@PathVariable Integer adNumber) {
+        try {
+            return chiroContactService.getRegistrationParticipant(adNumber);
+        } catch (URISyntaxException e) {
+            throw new InvalidAdNumber();
+        }
+    }
 }
