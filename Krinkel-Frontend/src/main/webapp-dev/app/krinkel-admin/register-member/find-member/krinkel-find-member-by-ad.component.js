@@ -12,20 +12,17 @@ class FindByAdController {
 
     findByAdNumber(adNumber) {
         this.RegisterOtherMemberService.getParticipantUsingAd(adNumber).then((resp) => {
-            var part = resp;
-            console.log(part);
             if (resp.size != 0) {
                 this.participant = {
-                    adNumber: part.adNumber,
-                    firstName: part.firstName,
-                    lastName: part.lastName,
-                    email: part.email,
-                    birthDate: part.birthdate,
-                    phone: part.phoneNumber,
-                    gender: part.gender,
-                    address: part.address
+                    adNumber: resp.adNumber,
+                    firstName: resp.firstName,
+                    lastName: resp.lastName,
+                    email: resp.email,
+                    birthDate: resp.birthdate,
+                    phone: resp.phoneNumber,
+                    gender: resp.gender,
+                    address: resp.address
                 };
-                console.log(this.participant.lastName);
                 this.RegisterOtherMemberService.setParticipant(this.participant);
             }
         });

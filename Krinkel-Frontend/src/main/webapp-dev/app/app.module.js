@@ -27,7 +27,7 @@ import {KrinkelHomepageComponent} from './krinkel-homepage/krinkel-homepage.comp
 import {KrinkelGraphComponent} from './krinkel-graph/krinkel-graph.component';
 import {KrinkelAnalyticsComponent} from './krinkel-analytics/krinkel-analytics.component';
 import {FindByAdComponent} from './krinkel-admin/register-member/find-member/krinkel-find-member-by-ad.component';
-//import {KrinkelChooseRegistrationMethod} from './krinkel-admin/register-member/choose-registration-method/krinkel-choose-registration-method.component';
+import {ChooseRegistrationComponent} from './krinkel-admin/register-member/choose-registration-method/krinkel-choose-registration-method.component';
 
 
 //TODO : make BASEURL dynamic!!!
@@ -61,5 +61,5 @@ export default angular
     .component('krinkelGraph', KrinkelGraphComponent)
     .component('voorwaarden', VoorwaardenComponent)
     .component('krinkelFindMemberByAd', FindByAdComponent)
-    //.component('krinkelChooseRegistration', KrinkelChooseRegistrationMethod)
+    .component('krinkelChooseRegistration', ChooseRegistrationComponent)
     .name;
