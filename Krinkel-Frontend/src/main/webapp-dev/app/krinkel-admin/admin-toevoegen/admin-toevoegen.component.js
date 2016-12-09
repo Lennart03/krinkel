@@ -1,15 +1,15 @@
 /*@ngInject*/
 class AdminToevoegenController {
 
-    constructor(KrinkelService, $location) {
+    constructor(KrinkelService) {
         this.KrinkelService = KrinkelService;
-        this.$location = $location;
         this.admins = [];
         this.init();
-        this.loading = true;
+
     }
 
     init() {
+        this.loading = true;
         this.KrinkelService.getAdmins().then((resp) => {
             resp.forEach(admin => {
                 var admin = {
@@ -24,18 +24,40 @@ class AdminToevoegenController {
         this.loading = false;
     }
 
-    searchChiroMember(adnumber) {
-        console.log("Hopelijk is dit het ingegeven adnummer: " + adnumber);
-        var response = this.KrinkelService.getContactFromChiro(adnumber);
-        console.log("Response from Chiro: " + response);
+    /**
+     * Searches a Chiro member in the API of Chiro and makes the member an administator for the Krinkelsite.
+     * The call should return an Array with one Object in it, the searched person.
+     * The Object in the array is then converted into an admin and saved in the frontend and backend.
+     * @param adnumber Unique identifier given by Chiro.
+     */
+    searchAndSaveAsAdmin(adnumber) {
+        console.log("adnummer in search and save: " + adnumber);
+        var response = this.KrinkelService.getContactFromChiro(adnumber).then((resp) => {
+            var newAdmin = {
+                firstname: resp[0].first_name,
+                lastname: resp[0].last_name,
+                email: resp[0].email,
+                adNummer: resp[0].adnr
+            };
+            this.admins.push(newAdmin);
+            this.KrinkelService.postAdmin(adnumber);
+        });
+
     }
 
-    deleteAdmin(adnumber) {
-        console.log("Delete button pressed");
-        console.log("Given adnumber: " +adnumber);
-        this.KrinkelService.deleteAdmin(adnumber).then(() =>{
-            this.$location.path("/adminBeheer");
+    /**
+     * Deletes an administator by his/her adnumber.
+     * @param adNummer Unique identifier given by Chiro.
+     */
+    deleteAdmin(adNummer) {
+        this.KrinkelService.deleteAdmin(adNummer);
+        var newAdmins = [];
+        this.admins.forEach(admin => {
+            if(admin.adNummer !== adNummer){
+                newAdmins.push(admin);
+            }
         });
+        this.admins = newAdmins;
     }
 
 }
@@ -44,3 +66,5 @@ export var AdminToevoegenComponent = {
     template: require('./admin-toevoegen.html'),
     controller: AdminToevoegenController
 };
+
+// AdminToevoegenController.$inject = ['KrinkelService', '$location'];

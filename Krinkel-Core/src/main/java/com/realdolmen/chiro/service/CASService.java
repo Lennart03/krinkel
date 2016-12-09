@@ -6,6 +6,7 @@ import com.realdolmen.chiro.domain.RegistrationParticipant;
 import com.realdolmen.chiro.domain.SecurityRole;
 import com.realdolmen.chiro.domain.Status;
 import com.realdolmen.chiro.domain.User;
+import com.realdolmen.chiro.domain.units.Admin;
 import com.realdolmen.chiro.domain.vo.StamNumbersRolesVO;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
@@ -17,12 +18,11 @@ import org.jasig.cas.client.validation.TicketValidationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.PostConstruct;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.xml.bind.DatatypeConverter;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 @Service
 public class CASService {
@@ -37,6 +37,20 @@ public class CASService {
 
     @Autowired
     private LoginLogAdvice loginLogAdvice;
+
+    @Autowired
+    private AdminService adminService;
+
+    // This are the administrators of the Krinkel website and are loaded after the service is made
+    private Set<String> adminAdNumbers;
+
+    @PostConstruct
+    public void initAdmins(){
+        adminAdNumbers = new HashSet<>();
+        for(Admin admin : adminService.getAdmins()){
+            adminAdNumbers.add(admin.getAdNummer().toString());
+        }
+    }
 
     public String validateTicket(String ticket) {
         User user = validate(ticket);
@@ -87,13 +101,11 @@ public class CASService {
             user.setRolesAndUpperClassesByStam(stamNumbersRolesVO.getRolesAndUpperClassesByStam());
             user.setStamnummer(stamNumbersRolesVO.getStamNumber());
 
-            //TODO change so it's not hardcoded
-            List<String> adminAdNumbers = new ArrayList<>();
-            adminAdNumbers.add("152504");
-            adminAdNumbers.add("109318");
-            //TODO remove this one, it's me (arne)
-            adminAdNumbers.add("169314");
-            adminAdNumbers.add("396943");
+//          List<String> adminAdNumbers = new ArrayList<>();
+//          adminAdNumbers.add("152504");
+//          adminAdNumbers.add("109318");
+//          adminAdNumbers.add("169314");
+//          adminAdNumbers.add("396943");
 
             if (adminAdNumbers.contains(adNumber)) {
                 user.setRole(SecurityRole.ADMIN);
@@ -192,5 +204,9 @@ public class CASService {
                 .claim("role", user.getRole())
                 .setIssuedAt(new Date())
                 .signWith(SignatureAlgorithm.HS256, jwtConfiguration.getJwtSecret()).compact();
+    }
+
+    protected void addAdmin(String adNumber) {
+        this.adminAdNumbers.add(adNumber);
     }
 }

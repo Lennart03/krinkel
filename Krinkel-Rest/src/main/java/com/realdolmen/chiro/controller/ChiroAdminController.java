@@ -22,15 +22,13 @@ public class ChiroAdminController {
     private AdminService adminService;
 
     @RequestMapping(method = RequestMethod.POST, value = "/api/admin/{adnummer}")
-    public String addNewAdmin(@PathVariable Integer adnummer){
+    public void addNewAdmin(@PathVariable Integer adnummer){
         System.out.println("Retrieved a post request in method addNewAdmin() with parameter: " + adnummer);
         try {
             adminService.addNewAdmin(adnummer);
         } catch (URISyntaxException e) {
             e.printStackTrace();
-            return "redirect:/api/admin";
         }
-        return "redirect:/admin";
     }
 
 

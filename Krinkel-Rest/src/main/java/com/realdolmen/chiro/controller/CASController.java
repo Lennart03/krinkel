@@ -14,6 +14,7 @@ import java.io.IOException;
 
 @Controller
 public class CASController {
+
     @Autowired
     private CASService casService;
 
