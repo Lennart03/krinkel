@@ -1,20 +1,37 @@
 <div ng-show="$ctrl.colleagueList.length === 0">
-    <p>Tis leeg.</p>
+    <p>Uw krinkelkarretje is leeg.</p>
 </div>
 <table class="bordered highlight responsive-table" ng-show="$ctrl.colleagueList.length > 0">
     <thead>
-        <tr>
-            <th>Naam</th>
-            <th>Bedrag</th>
-        </tr>
+    <tr>
+        <th>Naam</th>
+        <th>Bedrag</th>
+    </tr>
     </thead>
     <tbody>
-        <tr ng-repeat="col in $ctrl.colleagueList">
-            <td>{{col.firstName}} {{col.lastName}}</td>
-            <td>&euro; duust</td>
-        </tr>
+    <tr ng-repeat="col in $ctrl.colleagueList">
+            <td><a ng-click="$ctrl.deleteColleague(col.adNumber)" href="#"><i class="material-icons red-text table-valign">remove_circle</i></a>
+                <span class="table-valign">{{col.firstName}} {{col.lastName}}</span></td>
+            <td>&euro; {{ $ctrl.participantPrice / 100 }}</td>
+    </tr>
+    <tr>
+        <td><strong>Totale prijs:</strong></td>
+        <td><strong>&euro; {{ $ctrl.participantPrice / 100 * $ctrl.colleagueList.length }}</strong></td>
+    </tr>
     </tbody>
 </table>
-<div class="add-btn">
-    <a href="/select-participant" class="btn-floating btn-large waves-effect waves-light"><i class="material-icons">add</i></a>
+<div class="col s1 left">
+    <div class="add-btn">
+        <a href="/select-participant" class="btn-floating btn-large waves-effect waves-light"><i class="material-icons">add</i></a>
+    </div>
 </div>
+<div class="col s1 right">
+    <div class="pay-btn">
+        <button value="submit" class="btn right waves-effect waves-light" name="action"
+                ng-show="$ctrl.colleagueList.length > 0">
+            Betalen
+            <i class="material-icons right">send</i>
+        </button>
+    </div>
+</div>
+
