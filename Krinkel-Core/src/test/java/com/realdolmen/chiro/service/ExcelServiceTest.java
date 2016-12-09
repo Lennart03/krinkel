@@ -9,10 +9,8 @@ import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -20,7 +18,6 @@ import java.io.IOException;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
 
 /**
  * Created by JCPBB69 on 8/12/2016.
@@ -37,6 +34,9 @@ public class ExcelServiceTest extends SpringIntegrationTest {
     @Autowired
     private ExcelService excelService;
 
+    @Autowired
+    private ExportService exportService;
+
     @Test
     public void writeTest() throws IOException, InvalidFormatException {
         List<RegistrationParticipant> all = registrationParticipantRepository.findAll();
@@ -51,12 +51,23 @@ public class ExcelServiceTest extends SpringIntegrationTest {
         // Return first sheet from the XLSX workbook
         Sheet mySheet = workBook.getSheetAt(0);
 
-        assertEquals(6, mySheet.getPhysicalNumberOfRows());
+        assertEquals(7, mySheet.getPhysicalNumberOfRows());
     }
 
     @Test
     public void writeVolunteersTest() {
-        List<RegistrationVolunteer> all = registrationVolunteerRepository.findAll();
-        assertEquals(1, all.size());
+        List<RegistrationVolunteer> allVolunteers = registrationVolunteerRepository.findAll();
+        assertEquals(1, allVolunteers.size());
+    }
+
+//    @Test
+//    public void writeParticipantsTestQuery() {
+//        List<RegistrationParticipant> allParticipants = registrationParticipantRepository.findRegistrationParticipantsNotVolunteer();
+//        assertEquals(5, allParticipants.size());
+//    }
+
+    @Test
+    public void writeParticipantsTest() {
+        assertEquals(5, exportService.getRegistrationParticipantsWithoutVolunteers().size());
     }
 }

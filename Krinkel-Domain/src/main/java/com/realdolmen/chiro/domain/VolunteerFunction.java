@@ -16,7 +16,7 @@ public class VolunteerFunction {
         NATIONAL_CAMPGROUND("Aanbod nationale kampgrond"), // Aanbod nationale kampgrond
         CAMPGROUND("Kampgrondtrekker"), // Kampgrondtrekker
         KRINKEL_EDITORIAL("Klinkerredactie"), // Klinkerredactie
-        COOCKING("Kookploeg"), // Kookploeg
+        COOKING("Kookploeg"), // Kookploeg
 
         LOGISTICS_CAMPGROUND("Logistiek (kampgrond)"), // Logistiek (kampgrond)
         LOGISTICS_NATIONAL("Logistiek (nationaal)"), // Logistiek (nationaal)

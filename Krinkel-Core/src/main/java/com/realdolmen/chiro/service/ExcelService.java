@@ -1,17 +1,6 @@
 package com.realdolmen.chiro.service;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-
-import com.realdolmen.chiro.domain.RegistrationParticipant;
+import com.realdolmen.chiro.domain.*;
 import org.apache.poi.EncryptedDocumentException;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.ss.usermodel.Cell;
@@ -20,6 +9,13 @@ import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.stereotype.Service;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 @Service
 public class ExcelService {
@@ -77,29 +73,49 @@ public class ExcelService {
         // get the last row number to append new data
         //		int rownum = mySheet.getLastRowNum();
 
+        Object [] o = new Object[] {
+                "Id",
+                "Ad-nummer",
+                "Stamnummer",
+                "Geslacht",
+                "Voornaam",
+                "Achternaam",
+                "Geboortedatum",
+                "Straat",
+                "Huisnummer",
+                "Postcode",
+                "Gemeente",
+                "Telefoonnummer",
+                "E-mailadres",
+                "Evenementsfunctie",
+                "Data voorwacht",
+                "Data nawacht",
+                "Buddy",
+                "Talen",
+                "Eetgewoonte",
+                "Bemerkingen eten",
+                "Medische info",
+                "Bemerkingen",
+                "Kampgrond",
+                "Gekozen functie",
+                "Andere functie",
+                "Sociale promotie",
+                "Geregistreerd door",
+                "E-mailadres inschrijver",
+                "Status",
+                "Syncstatus",
+        };
+        Row headersRow = mySheet.createRow(0);
+        writeRowContent(headersRow, o);
+
         // Start from top row
-        int rownum = 0;
+        int rownum = 1;
 
         for (String key : newRows) {
             // Creating a new Row in existing XLSX sheet
             Row row = mySheet.createRow(rownum++);
             Object [] objArr = data.get(key);
-            int cellnum = 0;
-            for (Object obj : objArr) {
-                Cell cell = row.createCell(cellnum++);
-                if (obj instanceof String) {
-                    cell.setCellValue((String) obj); }
-                else if (obj instanceof Boolean) {
-                    cell.setCellValue((Boolean) obj); }
-                else if (obj instanceof Date) {
-                    cell.setCellValue((Date) obj); }
-                else if (obj instanceof Double) {
-                    cell.setCellValue((Double) obj);
-                }
-                else if (obj instanceof Long) {
-                    cell.setCellValue((Long) obj);
-                }
-            }
+            writeRowContent(row, objArr);
         }
 
         File file = new File("test.xlsx");
@@ -119,17 +135,156 @@ public class ExcelService {
         return file;
     }
 
+    private void writeRowContent(Row row, Object[] objArr) {
+        int cellnum = 0;
+        for (Object obj : objArr) {
+            Cell cell = row.createCell(cellnum++);
+            if (obj instanceof String) {
+                cell.setCellValue((String) obj); }
+            else if (obj instanceof Boolean) {
+                cell.setCellValue((Boolean) obj); }
+            else if (obj instanceof Date) {
+                cell.setCellValue((Date) obj); }
+            else if (obj instanceof Double) {
+                cell.setCellValue((Double) obj);
+            }
+            else if (obj instanceof Integer) {
+                cell.setCellValue((Integer) obj);
+            }
+            else if (obj instanceof Long) {
+                cell.setCellValue((Long) obj);
+            }
+        }
+    }
+
     private void putRegistrationParticipantsIntoMap(List<RegistrationParticipant> participants,
                                                     Map<String, Object[]> data) {
         RegistrationParticipant r = null;
         for(int i = 0; i < participants.size(); i++){
+            // Get current participant
             r = participants.get(i);
+
+            // In case of volunteers:
+            String campGround = "";
+            String preset = "";
+            String other = "";
+            //Set precamp and postcamp data for volunteers
+            String precampDates = "";
+            String postcampDates = "";
+            if(r instanceof RegistrationVolunteer) {
+                RegistrationVolunteer volunteer = (RegistrationVolunteer) r;
+                campGround = volunteer.getCampGround().getDescription();
+                preset = volunteer.getFunction().getPreset().getDescription();
+                other = volunteer.getFunction().getOther();
+                precampDates = transformPreCamptListToString(volunteer.getPreCampList());
+                postcampDates = transformPostCampListToString(volunteer.getPostCampList());
+            }
+
+            // Set languages if participant is a buddy
+            String languages = "";
+            if(r.isBuddy()){
+                languages = transformLanguageListToString(r.getLanguage());
+            }
+
+
+
+
+            // Translate booleans to yes or no
+            String buddy;
+            if(r.isBuddy()){
+                buddy = "Ja";
+            }
+            else{
+                buddy = "Nee";
+            }
+            String socialPromotion;
+            if(r.isSocialPromotion()) {
+                socialPromotion = "Ja";
+            } else {
+                socialPromotion = "Nee";
+            }
+
+            // For formatting dates
+            String birthDate = getDateFormatted(r.getBirthdate());
+
+            // Checking for null
+            String syncStatus = "";
+            if(r.getSyncStatus()!=null){
+                syncStatus = r.getSyncStatus().getDescription();
+            }
+
             data.put(""+i, new Object[] {
                     r.getId(),
+                    r.getAdNumber(),
+                    r.getStamnumber(),
+                    r.getGender().getDescription(),
                     r.getFirstName(),
-                    r.getLastName()
+                    r.getLastName(),
+                    birthDate,
+                    r.getAddress().getStreet(),
+                    r.getAddress().getHouseNumber(),
+                    r.getAddress().getPostalCode(),
+                    r.getAddress().getCity(),
+                    r.getPhoneNumber(),
+                    r.getEmail(),
+                    r.getEventRole().getDescription(),
+                    precampDates,
+                    postcampDates,
+                    buddy,
+                    languages,
+                    r.getEatinghabbit().getDescription(),
+                    r.getRemarksFood(),
+                    r.getMedicalRemarks(),
+                    r.getRemarks(),
+                    campGround,
+                    preset,
+                    other,
+                    socialPromotion,
+                    r.getRegisteredBy(),
+                    r.getEmailSubscriber(),
+                    r.getStatus().getDescription(), //format?
+                    syncStatus //format?
             });
         }
+    }
+
+    private String transformPreCamptListToString(List<PreCamp> preCampList) {
+        String dates = "";
+        for(int i = 0; i < preCampList.size()-1; i++){
+            dates += getDateFormatted(preCampList.get(i).getDate()) + ", ";
+        }
+        if(preCampList.size() > 0){
+            dates += getDateFormatted(preCampList.get(preCampList.size()-1).getDate());
+        }
+        return dates;
+    }
+
+    private String transformPostCampListToString(List<PostCamp> postCampList) {
+        String dates = "";
+        for(int i = 0; i < postCampList.size()-1; i++){
+            dates += getDateFormatted(postCampList.get(i).getDate()) + ", ";
+        }
+        if(postCampList.size() > 0){
+            dates += getDateFormatted(postCampList.get(postCampList.size()-1).getDate());
+        }
+        return dates;
+    }
+
+    private String getDateFormatted(Date date) {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+        return dateFormat.format(date);
+    }
+
+
+    private String transformLanguageListToString(List<Language> languagesList) {
+        String languages = "";
+        for(int i = 0; i < languagesList.size()-1; i++){
+            languages += languagesList.get(i).getDescription() + ", ";
+        }
+        if(languagesList.size() > 0){
+            languages += languagesList.get(languagesList.size()-1).getDescription();
+        }
+        return languages;
     }
 
     private void removeAllRows(XSSFWorkbook workBook, Sheet mySheet, FileOutputStream fos) throws IOException {
