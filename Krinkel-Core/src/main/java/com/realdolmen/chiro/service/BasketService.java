@@ -2,6 +2,7 @@ package com.realdolmen.chiro.service;
 
 import com.realdolmen.chiro.component.RegistrationBasketComponent;
 import com.realdolmen.chiro.domain.RegistrationParticipant;
+import com.realdolmen.chiro.domain.Status;
 import com.realdolmen.chiro.mspservice.MultiSafePayService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -66,7 +67,11 @@ public class BasketService {
     }
 
     public String initializePayment() throws MultiSafePayService.InvalidPaymentOrderIdException {
-        registrationBasketComponent.getUsersInBasket().forEach(registrationParticipantService::save);
+        applySubscriberEmail();
+        registrationBasketComponent.getUsersInBasket().forEach(u -> {
+            u.setStatus(Status.TO_BE_PAID);
+            registrationParticipantService.save(u);
+        });
 
         String url = getBasketPaymentUri();
         reset();
