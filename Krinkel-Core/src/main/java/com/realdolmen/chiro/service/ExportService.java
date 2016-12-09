@@ -56,7 +56,7 @@ public class ExportService {
      */
     public File writeRegistrationParticipantsToXlsx() {
         try {
-            File file = excelService.writeExcel(getRegistrationParticipantsWithoutVolunteers());
+            File file = excelService.writeExcel(getRegistrationParticipantsWithoutVolunteers(), true);
             return file;
         } catch (IOException e) {
             e.printStackTrace();
@@ -91,7 +91,7 @@ public class ExportService {
          }
 
          try {
-             File file = excelService.writeExcel(allVolunteerParticipants);
+             File file = excelService.writeExcel(allVolunteerParticipants, true);
              return file;
          } catch (IOException e) {
              e.printStackTrace();

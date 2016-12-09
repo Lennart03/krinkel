@@ -104,9 +104,36 @@ public class ExcelOutputService{
 //        sheet.addCell(new Label(i, 0, "Column " + (i+1)));
 
         Object [] objArr = new Object[] {
-                "id",
+                "Id",
+                "Ad-nummer",
+                "Stamnummer",
+                "Geslacht",
                 "Voornaam",
-                "Achternaam"
+                "Achternaam",
+                "Geboortedatum",
+                "Straat",
+                "Huisnummer",
+                "Postcode",
+                "Gemeente",
+                "Telefoonnummer",
+                "E-mailadres",
+                "Evenementsfunctie",
+                "Data voorwacht",
+                "Data nawacht",
+                "Buddy",
+                "Talen",
+                "Eetgewoonte",
+                "Bemerkingen eten",
+                "Medische info",
+                "Bemerkingen",
+                "Kampgrond",
+                "Gekozen functie",
+                "Andere functie",
+                "Sociale promotie",
+                "Geregistreerd door",
+                "E-mailadres inschrijver",
+                "Status",
+                "Syncstatus",
         };
         int i = 0;
         if(objArr == null){
