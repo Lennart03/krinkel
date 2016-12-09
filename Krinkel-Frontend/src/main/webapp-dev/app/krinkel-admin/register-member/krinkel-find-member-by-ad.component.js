@@ -1,27 +1,30 @@
+
 /**
  * Created by TSOAV51 on 8/12/2016.
  */
-
 class FindByAdController {
-    constructor(ChiroContactService) {
-        this.ChiroContactService = ChiroContactService;
-
-        this.participant = {};
+    constructor(KrinkelService) {
+        this.KrinkelService= KrinkelService;
     }
 
     findByAdNumber(adNumber) {
-        var part = this.ChiroContactService.getRegistrationParticipant(adNumber);
+        var part;
+        this.KrinkelService.getContact(adNumber).then(function(response) {
+            part = response.data;
+                this.participant = {
+                    firstName: part.values[0].firstName
+                };
+        });
+        console.log(part);
+    }
 
-        this.participant = {
-            adNumber: part.adNumber,
-            firstName: part.firstName,
-            lastName: part.lastName,
-            email: part.email,
-            birthDate: part.birthdate,
-            phone: part.phoneNumber.replace('-', ''),
-            gender: part.gender,
-            address: part.address
-        };
+
+    functionCallAfterDOMRender() {
+        try {
+            Materialize.updateTextFields();
+        } catch (exception) {
+
+        }
     }
 }
 
@@ -30,6 +33,5 @@ export var FindByAdComponent = {
     controller: FindByAdController
 };
 
-
-FindByAdController.$inject = ['ChiroContactService'];
+FindByAdController.$inject = ['KrinkelService'];
 

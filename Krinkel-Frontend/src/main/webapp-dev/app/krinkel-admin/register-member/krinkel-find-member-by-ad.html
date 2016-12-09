@@ -1,22 +1,22 @@
 <div class="row">
-    <form class="col s12 m12" novalidate name="personForm" ng-submit="$ctrl.findByAdNumber(308986)">
+    <form class="col s12 m12" novalidate name="personForm" ng-submit="$ctrl.findByAdNumber(368021)">
         <div class="row">
             <div class="input-field col s12 m6">
                 <i class="material-icons prefix">perm_identity</i>
-                <input id="first_name" name="firstName" type="text" class="validate" ng-minlength="1"
-                       ng-model="$ctrl.participant.firstName" required>
-                <label for="first_name">Voornaam *</label>
-                <p ng-show="personForm.firstName.$invalid && personForm.firstName.$touched" class="error"><i
-                    class="material-icons">error_outline</i> Voornaam is verplicht</p>
+                <input id="adNumber" name="adNumber" type="number" class="validate" ng-minlength="6" ng-maxlength="6"
+                       ng-model="$ctrl.adNumber" required>
+                <label for="adNumber">AdNummer *</label>
+                <p ng-show="personForm.AdNumber.$invalid" class="error">
+                    <i class="material-icons">error_outline</i>Geef een adnummer in (6 cijfers)</p>
             </div>
+        </div>
+        <h2> Opgehaalde data</h2>
+        <div class="row">
             <div class="input-field col s12 m6">
                 <i class="material-icons prefix">perm_identity</i>
-                <input id="last_name" name="lastName" type="text" class="validate" ng-model="$ctrl.participant.lastName"
-                       required>
-                <label for="last_name">Achternaam *</label>
-                <p ng-show="personForm.lastName.$invalid && personForm.lastName.$touched" class="error"><i
-                    class="material-icons">error_outline</i> Achternaam is verplicht
-                </p>
+                <input id="first_name" name="first_name" type="text"
+                       ng-model="$ctrl.participant.firstName">
+                <label for="first_name">voornaam *</label>
             </div>
         </div>
 
@@ -27,3 +27,4 @@
         </button>
         </form>
     </div>
+<div ng-show="$ctrl.functionCallAfterDOMRender()"></div>

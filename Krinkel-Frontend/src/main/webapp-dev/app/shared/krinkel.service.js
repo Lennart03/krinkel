@@ -3,6 +3,7 @@ export class KrinkelService {
         this.$http = $http;
         this.BASEURL = BASEURL;
         this.$window = $window;
+        this.adNumber="";
     }
 
     getCasUrl() {
@@ -176,6 +177,20 @@ export class KrinkelService {
             }
         );
     }
+
+    getContact(adNumber) {
+        var promise = this.$http.get(`${this.BASEURL}/api/contact/${adNumber}`).success(function (data, status, headers, config) {
+            return data;
+        })
+            .error(function (data, status, headers, config) {
+                    return {"status": false};
+                })
+        ;
+        console.log("output of promise " +promise);
+        return promise;
+    }
+
+
 
     popup() {
         Materialize.toast('Sessie verlopen, binnen 10 seconden herstart de applicatie', 10000, 'red rounded');

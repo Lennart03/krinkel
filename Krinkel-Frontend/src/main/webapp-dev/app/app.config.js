@@ -33,7 +33,6 @@ export function appConfig($routeProvider, $locationProvider) {
 
     $routeProvider.when('/find-participant-by-ad', {
         template: '<krinkel-find-member-by-ad></krinkel-find-member-by-ad>'
-
     });
 
     //Fail page had to go :(

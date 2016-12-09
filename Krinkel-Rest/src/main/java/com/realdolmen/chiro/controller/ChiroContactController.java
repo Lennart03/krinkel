@@ -30,6 +30,8 @@ public class ChiroContactController {
      */
     @RequestMapping("/api/contact/{adNumber}")
     public String getContact(@PathVariable Integer adNumber) {
+
+        System.out.println("Java printline It works yeeeeeeeeeeeee adnumber " +adNumber);
         try {
             return chiroContactService.getContact(adNumber);
         } catch (URISyntaxException e) {
