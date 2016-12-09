@@ -63,7 +63,7 @@
     </tr>
     </thead>
     <tbody>
-    <tr id="{{ ::participant.id }}" ng-repeat="participant in $ctrl.participants track by $index" >
+    <tr ng-repeat="participant in $ctrl.participants track by $index" id="{{ ::participant.id }}">
         <td>
             {{participant.firstName}} {{participant.lastName}}
         </td>
@@ -112,10 +112,11 @@
         <th data-field="medicalRemarks">Medische info</th>
         <th data-field="function">Functie</th>
         <th data-field="campground">Kampgrond</th>
+        <th ng-if="$ctrl.AuthService.getUserRole() === 'ADMIN'"><i class="material-icons right icon-green">delete</i></th>
     </tr>
     </thead>
     <tbody>
-    <tr ng-repeat="volunteer in $ctrl.volunteers track by $index">
+    <tr ng-repeat="volunteer in $ctrl.volunteers track by $index" id="{{ volunteer.id }}">
         <td>
             {{volunteer.firstName}} {{volunteer.lastName}}
         </td>
@@ -137,6 +138,23 @@
         <td>
             {{volunteer.campGround}}
         </td>
+        <td ng-if="$ctrl.AuthService.getUserRole() === 'ADMIN'">
+            <a ng-click="$ctrl.initCancelModal(volunteer.id)">
+                <i class="material-icons right icon-green">clear</i>
+            </a>
+        </td>
     </tr>
     </tbody>
 </table>
+
+<!-- Modal Structure -->
+<div id="{{ ::'modal' + volunteer.id }}"ng-if="$ctrl.volunteerDetails" ng-repeat="volunteer in $ctrl.volunteers track by $index" class="modal">
+    <div class="modal-content">
+        <h4>Wil u deze bestelling annuleren?</h4>
+    </div>
+    <div class="modal-footer">
+        <a href="" class=" modal-action modal-close waves-effect btn-flat"
+           ng-click="$ctrl.putParticipantToCancelled(volunteer.id)">OK</a>
+        <a href="" class="modal-action modal-close waves-effect btn-flat">CANCEL</a>
+    </div>
+</div>

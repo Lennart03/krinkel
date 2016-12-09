@@ -146,7 +146,6 @@ public class RegistrationParticipantService {
     }
 
 
-    //TODO: Remove possible buddy language record OR pre-/post camp record
     public RegistrationParticipant cancel(Long participantId) {
         RegistrationParticipant participant = registrationParticipantRepository.findOne(participantId);
         participant.setStatus(Status.CANCELLED);
@@ -154,6 +153,7 @@ public class RegistrationParticipantService {
         // If participant is a buddy, remove the language records for statistics and DB size reasons.
         if (participant.isBuddy()) {
             registrationParticipantRepository.removeBuddyLanguageRecordsAfterCancellation(participantId);
+            participant.setBuddy(false);
         }
 
         // If participant takes part in Pre Camp, remove the day records for statistics and DB size reasons.
