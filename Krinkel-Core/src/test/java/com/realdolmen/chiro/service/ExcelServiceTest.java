@@ -1,14 +1,18 @@
 package com.realdolmen.chiro.service;
 
 import com.realdolmen.chiro.domain.RegistrationParticipant;
+import com.realdolmen.chiro.domain.RegistrationVolunteer;
 import com.realdolmen.chiro.repository.RegistrationParticipantRepository;
+import com.realdolmen.chiro.repository.RegistrationVolunteerRepository;
 import com.realdolmen.chiro.spring_test.SpringIntegrationTest;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -28,6 +32,9 @@ public class ExcelServiceTest extends SpringIntegrationTest {
     private RegistrationParticipantRepository registrationParticipantRepository;
 
     @Autowired
+    private RegistrationVolunteerRepository registrationVolunteerRepository;
+
+    @Autowired
     private ExcelService excelService;
 
     @Test
@@ -45,5 +52,11 @@ public class ExcelServiceTest extends SpringIntegrationTest {
         Sheet mySheet = workBook.getSheetAt(0);
 
         assertEquals(6, mySheet.getPhysicalNumberOfRows());
+    }
+
+    @Test
+    public void writeVolunteersTest() {
+        List<RegistrationVolunteer> all = registrationVolunteerRepository.findAll();
+        assertEquals(1, all.size());
     }
 }

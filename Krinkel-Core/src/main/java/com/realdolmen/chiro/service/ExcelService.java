@@ -21,15 +21,11 @@ import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.stereotype.Service;
 
-/**
- * Created by JCPBB69 on 8/12/2016.
- */
 @Service
 public class ExcelService {
 
     // For testing purposes
     public File readExcel(File file) throws IOException{
-        //TODO: change myFile by given file
 
         FileInputStream fis = new FileInputStream(file);
         // Finds the workbook instance for XLSX file
@@ -66,48 +62,20 @@ public class ExcelService {
 
     public File writeExcel(List<RegistrationParticipant> participants) throws IOException, EncryptedDocumentException, InvalidFormatException {
 
-        //TODO: if sheet already exist, first empty?
+        //Create Blank workbook
+        XSSFWorkbook workBook = new XSSFWorkbook();
 
-        File myFile = new File("sheet.xlsx");
-
-        FileInputStream fileInputStream = new FileInputStream(myFile);
-
-        // Finds the workbook instance for XLSX file
-        XSSFWorkbook workBook = new XSSFWorkbook(fileInputStream);
-
-        // Return first sheet from the XLSX workbook
-        Sheet mySheet = workBook.getSheetAt(0);
-
-        System.err.println("Initial file");
-        readExcel(myFile);
-        System.err.println("Finished reading initial file");
-
-        // Create fileOutputStream for executing changes to the actual file
-        FileOutputStream fos = new FileOutputStream(myFile);
-
-        // First clear all rows:
-        removeAllRows(workBook, mySheet, fos);
-
-        System.err.println("Try to read out emptied sheet");
-        readExcel(myFile);
-        System.err.println("Continue with writing");
+        XSSFSheet mySheet = workBook.createSheet();
 
         Map<String, Object[]> data = new HashMap<String, Object[]>();
 
         putRegistrationParticipantsIntoMap(participants, data);
 
-//		Map<String, Object[]> data = new HashMap<String, Object[]>();
-//		data.put("7", new Object[] {7d, "Sonya", "9K", "SALES", "Rupert"});
-//		data.put("8", new Object[] {8d, "Kris", "9K", "SALES", "Rupert"});
-//		data.put("9", new Object[] {9d, "Dave", "5686857K", "SALES", "Rupert"});
-
-        //TODO: add header to excel file
-
         // Set to Iterate and add rows into XLS file
         Set<String> newRows = data.keySet();
 
         // get the last row number to append new data
-//		int rownum = mySheet.getLastRowNum();
+        //		int rownum = mySheet.getLastRowNum();
 
         // Start from top row
         int rownum = 0;
@@ -128,16 +96,27 @@ public class ExcelService {
                 else if (obj instanceof Double) {
                     cell.setCellValue((Double) obj);
                 }
+                else if (obj instanceof Long) {
+                    cell.setCellValue((Long) obj);
+                }
             }
         }
 
-        // FileOutputStream needs to be renewed every time a new write is executed to avoid errors.
-        fos = new FileOutputStream(myFile);
-        workBook.write(fos);
-        fos.close();
-        workBook.close();
-        System.out.println("Writing on XLSX file finished");
-        return myFile;
+        File file = new File("test.xlsx");
+        file.createNewFile();
+        //Create file system using specific name
+        FileOutputStream out = new FileOutputStream(file);
+
+        // CLEARING ROWS NOT NECESSARY ANYMORE SINCE FILE IS RECREATED EVERYTIME
+        // First clear all rows:
+//		removeAllRows(workBook, mySheet, out); 
+
+//		out = new FileOutputStream(file);
+        //write operation workbook using file out object
+        workBook.write(out);
+        out.close();
+
+        return file;
     }
 
     private void putRegistrationParticipantsIntoMap(List<RegistrationParticipant> participants,
@@ -147,11 +126,8 @@ public class ExcelService {
             r = participants.get(i);
             data.put(""+i, new Object[] {
                     r.getId(),
-                    r.getAdNumber(),
                     r.getFirstName(),
-                    r.getLastName(),
-                    r.getAddress(),
-                    r.getEmail()
+                    r.getLastName()
             });
         }
     }
@@ -168,4 +144,3 @@ public class ExcelService {
         workBook.write(fos);
     }
 }
-
