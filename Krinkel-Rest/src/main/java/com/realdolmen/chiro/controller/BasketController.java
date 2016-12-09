@@ -49,7 +49,7 @@ public class BasketController {
 
     @RequestMapping(value = "/api/basket/pay", method = RequestMethod.GET)
     public ResponseEntity<?> initializePayment() throws Exception {
-        String paymentUrl = basketService.getBasketPaymentUri();
+        String paymentUrl = basketService.initializePayment();
         HttpHeaders headers = new HttpHeaders();
         headers.setLocation(new URI(paymentUrl));
         return new ResponseEntity<>(headers, HttpStatus.CREATED);

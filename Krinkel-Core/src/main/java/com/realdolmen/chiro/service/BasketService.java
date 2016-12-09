@@ -4,12 +4,8 @@ import com.realdolmen.chiro.component.RegistrationBasketComponent;
 import com.realdolmen.chiro.domain.RegistrationParticipant;
 import com.realdolmen.chiro.mspservice.MultiSafePayService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import java.net.URI;
 import java.util.List;
 
 @Service
@@ -20,6 +16,9 @@ public class BasketService {
 
     @Autowired
     private MultiSafePayService multiSafePayService;
+
+    @Autowired
+    private RegistrationParticipantService registrationParticipantService;
 
     @Autowired
     private RegistrationBasketComponent registrationBasketComponent;
@@ -66,7 +65,15 @@ public class BasketService {
         return registrationBasketComponent.getUsersInBasket().stream().mapToInt(u -> 11000).sum();
     }
 
-    public String getBasketPaymentUri() throws MultiSafePayService.InvalidPaymentOrderIdException {
+    public String initializePayment() throws MultiSafePayService.InvalidPaymentOrderIdException {
+        registrationBasketComponent.getUsersInBasket().forEach(registrationParticipantService::save);
+
+        String url = getBasketPaymentUri();
+        reset();
+        return url;
+    }
+
+    private String getBasketPaymentUri() throws MultiSafePayService.InvalidPaymentOrderIdException {
         return multiSafePayService.getBasketPaymentUri(calculateTotalPrice(), userService.getCurrentUser());
     }
 }
