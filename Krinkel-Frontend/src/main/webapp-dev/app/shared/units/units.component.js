@@ -88,9 +88,9 @@ class UnitsController {
     putParticipantToCancelled(participantId) {
         if (participantId != null) {
             this.KrinkelService.putParticipantToCancelled(participantId).then((result) => {
-                console.log(result.data);
-                let verbondObj = result.data;
-                this.openExtraInfo(verbondObj);
+                //console.log(result.data);
+                //let verbondObj = result.data;
+                //this.openExtraInfo(verbondObj);
             });
         }
     }

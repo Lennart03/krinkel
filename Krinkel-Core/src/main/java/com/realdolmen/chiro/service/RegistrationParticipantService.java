@@ -4,6 +4,7 @@ import com.realdolmen.chiro.domain.*;
 import com.realdolmen.chiro.mspservice.MultiSafePayService;
 import com.realdolmen.chiro.repository.RegistrationCommunicationRepository;
 import com.realdolmen.chiro.repository.RegistrationParticipantRepository;
+import com.realdolmen.chiro.repository.RegistrationVolunteerRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -147,9 +148,25 @@ public class RegistrationParticipantService {
 
     //TODO: Remove possible buddy language record OR pre-/post camp record
     public RegistrationParticipant cancel(Long participantId) {
-            RegistrationParticipant participant = registrationParticipantRepository.findOne(participantId);
-            participant.setStatus(Status.CANCELLED);
-            return registrationParticipantRepository.save(participant);
+        RegistrationParticipant participant = registrationParticipantRepository.findOne(participantId);
+        participant.setStatus(Status.CANCELLED);
+
+        // If participant is a buddy, remove the language records for statistics and DB size reasons.
+        if (participant.isBuddy()) {
+            registrationParticipantRepository.removeBuddyLanguageRecordsAfterCancellation(participantId);
+        }
+
+        // If participant takes part in Pre Camp, remove the day records for statistics and DB size reasons.
+        if(registrationParticipantRepository.countPreCampRecordsAfterCancellation(participantId) > 0 ){
+            registrationParticipantRepository.removePreCampRecordsAfterCancellation(participantId);
+        }
+
+        // If participant takes part in Post Camp, remove the day records for statistics and DB size reasons.
+        if(registrationParticipantRepository.countPostCampRecordsAfterCancellation(participantId) > 0) {
+            registrationParticipantRepository.removePostCampRecordsAfterCancellation(participantId);
+        }
+
+        return registrationParticipantRepository.save(participant);
 
     }
 }
