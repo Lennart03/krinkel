@@ -58,10 +58,6 @@ public class BasketService {
         });
     }
 
-    public void initializePayment() throws Exception {
-        multiSafePayService.createPayment(5000, userService.getCurrentUser());
-    }
-
     public void reset() {
         registrationBasketComponent.reset();
     }
@@ -71,6 +67,6 @@ public class BasketService {
     }
 
     public String getBasketPaymentUri() throws MultiSafePayService.InvalidPaymentOrderIdException {
-        return multiSafePayService.getBasketPaymentUri(4000, userService.getCurrentUser());
+        return multiSafePayService.getBasketPaymentUri(calculateTotalPrice(), userService.getCurrentUser());
     }
 }
