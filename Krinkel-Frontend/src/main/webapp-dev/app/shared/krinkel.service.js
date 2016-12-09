@@ -198,6 +198,12 @@ export class KrinkelService {
         });
     }
 
+    doPayment(){
+        return this.$http.get(`${this.BASEURL}/api/basket/pay`).then((resp)=>{
+           return resp;
+        });
+    }
+
     removePersonFromBasket(adNumber) {
         return this.$http.get(`${this.BASEURL}/api/basket/delete/${adNumber}`).then((resp) => {
             return resp.data;
