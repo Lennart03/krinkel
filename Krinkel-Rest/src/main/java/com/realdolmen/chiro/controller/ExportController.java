@@ -34,7 +34,7 @@ public class ExportController {
 //    @RequestMapping(value = "/download", method = RequestMethod.GET)
 //    @ResponseBody
 //    public Object downloadExcel(HttpServletResponse response) {
-//        String xlsxFileName = exportService.writeRegistrationParticipantsToXlsx();
+//        String xlsxFileName = exportService.writeRegistrationAllParticipantsToXlsx();
 //
 //        response.setContentType("application/vnd.ms-excel");
 //        response.setHeader("Content-disposition",

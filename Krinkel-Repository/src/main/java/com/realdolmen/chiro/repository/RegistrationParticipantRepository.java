@@ -29,5 +29,14 @@ public interface RegistrationParticipantRepository extends JpaRepository<Registr
     )
     List<RegistrationParticipant> findParticipantsByGroupWithStatusConfirmedOrPaid(String s);
 
+//    // regular participants
+//    @Query("SELECT p FROM RegistrationParticipant p WHERE " +
+//            "p.campground IS EMPTY "
+//
+//    )
+//    List<RegistrationParticipant> findRegistrationParticipantsNotVolunteer();
+
+
+
 //    List<RegistrationParticipant> findParticipantsWithDtypeRegistrationParticipant();
 }
