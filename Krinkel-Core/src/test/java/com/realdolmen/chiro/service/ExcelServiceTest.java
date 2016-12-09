@@ -5,8 +5,12 @@ import com.realdolmen.chiro.domain.RegistrationVolunteer;
 import com.realdolmen.chiro.repository.RegistrationParticipantRepository;
 import com.realdolmen.chiro.repository.RegistrationVolunteerRepository;
 import com.realdolmen.chiro.spring_test.SpringIntegrationTest;
+import jxl.write.WritableSheet;
+import jxl.write.WritableWorkbook;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -37,16 +41,26 @@ public class ExcelServiceTest extends SpringIntegrationTest {
     @Autowired
     private ExcelService excelService;
 
+    @Autowired
+    private ExcelOutputService excelOutputService;
+
     @Test
     public void writeTest() throws IOException, InvalidFormatException {
         List<RegistrationParticipant> all = registrationParticipantRepository.findAll();
         assertEquals(6, all.size());
-        File myFile = excelService.writeExcel(all);
+        Boolean xlsx = false;
+        File myFile = excelService.writeExcel(all, xlsx);
 
         FileInputStream fileInputStream = new FileInputStream(myFile);
 
         // Finds the workbook instance for XLSX file
-        XSSFWorkbook workBook = new XSSFWorkbook(fileInputStream);
+        Workbook workBook;
+        if(xlsx){
+            workBook = new XSSFWorkbook(fileInputStream);
+        }
+        else{
+            workBook = new HSSFWorkbook(fileInputStream);
+        }
 
         // Return first sheet from the XLSX workbook
         Sheet mySheet = workBook.getSheetAt(0);
@@ -59,4 +73,5 @@ public class ExcelServiceTest extends SpringIntegrationTest {
         List<RegistrationVolunteer> all = registrationVolunteerRepository.findAll();
         assertEquals(1, all.size());
     }
+
 }

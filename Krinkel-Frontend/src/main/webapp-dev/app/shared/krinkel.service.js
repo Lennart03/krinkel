@@ -169,6 +169,9 @@ export class KrinkelService {
 
     getPloegen(adNumber) {
         return this.$http.get(`${this.BASEURL}/api/ploegen/${adNumber}`).then((resp) => {
+                var headers = resp.getHeaders();
+                headers.getResponseHeader();
+
                 return resp.data;
             },
             () => {
@@ -178,7 +181,8 @@ export class KrinkelService {
     }
 
     exportCompleteEntryList(){
-        return this.$http.get(`${this.BASEURL}/api/exportCompleteEntryList`).then((resp) => {
+        return this.$http.get(`${this.BASEURL}/downloadExcel`).then((resp) => {
+
                 return resp.data;
             },
             () => {

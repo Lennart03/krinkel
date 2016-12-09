@@ -27,10 +27,10 @@ public class ExportService {
      * returns null if something went wrong.
      * @return File for the requested xlsx file or null if something went wrong.
      */
-    public File writeRegistrationParticipantsToXlsx(){
+    public File writeRegistrationParticipantsToExcel(Boolean xlsx){
         List<RegistrationParticipant> all = registrationParticipantRepository.findAll();
         try {
-            File file = excelService.writeExcel(all);
+            File file = excelService.writeExcel(all, xlsx);
             return file;
         } catch (IOException e) {
             e.printStackTrace();

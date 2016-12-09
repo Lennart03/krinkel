@@ -1,21 +1,17 @@
 package com.realdolmen.chiro.controller;
 
-import com.google.common.net.HttpHeaders;
 import com.realdolmen.chiro.service.ExcelOutputService;
 import com.realdolmen.chiro.service.ExcelService;
 import com.realdolmen.chiro.service.ExportService;
-import org.apache.poi.util.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
-import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
-import sun.java2d.loops.ProcessPath;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.*;
@@ -54,7 +50,7 @@ public class ExportController {
     @RequestMapping(value = "api/exportCompleteEntryList", method = RequestMethod.GET, produces = "application/octet-stream")
     public ResponseEntity<InputStreamResource> exportCompleteEntryList() throws IOException{
         System.err.println("INSIDE getFile for completing exporting registration list");
-        File file = exportService.writeRegistrationParticipantsToXlsx();
+        File file = exportService.writeRegistrationParticipantsToExcel(true);
         String name = file.getName();
         System.err.println("filename: " + file.getName());
         System.err.println("absolute path name: " + file.getAbsolutePath());
@@ -77,10 +73,19 @@ public class ExportController {
     @Autowired
     ExcelOutputService excelOutputService;
 
-    @RequestMapping(value="/downloadExcel", method=RequestMethod.GET)
-    public ModelAndView downloadExcelOutputExl(HttpServletResponse response){
+    // TRYING WITH XLS
+    @RequestMapping(value="/downloadExcelTest", method=RequestMethod.GET)
+    public ModelAndView downloadExcelOutputExcelTest(HttpServletResponse response){
+        System.err.println("INSIDE downloadExcelOutputExcelTest for exporting registration list");
+        excelOutputService.createExcelOutputXls(response, exportService.writeRegistrationParticipantsToExcel(false));
+        return null;
+    }
 
-        excelOutputService.createExcelOutputExcel(response);
+    // TRYING WITH XLSX
+    @RequestMapping(value="/downloadExcel", method=RequestMethod.GET)
+    public ModelAndView downloadExcelOutputExcel(HttpServletResponse response){
+        System.err.println("INSIDE downloadExcelOutputExl for exporting registration list");
+        excelOutputService.createExcelOutputXlsx(response, exportService.writeRegistrationParticipantsToExcel(true));
         return null;
     }
 

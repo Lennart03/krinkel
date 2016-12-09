@@ -13,10 +13,12 @@ import java.util.Set;
 
 import com.realdolmen.chiro.domain.RegistrationParticipant;
 import org.apache.poi.EncryptedDocumentException;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.stereotype.Service;
@@ -25,13 +27,24 @@ import org.springframework.stereotype.Service;
 public class ExcelService {
 
     // For testing purposes
-    public File readExcel(File file) throws IOException{
+    public File readExcel(File file, Boolean xlsx) throws IOException{
 
         FileInputStream fis = new FileInputStream(file);
+
+        Workbook myWorkBook;
         // Finds the workbook instance for XLSX file
-        XSSFWorkbook myWorkBook = new XSSFWorkbook (fis);
+        if(xlsx){
+            myWorkBook = new XSSFWorkbook (fis);
+        }
+        else{
+            myWorkBook = new HSSFWorkbook (fis);
+        }
+
         // Return first sheet from the XLSX workbook
-        XSSFSheet mySheet = myWorkBook.getSheetAt(0);
+        Sheet mySheet;
+        mySheet = myWorkBook.getSheetAt(0);
+
+
         // Get iterator to all the rows in current sheet
         Iterator<Row> rowIterator = mySheet.iterator();
         // Traversing over each row of XLSX file
@@ -60,16 +73,24 @@ public class ExcelService {
         return null;
     }
 
-    public File writeExcel(List<RegistrationParticipant> participants) throws IOException, EncryptedDocumentException, InvalidFormatException {
+
+
+    public File writeExcel(List<RegistrationParticipant> participants, Boolean xlsx) throws IOException, EncryptedDocumentException, InvalidFormatException {
 
         //Create Blank workbook
-        XSSFWorkbook workBook = new XSSFWorkbook();
+        Workbook workBook;
+        if(xlsx){
+            workBook = new XSSFWorkbook();
+        }
+        else{
+            workBook = new HSSFWorkbook();
+        }
 
-        XSSFSheet mySheet = workBook.createSheet();
+        Sheet mySheet = workBook.createSheet();
 
         Map<String, Object[]> data = new HashMap<String, Object[]>();
 
-        putRegistrationParticipantsIntoMap(participants, data);
+        data = putRegistrationParticipantsIntoMap(participants);
 
         // Set to Iterate and add rows into XLS file
         Set<String> newRows = data.keySet();
@@ -102,7 +123,13 @@ public class ExcelService {
             }
         }
 
-        File file = new File("test.xlsx");
+        File file;
+        if(xlsx){
+            file = new File("test.xlsx");
+        }
+        else{
+            file = new File("test.xls");
+        }
         file.createNewFile();
         //Create file system using specific name
         FileOutputStream out = new FileOutputStream(file);
@@ -119,8 +146,8 @@ public class ExcelService {
         return file;
     }
 
-    private void putRegistrationParticipantsIntoMap(List<RegistrationParticipant> participants,
-                                                    Map<String, Object[]> data) {
+    public Map<String, Object[]> putRegistrationParticipantsIntoMap(List<RegistrationParticipant> participants) {
+        Map<String, Object[]> data = new HashMap<String, Object[]>();
         RegistrationParticipant r = null;
         for(int i = 0; i < participants.size(); i++){
             r = participants.get(i);
@@ -130,6 +157,7 @@ public class ExcelService {
                     r.getLastName()
             });
         }
+        return data;
     }
 
     private void removeAllRows(XSSFWorkbook workBook, Sheet mySheet, FileOutputStream fos) throws IOException {
