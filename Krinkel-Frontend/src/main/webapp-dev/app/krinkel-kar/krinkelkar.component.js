@@ -2,11 +2,13 @@
  * Created by FVHBB94 on 8/12/2016.
  */
 class KrinkelKarController{
-    constructor(KrinkelService, AuthService){
+    constructor(KrinkelService, AuthService, $window, $location){
         this.KrinkelService = KrinkelService;
         this.AuthService = AuthService;
         this.colleagueList = [];
         this.participantPrice = 11000;
+        this.$window = $window;
+        this.$location = $location;
         this.subscriberEmail = '';
         this.init();
     }
@@ -28,9 +30,13 @@ class KrinkelKarController{
     }
 
     doPayment(){
-        this.KrinkelService.setSubscriberEmailForBasket(this.subscriberEmail).then(()=>{
+        var self = this;
+        this.KrinkelService.setSubscriberEmailForBasket(this.subscriberEmail).then((resp)=>{
             console.log("added mail");
-            //redirect to payment
+            this.KrinkelService.doPayment().then((resp) =>{
+                console.log(resp);
+                self.$window.location.href = resp.headers().location;
+            });
         });
     }
 
@@ -42,4 +48,4 @@ export var KrinkelKarComponent = {
     controller: KrinkelKarController
 };
 
-KrinkelKarComponent.$inject = ["KrinkelService", "AuthService"];
+KrinkelKarComponent.$inject = ["KrinkelService", "AuthService", "$window", "$location"];
