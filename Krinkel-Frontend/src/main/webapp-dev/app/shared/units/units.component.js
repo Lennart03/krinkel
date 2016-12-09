@@ -1,8 +1,9 @@
 class UnitsController {
-    constructor(KrinkelService, AuthService, MapperService) {
+    constructor(KrinkelService, AuthService, MapperService, $route) {
         this.KrinkelService = KrinkelService;
         this.AuthService = AuthService;
         this.MapperService = MapperService;
+        this.$route = $route;
     }
 
     $onInit() {
@@ -18,8 +19,6 @@ class UnitsController {
             this.openUsers(verbond);
         }
     }
-
-
 
     openUsers(verbond) {
 
@@ -88,11 +87,17 @@ class UnitsController {
     putParticipantToCancelled(participantId) {
         if (participantId != null) {
             this.KrinkelService.putParticipantToCancelled(participantId).then((result) => {
-                console.log(result.data);
-                let verbondObj = result.data;
-                this.openExtraInfo(verbondObj);
+                //this.$route.reload();
             });
+            // TODO: remove this when reloading to same view is implemented and uncomment the comment above
+            let id = document.getElementById(participantId);
+            id.setAttribute('style', 'display: none;');
         }
+    }
+
+    initCancelModal(modalId) {
+        let modalName = '#modal' + modalId;
+        $(modalName).openModal();
     }
 }
 
@@ -101,4 +106,4 @@ export var UnitsComponent = {
     controller: UnitsController
 };
 
-UnitsComponent.$inject = ['KrinkelService', 'AuthService', 'MapperService'];
+UnitsComponent.$inject = ['KrinkelService', 'AuthService', 'MapperService','$route'];

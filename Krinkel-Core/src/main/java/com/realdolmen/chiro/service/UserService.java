@@ -144,7 +144,9 @@ public class UserService {
                 RegistrationParticipant participant = getRegistrationParticipant(v.get("adnr").asText());
 
                 if (participant != null) {
-                    if (participant.getStatus() == Status.PAID || participant.getStatus() == Status.CONFIRMED) {
+                    if (participant.getStatus() == Status.PAID
+                            || participant.getStatus() == Status.CONFIRMED
+                            || participant.getStatus() == Status.CANCELLED ) {
                         return;
                     }
                 }
