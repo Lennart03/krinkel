@@ -44,7 +44,6 @@ public class AdminService {
         RegistrationParticipant registrationParticipant = chiroContactService.getRegistrationParticipant(adnummer);
         Admin admin = new Admin(adnummer, registrationParticipant.getEmail(), registrationParticipant.getFirstName(), registrationParticipant.getLastName());
         adminRepository.save(admin);
-        casService.addAdmin(adnummer.toString());
     }
 
     public String getChiroMember(Integer adnummer) throws URISyntaxException {

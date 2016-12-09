@@ -41,17 +41,6 @@ public class CASService {
     @Autowired
     private AdminService adminService;
 
-    // This are the administrators of the Krinkel website and are loaded after the service is made
-    private Set<String> adminAdNumbers;
-
-    @PostConstruct
-    public void initAdmins(){
-        adminAdNumbers = new HashSet<>();
-        for(Admin admin : adminService.getAdmins()){
-            adminAdNumbers.add(admin.getAdNummer().toString());
-        }
-    }
-
     public String validateTicket(String ticket) {
         User user = validate(ticket);
         return createToken(user);
@@ -101,11 +90,10 @@ public class CASService {
             user.setRolesAndUpperClassesByStam(stamNumbersRolesVO.getRolesAndUpperClassesByStam());
             user.setStamnummer(stamNumbersRolesVO.getStamNumber());
 
-//          List<String> adminAdNumbers = new ArrayList<>();
-//          adminAdNumbers.add("152504");
-//          adminAdNumbers.add("109318");
-//          adminAdNumbers.add("169314");
-//          adminAdNumbers.add("396943");
+          List<String> adminAdNumbers = new ArrayList<>();
+           for(Admin admin : adminService.getAdmins()){
+               adminAdNumbers.add(admin.getAdNummer().toString());
+           }
 
             if (adminAdNumbers.contains(adNumber)) {
                 user.setRole(SecurityRole.ADMIN);
@@ -204,9 +192,5 @@ public class CASService {
                 .claim("role", user.getRole())
                 .setIssuedAt(new Date())
                 .signWith(SignatureAlgorithm.HS256, jwtConfiguration.getJwtSecret()).compact();
-    }
-
-    protected void addAdmin(String adNumber) {
-        this.adminAdNumbers.add(adNumber);
     }
 }
