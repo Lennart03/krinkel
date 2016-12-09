@@ -71,13 +71,13 @@ public class CASService {
             RegistrationParticipant registrationParticipantFromOurDB = userService.getRegistrationParticipant(adNumber);
 
             /*
-             *  Checks if the logged in user is in our DB (user has already paid or at least tried to pay)
+             *  Checks if the logged in user is in our DB (user has already paid or at least tried to initializePayment)
              */
             if (registrationParticipantFromOurDB != null) {
                 user = createUserFromOurDB(registrationParticipantFromOurDB);
             } else {
                 /*
-                 * Reached when the logged in user is not in our DB (this means he hasn't tried to pay yet)
+                 * Reached when the logged in user is not in our DB (this means he hasn't tried to initializePayment yet)
                  */
                 user = createNewUser(principal, adNumber);
             }
