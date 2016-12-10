@@ -32,29 +32,34 @@ public class ExcelOutputService{
     @Autowired
     RegistrationParticipantRepository registrationParticipantRepository;
 
-    @Autowired
-    ExcelService excelService;
-
     private static final Logger LOGGER = Logger.getLogger(String.valueOf(ExcelOutputService.class));
 
 
-    public WritableWorkbook createExcelOutputXls(HttpServletResponse response, File file) {
+    public WritableWorkbook createExcelOutputXls(HttpServletResponse response, String fileName,
+                                                 Object [] header, Map<String, Object []> data) {
 
 
-        String fileName = "Excel_Output.xls";
+//        String fileName = "Excel_Output.xls";
 //        String fileName = file.getName();
         WritableWorkbook writableWorkbook = null;
         try {
+            // Set content type to xls
             response.setContentType("application/vnd.ms-excel");
 
+            // Set the header with the attachment referring to the file which is going to be made below
             response.setHeader("Content-Disposition", "attachment; filename=" + fileName);
 
+            // Create a workbook wich writes to the given responses outputstream.
             writableWorkbook = Workbook.createWorkbook(response.getOutputStream());
 
 
             WritableSheet excelOutputsheet = writableWorkbook.createSheet("Excel Output", 0);
-            addExcelOutputHeader(excelOutputsheet);
-            writeExcelOutputData(excelOutputsheet);
+
+            // Add the headers
+            addExcelOutputHeader(excelOutputsheet, header);
+
+            // Add the data
+            writeExcelOutputData(excelOutputsheet, data);
 
             writableWorkbook.write();
             writableWorkbook.close();
@@ -100,47 +105,12 @@ public class ExcelOutputService{
      * @throws RowsExceededException
      * @throws WriteException
      */
-    protected void addExcelOutputHeader(WritableSheet sheet) throws RowsExceededException, WriteException {
+    protected void addExcelOutputHeader(WritableSheet sheet, Object [] header) throws RowsExceededException, WriteException {
 //        sheet.addCell(new Label(i, 0, "Column " + (i+1)));
 
-        Object [] objArr = new Object[] {
-                "Id",
-                "Ad-nummer",
-                "Stamnummer",
-                "Geslacht",
-                "Voornaam",
-                "Achternaam",
-                "Geboortedatum",
-                "Straat",
-                "Huisnummer",
-                "Postcode",
-                "Gemeente",
-                "Telefoonnummer",
-                "E-mailadres",
-                "Evenementsfunctie",
-                "Data voorwacht",
-                "Data nawacht",
-                "Buddy",
-                "Talen",
-                "Eetgewoonte",
-                "Bemerkingen eten",
-                "Medische info",
-                "Bemerkingen",
-                "Kampgrond",
-                "Gekozen functie",
-                "Andere functie",
-                "Sociale promotie",
-                "Geregistreerd door",
-                "E-mailadres inschrijver",
-                "Status",
-                "Syncstatus",
-        };
         int i = 0;
-        if(objArr == null){
-            System.err.println("HET IS NULL, hier is de erorroaegjaegaegegjogizegujehguzehgzei");
-        }
 
-        for (Object obj : objArr) {
+        for (Object obj : header) {
             // Nu alles naar string
             sheet.addCell(new Label(i, 0, obj.toString()));
             System.err.println(obj.toString());
@@ -156,30 +126,22 @@ public class ExcelOutputService{
     }
 
     /**
-     * For creating an excel sheet with test data. Here dummy data is added
+     * For creating an excel sheet with test data.
      * @param sheet
      * @throws RowsExceededException
      * @throws WriteException
      */
-    protected void writeExcelOutputData(WritableSheet sheet) throws RowsExceededException, WriteException{
-
-        List<RegistrationParticipant> all = registrationParticipantRepository.findAll();
-
-        Map<String, Object[]> stringMap = excelService.putRegistrationParticipantsIntoMap(all);
-
-        Set<String> newRows = stringMap.keySet();
+    protected void writeExcelOutputData(WritableSheet sheet, Map<String, Object []> dataMap) throws RowsExceededException, WriteException{
+        Set<String> newRows = dataMap.keySet();
 
 //        for(int rowNo = 1; rowNo<=10; rowNo++){
         int rowNr = 1;
         for (String key : newRows) {
             int columnNr = 0;
-            Object [] objArr = stringMap.get(key);
+            Object [] objArr = dataMap.get(key);
             for (Object obj : objArr) {
-                System.err.println("Tried to handle: " + obj.toString());
-                // TODO: Nu nog alles naar string
                 sheet.addCell(new Label(columnNr, rowNr, obj.toString()));
-
-                //TODO: alles type checken en dan wegschrijven met juiste type
+                //TODO: if necessary, type check everything like this:
 //            if(obj instanceof Integer){
 //                sheet.addCell(new Number(i, 0, (Integer) obj));
 //            }
@@ -190,7 +152,8 @@ public class ExcelOutputService{
     }
 
     /**
-     * For creating an excel sheet with test data. Here a header row is added.
+     * For testing purposes.
+     * For creating an excel sheet with test data. Here a dummy header row is added.
      * @param sheet
      * @throws RowsExceededException
      * @throws WriteException
@@ -203,13 +166,13 @@ public class ExcelOutputService{
     }
 
     /**
+     * For testing purposes.
      * For creating an excel sheet with test data. Here dummy data is added
      * @param sheet
      * @throws RowsExceededException
      * @throws WriteException
      */
     private void writeExcelOutputDataTest(WritableSheet sheet) throws RowsExceededException, WriteException{
-
         for(int rowNo = 1; rowNo<=10; rowNo++){
             for(int colNo = 1; colNo <= 10; colNo++)
             sheet.addCell(new Label(colNo, rowNo, "Col Data "+ (rowNo+colNo)));
@@ -217,6 +180,12 @@ public class ExcelOutputService{
 
     }
 
+    /**
+     * For creating an xlsx file. This is currently not used.
+     * @param response
+     * @param file
+     * @return
+     */
     public XSSFWorkbook createExcelOutputXlsx(HttpServletResponse response, File file){
         XSSFWorkbook workbook = null;
         try {
@@ -251,6 +220,11 @@ public class ExcelOutputService{
         return workbook;
     }
 
+    /**
+     * For filling up xlsx with dummy data. This is currently not used.
+     * @param rankerSheet
+     * @param worksheet
+     */
     private void writeExcelOutputData(XSSFSheet rankerSheet, XSSFWorkbook worksheet){
 
         XSSFRow row1 = rankerSheet.createRow(1);
