@@ -41,14 +41,14 @@ INSERT INTO registration_participant (dtype,id,ad_number,city, house_number, pos
 social_promotion, eatinghabbit, email, email_subscriber, first_name, gender, last_name, remarks_food, medical_remarks, remarks,
 event_role, buddy, stamnumber, status, sync_status, phone_number, camp_ground, other, preset, registered_by)
 VALUES('RegistrationVolunteer', '60', '876543', 'Brussel', '123', '1000', 'Veldstraat', '1995-08-21', false, 'FISHANDMEAT',
-                              'email@test.be', 'email@test.be', 'Jos', 'MAN', 'Flodder', '', '', '', 'VOLUNTEER', true, 'AG /0103', 'CONFIRMED', 'SYNCED', 1, 'KEMPEN', '', 'CAMPGROUND', '876543');
+                              'email@test.be', 'email@test.be', 'Jos', 'MAN', 'Flodder', '', '', '', 'VOLUNTEER', false, 'AG /0103', 'CONFIRMED', 'SYNCED', 1, 'KEMPEN', '', 'CAMPGROUND', '876543');
 
 
 INSERT INTO registration_participant_language (registration_participant_id,language)
-VALUES('60', '0');
+VALUES('50', '0');
 
 INSERT INTO registration_participant_language (registration_participant_id,language)
-VALUES('60', '1');
+VALUES('50', '1');
 
 INSERT INTO registration_participant_pre_camp_list VALUES (60,10);
 INSERT INTO registration_participant_pre_camp_list VALUES (60,20);
