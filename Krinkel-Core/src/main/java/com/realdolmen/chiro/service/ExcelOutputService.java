@@ -10,11 +10,9 @@ import org.apache.poi.xssf.usermodel.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
+import java.io.*;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -248,5 +246,84 @@ public class ExcelOutputService{
         cell5.setCellStyle(percentStyle);
         cell5.setCellValue(20.00);
 
+    }
+
+    /**
+     * Exports a test csv file
+     * @param response
+     */
+    public void exportCSV(HttpServletResponse response) {
+        File file = new File("test.csv");
+
+        response.setContentType("text/csv");
+
+        response.setHeader("Content-Disposition",
+                "attachment; filename=" + file.getName());
+
+        BufferedReader br = null;
+        try {
+            br = new BufferedReader(new FileReader(file));
+            String line;
+            while ((line = br.readLine()) != null) {
+                response.getWriter().write(line + "\n");
+            }
+        }
+        catch (FileNotFoundException e) {
+            LOGGER.info("CSV file was not found!");
+            e.printStackTrace();
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if(br != null) {
+                    br.close();
+                }
+            } catch (IOException e) {
+                LOGGER.info("IOException when trying to close buffered reader CSV.");
+                e.printStackTrace();
+            }
+        }
+    }
+
+    /**
+     * Exports a test xlsx file
+     * @param response
+     */
+    public void exportXLSX(HttpServletResponse response) {
+        File file = new File("sheet.xlsx");
+        FileInputStream fis = null;
+        try {
+             fis = new FileInputStream(file);
+        } catch (FileNotFoundException e) {
+            LOGGER.info("FileNotFoundException when downloading XLSX");
+            e.printStackTrace();
+            return;
+        }
+
+//        response.setContentType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
+//
+//        response.setHeader("Content-Disposition",
+//                "attachment; filename=" + file.getName());
+
+        try {
+            org.apache.poi.ss.usermodel.Workbook workbook = new XSSFWorkbook (fis);
+
+            // Add sheet(s), colums, cells and its contents to your workbook here ...
+
+            // First set response headers
+            response.setContentType("application/vnd.ms-excel");
+            response.setHeader("Content-Disposition", "attachment; filename="+file.getName());
+
+            // Get response outputStream
+            ServletOutputStream outputStream = null;
+            outputStream = response.getOutputStream();
+
+            // Write workbook data to outputstream
+            workbook.write(outputStream);
+        } catch (IOException e) {
+            LOGGER.info("IOException when downloading XLSX");
+            e.printStackTrace();
+        }
     }
 }

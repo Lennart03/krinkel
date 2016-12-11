@@ -36,6 +36,18 @@ public class ExportController {
         return null;
     }
 
+    @RequestMapping(value="/exportRegistratieLijstAllesCSV", method=RequestMethod.GET)
+    public ModelAndView exportRegistrationParticipantListCompleteCSV(HttpServletResponse response){
+        excelOutputService.exportCSV(response);
+        return null;
+    }
+
+    @RequestMapping(value="/exportRegistratieLijstAllesXLSX", method=RequestMethod.GET)
+    public ModelAndView exportRegistrationParticipantListCompleteXLSX(HttpServletResponse response){
+        excelOutputService.exportXLSX(response);
+        return null;
+    }
+
     /**
      * Downloads the excel sheet with all registrationParticipants.
      * This method is called by redirecting through a href with BASE_URL + /downloadExcelTest

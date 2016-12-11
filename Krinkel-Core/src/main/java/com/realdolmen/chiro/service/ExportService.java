@@ -110,6 +110,12 @@ public class ExportService {
         excelOutputService.createExcelOutputXls(response, "registratiesLijstAlles.xls", header, data);
     }
 
+    public void createExcelOutputXlsRegistrationCSV(HttpServletResponse response, String fileName) {
+        Object[] header = createHeaderForRegistrationParticipants();
+        Map<String, Object []> data = createDataForRegistrationParticipants();
+        excelOutputService.createExcelOutputXls(response, "registratiesLijstAlles.csv", header, data);
+    }
+
     public void createExcelOutputXlsRegistrationParticipants(HttpServletResponse response, String fileName) {
         Object[] header = createHeaderForRegistrationParticipants();
         Map<String, Object []> data = createDataForRegistrationParticipantsOnlyParticipants();
