@@ -1,4 +1,4 @@
-/**
+    /**
  * Created by MHSBB71 on 8/12/2016.
  */
 class ChooseRegistrationController {

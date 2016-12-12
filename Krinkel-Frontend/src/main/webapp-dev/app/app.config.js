@@ -35,15 +35,16 @@ export function appConfig($routeProvider, $locationProvider) {
         template: '<krinkel-find-member-by-ad></krinkel-find-member-by-ad>'
     });
 
-<<<<<<< HEAD
-    $routeProvider.when('/error', {
-        template: '<error></error>'
+    $routeProvider.otherwise({
+        redirectTo: '/home'
     });
+}
+
+
 
     /*$routeProvider.when('/choose-registration-participant', {
-=======
+
     $routeProvider.when('/choose-registration-participant', {
->>>>>>> 879f472e1e8d25f96453dc970aeb7a41c2af9e98
         template: '<krinkel-choose-registration></krinkel-choose-registration>'
     });
 
@@ -57,4 +58,4 @@ export function appConfig($routeProvider, $locationProvider) {
     $routeProvider.otherwise({
         redirectTo: '/home'
     });
-}
+}*/

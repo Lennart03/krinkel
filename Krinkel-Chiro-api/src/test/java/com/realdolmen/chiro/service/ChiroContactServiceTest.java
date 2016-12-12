@@ -2,6 +2,7 @@ package com.realdolmen.chiro.service;
 
 import com.realdolmen.chiro.domain.Address;
 import com.realdolmen.chiro.domain.RegistrationParticipant;
+import com.realdolmen.chiro.exception.NoContactFoundException;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -31,7 +32,7 @@ public class ChiroContactServiceTest {
     }
 
     @Test
-    public void parsteContactJSONTest() throws URISyntaxException {
+    public void parsteContactJSONTest() throws URISyntaxException, NoContactFoundException {
         RegistrationParticipant registrationParticipant = chiroContactService.getRegistrationParticipant(221826);
 
         Assert.assertNotNull(registrationParticipant);
