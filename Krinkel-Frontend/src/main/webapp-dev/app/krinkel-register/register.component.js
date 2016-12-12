@@ -82,7 +82,9 @@ class RegisterController {
                     thiz.dataIsRemoved = true;
                     thiz.StorageService.removeUser();
                     thiz.$window.location.href = resp.headers().location;
+
                 });
+                this.KrinkelService.popupForAdmin();
                 return;
             }
 
@@ -93,9 +95,14 @@ class RegisterController {
                     thiz.StorageService.removeUser();
                     thiz.SelectService.setSelectedFlag(false);
                     thiz.$window.location.href = resp.headers().location;
+
                 });
+                this.KrinkelService.popupForAdmin();
                 return;
             }
+
+
+
         } else {
             if (this.type === 'volunteer') {
                 var thiz = this;
