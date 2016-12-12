@@ -99,7 +99,7 @@ public class BasketService {
                     registrationParticipantService.save(u);
                     registrationParticipantService.createRegistrationCommunication(u);
                 });
-
+                reset();
                 return true;
             }
         }
