@@ -28,4 +28,5 @@ public class RegistrationParticipantServiceSecurity {
         return currentUser != null && (participant.getAdNumber().equals(currentUser.getAdNumber()) || currentUser.getRole().equals(SecurityRole.ADMIN) ||
                 chiroColleagueService.isColleague(221826, Integer.parseInt(participant.getAdNumber())));
     }
+
 }

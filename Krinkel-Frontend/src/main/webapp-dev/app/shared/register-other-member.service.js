@@ -4,12 +4,17 @@
 
 export class RegisterOtherMemberService {
     constructor($http, BASEURL, $window) {
-        console.log("begin");
         this.$http = $http;
         this.BASEURL = BASEURL;
         this.$window = $window;
 
+
         console.log("end");
+
+        this.boolSubscribeMember = false;
+        this.boolSubscribeColleague = false;
+
+
     }
 
     getParticipantUsingAd(adNumber) {
@@ -32,6 +37,22 @@ export class RegisterOtherMemberService {
 
     getParticipant() {
         return this.participant;
+    }
+
+    setSubscribeMember(subscribeMember) {
+        this.boolSubscribeMember = subscribeMember;
+    }
+
+    setSubscribeColleague(subscribeColleague) {
+        this.boolSubscribeColleague = subscribeColleague;
+    }
+
+    subscribeMember() {
+        return this.boolSubscribeMember;
+    }
+
+    subscribeColleague() {
+        return this.boolSubscribeColleague;
     }
 
     popup() {
