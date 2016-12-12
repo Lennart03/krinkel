@@ -19,6 +19,7 @@ import org.springframework.test.context.ContextConfiguration;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
@@ -81,4 +82,15 @@ public class ExcelServiceTest extends SpringIntegrationTest {
         assertEquals(5, exportService.getRegistrationParticipantsWithoutVolunteers().size());
     }
 
+    @Test
+    public void fieldsToStringTest(){
+        List<RegistrationVolunteer> allVolunteers = registrationVolunteerRepository.findAll();
+        System.err.println("");
+        System.err.println("With stringbuilder: ");
+        String variableNamesOfObjectWithBuilder = exportService.getVariableNamesOfObjectWithBuilder(allVolunteers.get(0));
+        System.err.println(variableNamesOfObjectWithBuilder);
+
+
+    }
 }
+

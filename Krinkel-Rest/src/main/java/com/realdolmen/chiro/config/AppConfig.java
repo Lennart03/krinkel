@@ -1,7 +1,9 @@
 package com.realdolmen.chiro.config;
 
 import javax.annotation.PostConstruct;
+import javax.servlet.Servlet;
 
+import org.springframework.boot.web.servlet.ServletRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
@@ -32,5 +34,15 @@ public class AppConfig {
                 registry.addMapping("/**").allowedOrigins("*");
             }
         };
+    }
+
+    @Bean
+    public ServletRegistrationBean giveZipServlet(ZipServlet zipsers){
+        return new ServletRegistrationBean(zipsers, "/zip");
+    }
+
+    @Bean
+    public ZipServlet createNewZipServlet(){
+        return new ZipServlet();
     }
 }

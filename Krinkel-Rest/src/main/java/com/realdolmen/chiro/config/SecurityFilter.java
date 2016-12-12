@@ -27,6 +27,7 @@ public class SecurityFilter extends WebSecurityConfigurerAdapter {
     public void configure(WebSecurity web) throws Exception {
         web
                 .ignoring()
+                .antMatchers("/zip")
                 .antMatchers("/api/cas")
                 //.antMatchers("/api/**") // NEVER EVER UNCOMMENT THIS. PREVIOUSLY USED FOR DEV ON PORT 3000, THIS WILL SCREW EVERYTHING UP NOW.
                 .antMatchers("/res/*")

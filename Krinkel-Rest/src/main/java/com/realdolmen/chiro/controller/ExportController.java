@@ -9,6 +9,9 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletResponse;
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
 
 /**
  * Created by JCPBB69 on 8/12/2016.
@@ -36,9 +39,32 @@ public class ExportController {
         return null;
     }
 
-    @RequestMapping(value="/exportRegistratieLijstAllesCSV", method=RequestMethod.GET)
-    public ModelAndView exportRegistrationParticipantListCompleteCSV(HttpServletResponse response){
-        excelOutputService.exportCSV(response);
+    @RequestMapping(value="/exportRegistratieLijstAllesCSV", method=RequestMethod.GET, produces = "application/zip")
+    public void exportRegistrationParticipantListCompleteCSV(HttpServletResponse response){
+        exportService.createCSVBackups(response);
+
+//        return null;
+    }
+
+
+
+//    @RequestMapping(value="zip", method=RequestMethod.GET, produces = "application/zip")
+//    public byte[] exportRegistrationParticipantListCompleteCSV2(HttpServletResponse response){
+//        response.setContentType("application/zip");
+//        response.setStatus(HttpServletResponse.SC_OK);
+//        response.addHeader("Content-Disposition", "attachment; filename=backup.zip");
+//        exportService.createCSVBackups(response);
+//        try {
+//            return Files.readAllBytes((new File("backup.zip")).toPath());
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//        return null;
+//    }
+
+    @RequestMapping(value="/exportRegistratieLijstAllesCSVTest", method=RequestMethod.GET)
+    public ModelAndView exportRegistrationParticipantListCompleteCSVTest(HttpServletResponse response){
+        excelOutputService.exportCSV(response, "test.csv");
         return null;
     }
 

@@ -76,4 +76,9 @@ public class VolunteerFunction {
     public void setOther(String other) {
         this.other = other;
     }
+
+    @Override
+    public String toString(){
+        return "[preset=" + preset.getDescription() + ",other="+other+"]";
+    }
 }
