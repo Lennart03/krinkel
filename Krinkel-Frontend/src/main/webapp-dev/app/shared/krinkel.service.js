@@ -10,7 +10,7 @@ export class KrinkelService {
             return resp.data;
         });
     }
-
+    //FIXME post instead of get (security?)
     logIn(user, password) {
         return this.$http.get(`${this.BASEURL}/api/users?user=${user}&password=${password}`).then((resp) => {
             return resp.data;
@@ -203,8 +203,41 @@ export class KrinkelService {
     }
 
     deleteAdmin(adNumber) {
-        console.log("Deleting: " +adNumber);
+        console.log("Deleting: " + adNumber);
         return this.$http.post(`${this.BASEURL}/api/admin/delete/${adNumber}`);
+    }
+
+    getBasket(){
+        return this.$http.get(`${this.BASEURL}/api/basket`).then((resp) => {
+            return resp.data;
+        });
+        //return [{last_name:'Fre', first_name:'De Riek'}];
+    }
+
+    addPersonToBasket(person){
+        //console.log(person);
+        return this.$http.post(`${this.BASEURL}/api/basket`, person).then((resp)=>{
+           return resp.data;
+        });
+    }
+
+    setSubscriberEmailForBasket(emailStr){
+        let email = {email: emailStr};
+        return this.$http.post(`${this.BASEURL}/api/basket/mail`, email).then((resp)=>{
+            return resp.data;
+        });
+    }
+
+    doPayment(){
+        return this.$http.get(`${this.BASEURL}/api/basket/pay`).then((resp)=>{
+           return resp;
+        });
+    }
+
+    removePersonFromBasket(adNumber) {
+        return this.$http.get(`${this.BASEURL}/api/basket/delete/${adNumber}`).then((resp) => {
+            return resp.data;
+        });
     }
 
     popup() {

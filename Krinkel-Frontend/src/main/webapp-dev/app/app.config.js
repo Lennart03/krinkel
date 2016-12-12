@@ -15,6 +15,10 @@ export function appConfig($routeProvider, $locationProvider) {
         template: '<register type="participant"></register>'
     });
 
+    $routeProvider.when('/add-to-basket', {
+        template: '<basket></basket>'
+    })
+
     $routeProvider.when('/register-volunteer', {
         template: '<register type="volunteer"></register>'
     });
@@ -25,6 +29,10 @@ export function appConfig($routeProvider, $locationProvider) {
 
     $routeProvider.when('/select-participant', {
         template: '<krinkel-select></krinkel-select>'
+    });
+
+    $routeProvider.when('/cart', {
+       template:'<krinkel-kar></krinkel-kar>'
     });
 
     $routeProvider.when('/graph', {

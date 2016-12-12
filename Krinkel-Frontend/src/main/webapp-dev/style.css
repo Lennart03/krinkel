@@ -21,7 +21,17 @@ i.icon-green {
     margin-bottom: 32px;
     text-align: center;
 }
-
+.add-btn{
+    padding-top: 10px;
+    width: 100%;
+    clear: both;
+}
+.pay-btn{
+    padding-top: 20px;
+}
+.table-valign{
+    vertical-align: middle;
+}
 #front-page-logo {
     display: inline-block;
     height: 100%;

@@ -1,5 +1,6 @@
 package com.realdolmen.chiro.mvccontroller;
 
+import com.realdolmen.chiro.service.BasketService;
 import com.realdolmen.chiro.service.RegistrationParticipantService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,22 +20,29 @@ public class PaymentWebController {
     private Logger logger = LoggerFactory.getLogger(PaymentWebController.class);
 
     @Autowired
+    private BasketService basketService;
+
+    @Autowired
     private RegistrationParticipantService registrationParticipantService;
 
     /**
      * when payment completed successful
+     *
      * @param orderId
      * @return
      */
     @RequestMapping(method = RequestMethod.GET, value = "/success")
     public String paymentSuccess(@RequestParam(name = "transactionid") String orderId) {
         logger.info("Payment Successful for Transaction " + orderId);
-        registrationParticipantService.updatePaymentStatus(orderId);
+        if (!basketService.handleSuccessCallback(orderId))
+            registrationParticipantService.updatePaymentStatus(orderId);
+
         return "redirect:/index.html";
     }
 
     /**
      * when payment not completed
+     *
      * @param orderId
      * @return
      */

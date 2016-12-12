@@ -1,5 +1,6 @@
 package com.realdolmen.chiro.mvccontroller;
 
+import com.realdolmen.chiro.service.BasketService;
 import com.realdolmen.chiro.service.RegistrationParticipantService;
 import org.junit.After;
 import org.junit.Test;
@@ -18,6 +19,9 @@ public class PaymentWebControllerTest {
 
     @Mock
     private RegistrationParticipantService registrationParticipantService;
+
+    @Mock
+    private BasketService basketService;
 
     private final static String TEST_ORDER_ID = "abc123";
 

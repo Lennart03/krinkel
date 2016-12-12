@@ -74,28 +74,29 @@ class RegisterController {
         this.newPerson.postalCode = this.details2.name;
         this.newPerson.street = this.details.address_components[0].long_name;
         if (this.type === 'volunteer') {
-            var thiz = this;
+            var self = this;
             this.KrinkelService.postVolunteer(this.MapperService.mapVolunteer(newPerson)).then(function (resp) {
-                thiz.dataIsRemoved = true;
-                thiz.StorageService.removeUser();
-                thiz.$window.location.href = resp.headers().location;
+                self.dataIsRemoved = true;
+                self.StorageService.removeUser();
+                self.$window.location.href = resp.headers().location;
             });
             return;
         }
 
         if (this.type === 'participant') {
-            var thiz = this;
+            var self = this;
             this.KrinkelService.postParticipant(this.MapperService.mapParticipant(newPerson)).then(function (resp) {
-                thiz.dataIsRemoved = true;
-                thiz.StorageService.removeUser();
-                thiz.SelectService.setSelectedFlag(false);
-                thiz.$window.location.href = resp.headers().location;
+                self.dataIsRemoved = true;
+                self.StorageService.removeUser();
+                self.SelectService.setSelectedFlag(false);
+                self.$window.location.href = resp.headers().location;
             });
             return;
         }
     }
 
     prefillColleague() {
+        console.log('prefil COll');
         var colleague = this.SelectService.getColleague();
         var loggedInUser = this.AuthService.getLoggedinUser();
 
@@ -186,8 +187,11 @@ class RegisterController {
          */
         if (this.SelectService.getColleague() !== undefined) {
             this.prefillColleague();
+            console.log('coll found');
 
         } else {
+            console.log('coll not found');
+
 
             var user = this.StorageService.getUser();
             if (user && user.email === this.AuthService.getLoggedinUser().email) {
@@ -234,6 +238,19 @@ class RegisterController {
         }
     }
 
+    addToBasket(person){
+        var perzon = person;
+        perzon.city = this.details3.vicinity;
+        perzon.postalCode = this.details2.name;
+        perzon.street = this.details.address_components[0].long_name;
+
+        var mappedPerson = this.MapperService.mapParticipant(perzon);
+        console.log(mappedPerson);
+        //add person to cart using service
+        this.KrinkelService.addPersonToBasket(mappedPerson).then(() => {
+            this.$location.path("/cart");
+        });
+    }
 
     /**
      * Not the ideal lifecycle hook to save everything in localstorage, due to time constraints this will have to do for now.
@@ -255,4 +272,17 @@ export var RegisterComponent = {
         type: '@'
     }
 };
+
 RegisterComponent.$inject = ['$log', '$window', 'StorageService', 'MapperService', 'AuthService', 'KrinkelService', '$location', 'SelectService'];
+
+
+export var BasketComponent = {
+    template:require('./addtobasket.html'),
+    controller:RegisterController,
+    bindings : {
+        type:'@'
+    }
+};
+
+BasketComponent.$inject = ['$log', '$window', 'StorageService', 'MapperService', 'AuthService', 'KrinkelService', '$location', 'SelectService'];
+

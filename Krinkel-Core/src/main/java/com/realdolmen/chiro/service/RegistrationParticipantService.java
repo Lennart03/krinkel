@@ -49,26 +49,29 @@ public class RegistrationParticipantService {
                 userService.updateCurrentUserRegisteredStatus();
             }
             return registrationParticipantRepository.save(participant);
-        } else if (participantFromOurDB != null && participantFromOurDB.getStatus().equals(Status.TO_BE_PAID)) {
+        } else if (participantFromOurDB.getStatus().equals(Status.TO_BE_PAID)) {
+
             participant.setId(participantFromOurDB.getId());
             User currentUser = userService.getCurrentUser();
             participantFromOurDB.setRegisteredBy(currentUser.getAdNumber());
             return registrationParticipantRepository.save(participant);
-        } else if (participantFromOurDB != null && (participantFromOurDB.getStatus().equals(Status.PAID)) || participantFromOurDB.getStatus().equals(Status.CONFIRMED)) {
+
+        } else if (participantFromOurDB.getStatus().equals(Status.PAID) || participantFromOurDB.getStatus().equals(Status.CONFIRMED)) {
             return null;
         }
         return null;
     }
 
-    public void updatePaymentStatus(String testOrderId) {
+
+    public void updatePaymentStatus(String orderId) {
         logger.info("in updatePaymentStatus()");
-        String[] split = testOrderId.split("-");
+        String[] split = orderId.split("-");
         String adNumber = split[0];
         RegistrationParticipant participant = registrationParticipantRepository.findByAdNumber(adNumber);
         if (participant != null) {
             logger.info("found participant " + participant.getAdNumber());
 
-            if (multiSafePayService.orderIsPaid(testOrderId)) {
+            if (multiSafePayService.orderIsPaid(orderId)) {
                 if (participant.getAdNumber().equals(participant.getRegisteredBy())) {
                     participant.setStatus(Status.CONFIRMED);
                     userService.updateCurrentUserPayStatus();
@@ -76,18 +79,21 @@ public class RegistrationParticipantService {
                     participant.setStatus(Status.PAID);
                 }
                 logger.info("participant " + participant.getAdNumber() + " on status '" + participant.getStatus().toString() + "'");
-
-                RegistrationCommunication registrationCommunication = new RegistrationCommunication();
-                registrationCommunication.setStatus(SendStatus.WAITING);
-                registrationCommunication.setCommunicationAttempt(0);
-                registrationCommunication.setAdNumber(participant.getAdNumber());
-                if (registrationCommunicationRepository.findByAdNumber(participant.getAdNumber()) == null) {
-                    logger.info("registering communication to participant/volunteer with ad-number: "
-                            + participant.getAdNumber() + " with status: " + registrationCommunication.getStatus());
-                    registrationCommunicationRepository.save(registrationCommunication);
-                }
+                createRegistrationCommunication(participant);
                 registrationParticipantRepository.save(participant);
             }
+        }
+    }
+
+    public void createRegistrationCommunication(RegistrationParticipant participant) {
+        RegistrationCommunication registrationCommunication = new RegistrationCommunication();
+        registrationCommunication.setStatus(SendStatus.WAITING);
+        registrationCommunication.setCommunicationAttempt(0);
+        registrationCommunication.setAdNumber(participant.getAdNumber());
+        if (registrationCommunicationRepository.findByAdNumber(participant.getAdNumber()) == null) {
+            logger.info("registering communication to participant/volunteer with ad-number: "
+                    + participant.getAdNumber() + " with status: " + registrationCommunication.getStatus());
+            registrationCommunicationRepository.save(registrationCommunication);
         }
     }
 
