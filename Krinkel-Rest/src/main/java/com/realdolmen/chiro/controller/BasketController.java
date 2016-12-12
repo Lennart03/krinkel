@@ -59,8 +59,12 @@ public class BasketController {
     @RequestMapping(value = "/api/basket/delete/{adNumber}", method = RequestMethod.GET)
     public ResponseEntity removeUser(@PathVariable String adNumber) {
         Optional<RegistrationParticipant> user = basketService.getUsersInBasket().stream().filter(u -> u.getAdNumber().equals(adNumber)).findFirst();
-        user.ifPresent(basketService::removeUserFromBasket);
-        return new ResponseEntity((HttpStatus.OK));
+
+        if (user.isPresent()) {
+            basketService.removeUserFromBasket(user.get());
+            return new ResponseEntity((HttpStatus.OK));
+        }
+        return new ResponseEntity((HttpStatus.BAD_REQUEST));
     }
 
 }
