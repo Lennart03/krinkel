@@ -1,6 +1,7 @@
 -- noinspection SqlDialectInspectionForFile
 -- noinspection SqlNoDataSourceInspectionForFile
 
+-- Used in Export Unit test -- please do not change this first one!
 INSERT INTO registration_participant (dtype,id,ad_number,city, house_number, postal_code, street, birthdate,
 social_promotion, eatinghabbit, email, email_subscriber, first_name, gender, last_name, remarks_food, medical_remarks, remarks,
 event_role, buddy, stamnumber, status, phone_number, camp_ground, other, preset, registered_by)
@@ -29,7 +30,7 @@ INSERT INTO registration_participant (dtype,id,ad_number,city, house_number, pos
 social_promotion, eatinghabbit, email, email_subscriber, first_name, gender, last_name, remarks_food, medical_remarks, remarks,
 event_role, buddy, stamnumber, status, phone_number, camp_ground, other, preset, registered_by)
 VALUES('RegistrationParticipant', '50', '987654', 'Brussel', '123', '1000', 'Veldstraat', '1995-08-21', false, 'FISHANDMEAT',
-                              'email@test.be', 'email@test.be', 'Frederik', 'MAN', 'Flodder', '', '', '', 'ASPI', false, 'AG /0202', 'CONFIRMED', 1, '', '', '', '987654');
+                              'email@test.be', 'email@test.be', 'Frederik', 'MAN', 'Flodder', '', '', '', 'ASPI', true, 'AG /0202', 'CONFIRMED', 1, '', '', '', '987654');
 
 INSERT INTO registration_participant (dtype,id,ad_number,city, house_number, postal_code, street, birthdate,
 social_promotion, eatinghabbit, email, email_subscriber, first_name, gender, last_name, remarks_food, medical_remarks, remarks,

@@ -2,12 +2,16 @@ package com.realdolmen.chiro.controller;
 
 import com.realdolmen.chiro.service.ExcelOutputService;
 import com.realdolmen.chiro.service.ExportService;
+import com.realdolmen.chiro.service.security.UserServiceSecurity;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.io.IOException;
@@ -16,6 +20,7 @@ import java.nio.file.Files;
 /**
  * Created by JCPBB69 on 8/12/2016.
  */
+
 @RestController
 public class ExportController {
 
@@ -27,26 +32,37 @@ public class ExportController {
     @Autowired
     private ExcelOutputService excelOutputService;
 
+    @Autowired
+    private UserServiceSecurity userServiceSecurity;
+
+
+    public String getBaseUrl(HttpServletRequest req) {
+        StringBuffer url = req.getRequestURL();
+        String uri = req.getRequestURI();
+        String ctx = req.getContextPath();
+        String base = url.substring(0, url.length() - uri.length() + ctx.length()) + "/";
+        System.err.println("##########################################");
+        System.err.println("Retrieved base url is : \n" + base);
+
+        return base;
+    }
+
     /**
      * Downloads the excel sheet with all registrationParticipants.
      * This method is called by redirecting through a href with BASE_URL + /downloadExcelTest
+     * redirects to home page of application if user is not admin
      * @param response
      * @return
      */
     @RequestMapping(value="/exportRegistratieLijstAlles", method=RequestMethod.GET)
-    public ModelAndView exportRegistrationParticipantListComplete(HttpServletResponse response){
-        exportService.createExcelOutputXlsRegistrationAll(response, "registratiesLijstAlles.xls");
+    public ModelAndView exportRegistrationParticipantListComplete(HttpServletResponse response, HttpServletRequest request){
+        if(userServiceSecurity.hasAdminRights()){
+            exportService.createExcelOutputXlsRegistrationAll(response);
+        } else {
+            return new ModelAndView("redirect:" + getBaseUrl(request) + "/index.html");
+        }
         return null;
     }
-
-    @RequestMapping(value="/exportRegistratieLijstAllesCSV", method=RequestMethod.GET, produces = "application/zip")
-    public void exportRegistrationParticipantListCompleteCSV(HttpServletResponse response){
-        exportService.createCSVBackups(response);
-
-//        return null;
-    }
-
-
 
 //    @RequestMapping(value="zip", method=RequestMethod.GET, produces = "application/zip")
 //    public byte[] exportRegistrationParticipantListCompleteCSV2(HttpServletResponse response){
@@ -66,12 +82,25 @@ public class ExportController {
     public ModelAndView exportRegistrationParticipantListCompleteCSVTest(HttpServletResponse response){
         excelOutputService.exportCSV(response, "test.csv");
         return null;
+}
+    @RequestMapping(value="/exportRegistratieLijstAllesCSV", method=RequestMethod.GET)
+    public ModelAndView exportRegistrationParticipantListCompleteCSV(HttpServletResponse response, HttpServletRequest request){
+        if (userServiceSecurity.hasAdminRights()) {
+            excelOutputService.exportCSV(response);
+        } else {
+            return new ModelAndView("redirect:" + getBaseUrl(request) + "/index.html");
+        }
+            return null;
     }
 
     @RequestMapping(value="/exportRegistratieLijstAllesXLSX", method=RequestMethod.GET)
-    public ModelAndView exportRegistrationParticipantListCompleteXLSX(HttpServletResponse response){
-        excelOutputService.exportXLSX(response);
-        return null;
+    public ModelAndView exportRegistrationParticipantListCompleteXLSX(HttpServletResponse response, HttpServletRequest request){
+        if (userServiceSecurity.hasAdminRights()) {
+            excelOutputService.exportXLSX(response);
+        } else {
+            return new ModelAndView("redirect:" + getBaseUrl(request) + "/index.html");
+        }
+            return null;
     }
 
     /**
@@ -81,9 +110,13 @@ public class ExportController {
      * @return
      */
     @RequestMapping(value="/exportRegistratieLijstMedewerkers", method=RequestMethod.GET)
-    public ModelAndView exportRegistrationParticipantListVolunteers(HttpServletResponse response){
-        exportService.createExcelOutputXlsRegistrationVolunteers(response, "registratiesLijstAlles.xls");
-        return null;
+    public ModelAndView exportRegistrationParticipantListVolunteers(HttpServletResponse response, HttpServletRequest request){
+        if (userServiceSecurity.hasAdminRights()) {
+            exportService.createExcelOutputXlsRegistrationVolunteers(response);
+        } else {
+            return new ModelAndView("redirect:" + getBaseUrl(request) + "/index.html");
+        }
+            return null;
     }
 
     /**
@@ -93,8 +126,12 @@ public class ExportController {
      * @return
      */
     @RequestMapping(value="/exportRegistratieLijstDeelnemers", method=RequestMethod.GET)
-    public ModelAndView exportRegistrationParticipantListParticipants(HttpServletResponse response){
-        exportService.createExcelOutputXlsRegistrationParticipants(response, "registratiesLijstAlles.xls");
+    public ModelAndView exportRegistrationParticipantListParticipants(HttpServletResponse response, HttpServletRequest request){
+        if (userServiceSecurity.hasAdminRights()) {
+            exportService.createExcelOutputXlsRegistrationParticipants(response);
+        } else {
+            return new ModelAndView("redirect:" + getBaseUrl(request) + "/index.html");
+        }
         return null;
     }
 
@@ -105,19 +142,23 @@ public class ExportController {
      * @return
      */
     @RequestMapping(value="/downloadExcelTest", method=RequestMethod.GET)
-    public ModelAndView downloadExcelOutputExcelTest(HttpServletResponse response){
-        System.err.println("INSIDE downloadExcelOutputExcelTest for exporting registration list");
-        exportService.createExcelOutputXlsRegistrationAll(response, "registratiesLijstAlles.xls");
+    public ModelAndView downloadExcelOutputExcelTest(HttpServletResponse response, HttpServletRequest request){
+        if (userServiceSecurity.hasAdminRights()) {
+            System.err.println("INSIDE downloadExcelOutputExcelTest for exporting registration list");
+            exportService.createExcelOutputXlsRegistrationAll(response);
+        } else {
+            return new ModelAndView("redirect:" + getBaseUrl(request) + "/index.html");
+        }
         return null;
     }
 
     // TRYING WITH XLSX -- gives corrupted xlsx files
-    @RequestMapping(value="/downloadExcel", method=RequestMethod.GET)
-    public ModelAndView downloadExcelOutputExcel(HttpServletResponse response){
-        System.err.println("INSIDE downloadExcelOutputExl for exporting registration list");
-        excelOutputService.createExcelOutputXlsx(response, exportService.writeRegistrationParticipantsToExcel(true));
-        return null;
-    }
+//    @RequestMapping(value="/downloadExcel", method=RequestMethod.GET)
+//    public ModelAndView downloadExcelOutputExcel(HttpServletResponse response){
+//        System.err.println("INSIDE downloadExcelOutputExl for exporting registration list");
+//        excelOutputService.createExcelOutputXlsx(response, exportService.writeRegistrationParticipantsToExcel(true));
+//        return null;
+//    }
 
     //    @RequestMapping(value = "api/exportCompleteEntryList", method = RequestMethod.GET, produces = "application/octet-stream")
 //    public ResponseEntity<InputStreamResource> exportCompleteEntryList() throws IOException{
