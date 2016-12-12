@@ -82,4 +82,26 @@ public class RegistrationParticipantController {
         logger.info("New registration created.");
         return new ResponseEntity<>(headers, HttpStatus.CREATED);
     }
+
+    @RequestMapping(method = RequestMethod.POST, value = "/api/participants/admin", consumes = "application/json")
+    public ResponseEntity<?> saveByAdmin(@Valid @RequestBody RegistrationParticipant participant) throws URISyntaxException {
+        if (participant == null) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
+        //Integer price = registrationParticipantService.getPRICE_IN_EUROCENTS();
+        //String paymentUrl = multiSafePayService.getParticipantPaymentUri(resultingParticipant, price, currentUser);
+        //admin moet niet betalen dus payment status op betaald zetten
+        registrationParticipantService.markAsPayed(participant);
+
+        HttpHeaders headers = new HttpHeaders();
+        //TODO doorverwijzen naar de admin page
+        // deze | lijn uit commentaar halen als ge gemerged hebt met lennart zijn branch
+        //      v
+        //headers.setLocation(new URI("/admin"));
+        headers.setLocation(new URI("/find-participant-by-ad"));
+
+        logger.info("New registration created.");
+        return new ResponseEntity<>(headers, HttpStatus.CREATED);
+    }
 }

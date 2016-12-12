@@ -23,7 +23,7 @@ class ChooseRegistrationController {
 
     subscribeColleague() {
         this.RegisterOtherMemberService.setSubscribeColleague(true);
-        this.$location.path("/register-participant");
+        this.$location.path("/register-volunteer");
     }
 
 }

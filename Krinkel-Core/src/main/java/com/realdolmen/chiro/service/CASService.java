@@ -93,6 +93,8 @@ public class CASService {
             adminAdNumbers.add("109318");
             //TODO remove this one, it's me (arne)
             adminAdNumbers.add("169314");
+            adminAdNumbers.add("396944");
+
 
             if (adminAdNumbers.contains(adNumber)) {
                 user.setRole(SecurityRole.ADMIN);
@@ -100,7 +102,9 @@ public class CASService {
                 user.setRole(SecurityRole.GROEP);
             }
 
-            userService.setCurrentUser(user);
+            if(userService.getCurrentUser() == null || userService.getCurrentUser().getRole() == null || !userService.getCurrentUser().getRole().equals(SecurityRole.ADMIN)) {
+                userService.setCurrentUser(user);
+            }
 
             return user;
         }

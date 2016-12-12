@@ -39,7 +39,9 @@ public class ChiroContactService {
          * "https://cividev.chiro.be/sites/all/modules/civicrm/extern/rest.php?key=2340f8603072358ffc23f5459ef92f88&api_key=vooneih8oo1XepeiduGh&entity=Light&action=getcontact&json=%7B%22adnr%22:" + adNumber + "%7D";
          */
         //TODO use adNumber variable and not hardcoded 308986
-        String url = chiroUrl + "?key=" + chiroKey + "&api_key=" + apiKey + "&entity=Light&action=getcontact&json=%7B%22adnr%22:" + 308986 + "%7D";
+        //String url = chiroUrl + "?key=" + chiroKey + "&api_key=" + apiKey + "&entity=Light&action=getcontact&json=%7B%22adnr%22:" + 308986 + "%7D";
+        String url = chiroUrl + "?key=" + chiroKey + "&api_key=" + apiKey + "&entity=Light&action=getcontact&json=%7B%22adnr%22:" + adNumber + "%7D";
+
 
         // Throws exception when the URL isn't valid, no further checks necessary because of this.
         URI uri = new URI(url);
@@ -55,9 +57,8 @@ public class ChiroContactService {
      *
      */
     public RegistrationParticipant getRegistrationParticipant(Integer adNumber) throws URISyntaxException {
-        //Todo: gebruik deze functie
-        //String json = getContact(adNumber);
-        String json = "{\"is_error\":0,\"version\":3,\"count\":1,\"id\":0,\"values\":[{\"adnr\":\"308986\",\"first_name\":\"Elise\",\"last_name\":\"Schollaert\",\"afdeling\":\"L\",\"functies\":[\"GG1\",\"GG2\"],\"gender_id\":\"1\",\"birth_date\":\"1978-07-20\",\"street_address\":\"Desselgemstraat 17\",\"postal_code\":\"2240\",\"city\":\"Massenhoven\",\"country\":\"BE\",\"phone\":\"02-0233980\",\"email\":\"120845@example.com\",\"id\":\"301334\"}]}";
+        String json = getContact(adNumber);
+        //String json = "{\"is_error\":0,\"version\":3,\"count\":1,\"id\":0,\"values\":[{\"adnr\":\"308986\",\"first_name\":\"Elise\",\"last_name\":\"Schollaert\",\"afdeling\":\"L\",\"functies\":[\"GG1\",\"GG2\"],\"gender_id\":\"1\",\"birth_date\":\"1978-07-20\",\"street_address\":\"Desselgemstraat 17\",\"postal_code\":\"2240\",\"city\":\"Massenhoven\",\"country\":\"BE\",\"phone\":\"02-0233980\",\"email\":\"120845@example.com\",\"id\":\"301334\"}]}";
 
         String adnr = json.substring(json.indexOf("adnr") + 3 + 4 );
         adnr = adnr.substring(0, adnr.indexOf("\""));

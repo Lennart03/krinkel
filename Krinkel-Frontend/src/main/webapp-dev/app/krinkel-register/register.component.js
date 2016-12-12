@@ -74,25 +74,49 @@ class RegisterController {
         this.newPerson.city = this.details3.vicinity;
         this.newPerson.postalCode = this.details2.name;
         this.newPerson.street = this.details.address_components[0].long_name;
-        if (this.type === 'volunteer') {
-            var thiz = this;
-            this.KrinkelService.postVolunteer(this.MapperService.mapVolunteer(newPerson)).then(function (resp) {
-                thiz.dataIsRemoved = true;
-                thiz.StorageService.removeUser();
-                thiz.$window.location.href = resp.headers().location;
-            });
-            return;
-        }
 
-        if (this.type === 'participant') {
-            var thiz = this;
-            this.KrinkelService.postParticipant(this.MapperService.mapParticipant(newPerson)).then(function (resp) {
-                thiz.dataIsRemoved = true;
-                thiz.StorageService.removeUser();
-                thiz.SelectService.setSelectedFlag(false);
-                thiz.$window.location.href = resp.headers().location;
-            });
-            return;
+        if(this.user === "admin") {
+            if (this.type === 'volunteer') {
+                var thiz = this;
+                this.KrinkelService.postVolunteerByAdmin(this.MapperService.mapVolunteer(newPerson)).then(function (resp) {
+                    thiz.dataIsRemoved = true;
+                    thiz.StorageService.removeUser();
+                    thiz.$window.location.href = resp.headers().location;
+                });
+                return;
+            }
+
+            if (this.type === 'participant') {
+                var thiz = this;
+                this.KrinkelService.postParticipantByAdmin(this.MapperService.mapParticipant(newPerson)).then(function (resp) {
+                    thiz.dataIsRemoved = true;
+                    thiz.StorageService.removeUser();
+                    thiz.SelectService.setSelectedFlag(false);
+                    thiz.$window.location.href = resp.headers().location;
+                });
+                return;
+            }
+        } else {
+            if (this.type === 'volunteer') {
+                var thiz = this;
+                this.KrinkelService.postVolunteer(this.MapperService.mapVolunteer(newPerson)).then(function (resp) {
+                    thiz.dataIsRemoved = true;
+                    thiz.StorageService.removeUser();
+                    thiz.$window.location.href = resp.headers().location;
+                });
+                return;
+            }
+
+            if (this.type === 'participant') {
+                var thiz = this;
+                this.KrinkelService.postParticipant(this.MapperService.mapParticipant(newPerson)).then(function (resp) {
+                    thiz.dataIsRemoved = true;
+                    thiz.StorageService.removeUser();
+                    thiz.SelectService.setSelectedFlag(false);
+                    thiz.$window.location.href = resp.headers().location;
+                });
+                return;
+            }
         }
     }
 
@@ -174,7 +198,7 @@ class RegisterController {
     }
 
     /*
-    * wanneer men admin een deelnemer wil toevoegen
+    * wanneer de admin een deelnemer wil toevoegen
      */
     prefillMember() {
         var participant = this.RegisterOtherMemberService.getParticipant();
@@ -215,7 +239,7 @@ class RegisterController {
     }
 
     /*
-     * wanneer men admin een medewerker wil toevoegen
+     * wanneer de admin een medewerker wil toevoegen
      */
     prefillColleagueByAdmin() {
         var participant = this.RegisterOtherMemberService.getParticipant();
@@ -266,9 +290,11 @@ class RegisterController {
          */
         if(this.RegisterOtherMemberService.subscribeMember()) {
             this.prefillMember();
+            this.user = "admin";
             this.RegisterOtherMemberService.setSubscribeMember(false);
         } else if(this.RegisterOtherMemberService.subscribeColleague()) {
             this.prefillColleagueByAdmin();
+            this.user = "admin";
             this.RegisterOtherMemberService.setSubscribeColleague(false);
         } else if (this.SelectService.getColleague() !== undefined) {
             this.prefillColleague();

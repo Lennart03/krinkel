@@ -18,7 +18,17 @@ export class KrinkelService {
     }
 
     postVolunteer(user) {
-        return this.$http.post(`${this.BASEURL}/api/volunteers`, user).then((resp) => {
+    return this.$http.post(`${this.BASEURL}/api/volunteers`, user).then((resp) => {
+            return resp;
+        },
+        () => {
+            this.popup();
+        }
+    );
+}
+
+    postParticipant(user) {
+        return this.$http.post(`${this.BASEURL}/api/participants`, user).then((resp) => {
                 return resp;
             },
             () => {
@@ -27,8 +37,18 @@ export class KrinkelService {
         );
     }
 
-    postParticipant(user) {
-        return this.$http.post(`${this.BASEURL}/api/participants`, user).then((resp) => {
+    postVolunteerByAdmin(user) {
+        return this.$http.post(`${this.BASEURL}/api/volunteers/admin`, user).then((resp) => {
+                return resp;
+            },
+            () => {
+                this.popup();
+            }
+        );
+    }
+
+    postParticipantByAdmin(user) {
+        return this.$http.post(`${this.BASEURL}/api/participants/admin`, user).then((resp) => {
                 return resp;
             },
             () => {
