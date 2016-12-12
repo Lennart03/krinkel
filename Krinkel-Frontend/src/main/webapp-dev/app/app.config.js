@@ -16,7 +16,7 @@ export function appConfig($routeProvider, $locationProvider) {
     });
 
     $routeProvider.when('/register-volunteer', {
-        template: '<register type="volunteer"></register>',
+        template: '<register type="volunteer"></register>'
     });
 
     $routeProvider.when('/analytics', {
@@ -29,6 +29,14 @@ export function appConfig($routeProvider, $locationProvider) {
 
     $routeProvider.when('/graph', {
         template: '<krinkel-graph></krinkel-graph>'
+    });
+
+    $routeProvider.when('/adminBeheer', {
+        template: '<admin-toevoegen></admin-toevoegen>'
+    });
+
+    $routeProvider.when('/admin', {
+        template: '<krinkel-admin></krinkel-admin>'
     });
 
     //Fail page had to go :(
