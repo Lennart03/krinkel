@@ -92,16 +92,17 @@ public class RegistrationParticipantController {
 
 
     @RequestMapping(method = RequestMethod.POST, value = "/api/participantCancel")
-    public ResponseEntity<?> cancel(@RequestParam("participant") String participantId) throws URISyntaxException {
+    public ResponseEntity<?> cancel(@RequestParam("participantId") String participantId) throws URISyntaxException {
         RegistrationParticipant resultingParticipant = registrationParticipantService.cancel(Long.valueOf(participantId));
-        Verbond verbond = Verbond.getVerbondFromStamNumber(this.stamNumberTrimmer.trim(resultingParticipant.getStamnumber()));
+        logger.info("Payment Cancelled.");
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
 
-        JSONObject entity = new JSONObject();
-        entity.put("naam", verbond.name());
-        entity.put("stamnummer", this.stamNumberTrimmer.trim(verbond.getStam()));
-        return new ResponseEntity<>(entity, HttpStatus.I_AM_A_TEAPOT);
 
-        // naam & stamnummer
-        // List<ChiroUnit> allVerbondUnits = chiroUnitService.findVerbondUnits();
+    @RequestMapping(method = RequestMethod.POST, value = "/api/paymentStatusChange")
+    public ResponseEntity<?> updatePayment(@RequestParam("participantId") String participantId, @RequestParam("paymentStatus") String paymentStatus) throws URISyntaxException {
+        RegistrationParticipant resultingParticipant = registrationParticipantService.updatePaymentStatusAdmin(Long.valueOf(participantId), paymentStatus);
+        logger.info("Payment updated.");
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }

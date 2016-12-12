@@ -4,6 +4,7 @@ class UnitsController {
         this.AuthService = AuthService;
         this.MapperService = MapperService;
         this.$route = $route;
+        this.initSelectPayStatus();
     }
 
     $onInit() {
@@ -95,9 +96,21 @@ class UnitsController {
         }
     }
 
+    saveData(participantId, paymentStatus) {
+        this.KrinkelService.updatePayment(participantId, paymentStatus);
+    }
+
     initCancelModal(modalId) {
         let modalName = '#modal' + modalId;
         $(modalName).openModal();
+    }
+
+    initSelectPayStatus() {
+        this.statusses =  [
+            { 'value': 'TO_BE_PAID', 'label': 'Onbetaald' },
+            { 'value': 'PAID', 'label': 'Betaald' },
+            { 'value': 'CONFIRMED', 'label': 'Bevestigd'}
+            ]
     }
 }
 

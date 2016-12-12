@@ -47,8 +47,20 @@ export class KrinkelService {
         );
     }
 
-    putParticipantToCancelled(participant) {
-        return this.$http.post(`${this.BASEURL}/api/participantCancel?participant=${participant}`).then((resp) => {
+    putParticipantToCancelled(participantId) {
+        return this.$http.post(`${this.BASEURL}/api/participantCancel?participantId=${participantId}`).then((resp) => {
+                return resp.data;
+            },
+            () => {
+                this.popup();
+            }
+        );
+    }
+
+    updatePayment(participantId, paymentStatus) {
+        return this.$http.post(`${this.BASEURL}/api/paymentStatusChange?participantId=${participantId}&paymentStatus=${paymentStatus}`).then((resp) => {
+                console.log('RESP: ' + resp.data);
+
                 return resp.data;
             },
             () => {

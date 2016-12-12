@@ -167,6 +167,17 @@ public class RegistrationParticipantService {
         }
 
         return registrationParticipantRepository.save(participant);
+    }
 
+    public RegistrationParticipant updatePaymentStatusAdmin(Long participantId, String paymentStatus) {
+        RegistrationParticipant participant = registrationParticipantRepository.findOne(participantId);
+        if (Status.valueOf(paymentStatus) == Status.TO_BE_PAID) {
+            participant.setStatus(Status.TO_BE_PAID);
+        } else if (Status.valueOf(paymentStatus) == Status.PAID) {
+            participant.setStatus(Status.PAID);
+        } else if (Status.valueOf(paymentStatus) == Status.CONFIRMED) {
+            participant.setStatus(Status.CONFIRMED);
+        }
+        return registrationParticipantRepository.save(participant);
     }
 }

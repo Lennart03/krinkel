@@ -5,7 +5,14 @@
         background-color: #EEE;
         cursor: pointer;
     }
-
+    select {
+        display: block;
+        cursor: pointer;
+    }
+    option {
+        padding: 5px 0;
+        cursor: pointer;
+    }
 </style>
 
 <a class="btn" ng-click="$ctrl.goToPrevious($ctrl.verbond)" ng-if="$ctrl.unitLevel">
@@ -59,6 +66,7 @@
         <th data-field="city">Gemeente</th>
         <th data-field="eatinghabit">Eetgewoonte</th>
         <th data-field="medicalRemarks">Medische info</th>
+        <th ng-if="$ctrl.AuthService.getUserRole() === 'ADMIN'">Status</th>
         <th ng-if="$ctrl.AuthService.getUserRole() === 'ADMIN'"><i class="material-icons right icon-green">delete</i></th>
     </tr>
     </thead>
@@ -78,6 +86,10 @@
         </td>
         <td>
             {{participant.medicalRemarks}}
+        </td>
+        <td ng-if="$ctrl.AuthService.getUserRole() === 'ADMIN'">
+            <select ng-model="participant.status" ng-init="participant.status" ng-options="item.value as item.label for item in $ctrl.statusses"  ng-change="$ctrl.saveData(participant.id, participant.status)">
+            </select>
         </td>
         <td ng-if="$ctrl.AuthService.getUserRole() === 'ADMIN'">
             <a ng-click="$ctrl.initCancelModal(participant.id)">
@@ -101,7 +113,6 @@
     </div>
 
 
-
 <table ng-if="$ctrl.volunteerDetails">
     <thead>
     <tr>
@@ -112,6 +123,7 @@
         <th data-field="medicalRemarks">Medische info</th>
         <th data-field="function">Functie</th>
         <th data-field="campground">Kampgrond</th>
+        <th ng-if="$ctrl.AuthService.getUserRole() === 'ADMIN'">Status</th>
         <th ng-if="$ctrl.AuthService.getUserRole() === 'ADMIN'"><i class="material-icons right icon-green">delete</i></th>
     </tr>
     </thead>
@@ -137,6 +149,10 @@
         </td>
         <td>
             {{volunteer.campGround}}
+        </td>
+        <td ng-if="$ctrl.AuthService.getUserRole() === 'ADMIN'">
+            <select ng-model="volunteer.status" ng-init="volunteer.status" ng-change="$ctrl.saveData(volunteer.id, volunteer.status)" ng-options="item.value as item.label for item in $ctrl.statusses">
+            </select>
         </td>
         <td ng-if="$ctrl.AuthService.getUserRole() === 'ADMIN'">
             <a ng-click="$ctrl.initCancelModal(volunteer.id)">
