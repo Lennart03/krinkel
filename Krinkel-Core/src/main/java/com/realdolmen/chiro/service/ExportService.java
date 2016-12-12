@@ -3,13 +3,11 @@ package com.realdolmen.chiro.service;
 import com.realdolmen.chiro.domain.*;
 import com.realdolmen.chiro.repository.RegistrationParticipantRepository;
 import com.realdolmen.chiro.repository.RegistrationVolunteerRepository;
-import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.File;
-import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -104,25 +102,25 @@ public class ExportService {
          return null;
      }
 
-    public void createExcelOutputXlsRegistrationAll(HttpServletResponse response, String fileName) {
+    public void createExcelOutputXlsRegistrationAll(HttpServletResponse response) {
         Object[] header = createHeaderForRegistrationParticipants();
         Map<String, Object []> data = createDataForRegistrationParticipants();
         excelOutputService.createExcelOutputXls(response, "registratiesLijstAlles.xls", header, data);
     }
 
-    public void createExcelOutputXlsRegistrationCSV(HttpServletResponse response, String fileName) {
+    public void createExcelOutputXlsRegistrationCSV(HttpServletResponse response) {
         Object[] header = createHeaderForRegistrationParticipants();
         Map<String, Object []> data = createDataForRegistrationParticipants();
         excelOutputService.createExcelOutputXls(response, "registratiesLijstAlles.csv", header, data);
     }
 
-    public void createExcelOutputXlsRegistrationParticipants(HttpServletResponse response, String fileName) {
+    public void createExcelOutputXlsRegistrationParticipants(HttpServletResponse response) {
         Object[] header = createHeaderForRegistrationParticipants();
         Map<String, Object []> data = createDataForRegistrationParticipantsOnlyParticipants();
         excelOutputService.createExcelOutputXls(response, "registratiesLijstDeelnemers.xls", header, data);
     }
 
-    public void createExcelOutputXlsRegistrationVolunteers(HttpServletResponse response, String fileName) {
+    public void createExcelOutputXlsRegistrationVolunteers(HttpServletResponse response) {
         Object[] header = createHeaderForRegistrationParticipants();
         Map<String, Object []> data = createDataForRegistrationParticipantsOnlyVolunteers();
         excelOutputService.createExcelOutputXls(response, "registratiesLijstMedewerkers.xls", header, data);
