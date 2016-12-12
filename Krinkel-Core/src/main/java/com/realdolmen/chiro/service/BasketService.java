@@ -6,6 +6,7 @@ import com.realdolmen.chiro.domain.Status;
 import com.realdolmen.chiro.mspdto.OrderDto;
 import com.realdolmen.chiro.mspservice.MultiSafePayService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -25,18 +26,22 @@ public class BasketService {
     @Autowired
     private RegistrationBasketComponent registrationBasketComponent;
 
+    @PreAuthorize("@UserServiceSecurity.hasPermissionToGetColleagues()")
     public void addUserToBasket(RegistrationParticipant user) {
         registrationBasketComponent.addUserToBasket(user);
     }
 
+    @PreAuthorize("@UserServiceSecurity.hasPermissionToGetColleagues()")
     public List<RegistrationParticipant> getUsersInBasket() {
         return registrationBasketComponent.getUsersInBasket();
     }
 
+    @PreAuthorize("@UserServiceSecurity.hasPermissionToGetColleagues()")
     public void removeUserFromBasket(RegistrationParticipant user) {
         registrationBasketComponent.removeUserFromBasket(user);
     }
 
+    @PreAuthorize("@UserServiceSecurity.hasPermissionToGetColleagues()")
     public String getRegistrationEmail() {
         if (userService.getCurrentUser() != null) {
             if (userService.getCurrentUser().getEmail() != null) {
@@ -67,6 +72,8 @@ public class BasketService {
         return registrationBasketComponent.getUsersInBasket().stream().mapToInt(u -> 11000).sum();
     }
 
+
+    @PreAuthorize("@UserServiceSecurity.hasPermissionToGetColleagues()")
     public String initializePayment() throws MultiSafePayService.InvalidPaymentOrderIdException {
         applySubscriberEmail();
         registrationBasketComponent.getUsersInBasket().forEach(u -> {
