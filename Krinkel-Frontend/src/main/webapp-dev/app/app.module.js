@@ -37,7 +37,7 @@ export default angular
     .config(appConfig)
     .constant('appVersion', 'BETA')
     .constant('BASEURL', 'http://localhost:8080')
-    .run((appVersion)=> {
+        .run((appVersion)=> {
         console.log(`version: ${appVersion}`);
     })
     .service('KrinkelService', KrinkelService)

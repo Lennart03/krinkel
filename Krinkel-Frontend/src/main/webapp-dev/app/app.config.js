@@ -35,6 +35,12 @@ export function appConfig($routeProvider, $locationProvider) {
         template: '<krinkel-find-member-by-ad></krinkel-find-member-by-ad>'
     });
 
+
+
+    $routeProvider.when('/choose-registration-participant', {
+           template: '<krinkel-choose-registration></krinkel-choose-registration>'
+    });
+
     $routeProvider.otherwise({
         redirectTo: '/home'
     });
@@ -42,13 +48,9 @@ export function appConfig($routeProvider, $locationProvider) {
 
 
 
-    /*$routeProvider.when('/choose-registration-participant', {
-
-    $routeProvider.when('/choose-registration-participant', {
-        template: '<krinkel-choose-registration></krinkel-choose-registration>'
-    });
 
 
+/*
 
     //Fail page had to go :(
     // $routeProvider.when('/fail', {
