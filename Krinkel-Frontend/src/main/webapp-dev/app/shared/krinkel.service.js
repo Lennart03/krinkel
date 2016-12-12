@@ -218,6 +218,10 @@ export class KrinkelService {
             this.$window.location.reload();
         }, 10000);
     }
+
+    popupForAdmin() {
+        Materialize.toast('De deelnemer is ingeschreven', 10000, 'red rounded');
+    }
 }
 
 KrinkelService.$inject = ['$http', 'BASEURL', '$window'];
