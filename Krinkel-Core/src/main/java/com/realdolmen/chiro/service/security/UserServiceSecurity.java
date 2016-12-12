@@ -23,7 +23,7 @@ public class UserServiceSecurity {
      */
     public boolean hasAdminRights() {
         User currentUser = userService.getCurrentUser();
-        if(currentUser.getRole() == SecurityRole.ADMIN) {
+        if(currentUser!= null && currentUser.getRole() == SecurityRole.ADMIN) {
             return true;
         } else {
             return false;

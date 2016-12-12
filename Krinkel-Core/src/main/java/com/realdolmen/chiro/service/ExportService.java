@@ -47,25 +47,6 @@ public class ExportService {
         return null;
     }
 
-    /**
-     * Queries the DB for registered participants only, calls the excelservice to write
-     * them to an xlsx file and returns the file for the requested xlsx file if successful or
-     * returns null if something went wrong.
-     * @return File for the requested xlsx file or null if something went wrong.
-     */
-    public File writeRegistrationParticipantsToXlsx() {
-        //TODO: rewrite
-//        try {
-//            File file = excelService.writeExcel(getRegistrationParticipantsWithoutVolunteers(), true);
-//            return file;
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        } catch (InvalidFormatException e) {
-//            e.printStackTrace();
-//        }
-        return null;
-    }
-
     public List<RegistrationParticipant> getRegistrationParticipantsWithoutVolunteers(){
         List<RegistrationParticipant> allParticipants = registrationParticipantRepository.findAll();
         List<RegistrationParticipant> allParticipantsNotVolunteer = new ArrayList<RegistrationParticipant>();
@@ -130,7 +111,7 @@ public class ExportService {
      * Collects the data needed to create the excel file for all RegistrationParticipants.
      * @return
      */
-    private Map<String,Object[]> createDataForRegistrationParticipants() {
+    protected Map<String,Object[]> createDataForRegistrationParticipants() {
         List<RegistrationParticipant> all = registrationParticipantRepository.findAll();
         Map<String, Object[]> dataMap = putRegistrationParticipantsIntoMap(all);
         return dataMap;
@@ -140,7 +121,7 @@ public class ExportService {
      * Collects the data needed to create the excel file for all RegistrationParticipants who are not volunteers.
      * @return
      */
-    private Map<String,Object[]> createDataForRegistrationParticipantsOnlyParticipants() {
+    protected Map<String,Object[]> createDataForRegistrationParticipantsOnlyParticipants() {
         List<RegistrationParticipant> participantsWithoutVolunteers = getRegistrationParticipantsWithoutVolunteers();
         Map<String, Object[]> dataMap = putRegistrationParticipantsIntoMap(participantsWithoutVolunteers);
         return dataMap;
@@ -150,7 +131,7 @@ public class ExportService {
      * Collects the data needed to create the excel file for all RegistrationParticipants who are volunteers.
      * @return
      */
-    private Map<String,Object[]> createDataForRegistrationParticipantsOnlyVolunteers() {
+    protected Map<String,Object[]> createDataForRegistrationParticipantsOnlyVolunteers() {
         List<RegistrationVolunteer> allVolunteers = registrationVolunteerRepository.findAll();
         List<RegistrationParticipant> allVolunteerParticipants = allVolunteers.stream().collect(Collectors.toList());
         Map<String, Object[]> dataMap = putRegistrationParticipantsIntoMap(allVolunteerParticipants);
@@ -161,7 +142,7 @@ public class ExportService {
      * Creates the header needed to create the excel file for the RegistrationParticipants.
      * @return
      */
-    private Object [] createHeaderForRegistrationParticipants(){
+    protected Object [] createHeaderForRegistrationParticipants(){
         Object [] header = new Object[] {
                 "Id",
                 "Ad-nummer",
@@ -192,7 +173,7 @@ public class ExportService {
                 "Geregistreerd door",
                 "E-mailadres inschrijver",
                 "Status",
-                "Syncstatus",
+                "Synchstatus",
         };
         return header;
     }
@@ -216,7 +197,7 @@ public class ExportService {
                 campGround = volunteer.getCampGround().getDescription();
                 preset = volunteer.getFunction().getPreset().getDescription();
                 other = volunteer.getFunction().getOther();
-                precampDates = transformPreCamptListToString(volunteer.getPreCampList());
+                precampDates = transformPreCampListToString(volunteer.getPreCampList());
                 postcampDates = transformPostCampListToString(volunteer.getPostCampList());
             }
 
@@ -286,7 +267,7 @@ public class ExportService {
         return data;
     }
 
-    private String transformPreCamptListToString(List<PreCamp> preCampList) {
+    protected String transformPreCampListToString(List<PreCamp> preCampList) {
         String dates = "";
         for(int i = 0; i < preCampList.size()-1; i++){
             dates += getDateFormatted(preCampList.get(i).getDate()) + ", ";
@@ -297,7 +278,7 @@ public class ExportService {
         return dates;
     }
 
-    private String transformPostCampListToString(List<PostCamp> postCampList) {
+    protected String transformPostCampListToString(List<PostCamp> postCampList) {
         String dates = "";
         for(int i = 0; i < postCampList.size()-1; i++){
             dates += getDateFormatted(postCampList.get(i).getDate()) + ", ";
@@ -308,13 +289,13 @@ public class ExportService {
         return dates;
     }
 
-    private String getDateFormatted(Date date) {
+    protected String getDateFormatted(Date date) {
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
         return dateFormat.format(date);
     }
 
 
-    private String transformLanguageListToString(List<Language> languagesList) {
+    protected String transformLanguageListToString(List<Language> languagesList) {
         String languages = "";
         for(int i = 0; i < languagesList.size()-1; i++){
             languages += languagesList.get(i).getDescription() + ", ";
