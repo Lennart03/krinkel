@@ -81,7 +81,7 @@ class RegisterController {
                 this.KrinkelService.postVolunteerByAdmin(this.MapperService.mapVolunteer(newPerson)).then(function (resp) {
                     thiz.dataIsRemoved = true;
                     thiz.StorageService.removeUser();
-                    thiz.$window.location.href = resp.headers().location;
+                    thiz.$location.path("/admin");
 
                 });
                 this.KrinkelService.popupForAdmin();
@@ -94,7 +94,7 @@ class RegisterController {
                     thiz.dataIsRemoved = true;
                     thiz.StorageService.removeUser();
                     thiz.SelectService.setSelectedFlag(false);
-                    thiz.$window.location.href = resp.headers().location;
+                    thiz.$location.path("/admin");
 
                 });
                 this.KrinkelService.popupForAdmin();
@@ -128,10 +128,10 @@ class RegisterController {
     }
 
     prefillColleague() {
-        console.log('prefil COll');
+        console.log('prefil COll now coll');
         var colleague = this.SelectService.getColleague();
         var loggedInUser = this.AuthService.getLoggedinUser();
-
+        console.log(colleague);
         this.newPerson = {
             adNumber: colleague.adnr,
             job: "Aanbod nationale kampgrond",
@@ -167,9 +167,12 @@ class RegisterController {
     }
 
     prefillSelf() {
+        console.log('init prefillself');
         var loggedInUser = this.AuthService.getLoggedinUser();
+        console.log(loggedInUser);
         this.KrinkelService.getContactFromChiro(loggedInUser.adnummer).then((resp) => {
             var chiroContact = resp[0];
+            console.log(chiroContact);
             if (resp.size != 0) {
                 this.newPerson = {
                     adNumber: loggedInUser.adnummer,
@@ -297,14 +300,17 @@ class RegisterController {
          * Prefilling the form when subscribing others
          */
         if(this.RegisterOtherMemberService.subscribeMember()) {
+            console.log('subMember');
             this.prefillMember();
             this.user = "admin";
             this.RegisterOtherMemberService.setSubscribeMember(false);
         } else if(this.RegisterOtherMemberService.subscribeColleague()) {
+            console.log('subColl');
             this.prefillColleagueByAdmin();
             this.user = "admin";
             this.RegisterOtherMemberService.setSubscribeColleague(false);
         } else if (this.SelectService.getColleague() !== undefined) {
+            console.log('prefillColl');
             this.prefillColleague();
         } else {
             var user = this.StorageService.getUser();
@@ -314,6 +320,7 @@ class RegisterController {
                 /**
                  * Prefilling the form when subscribing yourself
                  */
+                console.log('prefillSelf');
                 this.prefillSelf();
 
             }
@@ -399,5 +406,5 @@ export var BasketComponent = {
     }
 };
 
-BasketComponent.$inject = ['$log', '$window', 'StorageService', 'MapperService', 'AuthService', 'KrinkelService', '$location', 'SelectService'];
+BasketComponent.$inject = ['$log', '$window', 'StorageService', 'MapperService', 'AuthService', 'KrinkelService', '$location', 'SelectService', 'RegisterOtherMemberService'];
 

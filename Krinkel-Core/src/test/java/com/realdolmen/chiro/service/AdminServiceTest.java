@@ -3,6 +3,7 @@ package com.realdolmen.chiro.service;
 import com.realdolmen.chiro.config.TestConfig;
 import com.realdolmen.chiro.domain.RegistrationParticipant;
 import com.realdolmen.chiro.domain.units.Admin;
+import com.realdolmen.chiro.exception.NoContactFoundException;
 import com.realdolmen.chiro.spring_test.SpringIntegrationTest;
 import org.junit.Assert;
 import org.junit.Before;
@@ -41,7 +42,7 @@ public class AdminServiceTest extends SpringIntegrationTest {
     }
 
     @Test
-    public void addNewAdminSucces() throws URISyntaxException {
+    public void addNewAdminSucces() throws URISyntaxException, NoContactFoundException {
         registrationParticipant = new RegistrationParticipant();
         registrationParticipant.setAdNumber("5");
         registrationParticipant.setEmail("fifthEmail");

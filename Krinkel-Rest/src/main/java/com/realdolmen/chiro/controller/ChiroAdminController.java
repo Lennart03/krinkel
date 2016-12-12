@@ -1,6 +1,7 @@
 package com.realdolmen.chiro.controller;
 
 import com.realdolmen.chiro.domain.units.Admin;
+import com.realdolmen.chiro.exception.NoContactFoundException;
 import com.realdolmen.chiro.service.AdminService;
 import com.realdolmen.chiro.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +28,8 @@ public class ChiroAdminController {
         try {
             adminService.addNewAdmin(adnummer);
         } catch (URISyntaxException e) {
+            e.printStackTrace();
+        } catch (NoContactFoundException e) {
             e.printStackTrace();
         }
     }
