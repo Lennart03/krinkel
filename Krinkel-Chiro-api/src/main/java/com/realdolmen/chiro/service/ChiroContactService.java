@@ -76,7 +76,6 @@ public class ChiroContactService {
         }
         else
         {
-
         String adnr = json.substring(json.indexOf("adnr") + 3 + 4 );
         adnr = adnr.substring(0, adnr.indexOf("\""));
         if(adnr.length() < 1) { adnr = null; }
@@ -108,7 +107,6 @@ public class ChiroContactService {
                 birthdate = new Date(year, month, day);
             }
         }
-
         //make address
         String street = json.substring(json.indexOf("street_address") + 3 + 14 );
         street = street.substring(0, street.indexOf("\""));

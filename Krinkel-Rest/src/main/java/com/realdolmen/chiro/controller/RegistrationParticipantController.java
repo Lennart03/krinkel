@@ -68,6 +68,7 @@ public class RegistrationParticipantController {
      */
     @RequestMapping(method = RequestMethod.POST, value = "/api/participants", consumes = "application/json")
     public ResponseEntity<?> save(@Valid @RequestBody RegistrationParticipant participant) throws URISyntaxException, MultiSafePayService.InvalidPaymentOrderIdException {
+        participant.updateLastChange();
         RegistrationParticipant resultingParticipant = registrationParticipantService.save(participant);
         User currentUser = userService.getCurrentUser();
 

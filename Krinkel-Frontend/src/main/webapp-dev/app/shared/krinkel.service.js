@@ -11,7 +11,7 @@ export class KrinkelService {
             return resp.data;
         });
     }
-
+    //FIXME post instead of get (security?)
     logIn(user, password) {
         return this.$http.get(`${this.BASEURL}/api/users?user=${user}&password=${password}`).then((resp) => {
             return resp.data;
@@ -210,7 +210,68 @@ export class KrinkelService {
         return promise;
     }
 
+    /**
+     * Used to retrieve all the admins in the application
+     * @returns {*}
+     */
+    getAdmins() {
+        return this.$http.get(`${this.BASEURL}/api/admin`).then((resp) => {
+                console.log("get admins done");
+                console.log("Data in the response (krinkelservice): ");
+                console.log(resp.data)
+            return resp.data;
+        }, () => {
+                this.popup();
+            }
+        );
+    }
 
+    /**
+     * Requests to give the person admin rights with the given adnumber
+     * @param adNumber unique identiefies given by Chiro
+     */
+    postAdmin(adNumber) {
+        console.log("Posting: " + adNumber);
+        return this.$http.post(`${this.BASEURL}/api/admin/${adNumber}`);
+    }
+
+    deleteAdmin(adNumber) {
+        console.log("Deleting: " + adNumber);
+        return this.$http.post(`${this.BASEURL}/api/admin/delete/${adNumber}`);
+    }
+
+    getBasket(){
+        return this.$http.get(`${this.BASEURL}/api/basket`).then((resp) => {
+            return resp.data;
+        });
+        //return [{last_name:'Fre', first_name:'De Riek'}];
+    }
+
+    addPersonToBasket(person){
+        //console.log(person);
+        return this.$http.post(`${this.BASEURL}/api/basket`, person).then((resp)=>{
+           return resp.data;
+        });
+    }
+
+    setSubscriberEmailForBasket(emailStr){
+        let email = {email: emailStr};
+        return this.$http.post(`${this.BASEURL}/api/basket/mail`, email).then((resp)=>{
+            return resp.data;
+        });
+    }
+
+    doPayment(){
+        return this.$http.get(`${this.BASEURL}/api/basket/pay`).then((resp)=>{
+           return resp;
+        });
+    }
+
+    removePersonFromBasket(adNumber) {
+        return this.$http.get(`${this.BASEURL}/api/basket/delete/${adNumber}`).then((resp) => {
+            return resp.data;
+        });
+    }
 
     popup() {
         Materialize.toast('Sessie verlopen, binnen 10 seconden herstart de applicatie', 10000, 'red rounded');

@@ -128,6 +128,7 @@ class RegisterController {
     }
 
     prefillColleague() {
+        console.log('prefil COll');
         var colleague = this.SelectService.getColleague();
         var loggedInUser = this.AuthService.getLoggedinUser();
 
@@ -351,6 +352,19 @@ class RegisterController {
         }
     }
 
+    addToBasket(person){
+        var perzon = person;
+        perzon.city = this.details3.vicinity;
+        perzon.postalCode = this.details2.name;
+        perzon.street = this.details.address_components[0].long_name;
+
+        var mappedPerson = this.MapperService.mapParticipant(perzon);
+        console.log(mappedPerson);
+        //add person to cart using service
+        this.KrinkelService.addPersonToBasket(mappedPerson).then(() => {
+            this.$location.path("/cart");
+        });
+    }
 
     /**
      * Not the ideal lifecycle hook to save everything in localstorage, due to time constraints this will have to do for now.
@@ -372,4 +386,18 @@ export var RegisterComponent = {
         type: '@'
     }
 };
+
+
 RegisterComponent.$inject = ['$log', '$window', 'StorageService', 'MapperService', 'AuthService', 'KrinkelService', '$location', 'SelectService', 'RegisterOtherMemberService'];
+
+
+export var BasketComponent = {
+    template:require('./addtobasket.html'),
+    controller:RegisterController,
+    bindings : {
+        type:'@'
+    }
+};
+
+BasketComponent.$inject = ['$log', '$window', 'StorageService', 'MapperService', 'AuthService', 'KrinkelService', '$location', 'SelectService'];
+

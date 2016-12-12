@@ -993,3 +993,8 @@ INSERT INTO groepen VALUES ('Horizon','WM /1904','WG /1900','Oe Est','WG /0000',
 INSERT INTO groepen VALUES ('FREEDOM','WM /1905','WG /1900','Oe Est','WG /0000','West-Vlaanderen');
 INSERT INTO groepen VALUES ('Gaverke Beregoed!','WM /1907','WG /1900','Oe Est','WG /0000','West-Vlaanderen');
 INSERT INTO groepen VALUES ('Klimop','WM /1908','WG /1900','Oe Est','WG /0000','West-Vlaanderen');
+
+INSERT INTO admins VALUES (1 , 'firstAdmin@krinkel.be', 'first', 'admin');
+INSERT INTO admins VALUES (2, 'secondAdmin@krinkel.be', 'second', 'admin');
+INSERT INTO admins VALUES (3, 'thirdAdmin@krinkel.be', 'third', 'admin');
+INSERT INTO admins VALUES (4, 'fourthAdmin@krinkel.be', 'fourth', 'admin');

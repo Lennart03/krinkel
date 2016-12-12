@@ -15,6 +15,10 @@ export function appConfig($routeProvider, $locationProvider) {
         template: '<register type="participant"></register>'
     });
 
+    $routeProvider.when('/add-to-basket', {
+        template: '<basket></basket>'
+    })
+
     $routeProvider.when('/register-volunteer', {
         template: '<register type="volunteer"></register>'
     });
@@ -27,6 +31,10 @@ export function appConfig($routeProvider, $locationProvider) {
         template: '<krinkel-select></krinkel-select>'
     });
 
+    $routeProvider.when('/cart', {
+       template:'<krinkel-kar></krinkel-kar>'
+    });
+
     $routeProvider.when('/graph', {
         template: '<krinkel-graph></krinkel-graph>'
     });
@@ -35,22 +43,17 @@ export function appConfig($routeProvider, $locationProvider) {
         template: '<krinkel-find-member-by-ad></krinkel-find-member-by-ad>'
     });
 
-
-
     $routeProvider.when('/choose-registration-participant', {
            template: '<krinkel-choose-registration></krinkel-choose-registration>'
     });
 
-    $routeProvider.otherwise({
-        redirectTo: '/home'
+    $routeProvider.when('/adminBeheer', {
+        template: '<admin-toevoegen></admin-toevoegen>'
     });
-}
 
-
-
-
-
-/*
+    $routeProvider.when('/admin', {
+        template: '<krinkel-admin></krinkel-admin>'
+    });
 
     //Fail page had to go :(
     // $routeProvider.when('/fail', {
@@ -60,4 +63,4 @@ export function appConfig($routeProvider, $locationProvider) {
     $routeProvider.otherwise({
         redirectTo: '/home'
     });
-}*/
+}
