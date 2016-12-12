@@ -3,11 +3,11 @@
 
             <div class="input-field col s12 m6">
                 <i class="material-icons prefix">perm_identity</i>
-                <input id="ad_number" name="adNumber" type="text" class="validate" ng-minlength="1"
+                <input id="ad_number" name="adNumber" type="text" class="validate" ng-minlength="6" ng-maxlength="6"
                        ng-model="$ctrl.adNumber" required>
                 <label for="ad_number">Ad Number</label>
             </div>
-        <button type="submit" class="modal-action modal-close waves-effect btn-flat">Zoek lid</button>
+        <button type="submit" class="btn waves-effect waves-light modal-trigger" ng-disabled="!personForm.$valid">Zoek lid</button>
     </form>
 </div>
 

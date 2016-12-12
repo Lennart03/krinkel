@@ -35,6 +35,10 @@ export function appConfig($routeProvider, $locationProvider) {
         template: '<krinkel-find-member-by-ad></krinkel-find-member-by-ad>'
     });
 
+    $routeProvider.when('/error', {
+        template: '<error></error>'
+    });
+
     /*$routeProvider.when('/choose-registration-participant', {
         template: '<krinkel-choose-registration></krinkel-choose-registration>'
     });*/

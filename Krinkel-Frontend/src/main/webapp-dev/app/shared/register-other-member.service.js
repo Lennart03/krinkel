@@ -8,15 +8,20 @@ export class RegisterOtherMemberService {
         this.$http = $http;
         this.BASEURL = BASEURL;
         this.$window = $window;
+
         console.log("end");
     }
 
     getParticipantUsingAd(adNumber) {
         return this.$http.get(`${this.BASEURL}/api/participant/${adNumber}`).then((resp) => {
-                return resp.data;
+                console.log('response from service: ' +resp);
+                console.log('response.data from service: ' + JSON.stringify(resp.data));
+                return resp;
             },
-            () => {
-                this.popup();
+            (resp) => {
+                console.log('response error from service ' +resp);
+                console.log('response error from service ' +resp.data);
+                return resp;
             }
         );
     }

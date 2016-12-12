@@ -29,7 +29,7 @@ export class MapperService {
             campGround: data.campGround.toUpperCase(),
             email: data.email,
             emailSubscriber: data.emailSubscriber,
-            eventRole: 'VOLUNTEER',
+            eventRole: 'VOLUNTEER'
         };
 
         var genderTemp = data.gender.toLowerCase();
@@ -129,7 +129,7 @@ export class MapperService {
             socialPromotion: data.socialPromotion,
             medicalRemarks: data.medicalText,
             remarks: data.otherText,
-            phoneNumber: data.phone,
+            phoneNumber: data.phone
         };
 
 

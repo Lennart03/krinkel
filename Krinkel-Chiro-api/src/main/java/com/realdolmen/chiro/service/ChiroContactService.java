@@ -1,6 +1,7 @@
 package com.realdolmen.chiro.service;
 
 import com.realdolmen.chiro.domain.*;
+import com.realdolmen.chiro.exception.NoContactFoundException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -38,9 +39,8 @@ public class ChiroContactService {
          * Example URL
          * "https://cividev.chiro.be/sites/all/modules/civicrm/extern/rest.php?key=2340f8603072358ffc23f5459ef92f88&api_key=vooneih8oo1XepeiduGh&entity=Light&action=getcontact&json=%7B%22adnr%22:" + adNumber + "%7D";
          */
-        System.out.println("java chirocontactservice adnumber " +adNumber);
         //TODO use adNumber variable and not hardcoded 308986
-        String url = chiroUrl + "?key=" + chiroKey + "&api_key=" + apiKey + "&entity=Light&action=getcontact&json=%7B%22adnr%22:" + 308986 + "%7D";
+        String url = chiroUrl + "?key=" + chiroKey + "&api_key=" + apiKey + "&entity=Light&action=getcontact&json=%7B%22adnr%22:" + adNumber + "%7D";
 
         // Throws exception when the URL isn't valid, no further checks necessary because of this.
         URI uri = new URI(url);
@@ -55,9 +55,26 @@ public class ChiroContactService {
      * parse the JSON of the contact to a registrationParticipant
      *
      */
-    public RegistrationParticipant getRegistrationParticipant(Integer adNumber) throws URISyntaxException {
-        //String json = getContact(adNumber);
-        String json = "{\"is_error\":0,\"version\":3,\"count\":1,\"id\":0,\"values\":[{\"adnr\":\"308986\",\"first_name\":\"Elise\",\"last_name\":\"Schollaert\",\"afdeling\":\"L\",\"functies\":[\"GG1\",\"GG2\"],\"gender_id\":\"1\",\"birth_date\":\"1978-07-20\",\"street_address\":\"Desselgemstraat 17\",\"postal_code\":\"2240\",\"city\":\"Massenhoven\",\"country\":\"BE\",\"phone\":\"02-0233980\",\"email\":\"120845@example.com\",\"id\":\"301334\"}]}";
+    public RegistrationParticipant getRegistrationParticipant(Integer adNumber) throws URISyntaxException, NoContactFoundException {
+        String json = getContact(adNumber);
+       // String json = "{\"is_error\":0,\"version\":3,\"count\":1,\"id\":0,\"values\":[{\"adnr\":\"308986\",\"first_name\":\"Elise\",\"last_name\":\"Schollaert\",\"afdeling\":\"L\",\"functies\":[\"GG1\",\"GG2\"],\"gender_id\":\"1\",\"birth_date\":\"1978-07-20\",\"street_address\":\"Desselgemstraat 17\",\"postal_code\":\"2240\",\"city\":\"Massenhoven\",\"country\":\"BE\",\"phone\":\"02-0233980\",\"email\":\"120845@example.com\",\"id\":\"301334\"}]}";
+        System.out.println(json + " json object");
+        String count = json.substring(json.indexOf("count") +2 +5);
+        count = count.substring(0,count.indexOf(","));
+        System.out.println(count + " count");
+        RegistrationParticipant participant = new RegistrationParticipant();
+        if (Integer.parseInt(count) < 1)
+        {
+            System.out.println("throwing error NoContactFoundException");
+            participant=getDummyParticipant();
+            participant.setHttpStatus("404");
+            // throw new NoContactFoundException("Geen persoon gevonden voor het ingegeven adNummer");
+        }
+        else
+        {
+
+
+
 
         String adnr = json.substring(json.indexOf("adnr") + 3 + 4 );
         adnr = adnr.substring(0, adnr.indexOf("\""));
@@ -74,6 +91,7 @@ public class ChiroContactService {
         String lastName = json.substring(json.indexOf("last_name") + 3 + 9 );
         lastName = lastName.substring(0, lastName.indexOf("\""));
         if(lastName.length() < 1) { lastName = null; }
+
 
         //TODO: check if the conversion from string to date happens correctly
         Date birthdate = null;
@@ -126,9 +144,20 @@ public class ChiroContactService {
         if(phoneNumber.length() < 1) { phoneNumber = null; }
 
         //RegistrationParticipant(String adNumber, String email, String firstName, String lastName, java.util.Date birthdate, String stamnumber, Gender gender, EventRole eventRole, Eatinghabbit eatinghabbit, String emailSubscriber) {
-        RegistrationParticipant participant = new RegistrationParticipant(adnr, email, firstName, lastName, birthdate, null, gender, null, null, null);
+        participant = new RegistrationParticipant(adnr, email, firstName, lastName, birthdate, null, gender, null, null, null);
+            participant.setHttpStatus("200");
         participant.setAddress(address);
+
+
         participant.setPhoneNumber(phoneNumber);
+        }
+
+        return participant;
+    }
+
+    public RegistrationParticipant getDummyParticipant()
+    {
+        RegistrationParticipant participant = new RegistrationParticipant("1", "fake@nomail.com", "not found", "not found", null, null, Gender.MAN, null, null, null);
         return participant;
     }
 }
