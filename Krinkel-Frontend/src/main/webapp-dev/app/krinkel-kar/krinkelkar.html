@@ -39,12 +39,14 @@
     <div class="modal-content">
         <h4>Is dit uw email adres?</h4>
         <div class="input-field">
+            <input id="check_email" name="check_email" type="email" class="validate" ng-minlength="1"
+                   ng-model="$ctrl.subscriberEmail" required>
             <label for="check_email">Email</label>
-            <input id="check_email" type="email" class="validate" ng-model="$ctrl.subscriberEmail">
         </div>
     </div>
     <div class="modal-footer">
         <a href="#" ng-click="$ctrl.doPayment()" class=" modal-action modal-close waves-effect waves-green btn-flat">Betalen</a>
     </div>
+    <div ng-show="$ctrl.functionCallAfterDOMRender()"></div>
 </div>
 

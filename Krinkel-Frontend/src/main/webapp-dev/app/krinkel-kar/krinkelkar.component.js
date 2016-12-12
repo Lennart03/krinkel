@@ -40,6 +40,14 @@ class KrinkelKarController{
         });
     }
 
+    functionCallAfterDOMRender() {
+        try {
+            Materialize.updateTextFields();
+        } catch (exception) {
+
+        }
+    }
+
 
 }
 
