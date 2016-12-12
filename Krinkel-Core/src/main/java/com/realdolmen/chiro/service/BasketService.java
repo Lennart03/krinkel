@@ -3,6 +3,7 @@ package com.realdolmen.chiro.service;
 import com.realdolmen.chiro.component.RegistrationBasketComponent;
 import com.realdolmen.chiro.domain.RegistrationParticipant;
 import com.realdolmen.chiro.domain.Status;
+import com.realdolmen.chiro.mspdto.OrderDto;
 import com.realdolmen.chiro.mspservice.MultiSafePayService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -74,11 +75,28 @@ public class BasketService {
         });
 
         String url = getBasketPaymentUri();
-        reset();
         return url;
     }
 
     private String getBasketPaymentUri() throws MultiSafePayService.InvalidPaymentOrderIdException {
-        return multiSafePayService.getBasketPaymentUri(calculateTotalPrice(), userService.getCurrentUser());
+        OrderDto order = multiSafePayService.createPayment(calculateTotalPrice(), userService.getCurrentUser());
+        registrationBasketComponent.setOrder(order);
+        return order.getData().getPayment_url();
+    }
+
+    public boolean handleSuccessCallback(String orderId) {
+        if (multiSafePayService.orderIsPaid(orderId)) {
+            if (orderId.equals(registrationBasketComponent.getOrder().getData().getOrder_id())) {
+                registrationBasketComponent.getUsersInBasket().forEach(u -> {
+                    u.setStatus(Status.PAID);
+                    registrationParticipantService.save(u);
+                    registrationParticipantService.createRegistrationCommunication(u);
+                });
+
+                return true;
+            }
+        }
+
+        return false;
     }
 }

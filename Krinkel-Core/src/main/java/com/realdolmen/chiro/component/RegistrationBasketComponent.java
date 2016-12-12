@@ -2,6 +2,7 @@ package com.realdolmen.chiro.component;
 
 import com.realdolmen.chiro.domain.RegistrationParticipant;
 import com.realdolmen.chiro.domain.User;
+import com.realdolmen.chiro.mspdto.OrderDto;
 import org.hibernate.validator.constraints.Email;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.annotation.SessionScope;
@@ -15,6 +16,8 @@ import java.util.List;
 public class RegistrationBasketComponent {
 
     private List<RegistrationParticipant> usersInBasket = new ArrayList<>();
+
+    private OrderDto order;
 
     @Email
     @NotNull
@@ -46,6 +49,14 @@ public class RegistrationBasketComponent {
 
     public void setDestinationMail(String destinationMail) {
         this.destinationMail = destinationMail;
+    }
+
+    public OrderDto getOrder() {
+        return order;
+    }
+
+    public void setOrder(OrderDto order) {
+        this.order = order;
     }
 
     public void reset() {
