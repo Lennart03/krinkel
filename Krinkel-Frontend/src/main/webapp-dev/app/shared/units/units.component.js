@@ -1,8 +1,10 @@
 class UnitsController {
-    constructor(KrinkelService, AuthService, MapperService) {
+    constructor(KrinkelService, AuthService, MapperService, $route) {
         this.KrinkelService = KrinkelService;
         this.AuthService = AuthService;
         this.MapperService = MapperService;
+        this.$route = $route;
+        this.initSelectPayStatus();
     }
 
     $onInit() {
@@ -19,9 +21,8 @@ class UnitsController {
         }
     }
 
-
-
     openUsers(verbond) {
+
         this.unitLevel = verbond.naam;
         this.userDetails = true;
         this.participantDetails = true;
@@ -82,6 +83,35 @@ class UnitsController {
             this.participantDetails = false;
         }
     }
+
+    //TODO: remove getElementById & setAttribute when 'reloading to same view' is implemented and uncomment the route.reload()
+    putParticipantToCancelled(participantId) {
+        if (participantId != null) {
+            this.KrinkelService.putParticipantToCancelled(participantId).then((result) => {
+                //this.$route.reload();
+            });
+
+            let id = document.getElementById(participantId);
+            id.setAttribute('style', 'display: none;');
+        }
+    }
+
+    saveData(participantId, paymentStatus) {
+        this.KrinkelService.updatePayment(participantId, paymentStatus);
+    }
+
+    initCancelModal(modalId) {
+        let modalName = '#modal' + modalId;
+        $(modalName).openModal();
+    }
+
+    initSelectPayStatus() {
+        this.statusses =  [
+            { 'value': 'TO_BE_PAID', 'label': 'Onbetaald' },
+            { 'value': 'PAID', 'label': 'Betaald' },
+            { 'value': 'CONFIRMED', 'label': 'Bevestigd'}
+            ]
+    }
 }
 
 export var UnitsComponent = {
@@ -89,4 +119,4 @@ export var UnitsComponent = {
     controller: UnitsController
 };
 
-UnitsComponent.$inject = ['KrinkelService', 'AuthService', 'MapperService'];
+UnitsComponent.$inject = ['KrinkelService', 'AuthService', 'MapperService','$route'];

@@ -2,7 +2,10 @@ package com.realdolmen.chiro.repository;
 
 import com.realdolmen.chiro.domain.RegistrationParticipant;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -29,14 +32,25 @@ public interface RegistrationParticipantRepository extends JpaRepository<Registr
     )
     List<RegistrationParticipant> findParticipantsByGroupWithStatusConfirmedOrPaid(String s);
 
-//    // regular participants
-//    @Query("SELECT p FROM RegistrationParticipant p WHERE " +
-//            "p.campground IS EMPTY "
-//
-//    )
-//    List<RegistrationParticipant> findRegistrationParticipantsNotVolunteer();
+    @Query(value = "DELETE FROM registration_participant_language WHERE registration_participant_id = :participantId", nativeQuery = true)
+    @Modifying
+    @Transactional
+    void removeBuddyLanguageRecordsAfterCancellation(@Param("participantId") Long participantId);
 
+    @Query(value= "DELETE FROM registration_participant_post_camp_list WHERE registration_volunteer_id = :participantId", nativeQuery = true )
+    @Modifying
+    @Transactional
+    void removePostCampRecordsAfterCancellation(@Param("participantId") Long participantId);
 
+    @Query(value= "SELECT COUNT(*) FROM registration_participant_post_camp_list WHERE registration_volunteer_id = :participantId", nativeQuery = true )
+    Long countPostCampRecordsAfterCancellation(@Param("participantId") Long participantId);
 
-//    List<RegistrationParticipant> findParticipantsWithDtypeRegistrationParticipant();
+    @Query(value= "DELETE FROM registration_participant_pre_camp_list WHERE registration_volunteer_id = :participantId", nativeQuery = true )
+    @Modifying
+    @Transactional
+    void removePreCampRecordsAfterCancellation(@Param("participantId") Long participantId);
+
+    @Query(value= "SELECT COUNT(*) FROM registration_participant_pre_camp_list WHERE registration_volunteer_id = :participantId", nativeQuery = true )
+    Long countPreCampRecordsAfterCancellation(@Param("participantId") Long participantId);
+
 }

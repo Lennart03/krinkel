@@ -139,6 +139,9 @@ public class ExcelOutputService{
             int columnNr = 0;
             Object [] objArr = dataMap.get(key);
             for (Object obj : objArr) {
+                if (obj == null) {
+                    obj = "";
+                }
                 sheet.addCell(new Label(columnNr, rowNr, obj.toString()));
                 //TODO: if necessary, type check everything like this:
 //            if(obj instanceof Integer){

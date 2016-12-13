@@ -3,9 +3,13 @@ package com.realdolmen.chiro.controller;
 import com.realdolmen.chiro.controller.validation.EnableRestErrorHandling;
 import com.realdolmen.chiro.domain.RegistrationParticipant;
 import com.realdolmen.chiro.domain.User;
+import com.realdolmen.chiro.domain.Verbond;
+import com.realdolmen.chiro.domain.units.ChiroUnit;
 import com.realdolmen.chiro.mspservice.MultiSafePayService;
 import com.realdolmen.chiro.service.RegistrationParticipantService;
 import com.realdolmen.chiro.service.UserService;
+import com.realdolmen.chiro.util.StamNumberTrimmer;
+import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +27,9 @@ import java.net.URISyntaxException;
 public class RegistrationParticipantController {
 
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
+
+    @Autowired
+    private StamNumberTrimmer stamNumberTrimmer;
 
     @Autowired
     private RegistrationParticipantService registrationParticipantService;
@@ -68,6 +75,7 @@ public class RegistrationParticipantController {
      */
     @RequestMapping(method = RequestMethod.POST, value = "/api/participants", consumes = "application/json")
     public ResponseEntity<?> save(@Valid @RequestBody RegistrationParticipant participant) throws URISyntaxException, MultiSafePayService.InvalidPaymentOrderIdException {
+        participant.updateLastChange();
         RegistrationParticipant resultingParticipant = registrationParticipantService.save(participant);
         User currentUser = userService.getCurrentUser();
 
@@ -79,6 +87,44 @@ public class RegistrationParticipantController {
         String paymentUrl = multiSafePayService.getParticipantPaymentUri(resultingParticipant, price, currentUser);
         HttpHeaders headers = new HttpHeaders();
         headers.setLocation(new URI(paymentUrl));
+        logger.info("New registration created.");
+        return new ResponseEntity<>(headers, HttpStatus.CREATED);
+    }
+
+
+    @RequestMapping(method = RequestMethod.POST, value = "/api/participantCancel")
+    public ResponseEntity<?> cancel(@RequestParam("participantId") String participantId) throws URISyntaxException {
+        RegistrationParticipant resultingParticipant = registrationParticipantService.cancel(Long.valueOf(participantId));
+        logger.info("Payment Cancelled.");
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+
+    @RequestMapping(method = RequestMethod.POST, value = "/api/paymentStatusChange")
+    public ResponseEntity<?> updatePayment(@RequestParam("participantId") String participantId, @RequestParam("paymentStatus") String paymentStatus) throws URISyntaxException {
+        RegistrationParticipant resultingParticipant = registrationParticipantService.updatePaymentStatusAdmin(Long.valueOf(participantId), paymentStatus);
+        logger.info("Payment updated.");
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @RequestMapping(method = RequestMethod.POST, value = "/api/participants/admin", consumes = "application/json")
+    public ResponseEntity<?> saveByAdmin(@Valid @RequestBody RegistrationParticipant participant) throws URISyntaxException {
+        if (participant == null) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
+        //Integer price = registrationParticipantService.getPRICE_IN_EUROCENTS();
+        //String paymentUrl = multiSafePayService.getParticipantPaymentUri(resultingParticipant, price, currentUser);
+        //admin moet niet betalen dus payment status op betaald zetten
+        registrationParticipantService.markAsPayed(participant);
+
+        HttpHeaders headers = new HttpHeaders();
+        //TODO doorverwijzen naar de admin page
+        // deze | lijn uit commentaar halen als ge gemerged hebt met lennart zijn branch
+        //      v
+        //headers.setLocation(new URI("/admin"));
+        headers.setLocation(new URI("/find-participant-by-ad"));
+
         logger.info("New registration created.");
         return new ResponseEntity<>(headers, HttpStatus.CREATED);
     }

@@ -1,3 +1,11 @@
+-- These are the first admins that the project required
+INSERT INTO admins VALUES (152504, 'somedude@email.com', 'first', 'guy');
+INSERT INTO admins VALUES (109318, 'secondAdmin@email.com', 'second', 'dude');
+
+-- TODO these records need to be removed because this are the Realdolmen developers
+INSERT INTO admins VALUES (396943, 'lennart.vandamme@realdolmen.com', 'Lennart', 'Van Damme');
+INSERT INTO admins VALUES (396949, 'wesley.vanmalcot@realdolmen.com', 'Wesley', 'Van Malcot');
+
 INSERT INTO pre_camp VALUES (10, '2017-08-21') ON DUPLICATE KEY UPDATE id = 10;
 INSERT INTO pre_camp VALUES (20, '2017-08-22') ON DUPLICATE KEY UPDATE id = 20;
 INSERT INTO pre_camp VALUES (30, '2017-08-23') ON DUPLICATE KEY UPDATE id = 30;

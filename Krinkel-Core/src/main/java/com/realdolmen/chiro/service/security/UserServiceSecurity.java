@@ -30,4 +30,11 @@ public class UserServiceSecurity {
         }
     }
 
+    public boolean hasPermissionToSubscribeUser() {
+        User currentUser = userService.getCurrentUser();
+
+        return currentUser != null;
+    }
+
+
 }

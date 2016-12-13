@@ -3,7 +3,8 @@ package com.realdolmen.chiro.domain;
 public enum Status {
     TO_BE_PAID("Te betalen"),
     PAID("Betaald"),
-    CONFIRMED("Bevestigd");
+    CONFIRMED("Bevestigd"),
+    CANCELLED("Geannuleerd");
     //Status changes to confirmed when the confirmation link is clicked
 
     private String description;
