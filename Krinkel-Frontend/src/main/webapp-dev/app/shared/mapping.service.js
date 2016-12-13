@@ -315,6 +315,115 @@ export class MapperService {
                 break;
         }
     }
+
+    mapVolunteerByAdmin(data) {
+        var volunteer = {
+            adNumber: data.adNumber,
+            firstName: data.firstName,
+            lastName: data.lastName,
+            address: {
+                street: data.street,
+                houseNumber: 0,
+                postalCode: data.postalCode,
+                city: data.city
+            },
+            birthdate: data.birthDate,
+            stamnumber: data.group,
+            buddy: data.buddy,
+            language: [], // data.languages
+            eatinghabbit: data.dietary,
+            remarksFood: data.dietaryText,
+            socialPromotion: data.socialPromotion,
+            medicalRemarks: data.medicalText,
+            remarks: data.otherText,
+            phoneNumber: data.phone,
+            campGround: data.campGround.toUpperCase(),
+            email: data.email,
+            emailSubscriber: data.emailSubscriber,
+            eventRole: 'VOLUNTEER',
+        };
+
+        var genderTemp = data.gender.toLowerCase();
+        if (genderTemp == '2') {
+            volunteer.gender = 'MAN';
+        } else if (genderTemp == '1') {
+            volunteer.gender = 'WOMAN';
+        } else if (genderTemp == '0') {
+            volunteer.gender = 'X';
+        }
+
+        var mappedJob = this.mapJob(data.job);
+
+        if (mappedJob === 'CUSTOM') {
+            volunteer.function = {
+                preset: 'CUSTOM',
+                other: data.jobOther
+            };
+        } else {
+            volunteer.function = {
+                preset: mappedJob
+
+
+            };
+        }
+
+        volunteer.preCampList = this.mapPreCampToObject(data.preCamp);
+        volunteer.postCampList = this.mapPostCampToObject(data.postCamp);
+
+        // map
+        return volunteer;
+    }
+
+    mapParticipantByAdmin(data) {
+        var participant = {
+            adNumber: data.adNumber,
+            email: data.email,
+            emailSubscriber: data.emailSubscriber,
+            firstName: data.firstName,
+            lastName: data.lastName,
+            address: {
+                street: data.street,
+                houseNumber: 0,
+                postalCode: data.postalCode,
+                city: data.city
+            },
+            birthdate: data.birthDate,
+            stamnumber: data.group,
+            buddy: data.buddy,
+            // language: data.languages,
+            eatinghabbit: data.dietary,
+            remarksFood: data.dietaryText,
+            socialPromotion: data.socialPromotion,
+            medicalRemarks: data.medicalText,
+            remarks: data.otherText,
+            phoneNumber: data.phone,
+        };
+
+        if (data.buddy) {
+            participant.language = data.languages;
+        } else {
+            participant.language = [];
+        }
+        var genderTemp = data.gender.toLowerCase();
+        if (genderTemp == '2') {
+            participant.gender = 'MAN';
+        } else if (genderTemp == '1') {
+            participant.gender = 'WOMAN';
+        } else if (genderTemp == '0') {
+            participant.gender = 'X'
+        }
+
+        if (data.rank === 'L') {
+            participant.eventRole = 'LEADER';
+        } else if (data.rank === 'VB') {
+            participant.eventRole = 'MENTOR';
+        } else if (data.rank === 'A') {
+            participant.eventRole = 'ASPI';
+        }
+        console.log("LOGGING THE PARTICIPANT 123123");
+        console.log(participant);
+        return participant;
+    }
 }
 
 MapperService.$inject = ['AuthService', 'SelectService'];

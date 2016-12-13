@@ -78,7 +78,7 @@ class RegisterController {
         if(this.user === "admin") {
             if (this.type === 'volunteer') {
                 var thiz = this;
-                this.KrinkelService.postVolunteerByAdmin(this.MapperService.mapVolunteer(newPerson)).then(function (resp) {
+                this.KrinkelService.postVolunteerByAdmin(this.MapperService.mapVolunteerByAdmin(newPerson)).then(function (resp) {
                     thiz.dataIsRemoved = true;
                     thiz.StorageService.removeUser();
                     thiz.$location.path("/admin");
@@ -90,7 +90,7 @@ class RegisterController {
 
             if (this.type === 'participant') {
                 var thiz = this;
-                this.KrinkelService.postParticipantByAdmin(this.MapperService.mapParticipant(newPerson)).then(function (resp) {
+                this.KrinkelService.postParticipantByAdmin(this.MapperService.mapParticipantByAdmin(newPerson)).then(function (resp) {
                     thiz.dataIsRemoved = true;
                     thiz.StorageService.removeUser();
                     thiz.SelectService.setSelectedFlag(false);

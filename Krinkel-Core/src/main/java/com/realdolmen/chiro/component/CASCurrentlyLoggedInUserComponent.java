@@ -18,6 +18,8 @@ public class CASCurrentlyLoggedInUserComponent {
     }
 
     public void setCurrentUser(User currentUser) {
-        this.currentUser = currentUser;
+        if (this.currentUser == null) {
+            this.currentUser = currentUser;
+        }
     }
 }

@@ -12,7 +12,7 @@ class SideNavController {
 
     logout() {
         this.AuthService.logoutUser();
-        this.$location.path('/login')
+        //this.$location.path('/login')
     }
 
     go(){
