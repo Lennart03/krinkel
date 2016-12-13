@@ -9,7 +9,7 @@ INSERT INTO admins VALUES (396945, 'nicky.fasoel@realdolmen.com', 'Nicky', 'Faso
 INSERT INTO admins VALUES (396944, 'melvin.hulsmans@realdolmen.com', 'Melvin', 'Hulsmans');
 INSERT INTO admins VALUES (396946, 'shenno.willaert@realdolmen.com', 'Shenno', 'Willaert');
 INSERT INTO admins VALUES (396947, 'thomas.simons@realdolmen.com', 'Thomas', 'Simons');
-INSERT INTO admins VALUES (, 'brent.couck@realdolmen.com', 'Brent', 'Couck');
+INSERT INTO admins VALUES (396940, 'brent.couck@realdolmen.com', 'Brent', 'Couck');
 INSERT INTO admins VALUES (162070, 'frederik.vanherbruggen@realdolmen.com', 'Frederik', 'Van Herbruggen');
 INSERT INTO admins VALUES (396941, 'hade.Bressinck@realdolmen.com', 'Hade', 'Bressinck');
 INSERT INTO admins VALUES (396942, 'jeroen.compagnie@realdolmen.com', 'Jeroen', 'Compagnie');
