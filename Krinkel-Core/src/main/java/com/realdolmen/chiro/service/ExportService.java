@@ -3,7 +3,9 @@ package com.realdolmen.chiro.service;
 import com.realdolmen.chiro.domain.*;
 import com.realdolmen.chiro.repository.*;
 
+import jxl.write.WritableWorkbook;
 import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.poi.ss.usermodel.Workbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -40,10 +42,10 @@ public class ExportService {
     @Autowired
     private RegistrationCommunicationRepository registrationCommunicationRepository;
 
-    public void createExcelOutputXlsRegistrationAll(HttpServletResponse response) {
+    public WritableWorkbook createExcelOutputXlsRegistrationAll(HttpServletResponse response) {
         Object[] header = createHeaderForRegistrationParticipants();
         Map<String, Object []> data = createDataForRegistrationParticipants();
-        excelOutputService.createExcelOutputXls(response, "registratiesLijstAlles.xls", header, data);
+        return excelOutputService.createExcelOutputXls(response, "registratiesLijstAlles.xls", header, data);
     }
 
     public void createExcelOutputXlsRegistrationCSV(HttpServletResponse response) {
@@ -118,7 +120,6 @@ public class ExportService {
             byte data[] = new byte[bufferSize];
 
             for(int i=0; i < filenames.length; i++) {
-                System.err.println("Compress -- Adding: " + filenames[i]);
                 FileInputStream fi = null;
                 fi = new FileInputStream(filenames[i]);
 

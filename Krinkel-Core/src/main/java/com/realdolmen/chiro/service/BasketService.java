@@ -10,6 +10,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class BasketService {
@@ -28,6 +29,10 @@ public class BasketService {
 
     @PreAuthorize("@UserServiceSecurity.hasPermissionToGetColleagues()")
     public void addUserToBasket(RegistrationParticipant user) {
+        Optional<RegistrationParticipant> rp = registrationBasketComponent.getUsersInBasket().stream().filter(u -> u.getAdNumber().equals(user.getAdNumber())).findAny();
+        if (rp.isPresent()) {
+            throw new IllegalArgumentException("User already in basket");
+        }
         registrationBasketComponent.addUserToBasket(user);
     }
 

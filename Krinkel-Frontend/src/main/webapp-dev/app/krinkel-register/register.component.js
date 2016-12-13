@@ -370,6 +370,9 @@ class RegisterController {
         //add person to cart using service
         this.KrinkelService.addPersonToBasket(mappedPerson).then(() => {
             this.$location.path("/cart");
+        }, () => {
+            Materialize.toast("Persoon reeds in krinkelkar", 5000);
+            this.$location.path("/cart");
         });
     }
 

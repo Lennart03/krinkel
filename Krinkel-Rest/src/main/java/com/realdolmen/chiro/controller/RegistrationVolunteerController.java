@@ -111,20 +111,10 @@ public class RegistrationVolunteerController {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
 
-
-        //Integer price = registrationVolunteerService.getPRICE_IN_EUROCENTS();
-        //String paymentUrl = multiSafePayService.getVolunteerPaymentUri(resultingVolunteer, price, currentUser);
         registrationVolunteerService.markAsPayed(volunteer);
 
         HttpHeaders headers = new HttpHeaders();
-        //TODO doorverwijzen naar de admin page
-        // deze | lijn uit commentaar halen als ge gemerged hebt met lennart zijn branch
-        //      v
-        //headers.setLocation(new URI("/admin"));
-        headers.setLocation(new URI("/find-participant-by-ad"));
-
         logger.info("New Registration for Volunteer created.");
-
         return new ResponseEntity<>(headers, HttpStatus.CREATED);
     }
 }

@@ -32,7 +32,11 @@ public class BasketController {
 
     @RequestMapping(value = "/api/basket", consumes = MediaType.APPLICATION_JSON_VALUE, method = {RequestMethod.POST, RequestMethod.PUT})
     public ResponseEntity addUser(@Valid @RequestBody RegistrationParticipant user) {
-        basketService.addUserToBasket(user);
+        try {
+            basketService.addUserToBasket(user);
+        } catch (IllegalArgumentException e) {
+            return new ResponseEntity(HttpStatus.BAD_REQUEST);
+        }
         return new ResponseEntity(HttpStatus.CREATED);
     }
 
