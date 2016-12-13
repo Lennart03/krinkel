@@ -68,27 +68,27 @@ public class ExportService {
         // All registration participants (not volunteers)
         List<RegistrationParticipant> participants = getRegistrationParticipantsWithoutVolunteers();
         String backupRegistrationParticipantsFileName = "backupRegistrationParticipants.csv";
-        createExcelOutputCSVBackup(response, participants.toArray(),backupRegistrationParticipantsFileName);
+        createExcelOutputCSVBackup(participants.toArray(),backupRegistrationParticipantsFileName);
 
         // All registration participants who are volunteers
         List<RegistrationVolunteer> volunteers = registrationVolunteerRepository.findAll();
         String backupRegistrationVolunteersFileName = "backupRegistrationVolunteers.csv";
-        createExcelOutputCSVBackup(response, volunteers.toArray(), backupRegistrationVolunteersFileName);
+        createExcelOutputCSVBackup(volunteers.toArray(), backupRegistrationVolunteersFileName);
 
         // All login_logs
         List<LoginLog> loginLogs = loginLoggerRepository.findAll();
         String backupLoginLogsFileName = "backupLoginLogs.csv";
-        createExcelOutputCSVBackup(response, loginLogs.toArray(), backupLoginLogsFileName);
+        createExcelOutputCSVBackup(loginLogs.toArray(), backupLoginLogsFileName);
 
         // All confirmation links
         List<ConfirmationLink> confirmationLinks = confirmationLinkRepository.findAll();
         String backupConfirmationLinksFileName = "backupConfirmationLinks.csv";
-        createExcelOutputCSVBackup(response, confirmationLinks.toArray(), backupConfirmationLinksFileName);
+        createExcelOutputCSVBackup(confirmationLinks.toArray(), backupConfirmationLinksFileName);
 
         // All registration communication
         List<RegistrationCommunication> registrationCommunications = registrationCommunicationRepository.findAll();
         String backupRegistrationCommunicationFileName = "backupRegistrationCommunications.csv";
-        createExcelOutputCSVBackup(response, registrationCommunications.toArray(), backupRegistrationCommunicationFileName);
+        createExcelOutputCSVBackup(registrationCommunications.toArray(), backupRegistrationCommunicationFileName);
 
         // Zip them
         String [] filenames =
@@ -145,7 +145,7 @@ public class ExportService {
         }
     }
 
-    private void createExcelOutputCSVBackup(HttpServletResponse response, Object [] objects,
+    private void createExcelOutputCSVBackup(Object [] objects,
                                             String fileName) {
         if(objects != null && objects.length > 0) {
             ArrayList<String> headersForBackupCSV = getHeadersForBackupCSV(objects[0]);
