@@ -64,19 +64,19 @@ public class ExportController {
         return null;
     }
 
-//    @RequestMapping(value="zip", method=RequestMethod.GET, produces = "application/zip")
-//    public byte[] exportRegistrationParticipantListCompleteCSV2(HttpServletResponse response){
-//        response.setContentType("application/zip");
-//        response.setStatus(HttpServletResponse.SC_OK);
-//        response.addHeader("Content-Disposition", "attachment; filename=backup.zip");
-//        exportService.createCSVBackups(response);
-//        try {
-//            return Files.readAllBytes((new File("backup.zip")).toPath());
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//        return null;
-//    }
+    @RequestMapping(value="zipTest", method=RequestMethod.GET, produces = "application/zip")
+    public byte[] exportRegistrationParticipantListCompleteCSV2(HttpServletResponse response){
+        response.setContentType("application/zip");
+        response.setStatus(HttpServletResponse.SC_OK);
+        response.addHeader("Content-Disposition", "attachment; filename=backup.zip");
+        exportService.createCSVBackups(response);
+        try {
+            return Files.readAllBytes((new File("backup.zip")).toPath());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 
     @RequestMapping(value="/exportRegistratieLijstAllesCSVTest", method=RequestMethod.GET)
     public ModelAndView exportRegistrationParticipantListCompleteCSVTest(HttpServletResponse response){
@@ -86,7 +86,7 @@ public class ExportController {
     @RequestMapping(value="/exportRegistratieLijstAllesCSV", method=RequestMethod.GET)
     public ModelAndView exportRegistrationParticipantListCompleteCSV(HttpServletResponse response, HttpServletRequest request){
         if (userServiceSecurity.hasAdminRights()) {
-            excelOutputService.exportCSV(response);
+            excelOutputService.exportCSV(response, "test.csv");
         } else {
             return new ModelAndView("redirect:" + getBaseUrl(request) + "/index.html");
         }

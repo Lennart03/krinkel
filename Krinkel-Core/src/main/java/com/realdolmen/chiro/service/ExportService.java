@@ -1,18 +1,14 @@
 package com.realdolmen.chiro.service;
 
 import com.realdolmen.chiro.domain.*;
-import com.realdolmen.chiro.repository.RegistrationParticipantRepository;
-import com.realdolmen.chiro.repository.RegistrationVolunteerRepository;
+import com.realdolmen.chiro.repository.*;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
-import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.print.DocFlavor;
 import javax.servlet.http.HttpServletResponse;
 import java.io.*;
-import java.lang.reflect.Field;
 import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -35,61 +31,14 @@ public class ExportService {
     @Autowired
     private RegistrationVolunteerRepository registrationVolunteerRepository;
 
-    /**
-     * Queries the DB for all registered participants, calls the excelservice to write
-     * them to an xlsx file and returns the file for the requested xlsx file if successful or
-     * returns null if something went wrong.
-     * @return File for the requested xlsx file or null if something went wrong.
-     */
-    public File writeRegistrationParticipantsToExcel(Boolean xlsx){
-        //TODO: rewrite
-//        List<RegistrationParticipant> all = registrationParticipantRepository.findAll();
-//        try {
-//            File file = excelService.writeExcel(all, xlsx);
-//            return file;
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        } catch (InvalidFormatException e) {
-//            e.printStackTrace();
-//        }
-        return null;
-    }
+    @Autowired
+    private LoginLoggerRepository loginLoggerRepository;
 
-    public List<RegistrationParticipant> getRegistrationParticipantsWithoutVolunteers(){
-        List<RegistrationParticipant> allParticipants = registrationParticipantRepository.findAll();
-        List<RegistrationParticipant> allParticipantsNotVolunteer = new ArrayList<RegistrationParticipant>();
-        for (RegistrationParticipant registrationParticipant : allParticipants) {
-            if(registrationParticipant.getEventRole() != EventRole.VOLUNTEER){
-                allParticipantsNotVolunteer.add(registrationParticipant);
-            }
-        }
-        return allParticipantsNotVolunteer;
-    }
+    @Autowired
+    private ConfirmationLinkRepository confirmationLinkRepository;
 
-    /**
-     * Queries the DB for registered volunteers only, calls the excelservice to write
-     * them to an xlsx file and returns the file for the requested xlsx file if successful or
-     * returns null if something went wrong.
-     * @return File for the requested xlsx file or null if something went wrong.
-     * */
-     public File writeRegistrationVolunteersToXlsx() {
-         //TODO: rewrite
-//         List<RegistrationVolunteer> allVolunteers = registrationVolunteerRepository.findAll();
-//         List<RegistrationParticipant> allVolunteerParticipants = new ArrayList<RegistrationParticipant>();
-//         for (RegistrationVolunteer registrationVolunteer: allVolunteers) {
-//             allVolunteerParticipants.add(registrationVolunteer);
-//         }
-//
-//         try {
-//             File file = excelService.writeExcel(allVolunteerParticipants, true);
-//             return file;
-//         } catch (IOException e) {
-//             e.printStackTrace();
-//         } catch (InvalidFormatException e) {
-//             e.printStackTrace();
-//         }
-         return null;
-     }
+    @Autowired
+    private RegistrationCommunicationRepository registrationCommunicationRepository;
 
     public void createExcelOutputXlsRegistrationAll(HttpServletResponse response) {
         Object[] header = createHeaderForRegistrationParticipants();
@@ -116,11 +65,38 @@ public class ExportService {
     }
 
     public void createCSVBackups(HttpServletResponse response){
+        // All registration participants (not volunteers)
         List<RegistrationParticipant> participants = getRegistrationParticipantsWithoutVolunteers();
-        createExcelOutputCSVBackup(response, participants.toArray(), "backupRegistrationParticipants.csv");
+        String backupRegistrationParticipantsFileName = "backupRegistrationParticipants.csv";
+        createExcelOutputCSVBackup(response, participants.toArray(),backupRegistrationParticipantsFileName);
+
+        // All registration participants who are volunteers
         List<RegistrationVolunteer> volunteers = registrationVolunteerRepository.findAll();
-        createExcelOutputCSVBackup(response, volunteers.toArray(), "backupRegistrationVolunteers.csv");
-        String [] filenames = {"backupRegistrationParticipants.csv", "backupRegistrationVolunteers.csv"};
+        String backupRegistrationVolunteersFileName = "backupRegistrationVolunteers.csv";
+        createExcelOutputCSVBackup(response, volunteers.toArray(), backupRegistrationVolunteersFileName);
+
+        // All login_logs
+        List<LoginLog> loginLogs = loginLoggerRepository.findAll();
+        String backupLoginLogsFileName = "backupLoginLogs.csv";
+        createExcelOutputCSVBackup(response, loginLogs.toArray(), backupLoginLogsFileName);
+
+        // All confirmation links
+        List<ConfirmationLink> confirmationLinks = confirmationLinkRepository.findAll();
+        String backupConfirmationLinksFileName = "backupConfirmationLinks.csv";
+        createExcelOutputCSVBackup(response, confirmationLinks.toArray(), backupConfirmationLinksFileName);
+
+        // All registration communication
+        List<RegistrationCommunication> registrationCommunications = registrationCommunicationRepository.findAll();
+        String backupRegistrationCommunicationFileName = "backupRegistrationCommunications.csv";
+        createExcelOutputCSVBackup(response, registrationCommunications.toArray(), backupRegistrationCommunicationFileName);
+
+        // Zip them
+        String [] filenames =
+                {backupRegistrationParticipantsFileName,
+                        backupRegistrationVolunteersFileName,
+                        backupLoginLogsFileName,
+                        backupConfirmationLinksFileName,
+                        backupRegistrationCommunicationFileName};
         zip(filenames, "backup.zip");
 //        excelOutputService.exportZip(response, "backup.zip");
 //        excelOutputService.exportZip2(response, null);
@@ -171,7 +147,7 @@ public class ExportService {
 
     private void createExcelOutputCSVBackup(HttpServletResponse response, Object [] objects,
                                             String fileName) {
-        if(objects != null || objects.length > 0) {
+        if(objects != null && objects.length > 0) {
             ArrayList<String> headersForBackupCSV = getHeadersForBackupCSV(objects[0]);
             ArrayList<ArrayList<String>> stringListForBackupCSV = getStringListForBackupCSV(objects);
             //Add the header to the backup CSV
@@ -180,22 +156,30 @@ public class ExportService {
             //Create the CSV file
             createCSV(stringListForBackupCSV, fileName);
             // Call csv creator with the csv filename
-            excelOutputService.exportCSV(response, fileName);
+            //excelOutputService.exportCSV(response, fileName);
         }
         else{
+            // If no data in DB, make a CSV but with one cell filled in with "No data in DB"
             System.err.println("No objects could be found for CSV backup for file: " + fileName);
+            ArrayList<ArrayList<String>> stringListForBackupCSV = new ArrayList<ArrayList<String>>();
+            ArrayList<String> noData = new ArrayList<String>();
+            noData.add("No data in DB");
+            stringListForBackupCSV.add(noData);
+            createCSV(stringListForBackupCSV, fileName);
+            System.err.println("File created with no information");
         }
     }
 
     public void createCSV(ArrayList<ArrayList<String>> contentsList, String fileName){
-        System.err.println("");
-        System.err.println("Contentslist:");
-        int i = 0;
-        for (ArrayList<String> strings : contentsList) {
-            System.err.println("element " + i);
-            System.err.println(strings);
-            i++;
-        }
+        // For checking if right things are being writed
+//        System.err.println("");
+//        System.err.println("Contentslist:");
+//        int i = 0;
+//        for (ArrayList<String> strings : contentsList) {
+//            System.err.println("element " + i);
+//            System.err.println(strings);
+//            i++;
+//        }
 
 
         PrintWriter pw = null;
@@ -219,6 +203,16 @@ public class ExportService {
         pw.close();
     }
 
+    public List<RegistrationParticipant> getRegistrationParticipantsWithoutVolunteers(){
+        List<RegistrationParticipant> allParticipants = registrationParticipantRepository.findAll();
+        List<RegistrationParticipant> allParticipantsNotVolunteer = new ArrayList<RegistrationParticipant>();
+        for (RegistrationParticipant registrationParticipant : allParticipants) {
+            if(registrationParticipant.getEventRole() != EventRole.VOLUNTEER){
+                allParticipantsNotVolunteer.add(registrationParticipant);
+            }
+        }
+        return allParticipantsNotVolunteer;
+    }
 
     /**
      * Collects the data needed to create the excel file for all RegistrationParticipants.
