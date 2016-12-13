@@ -36,14 +36,16 @@ public class ExportController {
     private UserServiceSecurity userServiceSecurity;
 
 
+    /**
+     * For redirecting to the base URL
+     * @param req
+     * @return
+     */
     public String getBaseUrl(HttpServletRequest req) {
         StringBuffer url = req.getRequestURL();
         String uri = req.getRequestURI();
         String ctx = req.getContextPath();
         String base = url.substring(0, url.length() - uri.length() + ctx.length()) + "/";
-        System.err.println("##########################################");
-        System.err.println("Retrieved base url is : \n" + base);
-
         return base;
     }
 
@@ -64,45 +66,6 @@ public class ExportController {
         return null;
     }
 
-    @RequestMapping(value="zipTest", method=RequestMethod.GET, produces = "application/zip")
-    public byte[] exportRegistrationParticipantListCompleteCSV2(HttpServletResponse response){
-        response.setContentType("application/zip");
-        response.setStatus(HttpServletResponse.SC_OK);
-        response.addHeader("Content-Disposition", "attachment; filename=backup.zip");
-        exportService.createCSVBackups(response);
-        try {
-            return Files.readAllBytes((new File("backup.zip")).toPath());
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
-
-    @RequestMapping(value="/exportRegistratieLijstAllesCSVTest", method=RequestMethod.GET)
-    public ModelAndView exportRegistrationParticipantListCompleteCSVTest(HttpServletResponse response){
-        excelOutputService.exportCSV(response, "test.csv");
-        return null;
-}
-    @RequestMapping(value="/exportRegistratieLijstAllesCSV", method=RequestMethod.GET)
-    public ModelAndView exportRegistrationParticipantListCompleteCSV(HttpServletResponse response, HttpServletRequest request){
-        if (userServiceSecurity.hasAdminRights()) {
-            excelOutputService.exportCSV(response, "test.csv");
-        } else {
-            return new ModelAndView("redirect:" + getBaseUrl(request) + "/index.html");
-        }
-            return null;
-    }
-
-    @RequestMapping(value="/exportRegistratieLijstAllesXLSX", method=RequestMethod.GET)
-    public ModelAndView exportRegistrationParticipantListCompleteXLSX(HttpServletResponse response, HttpServletRequest request){
-        if (userServiceSecurity.hasAdminRights()) {
-            excelOutputService.exportXLSX(response);
-        } else {
-            return new ModelAndView("redirect:" + getBaseUrl(request) + "/index.html");
-        }
-            return null;
-    }
-
     /**
      * Downloads the excel sheet with all registrationParticipants.
      * This method is called by redirecting through a href with BASE_URL + /downloadExcelTest
@@ -116,7 +79,7 @@ public class ExportController {
         } else {
             return new ModelAndView("redirect:" + getBaseUrl(request) + "/index.html");
         }
-            return null;
+        return null;
     }
 
     /**
@@ -136,50 +99,55 @@ public class ExportController {
     }
 
     /**
-     * Downloads the excel sheet with all registrationParticipants.
-     * This method is called by redirecting through a href with BASE_URL + /downloadExcelTest
+     * Downloads a zip with a backup of the complete DB in CSV's
      * @param response
      * @return
      */
-    @RequestMapping(value="/downloadExcelTest", method=RequestMethod.GET)
-    public ModelAndView downloadExcelOutputExcelTest(HttpServletResponse response, HttpServletRequest request){
+    @RequestMapping(value="exportBackupZip", method=RequestMethod.GET, produces = "application/zip")
+    public byte[] exportRegistrationParticipantListCompleteCSV2(HttpServletResponse response){
         if (userServiceSecurity.hasAdminRights()) {
-            System.err.println("INSIDE downloadExcelOutputExcelTest for exporting registration list");
-            exportService.createExcelOutputXlsRegistrationAll(response);
-        } else {
-            return new ModelAndView("redirect:" + getBaseUrl(request) + "/index.html");
+
+            response.setContentType("application/zip");
+            response.setStatus(HttpServletResponse.SC_OK);
+            response.addHeader("Content-Disposition", "attachment; filename=backup.zip");
+            exportService.createCSVBackups(response);
+            try {
+                return Files.readAllBytes((new File("backup.zip")).toPath());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
         return null;
     }
+    /**
+     * For downloading XLSX, it works but currently xls is used
+     * @param response
+     * @param request
+     * @return
+     */
+    @RequestMapping(value="/exportRegistratieLijstAllesXLSX", method=RequestMethod.GET)
+    public ModelAndView exportRegistrationParticipantListCompleteXLSX(HttpServletResponse response, HttpServletRequest request){
+        if (userServiceSecurity.hasAdminRights()) {
+            excelOutputService.exportXLSX(response);
+        } else {
+            return new ModelAndView("redirect:" + getBaseUrl(request) + "/index.html");
+        }
+            return null;
+    }
 
-    // TRYING WITH XLSX -- gives corrupted xlsx files
-//    @RequestMapping(value="/downloadExcel", method=RequestMethod.GET)
-//    public ModelAndView downloadExcelOutputExcel(HttpServletResponse response){
-//        System.err.println("INSIDE downloadExcelOutputExl for exporting registration list");
-//        excelOutputService.createExcelOutputXlsx(response, exportService.writeRegistrationParticipantsToExcel(true));
+    //    @RequestMapping(value="/exportRegistratieLijstAllesCSVTest", method=RequestMethod.GET)
+//    public ModelAndView exportRegistrationParticipantListCompleteCSVTest(HttpServletResponse response){
+//        excelOutputService.exportCSV(response, "test.csv");
 //        return null;
 //    }
-
-    //    @RequestMapping(value = "api/exportCompleteEntryList", method = RequestMethod.GET, produces = "application/octet-stream")
-//    public ResponseEntity<InputStreamResource> exportCompleteEntryList() throws IOException{
-//        System.err.println("INSIDE getFile for completing exporting registration list");
-//        File file = exportService.writeRegistrationParticipantsToExcel(true);
-//        String name = file.getName();
-//        System.err.println("filename: " + file.getName());
-//        System.err.println("absolute path name: " + file.getAbsolutePath());
-//        System.err.println("canonical path name: " + file.getCanonicalPath());
-//        System.err.println(" path name: " + file.getPath());
 //
-//        ClassPathResource excelFile = new ClassPathResource(file.getAbsolutePath());
-//
-//        return ResponseEntity
-//                .ok()
-//                .contentLength(excelFile.contentLength())
-//                .contentType(
-//                        MediaType.parseMediaType("application/octet-stream"))
-//
-//                .body(new InputStreamResource(excelFile.getInputStream()));
-//
+//    @RequestMapping(value="/exportRegistratieLijstAllesCSV", method=RequestMethod.GET)
+//    public ModelAndView exportRegistrationParticipantListCompleteCSV(HttpServletResponse response, HttpServletRequest request){
+//        if (userServiceSecurity.hasAdminRights()) {
+//            excelOutputService.exportCSV(response, "test.csv");
+//        } else {
+//            return new ModelAndView("redirect:" + getBaseUrl(request) + "/index.html");
+//        }
+//        return null;
 //    }
-
 }
