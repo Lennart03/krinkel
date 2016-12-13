@@ -164,6 +164,7 @@ public class RegistrationParticipantService {
 
     public RegistrationParticipant cancel(Long participantId) {
         RegistrationParticipant participant = registrationParticipantRepository.findOne(participantId);
+        participant.updateLastChange();
         participant.setStatus(Status.CANCELLED);
 
         // If participant is a buddy, remove the language records for statistics and DB size reasons.
@@ -187,6 +188,7 @@ public class RegistrationParticipantService {
 
     public RegistrationParticipant updatePaymentStatusAdmin(Long participantId, String paymentStatus) {
         RegistrationParticipant participant = registrationParticipantRepository.findOne(participantId);
+        participant.updateLastChange();
         if (Status.valueOf(paymentStatus) == Status.TO_BE_PAID) {
             participant.setStatus(Status.TO_BE_PAID);
         } else if (Status.valueOf(paymentStatus) == Status.PAID) {
