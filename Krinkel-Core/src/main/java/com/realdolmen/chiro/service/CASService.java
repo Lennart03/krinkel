@@ -95,7 +95,6 @@ public class CASService {
                adminAdNumbers.add(admin.getAdNummer().toString());
            }
 
-
             if (adminAdNumbers.contains(adNumber)) {
                 user.setRole(SecurityRole.ADMIN);
             } else {

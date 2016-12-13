@@ -5,6 +5,7 @@ import com.realdolmen.chiro.exception.NoParticipantFoundException;
 import com.realdolmen.chiro.mspservice.MultiSafePayService;
 import com.realdolmen.chiro.repository.RegistrationCommunicationRepository;
 import com.realdolmen.chiro.repository.RegistrationParticipantRepository;
+import com.realdolmen.chiro.repository.RegistrationVolunteerRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -161,6 +162,41 @@ public class RegistrationParticipantService {
 
     public Integer getPRICE_IN_EUROCENTS() {
         return PRICE_IN_EUROCENTS;
+    }
+
+    public RegistrationParticipant cancel(Long participantId) {
+        RegistrationParticipant participant = registrationParticipantRepository.findOne(participantId);
+        participant.setStatus(Status.CANCELLED);
+
+        // If participant is a buddy, remove the language records for statistics and DB size reasons.
+        if (participant.isBuddy()) {
+            registrationParticipantRepository.removeBuddyLanguageRecordsAfterCancellation(participantId);
+            participant.setBuddy(false);
+        }
+
+        // If participant takes part in Pre Camp, remove the day records for statistics and DB size reasons.
+        if(registrationParticipantRepository.countPreCampRecordsAfterCancellation(participantId) > 0 ){
+            registrationParticipantRepository.removePreCampRecordsAfterCancellation(participantId);
+        }
+
+        // If participant takes part in Post Camp, remove the day records for statistics and DB size reasons.
+        if(registrationParticipantRepository.countPostCampRecordsAfterCancellation(participantId) > 0) {
+            registrationParticipantRepository.removePostCampRecordsAfterCancellation(participantId);
+        }
+
+        return registrationParticipantRepository.save(participant);
+    }
+
+    public RegistrationParticipant updatePaymentStatusAdmin(Long participantId, String paymentStatus) {
+        RegistrationParticipant participant = registrationParticipantRepository.findOne(participantId);
+        if (Status.valueOf(paymentStatus) == Status.TO_BE_PAID) {
+            participant.setStatus(Status.TO_BE_PAID);
+        } else if (Status.valueOf(paymentStatus) == Status.PAID) {
+            participant.setStatus(Status.PAID);
+        } else if (Status.valueOf(paymentStatus) == Status.CONFIRMED) {
+            participant.setStatus(Status.CONFIRMED);
+        }
+        return registrationParticipantRepository.save(participant);
     }
 
     /*
