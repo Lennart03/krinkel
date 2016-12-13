@@ -112,13 +112,6 @@ public class ExcelOutputService{
         for (Object obj : header) {
             // Nu alles naar string
             sheet.addCell(new Label(i, 0, obj.toString()));
-            System.err.println(obj.toString());
-
-            //TODO: alles type checken en dan wegschrijven met juiste type
-//            if(obj instanceof Integer){
-//                sheet.addCell(new Number(i, 0, (Integer) obj));
-//            }
-
             i++;
         }
 
@@ -192,8 +185,6 @@ public class ExcelOutputService{
         XSSFWorkbook workbook = null;
         try {
             String fileName = file.getName();
-
-            System.err.println("FILE NAME IN createExcelOutputXlsx is : " + fileName);
 
             response.setContentType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
 
@@ -331,89 +322,96 @@ public class ExcelOutputService{
         }
     }
 
-    public void exportZip(HttpServletResponse response, String zipFilename) {
-        File file = new File(zipFilename);
-
-
-
-        try {
-            byte[] bytes = Files.readAllBytes(file.toPath());
-//            response.setContentType("application/zip");
-
-            response.setHeader("Content-Disposition","attachment; filename=" + zipFilename);
-
-
-//            response.setContentLength(file.);
-//            FileCopyUtils.copy(bytes, response.getWriter());
-//            response.flushBuffer();
-
-
-//            byte[] bytes = Files.readAllBytes(file.toPath());
+    /**
+     * Exporting zip not used
+     * @param response
+     * @param filenames
+     */
+//    public void exportZip(HttpServletResponse response, String zipFilename) {
+//        File file = new File(zipFilename);
 //
-            ServletOutputStream outputStream = response.getOutputStream();
-            outputStream.write(bytes);
-            outputStream.flush();
-            outputStream.close();
-            response.flushBuffer();
+//        try {
+//            byte[] bytes = Files.readAllBytes(file.toPath());
+////            response.setContentType("application/zip");
+//
+//            response.setHeader("Content-Disposition","attachment; filename=" + zipFilename);
+//
+//
+////            response.setContentLength(file.);
+////            FileCopyUtils.copy(bytes, response.getWriter());
+////            response.flushBuffer();
+//
+//
+////            byte[] bytes = Files.readAllBytes(file.toPath());
+////
+//            ServletOutputStream outputStream = response.getOutputStream();
+//            outputStream.write(bytes);
+//            outputStream.flush();
+//            outputStream.close();
+//            response.flushBuffer();
+//
+////            br = new BufferedReader(new FileReader(file));
+////            String line;
+////            while ((line = br.readLine()) != null) {
+////                response.getWriter().write(line + "\n");
+////            }
+//        }
+//        catch (FileNotFoundException e) {
+//            LOGGER.info("CSV file was not found!");
+//            e.printStackTrace();
+//        }
+//        catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//    }
 
-//            br = new BufferedReader(new FileReader(file));
-//            String line;
-//            while ((line = br.readLine()) != null) {
-//                response.getWriter().write(line + "\n");
+    /**
+     * Exporting zip not used
+     * @param response
+     * @param filenames
+     */
+//    public void exportZip2(HttpServletResponse response, ArrayList<String> filenames){
+//        try {
+//            //setting headers
+//            response.setContentType("application/zip");
+////            response.setStatus(HttpServletResponse.SC_OK);
+//            response.addHeader("Content-Disposition", "attachment; filename=\"testZip.zip\"");
+//
+//            //creating byteArray stream, make it bufferable and passing this buffor to ZipOutputStream
+//            ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+//            BufferedOutputStream bufferedOutputStream = new BufferedOutputStream(byteArrayOutputStream);
+//            ZipOutputStream zipOutputStream = new ZipOutputStream(bufferedOutputStream);
+//
+//            //simple file list, just for tests
+//            ArrayList<File> files = new ArrayList<File>();
+//            files.add(new File("README.md"));
+//
+//            //packing files
+//            for (File file : files) {
+//                //new zip entry and copying inputstream with file to zipOutputStream, after all closing streams
+//                zipOutputStream.putNextEntry(new ZipEntry(file.getName()));
+//                FileInputStream fileInputStream = new FileInputStream(file);
+//
+//                IOUtils.copy(fileInputStream, zipOutputStream);
+//
+//                fileInputStream.close();
+//                zipOutputStream.closeEntry();
 //            }
-        }
-        catch (FileNotFoundException e) {
-            LOGGER.info("CSV file was not found!");
-            e.printStackTrace();
-        }
-        catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public void exportZip2(HttpServletResponse response, ArrayList<String> filenames){
-        try {
-            System.err.println("TRYING TO DOWNLOAD ZIP in exportZip2(..)");
-            //setting headers
-            response.setContentType("application/zip");
-//            response.setStatus(HttpServletResponse.SC_OK);
-            response.addHeader("Content-Disposition", "attachment; filename=\"testZip.zip\"");
-
-            //creating byteArray stream, make it bufferable and passing this buffor to ZipOutputStream
-            ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-            BufferedOutputStream bufferedOutputStream = new BufferedOutputStream(byteArrayOutputStream);
-            ZipOutputStream zipOutputStream = new ZipOutputStream(bufferedOutputStream);
-
-            //simple file list, just for tests
-            ArrayList<File> files = new ArrayList<File>();
-            files.add(new File("README.md"));
-
-            //packing files
-            for (File file : files) {
-                //new zip entry and copying inputstream with file to zipOutputStream, after all closing streams
-                zipOutputStream.putNextEntry(new ZipEntry(file.getName()));
-                FileInputStream fileInputStream = new FileInputStream(file);
-
-                IOUtils.copy(fileInputStream, zipOutputStream);
-
-                fileInputStream.close();
-                zipOutputStream.closeEntry();
-            }
-
-            if (zipOutputStream != null) {
-                zipOutputStream.finish();
-                zipOutputStream.flush();
-                IOUtils.closeQuietly(zipOutputStream);
-            }
-            IOUtils.closeQuietly(bufferedOutputStream);
-            IOUtils.closeQuietly(byteArrayOutputStream);
-//            return byteArrayOutputStream.toByteArray();
-        }
-        catch(IOException e){
-            System.err.println("IOException when trying to download zip");
-            e.printStackTrace();
-        }
-//        return null;
-    }
+//
+//            if (zipOutputStream != null) {
+//                zipOutputStream.finish();
+//                zipOutputStream.flush();
+//                IOUtils.closeQuietly(zipOutputStream);
+//            }
+//            IOUtils.closeQuietly(bufferedOutputStream);
+//            IOUtils.closeQuietly(byteArrayOutputStream);
+////            return byteArrayOutputStream.toByteArray();
+//        }
+//        catch(IOException e){
+//            System.err.println("IOException when trying to download zip");
+//            e.printStackTrace();
+//        }
+////        return null;
+//    }
 
 }
