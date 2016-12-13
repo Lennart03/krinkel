@@ -39,6 +39,14 @@ export function appConfig($routeProvider, $locationProvider) {
         template: '<krinkel-graph></krinkel-graph>'
     });
 
+    $routeProvider.when('/find-participant-by-ad', {
+        template: '<krinkel-find-member-by-ad></krinkel-find-member-by-ad>'
+    });
+
+    $routeProvider.when('/choose-registration-participant', {
+           template: '<krinkel-choose-registration></krinkel-choose-registration>'
+    });
+
     $routeProvider.when('/adminBeheer', {
         template: '<admin-toevoegen></admin-toevoegen>'
     });

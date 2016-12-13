@@ -102,7 +102,13 @@ public class CASService {
                 user.setRole(SecurityRole.GROEP);
             }
 
-            userService.setCurrentUser(user);
+         /*   if(userService.getCurrentUser() == null || userService.getCurrentUser().getRole() == null || !userService.getCurrentUser().getRole().equals(SecurityRole.ADMIN)) {
+                userService.setCurrentUser(user);
+            }*/
+            if(userService.getCurrentUser() == null || userService.getCurrentUser().getRole() == null || !userService.getCurrentUser().getAdNumber().equals(user.getAdNumber())) {
+                userService.setCurrentUser(user);
+            }
+
 
             return user;
         }

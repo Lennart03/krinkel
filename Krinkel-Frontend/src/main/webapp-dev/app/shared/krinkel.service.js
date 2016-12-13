@@ -3,6 +3,7 @@ export class KrinkelService {
         this.$http = $http;
         this.BASEURL = BASEURL;
         this.$window = $window;
+        this.adNumber="";
     }
 
     getCasUrl() {
@@ -18,7 +19,17 @@ export class KrinkelService {
     }
 
     postVolunteer(user) {
-        return this.$http.post(`${this.BASEURL}/api/volunteers`, user).then((resp) => {
+    return this.$http.post(`${this.BASEURL}/api/volunteers`, user).then((resp) => {
+            return resp;
+        },
+        () => {
+            this.popup();
+        }
+    );
+}
+
+    postParticipant(user) {
+        return this.$http.post(`${this.BASEURL}/api/participants`, user).then((resp) => {
                 return resp;
             },
             () => {
@@ -27,8 +38,18 @@ export class KrinkelService {
         );
     }
 
-    postParticipant(user) {
-        return this.$http.post(`${this.BASEURL}/api/participants`, user).then((resp) => {
+    postVolunteerByAdmin(user) {
+        return this.$http.post(`${this.BASEURL}/api/volunteers/admin`, user).then((resp) => {
+                return resp;
+            },
+            () => {
+                this.popup();
+            }
+        );
+    }
+
+    postParticipantByAdmin(user) {
+        return this.$http.post(`${this.BASEURL}/api/participants/admin`, user).then((resp) => {
                 return resp;
             },
             () => {
@@ -158,6 +179,7 @@ export class KrinkelService {
     }
 
     getContactFromChiro(adNumber) {
+
         return this.$http.get(`${this.BASEURL}/api/contact/` + adNumber).then((resp) => {
                 return resp.data.values;
             },
@@ -175,6 +197,18 @@ export class KrinkelService {
                 this.popup();
             }
         );
+    }
+
+    getContact(adNumber) {
+        var promise = this.$http.get(`${this.BASEURL}/api/contact/${adNumber}`).success(function (data, status, headers, config) {
+            return data;
+        })
+            .error(function (data, status, headers, config) {
+                    return {"status": false};
+                })
+        ;
+        console.log("output of promise " +promise);
+        return promise;
     }
 
     /**
@@ -245,6 +279,10 @@ export class KrinkelService {
         setTimeout(() => {
             this.$window.location.reload();
         }, 10000);
+    }
+
+    popupForAdmin() {
+        Materialize.toast('De deelnemer is ingeschreven', 10000, 'red rounded');
     }
 }
 
