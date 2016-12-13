@@ -16,7 +16,7 @@ public class VolunteerFunction {
         NATIONAL_CAMPGROUND("Aanbod nationale kampgrond"), // Aanbod nationale kampgrond
         CAMPGROUND("Kampgrondtrekker"), // Kampgrondtrekker
         KRINKEL_EDITORIAL("Klinkerredactie"), // Klinkerredactie
-        COOCKING("Kookploeg"), // Kookploeg
+        COOKING("Kookploeg"), // Kookploeg
 
         LOGISTICS_CAMPGROUND("Logistiek (kampgrond)"), // Logistiek (kampgrond)
         LOGISTICS_NATIONAL("Logistiek (nationaal)"), // Logistiek (nationaal)
@@ -75,5 +75,10 @@ public class VolunteerFunction {
 
     public void setOther(String other) {
         this.other = other;
+    }
+
+    @Override
+    public String toString(){
+        return "[preset=" + preset.getDescription() + ",other="+other+"]";
     }
 }

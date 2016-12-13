@@ -87,4 +87,9 @@ public class Address implements Serializable {
     public void setPostalCode(int postalCode) {
         this.postalCode = postalCode;
     }
+
+    @Override
+    public String toString(){
+        return street + " " + houseNumber + " " + postalCode + " " + city;
+    }
 }

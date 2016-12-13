@@ -1,6 +1,7 @@
 -- noinspection SqlDialectInspectionForFile
 -- noinspection SqlNoDataSourceInspectionForFile
 
+-- Used in Export Unit test -- please do not change this first one!
 INSERT INTO registration_participant (dtype,id,ad_number,city, house_number, postal_code, street, birthdate,
 social_promotion, eatinghabbit, email, email_subscriber, first_name, gender, last_name, remarks_food, medical_remarks, remarks,
 event_role, buddy, stamnumber, status, phone_number, camp_ground, other, preset, registered_by)
@@ -29,13 +30,19 @@ INSERT INTO registration_participant (dtype,id,ad_number,city, house_number, pos
 social_promotion, eatinghabbit, email, email_subscriber, first_name, gender, last_name, remarks_food, medical_remarks, remarks,
 event_role, buddy, stamnumber, status, phone_number, camp_ground, other, preset, registered_by)
 VALUES('RegistrationParticipant', '50', '987654', 'Brussel', '123', '1000', 'Veldstraat', '1995-08-21', false, 'FISHANDMEAT',
-                              'email@test.be', 'email@test.be', 'Frederik', 'MAN', 'Flodder', '', '', '', 'ASPI', false, 'AG /0202', 'CONFIRMED', 1, '', '', '', '987654');
+                              'email@test.be', 'email@test.be', 'Frederik', 'MAN', 'Flodder', '', '', '', 'ASPI', true, 'AG /0202', 'CONFIRMED', 1, '', '', '', '987654');
 
 INSERT INTO registration_participant (dtype,id,ad_number,city, house_number, postal_code, street, birthdate,
 social_promotion, eatinghabbit, email, email_subscriber, first_name, gender, last_name, remarks_food, medical_remarks, remarks,
-event_role, buddy, stamnumber, status, phone_number, camp_ground, other, preset, registered_by)
+event_role, buddy, stamnumber, status, sync_status, phone_number, camp_ground, other, preset, registered_by)
 VALUES('RegistrationVolunteer', '60', '876543', 'Brussel', '123', '1000', 'Veldstraat', '1995-08-21', false, 'FISHANDMEAT',
-                              'email@test.be', 'email@test.be', 'Jos', 'MAN', 'Flodder', '', '', '', 'VOLUNTEER', false, 'AG /0103', 'CONFIRMED', 1, 'KEMPEN', '', 'CAMPGROUND', '876543');
+                              'email@test.be', 'email@test.be', 'Jos', 'MAN', 'Flodder', '', '', '', 'VOLUNTEER', false, 'AG /0103', 'CONFIRMED', 'SYNCED', 1, 'KEMPEN', '', 'CAMPGROUND', '876543');
+
+INSERT INTO registration_participant_language (registration_participant_id,language)
+VALUES('50', '0');
+
+INSERT INTO registration_participant_language (registration_participant_id,language)
+VALUES('50', '1');
 
 INSERT INTO pre_camp VALUES (10, '2017-08-21');
 INSERT INTO pre_camp VALUES (20, '2017-08-22');
@@ -45,6 +52,14 @@ INSERT INTO pre_camp VALUES (40, '2017-08-24');
 INSERT INTO post_camp VALUES (60, '2017-08-31');
 INSERT INTO post_camp VALUES (70, '2017-09-01');
 INSERT INTO post_camp VALUES (80, '2017-09-02');
+
+INSERT INTO registration_participant_pre_camp_list VALUES (60,10);
+INSERT INTO registration_participant_pre_camp_list VALUES (60,20);
+INSERT INTO registration_participant_pre_camp_list VALUES (60,30);
+
+INSERT INTO registration_participant_post_camp_list VALUES (60,60);
+INSERT INTO registration_participant_post_camp_list VALUES (60,70);
+INSERT INTO registration_participant_post_camp_list VALUES (60,80);
 
 
 -- DROP TABLE IF EXISTS registration_communication;

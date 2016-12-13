@@ -15,6 +15,58 @@ INSERT INTO post_camp VALUES (60, '2017-08-31') ON DUPLICATE KEY UPDATE id = 60;
 INSERT INTO post_camp VALUES (70, '2017-09-01') ON DUPLICATE KEY UPDATE id = 70;
 INSERT INTO post_camp VALUES (80, '2017-09-02') ON DUPLICATE KEY UPDATE id = 80;
 
+INSERT INTO registration_participant (dtype,id,ad_number,city, house_number, postal_code, street, birthdate,
+social_promotion, eatinghabbit, email, email_subscriber, first_name, gender, last_name, remarks_food, medical_remarks, remarks,
+event_role, buddy, stamnumber, status, phone_number, camp_ground, other, preset, registered_by)
+VALUES('RegistrationParticipant', '10', '123456', 'Brussel', '123', '1000', 'Veldstraat', '1995-08-21', false, 'FISHANDMEAT',
+                              'email@test.be', 'email@test.be', 'Johnny', 'MAN', 'Flodder', 'food remarks', 'medical remarks', 'remarks', 'ASPI', false, 'AG /0103', 'TO_BE_PAID', 1, '', '', '', '123456');
+
+INSERT INTO registration_participant (dtype,id,ad_number,city, house_number, postal_code, street, birthdate,
+social_promotion, eatinghabbit, email, email_subscriber, first_name, gender, last_name, remarks_food, medical_remarks, remarks,
+event_role, buddy, stamnumber, status, phone_number, camp_ground, other, preset, registered_by)
+VALUES('RegistrationParticipant', '20', '234567', 'Brussel', '123', '1000', 'Veldstraat', '1995-08-21', false, 'FISHANDMEAT',
+                              'email@test.be', 'email@test.be', 'Kees', 'MAN', 'Flodder', '', '', '', 'ASPI', false, 'BG /0301', 'TO_BE_PAID', 1, '', '', '', '234567');
+
+INSERT INTO registration_participant (dtype,id,ad_number,city, house_number, postal_code, street, birthdate,
+social_promotion, eatinghabbit, email, email_subscriber, first_name, gender, last_name, remarks_food, medical_remarks, remarks,
+event_role, buddy, stamnumber, status, phone_number, camp_ground, other, preset, registered_by)
+VALUES('RegistrationParticipant', '30', '345678', 'Brussel', '123', '1000', 'Veldstraat', '1995-08-21', false, 'FISHANDMEAT',
+                              'email@test.be', 'email@test.be', 'Ma', 'WOMAN', 'Flodder', '', '', '', 'ASPI', false, 'AG /0103', 'CONFIRMED', 1, '', '', '', '345678');
+
+INSERT INTO registration_participant (dtype,id,ad_number,city, house_number, postal_code, street, birthdate,
+social_promotion, eatinghabbit, email, email_subscriber, first_name, gender, last_name, remarks_food, medical_remarks, remarks,
+event_role, buddy, stamnumber, status, phone_number, camp_ground, other, preset, registered_by)
+VALUES('RegistrationParticipant', '40', '456789', 'Brussel', '123', '1000', 'Veldstraat', '1995-08-21', false, 'FISHANDMEAT',
+                              'email@test.be', 'email@test.be', 'Cees', 'WOMAN', 'Flodder', '', '', '', 'ASPI', false, 'LEG/0101', 'PAID', 1, '', '', '',  '456789');
+
+INSERT INTO registration_participant (dtype,id,ad_number,city, house_number, postal_code, street, birthdate,
+social_promotion, eatinghabbit, email, email_subscriber, first_name, gender, last_name, remarks_food, medical_remarks, remarks,
+event_role, buddy, stamnumber, status, phone_number, camp_ground, other, preset, registered_by)
+VALUES('RegistrationParticipant', '50', '987654', 'Brussel', '123', '1000', 'Veldstraat', '1995-08-21', false, 'FISHANDMEAT',
+                              'email@test.be', 'email@test.be', 'Frederik', 'MAN', 'Flodder', '', '', '', 'ASPI', true, 'AG /0202', 'CONFIRMED', 1, '', '', '', '987654');
+
+INSERT INTO registration_participant (dtype,id,ad_number,city, house_number, postal_code, street, birthdate,
+social_promotion, eatinghabbit, email, email_subscriber, first_name, gender, last_name, remarks_food, medical_remarks, remarks,
+event_role, buddy, stamnumber, status, sync_status, phone_number, camp_ground, other, preset, registered_by)
+VALUES('RegistrationVolunteer', '60', '876543', 'Brussel', '123', '1000', 'Veldstraat', '1995-08-21', false, 'FISHANDMEAT',
+                              'email@test.be', 'email@test.be', 'Jos', 'MAN', 'Flodder', '', '', '', 'VOLUNTEER', false, 'AG /0103', 'CONFIRMED', 'SYNCED', 1, 'KEMPEN', '', 'CAMPGROUND', '876543');
+
+
+INSERT INTO registration_participant_language (registration_participant_id,language)
+VALUES('50', '0');
+
+INSERT INTO registration_participant_language (registration_participant_id,language)
+VALUES('50', '1');
+
+INSERT INTO registration_participant_pre_camp_list VALUES (60,10);
+INSERT INTO registration_participant_pre_camp_list VALUES (60,20);
+INSERT INTO registration_participant_pre_camp_list VALUES (60,30);
+
+INSERT INTO registration_participant_post_camp_list VALUES (60,60);
+INSERT INTO registration_participant_post_camp_list VALUES (60,70);
+INSERT INTO registration_participant_post_camp_list VALUES (60,80);
+
+
 -- OLD INSERTS
 -- INSERT INTO login_log (id,ad_number,stam_number,stamp) VALUES (1,'123456','OM1301',{d '2016-10-01'});
 -- INSERT INTO login_log (id,ad_number,stam_number,stamp) VALUES (13,'123546','OG1301',{d '2016-10-02'});

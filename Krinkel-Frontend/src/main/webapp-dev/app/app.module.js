@@ -31,6 +31,7 @@ import {KrinkelAnalyticsComponent} from './krinkel-analytics/krinkel-analytics.c
 import {FindByAdComponent} from './krinkel-admin/register-member/find-member/krinkel-find-member-by-ad.component';
 import {ChooseRegistrationComponent} from './krinkel-admin/register-member/choose-registration-method/krinkel-choose-registration-method.component';
 import {KrinkelAdminComponent} from './krinkel-admin/krinkel-admin.component';
+import {KrinkelExportComponent} from './krinkel-admin/krinkel-export/krinkel-export.component';
 import {AdminToevoegenComponent} from './krinkel-admin/admin-toevoegen/admin-toevoegen.component';
 
 
@@ -65,6 +66,7 @@ export default angular
     .component('krinkelAnalytics', KrinkelAnalyticsComponent)
     .component('krinkelGraph', KrinkelGraphComponent)
     .component('voorwaarden', VoorwaardenComponent)
+    .component('krinkelExport', KrinkelExportComponent)
     .component('krinkelFindMemberByAd', FindByAdComponent)
     .component('krinkelChooseRegistration', ChooseRegistrationComponent)
     .component('krinkelAdmin', KrinkelAdminComponent)

@@ -55,6 +55,10 @@ export function appConfig($routeProvider, $locationProvider) {
         template: '<krinkel-admin></krinkel-admin>'
     });
 
+    $routeProvider.when('/export', {
+        template: '<krinkel-export></krinkel-export>'
+    });
+
     //Fail page had to go :(
     // $routeProvider.when('/fail', {
     //     template: '<fail-message></fail-message>'

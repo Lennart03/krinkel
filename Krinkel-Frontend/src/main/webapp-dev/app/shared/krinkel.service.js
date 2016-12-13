@@ -213,6 +213,20 @@ export class KrinkelService {
 
     getPloegen(adNumber) {
         return this.$http.get(`${this.BASEURL}/api/ploegen/${adNumber}`).then((resp) => {
+               // var headers = resp.getHeaders();
+               // headers.getResponseHeader();
+
+                return resp.data;
+            },
+            () => {
+                this.popup();
+            }
+        );
+    }
+
+    exportCompleteEntryList(){
+        return this.$http.get(`${this.BASEURL}/downloadExcel`).then((resp) => {
+
                 return resp.data;
             },
             () => {
@@ -302,6 +316,7 @@ export class KrinkelService {
             this.$window.location.reload();
         }, 10000);
     }
+
 
     popupForAdmin() {
         Materialize.toast('De deelnemer is ingeschreven', 10000, 'red rounded');
