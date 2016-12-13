@@ -464,7 +464,7 @@
             kunnen zoeken. Je kan ons contacteren op 03/231 07 95 of <a href="mailto:info@krinkel.be">info@krinkel.be</a>.
         </p>
 
-        <div ng-if="$ctrl.user !== 'admin'">
+        <div ng-show="$ctrl.user !== 'admin'">
             <button href="#modal4" class="btn waves-effect waves-light modal-trigger"  name="action"
                     ng-disabled="!personForm.$valid">
                 Betalen
@@ -472,7 +472,7 @@
             </button>
         </div>
 
-        <div ng-if="$ctrl.user === 'admin'">
+        <div ng-show="$ctrl.user === 'admin'">
             <button href="#modal5" class="btn waves-effect waves-light modal-trigger" name="action"
                     ng-disabled="!personForm.$valid">
                 Volgende
@@ -497,7 +497,7 @@
 
         <div id="modal5" class="modal">
             <div class="modal-content">
-                <h4>Click op OK om $ctrl.newPerson.firstName "$ctrl.newPerson.lastName" in te schrijven.</h4>
+                <h4>Click op OK om {{$ctrl.newPerson.firstName}} {{$ctrl.newPerson.lastName}} in te schrijven.</h4>
             </div>
             <div class="modal-footer">
                 <button type="submit" class=" modal-action modal-close waves-effect btn-flat">OK</button>
