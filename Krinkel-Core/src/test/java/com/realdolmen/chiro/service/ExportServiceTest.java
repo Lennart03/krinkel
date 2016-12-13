@@ -91,6 +91,7 @@ public class ExportServiceTest extends SpringIntegrationTest {
         Assert.assertEquals("Vis en vlees",objects[18]);
         Assert.assertEquals("Te betalen",objects[28]);
         Assert.assertEquals("",objects[29]);
+        Assert.assertEquals("",objects[30]);
     }
 
     // TODO change indexes + length accordingly cf. previous test method!!
@@ -101,7 +102,7 @@ public class ExportServiceTest extends SpringIntegrationTest {
         Object object2 = headerObject[29];
         Assert.assertEquals("Id",object);
         Assert.assertEquals("Synchstatus",object2);
-        Assert.assertEquals(30,headerObject.length);
+        Assert.assertEquals(31,headerObject.length);
     }
 
     // TODO change indexes accordingly cf. previous test method!!
@@ -114,6 +115,7 @@ public class ExportServiceTest extends SpringIntegrationTest {
         Object[] objects = stringMap.get("0");
         Assert.assertEquals(60L,objects[0]);
         Assert.assertEquals("Gesynchroniseerd",objects[29]);
+        Assert.assertEquals("13-12-2016",objects[30]);
     }
 
     @Test

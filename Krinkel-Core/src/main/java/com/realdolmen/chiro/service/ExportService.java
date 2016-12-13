@@ -281,6 +281,7 @@ public class ExportService {
                 "E-mailadres inschrijver",
                 "Status",
                 "Synchstatus",
+                "Laatste wijziging"
         };
         return header;
     }
@@ -331,6 +332,7 @@ public class ExportService {
 
             // For formatting dates
             String birthDate = getDateFormatted(r.getBirthdate());
+            String lastChange = getDateFormatted(r.getLastChange());
 
             // Checking for null
             String syncStatus = "";
@@ -368,7 +370,8 @@ public class ExportService {
                     r.getRegisteredBy(),
                     r.getEmailSubscriber(),
                     r.getStatus().getDescription(),
-                    syncStatus
+                    syncStatus,
+                    lastChange
             });
         }
         return data;
@@ -397,6 +400,9 @@ public class ExportService {
     }
 
     protected String getDateFormatted(Date date) {
+        if(date == null){
+            return "";
+        }
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
         return dateFormat.format(date);
     }

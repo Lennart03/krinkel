@@ -2,9 +2,11 @@
 INSERT INTO admins VALUES (152504, 'somedude@email.com', 'first', 'guy');
 INSERT INTO admins VALUES (109318, 'secondAdmin@email.com', 'second', 'dude');
 
--- TODO these records need to be removed because this are the Realdolmen developers
+-- TODO these records need to be removed because these are the Realdolmen developers
 INSERT INTO admins VALUES (396943, 'lennart.vandamme@realdolmen.com', 'Lennart', 'Van Damme');
 INSERT INTO admins VALUES (396949, 'wesley.vanmalcot@realdolmen.com', 'Wesley', 'Van Malcot');
+INSERT INTO admins VALUES (396941, 'hade.Bressinck@realdolmen.com', 'Hade', 'Bressinck');
+INSERT INTO admins VALUES (396942, 'jeroen.compagnie@realdolmen.com', 'Jeroen', 'Compagnie');
 
 INSERT INTO pre_camp VALUES (10, '2017-08-21') ON DUPLICATE KEY UPDATE id = 10;
 INSERT INTO pre_camp VALUES (20, '2017-08-22') ON DUPLICATE KEY UPDATE id = 20;
@@ -47,9 +49,9 @@ VALUES('RegistrationParticipant', '50', '987654', 'Brussel', '123', '1000', 'Vel
 
 INSERT INTO registration_participant (dtype,id,ad_number,city, house_number, postal_code, street, birthdate,
 social_promotion, eatinghabbit, email, email_subscriber, first_name, gender, last_name, remarks_food, medical_remarks, remarks,
-event_role, buddy, stamnumber, status, sync_status, phone_number, camp_ground, other, preset, registered_by)
+event_role, buddy, stamnumber, status, sync_status, last_change, phone_number, camp_ground, other, preset, registered_by)
 VALUES('RegistrationVolunteer', '60', '876543', 'Brussel', '123', '1000', 'Veldstraat', '1995-08-21', false, 'FISHANDMEAT',
-                              'email@test.be', 'email@test.be', 'Jos', 'MAN', 'Flodder', '', '', '', 'VOLUNTEER', false, 'AG /0103', 'CONFIRMED', 'SYNCED', 1, 'KEMPEN', '', 'CAMPGROUND', '876543');
+                              'email@test.be', 'email@test.be', 'Jos', 'MAN', 'Flodder', '', '', '', 'VOLUNTEER', false, 'AG /0103', 'CONFIRMED', 'SYNCED', '2016-12-13', 1, 'KEMPEN', '', 'CAMPGROUND', '876543');
 
 
 INSERT INTO registration_participant_language (registration_participant_id,language)
