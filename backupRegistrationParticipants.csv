@@ -1,7 +1,0 @@
-id,adNumber,registeredBy,firstName,lastName,email,emailSubscriber,address,birthdate,lastChange,stamnumber,gender,eventRole,buddy,language,eatinghabbit,remarksFood,socialPromotion,medicalRemarks,remarks,status,syncStatus,httpStatus,phoneNumber
-10,123456,123456,Johnny,Flodder,email@test.be,email@test.be,Veldstraat 123 1000 Brussel,1995-08-21,null,AG /0103,MAN,ASPI,false,[],FISHANDMEAT,food remarks,false,medical remarks,remarks,TO_BE_PAID,null,null,1
-20,234567,234567,Kees,Flodder,email@test.be,email@test.be,Veldstraat 123 1000 Brussel,1995-08-21,null,BG /0301,MAN,ASPI,false,[],FISHANDMEAT,,false,,,TO_BE_PAID,null,null,1
-30,345678,345678,Ma,Flodder,email@test.be,email@test.be,Veldstraat 123 1000 Brussel,1995-08-21,null,AG /0103,WOMAN,ASPI,false,[],FISHANDMEAT,,false,,,CONFIRMED,null,null,1
-40,456789,456789,Cees,Flodder,email@test.be,email@test.be,Veldstraat 123 1000 Brussel,1995-08-21,null,LEG/0101,WOMAN,ASPI,false,[],FISHANDMEAT,,false,,,PAID,null,null,1
-50,987654,987654,Frederik,Flodder,email@test.be,email@test.be,Veldstraat 123 1000 Brussel,1995-08-21,null,AG /0202,MAN,ASPI,true,[SPANISH ---  FRENCH],FISHANDMEAT,,false,,,CONFIRMED,null,null,1
-61,221826,396946,Charlotte,Desmidt,73069@example.com,shenno.willaert@realdolmen.com,MONTENAU 136 0 2630 AARTSELAAR,1997-07-22,null,MG /0113,WOMAN,LEADER,false,[],VEGI,null,false,null,null,PAID,UNSYNCED,null,020168936
