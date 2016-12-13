@@ -119,12 +119,6 @@ public class RegistrationParticipantController {
         registrationParticipantService.markAsPayed(participant);
 
         HttpHeaders headers = new HttpHeaders();
-        //TODO doorverwijzen naar de admin page
-        // deze | lijn uit commentaar halen als ge gemerged hebt met lennart zijn branch
-        //      v
-        //headers.setLocation(new URI("/admin"));
-        headers.setLocation(new URI("/find-participant-by-ad"));
-
         logger.info("New registration created.");
         return new ResponseEntity<>(headers, HttpStatus.CREATED);
     }

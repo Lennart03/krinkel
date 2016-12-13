@@ -90,8 +90,6 @@ public class RegistrationParticipantService {
         if (participant != null) {
             participant.setStatus(Status.PAID);
 
-            //TODO deze | lijn uit commentaar halen als met brentc zijn branch is gemerged
-            //          v
             createRegistrationCommunication(participant);
             this.save(participant);
         }

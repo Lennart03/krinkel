@@ -1,10 +1,11 @@
 package com.realdolmen.chiro.service;
 
-import com.realdolmen.chiro.domain.RegistrationParticipant;
-import com.realdolmen.chiro.domain.RegistrationVolunteer;
-import com.realdolmen.chiro.domain.Status;
+import com.realdolmen.chiro.domain.*;
+import com.realdolmen.chiro.repository.RegistrationCommunicationRepository;
 import com.realdolmen.chiro.repository.RegistrationVolunteerRepository;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -18,6 +19,11 @@ public class RegistrationVolunteerService {
 
     @Autowired
     private RegistrationVolunteerRepository registrationVolunteerRepository;
+
+    @Autowired
+    private RegistrationCommunicationRepository registrationCommunicationRepository;
+
+    private Logger logger = LoggerFactory.getLogger(RegistrationParticipantService.class);
 
     @Autowired
     private UserService userService;
@@ -44,10 +50,20 @@ public class RegistrationVolunteerService {
         if (volunteer != null) {
             volunteer.setStatus(Status.PAID);
 
-            //TODO deze | lijn uit commentaar halen als met brentc zijn branch is gemerged
-            //          v
-            //registrationVolunteerRepository.createRegistrationCommunication(participant);
+            createRegistrationCommunication(volunteer);
             this.save(volunteer);
+        }
+    }
+
+    public void createRegistrationCommunication(RegistrationVolunteer volunteer) {
+        RegistrationCommunication registrationCommunication = new RegistrationCommunication();
+        registrationCommunication.setStatus(SendStatus.WAITING);
+        registrationCommunication.setCommunicationAttempt(0);
+        registrationCommunication.setAdNumber(volunteer.getAdNumber());
+        if (registrationCommunicationRepository.findByAdNumber(volunteer.getAdNumber()) == null) {
+            logger.info("registering communication to participant/volunteer with ad-number: "
+                    + volunteer.getAdNumber() + " with status: " + registrationCommunication.getStatus());
+            registrationCommunicationRepository.save(registrationCommunication);
         }
     }
 
