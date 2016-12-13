@@ -1,6 +1,6 @@
 class RegisterController {
 
-    constructor($log, $window, StorageService, MapperService, AuthService, KrinkelService, $location, SelectService) {
+    constructor($log, $window, StorageService, MapperService, AuthService, KrinkelService, $location, SelectService, RegisterOtherMemberService) {
         this.$log = $log;
         this.$window = $window;
         this.StorageService = StorageService;
@@ -9,6 +9,7 @@ class RegisterController {
         this.KrinkelService = KrinkelService;
         this.$location = $location;
         this.SelectService = SelectService;
+        this.RegisterOtherMemberService = RegisterOtherMemberService;
 
         this.phoneNumberPattern = /^((\+|00)32\s?|0)(\d\s?\d{3}|\d{2}\s?\d{2})(\s?\d{2}){2}|((\+|00)32\s?|0)4(60|[789]\d)(\s?\d{2}){3}$/;
         this.birthdatePattern = /^(\d{4})(\/|-)(\d{1,2})(\/|-)(\d{1,2})$/;
@@ -73,32 +74,64 @@ class RegisterController {
         this.newPerson.city = this.details3.vicinity;
         this.newPerson.postalCode = this.details2.name;
         this.newPerson.street = this.details.address_components[0].long_name;
-        if (this.type === 'volunteer') {
-            var thiz = this;
-            this.KrinkelService.postVolunteer(this.MapperService.mapVolunteer(newPerson)).then(function (resp) {
-                thiz.dataIsRemoved = true;
-                thiz.StorageService.removeUser();
-                thiz.$window.location.href = resp.headers().location;
-            });
-            return;
-        }
 
-        if (this.type === 'participant') {
-            var thiz = this;
-            this.KrinkelService.postParticipant(this.MapperService.mapParticipant(newPerson)).then(function (resp) {
-                thiz.dataIsRemoved = true;
-                thiz.StorageService.removeUser();
-                thiz.SelectService.setSelectedFlag(false);
-                thiz.$window.location.href = resp.headers().location;
-            });
-            return;
+        if(this.user === "admin") {
+            if (this.type === 'volunteer') {
+                var thiz = this;
+                this.KrinkelService.postVolunteerByAdmin(this.MapperService.mapVolunteerByAdmin(newPerson)).then(function (resp) {
+                    thiz.dataIsRemoved = true;
+                    thiz.StorageService.removeUser();
+                    thiz.$location.path("/admin");
+
+                });
+                this.KrinkelService.popupForAdmin();
+                return;
+            }
+
+            if (this.type === 'participant') {
+                var thiz = this;
+                this.KrinkelService.postParticipantByAdmin(this.MapperService.mapParticipantByAdmin(newPerson)).then(function (resp) {
+                    thiz.dataIsRemoved = true;
+                    thiz.StorageService.removeUser();
+                    thiz.SelectService.setSelectedFlag(false);
+                    thiz.$location.path("/admin");
+
+                });
+                this.KrinkelService.popupForAdmin();
+                return;
+            }
+
+
+
+        } else {
+            if (this.type === 'volunteer') {
+                var thiz = this;
+                this.KrinkelService.postVolunteer(this.MapperService.mapVolunteer(newPerson)).then(function (resp) {
+                    thiz.dataIsRemoved = true;
+                    thiz.StorageService.removeUser();
+                    thiz.$window.location.href = resp.headers().location;
+                });
+                return;
+            }
+
+            if (this.type === 'participant') {
+                var thiz = this;
+                this.KrinkelService.postParticipant(this.MapperService.mapParticipant(newPerson)).then(function (resp) {
+                    thiz.dataIsRemoved = true;
+                    thiz.StorageService.removeUser();
+                    thiz.SelectService.setSelectedFlag(false);
+                    thiz.$window.location.href = resp.headers().location;
+                });
+                return;
+            }
         }
     }
 
     prefillColleague() {
+        console.log('prefil COll now coll');
         var colleague = this.SelectService.getColleague();
         var loggedInUser = this.AuthService.getLoggedinUser();
-
+        console.log(colleague);
         this.newPerson = {
             adNumber: colleague.adnr,
             job: "Aanbod nationale kampgrond",
@@ -128,17 +161,18 @@ class RegisterController {
             long_name: colleague.street_address
         });
 
-
         this.details3.vicinity = colleague.city;
-
 
         this.SelectService.setSelectedFlag(true);
     }
 
     prefillSelf() {
+        console.log('init prefillself');
         var loggedInUser = this.AuthService.getLoggedinUser();
+        console.log(loggedInUser);
         this.KrinkelService.getContactFromChiro(loggedInUser.adnummer).then((resp) => {
             var chiroContact = resp[0];
+            console.log(chiroContact);
             if (resp.size != 0) {
                 this.newPerson = {
                     adNumber: loggedInUser.adnummer,
@@ -174,6 +208,87 @@ class RegisterController {
         });
     }
 
+    /*
+    * wanneer de admin een deelnemer wil toevoegen
+     */
+    prefillMember() {
+        var participant = this.RegisterOtherMemberService.getParticipant();
+
+        this.KrinkelService.getContactFromChiro(participant.adNumber).then((resp) => {
+            var chiroContact = resp[0];
+            if (resp.size != 0) {
+                this.newPerson = {
+                    adNumber: participant.adNumber,
+                    job: "Aanbod nationale kampgrond",
+                    firstName: chiroContact.first_name,
+                    lastName: chiroContact.last_name,
+                    email: chiroContact.email,
+                    birthDate: chiroContact.birth_date,
+                    phone: chiroContact.phone.replace('-', ''),
+                    gender: chiroContact.gender_id,
+                    rank: chiroContact.afdeling.toUpperCase()
+                };
+
+                this.KrinkelService.getPloegen(participant.adNumber).then((resp) => {
+                    this.options = [];
+                    resp.forEach((r) => {
+                        this.options.push(JSON.parse(r));
+                    });
+                    this.newPerson.group = this.options[0].stamnr;
+                });
+                this.details2.name = chiroContact.postal_code;
+
+
+                this.details.address_components = [];
+                this.details.address_components.push({
+                    long_name: chiroContact.street_address
+                });
+
+                this.details3.vicinity = chiroContact.city;
+            }
+        });
+    }
+
+    /*
+     * wanneer de admin een medewerker wil toevoegen
+     */
+    prefillColleagueByAdmin() {
+        var participant = this.RegisterOtherMemberService.getParticipant();
+
+        this.KrinkelService.getContactFromChiro(participant.adNumber).then((resp) => {
+            var chiroContact = resp[0];
+            if (resp.size != 0) {
+                this.newPerson = {
+                    adNumber: participant.adNumber,
+                    job: "Aanbod nationale kampgrond",
+                    firstName: chiroContact.first_name,
+                    lastName: chiroContact.last_name,
+                    email: chiroContact.email,
+                    birthDate: chiroContact.birth_date,
+                    phone: chiroContact.phone.replace('-', ''),
+                    gender: chiroContact.gender_id,
+                    rank: chiroContact.afdeling.toUpperCase()
+                };
+
+                this.KrinkelService.getPloegen(participant.adNumber).then((resp) => {
+                    this.options = [];
+                    resp.forEach((r) => {
+                        this.options.push(JSON.parse(r));
+                    });
+                    this.newPerson.group = this.options[0].stamnr;
+                });
+                this.details2.name = chiroContact.postal_code;
+
+
+                this.details.address_components = [];
+                this.details.address_components.push({
+                    long_name: chiroContact.street_address
+                });
+
+                this.details3.vicinity = chiroContact.city;
+            }
+        });
+    }
 
     $onInit() {
         if (this.AuthService.getLoggedinUser() == null) {
@@ -184,11 +299,20 @@ class RegisterController {
         /**
          * Prefilling the form when subscribing others
          */
-        if (this.SelectService.getColleague() !== undefined) {
+        if(this.RegisterOtherMemberService.subscribeMember()) {
+            console.log('subMember');
+            this.prefillMember();
+            this.user = "admin";
+            this.RegisterOtherMemberService.setSubscribeMember(false);
+        } else if(this.RegisterOtherMemberService.subscribeColleague()) {
+            console.log('subColl');
+            this.prefillColleagueByAdmin();
+            this.user = "admin";
+            this.RegisterOtherMemberService.setSubscribeColleague(false);
+        } else if (this.SelectService.getColleague() !== undefined) {
+            console.log('prefillColl');
             this.prefillColleague();
-
         } else {
-
             var user = this.StorageService.getUser();
             if (user && user.email === this.AuthService.getLoggedinUser().email) {
                 this.newPerson = user;
@@ -196,6 +320,7 @@ class RegisterController {
                 /**
                  * Prefilling the form when subscribing yourself
                  */
+                console.log('prefillSelf');
                 this.prefillSelf();
 
             }
@@ -234,6 +359,19 @@ class RegisterController {
         }
     }
 
+    addToBasket(person){
+        var perzon = person;
+        perzon.city = this.details3.vicinity;
+        perzon.postalCode = this.details2.name;
+        perzon.street = this.details.address_components[0].long_name;
+
+        var mappedPerson = this.MapperService.mapParticipant(perzon);
+        console.log(mappedPerson);
+        //add person to cart using service
+        this.KrinkelService.addPersonToBasket(mappedPerson).then(() => {
+            this.$location.path("/cart");
+        });
+    }
 
     /**
      * Not the ideal lifecycle hook to save everything in localstorage, due to time constraints this will have to do for now.
@@ -255,4 +393,18 @@ export var RegisterComponent = {
         type: '@'
     }
 };
-RegisterComponent.$inject = ['$log', '$window', 'StorageService', 'MapperService', 'AuthService', 'KrinkelService', '$location', 'SelectService'];
+
+
+RegisterComponent.$inject = ['$log', '$window', 'StorageService', 'MapperService', 'AuthService', 'KrinkelService', '$location', 'SelectService', 'RegisterOtherMemberService'];
+
+
+export var BasketComponent = {
+    template:require('./addtobasket.html'),
+    controller:RegisterController,
+    bindings : {
+        type:'@'
+    }
+};
+
+BasketComponent.$inject = ['$log', '$window', 'StorageService', 'MapperService', 'AuthService', 'KrinkelService', '$location', 'SelectService', 'RegisterOtherMemberService'];
+

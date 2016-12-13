@@ -1,5 +1,6 @@
 package com.realdolmen.chiro.service;
 
+import com.realdolmen.chiro.domain.RegistrationParticipant;
 import com.realdolmen.chiro.domain.RegistrationVolunteer;
 import com.realdolmen.chiro.domain.Status;
 import com.realdolmen.chiro.repository.RegistrationVolunteerRepository;
@@ -36,6 +37,18 @@ public class RegistrationVolunteerService {
             return null;
         }
         return null;
+    }
+
+
+    public void markAsPayed(RegistrationVolunteer volunteer) {
+        if (volunteer != null) {
+            volunteer.setStatus(Status.PAID);
+
+            //TODO deze | lijn uit commentaar halen als met brentc zijn branch is gemerged
+            //          v
+            //registrationVolunteerRepository.createRegistrationCommunication(participant);
+            this.save(volunteer);
+        }
     }
 
     public Integer getPRICE_IN_EUROCENTS() {

@@ -75,6 +75,7 @@ public class RegistrationParticipantController {
      */
     @RequestMapping(method = RequestMethod.POST, value = "/api/participants", consumes = "application/json")
     public ResponseEntity<?> save(@Valid @RequestBody RegistrationParticipant participant) throws URISyntaxException, MultiSafePayService.InvalidPaymentOrderIdException {
+        participant.updateLastChange();
         RegistrationParticipant resultingParticipant = registrationParticipantService.save(participant);
         User currentUser = userService.getCurrentUser();
 
@@ -104,5 +105,27 @@ public class RegistrationParticipantController {
         RegistrationParticipant resultingParticipant = registrationParticipantService.updatePaymentStatusAdmin(Long.valueOf(participantId), paymentStatus);
         logger.info("Payment updated.");
         return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @RequestMapping(method = RequestMethod.POST, value = "/api/participants/admin", consumes = "application/json")
+    public ResponseEntity<?> saveByAdmin(@Valid @RequestBody RegistrationParticipant participant) throws URISyntaxException {
+        if (participant == null) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
+        //Integer price = registrationParticipantService.getPRICE_IN_EUROCENTS();
+        //String paymentUrl = multiSafePayService.getParticipantPaymentUri(resultingParticipant, price, currentUser);
+        //admin moet niet betalen dus payment status op betaald zetten
+        registrationParticipantService.markAsPayed(participant);
+
+        HttpHeaders headers = new HttpHeaders();
+        //TODO doorverwijzen naar de admin page
+        // deze | lijn uit commentaar halen als ge gemerged hebt met lennart zijn branch
+        //      v
+        //headers.setLocation(new URI("/admin"));
+        headers.setLocation(new URI("/find-participant-by-ad"));
+
+        logger.info("New registration created.");
+        return new ResponseEntity<>(headers, HttpStatus.CREATED);
     }
 }

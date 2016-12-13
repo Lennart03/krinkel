@@ -31,9 +31,11 @@ public class ChiroColleagueController {
     }
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public class InvalidAdNumber extends RuntimeException {
+      public class InvalidAdNumber extends RuntimeException {
         public InvalidAdNumber() {
             super("Ongeldig adnummer.");
         }
     }
+
+
 }

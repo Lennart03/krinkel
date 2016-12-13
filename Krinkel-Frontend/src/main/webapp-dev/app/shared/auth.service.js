@@ -1,8 +1,10 @@
 export class AuthService {
-    constructor($window, KrinkelService, $timeout) {
+    constructor($window, KrinkelService, $timeout, $http, BASEURL) {
         this.$window = $window;
         this.KrinkelService = KrinkelService;
         this.$timeout = $timeout;
+        this.$http = $http;
+        this.BASEURL = BASEURL;
 
         this.getUserFromStorage();
 
@@ -14,7 +16,6 @@ export class AuthService {
         this.getUserDetails().then(function (resp) {
             // Initialize userdetails because we need them instantly.
         });
-
 
 
     }
@@ -31,7 +32,7 @@ export class AuthService {
 
     getUserFromStorage() {
         var jwt = this.getToken('Authorization');
-        if (jwt!= undefined && jwt.indexOf('.') !=-1) {
+        if (jwt != undefined && jwt.indexOf('.') != -1) {
             var payload = jwt.split('.')[1];
             var decodedPayload = JSON.parse(window.atob(payload));
             this.user = decodedPayload;
@@ -39,22 +40,30 @@ export class AuthService {
     }
 
     logoutUser() {
-        //clear sessionstorage and localstorage cuz mathias loves to put junk here
-        sessionStorage.clear();
-        localStorage.clear();
-        //clear the cookies
+        console.log('logoutUser() called')
+        this.$http.get(`${this.BASEURL}/api/logout`).then((resp) => {
+            if (resp.status !== 200) {
+                return;
+            }
+            console.log(resp.status);
+            console.log('statuscode is 200');
+            //clear sessionstorage and localstorage cuz mathias loves to put junk here
+            sessionStorage.clear();
+            localStorage.clear();
+            //clear the cookies
 
-        var cookies = document.cookie.split(";");
+            var cookies = document.cookie.split(";");
 
-        for (var i = 0; i < cookies.length; i++) {
-            var cookie = cookies[i];
-            var eqPos = cookie.indexOf("=");
-            var name = eqPos > -1 ? cookie.substr(0, eqPos) : cookie;
-            document.cookie = name + "=;expires=Thu, 01 Jan 1970 00:00:00 GMT";
-        }
-        // The service parameter is not recognized by the Chiro CAS.
-        // This feature is probably deactivated.
-        this.$window.location = 'https://login.chiro.be/cas/logout?service=http://localhost:8080/site/index.html';
+            for (var i = 0; i < cookies.length; i++) {
+                var cookie = cookies[i];
+                var eqPos = cookie.indexOf("=");
+                var name = eqPos > -1 ? cookie.substr(0, eqPos) : cookie;
+                document.cookie = name + "=;expires=Thu, 01 Jan 1970 00:00:00 GMT";
+            }
+            // The service parameter is not recognized by the Chiro CAS.
+            // This feature is probably deactivated.
+            this.$window.location = 'https://login.chiro.be/cas/logout?service=http://localhost:8080/site/index.html';
+        });
     }
 
     getToken(name) {
@@ -62,12 +71,12 @@ export class AuthService {
         var parts = value.split("; " + name + "=");
         if (parts.length == 2) {
             return parts.pop()
-                        .split(";")
-                        .shift();
+                .split(";")
+                .shift();
         }
     }
 
-    getCurrentUserDetails(adNumber){
+    getCurrentUserDetails(adNumber) {
         return this.KrinkelService.getCurrentUserDetails(adNumber).then(resp => {
             this.userDetails = resp;
             return resp;
@@ -101,6 +110,6 @@ export class AuthService {
     }
 }
 
-AuthService.$inject = ['$window', 'KrinkelService', '$timeout'];
+AuthService.$inject = ['$window', 'KrinkelService', '$timeout', '$http', 'BASEURL'];
 
 

@@ -11,6 +11,7 @@ import javax.validation.constraints.Past;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -50,6 +51,10 @@ public class RegistrationParticipant {
     @JsonFormat(pattern = "yyyy-MM-dd")
     private Date birthdate;
 
+    @Temporal(TemporalType.TIMESTAMP)
+    @JsonFormat(pattern = "yyyy-MM-dd")
+    private Date lastChange;
+
     @NotBlank
     private String stamnumber;
 
@@ -81,6 +86,16 @@ public class RegistrationParticipant {
     @Enumerated(EnumType.STRING)
     private SyncStatus syncStatus = SyncStatus.UNSYNCED;
 
+    @Transient
+    private String httpStatus;
+
+    public String getHttpStatus() {
+        return httpStatus;
+    }
+
+    public void setHttpStatus(String httpStatus) {
+        this.httpStatus = httpStatus;
+    }
 
     /**
      * Only numbers, spaces and optionally a '+' sign are allowed.
@@ -103,6 +118,7 @@ public class RegistrationParticipant {
         this.gender = gender;
         this.eventRole = eventRole;
         this.eatinghabbit = eatinghabbit;
+
     }
 
     private RegistrationParticipant(RegistrationParticipant.RegistrationParticipantBuilder builder) {
@@ -112,6 +128,7 @@ public class RegistrationParticipant {
         this.firstName = builder.firstName;
         this.lastName = builder.lastName;
         this.birthdate = builder.birthdate;
+        this.lastChange = builder.lastChange;
         this.stamnumber = builder.stamnumber;
         this.gender = builder.gender;
         this.eventRole = builder.eventRole;
@@ -307,6 +324,18 @@ public class RegistrationParticipant {
         this.syncStatus = syncStatus;
     }
 
+    public Date getLastChange() {
+        return lastChange;
+    }
+
+    public void setLastChange(Date lastChange) {
+        this.lastChange = lastChange;
+    }
+
+    public void updateLastChange() {
+        this.lastChange = Calendar.getInstance().getTime();
+    }
+
     public static class RegistrationParticipantBuilder {
         private String adNumber;
         private String firstName;
@@ -315,6 +344,7 @@ public class RegistrationParticipant {
         private String emailSubscriber;
         private Address address;
         private Date birthdate;
+        private Date lastChange;
         private String stamnumber;
         private Gender gender = Gender.X;
         private EventRole eventRole;
@@ -424,6 +454,11 @@ public class RegistrationParticipant {
 
         public RegistrationParticipantBuilder phoneNumber(String phoneNumber) {
             this.phoneNumber = phoneNumber;
+            return this;
+        }
+
+        public RegistrationParticipantBuilder lastChange(Date lastChange) {
+            this.lastChange = lastChange;
             return this;
         }
     }

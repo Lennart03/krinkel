@@ -23,8 +23,9 @@ class KrinkelSelectController {
     }
 
     selectPerson(colleague){
+        console.log(colleague);
         this.SelectService.setColleague(colleague);
-        this.$location.path("/register-participant");
+        this.$location.path("/add-to-basket");
     }
     getUserDetails() {
 

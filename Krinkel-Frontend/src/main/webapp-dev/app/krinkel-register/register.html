@@ -464,12 +464,21 @@
             kunnen zoeken. Je kan ons contacteren op 03/231 07 95 of <a href="mailto:info@krinkel.be">info@krinkel.be</a>.
         </p>
 
-        <button href="#modal4" class="btn waves-effect waves-light modal-trigger" name="action"
-                ng-disabled="!personForm.$valid">
-            Betalen
-            <i class="material-icons right">send</i>
-        </button>
+        <div ng-if="$ctrl.user !== 'admin'">
+            <button href="#modal4" class="btn waves-effect waves-light modal-trigger"  name="action"
+                    ng-disabled="!personForm.$valid">
+                Betalen
+                <i class="material-icons right">send</i>
+            </button>
+        </div>
 
+        <div ng-if="$ctrl.user === 'admin'">
+            <button href="#modal5" class="btn waves-effect waves-light modal-trigger" name="action"
+                    ng-disabled="!personForm.$valid">
+                Volgende
+                <i class="material-icons right">send</i>
+            </button>
+        </div>
         <!-- Modal Structure -->
         <div id="modal4" class="modal">
             <div  ng-if="$ctrl.type === 'volunteer'" class="modal-content">
@@ -479,6 +488,16 @@
             <div  ng-if="$ctrl.type === 'participant'" class="modal-content">
                 <h4>U wordt doorverwezen naar de betaalpagina</h4>
                 <p>De prijs voor deelnemers is €110</p>
+            </div>
+            <div class="modal-footer">
+                <button type="submit" class=" modal-action modal-close waves-effect btn-flat">OK</button>
+                <a href="" class="modal-action modal-close waves-effect btn-flat">CANCEL</a>
+            </div>
+        </div>
+
+        <div id="modal5" class="modal">
+            <div class="modal-content">
+                <h4>Click op OK om $ctrl.newPerson.firstName "$ctrl.newPerson.lastName" in te schrijven.</h4>
             </div>
             <div class="modal-footer">
                 <button type="submit" class=" modal-action modal-close waves-effect btn-flat">OK</button>

@@ -11,6 +11,9 @@
 
     <artifactId>Krinkel-Chiro-api</artifactId>
 
+    <properties>
+        <org.jackson-version>1.9.4</org.jackson-version>
+    </properties>
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -24,6 +27,11 @@
         <dependency>
             <groupId>com.realdolmen.chiro</groupId>
             <artifactId>Krinkel-Domain</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.codehaus.jackson</groupId>
+            <artifactId>jackson-mapper-asl</artifactId>
+            <version>${org.jackson-version}</version>
         </dependency>
     </dependencies>
 

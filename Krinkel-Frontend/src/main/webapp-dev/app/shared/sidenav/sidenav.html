@@ -16,13 +16,18 @@
             </a>
         </li>
         <li class="collection-item">
-            <a href="/select-participant">
+            <a href="/cart">
                 <i class="material-icons">group_add</i> Schrijf anderen in
             </a>
         </li>
         <li class="collection-item" ng-if="$ctrl.getUserDetails().hasPaid == false">
             <a href="/register-volunteer">
                 <i class="material-icons">work</i> Schrijf je in als medewerker
+            </a>
+        </li>
+        <li class="collection-item">
+            <a href="/find-participant-by-ad">
+                <i class="material-icons">work</i> Schrijf een bestaand lid in
             </a>
         </li>
         <li>
@@ -50,9 +55,12 @@
             </a>
         </li>
 
-        <!--<li>-->
-        <!--<br/>-->
-        <!--</li>-->
+        <li class="collection-item" ng-if="$ctrl.AuthService.getUserRole() === 'ADMIN'">
+            <a href="/admin">
+                <i class="material-icons">build</i> Admin
+            </a>
+        </li>
+
         <li>
             <div class="divider">
             </div>

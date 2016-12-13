@@ -5,9 +5,12 @@ import com.realdolmen.chiro.domain.RegistrationParticipant;
 import com.realdolmen.chiro.domain.RegistrationVolunteer;
 import com.realdolmen.chiro.domain.VolunteerFunction;
 import com.realdolmen.chiro.spring_test.SpringIntegrationTest;
+import org.junit.Assert;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
@@ -44,4 +47,14 @@ public class RegistrationParticipantRepositoryTest extends SpringIntegrationTest
 		assertNotNull(participants);
 		assertEquals(1, participants.size());
 	}
+
+    @Test
+    public void shouldUpdateLastChange(){
+        RegistrationParticipant participant = registrationParticipantRepository.findByAdNumber(AD_NUMBER);
+        Date timeStamp = Calendar.getInstance().getTime();
+        participant.updateLastChange();
+        registrationParticipantRepository.save(participant);
+        participant = registrationParticipantRepository.findByAdNumber(AD_NUMBER);
+        Assert.assertEquals(timeStamp, participant.getLastChange());
+    }
 }
