@@ -59,7 +59,7 @@
     "webpack": "2.1.0-beta.20"
   },
   "scripts": {
-    "travis": "npm install",
+    "travis": "install",
     "build" : "gulp",
     "serve": "gulp serve",
     "serve:dist": "gulp serve:dist"
