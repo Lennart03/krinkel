@@ -1,7 +1,12 @@
-language: java
+language: 
+ - java
+ - node_js
 
 jdk:
   - oraclejdk8
+
+node_js:
+  - node
 
 script:
   - gulp
@@ -12,9 +17,8 @@ branches:
   - master
   - devel
 
-before_script:
+install:
   - npm install -g gulp
-  - npm install
   
 after_success:
   - mvn -Pcobertura clean cobertura:cobertura
