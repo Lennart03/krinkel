@@ -9,7 +9,7 @@ node_js:
   - node
 
 script:
-  - npminstall.sh
+  - build.sh
   - "mvn test -DdatabaseEngine=h2"
 
 branches:
