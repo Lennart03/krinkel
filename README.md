@@ -1,5 +1,6 @@
 # Krinkel
 [![Build Status](https://travis-ci.com/Bumbolt/krinkel.svg?token=Zeuk5x1ZDC7EQTmDtyaK&branch=master)](https://travis-ci.com/Bumbolt/krinkel)
+
 ## Links
 
 * [Angular Frontend](http://localhost:8080/)
