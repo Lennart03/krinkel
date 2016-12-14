@@ -16,8 +16,8 @@ export function appConfig($routeProvider, $locationProvider) {
     });
 
     $routeProvider.when('/add-to-basket', {
-        template: '<basket></basket>'
-    })
+        template: '<basket type="participant"></basket>'
+    });
 
     $routeProvider.when('/register-volunteer', {
         template: '<register type="volunteer"></register>'
