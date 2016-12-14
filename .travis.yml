@@ -11,8 +11,8 @@ branches:
   - devel
   
 before_script:
-  - npm install -g gulp
-script: gulp
+  - cd /home/travis/build/Bumbolt/krinkel/Krinkel-Frontend/src/main/webapp-dev/Krinkel-Frontend/ | npm install -g gulp
+script: /home/travis/build/Bumbolt/krinkel/Krinkel-Frontend/src/main/webapp-dev/Krinkel-Frontend/gulp
 
 after_success:
   - mvn -Pcobertura clean cobertura:cobertura
