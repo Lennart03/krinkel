@@ -2,14 +2,13 @@ package com.realdolmen.chiro.service;
 
 import com.realdolmen.chiro.domain.*;
 import com.realdolmen.chiro.repository.*;
-
+import jxl.write.WritableWorkbook;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.*;
-import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -40,28 +39,28 @@ public class ExportService {
     @Autowired
     private RegistrationCommunicationRepository registrationCommunicationRepository;
 
-    public void createExcelOutputXlsRegistrationAll(HttpServletResponse response) {
+    public WritableWorkbook createExcelOutputXlsRegistrationAll(HttpServletResponse response) {
         Object[] header = createHeaderForRegistrationParticipants();
         Map<String, Object []> data = createDataForRegistrationParticipants();
-        excelOutputService.createExcelOutputXls(response, "registratiesLijstAlles.xls", header, data);
+        return excelOutputService.createExcelOutputXls(response, "registratiesLijstAlles.xls", header, data);
     }
 
-    public void createExcelOutputXlsRegistrationCSV(HttpServletResponse response) {
-        Object[] header = createHeaderForRegistrationParticipants();
-        Map<String, Object []> data = createDataForRegistrationParticipants();
-        excelOutputService.createExcelOutputXls(response, "registratiesLijstAlles.csv", header, data);
-    }
+//    public void createExcelOutputXlsRegistrationCSV(HttpServletResponse response) {
+//        Object[] header = createHeaderForRegistrationParticipants();
+//        Map<String, Object []> data = createDataForRegistrationParticipants();
+//        excelOutputService.createExcelOutputXls(response, "registratiesLijstAlles.csv", header, data);
+//    }
 
-    public void createExcelOutputXlsRegistrationParticipants(HttpServletResponse response) {
+    public WritableWorkbook createExcelOutputXlsRegistrationParticipants(HttpServletResponse response) {
         Object[] header = createHeaderForRegistrationParticipants();
         Map<String, Object []> data = createDataForRegistrationParticipantsOnlyParticipants();
-        excelOutputService.createExcelOutputXls(response, "registratiesLijstDeelnemers.xls", header, data);
+        return excelOutputService.createExcelOutputXls(response, "registratiesLijstDeelnemers.xls", header, data);
     }
 
-    public void createExcelOutputXlsRegistrationVolunteers(HttpServletResponse response) {
+    public WritableWorkbook createExcelOutputXlsRegistrationVolunteers(HttpServletResponse response) {
         Object[] header = createHeaderForRegistrationParticipants();
         Map<String, Object []> data = createDataForRegistrationParticipantsOnlyVolunteers();
-        excelOutputService.createExcelOutputXls(response, "registratiesLijstMedewerkers.xls", header, data);
+        return excelOutputService.createExcelOutputXls(response, "registratiesLijstMedewerkers.xls", header, data);
     }
 
     public void createCSVBackups(HttpServletResponse response){
@@ -118,7 +117,6 @@ public class ExportService {
             byte data[] = new byte[bufferSize];
 
             for(int i=0; i < filenames.length; i++) {
-                System.err.println("Compress -- Adding: " + filenames[i]);
                 FileInputStream fi = null;
                 fi = new FileInputStream(filenames[i]);
 
@@ -330,9 +328,10 @@ public class ExportService {
                 socialPromotion = "Nee";
             }
 
-            // For formatting dates
+            // For formatting dates and timestamps (date with hour)
             String birthDate = getDateFormatted(r.getBirthdate());
-            String lastChange = getDateFormatted(r.getLastChange());
+            String lastChange = getTimestampFormatted(r.getLastChange());
+
 
             // Checking for null
             String syncStatus = "";
@@ -404,6 +403,14 @@ public class ExportService {
             return "";
         }
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+        return dateFormat.format(date);
+    }
+
+    protected String getTimestampFormatted(Date date) {
+        if(date == null){
+            return "";
+        }
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
         return dateFormat.format(date);
     }
 
