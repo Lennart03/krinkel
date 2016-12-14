@@ -41,8 +41,7 @@
                 <configuration>
                     <executable>npm</executable>
                     <arguments>
-                        <argument>run</argument>
-                        <argument>build</argument>
+                        <argument>travis</argument>
                     </arguments>
                     <workingDirectory>${basedir}</workingDirectory>
                 </configuration>
