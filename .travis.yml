@@ -17,7 +17,7 @@ branches:
   - master
   - devel
 
-install:
+before_scripts:
   - npm install -g gulp
   
 after_success:
