@@ -35,14 +35,4 @@ public class AppConfig {
             }
         };
     }
-
-    @Bean
-    public ServletRegistrationBean giveZipServlet(ZipServlet zipsers){
-        return new ServletRegistrationBean(zipsers, "/zip");
-    }
-
-    @Bean
-    public ZipServlet createNewZipServlet(){
-        return new ZipServlet();
-    }
 }

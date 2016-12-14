@@ -70,12 +70,21 @@ public class ExportServiceTest extends SpringIntegrationTest {
     }
 
     @Test
-    public void getDateInBelgianFormat() {
+    public void getDateInFormat() {
         Calendar c = Calendar.getInstance();
         c.set(2016,11,25); //months work with index!!
         Date date = c.getTime();
         String dateFormatted = exportService.getDateFormatted(date);
         assertEquals("25-12-2016", dateFormatted);
+    }
+
+    @Test
+    public void getTimestampInFormat() {
+        Calendar c = Calendar.getInstance();
+        c.set(2016,11,25,12,00,00); //months work with index!!
+        Date date = c.getTime();
+        String dateFormatted = exportService.getTimestampFormatted(date);
+        assertEquals("25-12-2016 12:00:00", dateFormatted);
     }
 
     @Test
@@ -141,7 +150,7 @@ public class ExportServiceTest extends SpringIntegrationTest {
         Object[] objects = stringMap.get("0");
         assertEquals(60L, objects[0]);
         assertEquals("Gesynchroniseerd", objects[29]);
-        assertEquals("13-12-2016", objects[30]);
+        assertEquals("13-12-2016 00:00:00", objects[30]);
     }
 
     @Test
@@ -162,8 +171,9 @@ public class ExportServiceTest extends SpringIntegrationTest {
         assertEquals(5, registrationParticipants.size());
     }
 
+
     @Test
-    public void downloadCompleteRegistrationParticipantsList() throws IOException {
+    public void compareExcelOutputToTestDataForParticipantsAndVolunteers() throws IOException {
         HttpServletResponse response = new MockHttpServletResponse();
         WritableWorkbook workbook = exportService.createExcelOutputXlsRegistrationAll(response);
         assertEquals("Id", readLineFromXls(workbook, 0, 0));
@@ -175,6 +185,38 @@ public class ExportServiceTest extends SpringIntegrationTest {
         assertEquals("THIS CELL WAS EMPTY", readLineFromXls(workbook, 100, 100));
     }
 
+    @Test
+    public void compareExcelOutputToTestDataForParticipants() throws IOException {
+        HttpServletResponse response = new MockHttpServletResponse();
+        WritableWorkbook workbook = exportService.createExcelOutputXlsRegistrationParticipants(response);
+        assertEquals("Id", readLineFromXls(workbook, 0, 0));
+        assertEquals("Ad-nummer", readLineFromXls(workbook, 1, 0));
+        assertEquals("50", readLineFromXls(workbook, 0, 5));
+        assertEquals("", readLineFromXls(workbook, 14, 1));
+        assertEquals("Spaans, Frans", readLineFromXls(workbook, 17, 5));
+        assertEquals("21-08-1995", readLineFromXls(workbook, 6, 1));
+
+        assertEquals("THIS CELL WAS EMPTY", readLineFromXls(workbook, 0, 6));
+        assertEquals("THIS CELL WAS EMPTY", readLineFromXls(workbook, 29, 6));
+        assertEquals("THIS CELL WAS EMPTY", readLineFromXls(workbook, 100, 100));
+    }
+
+    @Test
+    public void compareExcelOutputToTestDataForVolunteers() throws IOException {
+        HttpServletResponse response = new MockHttpServletResponse();
+        WritableWorkbook workbook = exportService.createExcelOutputXlsRegistrationVolunteers(response);
+        assertEquals("Id", readLineFromXls(workbook, 0, 0));
+        assertEquals("Ad-nummer", readLineFromXls(workbook, 1, 0));
+        assertEquals("60", readLineFromXls(workbook, 0, 1));
+        assertEquals("21-08-1995", readLineFromXls(workbook, 6, 1));
+        assertEquals("Vrijwilliger", readLineFromXls(workbook, 13, 1));
+        assertEquals("Gesynchroniseerd", readLineFromXls(workbook, 29, 1));
+        assertEquals("13-12-2016 00:00:00", readLineFromXls(workbook, 30, 1));
+
+        assertEquals("THIS CELL WAS EMPTY", readLineFromXls(workbook, 100, 3));
+    }
+
+
     /**
      * Returns the string value of the cell at the given column and row indexes inside the given writableworkbook.
      * This is to check the contents of cells for writableworkbooks of the jexcel class.
@@ -185,12 +227,6 @@ public class ExportServiceTest extends SpringIntegrationTest {
      * @throws IOException
      */
     private String readLineFromXls(WritableWorkbook workBook, int column, int row) throws IOException {
-
-//        File file = new File(fileName);
-//        FileInputStream fis = new FileInputStream(file);
-        // Finds the workbook instance for XLS file
-//        HSSFWorkbook workBook = new HSSFWorkbook(fis);
-        // Return first sheet from the XLS workbook
         WritableSheet sheet = workBook.getSheet(0);
         WritableCell cell = sheet.getWritableCell(column, row);
         if(cell.getType() == CellType.EMPTY){
@@ -201,24 +237,4 @@ public class ExportServiceTest extends SpringIntegrationTest {
         }
         return null;
     }
-//    @Test
-//    public void compareExcelOutputToTestDataForAllParticipants() {
-//        exportService.createExcelOutputXlsRegistrationAll(HttpServletResponse response);
-//
-//    }
-
-//    @Test
-//    public void compareExcelOutputToTestDataForParticipants() {
-//
-//    }
-//
-//    @Test
-//    public void compareExcelOutputToTestDataForVolunteers() {
-//
-//    }
-//
-//    @Test
-//    public void compareCsvOutputToTestDataForAllParticipants() {
-//
-//    }
 }

@@ -48,22 +48,22 @@ public class ExportService {
         return excelOutputService.createExcelOutputXls(response, "registratiesLijstAlles.xls", header, data);
     }
 
-    public void createExcelOutputXlsRegistrationCSV(HttpServletResponse response) {
-        Object[] header = createHeaderForRegistrationParticipants();
-        Map<String, Object []> data = createDataForRegistrationParticipants();
-        excelOutputService.createExcelOutputXls(response, "registratiesLijstAlles.csv", header, data);
-    }
+//    public void createExcelOutputXlsRegistrationCSV(HttpServletResponse response) {
+//        Object[] header = createHeaderForRegistrationParticipants();
+//        Map<String, Object []> data = createDataForRegistrationParticipants();
+//        excelOutputService.createExcelOutputXls(response, "registratiesLijstAlles.csv", header, data);
+//    }
 
-    public void createExcelOutputXlsRegistrationParticipants(HttpServletResponse response) {
+    public WritableWorkbook createExcelOutputXlsRegistrationParticipants(HttpServletResponse response) {
         Object[] header = createHeaderForRegistrationParticipants();
         Map<String, Object []> data = createDataForRegistrationParticipantsOnlyParticipants();
-        excelOutputService.createExcelOutputXls(response, "registratiesLijstDeelnemers.xls", header, data);
+        return excelOutputService.createExcelOutputXls(response, "registratiesLijstDeelnemers.xls", header, data);
     }
 
-    public void createExcelOutputXlsRegistrationVolunteers(HttpServletResponse response) {
+    public WritableWorkbook createExcelOutputXlsRegistrationVolunteers(HttpServletResponse response) {
         Object[] header = createHeaderForRegistrationParticipants();
         Map<String, Object []> data = createDataForRegistrationParticipantsOnlyVolunteers();
-        excelOutputService.createExcelOutputXls(response, "registratiesLijstMedewerkers.xls", header, data);
+        return excelOutputService.createExcelOutputXls(response, "registratiesLijstMedewerkers.xls", header, data);
     }
 
     public void createCSVBackups(HttpServletResponse response){
@@ -331,9 +331,9 @@ public class ExportService {
                 socialPromotion = "Nee";
             }
 
-            // For formatting dates
+            // For formatting dates and timestamps (date with hour)
             String birthDate = getDateFormatted(r.getBirthdate());
-            String lastChange = getDateFormatted(r.getLastChange());
+            String lastChange = getTimestampFormatted(r.getLastChange());
 
             // Checking for null
             String syncStatus = "";
@@ -405,6 +405,14 @@ public class ExportService {
             return "";
         }
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+        return dateFormat.format(date);
+    }
+
+    protected String getTimestampFormatted(Date date) {
+        if(date == null){
+            return "";
+        }
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
         return dateFormat.format(date);
     }
 
