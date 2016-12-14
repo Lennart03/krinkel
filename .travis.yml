@@ -9,7 +9,6 @@ node_js:
   - node
 
 script:
-  - gulp
   - "mvn test -DdatabaseEngine=h2"
 
 branches:
@@ -17,8 +16,9 @@ branches:
   - master
   - devel
 
-before_scripts:
-  - npm install -g gulp
+install:
+  - npm install -g gulp gulp-cli
+  - find ./Krinkel-Fronend/* -maxdepth 1 -name package.json -execdir npm install \;
   
 after_success:
   - mvn -Pcobertura clean cobertura:cobertura
