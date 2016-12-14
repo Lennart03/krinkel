@@ -9,11 +9,7 @@ branches:
   only:
   - master
   - devel
-  
-before_script:
-  - cd /home/travis/build/Bumbolt/krinkel/Krinkel-Frontend/src/main/webapp-dev/Krinkel-Frontend/ | npm install -g gulp
-script: /home/travis/build/Bumbolt/krinkel/Krinkel-Frontend/src/main/webapp-dev/Krinkel-Frontend/gulp
-
+ 
 after_success:
   - mvn -Pcobertura clean cobertura:cobertura
   - mvn org.eluder.coveralls:coveralls-maven-plugin:report
