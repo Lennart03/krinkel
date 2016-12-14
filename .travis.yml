@@ -3,13 +3,14 @@ language: java
 jdk:
   - oraclejdk8
 
+script: gulp
 script: "mvn test -DdatabaseEngine=h2"
 
 branches:
   only:
   - master
   - devel
- 
+  
 after_success:
   - mvn -Pcobertura clean cobertura:cobertura
   - mvn org.eluder.coveralls:coveralls-maven-plugin:report
