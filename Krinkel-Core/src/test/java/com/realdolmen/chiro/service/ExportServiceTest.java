@@ -294,8 +294,7 @@ public class ExportServiceTest extends SpringIntegrationTest {
                 rows.get(5));
         zipFile.close();
         // Remove temp file
-        boolean delete = temp.delete();
-        System.err.println("Temp has been deleted: " + delete);
+        temp.delete();
     }
 
     @Test
@@ -317,8 +316,99 @@ public class ExportServiceTest extends SpringIntegrationTest {
                 rows.get(1));
         zipFile.close();
         // Remove temp file
-        boolean delete = temp.delete();
-        System.err.println("Temp has been deleted: " + delete);
+        temp.delete();
+    }
+
+    @Test
+    public void testBackupZipbackupLoginLogs() throws IOException {
+        exportService.createCSVBackups();
+        ZipFile zipFile = new ZipFile("backup.zip");
+        String fileName = "backupLoginLogs.csv";
+
+        // Go over every file and get the right file
+        InputStream inputStream = searchFile(fileName, zipFile);
+        File temp = new File("temp3.csv");
+        Path destination = Paths.get(temp.getName());
+        Files.copy(inputStream, destination);
+        inputStream.close(); // Close inputstream in order to be able to delete the temp file
+        List<String> rows = getContentOfCSVFile(temp);
+        // Data comes from test-data.sql: 12 entries + header
+        assertTrue(rows.size() == 13);
+        assertEquals("id,adNumber,stamp,stamNumber",
+                rows.get(0));
+        assertEquals("1,123456,2016-10-01,null",
+                rows.get(1));
+        zipFile.close();
+        // Remove temp file
+        temp.delete();
+    }
+
+    @Test
+    public void testBackupZipbackupRegistrationCommunications() throws IOException {
+        exportService.createCSVBackups();
+        ZipFile zipFile = new ZipFile("backup.zip");
+        String fileName = "backupRegistrationCommunications.csv";
+
+        // Go over every file and get the right file
+        InputStream inputStream = searchFile(fileName, zipFile);
+        File temp = new File("temp5.csv");
+        Path destination = Paths.get(temp.getName());
+        Files.copy(inputStream, destination);
+        inputStream.close(); // Close inputstream in order to be able to delete the temp file
+        List<String> rows = getContentOfCSVFile(temp);
+        assertTrue(rows.size() == 9);
+        assertEquals("id,adNumber,status,communicationAttempt",
+                rows.get(0));
+        assertEquals("1,12345,WAITING,0",
+                rows.get(1));
+        zipFile.close();
+        // Remove temp file
+        temp.delete();
+    }
+
+    @Test
+    public void testBackupZipbackupConfirmationLinks() throws IOException {
+        exportService.createCSVBackups();
+        ZipFile zipFile = new ZipFile("backup.zip");
+        String fileName = "backupConfirmationLinks.csv";
+
+        // Go over every file and get the right file
+        InputStream inputStream = searchFile(fileName, zipFile);
+        File temp = new File("temp5.csv");
+        Path destination = Paths.get(temp.getName());
+        Files.copy(inputStream, destination);
+        inputStream.close(); // Close inputstream in order to be able to delete the temp file
+        List<String> rows = getContentOfCSVFile(temp);
+        assertTrue(rows.size() == 1);
+        assertEquals("No data in DB",
+                rows.get(0));
+        zipFile.close();
+        // Remove temp file
+        temp.delete();
+    }
+
+    @Test
+    public void testBackupZipbackupAdmins() throws IOException {
+        exportService.createCSVBackups();
+        ZipFile zipFile = new ZipFile("backup.zip");
+        String fileName = "backupAdmins.csv";
+
+        // Go over every file and get the right file
+        InputStream inputStream = searchFile(fileName, zipFile);
+        File temp = new File("temp6.csv");
+        Path destination = Paths.get(temp.getName());
+        Files.copy(inputStream, destination);
+        inputStream.close(); // Close inputstream in order to be able to delete the temp file
+        List<String> rows = getContentOfCSVFile(temp);
+        assertEquals("adNummer,email,firstname,lastname",
+                rows.get(0));
+        assertEquals("1,firstAdmin@krinkel.be,first,admin",
+                rows.get(1));
+        assertEquals("2,secondAdmin@krinkel.be,second,admin",
+                rows.get(2));
+        zipFile.close();
+        // Remove temp file
+        temp.delete();
     }
 
     private InputStream searchFile(String fileName, ZipFile zipFile) throws IOException {
