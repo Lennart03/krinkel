@@ -440,7 +440,7 @@
                     <input type="checkbox" id="voorwaarden" ng-model="$ctrl.voorwaarden" required/>
                     <label for="voorwaarden">Ik aanvaard de algemene voorwaarden.</label>
                     <!-- Modal Trigger -->
-                    <a class="btn-floating waves-effect waves-light modal-trigger" href="#modal2"><i
+                    <a class="btn-floating waves-effect waves-light modal-trigger" ng-click="$ctrl.initVoorwaardenModal()"><i
                         class="material-icons">help</i></a>
                     <!-- Modal Structure -->
                     <div id="modal2" class="modal">
