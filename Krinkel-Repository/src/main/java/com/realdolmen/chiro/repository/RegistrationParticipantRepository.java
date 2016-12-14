@@ -27,6 +27,8 @@ public interface RegistrationParticipantRepository extends JpaRepository<Registr
             "AND " +
             "((p.status = com.realdolmen.chiro.domain.Status.CONFIRMED)" +
             " OR " +
+            "(p.status = com.realdolmen.chiro.domain.Status.TO_BE_PAID)" +
+            " OR " +
             "(p.status = com.realdolmen.chiro.domain.Status.PAID))"
 
     )
