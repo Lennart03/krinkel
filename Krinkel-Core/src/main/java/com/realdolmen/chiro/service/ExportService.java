@@ -2,16 +2,13 @@ package com.realdolmen.chiro.service;
 
 import com.realdolmen.chiro.domain.*;
 import com.realdolmen.chiro.repository.*;
-
 import jxl.write.WritableWorkbook;
 import org.apache.commons.lang3.builder.ToStringBuilder;
-import org.apache.poi.ss.usermodel.Workbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.*;
-import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -334,6 +331,7 @@ public class ExportService {
             // For formatting dates and timestamps (date with hour)
             String birthDate = getDateFormatted(r.getBirthdate());
             String lastChange = getTimestampFormatted(r.getLastChange());
+
 
             // Checking for null
             String syncStatus = "";
