@@ -26,13 +26,18 @@ import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.test.context.ContextConfiguration;
 
 import javax.servlet.http.HttpServletResponse;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
+import java.io.*;
+import java.lang.reflect.Array;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.*;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipFile;
+import java.util.zip.ZipInputStream;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Created by HBSBB70 on 12/12/2016.
@@ -108,7 +113,6 @@ public class ExportServiceTest extends SpringIntegrationTest {
         assertEquals(dateFormatted + ", " + dateFormatted + ", " + dateFormatted, preCampListToString);
     }
 
-    // TODO change indexes of 'objects' according to the method in ExportService!!!
     @Test
     public void getParticipantsInMap() {
         RegistrationParticipant registrationParticipant = registrationParticipantRepository.findAll().get(0);
@@ -129,7 +133,6 @@ public class ExportServiceTest extends SpringIntegrationTest {
         assertEquals("", objects[30]);
     }
 
-    // TODO change indexes + length accordingly cf. previous test method!!
     @Test
     public void canCreateHeaderForParticipants() {
         Object [] headerObject = exportService.createHeaderForRegistrationParticipants();
@@ -140,7 +143,6 @@ public class ExportServiceTest extends SpringIntegrationTest {
         assertEquals(31, headerObject.length);
     }
 
-    // TODO change indexes accordingly cf. previous test method!!
     @Test
     public void canCreateDataForVolunteers() {
         RegistrationVolunteer registrationVolunteer = registrationVolunteerRepository.findAll().get(0);
@@ -171,6 +173,11 @@ public class ExportServiceTest extends SpringIntegrationTest {
         assertEquals(5, registrationParticipants.size());
     }
 
+
+    /**
+     * Testing making of XLS
+     *
+     */
 
     @Test
     public void compareExcelOutputToTestDataForParticipantsAndVolunteers() throws IOException {
@@ -236,5 +243,103 @@ public class ExportServiceTest extends SpringIntegrationTest {
             return cell.getContents();
         }
         return null;
+    }
+
+    /**
+     * Testing CSV and ZIP
+     */
+    @Test
+    public void testNrOfFilesInBackupZipAndNames() throws IOException {
+        exportService.createCSVBackups();
+        ZipFile zipFile = new ZipFile("backup.zip");
+
+        // Check size
+        assertEquals(6, zipFile.size());
+
+        String [] temp = {"backupRegistrationParticipants.csv",
+                "backupRegistrationVolunteers.csv",
+                "backupLoginLogs.csv",
+                "backupConfirmationLinks.csv",
+                "backupRegistrationCommunications.csv",
+                "backupAdmins.csv"
+        };
+        List<String> fileNames = Arrays.asList(temp);
+
+        // Go over every file and check if the just defined List fileNames contains the fileName
+        Enumeration<? extends ZipEntry> entries = zipFile.entries();
+        while(entries.hasMoreElements()){
+            ZipEntry entry = entries.nextElement();
+            assertTrue(fileNames.contains(entry.getName()));
+            InputStream stream = zipFile.getInputStream(entry);
+        }
+        zipFile.close();
+    }
+
+    @Test
+    public void testBackupZipbackupRegistrationParticipants() throws IOException {
+        exportService.createCSVBackups();
+        ZipFile zipFile = new ZipFile("backup.zip");
+        String fileName = "backupRegistrationParticipants.csv";
+
+        // Go over every file and get the right file
+        InputStream inputStream = searchFile(fileName, zipFile);
+        File temp = new File("temp1.csv");
+        Path destination = Paths.get(temp.getName());
+        Files.copy(inputStream, destination);
+        inputStream.close(); // Close inputstream in order to be able to delete the temp file
+        List<String> rows = getContentOfCSVFile(temp);
+        assertEquals("id,adNumber,registeredBy,firstName,lastName,email,emailSubscriber,address,birthdate,lastChange,stamnumber,gender,eventRole,buddy,language,eatinghabbit,remarksFood,socialPromotion,medicalRemarks,remarks,status,syncStatus,httpStatus,phoneNumber",
+                rows.get(0));
+        assertEquals("50,987654,987654,Frederik,Flodder,email@test.be,email@test.be,Veldstraat 123 1000 Brussel,1995-08-21,null,AG /0202,MAN,ASPI,true,[SPANISH ---  FRENCH],FISHANDMEAT,null,false,null,null,CONFIRMED,null,null,1",
+                rows.get(5));
+        zipFile.close();
+        // Remove temp file
+        boolean delete = temp.delete();
+        System.err.println("Temp has been deleted: " + delete);
+    }
+
+    @Test
+    public void testBackupZipbackupRegistrationVolunteers() throws IOException {
+        exportService.createCSVBackups();
+        ZipFile zipFile = new ZipFile("backup.zip");
+        String fileName = "backupRegistrationVolunteers.csv";
+
+        // Go over every file and get the right file
+        InputStream inputStream = searchFile(fileName, zipFile);
+        File temp = new File("temp2.csv");
+        Path destination = Paths.get(temp.getName());
+        Files.copy(inputStream, destination);
+        inputStream.close(); // Close inputstream in order to be able to delete the temp file
+        List<String> rows = getContentOfCSVFile(temp);
+        assertEquals("campGround,function,preCampList,postCampList,id,adNumber,registeredBy,firstName,lastName,email,emailSubscriber,address,birthdate,lastChange,stamnumber,gender,eventRole,buddy,language,eatinghabbit,remarksFood,socialPromotion,medicalRemarks,remarks,status,syncStatus,httpStatus,phoneNumber",
+                rows.get(0));
+        assertEquals("KEMPEN,[preset=Kampgrondtrekker --- other=null],[21/08/2017 ---  22/08/2017 ---  23/08/2017],[31/08/2017 ---  01/09/2017 ---  02/09/2017],60,876543,876543,Jos,Flodder,email@test.be,email@test.be,Veldstraat 123 1000 Brussel,1995-08-21,2016-12-13 00:00:00.0,AG /0103,MAN,VOLUNTEER,false,[],FISHANDMEAT,null,false,null,null,CONFIRMED,SYNCED,null,1",
+                rows.get(1));
+        zipFile.close();
+        // Remove temp file
+        boolean delete = temp.delete();
+        System.err.println("Temp has been deleted: " + delete);
+    }
+
+    private InputStream searchFile(String fileName, ZipFile zipFile) throws IOException {
+        Enumeration<? extends ZipEntry> entries = zipFile.entries();
+        while(entries.hasMoreElements()){
+            ZipEntry entry = entries.nextElement();
+            if (entry.getName().equals(fileName)) {
+                return zipFile.getInputStream(entry);
+            }
+        }
+        return null;
+    }
+
+    private List<String> getContentOfCSVFile(File file) throws IOException {
+        BufferedReader reader = new BufferedReader(new FileReader(file));
+        List<String> lines = new ArrayList<>();
+        String line = null;
+        while ((line = reader.readLine()) != null) {
+            lines.add(line);
+        }
+        reader.close();
+        return lines;
     }
 }

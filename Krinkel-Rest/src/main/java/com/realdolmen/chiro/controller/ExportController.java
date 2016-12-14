@@ -110,7 +110,7 @@ public class ExportController {
             response.setContentType("application/zip");
             response.setStatus(HttpServletResponse.SC_OK);
             response.addHeader("Content-Disposition", "attachment; filename=backup.zip");
-            exportService.createCSVBackups(response);
+            exportService.createCSVBackups();
             try {
                 return Files.readAllBytes((new File("backup.zip")).toPath());
             } catch (IOException e) {

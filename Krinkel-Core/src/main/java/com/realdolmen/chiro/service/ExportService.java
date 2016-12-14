@@ -1,6 +1,7 @@
 package com.realdolmen.chiro.service;
 
 import com.realdolmen.chiro.domain.*;
+import com.realdolmen.chiro.domain.units.Admin;
 import com.realdolmen.chiro.repository.*;
 import jxl.write.WritableWorkbook;
 import org.apache.commons.lang3.builder.ToStringBuilder;
@@ -37,6 +38,9 @@ public class ExportService {
     private ConfirmationLinkRepository confirmationLinkRepository;
 
     @Autowired
+    private AdminRepository adminRepository;
+
+    @Autowired
     private RegistrationCommunicationRepository registrationCommunicationRepository;
 
     public WritableWorkbook createExcelOutputXlsRegistrationAll(HttpServletResponse response) {
@@ -63,7 +67,10 @@ public class ExportService {
         return excelOutputService.createExcelOutputXls(response, "registratiesLijstMedewerkers.xls", header, data);
     }
 
-    public void createCSVBackups(HttpServletResponse response){
+    /**
+     * Creates the zip with all backup CSV files
+     */
+    public void createCSVBackups(){
         // All registration participants (not volunteers)
         List<RegistrationParticipant> participants = getRegistrationParticipantsWithoutVolunteers();
         String backupRegistrationParticipantsFileName = "backupRegistrationParticipants.csv";
@@ -89,13 +96,19 @@ public class ExportService {
         String backupRegistrationCommunicationFileName = "backupRegistrationCommunications.csv";
         createExcelOutputCSVBackup(registrationCommunications.toArray(), backupRegistrationCommunicationFileName);
 
+        // All admins
+        List<Admin> admins = adminRepository.findAll();
+        String backupAdminsFileName = "backupAdmins.csv";
+        createExcelOutputCSVBackup(admins.toArray(), backupAdminsFileName);
+
         // Zip them
         String [] filenames =
                 {backupRegistrationParticipantsFileName,
                         backupRegistrationVolunteersFileName,
                         backupLoginLogsFileName,
                         backupConfirmationLinksFileName,
-                        backupRegistrationCommunicationFileName};
+                        backupRegistrationCommunicationFileName,
+                        backupAdminsFileName};
         zip(filenames, "backup.zip");
 //        excelOutputService.exportZip(response, "backup.zip");
 //        excelOutputService.exportZip2(response, null);
@@ -484,8 +497,8 @@ public class ExportService {
                 //Replace all comma's with semicolon because CSV is comma separated
                 value = value.replaceAll(","," --- ");
 
-                // In order to have all null values marked with null
-                if(value.equals("<null>")){
+                // In order to have all null and emptry string values marked with null
+                if(value.equals("<null>") || value.equals("")){
                     variablesValues.add("null");
                 }else if(value.startsWith("\"")){
                     // If value is a list: change the quotes " " back to brackets [ ]
