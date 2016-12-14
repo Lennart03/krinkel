@@ -9,6 +9,10 @@ branches:
   only:
   - master
   - devel
+  
+before_script:
+  - npm install -g gulp
+script: gulp
 
 after_success:
   - mvn -Pcobertura clean cobertura:cobertura
