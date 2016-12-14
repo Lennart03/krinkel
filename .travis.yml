@@ -17,6 +17,7 @@ branches:
   - devel
 
 install:
+  - npm update -g npm
   - npm install -g gulp gulp-cli
   
 after_success:
