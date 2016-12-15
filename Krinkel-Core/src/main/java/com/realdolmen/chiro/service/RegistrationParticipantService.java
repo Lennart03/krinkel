@@ -5,7 +5,6 @@ import com.realdolmen.chiro.exception.NoParticipantFoundException;
 import com.realdolmen.chiro.mspservice.MultiSafePayService;
 import com.realdolmen.chiro.repository.RegistrationCommunicationRepository;
 import com.realdolmen.chiro.repository.RegistrationParticipantRepository;
-import com.realdolmen.chiro.repository.RegistrationVolunteerRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -118,7 +117,7 @@ public class RegistrationParticipantService {
      */
     public List<RegistrationParticipant> findParticipantsByGroup(String stamNumber) {
         List<RegistrationParticipant> participants = registrationParticipantRepository
-                .findParticipantsByGroupWithStatusConfirmedOrPaid(stamNumber);
+                .findParticipantsByGroupWithStatusConfirmedOrToBePaidOrPaid(stamNumber);
         List<RegistrationParticipant> results = new ArrayList<>();
         for (RegistrationParticipant participant : participants) {
             if (!(participant instanceof RegistrationVolunteer)) {
@@ -136,7 +135,7 @@ public class RegistrationParticipantService {
      */
     public List<RegistrationVolunteer> findVolunteersByGroup(String stamNumber) {
         List<RegistrationParticipant> participants = registrationParticipantRepository
-                .findParticipantsByGroupWithStatusConfirmedOrPaid(stamNumber);
+                .findParticipantsByGroupWithStatusConfirmedOrToBePaidOrPaid(stamNumber);
         List<RegistrationVolunteer> results = new ArrayList<>();
         for (RegistrationParticipant participant : participants) {
             if (participant instanceof RegistrationVolunteer) {

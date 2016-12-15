@@ -32,7 +32,7 @@ public interface RegistrationParticipantRepository extends JpaRepository<Registr
             "(p.status = com.realdolmen.chiro.domain.Status.PAID))"
 
     )
-    List<RegistrationParticipant> findParticipantsByGroupWithStatusConfirmedOrPaid(String s);
+    List<RegistrationParticipant> findParticipantsByGroupWithStatusConfirmedOrToBePaidOrPaid(String s);
 
     @Query(value = "DELETE FROM registration_participant_language WHERE registration_participant_id = :participantId", nativeQuery = true)
     @Modifying

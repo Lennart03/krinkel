@@ -38,7 +38,7 @@ public class ChiroUnitServiceIntegrationTest extends SpringIntegrationTest {
 	public void shouldReturnAParticipantInPleploGroup(){
 		List<RegistrationParticipant>participants=chiroUnitService.findParticipantsByChiroUnit(PLEPLO_STAMNUMMER);
 		Assert.assertNotNull(participants);
-		Assert.assertEquals(1, participants.size());
+		Assert.assertEquals(2, participants.size());
 		ChiroUnit unit = chiroUnitService.find(PLEPLO_STAMNUMMER);
 		Assert.assertEquals(participants.size(), unit.getParticipantsCount());
 	}
@@ -47,7 +47,7 @@ public class ChiroUnitServiceIntegrationTest extends SpringIntegrationTest {
 	public void shouldReturnTwoParticipantsInAntwerpVerbond(){
 		List<RegistrationParticipant>participants=chiroUnitService.findParticipantsByChiroUnit(ANTWERPEN_STAMNUMMER);
 		Assert.assertNotNull(participants);
-		Assert.assertEquals(2, participants.size());
+		Assert.assertEquals(3, participants.size());
 		ChiroUnit unit = chiroUnitService.find(ANTWERPEN_STAMNUMMER);
 		Assert.assertEquals(participants.size(), unit.getParticipantsCount());
 	}
@@ -65,7 +65,7 @@ public class ChiroUnitServiceIntegrationTest extends SpringIntegrationTest {
 	public void shouldNotReturnTheOnlyParticipantInBrusselBecauseHeHasntPaid(){
 		List<RegistrationParticipant>participants=chiroUnitService.findParticipantsByChiroUnit(BRUSSEL_STAMNUMMER);
 		Assert.assertNotNull(participants);
-		Assert.assertEquals(0, participants.size());
+		Assert.assertEquals(1, participants.size());
 		ChiroUnit unit = chiroUnitService.find(BRUSSEL_STAMNUMMER);
 		Assert.assertEquals(participants.size(), unit.getParticipantsCount());
 	}
@@ -82,7 +82,7 @@ public class ChiroUnitServiceIntegrationTest extends SpringIntegrationTest {
 	@Test
 	public void shouldReturnChiroUnitAntwerpWithFilledCountFields(){
 		ChiroUnit unit = chiroUnitService.find(ANTWERPEN_STAMNUMMER);
-		Assert.assertEquals(2, unit.getParticipantsCount());
+		Assert.assertEquals(3, unit.getParticipantsCount());
 	}
 	
 	@Test
