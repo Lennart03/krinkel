@@ -8,7 +8,10 @@ import com.realdolmen.chiro.exception.DuplicateEntryException;
 import com.realdolmen.chiro.repository.ConfirmationLinkRepository;
 import com.realdolmen.chiro.repository.RegistrationParticipantRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.web.util.UriComponents;
+import org.springframework.web.util.UriComponentsBuilder;
 
 import java.util.UUID;
 
@@ -24,6 +27,9 @@ public class ConfirmationLinkService {
     @Autowired
     private ServerConfiguration serverConfiguration;
 
+	@Value("${security.require-ssl}")
+	private boolean sslRequired;
+	
     private String generateToken() {
         UUID token = UUID.randomUUID();
         return token.toString();
@@ -64,8 +70,20 @@ public class ConfirmationLinkService {
     }
 
     public String generateURLFromConfirmationLink(ConfirmationLink link) {
-        return "http://" + serverConfiguration.getServerHostname() +
-                ":" + serverConfiguration.getServerPort() +
-                "/confirmation?ad=" + link.getAdNumber() + "&token=" + link.getToken();
+    	String scheme;
+		if (sslRequired) {
+			scheme = "https";
+		} else {
+			scheme = "http";
+		}
+		UriComponents uriComponents = UriComponentsBuilder.newInstance()
+							.scheme(scheme)
+							.host(serverConfiguration.getServerHostname())
+							.port(serverConfiguration.getServerPort().equals("80")?null:"8080")
+							.path("confirmation")
+							.queryParam("ad", link.getAdNumber())
+							.queryParam("token", link.getToken())
+							.build();
+		return uriComponents.toUriString();
     }
 }
