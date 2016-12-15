@@ -41,10 +41,9 @@
                 <configuration>
                     <executable>npm</executable>
                     <arguments>
-                        <argument>run</argument>
-                        <argument>build</argument>
+                        <argument>install</argument>
                     </arguments>
-                    <workingDirectory>./src/main/webapp-dev</workingDirectory>
+                    <workingDirectory>${basedir}</workingDirectory>
                 </configuration>
             </plugin>
             <plugin>
