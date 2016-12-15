@@ -13,12 +13,12 @@
 ========================================================================== */
 @font-face {
   font-family: RobotoCondensed;
-  src: url(../../fonts/RobotoCondensed-Regular.ttf);
+  src: url(../fonts/RobotoCondensed-Regular.ttf);
 }
 
 @font-face {
   font-family: aleo;
-  src: url(../../fonts/Aleo_font_v1.2.2/WebfontKit/Regular/aleo-regular-webfont.ttf);
+  src: url(../fonts/Aleo_font_v1.2.2/WebfontKit/Regular/aleo-regular-webfont.ttf);
 }
 
 h1 {
@@ -232,7 +232,7 @@ body {
   width: 100%;
   background-repeat: no-repeat;
   background-position: 0% 20%;
-  background-image: url("../../img/layout/BRU_9436.jpg");
+  background-image: url("../img/layout/BRU_9436.jpg");
   background-size: cover;
   border-bottom: 1px solid #309583;
 }
@@ -331,42 +331,42 @@ body {
 }
 
 .landingPageCarouselWrapper .carousel .carousel-item .gal1 {
-  background-image: url("/img/graphic/gallery/gal1.jpg");
+  background-image: url("../img/graphic/gallery/gal1.jpg");
   background-color: #309583;
 }
 
 .landingPageCarouselWrapper .carousel .carousel-item .gal2 {
-  background-image: url("/img/graphic/gallery/gal2.jpg");
+  background-image: url("../img/graphic/gallery/gal2.jpg");
   background-color: #309583;
 }
 
 .landingPageCarouselWrapper .carousel .carousel-item .gal3 {
-  background-image: url("/img/graphic/gallery/gal3.jpg");
+  background-image: url("../img/graphic/gallery/gal3.jpg");
   background-color: #309583;
 }
 
 .landingPageCarouselWrapper .carousel .carousel-item .gal4 {
-  background-image: url("/img/graphic/gallery/gal4.jpg");
+  background-image: url("../img/graphic/gallery/gal4.jpg");
   background-color: #309583;
 }
 
 .landingPageCarouselWrapper .carousel .carousel-item .gal5 {
-  background-image: url("/img/graphic/gallery/gal5.jpg");
+  background-image: url("../img/graphic/gallery/gal5.jpg");
   background-color: #309583;
 }
 
 .landingPageCarouselWrapper .carousel .carousel-item .gal6 {
-  background-image: url("/img/graphic/gallery/gal6.jpg");
+  background-image: url("../img/graphic/gallery/gal6.jpg");
   background-color: #309583;
 }
 
 .landingPageCarouselWrapper .carousel .carousel-item .gal7 {
-  background-image: url("/img/graphic/gallery/gal7.jpg");
+  background-image: url("../img/graphic/gallery/gal7.jpg");
   background-color: #309583;
 }
 
 .landingPageCarouselWrapper .carousel .carousel-item .gal8 {
-  background-image: url("/img/graphic/gallery/gal8.jpg");
+  background-image: url("../img/graphic/gallery/gal8.jpg");
   background-color: #309583;
 }
 
@@ -380,7 +380,7 @@ body {
   height: 105px;
   background-repeat: no-repeat;
   background-position: center;
-  background-image: url(/img/layout/krinkel.png);
+  background-image: url(../img/layout/krinkel.png);
 }
 
 .landingPageInfoText {
@@ -421,35 +421,35 @@ body {
 }
 
 .logo1 {
-  background-image: url(/img/layout/1985.png);
+  background-image: url(../img/layout/1985.png);
 }
 
 .logo2 {
-  background-image: url(/img/layout/1990.png);
+  background-image: url(../img/layout/1990.png);
 }
 
 .logo3 {
-  background-image: url(/img/layout/1995.png);
+  background-image: url(../img/layout/1995.png);
 }
 
 .logo4 {
-  background-image: url(/img/layout/2000.png);
+  background-image: url(../img/layout/2000.png);
 }
 
 .logo5 {
-  background-image: url(/img/layout/2004.png);
+  background-image: url(../img/layout/2004.png);
 }
 
 .logo6 {
-  background-image: url(/img/layout/2009.png);
+  background-image: url(../img/layout/2009.png);
 }
 
 .logo7 {
-  background-image: url(/img/layout/2013.png);
+  background-image: url(../img/layout/2013.png);
 }
 
 .logo8 {
-  background-image: url(/img/graphic/logos/KRINKEL_full_COLOR_small.png);
+  background-image: url(../img/graphic/logos/KRINKEL_full_COLOR_small.png);
 }
 
 .icon1,
@@ -473,33 +473,33 @@ body {
 }
 
 .icon1 {
-  background-image: url("/img/layout/icon1.png");
+  background-image: url("../img/layout/icon1.png");
 }
 
 .icon2 {
-  background-image: url("/img/layout/icon2.png");
+  background-image: url("../img/layout/icon2.png");
 }
 
 .icon3 {
-  background-image: url("/img/layout/icon3.png");
+  background-image: url("../img/layout/icon3.png");
 }
 
 .icon4 {
-  background-image: url("/img/layout/icon4.png");
+  background-image: url("../img/layout/icon4.png");
 }
 
 .icon5 {
-  background-image: url("/img/layout/icon5.png");
+  background-image: url("../img/layout/icon5.png");
 }
 
 .icon6 {
-  background-image: url("/img/layout/icon6.png");
+  background-image: url("../img/layout/icon6.png");
 }
 
 .aboutPageMainImage {
   height: 500px;
   width: 100%;
-  background: url("../../img/layout/Onthaal1.jpg") no-repeat 50% 30%;
+  background: url("../img/layout/Onthaal1.jpg") no-repeat 50% 30%;
   background-size: cover;
   border-bottom: 1px solid #309583;
 }
@@ -527,7 +527,7 @@ body {
 .aboutPageInfoTitleBanner {
   margin: 75px 0 50px 0;
   height: 105px;
-  background: url(/img/layout/geschiedenis.png) no-repeat center;
+  background: url(../img/layout/geschiedenis.png) no-repeat center;
 }
 
 .aboutPageHerexamensWrapper {
@@ -539,7 +539,7 @@ body {
 .aboutPageHerexamenTitleBanner {
   margin: 75px 0 50px 0;
   height: 105px;
-  background: url(/img/layout/emptyBanner.png) no-repeat center;
+  background: url(../img/layout/emptyBanner.png) no-repeat center;
   position: relative;
 }
 
@@ -618,7 +618,7 @@ body {
 .faqPageMainImage {
   height: 500px;
   width: 100%;
-  background: url("../../img/layout/faq.jpg") no-repeat 50% 30%;
+  background: url("../img/layout/faq.jpg") no-repeat 50% 30%;
   background-size: cover;
   border-bottom: 1px solid #309583;
 }
@@ -694,7 +694,7 @@ body {
 .contactPageMainImage {
   height: 500px;
   width: 100%;
-  background: url("../../img/layout/contact.jpg") no-repeat 50% 30%;
+  background: url("../img/layout/contact.jpg") no-repeat 50% 30%;
   background-size: cover;
   border-bottom: 1px solid #309583;
 }

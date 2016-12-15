@@ -1,13 +1,12 @@
 <!DOCTYPE html>
 <html lang="nl">
     <head>
-        <title>Krinkel - Home</title>
+        <title>Krinkel - FAQ</title>
         <meta charset="UTF-8"/>
         <meta name="description" content="Krinkel, Chiro, Het grootste chiro feest"/>
         <meta name="keywords" content="Krinkel"/>
         <meta name="author" content="Realdolmen"/>
         <meta name="format-detection" content="telephone=no">
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 
         <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
         <link rel="icon" type="image/png" href="/favicon-32x32.png" sizes="32x32">
@@ -27,10 +26,10 @@
         <header>
             <nav>
                 <div class="nav-wrapper">
-                    <a href="" class="brand-logo"><img src="img/graphic/logos/logo_KRINKEL_fullALT_BW_small.png" alt="logo Krinkel"/><span class="hide-on-med-and-down logoDate">25-30 augustus 2017</span></a>
-                    <a href="" data-activates="mobile" class="button-collapse"><i class="material-icons">menu</i></a>
+                    <a href="index.html" class="brand-logo"><img src="img/graphic/logos/logo_KRINKEL_fullALT_BW_small.png" alt="logo Krinkel"/><span class="hide-on-med-and-down logoDate">25-30 augustus 2017</span></a>
+                    <a href="#" data-activates="mobile" class="button-collapse"><i class="material-icons">menu</i></a>
                     <ul class="right hide-on-med-and-down">
-                        <li><a href="index.html" class="active">HOME</a></li>
+                        <li><a href="index.html">HOME</a></li>
                         <li><a href="http://localhost:8080/login" target="_blank">INSCHRIJVEN</a></li>
                         <li><a href="over.html">OVER</a></li>
                         <li><a href="faq.html">FAQ</a></li>
@@ -49,10 +48,10 @@
                         </li>
                     </ul>
                     <ul class="side-nav" id="mobile">
-                        <li><a href="index.html" class="waves-effect waves-light borderTop1pxHoofdkleur active">HOME</a></li>
-                        <li><a href="http://localhost:8080/login" class="waves-effect waves-light">INSCHRIJVEN</a></li>
+                        <li><a href="index.html" class="waves-effect waves-light borderTop1pxHoofdkleur">HOME</a></li>
+                        <li><a href="http://localhost:8080/login" target="_blank" class="waves-effect waves-light">INSCHRIJVEN</a></li>
                         <li><a href="over.html" class="waves-effect waves-light">OVER</a></li>
-                        <li><a href="faq.html" class="waves-effect waves-light">FAQ</a></li>
+                        <li><a href="faq.html" class="waves-effect waves-light active">FAQ</a></li>
                         <li><a href="" class="waves-effect waves-light">CONTACT</a></li>
                         <li>
                             <a href="http://www.facebook.com/ChirojeugdVlaanderen" target="_blank" class="waves-effect waves-green"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><path d="M19 6h5V0h-5c-3.86 0-7 3.14-7 7v3H8v6h4v16h6V16h5l1-6h-6V7c0-.542.458-1 1-1z"></path></svg></a>
@@ -72,99 +71,93 @@
                 </div>
             </nav>
         </header>
-        <section id="parallaxHome" class="landingPageMainImage">
+        <section id="parallaxFaq" class="faqPageMainImage">
             <div class="landingPageMainImageFilter">
                 <div class="landingPageMainImageText center-align">
-                    <h1 style="margin: 0;">Het grootste chiro-evenement</h1>
-                </div>
-                <div class="landingPageMainImageScrollButton">
-                    <a href="#watiskrinkel" id="landingPageMainImageScrollButtonAction"><i class="material-icons">keyboard_arrow_down</i></a>
+                    <h1 style="margin: 0;">FAQ</h1>
                 </div>
             </div>
         </section>
-        <section class="landingPageSignUpWrapper center-align">
-            <div class="landingPageKrinkelSlagzin2Wrapper">
-                <img src="img/graphic/logos/logo_KRINKEL_slagzin2_small.png" alt="Logo Krinkel" class="landingPageKrinkelSlagzin2Image"/>
-                <p class="landingPageKrinkelSlagzin2Date">
-                    25-30 augustus 2017
-                </p>
-            </div>
-            <div class="landingPageKrinkelSignUpTextWrapper">
-                <p class="landingPageKrinkelSignUpText center-align">
-                    <span class="greenText">Krinkel</span> is 6 dagen vol Chiro, spel, feest en vrienden.
-                    Het is een groot bivak dat één keer om de 4 jaar georganiseerd wordt voor alle Chiroleiding, aspiranten en VB's uit heel Vlaanderen en Brussel.<br/><br/>
-                    Duid 25 tot 30 augustus 2017 aan met de dikste stift die je kan vinden, zorg dat je geen of weinig herexamens hebt, vraag je baas om congé, … Want het wordt -zonder gezever- één van de mooiste momenten uit je Chirocarrière.
-                </p>
-            </div>
+        <section class="faqPageSearchWrapper">
+            <input type="text" class="faqPageSearchBar" id="searchBarFaq" placeholder="Type hier je zoekterm">
             <div class="landingPageKrinkelSignUpButtonWrapper">
-                <a href="http://localhost:8080/login" target="_blank" class="landingPageKrinkelSignUpButton waves-effect waves-light btn-large btn">INSCHRIJVEN</a>
+                <a id="searchBtn" class="landingPageKrinkelSignUpButton waves-effect waves-light btn-large btn">ZOEKEN</a>
             </div>
         </section>
-        <section class="landingPageCarouselWrapper">
-            <!-- TODO: Nicky => Implement Frederiks Carousel -->
-            <div class="carousel carousel-slider" data-indicators="true">
-                <div class="carousel-item">
-                    <div class="gal1"></div>
+        <section class="faqPageQuestionWrapper container">
+            <div class="row">
+                <div class="col s12 m9 l10">
+                    <div class="faqPageQuestion scrollspy" id="prijs">
+                        <div class="faqTitle">110 euro, wat krijg ik daar allemaal voor in ruil?</div>
+                        <p class="faqContent">
+                            Voor de inschrijvingsprijs krijg je zes dagen vol activiteiten, plezier en feestjes, drie maaltijden per dag, een vieruurtje en een busticket van en naar de stations van Noorderkempen of Turnhout.</p>
+                    </div>
+                    <div class="faqSpacer"></div>
+                    <div class="faqPageQuestion">
+                        <div class="faqTitle">Welke bijkomende kosten zijn er?</div>
+                        <p class="faqContent">
+                            Het treinticket is niet inbegrepen in de prijs, je bent dus zelf verantwoordelijk voor je vervoer naar de stations van Noorderkempen of Turnhout. Als je ’s avonds graag iets drinkt, neem je best wat zakgeld mee. Water is sowieso gratis en altijd beschikbaar.</p>
+                    </div>
+                    <div class="faqSpacer"></div>
+                    <div class="faqPageQuestion">
+                        <div class="faqTitle">110 euro, dat is veel geld voor mij.</div>
+                        <p class="faqContent">
+                            Als de deelnemersprijs een drempel is voor jou, neem dan gerust contact op en we zoeken een oplossing. Elke deelnemer krijgt ook een attest van deelname. Met dit attest kan je een deel van het inschrijvingsgeld terug vragen van je gemeente.</p>
+                    </div>
+                    <div class="faqSpacer"></div>
+                    <div class="faqPageQuestion scrollspy" id="toegankelijkheid">
+                        <div class="faqTitle">Iedereen mee op Krinkel</div>
+                        <p class="faqContent">Wij willen graag iedereen mee op Krinkel. Waar we kunnen, passen we onze infrastructuur en inhoud aan voor deelnemers die dit nodig hebben. Zo kunnen we bijvoorbeeld een verhoogd podium, een ringleiding voor slechthorenden, aangepaste toiletten,… voorzien. Heb je bepaalde beperkingen waar we rekening mee moeten houden? Laat dit dan zeker weten, dan doen wij het nodige!</p>
+                    </div>
+                    <div class="faqSpacer"></div>
+                    <div class="faqPageQuestion scrollspy" id="aanwezigheid">
+                        <div class="faqTitle">Moet ik de hele tijd aanwezig zijn op Krinkel?</div>
+                        <p class="faqContent">Ja, het is de bedoeling dat je de volle zes dagen aanwezig bent op Krinkel. Maar er kunnen uitzonderingen zijn, bijvoorbeeld om medische redenen. Contacteer ons hiervoor via info@krinkel.be.</p>
+                    </div>
+                    <div class="faqSpacer"></div>
+                    <div class="faqPageQuestion scrollspy" id="dieet">
+                        <div class="faqTitle">Kan ik met een speciaal dieet ook mee op Krinkel?</div>
+                        <p class="faqContent">Ja, wij houden rekening met speciale diëten (glutenvrij, halal, koosjer,…). Geef dit zeker aan tijdens je inschrijving in het speciaal daarvoor voorziene tekstveld.</p>
+                    </div>
+                    <div class="faqSpacer"></div>
+                    <div class="faqPageQuestion scrollspy" id="deadline">
+                        <div class="faqTitle">Ik twijfel nog of ik mee kan op Krinkel. Tot wanneer kan ik inschrijven?</div>
+                        <p class="faqContent">Twijfel je verband met herexamens? Dat hoeft niet! Herexamens zijn een geldige reden om je probleemloos weer uit te schrijven en je geld terug te krijgen. Inschrijven kan tot en met 6 augustus. Maar let op: vol is vol.</p>
+                    </div>
+                    <div class="faqSpacer"></div>
+                    <div class="faqPageQuestion scrollspy" id="VB">
+                        <div class="faqTitle">Ik ben VB, mag ik ook mee op Krinkel?</div>
+                        <p class="faqContent">Ja, dat mag! We voorzien aparte leefgroepen voor VB's.</p>
+                    </div>
+                    <div class="faqSpacer"></div>
+                    <div class="faqPageQuestion scrollspy" id="keti">
+                        <div class="faqTitle">Ik wil graag meegaan op Krinkel maar ik ben nog keti. Mag dat?</div>
+                        <p class="faqContent">Nee, dat mag niet. We kiezen ervoor om Krinkel specifiek voor te behouden voor aspi's en leiding.</p>
+                    </div>
+                    <div class="faqSpacer"></div>
+                    <div class="faqPageQuestion scrollspy" id="herexamen">
+                        <div class="faqTitle">Ik ben ingeschreven maar heb herexamens en kan nu toch niet mee. Kan ik mijn inschrijving nog annuleren?</div>
+                        <p class="faqContent">Ja, dat kan. Heb je een geldige reden (herexamens, ziekte, enz.), dan krijg je het inschrijvingsgeld terug. Je hebt wel een bewijs van afwezigheid nodig. Bekijk ook eens de annulatievoorwaarden. [link op woord annulatievoorwaarden] Met vragen hierover kun je terecht bij <a href="mailto:info@krinkel.be">info@krinkel.be</a>.</p>
+                    </div>
+                    <div class="faqSpacer"></div>
+                    <div class="faqPageQuestion scrollspy" id="auto">
+                        <div class="faqTitle">Ik wil graag met de auto naar Krinkel komen. Kan dat?</div>
+                        <p class="faqContent">Nee, er is geen parkeerplaats. Er is wel een ‘kiss & ride’-zone waar je met de auto afgezet kunt worden. Kom dus liefst met het openbaar vervoer of met de fiets.</p>
+                    </div>
                 </div>
-                <div class="carousel-item">
-                    <div class="gal2"></div>
+                <div class="col hide-on-small-only m3 l2 pin-top">
+                    <ul class="section table-of-contents pin">
+                        <li><a href="#prijs">Prijs</a></li>
+                        <li><a href="#toegankelijkheid">Toegankelijkheid</a></li>
+                        <li><a href="#aanwezigheid">Aanwezigheid</a></li>
+                        <li><a href="#dieet">Aangepast dieet</a></li>
+                        <li><a href="#deadline">Deadline inschrijving</a></li>
+                        <li><a href="#VB">Ik ben VB</a></li>
+                        <li><a href="#keti">Ik ben Keti</a></li>
+                        <li><a href="#herexamen">Herexamens</a></li>
+                        <li><a href="#auto">Met de auto</a></li>
+                    </ul>
                 </div>
-                <div class="carousel-item">
-                    <div class="gal3"></div>
-                </div>
-                <div class="carousel-item">
-                    <div class="gal4"></div>
-                </div>
-                <div class="carousel-item">
-                    <div class="gal5"></div>
-                </div>
-                <div class="carousel-item">
-                    <div class="gal6"></div>
-                </div>
-                <div class="carousel-item">
-                    <div class="gal7"></div>
-                </div>
-                <div class="carousel-item">
-                    <div class="gal8"></div>
-                </div>
-            </div>
-        </section>
-        <section id="landingPageInfoWrapper" class="landingPageInfoWrapper">
-            <div class="landingPageInfoTitleBanner"></div>
-            <div class="landingPageInfoText">
-                <blockquote>
-                    “Meng het beste van een Chirokamp met de sfeer van een groot festival. Dan heb je <span class="greenText">Krinkel</span>.” Ruben uit Antwerpen
-                </blockquote>
-                <p class="center-align marginTopBot30">
-                    <span class="greenText">Krinkel</span> is als een Chirokamp op grote schaal: honderden tenten, Chirospelen, massaspel met duizenden Chiroleidsters, -leiders en aspi’s, een megakampvuur, ... Je leert er hopen mensen kennen, keuvelt tijdens de lavers en gaat helemaal los in een onvergetelijk slotfeest.<br/>
-                    Je doet er waar elk Chirolid ontzettend veel van houdt: aan Chiro doen.
-                </p>
-                <blockquote>
-                    “<span class="greenText">Krinkel</span> is niet te vertellen: je moet <span class="greenText">Krinkel</span> zelf beleven.” Wax uit Herk-de-stad
-                </blockquote>
-            </div>
-            <div class="landingPageInfoPracticalInfoButtonWrapper center-align">
-                <a href="over.html" class="landingPageKrinkelInfoButton waves-effect waves-light btn-large btn">Ontdek Krinkel</a>
-            </div>
-        </section>
-        <section class="landingPageInfoIconsWrapper">
-            <div class="icon1Wrapper">
-                <div class="icon1"></div>
-                <div class="icon1Description"><span class="greenText">500</span> tenten</div>
-            </div><div class="icon2Wrapper">
-                <div class="icon2"></div><div class="icon2Description"><span class="greenText">4000</span> deelnemers</div>
-            </div><div class="icon3Wrapper">
-                <div class="icon3"></div>
-                <div class="icon3Description"><span class="greenText">1000L</span> koffie</div>
-            </div><div class="icon4Wrapper">
-                <div class="icon4"></div>
-                <div class="icon4Description"><span class="greenText">12</span> kampgronden</div>
-            </div><div class="icon5Wrapper">
-                <div class="icon5"></div>
-                <div class="icon5Description"><span class="greenText">6</span> dagen</div>
-            </div><div class="icon6Wrapper">
-                <div class="icon6"></div>
-                <div class="icon6Description"><span class="greenText">1</span> groot slotfeest</div>
             </div>
         </section>
         <footer class="landingPageFooter">
@@ -200,5 +193,19 @@
         <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
         <script type="text/javascript" src="js/materialize.min.js"></script>
         <script src="js/main.js"></script>
+        <script>
+            //todo:make not inline
+            $(document).ready(function(){
+                $('.scrollspy').scrollSpy({
+                    scrollOffset: 0
+                });
+                $('.pin').pushpin({
+                    top: 650,
+                    bottom: 2500,
+                    offset: 0
+                });
+            });
+        </script>
+        <script src="js/search.js"></script>
     </body>
 </html>

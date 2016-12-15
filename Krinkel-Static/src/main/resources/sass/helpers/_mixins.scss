@@ -135,7 +135,7 @@
 @mixin generateGalClassNImages($number) {
     @for $i from 1 through $number {
         .gal#{$i} {
-            background-image: url('/img/graphic/gallery/gal#{$i}.jpg');
+            background-image: url('../img/graphic/gallery/gal#{$i}.jpg');
             background-color: $hoofdkleur;
         }
     }
@@ -144,7 +144,7 @@
 @mixin generateIconClassNImages($number) {
     @for $i from 1 through $number {
         .icon#{$i} {
-            background-image: url('/img/layout/icon#{$i}.png');
+            background-image: url('../img/layout/icon#{$i}.png');
         }
     }
 }

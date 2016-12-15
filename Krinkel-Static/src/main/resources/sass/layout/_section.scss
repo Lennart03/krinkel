@@ -7,7 +7,7 @@ section {
   width: 100%;
   background-repeat: no-repeat;
   background-position: 0% 20%;
-  background-image: url("../../img/layout/BRU_9436.jpg");
+  background-image: url("../img/layout/BRU_9436.jpg");
   background-size: cover;
   border-bottom: 1px solid $hoofdkleur;
 }
@@ -112,7 +112,7 @@ section {
   height: 105px;
   background-repeat: no-repeat;
   background-position: center;
-  background-image: url(/img/layout/krinkel.png);
+  background-image: url(../img/layout/krinkel.png);
 }
 
 .landingPageInfoText {
@@ -153,35 +153,35 @@ section {
 }
 
 .logo1 {
-  background-image: url(/img/layout/1985.png);
+  background-image: url(../img/layout/1985.png);
 }
 
 .logo2 {
-  background-image: url(/img/layout/1990.png);
+  background-image: url(../img/layout/1990.png);
 }
 
 .logo3 {
-  background-image: url(/img/layout/1995.png);
+  background-image: url(../img/layout/1995.png);
 }
 
 .logo4 {
-  background-image: url(/img/layout/2000.png);
+  background-image: url(../img/layout/2000.png);
 }
 
 .logo5 {
-  background-image: url(/img/layout/2004.png);
+  background-image: url(../img/layout/2004.png);
 }
 
 .logo6 {
-  background-image: url(/img/layout/2009.png);
+  background-image: url(../img/layout/2009.png);
 }
 
 .logo7 {
-  background-image: url(/img/layout/2013.png);
+  background-image: url(../img/layout/2013.png);
 }
 
 .logo8 {
-  background-image: url(/img/graphic/logos/KRINKEL_full_COLOR_small.png);
+  background-image: url(../img/graphic/logos/KRINKEL_full_COLOR_small.png);
 }
 
 .icon1,
@@ -208,7 +208,7 @@ section {
 .aboutPageMainImage {
   height: 500px;
   width: 100%;
-  background: url("../../img/layout/Onthaal1.jpg") no-repeat 50% 30%;
+  background: url("../img/layout/Onthaal1.jpg") no-repeat 50% 30%;
   background-size: cover;
   border-bottom: 1px solid $hoofdkleur;
 }
@@ -234,7 +234,7 @@ section {
 .aboutPageInfoTitleBanner {
   margin: 75px 0 50px 0;
   height: 105px;
-  background: url(/img/layout/geschiedenis.png) no-repeat center;
+  background: url(../img/layout/geschiedenis.png) no-repeat center;
 }
 
 .aboutPageHerexamensWrapper {
@@ -246,7 +246,7 @@ section {
 .aboutPageHerexamenTitleBanner {
   margin: 75px 0 50px 0;
   height: 105px;
-  background: url(/img/layout/emptyBanner.png) no-repeat center;
+  background: url(../img/layout/emptyBanner.png) no-repeat center;
   position: relative;
 }
 
@@ -318,7 +318,7 @@ section {
 .faqPageMainImage {
   height: 500px;
   width: 100%;
-  background: url("../../img/layout/faq.jpg") no-repeat 50% 30%;
+  background: url("../img/layout/faq.jpg") no-repeat 50% 30%;
   background-size: cover;
   border-bottom: 1px solid $hoofdkleur;
   @media only screen and (min-width: 1930px) {
@@ -385,7 +385,7 @@ section {
 .contactPageMainImage{
   height: 500px; //750px
   width: 100%;
-  background: url("../../img/layout/contact.jpg") no-repeat 50% 30%;
+  background: url("../img/layout/contact.jpg") no-repeat 50% 30%;
   background-size: cover;
   border-bottom: 1px solid $hoofdkleur;
   @media only screen and (min-width: 1930px) {
