@@ -51,8 +51,7 @@ public class RegistrationParticipantRepositoryTest extends SpringIntegrationTest
     @Test
     public void shouldUpdateLastChange(){
         RegistrationParticipant participant = registrationParticipantRepository.findByAdNumber(AD_NUMBER);
-        Date timeStamp = Calendar.getInstance().getTime();
-        participant.updateLastChange();
+        Date timeStamp = participant.updateLastChange();
         registrationParticipantRepository.save(participant);
         participant = registrationParticipantRepository.findByAdNumber(AD_NUMBER);
         Assert.assertEquals(timeStamp, participant.getLastChange());

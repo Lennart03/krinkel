@@ -332,8 +332,9 @@ public class RegistrationParticipant {
         this.lastChange = lastChange;
     }
 
-    public void updateLastChange() {
+    public Date updateLastChange() {
         this.lastChange = Calendar.getInstance().getTime();
+        return this.lastChange;
     }
 
     public static class RegistrationParticipantBuilder {
