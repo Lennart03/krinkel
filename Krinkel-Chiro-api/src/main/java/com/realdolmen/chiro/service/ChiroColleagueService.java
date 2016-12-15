@@ -2,6 +2,9 @@ package com.realdolmen.chiro.service;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.realdolmen.chiro.dto.ColleagueDTO;
+import com.realdolmen.chiro.dto.ColleagueListContainer;
+import com.realdolmen.chiro.dto.ContainerResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -11,6 +14,8 @@ import org.springframework.web.client.RestTemplate;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.List;
+
 /**
  *
  * Contacts the Chiro API to get colleagues of currently logged in user.
@@ -54,6 +59,13 @@ public class ChiroColleagueService {
         RestTemplate restTemplate = new RestTemplate();
 
         return restTemplate.getForEntity(uri, String.class).getBody();
+    }
+
+    public List<ColleagueDTO> getBLABLA() throws URISyntaxException {
+        ObjectMapper mapper = new ObjectMapper();
+        String json = getColleagues(308986);
+        //oh god plis think about this & fix
+        return mapper.convertValue(json, ColleagueListContainer.class).getValues();
     }
 
 
