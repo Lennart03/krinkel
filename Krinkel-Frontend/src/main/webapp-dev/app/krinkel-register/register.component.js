@@ -386,6 +386,10 @@ class RegisterController {
         }
     }
 
+    initVoorwaardenModal() {
+        $('#modal2').openModal();
+    }
+
 }
 
 

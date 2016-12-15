@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.*;
@@ -147,7 +148,7 @@ public class GraphChiroService {
         List<String> distinctStamps;
 
         fillMapWithAllVerbonden(uniqueLoginsPerVerbond);
-
+        SimpleDateFormat frmt = new SimpleDateFormat("dd/MM/yyyy");
         if (lastTwoWeeks) {
             Date startDate = Date.from(LocalDate.now().minusWeeks(2).atStartOfDay(ZoneId.systemDefault()).toInstant());
             Date now = new Date();
@@ -156,13 +157,13 @@ public class GraphChiroService {
 
             distinctStamps = loginLoggerRepository.findDistinctStamps(startDate, now)
                     .stream()
-                    .map(Date::toString)
+                    .map(date->frmt.format(date))
                     .collect(Collectors.toList());
         } else {
             allLogs = loginLoggerRepository.findAll();
             distinctStamps = loginLoggerRepository.findDistinctStamps()
                     .stream()
-                    .map(Date::toString)
+                    .map(date->frmt.format(date))
                     .collect(Collectors.toList());
         }
 

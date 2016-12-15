@@ -58,6 +58,7 @@ public class EmailSenderServiceImpl implements EmailSenderService {
         ctx.setVariable("isVolunteer", participant instanceof RegistrationVolunteer);
         String url = "";
 
+        //Create confirmation URL in case the participant is registered by someone else
         if (participant.isRegisteredByOther()) {
             try {
                 ConfirmationLink confirmationLink = confirmationLinkService.createConfirmationLink(participant.getAdNumber());
