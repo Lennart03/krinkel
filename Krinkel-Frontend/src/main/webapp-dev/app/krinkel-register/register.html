@@ -433,7 +433,7 @@
             </div>
         </div>
 
-        <div class="row" ng-if="!$ctrl.SelectService.getSelectedFlag()">
+        <div class="row" ng-if="(!$ctrl.SelectService.getSelectedFlag() && $ctrl.user !== 'admin')">
             <div class="col s12">
                 <div>
                     <!--<i class="small material-icons prefix">mood</i>-->
