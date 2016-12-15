@@ -15,14 +15,14 @@
 
 
 <div class="row">
-    <form class="col s12 m12" novalidate name="personForm" ng-submit="$ctrl.registerPerson($ctrl.newPerson)">
+    <form class="col s12 m12" novalidate name="personForm" ng-submit="personForm.$valid && $ctrl.registerPerson($ctrl.newPerson)">
         <div class="row">
             <div class="input-field col s12 m6">
                 <i class="material-icons prefix">perm_identity</i>
                 <input id="first_name" name="firstName" type="text" class="validate" ng-minlength="1"
                        ng-model="$ctrl.newPerson.firstName" required>
                 <label for="first_name">Voornaam *</label>
-                <p ng-show="personForm.firstName.$invalid && personForm.firstName.$touched" class="error"><i
+                <p ng-show="(personForm.firstName.$invalid && $ctrl.validateNow) || (personForm.firstName.$invalid && personForm.firstName.$touched)" class="error"><i
                     class="material-icons">error_outline</i> Voornaam is verplicht</p>
             </div>
             <div class="input-field col s12 m6">
@@ -30,7 +30,7 @@
                 <input id="last_name" name="lastName" type="text" class="validate" ng-model="$ctrl.newPerson.lastName"
                        required>
                 <label for="last_name">Achternaam *</label>
-                <p ng-show="personForm.lastName.$invalid && personForm.lastName.$touched" class="error"><i
+                <p ng-show="(personForm.lastName.$invalid && $ctrl.validateNow) || (personForm.lastName.$invalid && personForm.lastName.$touched)" class="error"><i
                     class="material-icons">error_outline</i> Achternaam is verplicht
                 </p>
             </div>
@@ -42,7 +42,7 @@
                 <input id="date_of_birth" name="birthdate" type="text" class="validate"
                        ng-model="$ctrl.newPerson.birthDate" ng-pattern="$ctrl.birthdatePattern" required>
                 <label for="date_of_birth">Geboortedatum (yyyy-mm-dd) *</label>
-                <p ng-show="personForm.birthdate.$invalid && personForm.birthdate.$touched" class="error"><i
+                <p ng-show="(personForm.birthdate.$invalid && $ctrl.validateNow) || (personForm.birthdate.$invalid && personForm.birthdate.$touched)" class="error"><i
                     class="material-icons">error_outline</i>
                     Geboortedatum is verplicht</p>
             </div>
@@ -52,7 +52,7 @@
                 <input id="email" name="email" type="email" class="validate" ng-model="$ctrl.newPerson.email"
                        ng-pattern="$ctrl.emailPattern" required>
                 <label for="email">Email *</label>
-                <p ng-show="personForm.email.$invalid && personForm.email.$touched" class="error"><i
+                <p ng-show="(personForm.email.$invalid && $ctrl.validateNow) || (personForm.email.$invalid && personForm.email.$touched)" class="error"><i
                     class="material-icons">error_outline</i>
                     Email is verplicht</p>
             </div>
@@ -71,7 +71,7 @@
                 {{$ctrl.extractFromAdress($ctrl.details.address_components )}}
 
                 <label for="street">Straat en huisnummer *</label>
-                <p ng-show="personForm.street.$invalid && personForm.street.$touched" class="error"><i
+                <p ng-show="(personForm.street.$invalid && $ctrl.validateNow) || (personForm.street.$invalid && personForm.street.$touched)" class="error"><i
                     class="material-icons">error_outline</i>
                     Straatnaam is verplicht</p>
             </div>
@@ -98,7 +98,7 @@
                        required/>
 
                 <label for="postal_code">Postcode *</label>
-                <p ng-show="personForm.postalCode.$invalid && personForm.postalCode.$touched" class="error"><i
+                <p ng-show="(personForm.postalCode.$invalid && $ctrl.validateNow) || (personForm.postalCode.$invalid && personForm.postalCode.$touched)" class="error"><i
                     class="material-icons">error_outline</i> Postcode is verplicht</p>
             </div>
 
@@ -110,7 +110,7 @@
                        options="$ctrl.optionsStad" details="$ctrl.details3" required placeholder="..."/>
 
                 <label for="city">Gemeente *</label>
-                <p ng-show="personForm.city.$invalid && personForm.city.$touched" class="error"><i
+                <p ng-show="(personForm.city.$invalid && $ctrl.validateNow) || (personForm.city.$invalid && personForm.city.$touched)" class="error"><i
                     class="material-icons">error_outline</i>
                     Gemeente is verplicht</p>
             </div>
@@ -124,7 +124,7 @@
                        ng-model="$ctrl.newPerson.phone"
                        required>
                 <label for="phone">Telefoon (+32xxxxxxxx) *</label>
-                <p ng-show="personForm.phone.$invalid && personForm.phone.$touched" class="error">
+                <p ng-show="(personForm.phone.$invalid && $ctrl.validateNow) || (personForm.phone.$invalid && personForm.phone.$touched)" class="error">
                     <i class="material-icons">error_outline</i>
                     Telefoonnummer is verplicht
                 </p>
@@ -144,7 +144,7 @@
                 <!--<i class="material-icons prefix">mood</i>-->
                 <select ng-options="o.stamnr as o.stamnr + ': ' + o.name for o in $ctrl.options" name="group" ng-model="$ctrl.newPerson.group" class="browser-default" required>
                 </select>
-                <p ng-show="personForm.group.$invalid && personForm.group.$touched" class="error">
+                <p ng-show="(personForm.group.$invalid && $ctrl.validateNow) || (personForm.group.$invalid && personForm.group.$touched)" class="error">
                     <i class="material-icons">error_outline</i>
                     Verplicht</p>
             </div>
@@ -160,7 +160,7 @@
                     <option value="2">Man</option>
                     <option value="0">X</option>
                 </select>
-                <p ng-show="personForm.gender.$invalid && personForm.gender.$touched" class="error">
+                <p ng-show="(personForm.gender.$invalid && $ctrl.validateNow) || (personForm.gender.$invalid && personForm.gender.$touched)" class="error">
                     <i class="material-icons">error_outline</i>
                     Verplicht</p>
                 <!--<label>Geslacht</label>-->
@@ -175,7 +175,7 @@
                     <option value="VB">Volwassen begeleider</option>
                 </select>
                 <!--<label>In '16-17' was ik:</label>-->
-                <p ng-show="personForm.rank.$invalid && personForm.rank.$touched" class="error">
+                <p ng-show="(personForm.rank.$invalid && $ctrl.validateNow) || (personForm.rank.$invalid && personForm.rank.$touched)" class="error">
                     <i class="material-icons">error_outline</i>
                     Verplicht</p>
             </div>
@@ -191,7 +191,7 @@
                     <option value="HALAL">Ik eet vis en vlees, maar halal</option>
                     <option value="FISHANDMEAT">Ik eet vis en vlees</option>
                 </select>
-                <p ng-show="personForm.eatingHabbits.$invalid && personForm.eatingHabbits.$touched" class="error">
+                <p ng-show="(personForm.eatingHabbits.$invalid && $ctrl.validateNow) || (personForm.eatingHabbits.$invalid && personForm.eatingHabbits.$touched)" class="error">
                     <i class="material-icons">error_outline</i>
                     Verplicht</p>
                 <!--<label>Eetgewoonten</label>-->
@@ -307,7 +307,7 @@
                     <option value="West-Vlaanderen">West-Vlaanderen</option>
                 </select>
                 <!--<label>Keuze kampgrond:</label>-->
-                <p ng-show="personForm.campground.$invalid && personForm.campground.$touched" class="error">
+                <p ng-show="(personForm.campground.$invalid && $ctrl.validateNow) || (personForm.campground.$invalid && personForm.campground.$touched)" class="error">
                     <i class="material-icons">error_outline</i>
                     Verplicht
                 </p>
@@ -372,7 +372,7 @@
                     </label>
                 </p>
 
-                <p ng-show="personForm.job.$invalid && personForm.job.$touched" class="error">
+                <p ng-show="(personForm.job.$invalid && $ctrl.validateNow) || (personForm.job.$invalid && personForm.job.$touched)" class="error">
                     <i class="material-icons">error_outline</i> Verplicht
                 </p>
             </div>
@@ -437,11 +437,15 @@
             <div class="col s12">
                 <div>
                     <!--<i class="small material-icons prefix">mood</i>-->
-                    <input type="checkbox" id="voorwaarden" ng-model="$ctrl.voorwaarden" required/>
+                    <input type="checkbox" name="voorwaarden" id="voorwaarden" ng-model="$ctrl.voorwaarden" required/>
                     <label for="voorwaarden">Ik aanvaard de algemene voorwaarden.</label>
+
                     <!-- Modal Trigger -->
                     <a class="btn-floating waves-effect waves-light modal-trigger" ng-click="$ctrl.initVoorwaardenModal()"><i
                         class="material-icons">help</i></a>
+                    <p ng-show="(personForm.voorwaarden.$invalid && $ctrl.validateNow) || (personForm.voorwaarden.$invalid && personForm.voorwaarden.$touched)" class="error">
+                        <i class="material-icons">error_outline</i> Verplicht
+                    </p>
                     <!-- Modal Structure -->
                     <div id="modal2" class="modal">
                         <voorwaarden></voorwaarden>
@@ -464,19 +468,17 @@
         </p>
 
         <div ng-show="$ctrl.user !== 'admin'">
-            <button href="#modal4" class="btn waves-effect waves-light modal-trigger"  name="action"
-                    ng-disabled="!personForm.$valid">
+            <a ng-click="$ctrl.initModal4(personForm.$valid)" class="btn waves-effect waves-light">
                 Betalen
                 <i class="material-icons right">send</i>
-            </button>
+            </a>
         </div>
 
         <div ng-show="$ctrl.user === 'admin'">
-            <button href="#modal5" class="btn waves-effect waves-light modal-trigger" name="action"
-                    ng-disabled="!personForm.$valid">
+            <a ng-click="$ctrl.initModal5(personForm.$valid)" class="btn waves-effect waves-light">
                 Volgende
                 <i class="material-icons right">send</i>
-            </button>
+            </a>
         </div>
         <!-- Modal Structure -->
         <div id="modal4" class="modal">
