@@ -3,6 +3,7 @@ package com.realdolmen.chiro.service;
 import com.realdolmen.chiro.component.RegistrationBasketComponent;
 import com.realdolmen.chiro.domain.RegistrationParticipant;
 import com.realdolmen.chiro.domain.Status;
+import com.realdolmen.chiro.domain.dto.UserDTO;
 import com.realdolmen.chiro.mspdto.OrderDto;
 import com.realdolmen.chiro.mspservice.MultiSafePayService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -86,19 +87,21 @@ public class BasketService {
             registrationParticipantService.save(u);
         });
 
-        String url = getBasketPaymentUri();
+        String url = getBasketPaymentUri(registrationBasketComponent.getDestinationMail());
         return url;
     }
 
-    private String getBasketPaymentUri() throws MultiSafePayService.InvalidPaymentOrderIdException {
-        OrderDto order = multiSafePayService.createPayment(calculateTotalPrice(), userService.getCurrentUser());
+    private String getBasketPaymentUri(String buyerEmail) throws MultiSafePayService.InvalidPaymentOrderIdException {
+        UserDTO userDTO = new UserDTO(userService.getCurrentUser());
+        userDTO.setEmail(buyerEmail);
+        OrderDto order = multiSafePayService.createPayment(calculateTotalPrice(), userDTO);
         registrationBasketComponent.setOrder(order);
         return order.getData().getPayment_url();
     }
 
     public boolean handleSuccessCallback(String orderId) {
         if (multiSafePayService.orderIsPaid(orderId)) {
-            if (orderId.equals(registrationBasketComponent.getOrder().getData().getOrder_id())) {
+            if (registrationBasketComponent.getOrder() != null && orderId.equals(registrationBasketComponent.getOrder().getData().getOrder_id())) {
                 registrationBasketComponent.getUsersInBasket().forEach(u -> {
                     u.setStatus(Status.PAID);
                     registrationParticipantService.save(u);

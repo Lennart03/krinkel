@@ -3,6 +3,7 @@ package com.realdolmen.chiro.mspservice;
 import com.realdolmen.chiro.domain.RegistrationParticipant;
 import com.realdolmen.chiro.domain.RegistrationVolunteer;
 import com.realdolmen.chiro.domain.User;
+import com.realdolmen.chiro.domain.dto.UserDTO;
 import com.realdolmen.chiro.mspdto.Data;
 import com.realdolmen.chiro.mspdto.OrderDto;
 import com.realdolmen.chiro.mspdto.StatusDto;
@@ -73,7 +74,7 @@ public class MultiSafePayService {
      * @return returns the JSON response in object form (an OrderDto object)
      * @throws InvalidPaymentOrderIdException
      */
-    public OrderDto createPayment(Integer amount, User currentUser) throws InvalidPaymentOrderIdException {
+    public OrderDto createPayment(Integer amount, UserDTO currentUser) throws InvalidPaymentOrderIdException {
         if (!createPaymentParamsAreValid(currentUser.getAdNumber(), amount))
             throw new InvalidParameterException("cannot create a payment with those params");
         JSONObject jsonObject = this.createPaymentJsonObject(amount, currentUser);
@@ -179,7 +180,7 @@ public class MultiSafePayService {
         return jsonObject;
     }
 
-    private JSONObject createPaymentJsonObject(Integer amount, User currentUser) {
+    private JSONObject createPaymentJsonObject(Integer amount, UserDTO currentUser) {
         JSONObject paymentOptions = configuration.getPaymentOptions();
         JSONObject customer = new JSONObject();
         JSONObject jsonObject = new JSONObject();
@@ -188,8 +189,8 @@ public class MultiSafePayService {
 
         customer.put("country", "BE");
 
-        customer.put("first_name", currentUser.getFirstname());
-        customer.put("last_name", currentUser.getLastname());
+        customer.put("first_name", currentUser.getFirstName());
+        customer.put("last_name", currentUser.getLastName());
         customer.put("email", currentUser.getEmail());
         jsonObject.put("description", "Betaling voor Krinkel");
 
@@ -217,7 +218,7 @@ public class MultiSafePayService {
 
     }
 
-    public String getBasketPaymentUri(Integer amount, User currentUser) throws InvalidPaymentOrderIdException {
+    public String getBasketPaymentUri(Integer amount, UserDTO currentUser) throws InvalidPaymentOrderIdException {
         return this.createPayment(amount, currentUser).getData().getPayment_url();
     }
 
