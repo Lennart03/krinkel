@@ -1,0 +1,25 @@
+<h1>Lijst van verbonden NEW</h1>
+
+<table>
+    <thead>
+    <tr>
+        <th data-field="naam">Naam</th>
+        <th data-field="amountParticipants">Aantal deelnemers</th>
+        <th data-field="amountVolunteers">Aantal medewerkers</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    <tr ng-repeat="verbondStamNummer in $ctrl.verbonden">
+        <td>
+            {{verbondStamNummer.naam}}
+        </td>
+        <td>
+            {{verbondStamNummer.aantal_ingeschreven_deelnemers}}
+        </td>
+        <td>
+            {{verbondStamNummer.aantal_ingeschreven_vrijwilligers}}
+        </td>
+    </tr>
+    </tbody>
+</table>

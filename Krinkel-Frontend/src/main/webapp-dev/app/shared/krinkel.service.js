@@ -120,6 +120,16 @@ export class KrinkelService {
         );
     }
 
+    getVerbondenList() {
+        return this.$http.get(`${this.BASEURL}/api/overview?verbonden`).then((resp) => {
+            return resp.data;
+            },
+            () => {
+                this.popup();
+            }
+        );
+    }
+
     getGewestenForVerbond(verbondNummer) {
         return this.$http.get(`${this.BASEURL}/api/units/${verbondNummer}`).then((resp) => {
                 return resp.data;

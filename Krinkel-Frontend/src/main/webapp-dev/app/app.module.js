@@ -18,6 +18,7 @@ import {SuccessMessageComponent} from './shared/success-message/success-message.
 import {SideNavComponent} from './shared/sidenav/sidenav.component'
 import {TopNavComponent} from './shared/topnav/topnav.component'
 import {UnitsComponent} from './shared/units/units.component'
+import {VerbondenComponent} from './shared/units/verbonden.component'
 import {KrinkelSelectComponent} from './krinkel-select-person/select.component';
 import {FailMessageComponent} from './shared/fail-message/fail-message.component';
 import {VoorwaardenComponent} from './shared/voorwaarden/voorwaarden.component';

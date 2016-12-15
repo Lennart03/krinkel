@@ -16,13 +16,13 @@ import java.util.List;
 )*/
 public class ChiroUnit {
     /**
-     * Normalized stam number (without '/' and without whitespace)
+     * Normalized StamNummer number of a groep, gewest or verbond (without '/' and without whitespace)
      */
     @JsonProperty("stamnummer")
-    private String stam;
+    private String stamNummer;
 
     @JsonProperty("naam")
-    private String name;
+    private String naam;
 
     @JsonProperty("bovenliggende_stamnummer")
     @JsonIgnoreProperties({"bovenliggende_stamnummer", "onderliggende_stamnummers"})
@@ -44,24 +44,24 @@ public class ChiroUnit {
 
     public ChiroUnit(String stam, String name) {
         this();
-        this.stam = stam;
-        this.name = name;
+        this.stamNummer = trim(stam);
+        this.naam = name;
     }
 
-    public String getStam() {
-        return stam;
+    public String getStamNummer() {
+        return stamNummer;
     }
 
-    public void setStam(String stam) {
-        this.stam = stam;
+    public void setStamNummer(String stamNummer) {
+        this.stamNummer = stamNummer;
     }
 
-    public String getName() {
-        return name;
+    public String getNaam() {
+        return naam;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setNaam(String naam) {
+        this.naam = naam;
     }
 
     public ChiroUnit getUpper() {
@@ -100,8 +100,8 @@ public class ChiroUnit {
     public int hashCode() {
         final int prime = 31;
         int result = 1;
-        result = prime * result + ((name == null) ? 0 : name.hashCode());
-        result = prime * result + ((stam == null) ? 0 : stam.hashCode());
+        result = prime * result + ((naam == null) ? 0 : naam.hashCode());
+        result = prime * result + ((stamNummer == null) ? 0 : stamNummer.hashCode());
         return result;
     }
 
@@ -114,17 +114,27 @@ public class ChiroUnit {
         if (getClass() != obj.getClass())
             return false;
         ChiroUnit other = (ChiroUnit) obj;
-        if (name == null) {
-            if (other.name != null)
+        if (naam == null) {
+            if (other.naam != null)
                 return false;
-        } else if (!name.equals(other.name))
+        } else if (!naam.equals(other.naam))
             return false;
-        if (stam == null) {
-            if (other.stam != null)
+        if (stamNummer == null) {
+            if (other.stamNummer != null)
                 return false;
-        } else if (!stam.equals(other.stam))
+        } else if (!stamNummer.equals(other.stamNummer))
             return false;
         return true;
+    }
+
+    private String trim(String stam) {
+        if (stam == null) {
+            return "";
+        } else {
+            return stam.replace("/", "")
+                    .replace("\\s", "")
+                    .replace(" ", "");
+        }
     }
 
 

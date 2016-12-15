@@ -111,8 +111,8 @@ public class ChiroUnitServiceIntegrationTest extends SpringIntegrationTest {
 				s.getLower().forEach(l -> {
 					l.getLower().forEach(g -> {
 						if (g != null) {
-							String info = String.format("%20s %10s %20s %10s %30s %10s", s.getName(), s.getStam(),
-									l.getName(), l.getStam(), g.getName(), g.getStam());
+							String info = String.format("%20s %10s %20s %10s %30s %10s", s.getNaam(), s.getStamNummer(),
+									l.getNaam(), l.getStamNummer(), g.getNaam(), g.getStamNummer());
 							try {
 								out.write(info);
 								out.newLine();
