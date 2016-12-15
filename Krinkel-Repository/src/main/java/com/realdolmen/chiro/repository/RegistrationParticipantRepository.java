@@ -55,4 +55,8 @@ public interface RegistrationParticipantRepository extends JpaRepository<Registr
     @Query(value= "SELECT COUNT(*) FROM registration_participant_pre_camp_list WHERE registration_volunteer_id = :participantId", nativeQuery = true )
     Long countPreCampRecordsAfterCancellation(@Param("participantId") Long participantId);
 
+    @Query(value= "SELECT r FROM RegistrationParticipant r WHERE " +
+            "r.event_role = 'ASPI'")
+    List<RegistrationParticipant> findAllAspis();
+
 }

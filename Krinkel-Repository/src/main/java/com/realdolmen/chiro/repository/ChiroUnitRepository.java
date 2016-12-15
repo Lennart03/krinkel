@@ -1,6 +1,7 @@
 package com.realdolmen.chiro.repository;
 
 
+import com.realdolmen.chiro.domain.RegistrationParticipant;
 import com.realdolmen.chiro.domain.units.ChiroUnit;
 import com.realdolmen.chiro.domain.units.RawChiroUnit;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -30,4 +31,11 @@ public interface ChiroUnitRepository extends JpaRepository<RawChiroUnit, String>
             "FROM RawChiroUnit c " +
             "GROUP BY c.verbond, c.verbondName")
     List<ChiroUnit> findAllVerbonden();
+
+
+    @Query("SELECT c.verbond FROM RegistrationParticipant r, RawChiroUnit c WHERE " +
+            "r.adNumber = ?1" +
+            " AND " +
+            "r.stamnumber = c.stamNumber")
+    String findUnionParticipant(String adNumber);
 }
