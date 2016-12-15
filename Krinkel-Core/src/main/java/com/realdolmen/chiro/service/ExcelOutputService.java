@@ -40,7 +40,7 @@ public class ExcelOutputService{
 
 
 //        String fileName = "Excel_Output.xls";
-//        String fileName = file.getNaam();
+//        String fileName = file.getName();
         WritableWorkbook writableWorkbook = null;
         try {
             // Set content type to xls
@@ -192,7 +192,7 @@ public class ExcelOutputService{
 
             ClassLoader loader = getClass().getClassLoader();
 //            File file = new File(loader.getResource("Excel_Output.xlsx").getFile());  //file should be at classpath
-//            File file = new File(loader.getResource(file2.getNaam()).getFile());  //file should be at classpath
+//            File file = new File(loader.getResource(file2.getName()).getFile());  //file should be at classpath
             FileInputStream is = new FileInputStream(file);
 
 
@@ -299,7 +299,7 @@ public class ExcelOutputService{
 //        response.setContentType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
 //
 //        response.setHeader("Content-Disposition",
-//                "attachment; filename=" + file.getNaam());
+//                "attachment; filename=" + file.getName());
 
         try {
             org.apache.poi.ss.usermodel.Workbook workbook = new XSSFWorkbook (fis);
@@ -389,7 +389,7 @@ public class ExcelOutputService{
 //            //packing files
 //            for (File file : files) {
 //                //new zip entry and copying inputstream with file to zipOutputStream, after all closing streams
-//                zipOutputStream.putNextEntry(new ZipEntry(file.getNaam()));
+//                zipOutputStream.putNextEntry(new ZipEntry(file.getName()));
 //                FileInputStream fileInputStream = new FileInputStream(file);
 //
 //                IOUtils.copy(fileInputStream, zipOutputStream);

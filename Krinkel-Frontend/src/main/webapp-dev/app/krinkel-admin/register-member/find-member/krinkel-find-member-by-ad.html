@@ -1,9 +1,9 @@
 <div class="row" style="margin-top: 40px;">
-    <form class="col s12 m12 l12" novalidate naam="personForm" ng-submit="$ctrl.findByAdNumber($ctrl.adNumber)">
+    <form class="col s12 m12 l12" novalidate name="personForm" ng-submit="$ctrl.findByAdNumber($ctrl.adNumber)">
 
         <div class="input-field col s6 m6 l6">
             <i class="material-icons prefix">perm_identity</i>
-            <input id="ad_number" naam="adNumber" type="text" class="validate" ng-minlength="6" ng-maxlength="6"
+            <input id="ad_number" name="adNumber" type="text" class="validate" ng-minlength="6" ng-maxlength="6"
                    ng-model="$ctrl.adNumber" required>
             <label for="ad_number">Ad Number</label>
         </div>

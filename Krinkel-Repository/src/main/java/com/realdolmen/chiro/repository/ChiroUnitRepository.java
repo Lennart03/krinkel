@@ -31,21 +31,40 @@ public interface ChiroUnitRepository extends JpaRepository<RawChiroUnit, String>
             "GROUP BY c.verbondStamNummer, c.verbondNaam")
     List<ChiroUnit> findAllVerbonden();
 
+    /**
+     * Get the nr of participants + volunteers who are in the verbond specified by the given verbondStamNummer
+     * @param verbondStamNummer
+     * @return
+     */
     @Query("SELECT COUNT(p) FROM RegistrationParticipant p, RawChiroUnit c " +
             "WHERE c.verbondStamNummer = ?1 AND p.stamnumber = c.groepStamNummer")
     int countParticipantsByVerbond(String verbondStamNummer);
 
+    /**
+     * Get the nr of volunteers who are in the verbond specified by the given verbondStamNummer
+     * @param verbondStamNummer
+     * @return
+     */
     @Query("SELECT COUNT(p) FROM RegistrationVolunteer p, RawChiroUnit c " +
                   "WHERE c.verbondStamNummer = ?1 AND p.stamnumber = c.groepStamNummer")
     int countVolunteersByVerbond(String verbondStamNummer);
 
+    /**
+     * Get the nr of participants + volunteers who are in the gewest specified by the given gewestStamNummer
+     * @param gewestStamNummer
+     * @return
+     */
     @Query("SELECT COUNT(p) FROM RegistrationParticipant p, RawChiroUnit c " +
             "WHERE c.gewestStamNummer = ?1 AND p.stamnumber = c.groepStamNummer")
     int countParticipantsByGewest(String gewestStamNummer);
 
+    /**
+     * Get the nr of volunteers who are in the gewest specified by the given gewestStamNummer
+     * @param gewestStamNummer
+     * @return
+     */
     @Query("SELECT COUNT(p) FROM RegistrationVolunteer p, RawChiroUnit c " +
             "WHERE c.gewestStamNummer = ?1 AND p.stamnumber = c.groepStamNummer")
     int countVolunteersByGewest(String gewestStamNummer);
 
-    /*SELECT c FROM Customer c, DiscountCode d WHERE c.DISCOUNT_CODE= d.DISCOUNT_CODE", Customer.class);*/
 }

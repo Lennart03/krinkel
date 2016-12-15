@@ -445,15 +445,15 @@ public class ExportService {
 //        ArrayList<String> fieldNames = new ArrayList<String>();
 //        System.err.println("Declared fields: ");
 //        for (Field field : fields) {
-//            fieldNames.add(field.getNaam());
-//            System.err.println(field.getNaam());
+//            fieldNames.add(field.getName());
+//            System.err.println(field.getName());
 //        }
 //
 //        fields = object.getClass().getFields();
 //        System.err.println("Fields: ");
 //        for (Field field: fields){
-//            fieldNames.add(field.getNaam());
-//            System.err.println(field.getNaam());
+//            fieldNames.add(field.getName());
+//            System.err.println(field.getName());
 //        }
 //        return fieldNames;
 //    }

@@ -37,7 +37,7 @@
 <table ng-if="!$ctrl.userDetails">
     <thead>
     <tr>
-        <th data-field="naam">Naam</th>
+        <th data-field="name">Naam</th>
         <th data-field="amountParticipants">Aantal deelnemers</th>
         <th data-field="amountVolunteers">Aantal medewerkers</th>
     </tr>
@@ -46,7 +46,7 @@
     <tbody>
     <tr ng-repeat="verbondStamNummer in $ctrl.verbonden track by $index" ng-click="$ctrl.openExtraInfo(verbondStamNummer)">
         <td>
-            {{verbondStamNummer.naam}}
+            {{verbondStamNummer.name}}
         </td>
         <td>
             {{verbondStamNummer.aantal_ingeschreven_deelnemers}}
@@ -63,7 +63,7 @@
 <table ng-if="$ctrl.participantDetails">
     <thead>
     <tr>
-        <th data-field="naam">Naam</th>
+        <th data-field="name">Naam</th>
         <th data-field="address">Adres</th>
         <th data-field="city">Gemeente</th>
         <th data-field="eatinghabit">Eetgewoonte</th>
@@ -118,7 +118,7 @@
 <table ng-if="$ctrl.volunteerDetails">
     <thead>
     <tr>
-        <th data-field="naam">Naam</th>
+        <th data-field="name">Naam</th>
         <th data-field="address">Adres</th>
         <th data-field="city">Gemeente</th>
         <th data-field="eatinghabit">Eetgewoonte</th>

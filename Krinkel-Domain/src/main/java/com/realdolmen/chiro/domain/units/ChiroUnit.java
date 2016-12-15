@@ -21,8 +21,8 @@ public class ChiroUnit {
     @JsonProperty("stamnummer")
     private String stamNummer;
 
-    @JsonProperty("naam")
-    private String naam;
+    @JsonProperty("name")
+    private String name;
 
     @JsonProperty("bovenliggende_stamnummer")
     @JsonIgnoreProperties({"bovenliggende_stamnummer", "onderliggende_stamnummers"})
@@ -45,7 +45,7 @@ public class ChiroUnit {
     public ChiroUnit(String stam, String name) {
         this();
         this.stamNummer = trim(stam);
-        this.naam = name;
+        this.name = name;
     }
 
     public String getStamNummer() {
@@ -56,12 +56,12 @@ public class ChiroUnit {
         this.stamNummer = stamNummer;
     }
 
-    public String getNaam() {
-        return naam;
+    public String getName() {
+        return name;
     }
 
-    public void setNaam(String naam) {
-        this.naam = naam;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public ChiroUnit getUpper() {
@@ -100,7 +100,7 @@ public class ChiroUnit {
     public int hashCode() {
         final int prime = 31;
         int result = 1;
-        result = prime * result + ((naam == null) ? 0 : naam.hashCode());
+        result = prime * result + ((name == null) ? 0 : name.hashCode());
         result = prime * result + ((stamNummer == null) ? 0 : stamNummer.hashCode());
         return result;
     }
@@ -114,10 +114,10 @@ public class ChiroUnit {
         if (getClass() != obj.getClass())
             return false;
         ChiroUnit other = (ChiroUnit) obj;
-        if (naam == null) {
-            if (other.naam != null)
+        if (name == null) {
+            if (other.name != null)
                 return false;
-        } else if (!naam.equals(other.naam))
+        } else if (!name.equals(other.name))
             return false;
         if (stamNummer == null) {
             if (other.stamNummer != null)
