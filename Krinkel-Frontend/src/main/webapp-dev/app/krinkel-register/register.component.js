@@ -30,6 +30,8 @@ class RegisterController {
         this.details3 = {};
         this.details2 = {};
         this.details = {};
+
+        this.validateNow = false;
     }
 
     clearPostCodeAndCityNameFields() {
@@ -388,6 +390,20 @@ class RegisterController {
 
     initVoorwaardenModal() {
         $('#modal2').openModal();
+    }
+
+    initModal4(form) {
+        this.validateNow = true;
+        if(form) {
+            $('#modal4').openModal();
+        }
+    }
+
+    initModal5(form) {
+        this.validateNow = true;
+        if(form) {
+            $('#modal5').openModal();
+        }
     }
 
 }
