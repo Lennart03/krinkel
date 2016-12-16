@@ -165,8 +165,6 @@ export class MapperService {
         } else if (data.rank === 'A') {
             participant.eventRole = 'ASPI';
         }
-        //console.log("LOGGING THE PARTICIPANT 123123");
-        //console.log(participant);
         return participant;
     }
 
@@ -420,8 +418,6 @@ export class MapperService {
         } else if (data.rank === 'A') {
             participant.eventRole = 'ASPI';
         }
-        console.log("LOGGING THE PARTICIPANT 123123");
-        console.log(participant);
         return participant;
     }
 }

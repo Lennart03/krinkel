@@ -13,7 +13,6 @@ class FindByAdController {
 
     findByAdNumber(adNumber) {
         this.adNumber=adNumber;
-        console.log("findByAdNumber: " +adNumber);
         this.RegisterOtherMemberService.getParticipantUsingAd(adNumber).then((resp) => {
                 var part = resp.data;
 
@@ -37,10 +36,6 @@ class FindByAdController {
                             address: part.address,
                             httpStatus: part.httpStatus
                         };
-                        console.log('participant lastname : ' +this.participant.lastName);
-
-                        console.log('adNumber' + adNumber);
-
                         this.RegisterOtherMemberService.setParticipant(this.participant);
                         this.$location.path("/choose-registration-participant");
                     }
@@ -48,8 +43,6 @@ class FindByAdController {
                 }
             },
             (resp) => {
-                console.log(resp.statusText + 'this was the statusText');
-                console.log(resp.status + 'this was the status');
 
         });
 

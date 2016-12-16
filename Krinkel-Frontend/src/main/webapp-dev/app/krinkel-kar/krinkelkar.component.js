@@ -24,7 +24,6 @@ class KrinkelKarController{
     deleteColleague(adNumber) {
         this.KrinkelService.removePersonFromBasket(adNumber).then(() => {
             this.init();
-            console.log('deleted ' + adNumber)
         });
 
     }
@@ -32,7 +31,6 @@ class KrinkelKarController{
     doPayment(){
         var self = this;
         this.KrinkelService.setSubscriberEmailForBasket(this.subscriberEmail).then((resp)=>{
-            console.log("added mail");
             this.KrinkelService.doPayment().then((resp) =>{
                 console.log(resp);
                 self.$window.location.href = resp.headers().location;

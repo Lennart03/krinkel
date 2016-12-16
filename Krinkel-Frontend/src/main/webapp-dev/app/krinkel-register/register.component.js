@@ -184,27 +184,20 @@ class RegisterController {
          * Prefilling the form when subscribing others
          */
         if(this.RegisterOtherMemberService.subscribeMember()) {
-            console.log('subMember');
             this.prefillMember();
             this.user = "admin";
             this.RegisterOtherMemberService.setSubscribeMember(false);
         } else if(this.RegisterOtherMemberService.subscribeColleague()) {
-            console.log('subColl');
             this.prefillMember();
             this.user = "admin";
             this.RegisterOtherMemberService.setSubscribeColleague(false);
         } else if (this.SelectService.getColleague() !== undefined) {
-            console.log('prefillColl');
             this.prefillColleague();
         } else {
             var user = this.StorageService.getUser();
             if (user && user.email === this.AuthService.getLoggedinUser().email) {
                 this.newPerson = user;
             } else {
-                /**
-                 * Prefilling the form when subscribing yourself
-                 */
-                console.log('prefillSelf');
                 this.prefillSelf();
 
             }
