@@ -125,12 +125,13 @@ public class UserService {
     public List<ColleagueDTO> getAvailableColleagues(int adNumber) throws URISyntaxException {
 
         List<ColleagueDTO> colleagues = chiroColleagueService.getColleagues(adNumber);
+        System.err.println(colleagues.size());
 
         return colleagues.stream()
                 .filter(Objects::nonNull)
                 .filter(c -> {
                     RegistrationParticipant r = getRegistrationParticipant(c.getAdNumber());
-                    if (r == null) return false;
+                    if (r == null) return true;
                     return r.getStatus() != Status.PAID
                             || r.getStatus() != Status.CONFIRMED
                             || r.getStatus() != Status.CANCELLED
