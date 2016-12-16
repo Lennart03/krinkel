@@ -4,6 +4,7 @@ class WelcomeMessageController {
         this.$location = $location;
         this.AuthService = AuthService;
 
+
         this.AuthService.getCurrentUserDetails(this.AuthService.getLoggedinUser().adnummer).then((resp) => {
             if (resp.registered && resp.hasPaid) {
                 this.$location.path('/success');

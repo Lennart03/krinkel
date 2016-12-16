@@ -1,5 +1,6 @@
 package com.realdolmen.chiro.service;
 
+import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.realdolmen.chiro.converters.ChiroContactMapper;
 import com.realdolmen.chiro.containers.ChiroContactContainer;
@@ -80,6 +81,8 @@ public class ChiroContactService {
     public ChiroContact getChiroContact(Integer adNummer) throws URISyntaxException, IOException {
         String json = getContact(adNummer);
         ObjectMapper objectMapper = new ObjectMapper();
+        objectMapper.configure(DeserializationFeature.ACCEPT_EMPTY_STRING_AS_NULL_OBJECT, true);
+        objectMapper.configure(DeserializationFeature.ACCEPT_SINGLE_VALUE_AS_ARRAY, true);
         ChiroContactMapper chiroContactMapper = new ChiroContactMapper();
         ChiroContactContainer chiroContactsContainer = objectMapper.readValue(json, ChiroContactContainer.class);
         if(Integer.parseInt(chiroContactsContainer.getCount()) < 1) {

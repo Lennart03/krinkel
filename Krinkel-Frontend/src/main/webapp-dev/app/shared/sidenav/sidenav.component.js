@@ -16,16 +16,6 @@ class SideNavController {
         this.AuthService.logoutUser();
         //this.$location.path('/login')
     }
-
-    go(){
-        var currentUser = this.userDetails;
-        if(currentUser.registered && currentUser.hasPaid){
-            this.$location.path('/success');
-        }else{
-            this.$location.path('/home')
-        }
-    }
-
     redirectToLandingsPage()
     {
         this.$window.location.href= this.BASEURL+'/site/index.html';
