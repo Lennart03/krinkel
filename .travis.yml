@@ -1,10 +1,25 @@
-language: java
+language: 
+ - java
+ - node_js
 
 jdk:
   - oraclejdk8
 
-script: "mvn test -DdatabaseEngine=h2"
+node_js:
+  - node
 
+script:
+  - "mvn test -DdatabaseEngine=h2"
+
+branches:
+  only:
+  - master
+  - devel
+
+install:
+  - npm update -g npm
+  - npm install -g gulp gulp-cli
+  
 after_success:
   - mvn -Pcobertura clean cobertura:cobertura
   - mvn org.eluder.coveralls:coveralls-maven-plugin:report

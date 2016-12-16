@@ -2,7 +2,7 @@
 INSERT INTO admins VALUES (152504, 'somedude@email.com', 'first', 'guy');
 INSERT INTO admins VALUES (109318, 'secondAdmin@email.com', 'second', 'dude');
 
--- TODO these records need to be removed because this are the Realdolmen developers
+-- TODO these records need to be removed because these are the Realdolmen developers
 INSERT INTO admins VALUES (396943, 'lennart.vandamme@realdolmen.com', 'Lennart', 'Van Damme');
 INSERT INTO admins VALUES (396949, 'wesley.vanmalcot@realdolmen.com', 'Wesley', 'Van Malcot');
 INSERT INTO admins VALUES (396945, 'nicky.fasoel@realdolmen.com', 'Nicky', 'Fasoel');
@@ -13,6 +13,11 @@ INSERT INTO admins VALUES (396940, 'brent.couck@realdolmen.com', 'Brent', 'Couck
 INSERT INTO admins VALUES (162070, 'frederik.vanherbruggen@realdolmen.com', 'Frederik', 'Van Herbruggen');
 INSERT INTO admins VALUES (396941, 'hade.Bressinck@realdolmen.com', 'Hade', 'Bressinck');
 INSERT INTO admins VALUES (396942, 'jeroen.compagnie@realdolmen.com', 'Jeroen', 'Compagnie');
+INSERT INTO admins VALUES (386287, 'frank.claes@realdolmen.com', 'Frank', 'Claes');
+-- TODO these records need to be removed because these are the Realdolmen developers
+INSERT INTO admins VALUES (386286, 'matthias.vanderwilt@realdolmen.com', 'Matthias', 'Vanderwilt');
+INSERT INTO admins VALUES (386285, 'gil.mathijs@realdolmen.com', 'Gil', 'Mathijs');
+
 
 INSERT INTO pre_camp VALUES (10, '2017-08-21') ON DUPLICATE KEY UPDATE id = 10;
 INSERT INTO pre_camp VALUES (20, '2017-08-22') ON DUPLICATE KEY UPDATE id = 20;

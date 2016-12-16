@@ -1,6 +1,5 @@
 # Krinkel
-[![Build Status](https://travis-ci.org/Nawsen/Krinkel.svg?branch=master)](https://travis-ci.org/Nawsen/Krinkel)
-[![Coverage Status](https://coveralls.io/repos/github/Nawsen/Krinkel/badge.svg)](https://coveralls.io/github/Nawsen/Krinkel)
+[![Build Status](https://travis-ci.com/Bumbolt/krinkel.svg?token=Zeuk5x1ZDC7EQTmDtyaK&branch=master)](https://travis-ci.com/Bumbolt/krinkel)
 
 ## Module dependencies
 ![alt tag](http://i.imgur.com/Pj9z23V.png)
