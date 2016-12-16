@@ -60,12 +60,12 @@ export function appConfig($routeProvider, $locationProvider) {
     });
 
     $routeProvider.when('/verbonden', {
-        template: require('./shared/units/verbonden.html')
+        template: '<verbonden></verbonden>'
     });
-    //Fail page had to go :(
-    // $routeProvider.when('/fail', {
-    //     template: '<fail-message></fail-message>'
-    // });
+
+    $routeProvider.when('/gewesten/:lol', {
+        template: '<gewesten></gewesten>'
+    });
 
     $routeProvider.otherwise({
         redirectTo: '/home'

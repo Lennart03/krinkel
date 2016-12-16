@@ -122,7 +122,7 @@ export class KrinkelService {
 
     getVerbondenList() {
         return this.$http.get(`${this.BASEURL}/api/overview?verbonden`).then((resp) => {
-            return resp.data;
+                return resp.data;
             },
             () => {
                 this.popup();
@@ -130,8 +130,18 @@ export class KrinkelService {
         );
     }
 
-    getGewestenForVerbond(verbondNummer) {
-        return this.$http.get(`${this.BASEURL}/api/units/${verbondNummer}`).then((resp) => {
+    getGewestenList(verbondStamNummer) {
+        return this.$http.get(`${this.BASEURL}/api/overview/gewesten/${verbondStamNummer}`).then((resp) => {
+                return resp.data;
+            },
+            () => {
+                this.popup();
+            }
+        );
+    }
+
+    getGroepenList(gewestStamNummer) {
+        return this.$http.get(`${this.BASEURL}/api/overview/groepen/${gewestStamNummer}`).then((resp) => {
                 return resp.data;
             },
             () => {

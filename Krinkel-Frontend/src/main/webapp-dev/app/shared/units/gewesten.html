@@ -1,4 +1,4 @@
-<h1>Lijst van verbonden TEST</h1>
+<h1>Lijst van gewesten TEST</h1>
 
 <style>
     tbody tr:hover {
@@ -10,28 +10,27 @@
 <table>
     <thead>
     <tr>
-        <th data-field="stamNummmer">Stam nummer</th>
+        <th data-field="stamNummer">Stam nummer</th>
         <th data-field="naam">Naam</th>
         <th data-field="amountParticipants">Aantal deelnemers</th>
         <th data-field="amountVolunteers">Aantal medewerkers</th>
     </tr>
     </thead>
 
-    <tbody>
 
-    <tr ng-repeat="verbond in $ctrl.verbonden" ng-click="$ctrl.redirectToGewesten(verbond.stamnummer)">
+    <tbody>
+    <tr ng-repeat="gewest in $ctrl.gewesten" ng-click="$ctrl.redirectToGroepen(gewest.stamnummer)">
         <td>
-            {{verbond.stamnummer}}
-            {{verbond.stamnummer | escape}}
+            {{gewest.stamnummer}}
         </td>
         <td>
-            {{verbond.name}}
+            {{gewest.name}}
         </td>
         <td>
-            {{verbond.aantal_ingeschreven_deelnemers}}
+            {{gewest.aantal_ingeschreven_deelnemers}}
         </td>
         <td>
-            {{verbond.aantal_ingeschreven_vrijwilligers}}
+            {{gewest.aantal_ingeschreven_vrijwilligers}}
         </td>
     </tr>
     </tbody>

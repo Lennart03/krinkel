@@ -44,7 +44,7 @@ public class ChiroUnit {
 
     public ChiroUnit(String stam, String name) {
         this();
-        this.stamNummer = trim(stam);
+        this.stamNummer = stam;
         this.name = name;
     }
 
@@ -137,5 +137,8 @@ public class ChiroUnit {
         }
     }
 
-
+    @Override
+    public String toString(){
+        return name + " - Stam nummer: " + stamNummer + ", #participants: " + participantsCount + ", #volunteers: " + volunteersCount;
+    }
 }

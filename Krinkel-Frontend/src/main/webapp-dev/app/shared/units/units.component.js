@@ -11,6 +11,7 @@ class UnitsController {
         this.KrinkelService.getVerbonden().then((results) => {
             this.verbonden = results;
         });
+
     }
 
     openExtraInfo(verbond) {

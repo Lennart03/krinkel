@@ -42,4 +42,16 @@ public class ChiroUnitRepositoryTest extends SpringIntegrationTest{
         assertEquals(1, count);
     }
 
+    @Test
+    public void testCountVolunteerFromGewest(){
+        int count = chiroUnitRepository.countParticipantsByGewest("AG /0400");
+        assertEquals(3, count);
+    }
+
+    @Test
+    public void testCountParticipantFromGewest(){
+        int count = chiroUnitRepository.countVolunteersByGewest("AG /0400");
+        assertEquals(1, count);
+    }
+
 }

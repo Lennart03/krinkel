@@ -26,6 +26,18 @@ public interface ChiroUnitRepository extends JpaRepository<RawChiroUnit, String>
             "GROUP BY c.gewestStamNummer, c.gewestNaam")
     List<ChiroUnit> findAllGewesten();
 
+    @Query("SELECT NEW com.realdolmen.chiro.domain.units.ChiroUnit(c.gewestStamNummer, c.gewestNaam)" +
+            "FROM RawChiroUnit c " +
+            "WHERE c.verbondStamNummer = ?1 " +
+            "GROUP BY c.gewestStamNummer, c.gewestNaam")
+    List<ChiroUnit> findAllGewestenWhereVerbondStamNummerIs(String verbondStamNummer);
+
+    @Query("SELECT NEW com.realdolmen.chiro.domain.units.ChiroUnit(c.groepStamNummer, c.groepNaam)" +
+            "FROM RawChiroUnit c " +
+            "WHERE c.gewestStamNummer = ?1 " +
+            "GROUP BY c.groepStamNummer, c.groepNaam")
+    List<ChiroUnit> findAllGroepenWhereGewestStamNummerIs(String gewestStamNummer);
+
     @Query("SELECT NEW com.realdolmen.chiro.domain.units.ChiroUnit(c.verbondStamNummer, c.verbondNaam)" +
             "FROM RawChiroUnit c " +
             "GROUP BY c.verbondStamNummer, c.verbondNaam")
@@ -66,5 +78,6 @@ public interface ChiroUnitRepository extends JpaRepository<RawChiroUnit, String>
     @Query("SELECT COUNT(p) FROM RegistrationVolunteer p, RawChiroUnit c " +
             "WHERE c.gewestStamNummer = ?1 AND p.stamnumber = c.groepStamNummer")
     int countVolunteersByGewest(String gewestStamNummer);
+
 
 }
