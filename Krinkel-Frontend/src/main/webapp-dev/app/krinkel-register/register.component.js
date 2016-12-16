@@ -129,7 +129,6 @@ class RegisterController {
     }
 
     prefillWithAdNumber(adNumber){
-        adNumber =397768;
         this.KrinkelService.getContactFromChiro(adNumber).then((resp) => {
             console.log(resp);
             var chiroContact = resp[0];
