@@ -92,58 +92,28 @@ class RegisterController {
     }
 
     prefillColleague() {
-        var colleague = this.SelectService.getColleague();
-        var loggedInUser = this.AuthService.getLoggedinUser();
-        console.log(colleague);
-        this.newPerson = {
-            adNumber: colleague.adnr,
-            job: "Aanbod nationale kampgrond",
-            firstName: colleague.first_name,
-            lastName: colleague.last_name,
-            email: colleague.email,
-            birthDate: colleague.birth_date,
-            phone: colleague.phone.replace('-', ''),
-            emailSubscriber: loggedInUser.email,
-            gender: colleague.gender_id,
-            rank: colleague.afdeling.toUpperCase()
-        };
-
-        this.KrinkelService.getPloegen(colleague.adnr).then((resp) => {
-            this.options = [];
-            resp.forEach((r) => {
-                this.options.push(JSON.parse(r));
-            });
-            this.newPerson.group = this.options[0].stamnr;
-        });
-
-        this.details2.name = colleague.postal_code;
-
-        this.details.address_components = [];
-        this.details.address_components.push({
-            long_name: colleague.street_address
-        });
-
-        this.details3.vicinity = colleague.city;
-
+        let colleague = this.SelectService.getColleague();
+        let loggedInUser = this.AuthService.getLoggedinUser();
+        this.prefillWithAdNumber(colleague.adnr, loggedInUser.email);
         this.SelectService.setSelectedFlag(true);
     }
 
-    prefillWithAdNumber(adNumber){
+    prefillWithAdNumber(adNumber, emailSubscriber){ //second var is optional, as it's only required when subscribing a colleague.
         this.KrinkelService.getContactFromChiro(adNumber).then((resp) => {
             if (resp) {
                 let chiroContact = resp[0];
                 this.newPerson = {
                     adNumber: adNumber,
                     job: "Aanbod nationale kampgrond",
-                    firstName: chiroContact.first_name,
-                    lastName: chiroContact.last_name,
-                    email: chiroContact.email,
-                    birthDate: chiroContact.birth_date,
-                    phone: chiroContact.phone.replace('-', ''),
-                    gender: chiroContact.gender_id,
-                    rank: chiroContact.afdeling.toUpperCase()
+                    firstName: chiroContact.first_name || "", //this pretty much means use the var if it's not null/undefined, else use an empty string
+                    lastName: chiroContact.last_name || "",
+                    email: chiroContact.email || "",
+                    birthDate: chiroContact.birth_date || "",
+                    emailSubscriber: emailSubscriber || "",
+                    phone: chiroContact.phone.replace('-', '') || "",
+                    gender: chiroContact.gender_id || "",
+                    rank: chiroContact.afdeling.toUpperCase() || ""
                 };
-
                 this.KrinkelService.getPloegen(adNumber).then((resp) => {
                     this.options = [];
                     resp.forEach((r) => {
@@ -163,7 +133,7 @@ class RegisterController {
     }
 
     prefillSelf() {
-        var loggedInUser = this.AuthService.getLoggedinUser();
+        let loggedInUser = this.AuthService.getLoggedinUser();
         this.prefillWithAdNumber(loggedInUser.adNumber);
     }
 
@@ -171,7 +141,7 @@ class RegisterController {
     * wanneer de admin een deelnemer wil toevoegen
      */
     prefillMember() {
-        var participant = this.RegisterOtherMemberService.getParticipant();
+        let participant = this.RegisterOtherMemberService.getParticipant();
         this.prefillWithAdNumber(participant.adNumber);
     }
     $onInit() {
@@ -197,7 +167,7 @@ class RegisterController {
             console.log('prefillColl');
             this.prefillColleague();
         } else {
-            var user = this.StorageService.getUser();
+            let user = this.StorageService.getUser();
             if (user && user.email === this.AuthService.getLoggedinUser().email) {
                 this.newPerson = user;
             } else {
@@ -244,12 +214,12 @@ class RegisterController {
     }
 
     addToBasket(person){
-        var perzon = person;
+        let perzon = person;
         perzon.city = this.details3.vicinity;
         perzon.postalCode = this.details2.name;
         perzon.street = this.details.address_components[0].long_name;
 
-        var mappedPerson = this.MapperService.mapParticipant(perzon);
+        let mappedPerson = this.MapperService.mapParticipant(perzon);
         console.log(mappedPerson);
         //add person to cart using service
         this.KrinkelService.addPersonToBasket(mappedPerson).then(() => {
