@@ -34,44 +34,6 @@ class RegisterController {
         this.validateNow = false;
     }
 
-    clearPostCodeAndCityNameFields() {
-
-        if (this.details3 != null || this.details2 != null || this.details != null) {
-
-            this.details3 = {};
-            this.details2 = {};
-
-        }
-    }
-
-    extractFromAdress(components) {
-        if (this.details3.vicinity != null || this.details2.name != null) {
-            return;
-        }
-
-        if (components != null) {
-            for (var i = 0; i < components.length; i++)
-                for (var j = 0; j < components[i].types.length; j++) {
-                    if (components[i].types[j] == 'postal_code') {
-                        //  console.debug(components[i].long_name);
-                        this.details2 = {
-                            name: components[i].long_name
-                        };
-                    }
-                    // console.debug(components[i].types[j]);
-                    if (components[i].types[j] == 'locality') {
-                        //console.debug(components[i].short_name);
-
-                        this.details3 = {
-                            vicinity: components[i].short_name
-                        };
-                    }
-
-                }
-        }
-        return "";
-    }
-
     registerPerson(newPerson) {
         this.newPerson.city = this.details3.vicinity;
         this.newPerson.postalCode = this.details2.name;
@@ -167,7 +129,9 @@ class RegisterController {
     }
 
     prefillWithAdNumber(adNumber){
+        adNumber =397768;
         this.KrinkelService.getContactFromChiro(adNumber).then((resp) => {
+            console.log(resp);
             var chiroContact = resp[0];
             if (resp.size != 0) {
                 this.newPerson = {
@@ -201,9 +165,7 @@ class RegisterController {
     }
 
     prefillSelf() {
-        console.log('init prefillself');
         var loggedInUser = this.AuthService.getLoggedinUser();
-        console.log(loggedInUser);
         this.prefillWithAdNumber(loggedInUser.adNumber);
     }
 
