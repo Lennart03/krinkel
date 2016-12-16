@@ -1,5 +1,6 @@
 package com.realdolmen.chiro.service;
 
+import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.realdolmen.chiro.dto.ColleagueDTO;
@@ -10,6 +11,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
@@ -38,14 +40,22 @@ public class ChiroColleagueService {
      */
     public List<ColleagueDTO> getColleagues(Integer adNumber) throws URISyntaxException {
         ObjectMapper mapper = new ObjectMapper();
+        mapper.configure(DeserializationFeature.ACCEPT_EMPTY_STRING_AS_NULL_OBJECT, true);
+        mapper.configure(DeserializationFeature.ACCEPT_SINGLE_VALUE_AS_ARRAY, true);
         String json = retrieveColleaguesFromChiroApi(adNumber);
         System.err.println(json);
 
         //todo: think about this & fix using JavaType
         JavaType type = mapper.getTypeFactory().
                 constructParametricType(ContainerResponse.class, ColleagueDTO.class);
-        ContainerResponse<ColleagueDTO> response = mapper.convertValue(json, type);
-        return response.getValues();
+
+        ContainerResponse<ColleagueDTO> resp = null;
+        try {
+            resp = mapper.readValue(json, type);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return resp.getValues();
     }
 
     /**

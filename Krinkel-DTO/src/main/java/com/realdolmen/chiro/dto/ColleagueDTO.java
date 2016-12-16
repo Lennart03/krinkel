@@ -1,5 +1,6 @@
 package com.realdolmen.chiro.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonView;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
@@ -14,6 +15,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class ColleagueDTO {
 
     @JsonProperty("adnr")
@@ -30,16 +32,23 @@ public class ColleagueDTO {
     private String division;
 
     @JsonProperty("functies")
-    private List<String> functions = new ArrayList<>();
+    private List<String> functions;
 
     @JsonProperty("gender_id")
     @JsonSerialize(using = GenderSerializer.class)
     @JsonDeserialize(using = GenderDeserializer.class)
     private Gender gender;
 
+    @JsonProperty("birth_date")
     private Date birthDate;
 
-    private Address address;
+    private String street_address;
+
+    private String postal_code;
+
+    private String city;
+
+    private String country;
 
     private String phone;
 
@@ -106,14 +115,6 @@ public class ColleagueDTO {
         this.birthDate = birthDate;
     }
 
-    public Address getAddress() {
-        return address;
-    }
-
-    public void setAddress(Address address) {
-        this.address = address;
-    }
-
     public String getPhone() {
         return phone;
     }
@@ -128,5 +129,37 @@ public class ColleagueDTO {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getStreet_address() {
+        return street_address;
+    }
+
+    public void setStreet_address(String street_address) {
+        this.street_address = street_address;
+    }
+
+    public String getPostal_code() {
+        return postal_code;
+    }
+
+    public void setPostal_code(String postal_code) {
+        this.postal_code = postal_code;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public String getCountry() {
+        return country;
+    }
+
+    public void setCountry(String country) {
+        this.country = country;
     }
 }
