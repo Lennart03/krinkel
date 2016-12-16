@@ -37,7 +37,7 @@ public class PaymentWebController {
         if (!basketService.handleSuccessCallback(orderId))
             registrationParticipantService.updatePaymentStatus(orderId);
 
-        return "redirect:/index.html";
+        return "redirect:/site/index.html";
     }
 
     /**
