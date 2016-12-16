@@ -243,7 +243,6 @@ class RegisterController {
         perzon.street = this.details.address_components[0].long_name;
 
         var mappedPerson = this.MapperService.mapParticipant(perzon);
-        console.log(mappedPerson);
         //add person to cart using service
         this.KrinkelService.addPersonToBasket(mappedPerson).then(() => {
             this.$location.path("/cart");
