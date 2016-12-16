@@ -49,6 +49,6 @@ public class PaymentWebController {
     @RequestMapping(method = RequestMethod.GET, value = "/failure")
     public String paymentFailure(@RequestParam(name = "transactionid") String orderId) {
         logger.info("Payment Failure for Transaction " + orderId);
-        return "redirect:/index.html";
+        return "redirect:/site/index.html";
     }
 }
