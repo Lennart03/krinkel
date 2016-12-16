@@ -9,7 +9,7 @@
        ng-repeat="admin in $ctrl.admins"
        class="collection-item">
         <span class="badge">
-            <button class="waves-effect waves-light btn red" ng-click="$ctrl.deleteAdmin(admin.adNummer)">delete <i
+            <button class="btn red" ng-click="$ctrl.deleteAdmin(admin.adNummer)">delete <i
                 class="material-icons" style="vertical-align: bottom">delete</i></button>
         </span>
         {{admin.firstname}} {{admin.lastname}}<br/>
@@ -32,7 +32,7 @@
         </div>
     </div>
     <div class="row">
-        <button type="submit" class="btn waves-effect" ng-disabled="!createAdmin.$valid">
+        <button type="submit" class="btn" ng-disabled="!createAdmin.$valid">
             Maak admin
             <i class="material-icons right">send</i>
         </button>
