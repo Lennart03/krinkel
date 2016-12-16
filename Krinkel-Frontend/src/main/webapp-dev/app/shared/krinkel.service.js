@@ -4,6 +4,8 @@ export class KrinkelService {
         this.BASEURL = BASEURL;
         this.$window = $window;
         this.adNumber="";
+        this.startDate;
+        this.endDate;
     }
 
     getCasUrl() {
@@ -181,17 +183,7 @@ export class KrinkelService {
     }
 
     getGraphLoginInfo() {
-        return this.$http.get(`${this.BASEURL}/api/graph/uniqueLoginsPerVerbond`).then((resp) => {
-                return resp.data;
-            },
-            () => {
-                this.popup();
-            }
-        );
-    }
-
-    getGraphLoginCurrent() {
-        return this.$http.get(`${this.BASEURL}/api/graph/uniqueLoginsPerVerbondLastTwoWeeks`).then((resp) => {
+        return this.$http.get(`${this.BASEURL}/api/graph/uniqueLoginsPerVerbond?startDate=01/12/2016&endDate=31/12/2016`).then((resp) => {
                 return resp.data;
             },
             () => {

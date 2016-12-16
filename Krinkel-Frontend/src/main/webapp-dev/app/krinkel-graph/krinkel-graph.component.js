@@ -4,7 +4,6 @@ class KrinkelGraphController {
         this.getDataForSunBurst();
         this.getDataForStatus();
         this.getDataForLogin();
-        this.getDataForLoginLastWeeks();
     }
 
     getDataForSunBurst() {
@@ -54,12 +53,6 @@ class KrinkelGraphController {
     getDataForLogin() {
         this.KrinkelService.getGraphLoginInfo().then((results) => {
             this.lineData = this.mapServerJSONToChartJSON(results);
-        });
-    }
-
-    getDataForLoginLastWeeks() {
-        this.KrinkelService.getGraphLoginCurrent().then((results) => {
-            this.lineDataLastWeeks = this.mapServerJSONToChartJSON(results);
         });
     }
 
@@ -235,6 +228,7 @@ class KrinkelGraphController {
             }
         };
         this.barData = [];
+        console.log(this.lineOptions.values());
     }
 
 

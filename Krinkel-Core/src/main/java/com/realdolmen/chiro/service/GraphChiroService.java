@@ -130,42 +130,32 @@ public class GraphChiroService {
     private List<RawChiroUnit> findAll() {
         return chiroUnitRepository.findAll();
     }
-
+/* commented by thomas no longer needed
     @PreAuthorize("@GraphChiroServiceSecurity.hasPermissionToGetLoginData()")
     public SortedMap getLoginDataFromLastTwoWeeks() {
-        return getUniqueLoginsPerVerbond(true);
+        return getUniqueLoginsPerVerbond(startDate,endDate);
     }
-
+*/
     @PreAuthorize("@GraphChiroServiceSecurity.hasPermissionToGetLoginData()")
-    public SortedMap getLoginData() {
-        return getUniqueLoginsPerVerbond(false);
+    public SortedMap getLoginData(Date startDate,Date endDate) {
+        return getUniqueLoginsPerVerbond(startDate,endDate);
     }
 
 
-    private SortedMap<Verbond, SortedMap<String, Integer>> getUniqueLoginsPerVerbond(Boolean lastTwoWeeks) {
+    private SortedMap<Verbond, SortedMap<String, Integer>> getUniqueLoginsPerVerbond(Date startDate,Date endDate) {
         TreeMap<Verbond, SortedMap<String, Integer>> uniqueLoginsPerVerbond = new TreeMap<>();
         List<LoginLog> allLogs = null;
         List<String> distinctStamps;
 
         fillMapWithAllVerbonden(uniqueLoginsPerVerbond);
         SimpleDateFormat frmt = new SimpleDateFormat("dd/MM/yyyy");
-        if (lastTwoWeeks) {
-            Date startDate = Date.from(LocalDate.now().minusWeeks(2).atStartOfDay(ZoneId.systemDefault()).toInstant());
-            Date now = new Date();
 
-            allLogs = loginLoggerRepository.findLogsBetweenDates(startDate, now);
+            allLogs = loginLoggerRepository.findLogsBetweenDates(startDate, endDate);
 
-            distinctStamps = loginLoggerRepository.findDistinctStamps(startDate, now)
+            distinctStamps = loginLoggerRepository.findDistinctStamps(startDate, endDate)
                     .stream()
                     .map(date->frmt.format(date))
                     .collect(Collectors.toList());
-        } else {
-            allLogs = loginLoggerRepository.findAll();
-            distinctStamps = loginLoggerRepository.findDistinctStamps()
-                    .stream()
-                    .map(date->frmt.format(date))
-                    .collect(Collectors.toList());
-        }
 
 
         allLogs.parallelStream().forEach(log -> mapLoginLogs(log, uniqueLoginsPerVerbond));
