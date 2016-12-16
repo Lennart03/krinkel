@@ -30,6 +30,8 @@ class RegisterController {
         this.details3 = {};
         this.details2 = {};
         this.details = {};
+
+        this.validateNow = false;
     }
 
     clearPostCodeAndCityNameFields() {
@@ -128,7 +130,6 @@ class RegisterController {
     }
 
     prefillColleague() {
-        console.log('prefil COll now coll');
         var colleague = this.SelectService.getColleague();
         var loggedInUser = this.AuthService.getLoggedinUser();
         console.log(colleague);
@@ -155,7 +156,6 @@ class RegisterController {
 
         this.details2.name = colleague.postal_code;
 
-
         this.details.address_components = [];
         this.details.address_components.push({
             long_name: colleague.street_address
@@ -166,16 +166,12 @@ class RegisterController {
         this.SelectService.setSelectedFlag(true);
     }
 
-    prefillSelf() {
-        console.log('init prefillself');
-        var loggedInUser = this.AuthService.getLoggedinUser();
-        console.log(loggedInUser);
-        this.KrinkelService.getContactFromChiro(loggedInUser.adnummer).then((resp) => {
+    prefillWithAdNumber(adNumber){
+        this.KrinkelService.getContactFromChiro(adNumber).then((resp) => {
             var chiroContact = resp[0];
-            console.log(chiroContact);
             if (resp.size != 0) {
                 this.newPerson = {
-                    adNumber: loggedInUser.adnummer,
+                    adNumber: adNumber,
                     job: "Aanbod nationale kampgrond",
                     firstName: chiroContact.first_name,
                     lastName: chiroContact.last_name,
@@ -186,7 +182,7 @@ class RegisterController {
                     rank: chiroContact.afdeling.toUpperCase()
                 };
 
-                this.KrinkelService.getPloegen(loggedInUser.adnummer).then((resp) => {
+                this.KrinkelService.getPloegen(adNumber).then((resp) => {
                     this.options = [];
                     resp.forEach((r) => {
                         this.options.push(JSON.parse(r));
@@ -195,17 +191,20 @@ class RegisterController {
                 });
                 this.details2.name = chiroContact.postal_code;
 
-
                 this.details.address_components = [];
                 this.details.address_components.push({
                     long_name: chiroContact.street_address
                 });
-
-
                 this.details3.vicinity = chiroContact.city;
-
             }
         });
+    }
+
+    prefillSelf() {
+        console.log('init prefillself');
+        var loggedInUser = this.AuthService.getLoggedinUser();
+        console.log(loggedInUser);
+        this.prefillWithAdNumber(loggedInUser.adNumber);
     }
 
     /*
@@ -213,84 +212,8 @@ class RegisterController {
      */
     prefillMember() {
         var participant = this.RegisterOtherMemberService.getParticipant();
-        console.log(participant)
-        this.KrinkelService.getContactFromChiro(participant.adNumber).then((resp) => {
-            var chiroContact = resp[0];
-
-            if (resp.size != 0) {
-                this.newPerson = {
-                    adNumber: participant.adNumber,
-                    job: "Aanbod nationale kampgrond",
-                    firstName: chiroContact.first_name,
-                    lastName: chiroContact.last_name,
-                    email: chiroContact.email,
-                    birthDate: chiroContact.birth_date,
-                    phone: chiroContact.phone.replace('-', ''),
-                    gender: chiroContact.gender_id,
-                    rank: chiroContact.afdeling.toUpperCase()
-                };
-
-                this.KrinkelService.getPloegen(participant.adNumber).then((resp) => {
-                    this.options = [];
-                    resp.forEach((r) => {
-                        this.options.push(JSON.parse(r));
-                    });
-                    this.newPerson.group = this.options[0].stamnr;
-                });
-                this.details2.name = chiroContact.postal_code;
-
-
-                this.details.address_components = [];
-                this.details.address_components.push({
-                    long_name: chiroContact.street_address
-                });
-
-                this.details3.vicinity = chiroContact.city;
-            }
-        });
+        this.prefillWithAdNumber(participant.adNumber);
     }
-
-    /*
-     * wanneer de admin een medewerker wil toevoegen
-     */
-    prefillColleagueByAdmin() {
-        var participant = this.RegisterOtherMemberService.getParticipant();
-
-        this.KrinkelService.getContactFromChiro(participant.adNumber).then((resp) => {
-            var chiroContact = resp[0];
-            if (resp.size != 0) {
-                this.newPerson = {
-                    adNumber: participant.adNumber,
-                    job: "Aanbod nationale kampgrond",
-                    firstName: chiroContact.first_name,
-                    lastName: chiroContact.last_name,
-                    email: chiroContact.email,
-                    birthDate: chiroContact.birth_date,
-                    phone: chiroContact.phone.replace('-', ''),
-                    gender: chiroContact.gender_id,
-                    rank: chiroContact.afdeling.toUpperCase()
-                };
-
-                this.KrinkelService.getPloegen(participant.adNumber).then((resp) => {
-                    this.options = [];
-                    resp.forEach((r) => {
-                        this.options.push(JSON.parse(r));
-                    });
-                    this.newPerson.group = this.options[0].stamnr;
-                });
-                this.details2.name = chiroContact.postal_code;
-
-
-                this.details.address_components = [];
-                this.details.address_components.push({
-                    long_name: chiroContact.street_address
-                });
-
-                this.details3.vicinity = chiroContact.city;
-            }
-        });
-    }
-
     $onInit() {
         if (this.AuthService.getLoggedinUser() == null) {
             this.$location.path('/');
@@ -307,7 +230,7 @@ class RegisterController {
             this.RegisterOtherMemberService.setSubscribeMember(false);
         } else if(this.RegisterOtherMemberService.subscribeColleague()) {
             console.log('subColl');
-            this.prefillColleagueByAdmin();
+            this.prefillMember();
             this.user = "admin";
             this.RegisterOtherMemberService.setSubscribeColleague(false);
         } else if (this.SelectService.getColleague() !== undefined) {
@@ -389,6 +312,20 @@ class RegisterController {
 
     initVoorwaardenModal() {
         $('#modal2').openModal();
+    }
+
+    initModal4(form) {
+        this.validateNow = true;
+        if(form) {
+            $('#modal4').openModal();
+        }
+    }
+
+    initModal5(form) {
+        this.validateNow = true;
+        if(form) {
+            $('#modal5').openModal();
+        }
     }
 
 }
