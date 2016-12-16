@@ -130,9 +130,8 @@ class RegisterController {
 
     prefillWithAdNumber(adNumber){
         this.KrinkelService.getContactFromChiro(adNumber).then((resp) => {
-            console.log(resp);
-            var chiroContact = resp[0];
-            if (resp.size != 0) {
+            if (resp) {
+                let chiroContact = resp[0];
                 this.newPerson = {
                     adNumber: adNumber,
                     job: "Aanbod nationale kampgrond",
