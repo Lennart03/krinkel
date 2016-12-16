@@ -26,20 +26,16 @@ class FindByAdController {
                     {
                         console.log('status ok');
                         this.participant = {
-                            adNumber: part.adNumber,
+                            adNumber: part.adnr,
                             firstName: part.firstName,
                             lastName: part.lastName,
                             email: part.email,
-                            birthDate: part.birthdate,
+                            birthDate: part.birthDate,
                             phone: part.phoneNumber,
                             gender: part.gender,
                             address: part.address,
                             httpStatus: part.httpStatus
                         };
-                        console.log('participant lastname : ' +this.participant.lastName);
-
-                        console.log('adNumber' + adNumber);
-
                         this.RegisterOtherMemberService.setParticipant(this.participant);
                         this.$location.path("/choose-registration-participant");
                     }
@@ -47,8 +43,6 @@ class FindByAdController {
                 }
             },
             (resp) => {
-                console.log(resp.statusText + 'this was the statusText');
-                console.log(resp.status + 'this was the status');
 
         });
 

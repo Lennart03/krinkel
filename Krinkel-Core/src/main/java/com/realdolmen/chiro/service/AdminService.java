@@ -2,11 +2,13 @@ package com.realdolmen.chiro.service;
 
 import com.realdolmen.chiro.domain.RegistrationParticipant;
 import com.realdolmen.chiro.domain.units.Admin;
+import com.realdolmen.chiro.domain.units.ChiroContact;
 import com.realdolmen.chiro.exception.NoContactFoundException;
 import com.realdolmen.chiro.repository.AdminRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.List;
 
@@ -41,9 +43,9 @@ public class AdminService {
      * @param adnummer unique number by chiro to identify a person
      * @throws URISyntaxException
      */
-    public void addNewAdmin(Integer adnummer) throws URISyntaxException, NoContactFoundException {
-        RegistrationParticipant registrationParticipant = chiroContactService.getRegistrationParticipant(adnummer);
-        Admin admin = new Admin(adnummer, registrationParticipant.getEmail(), registrationParticipant.getFirstName(), registrationParticipant.getLastName());
+    public void addNewAdmin(Integer adnummer) throws URISyntaxException, NoContactFoundException, IOException {
+        ChiroContact chiroContact= chiroContactService.getChiroContact(adnummer);
+        Admin admin = new Admin(adnummer, chiroContact.getEmail(), chiroContact.getFirstName(), chiroContact.getLastName());
         adminRepository.save(admin);
     }
 

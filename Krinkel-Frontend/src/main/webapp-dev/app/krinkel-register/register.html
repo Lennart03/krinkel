@@ -64,11 +64,9 @@
                 <!--$ctrl.newPerson.street-->
                 <input name="street" type="text" class="validate" id="street"
                        ng-model="$ctrl.details.address_components[0].long_name"
-                       class="validate" ng-autocomplete
-                       options="$ctrl.optionsStreet" details="$ctrl.details" required placeholder="..."
-                       ng-change="$ctrl.clearPostCodeAndCityNameFields()"/>
-
-                {{$ctrl.extractFromAdress($ctrl.details.address_components )}}
+                       class="validate"
+                       details="$ctrl.details" required placeholder="..."
+                       />
 
                 <label for="street">Straat en huisnummer *</label>
                 <p ng-show="(personForm.street.$invalid && $ctrl.validateNow) || (personForm.street.$invalid && personForm.street.$touched)" class="error"><i

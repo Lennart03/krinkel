@@ -31,7 +31,6 @@ class AdminToevoegenController {
      * @param adnumber Unique identifier given by Chiro.
      */
     searchAndSaveAsAdmin(adnumber) {
-        console.log("adnummer in search and save: " + adnumber);
         var response = this.KrinkelService.getContactFromChiro(adnumber).then((resp) => {
             var newAdmin = {
                 firstname: resp[0].first_name,
