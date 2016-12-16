@@ -33,6 +33,7 @@ import {ChooseRegistrationComponent} from './krinkel-admin/register-member/choos
 import {KrinkelAdminComponent} from './krinkel-admin/krinkel-admin.component';
 import {KrinkelExportComponent} from './krinkel-admin/krinkel-export/krinkel-export.component';
 import {AdminToevoegenComponent} from './krinkel-admin/admin-toevoegen/admin-toevoegen.component';
+import {GenerateGroupsComponent} from './krinkel-tools/generate-groups/generate-groups.component';
 
 
 //TODO : make BASEURL dynamic!!!
@@ -72,4 +73,5 @@ export default angular
     .component('krinkelAdmin', KrinkelAdminComponent)
     .component('adminToevoegen', AdminToevoegenComponent)
     .component('krinkelKar', KrinkelKarComponent)
+    .component('generateGroups', GenerateGroupsComponent)
     .name;

@@ -56,7 +56,7 @@ public interface RegistrationParticipantRepository extends JpaRepository<Registr
     Long countPreCampRecordsAfterCancellation(@Param("participantId") Long participantId);
 
     @Query(value= "SELECT r FROM RegistrationParticipant r WHERE " +
-            "r.event_role = 'ASPI'")
+            "r.eventRole = 'ASPI'")
     List<RegistrationParticipant> findAllAspis();
 
 }

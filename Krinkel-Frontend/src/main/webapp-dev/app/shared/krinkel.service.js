@@ -310,6 +310,13 @@ export class KrinkelService {
         });
     }
 
+    generateGroups() {
+        console.log("generate groups");
+        return this.$http.get(`${this.BASEURL}/tools/generate-groups`).then((resp) => {
+            return resp.data;
+        });
+    }
+
     popup() {
         Materialize.toast('Sessie verlopen, binnen 10 seconden herstart de applicatie', 10000, 'red rounded');
         setTimeout(() => {

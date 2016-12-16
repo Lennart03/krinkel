@@ -5,6 +5,8 @@ import com.realdolmen.chiro.domain.RegistrationParticipant;
 import com.realdolmen.chiro.domain.units.ChiroUnit;
 import com.realdolmen.chiro.repository.ChiroUnitRepository;
 import com.realdolmen.chiro.repository.RegistrationParticipantRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,14 +23,18 @@ public class GenerateGroupsService {
     @Autowired
     RegistrationParticipantRepository registrationParticipantRepository;
 
+
+    private Logger logger = LoggerFactory.getLogger(GenerateGroupsService.class);
+
     private static Integer GROUPSIZE = 12;
 
     private Map<String, List<RegistrationParticipant>> participantsMale = new HashMap<>();
     private Map<String, List<RegistrationParticipant>> participantsFemale = new HashMap<>();
     private Map<String, List<RegistrationParticipant>> participantsX = new HashMap<>();
 
-
     public List<List<RegistrationParticipant>> generateRandomGroups() {
+        logger.debug("begin generateRandomGroups");
+        System.out.println("begin generateRandomGroups sout");
         //fill the lists with the currently registered members
         List<RegistrationParticipant> registrationParticipants = registrationParticipantRepository.findAllAspis();
 
@@ -50,6 +56,14 @@ public class GenerateGroupsService {
             groupsOfParticipant.add(tempList);
         } while (!stop);
 
+
+        logger.debug("You need to be here");
+        for(int i = 0; i < groupsOfParticipant.size(); i++) {
+            List<RegistrationParticipant> reglist = groupsOfParticipant.get(i);
+            for(int j = 0; j < reglist.size(); j++) {
+                logger.debug(reglist.get(j).getFirstName());
+            }
+        }
         return groupsOfParticipant;
     }
 
@@ -159,7 +173,7 @@ public class GenerateGroupsService {
 
     private void addToMap(String union, RegistrationParticipant participant, Map<String, List<RegistrationParticipant>> map) {
         if(map.get(union) == null) {
-            List<RegistrationParticipant> registrationParticipants = new ArrayList<RegistrationParticipant>();
+            List<RegistrationParticipant> registrationParticipants = new ArrayList<>();
             registrationParticipants.add(participant);
             map.put(union, registrationParticipants);
         } else {
