@@ -13,6 +13,7 @@ class FindByAdController {
 
     findByAdNumber(adNumber) {
         this.adNumber=adNumber;
+        console.log("findByAdNumber: " +adNumber);
         this.RegisterOtherMemberService.getParticipantUsingAd(adNumber).then((resp) => {
                 var part = resp.data;
 
@@ -26,11 +27,11 @@ class FindByAdController {
                     {
                         console.log('status ok');
                         this.participant = {
-                            adNumber: part.adNumber,
+                            adNumber: part.adnr,
                             firstName: part.firstName,
                             lastName: part.lastName,
                             email: part.email,
-                            birthDate: part.birthdate,
+                            birthDate: part.birthDate,
                             phone: part.phoneNumber,
                             gender: part.gender,
                             address: part.address,
