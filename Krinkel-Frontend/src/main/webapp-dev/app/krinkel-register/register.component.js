@@ -110,7 +110,7 @@ class RegisterController {
                     email: chiroContact.email || "",
                     birthDate: chiroContact.birth_date || "",
                     emailSubscriber: emailSubscriber || "",
-                    phone: chiroContact.phone.replace('-', '') || "",
+                    phone: chiroContact.phone ? chiroContact.phone.replace('-', '') : "",
                     gender: chiroContact.gender_id || "",
                     rank: chiroContact.afdeling.toUpperCase() || ""
                 };
@@ -154,17 +154,14 @@ class RegisterController {
          * Prefilling the form when subscribing others
          */
         if(this.RegisterOtherMemberService.subscribeMember()) {
-            console.log('subMember');
             this.prefillMember();
             this.user = "admin";
             this.RegisterOtherMemberService.setSubscribeMember(false);
         } else if(this.RegisterOtherMemberService.subscribeColleague()) {
-            console.log('subColl');
             this.prefillMember();
             this.user = "admin";
             this.RegisterOtherMemberService.setSubscribeColleague(false);
         } else if (this.SelectService.getColleague() !== undefined) {
-            console.log('prefillColl');
             this.prefillColleague();
         } else {
             let user = this.StorageService.getUser();
@@ -174,7 +171,6 @@ class RegisterController {
                 /**
                  * Prefilling the form when subscribing yourself
                  */
-                console.log('prefillSelf');
                 this.prefillSelf();
 
             }
@@ -220,7 +216,6 @@ class RegisterController {
         perzon.street = this.details.address_components[0].long_name;
 
         let mappedPerson = this.MapperService.mapParticipant(perzon);
-        console.log(mappedPerson);
         //add person to cart using service
         this.KrinkelService.addPersonToBasket(mappedPerson).then(() => {
             this.$location.path("/cart");
