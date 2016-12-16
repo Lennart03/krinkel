@@ -34,44 +34,6 @@ class RegisterController {
         this.validateNow = false;
     }
 
-    clearPostCodeAndCityNameFields() {
-
-        if (this.details3 != null || this.details2 != null || this.details != null) {
-
-            this.details3 = {};
-            this.details2 = {};
-
-        }
-    }
-
-    extractFromAdress(components) {
-        if (this.details3.vicinity != null || this.details2.name != null) {
-            return;
-        }
-
-        if (components != null) {
-            for (var i = 0; i < components.length; i++)
-                for (var j = 0; j < components[i].types.length; j++) {
-                    if (components[i].types[j] == 'postal_code') {
-                        //  console.debug(components[i].long_name);
-                        this.details2 = {
-                            name: components[i].long_name
-                        };
-                    }
-                    // console.debug(components[i].types[j]);
-                    if (components[i].types[j] == 'locality') {
-                        //console.debug(components[i].short_name);
-
-                        this.details3 = {
-                            vicinity: components[i].short_name
-                        };
-                    }
-
-                }
-        }
-        return "";
-    }
-
     registerPerson(newPerson) {
         this.newPerson.city = this.details3.vicinity;
         this.newPerson.postalCode = this.details2.name;
@@ -130,65 +92,29 @@ class RegisterController {
     }
 
     prefillColleague() {
-        console.log('prefil COll now coll');
-        var colleague = this.SelectService.getColleague();
-        var loggedInUser = this.AuthService.getLoggedinUser();
-        console.log(colleague);
-        this.newPerson = {
-            adNumber: colleague.adnr,
-            job: "Aanbod nationale kampgrond",
-            firstName: colleague.first_name,
-            lastName: colleague.last_name,
-            email: colleague.email,
-            birthDate: colleague.birth_date,
-            phone: colleague.phone.replace('-', ''),
-            emailSubscriber: loggedInUser.email,
-            gender: colleague.gender_id,
-            rank: colleague.afdeling.toUpperCase()
-        };
-
-        this.KrinkelService.getPloegen(colleague.adnr).then((resp) => {
-            this.options = [];
-            resp.forEach((r) => {
-                this.options.push(JSON.parse(r));
-            });
-            this.newPerson.group = this.options[0].stamnr;
-        });
-
-        this.details2.name = colleague.postal_code;
-
-
-        this.details.address_components = [];
-        this.details.address_components.push({
-            long_name: colleague.street_address
-        });
-
-        this.details3.vicinity = colleague.city;
-
+        let colleague = this.SelectService.getColleague();
+        let loggedInUser = this.AuthService.getLoggedinUser();
+        this.prefillWithAdNumber(colleague.adnr, loggedInUser.email);
         this.SelectService.setSelectedFlag(true);
     }
 
-    prefillSelf() {
-        console.log('init prefillself');
-        var loggedInUser = this.AuthService.getLoggedinUser();
-        console.log(loggedInUser);
-        this.KrinkelService.getContactFromChiro(loggedInUser.adnummer).then((resp) => {
-            var chiroContact = resp[0];
-            console.log(chiroContact);
-            if (resp.size != 0) {
+    prefillWithAdNumber(adNumber, emailSubscriber){ //second var is optional, as it's only required when subscribing a colleague.
+        this.KrinkelService.getContactFromChiro(adNumber).then((resp) => {
+            if (resp) {
+                let chiroContact = resp[0];
                 this.newPerson = {
-                    adNumber: loggedInUser.adnummer,
+                    adNumber: adNumber,
                     job: "Aanbod nationale kampgrond",
-                    firstName: chiroContact.first_name,
-                    lastName: chiroContact.last_name,
-                    email: chiroContact.email,
-                    birthDate: chiroContact.birth_date,
-                    phone: chiroContact.phone.replace('-', ''),
-                    gender: chiroContact.gender_id,
-                    rank: chiroContact.afdeling.toUpperCase()
+                    firstName: chiroContact.first_name || "", //this pretty much means use the var if it's not null/undefined, else use an empty string
+                    lastName: chiroContact.last_name || "",
+                    email: chiroContact.email || "",
+                    birthDate: chiroContact.birth_date || "",
+                    emailSubscriber: emailSubscriber || "",
+                    phone: chiroContact.phone ? chiroContact.phone.replace('-', '') : "",
+                    gender: chiroContact.gender_id || "",
+                    rank: chiroContact.afdeling.toUpperCase() || ""
                 };
-
-                this.KrinkelService.getPloegen(loggedInUser.adnummer).then((resp) => {
+                this.KrinkelService.getPloegen(adNumber).then((resp) => {
                     this.options = [];
                     resp.forEach((r) => {
                         this.options.push(JSON.parse(r));
@@ -197,101 +123,27 @@ class RegisterController {
                 });
                 this.details2.name = chiroContact.postal_code;
 
-
                 this.details.address_components = [];
                 this.details.address_components.push({
                     long_name: chiroContact.street_address
                 });
-
-
                 this.details3.vicinity = chiroContact.city;
-
             }
         });
+    }
+
+    prefillSelf() {
+        let loggedInUser = this.AuthService.getLoggedinUser();
+        this.prefillWithAdNumber(loggedInUser.adNumber);
     }
 
     /*
     * wanneer de admin een deelnemer wil toevoegen
      */
     prefillMember() {
-        var participant = this.RegisterOtherMemberService.getParticipant();
-
-        this.KrinkelService.getContactFromChiro(participant.adNumber).then((resp) => {
-            var chiroContact = resp[0];
-            if (resp.size != 0) {
-                this.newPerson = {
-                    adNumber: participant.adNumber,
-                    job: "Aanbod nationale kampgrond",
-                    firstName: chiroContact.first_name,
-                    lastName: chiroContact.last_name,
-                    email: chiroContact.email,
-                    birthDate: chiroContact.birth_date,
-                    phone: chiroContact.phone.replace('-', ''),
-                    gender: chiroContact.gender_id,
-                    rank: chiroContact.afdeling.toUpperCase()
-                };
-
-                this.KrinkelService.getPloegen(participant.adNumber).then((resp) => {
-                    this.options = [];
-                    resp.forEach((r) => {
-                        this.options.push(JSON.parse(r));
-                    });
-                    this.newPerson.group = this.options[0].stamnr;
-                });
-                this.details2.name = chiroContact.postal_code;
-
-
-                this.details.address_components = [];
-                this.details.address_components.push({
-                    long_name: chiroContact.street_address
-                });
-
-                this.details3.vicinity = chiroContact.city;
-            }
-        });
+        let participant = this.RegisterOtherMemberService.getParticipant();
+        this.prefillWithAdNumber(participant.adNumber);
     }
-
-    /*
-     * wanneer de admin een medewerker wil toevoegen
-     */
-    prefillColleagueByAdmin() {
-        var participant = this.RegisterOtherMemberService.getParticipant();
-
-        this.KrinkelService.getContactFromChiro(participant.adNumber).then((resp) => {
-            var chiroContact = resp[0];
-            if (resp.size != 0) {
-                this.newPerson = {
-                    adNumber: participant.adNumber,
-                    job: "Aanbod nationale kampgrond",
-                    firstName: chiroContact.first_name,
-                    lastName: chiroContact.last_name,
-                    email: chiroContact.email,
-                    birthDate: chiroContact.birth_date,
-                    phone: chiroContact.phone.replace('-', ''),
-                    gender: chiroContact.gender_id,
-                    rank: chiroContact.afdeling.toUpperCase()
-                };
-
-                this.KrinkelService.getPloegen(participant.adNumber).then((resp) => {
-                    this.options = [];
-                    resp.forEach((r) => {
-                        this.options.push(JSON.parse(r));
-                    });
-                    this.newPerson.group = this.options[0].stamnr;
-                });
-                this.details2.name = chiroContact.postal_code;
-
-
-                this.details.address_components = [];
-                this.details.address_components.push({
-                    long_name: chiroContact.street_address
-                });
-
-                this.details3.vicinity = chiroContact.city;
-            }
-        });
-    }
-
     $onInit() {
         if (this.AuthService.getLoggedinUser() == null) {
             this.$location.path('/');
@@ -302,27 +154,23 @@ class RegisterController {
          * Prefilling the form when subscribing others
          */
         if(this.RegisterOtherMemberService.subscribeMember()) {
-            console.log('subMember');
             this.prefillMember();
             this.user = "admin";
             this.RegisterOtherMemberService.setSubscribeMember(false);
         } else if(this.RegisterOtherMemberService.subscribeColleague()) {
-            console.log('subColl');
-            this.prefillColleagueByAdmin();
+            this.prefillMember();
             this.user = "admin";
             this.RegisterOtherMemberService.setSubscribeColleague(false);
         } else if (this.SelectService.getColleague() !== undefined) {
-            console.log('prefillColl');
             this.prefillColleague();
         } else {
-            var user = this.StorageService.getUser();
+            let user = this.StorageService.getUser();
             if (user && user.email === this.AuthService.getLoggedinUser().email) {
                 this.newPerson = user;
             } else {
                 /**
                  * Prefilling the form when subscribing yourself
                  */
-                console.log('prefillSelf');
                 this.prefillSelf();
 
             }
@@ -362,13 +210,12 @@ class RegisterController {
     }
 
     addToBasket(person){
-        var perzon = person;
+        let perzon = person;
         perzon.city = this.details3.vicinity;
         perzon.postalCode = this.details2.name;
         perzon.street = this.details.address_components[0].long_name;
 
-        var mappedPerson = this.MapperService.mapParticipant(perzon);
-        console.log(mappedPerson);
+        let mappedPerson = this.MapperService.mapParticipant(perzon);
         //add person to cart using service
         this.KrinkelService.addPersonToBasket(mappedPerson).then(() => {
             this.$location.path("/cart");

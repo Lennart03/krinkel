@@ -128,5 +128,4 @@ public class ChiroColleagueService {
 
         return colleagues.stream().anyMatch(c -> c.getAdNumber().equals(colleagueAdNumber.toString()));
     }
-
 }

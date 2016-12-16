@@ -40,13 +40,10 @@ export class AuthService {
     }
 
     logoutUser() {
-        console.log('logoutUser() called')
         this.$http.get(`${this.BASEURL}/api/logout`).then((resp) => {
             if (resp.status !== 200) {
                 return;
             }
-            console.log(resp.status);
-            console.log('statuscode is 200');
             //clear sessionstorage and localstorage cuz mathias loves to put junk here
             sessionStorage.clear();
             localStorage.clear();
