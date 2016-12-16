@@ -15,15 +15,15 @@ class GewestenController {
         });
     }
 
-    getSubscribedParticipant(naamVerbond) {
+    redirectToGroepen(gewestStamNr) {
+        console.log('Tried to redirect via javascript to gewesten with verbondStamNummer: ' + gewestStamNr);
 
+        this.$location.path('/groepen/' + gewestStamNr);
     }
 
     getPloegen(stamnummer) {
         this.$location.path('/gewesten/'+ stamnummer);
     }
-
-
 }
 
 export var GewestenComponent = {

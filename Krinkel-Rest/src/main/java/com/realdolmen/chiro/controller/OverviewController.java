@@ -38,7 +38,7 @@ public class OverviewController {
 
     @RequestMapping(value = "/groepen/{groepStamNummer}", method = RequestMethod.GET)
     public List<ChiroUnit> getGroepen(@PathVariable("groepStamNummer") String groepStamNummer) {
-        System.err.println("Groepen in overview controller: " + verbondenService.getGewesten(groepStamNummer));
-        return verbondenService.getGewesten(groepStamNummer);
+        System.err.println("Groepen in overview controller: " + verbondenService.getGroepen(groepStamNummer));
+        return verbondenService.getGroepen(groepStamNummer);
     }
 }

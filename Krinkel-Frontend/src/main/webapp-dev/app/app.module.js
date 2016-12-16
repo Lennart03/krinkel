@@ -25,6 +25,7 @@ import {LoadingSpinnerComponent} from './shared/loading-spinner/loading-spinner.
 import {KrinkelKarComponent} from './krinkel-kar/krinkelkar.component';
 import {VerbondenComponent} from './shared/units/verbonden.component';
 import {GewestenComponent} from './shared/units/gewesten.component';
+import {GroepenComponent} from './shared/units/groepen.component';
 
 
 //pages
@@ -78,6 +79,7 @@ export default angular
     .component('krinkelKar', KrinkelKarComponent)
     .component('verbonden', VerbondenComponent)
     .component('gewesten', GewestenComponent)
+    .component('groepen', GroepenComponent)
     .filter('escape', function() {
         return window.encodeURIComponent;
     })

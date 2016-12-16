@@ -41,6 +41,7 @@ public class VerbondenService {
     }
 
     public List<ChiroUnit> getGewesten(String verbondStamNummer){
+        System.err.println("Hi from getGewesten");
         // first untrim the verbondStamNummer
         verbondStamNummer = stamNumberTrimmer.untrim(verbondStamNummer);
 
@@ -64,17 +65,19 @@ public class VerbondenService {
     }
 
     public List<ChiroUnit> getGroepen(String gewestStamNummer){
+        System.err.println("Hi from getGroepen");
         // first untrim the verbondStamNummer
         gewestStamNummer = stamNumberTrimmer.untrim(gewestStamNummer);
         // Get the gewesten: the name + stamNummer
         List<ChiroUnit> groepen = chiroUnitRepository.findAllGroepenWhereGewestStamNummerIs(gewestStamNummer);
         // Set the participants and volunteers count
         for (ChiroUnit groep : groepen) {
-            int countAllParticipants = chiroUnitRepository.countParticipantsByGewest(groep.getStamNummer());
-            int countVolunteers = chiroUnitRepository.countVolunteersByGewest(groep.getStamNummer());
+            int countAllParticipants = chiroUnitRepository.countParticipantsByGroep(groep.getStamNummer());
+            int countVolunteers = chiroUnitRepository.countVolunteersByGroep(groep.getStamNummer());
             System.err.println("stamnr: " + groep.getStamNummer() + " #participants+volunteers: "
                     + countAllParticipants + ", #volunteers: " + countVolunteers);
-
+            groep.setParticipantsCount(countAllParticipants - countVolunteers);
+            groep.setVolunteersCount(countVolunteers);
             // Trim the stam nummers.
             groep.setStamNummer(stamNumberTrimmer.trim(groep.getStamNummer()));
         }

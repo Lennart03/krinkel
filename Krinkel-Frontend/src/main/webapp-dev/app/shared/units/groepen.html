@@ -1,0 +1,37 @@
+<h1>Lijst van groepen TEST</h1>
+
+<style>
+    tbody tr:hover {
+        background-color: #EEE;
+        cursor: pointer;
+    }
+</style>
+
+<table>
+    <thead>
+    <tr>
+        <th data-field="stamNummer">Stam nummer</th>
+        <th data-field="naam">Naam</th>
+        <th data-field="amountParticipants">Aantal deelnemers</th>
+        <th data-field="amountVolunteers">Aantal medewerkers</th>
+    </tr>
+    </thead>
+
+
+    <tbody>
+    <tr ng-repeat="groep in $ctrl.groepen" ng-click="$ctrl.redirectToGroep(groep.stamnummer)">
+        <td>
+            {{groep.stamnummer}}
+        </td>
+        <td>
+            {{groep.name}}
+        </td>
+        <td>
+            {{groep.aantal_ingeschreven_deelnemers}}
+        </td>
+        <td>
+            {{groep.aantal_ingeschreven_vrijwilligers}}
+        </td>
+    </tr>
+    </tbody>
+</table>

@@ -67,6 +67,10 @@ export function appConfig($routeProvider, $locationProvider) {
         template: '<gewesten></gewesten>'
     });
 
+    $routeProvider.when('/groepen/:gewestNr', {
+        template: '<groepen></groepen>'
+    });
+
     $routeProvider.otherwise({
         redirectTo: '/home'
     });
