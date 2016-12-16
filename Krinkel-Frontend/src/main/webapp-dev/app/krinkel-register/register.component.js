@@ -94,22 +94,18 @@ class RegisterController {
     prefillColleague() {
         let colleague = this.SelectService.getColleague();
         let loggedInUser = this.AuthService.getLoggedinUser();
-        console.log(colleague)
         this.prefillWithAdNumber(colleague.adnr, loggedInUser.email);
         this.SelectService.setSelectedFlag(true);
     }
 
-    prefillWithAdNumber(adNumber, emailSubscriber){
-        console.log(adNumber+ " " + emailSubscriber);
+    prefillWithAdNumber(adNumber, emailSubscriber){ //second var is optional, as it's only required when subscribing a colleague.
         this.KrinkelService.getContactFromChiro(adNumber).then((resp) => {
-            console.log("resp" + resp);
             if (resp) {
                 let chiroContact = resp[0];
-                console.log("contact: " + chiroContact);
                 this.newPerson = {
                     adNumber: adNumber,
                     job: "Aanbod nationale kampgrond",
-                    firstName: chiroContact.first_name || "",
+                    firstName: chiroContact.first_name || "", //this pretty much means use the var if it's not null/undefined, else use an empty string
                     lastName: chiroContact.last_name || "",
                     email: chiroContact.email || "",
                     birthDate: chiroContact.birth_date || "",
@@ -118,7 +114,6 @@ class RegisterController {
                     gender: chiroContact.gender_id || "",
                     rank: chiroContact.afdeling.toUpperCase() || ""
                 };
-                console.log(this.newPerson);
                 this.KrinkelService.getPloegen(adNumber).then((resp) => {
                     this.options = [];
                     resp.forEach((r) => {
