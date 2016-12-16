@@ -1,7 +1,6 @@
 package com.realdolmen.chiro.service;
 
 import com.realdolmen.chiro.domain.Gender;
-import com.realdolmen.chiro.domain.units.ChiroContact;
 import com.realdolmen.chiro.domain.units.HttpChiroContact;
 import com.realdolmen.chiro.spring_test.SpringIntegrationTest;
 import org.junit.Assert;
@@ -41,7 +40,7 @@ public class ChiroContactServiceTest extends SpringIntegrationTest {
         Assert.assertEquals("3660", chiroContact.getPostalCode());
         Assert.assertEquals("Bree", chiroContact.getCity());
         Assert.assertEquals("BE", chiroContact.getCountry());
-        Assert.assertEquals(null, chiroContact.getPhone());
+        Assert.assertEquals("", chiroContact.getPhone());
         Assert.assertEquals("thomas.simons@realdolmen.com", chiroContact.getEmail());
         Assert.assertEquals("377768", chiroContact.getId());
         Assert.assertEquals("200", chiroContact.getHttpStatus());

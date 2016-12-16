@@ -50,26 +50,6 @@ public class ChiroContactController {
         }
     }
 
-    @ResponseStatus(value=HttpStatus.NOT_FOUND,reason="Er bestaat geen persoon met deze adNummer")
-    public class NoContactFoundExcep extends RuntimeException {
-        private static final long serialVersionUID = -3712981290802922344L;
-        private String message;
-
-        public String getMessage() {
-            return message;
-        }
-
-        public void setMessage(String message) {
-            this.message = message;
-        }
-
-        public NoContactFoundExcep(String message) {
-            super("Er bestaat geen persoon met deze adNummer");
-            this.message=message;
-            System.out.println("Controller class throw error");
-        }
-    }
-
     @RequestMapping("/api/participant/{adNumber}")
     public@ResponseBody
     ChiroContact getParticipant(@PathVariable Integer adNumber) {

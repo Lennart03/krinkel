@@ -5,6 +5,7 @@ import com.realdolmen.chiro.domain.Gender;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -55,7 +56,11 @@ public class ChiroContact {
     }
 
     public void setAdnr(String adnr) {
-        this.adnr = adnr;
+        if (adnr == null) {
+            this.adnr = "";
+        } else {
+            this.adnr = adnr;
+        }
     }
 
     public String getFirstName() {
@@ -63,6 +68,9 @@ public class ChiroContact {
     }
 
     public void setFirstName(String firstName) {
+        if (firstName == null) {
+            this.firstName = "";
+        }
         this.firstName = firstName;
     }
 
@@ -71,7 +79,11 @@ public class ChiroContact {
     }
 
     public void setLastName(String lastName) {
-        this.lastName = lastName;
+        if (lastName == null) {
+            this.lastName = "";
+        } else {
+            this.lastName = lastName;
+        }
     }
 
     public String getAfdeling() {
@@ -79,7 +91,11 @@ public class ChiroContact {
     }
 
     public void setAfdeling(String afdeling) {
-        this.afdeling = afdeling;
+        if (afdeling == null) {
+            this.afdeling = "";
+        } else {
+            this.afdeling = afdeling;
+        }
     }
 
     public List<String> getFuncties() {
@@ -87,7 +103,11 @@ public class ChiroContact {
     }
 
     public void setFuncties(List<String> functies) {
-        this.functies = functies;
+        if (functies == null) {
+            this.functies = new ArrayList<>();
+        } else {
+            this.functies = functies;
+        }
     }
 
     public Gender getGender() {
@@ -95,7 +115,11 @@ public class ChiroContact {
     }
 
     public void setGender(Gender gender) {
-        this.gender = gender;
+        if (gender == null) {
+            this.gender = Gender.X;
+        } else {
+            this.gender = gender;
+        }
     }
 
     public void setGender(String gender) {
@@ -131,7 +155,11 @@ public class ChiroContact {
     }
 
     public void setStreetAddress(String streetAddress) {
-        this.streetAddress = streetAddress;
+        if (streetAddress == null) {
+            this.streetAddress = "";
+        } else {
+            this.streetAddress = streetAddress;
+        }
     }
 
     public String getPostalCode() {
@@ -139,7 +167,11 @@ public class ChiroContact {
     }
 
     public void setPostalCode(String postalCode) {
-        this.postalCode = postalCode;
+        if (postalCode == null) {
+            this.postalCode = "";
+        } else {
+            this.postalCode = postalCode;
+        }
     }
 
     public String getCity() {
@@ -147,7 +179,11 @@ public class ChiroContact {
     }
 
     public void setCity(String city) {
-        this.city = city;
+        if (city == null) {
+            this.city = "";
+        } else {
+            this.city = city;
+        }
     }
 
     public String getCountry() {
@@ -155,7 +191,11 @@ public class ChiroContact {
     }
 
     public void setCountry(String country) {
-        this.country = country;
+        if (country == null) {
+            this.country = "";
+        } else {
+            this.country = country;
+        }
     }
 
     public String getPhone() {
@@ -163,7 +203,11 @@ public class ChiroContact {
     }
 
     public void setPhone(String phone) {
-        this.phone = phone;
+        if (phone == null) {
+            this.phone = "";
+        } else {
+            this.phone = phone;
+        }
     }
 
     public String getEmail() {
@@ -171,7 +215,11 @@ public class ChiroContact {
     }
 
     public void setEmail(String email) {
-        this.email = email;
+        if (email == null) {
+            this.email = "";
+        } else {
+            this.email = email;
+        }
     }
 
     public String getId() {
@@ -179,7 +227,11 @@ public class ChiroContact {
     }
 
     public void setId(String id) {
-        this.id = id;
+        if(id == null) {
+            this.id = "";
+        } else {
+            this.id = id;
+        }
     }
 
     @Override

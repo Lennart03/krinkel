@@ -213,9 +213,10 @@ class RegisterController {
      */
     prefillMember() {
         var participant = this.RegisterOtherMemberService.getParticipant();
-
+        console.log(participant)
         this.KrinkelService.getContactFromChiro(participant.adNumber).then((resp) => {
             var chiroContact = resp[0];
+
             if (resp.size != 0) {
                 this.newPerson = {
                     adNumber: participant.adNumber,

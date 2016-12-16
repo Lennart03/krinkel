@@ -18,6 +18,7 @@ export class RegisterOtherMemberService {
     }
 
     getParticipantUsingAd(adNumber) {
+        console.log("Adnummer posting in url: " +adNumber);
         return this.$http.get(`${this.BASEURL}/api/participant/${adNumber}`).then((resp) => {
                 console.log('response from service: ' +resp);
                 console.log('response.data from service: ' + JSON.stringify(resp.data));
