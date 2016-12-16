@@ -11,8 +11,8 @@ import java.io.IOException;
 @JsonComponent
 public class GenderSerializer extends StdSerializer<Gender> {
 
-    protected GenderSerializer(Class<Gender> t) {
-        super(t);
+    public GenderSerializer() {
+        super(Gender.class);
     }
 
     @Override

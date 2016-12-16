@@ -6,14 +6,14 @@ import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
 import com.realdolmen.chiro.domain.Gender;
 import org.springframework.boot.jackson.JsonComponent;
-import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 
 @JsonComponent
 public class GenderDeserializer extends StdDeserializer<Gender> {
-    protected GenderDeserializer(Class<?> vc) {
-        super(vc);
+
+    public GenderDeserializer() {
+        super(Gender.class);
     }
 
     @Override

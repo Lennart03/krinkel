@@ -3,7 +3,7 @@ export class KrinkelService {
         this.$http = $http;
         this.BASEURL = BASEURL;
         this.$window = $window;
-        this.adNumber="";
+        this.adNumber = "";
     }
 
     getCasUrl() {
@@ -11,6 +11,7 @@ export class KrinkelService {
             return resp.data;
         });
     }
+
     //FIXME post instead of get (security?)
     logIn(user, password) {
         return this.$http.get(`${this.BASEURL}/api/users?user=${user}&password=${password}`).then((resp) => {
@@ -19,14 +20,14 @@ export class KrinkelService {
     }
 
     postVolunteer(user) {
-    return this.$http.post(`${this.BASEURL}/api/volunteers`, user).then((resp) => {
-            return resp;
-        },
-        () => {
-            this.popup();
-        }
-    );
-}
+        return this.$http.post(`${this.BASEURL}/api/volunteers`, user).then((resp) => {
+                return resp;
+            },
+            () => {
+                this.popup();
+            }
+        );
+    }
 
     postParticipant(user) {
         return this.$http.post(`${this.BASEURL}/api/participants`, user).then((resp) => {
@@ -90,8 +91,9 @@ export class KrinkelService {
         );
     }
 
-    getColleagues() {
+    getColleagues(adNumber) {
         return this.$http.get(`${this.BASEURL}/api/colleagues`).then((resp) => {
+                console.log(resp.data);
                 return resp.data;
             },
             () => {
@@ -213,8 +215,8 @@ export class KrinkelService {
 
     getPloegen(adNumber) {
         return this.$http.get(`${this.BASEURL}/api/ploegen/${adNumber}`).then((resp) => {
-               // var headers = resp.getHeaders();
-               // headers.getResponseHeader();
+                // var headers = resp.getHeaders();
+                // headers.getResponseHeader();
 
                 return resp.data;
             },
@@ -224,7 +226,7 @@ export class KrinkelService {
         );
     }
 
-    exportCompleteEntryList(){
+    exportCompleteEntryList() {
         return this.$http.get(`${this.BASEURL}/downloadExcel`).then((resp) => {
 
                 return resp.data;
@@ -237,13 +239,13 @@ export class KrinkelService {
 
     getContact(adNumber) {
         var promise = this.$http.get(`${this.BASEURL}/api/contact/${adNumber}`).success(function (data, status, headers, config) {
-            return data;
-        })
-            .error(function (data, status, headers, config) {
+                return data;
+            })
+                .error(function (data, status, headers, config) {
                     return {"status": false};
                 })
-        ;
-        console.log("output of promise " +promise);
+            ;
+        console.log("output of promise " + promise);
         return promise;
     }
 
@@ -256,8 +258,8 @@ export class KrinkelService {
                 console.log("get admins done");
                 console.log("Data in the response (krinkelservice): ");
                 console.log(resp.data)
-            return resp.data;
-        }, () => {
+                return resp.data;
+            }, () => {
                 this.popup();
             }
         );
@@ -277,30 +279,30 @@ export class KrinkelService {
         return this.$http.post(`${this.BASEURL}/api/admin/delete/${adNumber}`);
     }
 
-    getBasket(){
+    getBasket() {
         return this.$http.get(`${this.BASEURL}/api/basket`).then((resp) => {
             return resp.data;
         });
         //return [{last_name:'Fre', first_name:'De Riek'}];
     }
 
-    addPersonToBasket(person){
+    addPersonToBasket(person) {
         //console.log(person);
-        return this.$http.post(`${this.BASEURL}/api/basket`, person).then((resp)=>{
-           return resp.data;
-        });
-    }
-
-    setSubscriberEmailForBasket(emailStr){
-        let email = {email: emailStr};
-        return this.$http.post(`${this.BASEURL}/api/basket/mail`, email).then((resp)=>{
+        return this.$http.post(`${this.BASEURL}/api/basket`, person).then((resp) => {
             return resp.data;
         });
     }
 
-    doPayment(){
-        return this.$http.get(`${this.BASEURL}/api/basket/pay`).then((resp)=>{
-           return resp;
+    setSubscriberEmailForBasket(emailStr) {
+        let email = {email: emailStr};
+        return this.$http.post(`${this.BASEURL}/api/basket/mail`, email).then((resp) => {
+            return resp.data;
+        });
+    }
+
+    doPayment() {
+        return this.$http.get(`${this.BASEURL}/api/basket/pay`).then((resp) => {
+            return resp;
         });
     }
 

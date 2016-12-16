@@ -1,10 +1,13 @@
 package com.realdolmen.chiro.dto;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.springframework.boot.jackson.JsonComponent;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@JsonComponent
 public class ContainerResponse<T> {
 
     @JsonProperty("is_error")
@@ -15,6 +18,16 @@ public class ContainerResponse<T> {
     private int count;
 
     private List<T> values = new ArrayList<>();
+
+    @JsonCreator(mode = JsonCreator.Mode.PROPERTIES)
+    public static ContainerResponse createContainerResponse(@JsonProperty("is_error") String error, @JsonProperty("version") String version, @JsonProperty("count") String count, @JsonProperty("values") String values) {
+        ContainerResponse r = new ContainerResponse();
+        r.error = Boolean.parseBoolean(error);
+        r.version = Integer.parseInt(version);
+        r.count = Integer.parseInt(count);
+//        this.values = values;
+        return r;
+    }
 
     public boolean isError() {
         return error;
