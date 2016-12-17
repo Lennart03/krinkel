@@ -6,6 +6,11 @@ var sassdoc = require('sassdoc');
 var browserSync = require('browser-sync').create();
 var reload      = browserSync.reload;
 
+var postcss = require("gulp-postcss");
+var processors = [
+    require("postcss-unprefix")
+];
+
 
 var sassOptions = {
   errLogToConsole: true,
@@ -25,6 +30,7 @@ gulp.task('sass', function () {
     .pipe(sourcemaps.init())
     // Run Sass on those files
     .pipe(sass(sassOptions).on('error', sass.logError))
+      .pipe(postcss(processors))
     .pipe(autoprefixer())
     .pipe(sourcemaps.write('./maps'))
     // Write the resulting CSS in the output folder
@@ -45,7 +51,11 @@ gulp.task('prod', ['sassdoc'], function () {
   return gulp
     .src(input)
     .pipe(sass({ outputStyle: 'compressed' }))
-    .pipe(autoprefixer())
+      .pipe(unprefix())
+    .pipe(autoprefixer({
+        browsers: ['last 2 versions'],
+        cascade: false
+    }))
     .pipe(gulp.dest(output))
     .pipe(browserSync.stream());
 });

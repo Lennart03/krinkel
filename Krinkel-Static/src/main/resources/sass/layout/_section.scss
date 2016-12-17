@@ -306,7 +306,7 @@ section {
   color: $white;
   position: absolute;
   top: calc(50% - 14px);
-  transform: rotate(-3deg);
+  -webkit-transform: rotate(-3deg);
   left: 0;
 }
 
