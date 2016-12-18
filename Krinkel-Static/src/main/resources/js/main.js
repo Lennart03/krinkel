@@ -17,8 +17,10 @@ function checkBrowser() {
     let parallaxOver = document.getElementById('parallaxOver');
     let parallaxFaq = document.getElementById('parallaxFaq');
     let parallaxPraktisch = document.getElementById('parallaxPraktisch');
+    let parallaxNieuws = document.getElementById('parallaxNieuws');
+    let browser = navigator.userAgent.toLowerCase();
 
-    if (isChromium !== null && isChromium !== undefined && vendorName === "Google Inc." && isOpera == false && isIEedge == false) {
+    if ( isChrome() || browser.indexOf('firefox') > -1 ) {
         // is Google Chrome
         if (!!parallaxHome) {
             parallaxHome.style.backgroundAttachment = 'fixed';
@@ -31,29 +33,19 @@ function checkBrowser() {
             parallaxFaq.style.backgroundAttachment = 'fixed';
             parallaxFaq.style.backgroundPosition = '50% 60%';
         }
-        else if (!! parallaxPraktisch) {
+        else if (!!parallaxPraktisch) {
             parallaxPraktisch.style.backgroundAttachment = 'fixed';
             parallaxPraktisch.style.backgroundPosition = '50% 50%';
+        }
+        else if (!!parallaxNieuws) {
+            parallaxNieuws.style.backgroundAttachment = 'fixed';
+            parallaxNieuws.style.backgroundPosition = '50% 60%';
         }
 
     }
-    let browser = navigator.userAgent.toLowerCase();
-    if (browser.indexOf('firefox') > -1) {
-        if (!!parallaxHome) {
-            parallaxHome.style.backgroundAttachment = 'fixed';
-            parallaxHome.style.backgroundPosition = '50% 25%';
-        } else if (!!parallaxOver) {
-            parallaxOver.style.backgroundAttachment = 'fixed';
-            parallaxOver.style.backgroundPosition = '50% 60%';
-        }
-        else if(!!parallaxFaq){
-            parallaxFaq.style.backgroundAttachment = 'fixed';
-            parallaxFaq.style.backgroundPosition = '50% 60%';
-        }
-        else if (!! parallaxPraktisch) {
-            parallaxPraktisch.style.backgroundAttachment = 'fixed';
-            parallaxPraktisch.style.backgroundPosition = '50% 50%';
-        }
+
+    function isChrome() {
+        return isChromium !== null && isChromium !== undefined && vendorName === "Google Inc." && isOpera == false && isIEedge == false;
     }
 }
 

@@ -1,6 +1,4 @@
-section {
-
-}
+section {}
 
 .landingPageMainImage {
   @extend %mainImage;
@@ -383,4 +381,60 @@ section {
   @extend %mainImage;
   background: url("/img/layout/JVB_Krinkel2013_63.jpg") no-repeat 50% 25%;
   background-size: cover;
+}
+
+.nieuwsPageMainImage {
+  @extend %mainImage;
+  background: url("/img/layout/JVB_Krinkel2013_61.jpg") no-repeat 50% 25%;
+  background-size: cover;
+}
+
+.nieuwsPageWrapper {
+  max-width: $contentWidth;
+  margin: 75px auto 75px;
+  padding: 10px;
+}
+
+.nieuwsCard {
+  border: 1px solid $lightGreen;
+  strong {
+    font-weight: 600;
+  }
+  .card-image {
+    border: 10px solid $white !important;
+    img {
+      border: 1px solid rgba(0,0,0,.15);
+    }
+    .card-title {
+      pointer-events: none !important;
+      background-color: rgba($white, 1) !important;
+      color: $darkGreen;
+      margin-bottom: 20px;
+      border-radius: 0 7px 7px 0;
+      border: 1px solid $lightGreen;
+      border-left: none;
+    }
+    .card-datum {
+      pointer-events: none !important;
+      background-color: rgba($white, 1) !important;
+      color: $darkGreen;
+      top: 0;
+      right: 0;
+      bottom: auto;
+      left: auto;
+      border-radius: 0 0 0 7px;
+      border: 1px solid $lightGreen;
+      border-right: none;
+      border-top: none;
+      font-size: 18px;
+      padding: 10px;
+    }
+  }
+  @media only screen and (max-width: 500px) {
+    img {
+      margin-left: -25% !important;
+      height: 300px !important;
+      width: 500px !important;
+    }
+  }
 }

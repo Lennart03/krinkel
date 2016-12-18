@@ -22,6 +22,7 @@ var sassdocOptions = {
 
 var input = './sass/**/*.scss';
 var output = './css';
+var prodOutput = './css/min';
 
 gulp.task('sass', function () {
   return gulp
@@ -56,7 +57,7 @@ gulp.task('prod', ['sassdoc'], function () {
     .pipe(autoprefixer({
         browsers: ['last 2 versions']
     }))
-    .pipe(gulp.dest(output))
+    .pipe(gulp.dest(prodOutput))
     .pipe(browserSync.stream());
 });
 
