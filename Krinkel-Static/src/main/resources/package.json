@@ -1,21 +1,23 @@
 {
-  "name": "Krinkel Static Website",
+  "name": "",
   "version": "1.0.0",
   "description": "Static website for Krinkel",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "Fasoel Nicky and Van Herbruggen Frederik",
+  "author": "Realdolmen",
   "license": "ISC",
   "devDependencies": {
-    "browser-sync": "^2.8.2",
-    "express": "^4.13.4",
+    "browser-sync": "^2.18.5",
+    "express": "^4.14.0",
     "gulp": "^3.9.1",
-    "gulp-autoprefixer": "^3.1.0",
-    "gulp-sass": "^2.3.1",
+    "gulp-autoprefixer": "^3.1.1",
+    "gulp-postcss": "^6.2.0",
+    "gulp-sass": "^3.0.0",
     "gulp-sourcemaps": "^1.6.0",
+    "postcss-unprefix": "^1.0.0",
     "sassdoc": "^2.1.20",
-    "tiny-lr": "^0.2.1"
+    "tiny-lr": "^1.0.3"
   }
 }
