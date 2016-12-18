@@ -305,6 +305,16 @@ section {}
   left: 0;
 }
 
+.englishHomePageTeamBannerTitle {
+  font-family: aleo, sans-serif;
+  font-weight: 600;
+  font-size: 35px;
+  color: $white;
+  position: relative;
+  top: calc(50% - 14px);
+  transform: rotate(-3deg);
+}
+
 .aboutPageTeamNames {
   border-bottom: 1px solid $lightGreen;
   min-height: 88px;
@@ -373,7 +383,7 @@ section {}
 }
 
 .contactPageMainImage {
-  height: 500px; //750px
+  height: 500px;
   width: 100%;
   background: url("../../img/layout/contact.jpg") no-repeat 50% 30%;
   background-size: cover;
@@ -411,7 +421,6 @@ section {}
   background-size: cover;
 }
 
-<<<<<<< HEAD
 .nieuwsPageMainImage {
   @extend %mainImage;
   background: url("/img/layout/JVB_Krinkel2013_61.jpg") no-repeat 50% 25%;
@@ -473,6 +482,7 @@ section {}
   color:white;
   right:1%;
   top:calc(50% - 32px);
+  width: 70px;
 }
 #carrNext i{
   font-size: 64px;
@@ -486,9 +496,12 @@ section {}
   color:white;
   left:1%;
   top:calc(50% - 32px);
+  width: 70px;
 }
-#carrPrev i{
+#carrPrev i {
   font-size: 64px;
+  width: 100%;
+  overflow: hidden;
 }
 #carrPrev:hover{
   color:$lightGreen;

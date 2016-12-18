@@ -7,7 +7,7 @@
 */
 /* SASS Utilities
 ========================================================================== */
-.landingPageMainImage, .aboutPageMainImage, .faqPageMainImage, .contactPageMainImage, .praktischPageMainImage, .nieuwsPageMainImage {
+.landingPageMainImage, .aboutPageMainImage, .faqPageMainImage, .praktischPageMainImage, .nieuwsPageMainImage {
   height: 500px;
   width: 100%;
   border-bottom: 1px solid #309583;
@@ -729,6 +729,16 @@ body {
   left: 0;
 }
 
+.englishHomePageTeamBannerTitle {
+  font-family: aleo, sans-serif;
+  font-weight: 600;
+  font-size: 35px;
+  color: white;
+  position: relative;
+  top: calc(50% - 14px);
+  transform: rotate(-3deg);
+}
+
 .aboutPageTeamNames {
   border-bottom: 1px solid #a4ccbc;
   min-height: 88px;
@@ -911,6 +921,7 @@ body {
   color: white;
   right: 1%;
   top: calc(50% - 32px);
+  width: 70px;
 }
 
 #carrNext i {
@@ -927,10 +938,13 @@ body {
   color: white;
   left: 1%;
   top: calc(50% - 32px);
+  width: 70px;
 }
 
 #carrPrev i {
   font-size: 64px;
+  width: 100%;
+  overflow: hidden;
 }
 
 #carrPrev:hover {
