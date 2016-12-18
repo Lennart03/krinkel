@@ -1,6 +1,7 @@
 $( document ).ready(function(){
     $(".button-collapse").sideNav();
     $('.carousel').carousel();
+    $(".dropdown-button1").dropdown( { hover: false } );
     checkBrowser();
 });
 
@@ -15,6 +16,7 @@ function checkBrowser() {
     let parallaxHome = document.getElementById('parallaxHome');
     let parallaxOver = document.getElementById('parallaxOver');
     let parallaxFaq = document.getElementById('parallaxFaq');
+    let parallaxPraktisch = document.getElementById('parallaxPraktisch');
 
     if (isChromium !== null && isChromium !== undefined && vendorName === "Google Inc." && isOpera == false && isIEedge == false) {
         // is Google Chrome
@@ -28,6 +30,10 @@ function checkBrowser() {
         else if(!!parallaxFaq){
             parallaxFaq.style.backgroundAttachment = 'fixed';
             parallaxFaq.style.backgroundPosition = '50% 60%';
+        }
+        else if (!! parallaxPraktisch) {
+            parallaxPraktisch.style.backgroundAttachment = 'fixed';
+            parallaxPraktisch.style.backgroundPosition = '50% 50%';
         }
 
     }
@@ -44,6 +50,10 @@ function checkBrowser() {
             parallaxFaq.style.backgroundAttachment = 'fixed';
             parallaxFaq.style.backgroundPosition = '50% 60%';
         }
+        else if (!! parallaxPraktisch) {
+            parallaxPraktisch.style.backgroundAttachment = 'fixed';
+            parallaxPraktisch.style.backgroundPosition = '50% 50%';
+        }
     }
 }
 
@@ -54,3 +64,4 @@ $('#landingPageMainImageScrollButtonAction').on('click', function(){
         scrollTop: $('#landingPageInfoWrapper').offset().top - 40
     }, 1000); //tijd in ms
 });
+

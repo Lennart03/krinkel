@@ -3,13 +3,12 @@ section {
 }
 
 .landingPageMainImage {
-  height: 100%; //750px
-  width: 100%;
+  @extend %mainImage;
+  height: 100%;
   background-repeat: no-repeat;
   background-position: 0% 20%;
   background-image: url("../img/layout/BRU_9436.jpg");
   background-size: cover;
-  border-bottom: 1px solid $hoofdkleur;
 }
 
 .landingPageMainImageFilter {
@@ -96,7 +95,6 @@ section {
         background: no-repeat 100% 100%;
         background-size: cover;
       }
-
       @include generateGalClassNImages(8);
     }
   }
@@ -206,16 +204,14 @@ section {
 @include generateIconClassNImages(6);
 
 .aboutPageMainImage {
-  height: 500px;
-  width: 100%;
+  @extend %mainImage;
   background: url("../img/layout/Onthaal1.jpg") no-repeat 50% 30%;
   background-size: cover;
-  border-bottom: 1px solid $hoofdkleur;
 }
 
 .aboutPageHistoriekWrapper {
   max-width: $contentWidth;
-  margin: 0 auto;
+  margin: 0 auto 75px;
   padding: 10px;
   h2 {
     text-align: center;
@@ -316,14 +312,9 @@ section {
 }
 
 .faqPageMainImage {
-  height: 500px;
-  width: 100%;
-  background: url("../img/layout/faq.jpg") no-repeat 50% 30%;
+  @extend %mainImage;
+  background: url("../img/layout/faq.jpg") no-repeat 50% 25%;
   background-size: cover;
-  border-bottom: 1px solid $hoofdkleur;
-  @media only screen and (min-width: 1930px) {
-    background-position: 50% 30% !important;
-  }
 }
 
 .row .col {
@@ -337,12 +328,12 @@ section {
 .faqPageSearchWrapper {
   text-align: center;
   max-width: $contentWidth + 100px;
-  margin: 20px auto 0;
+  margin: 50px auto 0;
 
   .faqPageSearchBar{
     width: 80%;
     float: left;
-    border: 1px solid #aaaaaa;
+    border: 1px solid #aaa;
     padding: 5px;
     padding-right: 0;
     margin-left: 5px;
@@ -355,7 +346,7 @@ section {
 @media (max-width: 993px) {
 
   .faqPageSearchWrapper {
-    margin: 30px;
+    margin: 50px;
 
     .faqPageSearchBar {
       width: 100%;
@@ -382,13 +373,14 @@ section {
   color:$hoofdkleur;
 }
 
-.contactPageMainImage{
-  height: 500px; //750px
-  width: 100%;
-  background: url("../img/layout/contact.jpg") no-repeat 50% 30%;
+.contactPageMainImage {
+ @extend %mainImage;
+  background: url("/img/layout/contact.jpg") no-repeat 50% 30%;
   background-size: cover;
-  border-bottom: 1px solid $hoofdkleur;
-  @media only screen and (min-width: 1930px) {
-    background-position: 50% 30% !important;
-  }
+}
+
+.praktischPageMainImage {
+  @extend %mainImage;
+  background: url("/img/layout/JVB_Krinkel2013_63.jpg") no-repeat 50% 25%;
+  background-size: cover;
 }

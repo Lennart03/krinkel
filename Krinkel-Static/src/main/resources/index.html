@@ -7,19 +7,11 @@
         <meta name="keywords" content="Krinkel"/>
         <meta name="author" content="Realdolmen"/>
         <meta name="format-detection" content="telephone=no">
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-
-        <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
-        <link rel="icon" type="image/png" href="/favicon-32x32.png" sizes="32x32">
-        <link rel="icon" type="image/png" href="/favicon-16x16.png" sizes="16x16">
-        <link rel="manifest" href="/manifest.json">
-        <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#309583">
-        <meta name="theme-color" content="#ffffff">
 
         <!--Import Google Icon Font-->
         <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
         <!--Import materialize.css-->
-        <link type="text/css" rel="stylesheet" href="css/materialize.min.css"  media="screen,projection"/>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/css/materialize.min.css">
         <link rel="stylesheet" type="text/css" href="css/main.css"/>
         <meta name='viewport' content='width=device-width,initial-scale=1.0'>
     </head>
@@ -27,14 +19,25 @@
         <header>
             <nav>
                 <div class="nav-wrapper">
-                    <a href="" class="brand-logo"><img src="img/graphic/logos/logo_KRINKEL_fullALT_BW_small.png" alt="logo Krinkel"/><span class="hide-on-med-and-down logoDate">25-30 augustus 2017</span></a>
+                    <ul id="dropdown1" class="dropdown-content">
+                        <li class="show1"><a href="praktisch.html">PRAKTISCH</a></li>
+                        <li class="show2"><a href="faq.html">FAQ</a></li>
+                        <li class="show3"><a href="over.html">OVER</a></li>
+                        <li class="show4"><a href="contact.html">CONTACT</a></li>
+                        <li class="show5"><a href="">ENGLISH</a></li>
+                    </ul>
+                    <a href="index.html" class="brand-logo"><img src="img/graphic/logos/logo_KRINKEL_fullALT_BW_small.png" alt="logo Krinkel"/><span class="hide-on-med-and-down logoDate">25-30 augustus 2017</span></a>
                     <a href="" data-activates="mobile" class="button-collapse"><i class="material-icons">menu</i></a>
                     <ul class="right hide-on-med-and-down">
-                        <li><a href="index.html" class="active">HOME</a></li>
+                        <li><a href="index.html">HOME</a></li>
                         <li><a href="/login">INSCHRIJVEN</a></li>
-                        <li><a href="over.html">OVER</a></li>
-                        <li><a href="faq.html">FAQ</a></li>
-                        <li><a href="">CONTACT</a></li>
+                        <li><a href="">NIEUWS</a></li>
+                        <li class="hide1"><a href="praktisch.html">PRAKTISCH</a></li>
+                        <li class="hide2"><a href="faq.html">FAQ</a></li>
+                        <li class="hide3"><a href="over.html">OVER</a></li>
+                        <li class="hide4"><a href="contact.html">CONTACT</a></li>
+                        <li class="hide5"><a href="">ENGLISH</a></li>
+                        <li><a class="dropdown-button1 show5" href="#!" data-activates="dropdown1">INFO<i class="material-icons right">arrow_drop_down</i></a></li>
                         <li class="marginLeft15">
                             <a href="http://www.facebook.com/ChirojeugdVlaanderen" target="_blank"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><path fill="currentColor" d="M19 6h5V0h-5c-3.86 0-7 3.14-7 7v3H8v6h4v16h6V16h5l1-6h-6V7c0-.542.458-1 1-1z"></path></svg></a>
                         </li>
@@ -51,9 +54,12 @@
                     <ul class="side-nav" id="mobile">
                         <li><a href="index.html" class="waves-effect waves-light borderTop1pxHoofdkleur active">HOME</a></li>
                         <li><a href="/login" class="waves-effect waves-light">INSCHRIJVEN</a></li>
-                        <li><a href="over.html" class="waves-effect waves-light">OVER</a></li>
+                        <li><a href="" class="waves-effect waves-light">NIEUWS</a></li>
+                        <li><a href="praktisch.html" class="waves-effect waves-light">PRAKTISCH</a></li>
                         <li><a href="faq.html" class="waves-effect waves-light">FAQ</a></li>
-                        <li><a href="" class="waves-effect waves-light">CONTACT</a></li>
+                        <li><a href="over.html" class="waves-effect waves-light">OVER</a></li>
+                        <li><a href="contact.html" class="waves-effect waves-light">CONTACT</a></li>
+                        <li><a href="" class="waves-effect waves-light">ENGLISH</a></li>
                         <li>
                             <a href="http://www.facebook.com/ChirojeugdVlaanderen" target="_blank" class="waves-effect waves-green"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><path d="M19 6h5V0h-5c-3.86 0-7 3.14-7 7v3H8v6h4v16h6V16h5l1-6h-6V7c0-.542.458-1 1-1z"></path></svg></a>
                         </li>
@@ -133,14 +139,14 @@
             <div class="landingPageInfoTitleBanner"></div>
             <div class="landingPageInfoText">
                 <blockquote>
-                    “Meng het beste van een Chirokamp met de sfeer van een groot festival. Dan heb je <span class="greenText">Krinkel</span>.” Ruben uit Antwerpen
+                    “Meng het beste van een Chirokamp met de sfeer van een groot festival. Dan heb je <span class="greenText">Krinkel</span>.” <span class="quotee">Ruben uit Antwerpen</span>
                 </blockquote>
                 <p class="center-align marginTopBot30">
                     <span class="greenText">Krinkel</span> is als een Chirokamp op grote schaal: honderden tenten, Chirospelen, massaspel met duizenden Chiroleidsters, -leiders en aspi’s, een megakampvuur, ... Je leert er hopen mensen kennen, keuvelt tijdens de lavers en gaat helemaal los in een onvergetelijk slotfeest.<br/>
                     Je doet er waar elk Chirolid ontzettend veel van houdt: aan Chiro doen.
                 </p>
                 <blockquote>
-                    “<span class="greenText">Krinkel</span> is niet te vertellen: je moet <span class="greenText">Krinkel</span> zelf beleven.” Wax uit Herk-de-stad
+                    “<span class="greenText">Krinkel</span> is niet te vertellen: je moet <span class="greenText">Krinkel</span> zelf beleven.” <span class="quotee">Wax uit Herk-de-stad</span>
                 </blockquote>
             </div>
             <div class="landingPageInfoPracticalInfoButtonWrapper center-align">
@@ -198,7 +204,7 @@
             </div>
         </footer>
         <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
-        <script type="text/javascript" src="js/materialize.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/js/materialize.min.js"></script>
         <script src="js/main.js"></script>
     </body>
 </html>

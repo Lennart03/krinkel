@@ -7,6 +7,12 @@
 */
 /* SASS Utilities
 ========================================================================== */
+.landingPageMainImage, .aboutPageMainImage, .faqPageMainImage, .contactPageMainImage, .praktischPageMainImage {
+  height: 500px;
+  width: 100%;
+  border-bottom: 1px solid #309583;
+}
+
 /* Vendors And External Stylesheets
 ========================================================================== */
 /* Base Files
@@ -82,8 +88,16 @@ blockquote {
   margin-left: 15px;
 }
 
+.marginBot0 {
+  margin-bottom: 0 !important;
+}
+
 .borderTop1pxHoofdkleur {
   border-top: 1px solid #309583;
+}
+
+.quotee {
+  font-size: 14px;
 }
 
 html {
@@ -154,6 +168,11 @@ nav:hover {
   fill: white;
 }
 
+nav .dropdown-content .active {
+  background-color: #309583;
+  color: white !important;
+}
+
 .brand-logo .logoDate {
   vertical-align: middle;
   letter-spacing: 2px;
@@ -205,17 +224,120 @@ nav:hover {
   vertical-align: middle;
 }
 
+.dropdown-content {
+  top: 19px !important;
+  height: auto !important;
+  width: auto !important;
+}
+
+.dropdown-content li a {
+  color: #006b5e !important;
+}
+
+.dropdown-content li a .active {
+  color: white !important;
+}
+
+.dropdown-content li:hover > a {
+  background-color: #a4ccbc !important;
+}
+
 @media only screen and (max-width: 992px) {
   .brand-logo img {
     width: 150px;
   }
   nav .brand-logo {
-    -webkit-transform: translateX(0);
-            transform: translateX(0);
+    transform: translateX(0);
     right: 0;
   }
   nav .brand-logo img {
     float: right;
+  }
+  .hide-on-med-and-down {
+    display: none !important;
+  }
+  .button-collapse {
+    display: inherit !important;
+  }
+}
+
+@media only screen and (max-width: 1045px) {
+  .hide1 {
+    display: none !important;
+  }
+}
+
+@media only screen and (max-width: 1110px) {
+  .hide2 {
+    display: none !important;
+  }
+}
+
+@media only screen and (max-width: 1175px) {
+  .hide3 {
+    display: none !important;
+  }
+}
+
+@media only screen and (max-width: 1280px) {
+  .hide4 {
+    display: none !important;
+  }
+}
+
+@media only screen and (max-width: 1280px) {
+  .hide5 {
+    display: none !important;
+  }
+}
+
+.show1 {
+  display: none !important;
+}
+
+@media only screen and (max-width: 1045px) {
+  .show1 {
+    display: block !important;
+  }
+}
+
+.show2 {
+  display: none !important;
+}
+
+@media only screen and (max-width: 1110px) {
+  .show2 {
+    display: block !important;
+  }
+}
+
+.show3 {
+  display: none !important;
+}
+
+@media only screen and (max-width: 1175px) {
+  .show3 {
+    display: block !important;
+  }
+}
+
+.show4 {
+  display: none !important;
+}
+
+@media only screen and (max-width: 1280px) {
+  .show4 {
+    display: block !important;
+  }
+}
+
+.show5 {
+  display: none !important;
+}
+
+@media only screen and (max-width: 1280px) {
+  .show5 {
+    display: block !important;
   }
 }
 
@@ -229,12 +351,10 @@ body {
 
 .landingPageMainImage {
   height: 100%;
-  width: 100%;
   background-repeat: no-repeat;
   background-position: 0% 20%;
   background-image: url("../img/layout/BRU_9436.jpg");
   background-size: cover;
-  border-bottom: 1px solid #309583;
 }
 
 .landingPageMainImageFilter {
@@ -497,16 +617,13 @@ body {
 }
 
 .aboutPageMainImage {
-  height: 500px;
-  width: 100%;
   background: url("../img/layout/Onthaal1.jpg") no-repeat 50% 30%;
   background-size: cover;
-  border-bottom: 1px solid #309583;
 }
 
 .aboutPageHistoriekWrapper {
   max-width: 800px;
-  margin: 0 auto;
+  margin: 0 auto 75px;
   padding: 10px;
 }
 
@@ -553,8 +670,7 @@ body {
   color: white;
   position: absolute;
   top: calc(50% - 14px);
-  -webkit-transform: rotate(-3deg);
-          transform: rotate(-3deg);
+  transform: rotate(-3deg);
 }
 
 .aboutPageTeamWrapper {
@@ -591,7 +707,6 @@ body {
 
 .aboutPageTeamIcon:hover {
   box-shadow: 0 4px 5px 0 rgba(0, 0, 0, 0.14), 0 1px 10px 0 rgba(0, 0, 0, 0.12), 0 2px 4px -1px rgba(0, 0, 0, 0.3);
-  -webkit-transition: box-shadow 0.15s ease-in-out;
   transition: box-shadow 0.15s ease-in-out;
 }
 
@@ -605,8 +720,7 @@ body {
   color: white;
   position: absolute;
   top: calc(50% - 14px);
-  -webkit-transform: rotate(-3deg);
-          transform: rotate(-3deg);
+  transform: rotate(-3deg);
   left: 0;
 }
 
@@ -616,17 +730,8 @@ body {
 }
 
 .faqPageMainImage {
-  height: 500px;
-  width: 100%;
-  background: url("../img/layout/faq.jpg") no-repeat 50% 30%;
+  background: url("../img/layout/faq.jpg") no-repeat 50% 25%;
   background-size: cover;
-  border-bottom: 1px solid #309583;
-}
-
-@media only screen and (min-width: 1930px) {
-  .faqPageMainImage {
-    background-position: 50% 30% !important;
-  }
 }
 
 .row .col {
@@ -640,13 +745,13 @@ body {
 .faqPageSearchWrapper {
   text-align: center;
   max-width: 900px;
-  margin: 20px auto 0;
+  margin: 50px auto 0;
 }
 
 .faqPageSearchWrapper .faqPageSearchBar {
   width: 80%;
   float: left;
-  border: 1px solid #aaaaaa;
+  border: 1px solid #aaa;
   padding: 5px;
   padding-right: 0;
   margin-left: 5px;
@@ -659,7 +764,7 @@ body {
 
 @media (max-width: 993px) {
   .faqPageSearchWrapper {
-    margin: 30px;
+    margin: 50px;
   }
   .faqPageSearchWrapper .faqPageSearchBar {
     width: 100%;
@@ -692,17 +797,13 @@ body {
 }
 
 .contactPageMainImage {
-  height: 500px;
-  width: 100%;
-  background: url("../img/layout/contact.jpg") no-repeat 50% 30%;
+  background: url("/img/layout/contact.jpg") no-repeat 50% 30%;
   background-size: cover;
-  border-bottom: 1px solid #309583;
 }
 
-@media only screen and (min-width: 1930px) {
-  .contactPageMainImage {
-    background-position: 50% 30% !important;
-  }
+.praktischPageMainImage {
+  background: url("/img/layout/JVB_Krinkel2013_63.jpg") no-repeat 50% 25%;
+  background-size: cover;
 }
 
 footer {
