@@ -823,7 +823,7 @@ body {
 .contactPageMainImage {
   height: 500px;
   width: 100%;
-  background: url("../../img/layout/contact.jpg") no-repeat 50% 30%;
+  background: url("../img/layout/contact.jpg") no-repeat 50% 30%;
   background-size: cover;
   border-bottom: 1px solid #309583;
 }
@@ -860,12 +860,12 @@ body {
 }
 
 .praktischPageMainImage {
-  background: url("/img/layout/JVB_Krinkel2013_63.jpg") no-repeat 50% 25%;
+  background: url("../img/layout/JVB_Krinkel2013_63.jpg") no-repeat 50% 25%;
   background-size: cover;
 }
 
 .nieuwsPageMainImage {
-  background: url("/img/layout/JVB_Krinkel2013_61.jpg") no-repeat 50% 25%;
+  background: url("../img/layout/JVB_Krinkel2013_61.jpg") no-repeat 50% 25%;
   background-size: cover;
 }
 

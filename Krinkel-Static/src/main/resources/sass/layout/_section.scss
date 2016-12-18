@@ -393,7 +393,7 @@ section {}
 .contactPageMainImage {
   height: 500px;
   width: 100%;
-  background: url("../../img/layout/contact.jpg") no-repeat 50% 30%;
+  background: url("../img/layout/contact.jpg") no-repeat 50% 30%;
   background-size: cover;
   border-bottom: 1px solid $hoofdkleur;
   @media only screen and (min-width: 1930px) {
@@ -425,13 +425,13 @@ section {}
 
 .praktischPageMainImage {
   @extend %mainImage;
-  background: url("/img/layout/JVB_Krinkel2013_63.jpg") no-repeat 50% 25%;
+  background: url("../img/layout/JVB_Krinkel2013_63.jpg") no-repeat 50% 25%;
   background-size: cover;
 }
 
 .nieuwsPageMainImage {
   @extend %mainImage;
-  background: url("/img/layout/JVB_Krinkel2013_61.jpg") no-repeat 50% 25%;
+  background: url("../img/layout/JVB_Krinkel2013_61.jpg") no-repeat 50% 25%;
   background-size: cover;
 }
 
