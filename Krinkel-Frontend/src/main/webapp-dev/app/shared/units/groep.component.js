@@ -9,6 +9,7 @@ class GroepController {
         this.groepNaam = $routeParams.groepNaam;
         this.showParticipants = true;
         console.log(this.lolo + 'groep.component.js says hi!');
+        this.initSelectPayStatus();
     }
 
     $onInit() {
@@ -36,8 +37,43 @@ class GroepController {
         });
     }
 
+    /**
+     *
+     * FOR CHANGING PAYMENT STATUS AND CANCELLING PAYMENT
+     *
+     */
+
+    //DONE: remove getElementById & setAttribute when 'reloading to same view' is implemented and uncomment the route.reload()
+    putParticipantToCancelled(participantId) {
+        if (participantId != null) {
+            this.KrinkelService.putParticipantToCancelled(participantId).then((result) => {
+                this.$route.reload();
+            });
+
+            // let id = document.getElementById(participantId);
+            // id.setAttribute('style', 'display: none;');
+        }
+    }
+
+    saveData(participantId, paymentStatus) {
+        this.KrinkelService.updatePayment(participantId, paymentStatus);
+    }
+
+    initCancelModal(modalId) {
+        let modalName = '#modal' + modalId;
+        $(modalName).openModal();
+    }
+
     switchShowParticipantsVolunteers() {
         this.showParticipants = ! this.showParticipants;
+    }
+
+    initSelectPayStatus() {
+        this.statusses =  [
+            { 'value': 'TO_BE_PAID', 'label': 'Onbetaald' },
+            { 'value': 'PAID', 'label': 'Betaald' },
+            { 'value': 'CONFIRMED', 'label': 'Bevestigd'}
+        ]
     }
 }
 

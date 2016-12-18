@@ -22,7 +22,6 @@
     <tr ng-repeat="verbond in $ctrl.verbonden" ng-click="$ctrl.redirectToGewesten(verbond.stamnummer, verbond.name)">
         <td>
             {{verbond.stamnummer}}
-            {{verbond.stamnummer | escape}}
         </td>
         <td>
             {{verbond.name}}
