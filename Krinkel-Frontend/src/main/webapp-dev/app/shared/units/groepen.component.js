@@ -5,6 +5,7 @@ class GroepenController {
         this.AuthService = AuthService;
         this.$location = $location;
         this.lolo = $routeParams.gewestNr;
+        this.gewestNaam = $routeParams.gewestNaam;
         console.log(this.lolo + 'groepen.component.js says hi!');
     }
 
@@ -13,6 +14,12 @@ class GroepenController {
             console.log(results);
             this.groepen = results;
         });
+    }
+
+    redirectToGroep(groepStamNr, groepNaam) {
+        console.log('Tried to redirect via javascript to groep with groepStamNummer: ' + groepStamNr);
+
+        this.$location.path('/groep/' + groepStamNr + '/' + groepNaam);
     }
 }
 

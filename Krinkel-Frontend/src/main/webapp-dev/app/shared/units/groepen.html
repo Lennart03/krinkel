@@ -1,4 +1,4 @@
-<h1>Lijst van groepen TEST</h1>
+<h1>Lijst van {{$ctrl.gewestNaam}}</h1>
 
 <style>
     tbody tr:hover {
@@ -19,7 +19,7 @@
 
 
     <tbody>
-    <tr ng-repeat="groep in $ctrl.groepen" ng-click="$ctrl.redirectToGroep(groep.stamnummer)">
+    <tr ng-repeat="groep in $ctrl.groepen" ng-click="$ctrl.redirectToGroep(groep.stamnummer, groep.name)">
         <td>
             {{groep.stamnummer}}
         </td>

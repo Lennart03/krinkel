@@ -1,5 +1,7 @@
 package com.realdolmen.chiro.controller;
 
+import com.realdolmen.chiro.domain.RegistrationParticipant;
+import com.realdolmen.chiro.domain.RegistrationVolunteer;
 import com.realdolmen.chiro.domain.units.ChiroUnit;
 import com.realdolmen.chiro.service.ChiroUnitService;
 import com.realdolmen.chiro.service.VerbondenService;
@@ -36,9 +38,21 @@ public class OverviewController {
         return verbondenService.getGewesten(verbondStamNummer);
     }
 
-    @RequestMapping(value = "/groepen/{groepStamNummer}", method = RequestMethod.GET)
-    public List<ChiroUnit> getGroepen(@PathVariable("groepStamNummer") String groepStamNummer) {
-        System.err.println("Groepen in overview controller: " + verbondenService.getGroepen(groepStamNummer));
-        return verbondenService.getGroepen(groepStamNummer);
+    @RequestMapping(value = "/groepen/{gewestStamNummer}", method = RequestMethod.GET)
+    public List<ChiroUnit> getGroepen(@PathVariable("gewestStamNummer") String gewestStamNummer) {
+        System.err.println("Groepen in overview controller: " + verbondenService.getGroepen(gewestStamNummer));
+        return verbondenService.getGroepen(gewestStamNummer);
+    }
+
+    @RequestMapping(value = "/groep/{groepStamNummer}", method = RequestMethod.GET)
+    public List<RegistrationParticipant> getParticipants(@PathVariable("groepStamNummer") String groepStamNummer) {
+        System.err.println("Participants in overview controller: " + verbondenService.getRegistrationParticipants(groepStamNummer));
+        return verbondenService.getRegistrationParticipants(groepStamNummer);
+    }
+
+    @RequestMapping(value = "/groep/{groepStamNummer}/vrijwilligers", method = RequestMethod.GET)
+    public List<RegistrationVolunteer> getVolunteers(@PathVariable("groepStamNummer") String groepStamNummer) {
+        System.err.println("Participants in overview controller: " + verbondenService.getRegistrationVolunteers(groepStamNummer));
+        return verbondenService.getRegistrationVolunteers(groepStamNummer);
     }
 }

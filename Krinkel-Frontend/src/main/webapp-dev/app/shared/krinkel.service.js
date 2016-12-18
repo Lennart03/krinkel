@@ -150,6 +150,26 @@ export class KrinkelService {
         );
     }
 
+    getParticipantsList(groepStamNummer) {
+        return this.$http.get(`${this.BASEURL}/api/overview/groep/${groepStamNummer}`).then((resp) => {
+                return resp.data;
+            },
+            () => {
+                this.popup();
+            }
+        );
+    }
+
+    getVolunteersList(groepStamNummer) {
+        return this.$http.get(`${this.BASEURL}/api/overview/groep/${groepStamNummer}/vrijwilligers`).then((resp) => {
+                return resp.data;
+            },
+            () => {
+                this.popup();
+            }
+        );
+    }
+
     getParticipantsForUnit(stamNummer) {
         return this.$http.get(`${this.BASEURL}/api/units/${stamNummer}`).then((resp) => {
                 return resp.data;

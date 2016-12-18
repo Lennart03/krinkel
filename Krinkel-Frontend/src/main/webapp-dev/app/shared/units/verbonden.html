@@ -1,4 +1,4 @@
-<h1>Lijst van verbonden TEST</h1>
+<h1>Lijst van verbonden</h1>
 
 <style>
     tbody tr:hover {
@@ -19,7 +19,7 @@
 
     <tbody>
 
-    <tr ng-repeat="verbond in $ctrl.verbonden" ng-click="$ctrl.redirectToGewesten(verbond.stamnummer)">
+    <tr ng-repeat="verbond in $ctrl.verbonden" ng-click="$ctrl.redirectToGewesten(verbond.stamnummer, verbond.name)">
         <td>
             {{verbond.stamnummer}}
             {{verbond.stamnummer | escape}}

@@ -1,5 +1,7 @@
 package com.realdolmen.chiro.service;
 
+import com.realdolmen.chiro.domain.RegistrationParticipant;
+import com.realdolmen.chiro.domain.RegistrationVolunteer;
 import com.realdolmen.chiro.domain.units.ChiroUnit;
 import com.realdolmen.chiro.repository.ChiroUnitRepository;
 import com.realdolmen.chiro.util.StamNumberTrimmer;
@@ -84,4 +86,31 @@ public class VerbondenService {
         System.err.println("GROEPEN LIST from gewest: " + gewestStamNummer + " -- " +groepen);
         return groepen;
     }
+
+    public List<RegistrationParticipant> getRegistrationParticipants(String groepStamNummer){
+        System.err.println("Hi from getRegistrationParticipants");
+        // first untrim the groepStamNummer
+        groepStamNummer = stamNumberTrimmer.untrim(groepStamNummer);
+
+        List<RegistrationParticipant> registrationParticipants = chiroUnitRepository.returnParticipantsByGroep(groepStamNummer);
+
+        List<RegistrationParticipant> registrationParticipantsWithoutVolunteers = new ArrayList<>();
+
+        for (RegistrationParticipant registrationParticipant : registrationParticipants) {
+            if(! (registrationParticipant instanceof RegistrationVolunteer) ){
+                registrationParticipantsWithoutVolunteers.add(registrationParticipant);
+            }
+        }
+        System.err.println("Nr of participants in getRegistrationParticipants verbondenservice: " +registrationParticipantsWithoutVolunteers.size());
+        return registrationParticipantsWithoutVolunteers;
+    }
+
+    public List<RegistrationVolunteer> getRegistrationVolunteers(String groepStamNummer){
+        System.err.println("Hi from getRegistrationVolunteers");
+        // first untrim the groepStamNummer
+        groepStamNummer = stamNumberTrimmer.untrim(groepStamNummer);
+
+        return chiroUnitRepository.returnVolunteersByGroep(groepStamNummer);
+    }
+
 }

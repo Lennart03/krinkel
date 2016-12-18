@@ -16,10 +16,10 @@ class VerbondenController {
         });
     }
 
-    redirectToGewesten(lol){
+    redirectToGewesten(lol, verbondNaam){
         console.log('Tried to redirect via javascript to gewesten with verbondStamNummer: ' + lol);
 
-        this.$location.path('/gewesten/'+ lol);
+        this.$location.path('/gewesten/'+ lol +'/'+ verbondNaam);
 
         // console.log(this.$location.url);
         // console.log(this.$location.path('/gewesten/'+verbondStamNummer));

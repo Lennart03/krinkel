@@ -1,0 +1,90 @@
+<h1>Lijst van {{$ctrl.groepNaam}}</h1>
+
+<style>
+    tbody tr:hover {
+        background-color: #EEE;
+        cursor: pointer;
+    }
+</style>
+
+<a class="btn" ng-click="$ctrl.switchShowParticipantsVolunteers()" ng-if="!$ctrl.showParticipants">
+    Deelnemers
+</a>
+
+<a class="btn" ng-click="$ctrl.switchShowParticipantsVolunteers()" ng-if="$ctrl.showParticipants">
+    Medewerkers
+</a>
+
+<h2 ng-if="$ctrl.showParticipants">Deelnemers</h2>
+<table ng-if="$ctrl.showParticipants">
+    <thead>
+    <tr>
+        <th data-field="name">Naam</th>
+        <th data-field="address">Adres</th>
+        <th data-field="city">Gemeente</th>
+        <th data-field="eatinghabit">Eetgewoonte</th>
+        <th data-field="medicalRemarks">Medische info</th>
+    </tr>
+    </thead>
+
+
+    <tbody>
+    <tr ng-repeat="participant in $ctrl.participants">
+        <td>
+            {{participant.firstName}} {{participant.lastName}}
+        </td>
+        <td>
+            {{participant.address.street}}
+        </td>
+        <td>
+            {{participant.address.city}}
+        </td>
+        <td>
+            {{participant.eatinghabbit}}
+        </td>
+        <td>
+            {{participant.medicalRemarks}}
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+<h2 ng-if="!$ctrl.showParticipants">Medewerkers</h2>
+<table ng-if="!$ctrl.showParticipants">
+    <thead>
+    <tr>
+        <th data-field="name">Naam</th>
+        <th data-field="address">Adres</th>
+        <th data-field="city">Gemeente</th>
+        <th data-field="eatinghabit">Eetgewoonte</th>
+        <th data-field="medicalRemarks">Medische info</th>
+        <th data-field="function">Functie</th>
+        <th data-field="campground">Kampgrond</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr ng-repeat="volunteer in $ctrl.volunteers">
+        <td>
+            {{volunteer.firstName}} {{volunteer.lastName}}
+        </td>
+        <td>
+            {{volunteer.address.street}} {{volunteer.address.houseNumber}}
+        </td>
+        <td>
+            {{volunteer.address.city}}
+        </td>
+        <td>
+            {{volunteer.eatinghabbit}}
+        </td>
+        <td>
+            {{volunteer.medicalRemarks}}
+        </td>
+        <td>
+            {{volunteer.function.preset}}
+        </td>
+        <td>
+            {{volunteer.campGround}}
+        </td>
+    </tr>
+    </tbody>
+</table>

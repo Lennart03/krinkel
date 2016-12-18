@@ -63,12 +63,16 @@ export function appConfig($routeProvider, $locationProvider) {
         template: '<verbonden></verbonden>'
     });
 
-    $routeProvider.when('/gewesten/:lol', {
+    $routeProvider.when('/gewesten/:lol/:verbondNaam', {
         template: '<gewesten></gewesten>'
     });
 
-    $routeProvider.when('/groepen/:gewestNr', {
+    $routeProvider.when('/groepen/:gewestNr/:gewestNaam', {
         template: '<groepen></groepen>'
+    });
+
+    $routeProvider.when('/groep/:groepNr/:groepNaam', {
+        template: '<groep></groep>'
     });
 
     $routeProvider.otherwise({

@@ -5,7 +5,8 @@ class GewestenController {
         this.AuthService = AuthService;
         this.$location = $location;
         this.lolo = $routeParams.lol;
-        console.log(this.lolo + 'gewesten.component.js says hi!');
+        this.verbondNaam = $routeParams.verbondNaam;
+        console.log(this.lolo + ' gewesten.component.js says hi! ' + this.verbondNaam);
     }
 
     $onInit() {
@@ -15,14 +16,10 @@ class GewestenController {
         });
     }
 
-    redirectToGroepen(gewestStamNr) {
+    redirectToGroepen(gewestStamNr, gewestNaam) {
         console.log('Tried to redirect via javascript to gewesten with verbondStamNummer: ' + gewestStamNr);
 
-        this.$location.path('/groepen/' + gewestStamNr);
-    }
-
-    getPloegen(stamnummer) {
-        this.$location.path('/gewesten/'+ stamnummer);
+        this.$location.path('/groepen/' + gewestStamNr + '/' + gewestNaam);
     }
 }
 

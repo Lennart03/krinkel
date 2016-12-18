@@ -26,6 +26,7 @@ import {KrinkelKarComponent} from './krinkel-kar/krinkelkar.component';
 import {VerbondenComponent} from './shared/units/verbonden.component';
 import {GewestenComponent} from './shared/units/gewesten.component';
 import {GroepenComponent} from './shared/units/groepen.component';
+import {GroepComponent} from './shared/units/groep.component';
 
 
 //pages
@@ -80,7 +81,8 @@ export default angular
     .component('verbonden', VerbondenComponent)
     .component('gewesten', GewestenComponent)
     .component('groepen', GroepenComponent)
-    .filter('escape', function() {
+    .component('groep', GroepComponent)
+    .filter('escape', function() { // Filter for escaping special characters in URLs
         return window.encodeURIComponent;
     })
     .name;
