@@ -384,8 +384,17 @@ body {
   padding: 0 5px;
 }
 
+.landingPageMainImageText .internationale {
+  font-size: 40px;
+  line-height: 55px;
+}
+
 @media only screen and (min-width: 540px) {
   .landingPageMainImageText h1 {
+    font-size: 60px;
+    line-height: 97px;
+  }
+  .landingPageMainImageText .internationale {
     font-size: 60px;
     line-height: 97px;
   }

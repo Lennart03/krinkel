@@ -1,15 +1,34 @@
 $( document ).ready(function(){
+    let carousel = $('.carousel');
     $(".button-collapse").sideNav();
-    $('.carousel').carousel();
+    carousel.carousel();
     $(".dropdown-button1").dropdown( { hover: false } );
     checkBrowser();
     //carousel buttons
     $('#carrNext').on('click', ()=>{
-        $('.carousel').carousel('next');
+        carousel.carousel('next');
 
     });
     $('#carrPrev').on('click', ()=>{
-        $('.carousel').carousel('prev');
+        carousel.carousel('prev');
+    });
+    $('body').keydown((e)=>{
+        let scrollPos = $(this).scrollTop();
+        if(!(scrollPos > 800 && scrollPos < 2500)) return;
+        switch (e.keyCode){
+            case 37:
+                carousel.carousel('prev');
+                break;
+            case 39:
+                carousel.carousel('next');
+                break;
+            default:
+                break;
+        }
+    });
+    $('#sendBtn').on("click", ()=>{
+        window.location = "mailto:info@krinkel.be?subject="+"Vraagje over krinkel: "+$('#subject').val()+"&body="+"Gesteld door: "+$('#name').val()
+            +"%0D%0AReturn email: " + $('#email').val() + "%0D%0AVraag:%0D%0A"+$("#messageArea").val();
     });
 });
 
@@ -62,6 +81,11 @@ $('.carousel.carousel-slider').carousel({full_width: true});
 $('#landingPageMainImageScrollButtonAction').on('click', function(){
     $('html, body').animate({
         scrollTop: $('#landingPageInfoWrapper').offset().top - 40
+    }, 1000); //tijd in ms
+});
+$('.scrollToSignup').on('click', function(){
+    $('html, body').animate({
+        scrollTop: $('#signup').offset().top - 40
     }, 1000); //tijd in ms
 });
 
