@@ -836,7 +836,7 @@ footer div:last-child {
   float: right;
 }
 
-@media only screen and (max-width: 800px) {
+@media only screen and (max-width: 850px) {
   footer div {
     text-align: center;
     display: block;
