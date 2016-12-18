@@ -6,18 +6,18 @@ class GroepenController {
         this.$location = $location;
         this.lolo = $routeParams.gewestNr;
         this.gewestNaam = $routeParams.gewestNaam;
-        console.log(this.lolo + 'groepen.component.js says hi!');
+        //console.log(this.lolo + 'groepen.component.js says hi!');
     }
 
     $onInit() {
         this.KrinkelService.getGroepenList(this.lolo).then((results) => {
-            console.log(results);
+            //console.log(results);
             this.groepen = results;
         });
     }
 
     redirectToGroep(groepStamNr, groepNaam) {
-        console.log('Tried to redirect via javascript to groep with groepStamNummer: ' + groepStamNr);
+        //console.log('Tried to redirect via javascript to groep with groepStamNummer: ' + groepStamNr);
 
         this.$location.path('/groep/' + groepStamNr + '/' + groepNaam);
     }

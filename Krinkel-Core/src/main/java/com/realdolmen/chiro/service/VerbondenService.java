@@ -35,21 +35,21 @@ public class VerbondenService {
         for (ChiroUnit verbond : verbonden) {
             int countAllParticipants = chiroUnitRepository.countParticipantsByVerbond(verbond.getStamNummer());
             int countVolunteers = chiroUnitRepository.countVolunteersByVerbond(verbond.getStamNummer());
-            System.err.println("stamnr: " + verbond.getStamNummer() + " #participants+volunteers: "
-                    + countAllParticipants + ", #volunteers: " + countVolunteers);
+//            System.err.println("stamnr: " + verbond.getStamNummer() + " #participants+volunteers: "
+//                    + countAllParticipants + ", #volunteers: " + countVolunteers);
             verbond.setParticipantsCount(countAllParticipants - countVolunteers);
             verbond.setVolunteersCount(countVolunteers);
             // Trim the stam nummers
             verbond.setStamNummer(stamNumberTrimmer.trim(verbond.getStamNummer()));
         }
-        System.err.println("VERBONDEN LIST: " +verbonden);
+//        System.err.println("VERBONDEN LIST: " +verbonden);
         return verbonden;
     }
 
     @PreAuthorize("@ChiroUnitServiceSecurity.hasPermissionToFindUnits()")
     @PostFilter("@ChiroUnitServiceSecurity.hasPermissionToSeeUnits(filterObject)")
     public List<ChiroUnit> getGewesten(String verbondStamNummer){
-        System.err.println("Hi from getGewesten");
+//        System.err.println("Hi from getGewesten");
         // first untrim the verbondStamNummer
         verbondStamNummer = stamNumberTrimmer.untrim(verbondStamNummer);
 
@@ -61,8 +61,8 @@ public class VerbondenService {
             int countAllParticipants = chiroUnitRepository.countParticipantsByGewest(gewest.getStamNummer());
 
             int countVolunteers = chiroUnitRepository.countVolunteersByGewest(gewest.getStamNummer());
-            System.err.println("stamnr: " + gewest.getStamNummer() + " #participants+volunteers: "
-                    + countAllParticipants + ", #volunteers: " + countVolunteers);
+//            System.err.println("stamnr: " + gewest.getStamNummer() + " #participants+volunteers: "
+//                    + countAllParticipants + ", #volunteers: " + countVolunteers);
             gewest.setParticipantsCount(countAllParticipants - countVolunteers);
             gewest.setVolunteersCount(countVolunteers);
             // Trim the stam nummers.
@@ -70,14 +70,14 @@ public class VerbondenService {
             // Set "upper" to verbondStamNummer => used for security filtering (name may remain empty, it is not used for filtering)
             gewest.setUpper(new ChiroUnit(verbondStamNummer, ""));
         }
-        System.err.println("GEWESTEN LIST from verbond: " + verbondStamNummer + " -- " +gewesten);
+//        System.err.println("GEWESTEN LIST from verbond: " + verbondStamNummer + " -- " +gewesten);
         return gewesten;
     }
 
     @PreAuthorize("@ChiroUnitServiceSecurity.hasPermissionToFindUnits()")
     @PostFilter("@ChiroUnitServiceSecurity.hasPermissionToSeeUnits(filterObject)")
     public List<ChiroUnit> getGroepen(String gewestStamNummer){
-        System.err.println("Hi from getGroepen");
+//        System.err.println("Hi from getGroepen");
         // first untrim the verbondStamNummer
         gewestStamNummer = stamNumberTrimmer.untrim(gewestStamNummer);
         // Get the gewesten: the name + stamNummer
@@ -86,8 +86,8 @@ public class VerbondenService {
         for (ChiroUnit groep : groepen) {
             int countAllParticipants = chiroUnitRepository.countParticipantsByGroep(groep.getStamNummer());
             int countVolunteers = chiroUnitRepository.countVolunteersByGroep(groep.getStamNummer());
-            System.err.println("stamnr: " + groep.getStamNummer() + " #participants+volunteers: "
-                    + countAllParticipants + ", #volunteers: " + countVolunteers);
+//            System.err.println("stamnr: " + groep.getStamNummer() + " #participants+volunteers: "
+//                    + countAllParticipants + ", #volunteers: " + countVolunteers);
             groep.setParticipantsCount(countAllParticipants - countVolunteers);
             groep.setVolunteersCount(countVolunteers);
             // Trim the stam nummers.
@@ -95,14 +95,14 @@ public class VerbondenService {
             // Set "upper" to gewestStamNummer => used for security filtering (name may remain empty, it is not used for filtering)
             groep.setUpper(new ChiroUnit(gewestStamNummer, ""));
         }
-        System.err.println("GROEPEN LIST from gewest: " + gewestStamNummer + " -- " +groepen);
+//        System.err.println("GROEPEN LIST from gewest: " + gewestStamNummer + " -- " +groepen);
         return groepen;
     }
 
     @PreAuthorize("@ChiroUnitServiceSecurity.hasPermissionToGetParticipants()")
     @PostFilter("@ChiroUnitServiceSecurity.hasPermissionToSeeParticipants(filterObject)")
     public List<RegistrationParticipant> getRegistrationParticipants(String groepStamNummer){
-        System.err.println("Hi from getRegistrationParticipants");
+//        System.err.println("Hi from getRegistrationParticipants");
         // first untrim the groepStamNummer
         groepStamNummer = stamNumberTrimmer.untrim(groepStamNummer);
 
@@ -115,14 +115,14 @@ public class VerbondenService {
                 registrationParticipantsWithoutVolunteers.add(registrationParticipant);
             }
         }
-        System.err.println("Nr of participants in getRegistrationParticipants verbondenservice: " +registrationParticipantsWithoutVolunteers.size());
+//        System.err.println("Nr of participants in getRegistrationParticipants verbondenservice: " +registrationParticipantsWithoutVolunteers.size());
         return registrationParticipantsWithoutVolunteers;
     }
 
     @PreAuthorize("@ChiroUnitServiceSecurity.hasPermissionToGetVolunteers()")
     @PostFilter("@ChiroUnitServiceSecurity.hasPermissionToSeeVolunteers(filterObject)")
     public List<RegistrationVolunteer> getRegistrationVolunteers(String groepStamNummer){
-        System.err.println("Hi from getRegistrationVolunteers");
+//        System.err.println("Hi from getRegistrationVolunteers");
         // first untrim the groepStamNummer
         groepStamNummer = stamNumberTrimmer.untrim(groepStamNummer);
 

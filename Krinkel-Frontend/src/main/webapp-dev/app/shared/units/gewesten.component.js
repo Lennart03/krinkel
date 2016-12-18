@@ -6,18 +6,18 @@ class GewestenController {
         this.$location = $location;
         this.lolo = $routeParams.lol;
         this.verbondNaam = $routeParams.verbondNaam;
-        console.log(this.lolo + ' gewesten.component.js says hi! ' + this.verbondNaam);
+        //console.log(this.lolo + ' gewesten.component.js says hi! ' + this.verbondNaam);
     }
 
     $onInit() {
         this.KrinkelService.getGewestenList(this.lolo).then((results) => {
-            console.log(results);
+            //console.log(results);
             this.gewesten = results;
         });
     }
 
     redirectToGroepen(gewestStamNr, gewestNaam) {
-        console.log('Tried to redirect via javascript to gewesten with verbondStamNummer: ' + gewestStamNr);
+        //console.log('Tried to redirect via javascript to gewesten with verbondStamNummer: ' + gewestStamNr);
 
         this.$location.path('/groepen/' + gewestStamNr + '/' + gewestNaam);
     }

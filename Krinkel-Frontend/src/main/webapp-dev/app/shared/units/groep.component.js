@@ -8,7 +8,7 @@ class GroepController {
         this.lolo = $routeParams.groepNr;
         this.groepNaam = $routeParams.groepNaam;
         this.showParticipants = true;
-        console.log(this.lolo + 'groep.component.js says hi!');
+        //console.log(this.lolo + 'groep.component.js says hi!');
         this.initSelectPayStatus();
     }
 

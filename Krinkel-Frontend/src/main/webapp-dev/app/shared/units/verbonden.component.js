@@ -17,7 +17,7 @@ class VerbondenController {
     }
 
     redirectToGewesten(lol, verbondNaam){
-        console.log('Tried to redirect via javascript to gewesten with verbondStamNummer: ' + lol);
+        //console.log('Tried to redirect via javascript to gewesten with verbondStamNummer: ' + lol);
 
         this.$location.path('/gewesten/'+ lol +'/'+ verbondNaam);
 

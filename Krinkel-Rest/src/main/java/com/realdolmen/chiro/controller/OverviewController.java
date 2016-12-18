@@ -28,31 +28,31 @@ public class OverviewController {
      */
     @RequestMapping(value = "", method = RequestMethod.GET, params = {"verbonden"})
     public List<ChiroUnit> getVerbonden() {
-        System.err.println("Verbonden in overview controller: " + verbondenService.getVerbonden());
+        //System.err.println("Verbonden in overview controller: " + verbondenService.getVerbonden());
         return verbondenService.getVerbonden();
     }
 
     @RequestMapping(value = "/gewesten/{verbondStamNummer}", method = RequestMethod.GET)
     public List<ChiroUnit> getGewesten(@PathVariable("verbondStamNummer") String verbondStamNummer) {
-        System.err.println("Gewesten in overview controller: " + verbondenService.getGewesten(verbondStamNummer));
+        //System.err.println("Gewesten in overview controller: " + verbondenService.getGewesten(verbondStamNummer));
         return verbondenService.getGewesten(verbondStamNummer);
     }
 
     @RequestMapping(value = "/groepen/{gewestStamNummer}", method = RequestMethod.GET)
     public List<ChiroUnit> getGroepen(@PathVariable("gewestStamNummer") String gewestStamNummer) {
-        System.err.println("Groepen in overview controller: " + verbondenService.getGroepen(gewestStamNummer));
+        //System.err.println("Groepen in overview controller: " + verbondenService.getGroepen(gewestStamNummer));
         return verbondenService.getGroepen(gewestStamNummer);
     }
 
     @RequestMapping(value = "/groep/{groepStamNummer}", method = RequestMethod.GET)
     public List<RegistrationParticipant> getParticipants(@PathVariable("groepStamNummer") String groepStamNummer) {
-        System.err.println("Participants in overview controller: " + verbondenService.getRegistrationParticipants(groepStamNummer));
+        //System.err.println("Participants in overview controller: " + verbondenService.getRegistrationParticipants(groepStamNummer));
         return verbondenService.getRegistrationParticipants(groepStamNummer);
     }
 
     @RequestMapping(value = "/groep/{groepStamNummer}/vrijwilligers", method = RequestMethod.GET)
     public List<RegistrationVolunteer> getVolunteers(@PathVariable("groepStamNummer") String groepStamNummer) {
-        System.err.println("Participants in overview controller: " + verbondenService.getRegistrationVolunteers(groepStamNummer));
+        //System.err.println("Participants in overview controller: " + verbondenService.getRegistrationVolunteers(groepStamNummer));
         return verbondenService.getRegistrationVolunteers(groepStamNummer);
     }
 }
