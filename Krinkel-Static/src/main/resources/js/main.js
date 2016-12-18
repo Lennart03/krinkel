@@ -3,6 +3,14 @@ $( document ).ready(function(){
     $('.carousel').carousel();
     $(".dropdown-button1").dropdown( { hover: false } );
     checkBrowser();
+    //carousel buttons
+    $('#carrNext').on('click', ()=>{
+        $('.carousel').carousel('next');
+
+    });
+    $('#carrPrev').on('click', ()=>{
+        $('.carousel').carousel('prev');
+    });
 });
 
 function checkBrowser() {

@@ -422,6 +422,7 @@ body {
 }
 
 .landingPageCarouselWrapper {
+  position: relative;
   max-height: 100%;
   height: 750px !important;
   border-top: 1px solid #309583;
@@ -801,8 +802,42 @@ body {
 }
 
 .contactPageMainImage {
-  background: url("/img/layout/contact.jpg") no-repeat 50% 30%;
+  height: 500px;
+  width: 100%;
+  background: url("../../img/layout/contact.jpg") no-repeat 50% 30%;
   background-size: cover;
+  border-bottom: 1px solid #309583;
+}
+
+@media only screen and (min-width: 1930px) {
+  .contactPageMainImage {
+    background-position: 50% 30% !important;
+  }
+}
+
+.contactPageForm {
+  text-align: center;
+  max-width: 900px;
+  margin: 20px auto 0;
+}
+
+.contactPageForm .row {
+  margin-right: 10px;
+  margin-left: 10px;
+}
+
+#contactTitle {
+  margin-top: 30px;
+}
+
+#sendBtn {
+  width: 100% !important;
+}
+
+.joinOnFaceBookInt svg {
+  fill: white;
+  height: 20px;
+  width: 20px;
 }
 
 .praktischPageMainImage {
@@ -869,6 +904,38 @@ body {
     height: 300px !important;
     width: 500px !important;
   }
+}
+
+#carrNext {
+  position: absolute;
+  color: white;
+  right: 1%;
+  top: calc(50% - 32px);
+}
+
+#carrNext i {
+  font-size: 64px;
+}
+
+#carrNext:hover {
+  color: #a4ccbc;
+  cursor: pointer;
+}
+
+#carrPrev {
+  position: absolute;
+  color: white;
+  left: 1%;
+  top: calc(50% - 32px);
+}
+
+#carrPrev i {
+  font-size: 64px;
+}
+
+#carrPrev:hover {
+  color: #a4ccbc;
+  cursor: pointer;
 }
 
 footer {
