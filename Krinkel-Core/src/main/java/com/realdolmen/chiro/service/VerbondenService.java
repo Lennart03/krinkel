@@ -6,6 +6,8 @@ import com.realdolmen.chiro.domain.units.ChiroUnit;
 import com.realdolmen.chiro.repository.ChiroUnitRepository;
 import com.realdolmen.chiro.util.StamNumberTrimmer;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PostFilter;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
@@ -24,6 +26,8 @@ public class VerbondenService {
     @Autowired
     StamNumberTrimmer stamNumberTrimmer;
 
+    @PreAuthorize("@ChiroUnitServiceSecurity.hasPermissionToFindVerbonden()")
+    @PostFilter("@ChiroUnitServiceSecurity.hasPermissionToSeeVerbonden(filterObject)")
     public List<ChiroUnit> getVerbonden() {
         // Get the verbonden: the name + stamNummer
         List<ChiroUnit> verbonden = chiroUnitRepository.findAllVerbonden();
@@ -42,6 +46,8 @@ public class VerbondenService {
         return verbonden;
     }
 
+    @PreAuthorize("@ChiroUnitServiceSecurity.hasPermissionToFindUnits()")
+    @PostFilter("@ChiroUnitServiceSecurity.hasPermissionToSeeUnits(filterObject)")
     public List<ChiroUnit> getGewesten(String verbondStamNummer){
         System.err.println("Hi from getGewesten");
         // first untrim the verbondStamNummer
@@ -61,11 +67,15 @@ public class VerbondenService {
             gewest.setVolunteersCount(countVolunteers);
             // Trim the stam nummers.
             gewest.setStamNummer(stamNumberTrimmer.trim(gewest.getStamNummer()));
+            // Set "upper" to verbondStamNummer => used for security filtering (name may remain empty, it is not used for filtering)
+            gewest.setUpper(new ChiroUnit(verbondStamNummer, ""));
         }
         System.err.println("GEWESTEN LIST from verbond: " + verbondStamNummer + " -- " +gewesten);
         return gewesten;
     }
 
+    @PreAuthorize("@ChiroUnitServiceSecurity.hasPermissionToFindUnits()")
+    @PostFilter("@ChiroUnitServiceSecurity.hasPermissionToSeeUnits(filterObject)")
     public List<ChiroUnit> getGroepen(String gewestStamNummer){
         System.err.println("Hi from getGroepen");
         // first untrim the verbondStamNummer
@@ -82,11 +92,15 @@ public class VerbondenService {
             groep.setVolunteersCount(countVolunteers);
             // Trim the stam nummers.
             groep.setStamNummer(stamNumberTrimmer.trim(groep.getStamNummer()));
+            // Set "upper" to gewestStamNummer => used for security filtering (name may remain empty, it is not used for filtering)
+            groep.setUpper(new ChiroUnit(gewestStamNummer, ""));
         }
         System.err.println("GROEPEN LIST from gewest: " + gewestStamNummer + " -- " +groepen);
         return groepen;
     }
 
+    @PreAuthorize("@ChiroUnitServiceSecurity.hasPermissionToGetParticipants()")
+    @PostFilter("@ChiroUnitServiceSecurity.hasPermissionToSeeParticipants(filterObject)")
     public List<RegistrationParticipant> getRegistrationParticipants(String groepStamNummer){
         System.err.println("Hi from getRegistrationParticipants");
         // first untrim the groepStamNummer
@@ -105,6 +119,8 @@ public class VerbondenService {
         return registrationParticipantsWithoutVolunteers;
     }
 
+    @PreAuthorize("@ChiroUnitServiceSecurity.hasPermissionToGetVolunteers()")
+    @PostFilter("@ChiroUnitServiceSecurity.hasPermissionToSeeVolunteers(filterObject)")
     public List<RegistrationVolunteer> getRegistrationVolunteers(String groepStamNummer){
         System.err.println("Hi from getRegistrationVolunteers");
         // first untrim the groepStamNummer

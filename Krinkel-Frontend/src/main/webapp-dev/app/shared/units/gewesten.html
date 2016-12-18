@@ -10,7 +10,7 @@
 <table>
     <thead>
     <tr>
-        <th data-field="stamNummer">Stam nummer</th>
+        <!--<th data-field="stamNummer">Stam nummer</th>-->
         <th data-field="naam">Naam</th>
         <th data-field="amountParticipants">Aantal deelnemers</th>
         <th data-field="amountVolunteers">Aantal medewerkers</th>
@@ -20,9 +20,9 @@
 
     <tbody>
     <tr ng-repeat="gewest in $ctrl.gewesten" ng-click="$ctrl.redirectToGroepen(gewest.stamnummer, gewest.name)">
-        <td>
-            {{gewest.stamnummer}}
-        </td>
+        <!--<td>-->
+            <!--{{gewest.stamnummer}}-->
+        <!--</td>-->
         <td>
             {{gewest.name}}
         </td>
