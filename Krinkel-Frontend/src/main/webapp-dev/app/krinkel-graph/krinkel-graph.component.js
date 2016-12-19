@@ -155,6 +155,7 @@ class KrinkelGraphController {
 
         this.lineOptions = {
             chart: {
+                rotateLabels: 90,
                 type: 'multiBarChart',
                 height: 450,
                 margin: {
@@ -165,11 +166,13 @@ class KrinkelGraphController {
                 },
                 x: function (d) {
                     if (d != undefined) {
+                        console.log("d[0] = " +d[0]);
                         return d[0];
                     }
                 },
                 y: function (d) {
                     if (d != undefined) {
+                        console.log("d[1] = " +d[1]);
                         return d[1];
                     }
                 },
