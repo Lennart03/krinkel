@@ -28,20 +28,48 @@ class AdminToevoegenController {
      * Searches a Chiro member in the API of Chiro and makes the member an administator for the Krinkelsite.
      * The call should return an Array with one Object in it, the searched person.
      * The Object in the array is then converted into an admin and saved in the frontend and backend.
-     * @param adnumber Unique identifier given by Chiro.
+     * @param adNumber Unique identifier given by Chiro.
      */
-    searchAndSaveAsAdmin(adnumber) {
-        var response = this.KrinkelService.getContactFromChiro(adnumber).then((resp) => {
-            var newAdmin = {
-                firstname: resp[0].first_name,
-                lastname: resp[0].last_name,
-                email: resp[0].email,
-                adNummer: resp[0].adnr
-            };
-            this.admins.push(newAdmin);
-            this.KrinkelService.postAdmin(adnumber);
-        });
+    searchAndSaveAsAdmin(adNummer) {
+        if (!this.isAdmin(adNummer)) {
+            let response = this.KrinkelService.getContactFromChiro(adNummer).then((resp) => {
+                if((resp[0] !== undefined)){
+                    let newAdmin = {
+                        firstname: resp[0].first_name,
+                        lastname: resp[0].last_name,
+                        email: resp[0].email,
+                        adNummer: resp[0].adnr
+                    };
+                    this.admins.push(newAdmin);
+                    this.KrinkelService.postAdmin(adNummer);
+                } else {
+                    this.popup(adNummer);
+                }
+            });
+        } else {
+            this.popupAlreadyAdmin();
+        }
+    }
 
+    popup(adNummer) {
+        Materialize.toast('Geen gebruiker gevonden voor ingegeven AD nummer '+ adNummer, 10000, 'red rounded');
+    }
+
+    popupAlreadyAdmin() {
+        Materialize.toast('Deze persoon heeft al admin rechten.', 10000, 'red rounded');
+    }
+
+    isAdmin(adNummer) {
+        let isAdmin = false;
+        this.admins.forEach(admin => {
+            console.log(admin.firstname + " " + admin.adNummer);
+            if (admin.adNummer == adNummer) {
+                console.log("found the same person");
+                isAdmin = true;
+            }
+        });
+        console.log(isAdmin);
+        return isAdmin;
     }
 
     /**
@@ -50,9 +78,9 @@ class AdminToevoegenController {
      */
     deleteAdmin(adNummer) {
         this.KrinkelService.deleteAdmin(adNummer);
-        var newAdmins = [];
+        let newAdmins = [];
         this.admins.forEach(admin => {
-            if(admin.adNummer !== adNummer){
+            if (admin.adNummer !== adNummer) {
                 newAdmins.push(admin);
             }
         });

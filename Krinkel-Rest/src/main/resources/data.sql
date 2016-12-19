@@ -1,6 +1,6 @@
 -- These are the first admins that the project required
-INSERT INTO admins VALUES (152504, 'somedude@email.com', 'first', 'guy');
-INSERT INTO admins VALUES (109318, 'secondAdmin@email.com', 'second', 'dude');
+INSERT INTO admins VALUES (152504, 'blyweert.roel@gmail.com', 'Roel', 'Blyweert');
+INSERT INTO admins VALUES (109318, 'tom@horre.com', 'Tom', 'Horre');
 
 -- TODO these records need to be removed because these are the Realdolmen developers
 INSERT INTO admins VALUES (396943, 'lennart.vandamme@realdolmen.com', 'Lennart', 'Van Damme');
