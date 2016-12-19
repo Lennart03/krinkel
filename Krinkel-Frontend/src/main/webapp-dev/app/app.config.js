@@ -60,7 +60,7 @@ export function appConfig($routeProvider, $locationProvider) {
     });
 
     $routeProvider.when('/generate-groups', {
-        template: '<generate-groups></krinkel-export>'
+        template: '<generate-groups></generate-groups>'
     });
 
     //Fail page had to go :(
