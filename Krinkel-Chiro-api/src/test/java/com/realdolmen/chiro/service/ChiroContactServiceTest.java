@@ -40,7 +40,7 @@ public class ChiroContactServiceTest extends SpringIntegrationTest {
         Assert.assertEquals("3660", chiroContact.getPostalCode());
         Assert.assertEquals("Bree", chiroContact.getCity());
         Assert.assertEquals("BE", chiroContact.getCountry());
-        Assert.assertEquals("", chiroContact.getPhone());
+        Assert.assertEquals("0499666666", chiroContact.getPhone());
         Assert.assertEquals("thomas.simons@realdolmen.com", chiroContact.getEmail());
         Assert.assertEquals("377768", chiroContact.getId());
         Assert.assertEquals("200", chiroContact.getHttpStatus());

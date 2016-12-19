@@ -139,7 +139,7 @@ public class ChiroContact {
     }
 
     public void setBirthDate(String birthDate) {
-        if (birthDate.equals("")) {
+        if (birthDate == null || birthDate.equals("")) {
             this.birthDate = null;
         } else {
             try {
