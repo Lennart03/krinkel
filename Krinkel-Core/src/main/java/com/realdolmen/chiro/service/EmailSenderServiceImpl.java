@@ -3,6 +3,7 @@ package com.realdolmen.chiro.service;
 import java.util.concurrent.Future;
 
 import javax.mail.MessagingException;
+import javax.mail.internet.AddressException;
 import javax.mail.internet.MimeMessage;
 
 import com.realdolmen.chiro.domain.*;
@@ -48,7 +49,8 @@ public class EmailSenderServiceImpl implements EmailSenderService {
     private ConfirmationLinkService confirmationLinkService;
 
     @Override
-    public Future<String> sendMail(RegistrationParticipant participant) { //todo:fix spam when subscriber email is not set
+    public Future<String> sendMail(RegistrationParticipant participant) {
+
         MimeMessage message = mailSender.createMimeMessage();
         Context ctx = new Context();
 
@@ -86,7 +88,8 @@ public class EmailSenderServiceImpl implements EmailSenderService {
             logger.info("trying to send confirmation email to: " + participant.getEmail());
             mailSender.send(message);
 
-            if (participant.isRegisteredByOther() && participant.getEmailSubscriber() != null) {
+            //check for empty string is REQUIRED, empty strings are not null. if this code fails, the user will be spammed because the service keeps trying
+            if (participant.isRegisteredByOther() && participant.getEmailSubscriber() != null && !participant.getEmailSubscriber().trim().isEmpty()) {
 
                 ctx.setVariable("isMailToSubscriber", true);
 
@@ -104,11 +107,17 @@ public class EmailSenderServiceImpl implements EmailSenderService {
             registrationCommunication.setStatus(SendStatus.SENT);
             registrationCommunicationRepository.save(registrationCommunication);
             logger.info("sending confirmation email to: " + participant.getEmail() + " succeeded");
-            if (participant.getEmailSubscriber() != null) {
+            if (participant.getEmailSubscriber() != null && !participant.getEmailSubscriber().trim().isEmpty()) {
                 logger.info("sending email to: " + participant.getEmailSubscriber() + " succeeded");
             }
             return new AsyncResult<String>("ok");
-        } catch (Exception e) {
+        }catch (AddressException ae){
+            logger.info("One of the provided email addresses were not valid, setting mail to cancelled to prevent spam.");
+            registrationCommunication.setStatus(SendStatus.CANCELLED);
+            registrationCommunicationRepository.save(registrationCommunication);
+            return new AsyncResult<String>("cancelled");
+        }
+        catch (Exception e) {
             registrationCommunication.setStatus(SendStatus.FAILED);
             logger.error("sending mail failed", e);
             logger.info("sending confirmation email to: " + participant.getEmail() + " failed");
