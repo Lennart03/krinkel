@@ -59,10 +59,21 @@ export function appConfig($routeProvider, $locationProvider) {
         template: '<krinkel-export></krinkel-export>'
     });
 
-    //Fail page had to go :(
-    // $routeProvider.when('/fail', {
-    //     template: '<fail-message></fail-message>'
-    // });
+    $routeProvider.when('/verbonden', {
+        template: '<verbonden></verbonden>'
+    });
+
+    $routeProvider.when('/gewesten/:lol/:verbondNaam', {
+        template: '<gewesten></gewesten>'
+    });
+
+    $routeProvider.when('/groepen/:gewestNr/:gewestNaam', {
+        template: '<groepen></groepen>'
+    });
+
+    $routeProvider.when('/groep/:groepNr/:groepNaam', {
+        template: '<groep></groep>'
+    });
 
     $routeProvider.otherwise({
         redirectTo: '/home'

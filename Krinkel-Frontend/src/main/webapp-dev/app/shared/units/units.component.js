@@ -11,6 +11,7 @@ class UnitsController {
         this.KrinkelService.getVerbonden().then((results) => {
             this.verbonden = results;
         });
+
     }
 
     openExtraInfo(verbond) {
@@ -23,7 +24,7 @@ class UnitsController {
 
     openUsers(verbond) {
 
-        this.unitLevel = verbond.naam;
+        this.unitLevel = verbond.name;
         this.userDetails = true;
         this.participantDetails = true;
         this.volunteerDetails = false;
@@ -53,7 +54,7 @@ class UnitsController {
 
     openVerbond(verbond) {
         this.KrinkelService.getGewestenForVerbond(verbond.stamnummer).then((results) => {
-            this.unitLevel = verbond.naam;
+            this.unitLevel = verbond.name;
             this.verbonden = results;
             this.verbond = verbond;
         });
