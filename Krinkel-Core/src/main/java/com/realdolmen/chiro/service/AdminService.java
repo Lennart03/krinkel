@@ -1,6 +1,5 @@
 package com.realdolmen.chiro.service;
 
-import com.realdolmen.chiro.domain.RegistrationParticipant;
 import com.realdolmen.chiro.domain.units.Admin;
 import com.realdolmen.chiro.domain.units.ChiroContact;
 import com.realdolmen.chiro.exception.NoContactFoundException;
@@ -40,20 +39,20 @@ public class AdminService {
      * Adds a new admin based on his adnumber. To do this, first a call is made to the ChiroAPI to retrieve the person.
      * Afterwards it is save using the AdminRepository.
      *
-     * @param adnummer unique number by chiro to identify a person
+     * @param adNumber unique number by chiro to identify a person
      * @throws URISyntaxException
      */
-    public void addNewAdmin(Integer adnummer) throws URISyntaxException, NoContactFoundException, IOException {
-        ChiroContact chiroContact= chiroContactService.getChiroContact(adnummer);
-        Admin admin = new Admin(adnummer, chiroContact.getEmail(), chiroContact.getFirstName(), chiroContact.getLastName());
+    public void addNewAdmin(Integer adNumber) throws URISyntaxException, NoContactFoundException, IOException {
+        ChiroContact chiroContact = chiroContactService.getChiroContact(adNumber);
+        Admin admin = new Admin(adNumber, chiroContact.getEmail(), chiroContact.getFirstName(), chiroContact.getLastName());
         adminRepository.save(admin);
     }
 
-    public String getChiroMember(Integer adnummer) throws URISyntaxException {
-        return chiroContactService.getContact(adnummer);
+    public String getChiroMember(Integer adNumber) throws URISyntaxException {
+        return chiroContactService.getContact(adNumber);
     }
 
-    public void deleteAdmin(Integer adnummer) {
-        adminRepository.delete(adnummer);
+    public void deleteAdmin(Integer adNumber) {
+        adminRepository.delete(adNumber);
     }
 }
