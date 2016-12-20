@@ -19,12 +19,10 @@ class FindByAdController {
                 if (resp.size != 0) {
                     if (part.httpStatus == '404')
                     {
-                        console.log('status is not found');
                         this.popup();
                     }
                     else
                     {
-                        console.log('status ok');
                         this.participant = {
                             adNumber: part.adnr,
                             firstName: part.firstName,
