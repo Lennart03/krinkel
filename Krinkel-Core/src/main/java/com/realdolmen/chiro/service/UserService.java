@@ -1,6 +1,7 @@
 package com.realdolmen.chiro.service;
 
 import com.realdolmen.chiro.component.CASCurrentlyLoggedInUserComponent;
+import com.realdolmen.chiro.component.RegistrationBasketComponent;
 import com.realdolmen.chiro.domain.RegistrationParticipant;
 import com.realdolmen.chiro.domain.SecurityRole;
 import com.realdolmen.chiro.domain.Status;
@@ -40,6 +41,8 @@ public class UserService {
     private CASCurrentlyLoggedInUserComponent CASCurrentlyLoggedInUserComponent;
     @Autowired
     private StamNumberTrimmer stamNumberTrimmer;
+    @Autowired
+    private RegistrationBasketComponent registrationBasketComponent;
 
     /**
      * get a participant or volunteer from our DB
@@ -125,9 +128,9 @@ public class UserService {
     public List<ColleagueDTO> getAvailableColleagues(int adNumber) throws URISyntaxException {
 
         List<ColleagueDTO> colleagues = chiroColleagueService.getColleagues(adNumber);
-
-        return colleagues.stream()
+        List<ColleagueDTO> filteredColls = colleagues.stream()
                 .filter(Objects::nonNull)
+                .filter(c -> !registrationBasketComponent.getUsersInBasket().stream().anyMatch(rp -> rp.getAdNumber().equals(c.getAdNumber())))
                 .filter(c -> {
                     RegistrationParticipant r = getRegistrationParticipant(c.getAdNumber());
                     if (r == null) return true;
@@ -137,6 +140,8 @@ public class UserService {
                             || r.getStatus() != Status.TO_BE_PAID;
                 })
                 .collect(Collectors.toList());
+
+        return filteredColls;
     }
 
     public StamNumbersRolesVO getAllStamnumbersRolesAndUpperUnits(String adNumber) {

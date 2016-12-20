@@ -91,7 +91,6 @@ export class KrinkelService {
 
     getColleagues(adNumber) {
         return this.$http.get(`${this.BASEURL}/api/colleagues`).then((resp) => {
-                console.log(resp.data);
                 return resp.data;
             },
             () => {

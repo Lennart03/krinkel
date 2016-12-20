@@ -18,11 +18,18 @@ public class GenderDeserializer extends StdDeserializer<Gender> {
 
     @Override
     public Gender deserialize(JsonParser p, DeserializationContext ctxt) throws IOException, JsonProcessingException {
-        int ordinal = Integer.parseInt(p.getValueAsString());
-        if (ordinal < 0 && ordinal > Gender.values().length) {
-            return null;
-        } else {
-            return Gender.values()[ordinal];
+        try {
+
+
+            int ordinal = Integer.parseInt(p.getValueAsString());
+            if (ordinal < 0 && ordinal > Gender.values().length) {
+                return null;
+            } else {
+                return Gender.values()[ordinal];
+            }
+        } catch (NumberFormatException e) {
+            String name = p.getValueAsString();
+            return Gender.valueOf(name);
         }
     }
 }

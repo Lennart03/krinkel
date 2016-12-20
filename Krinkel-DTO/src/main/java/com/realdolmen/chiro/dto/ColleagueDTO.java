@@ -162,4 +162,19 @@ public class ColleagueDTO {
     public void setCountry(String country) {
         this.country = country;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        ColleagueDTO that = (ColleagueDTO) o;
+
+        return adNumber != null ? adNumber.equals(that.adNumber) : that.adNumber == null;
+    }
+
+    @Override
+    public int hashCode() {
+        return adNumber != null ? adNumber.hashCode() : 0;
+    }
 }
