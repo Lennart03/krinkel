@@ -7,6 +7,12 @@ section {}
   background-position: 0% 20%;
   background-image: url("../img/layout/BRU_9436.jpg");
   background-size: cover;
+  @media only screen and(max-width: 1200px) {
+    background-image: url("../img/layout/BRU_9436_med.jpg");
+  }
+  @media only screen and(max-width: 800px) {
+    background-image: url("../img/layout/BRU_9436_small.jpg");
+  }
 }
 
 .landingPageMainImageFilter {
@@ -214,6 +220,12 @@ section {}
   @extend %mainImage;
   background: url("../img/layout/Onthaal1.jpg") no-repeat 50% 30%;
   background-size: cover;
+  @media only screen and(max-width: 1200px) {
+    background-image: url("../img/layout/Onthaal1_med.jpg");
+  }
+  @media only screen and(max-width: 800px) {
+    background-image: url("../img/layout/Onthaal1_small.jpg");
+  }
 }
 
 .aboutPageHistoriekWrapper {
@@ -332,6 +344,12 @@ section {}
   @extend %mainImage;
   background: url("../img/layout/faq.jpg") no-repeat 50% 25%;
   background-size: cover;
+  @media only screen and(max-width: 1200px) {
+    background-image: url("../img/layout/faq_med.jpg");
+  }
+  @media only screen and(max-width: 800px) {
+    background-image: url("../img/layout/faq_small.jpg");
+  }
 }
 
 .row .col {
@@ -399,6 +417,12 @@ section {}
   @media only screen and (min-width: 1930px) {
     background-position: 50% 30% !important;
   }
+  @media only screen and(max-width: 1200px) {
+    background-image: url("../img/layout/contact_med.jpg");
+  }
+  @media only screen and(max-width: 800px) {
+    background-image: url("../img/layout/contact_small.jpg");
+  }
 }
 
 .contactPageForm {
@@ -427,12 +451,24 @@ section {}
   @extend %mainImage;
   background: url("../img/layout/JVB_Krinkel2013_63.jpg") no-repeat 50% 25%;
   background-size: cover;
+  @media only screen and(max-width: 1200px) {
+    background-image: url("../img/layout/JVB_Krinkel2013_63_med.jpg");
+  }
+  @media only screen and(max-width: 800px) {
+    background-image: url("../img/layout/JVB_Krinkel2013_63_small.jpg");
+  }
 }
 
 .nieuwsPageMainImage {
   @extend %mainImage;
   background: url("../img/layout/JVB_Krinkel2013_61.jpg") no-repeat 50% 25%;
   background-size: cover;
+  @media only screen and(max-width: 1200px) {
+    background-image: url("../img/layout/JVB_Krinkel2013_61_med.jpg");
+  }
+  @media only screen and(max-width: 800px) {
+    background-image: url("../img/layout/JVB_Krinkel2013_61_small.jpg");
+  }
 }
 
 .nieuwsPageWrapper {
