@@ -1,9 +1,12 @@
 /*@ngInject*/
 class SideNavController {
-    constructor(AuthService,$location) {
+    constructor(AuthService,$location,KrinkelService,BASEURL,$window) {
         this.AuthService = AuthService;
         this.$location = $location;
+        this.KrinelService = KrinkelService;
         this.userDetails;
+        this.BASEURL = BASEURL;
+        this.$window = $window;
     }
 
     $onInit() {
@@ -11,17 +14,11 @@ class SideNavController {
 
     logout() {
         this.AuthService.logoutUser();
-        this.$location.path('/login')
+        //this.$location.path('/login')
     }
-
-    go(){
-        var currentUser = this.userDetails;
-
-        if(currentUser.registered && currentUser.hasPaid){
-            this.$location.path('/success');
-        }else{
-            this.$location.path('/home')
-        }
+    redirectToLandingsPage()
+    {
+        this.$window.location.href= this.BASEURL+'/site/index.html';
     }
 
 
@@ -38,4 +35,4 @@ export var SideNavComponent = {
     controller: SideNavController
 };
 
-SideNavComponent.$inject = ['AuthService','$location'];
+SideNavComponent.$inject = ['AuthService','$location','KrinkelService','BASEURL','$window'];

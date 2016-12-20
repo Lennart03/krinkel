@@ -19,6 +19,7 @@ public class MultiSafePayServiceTest extends SpringIntegrationTest {
     private RegistrationParticipant p;
     private RegistrationVolunteer v;
     private Address address;
+    private User currentUser;
 
     @Before
     public void setUp() {
@@ -28,44 +29,46 @@ public class MultiSafePayServiceTest extends SpringIntegrationTest {
         v = new RegistrationVolunteer();
 
         v.setAdNumber("1516");
+
+        currentUser = new User();
     }
 
 
     @Test
     public void createPaymentReturnsDtoWithUrl() throws MultiSafePayService.InvalidPaymentOrderIdException {
-        OrderDto payment = multiSafePayService.createPayment(p, 100);
+        OrderDto payment = multiSafePayService.createPayment(p, 100, currentUser);
         Assert.assertNotNull(payment.getData().getPayment_url());
     }
 
     @Test
     public void createPaymentForVolunteerWithEmptyFieldsReturnsDtoWithUrl() throws MultiSafePayService.InvalidPaymentOrderIdException {
-        OrderDto payment = multiSafePayService.createPayment(v, 6000);
+        OrderDto payment = multiSafePayService.createPayment(v, 6000, currentUser);
         Assert.assertNotNull(payment.getData().getPayment_url());
     }
 
     @Test(expected = InvalidParameterException.class)
     public void createPaymentThrowsErrorWhenOrderIdIsNull() throws MultiSafePayService.InvalidPaymentOrderIdException {
         p.setAdNumber(null);
-        multiSafePayService.createPayment(p, 100);
+        multiSafePayService.createPayment(p, 100, currentUser);
     }
 
     @Test(expected = InvalidParameterException.class)
     public void createPaymentThrowsErrorWhenAmountIsNull() throws MultiSafePayService.InvalidPaymentOrderIdException {
-        multiSafePayService.createPayment(p, null);
+        multiSafePayService.createPayment(p, null, currentUser);
     }
 
     @Test(expected = InvalidParameterException.class)
     public void createPaymentThrowsErrorWhenAmountIsNegative() throws MultiSafePayService.InvalidPaymentOrderIdException {
-        multiSafePayService.createPayment(p, -1);
+        multiSafePayService.createPayment(p, -1, currentUser);
     }
 
     @Test
     public void getParticipantPaymentUriReturnsUri() throws MultiSafePayService.InvalidPaymentOrderIdException {
-        Assert.assertNotNull(multiSafePayService.getParticipantPaymentUri(p, 10000));
+        Assert.assertNotNull(multiSafePayService.getParticipantPaymentUri(p, 10000, currentUser));
     }
 
     @Test
     public void getVolunteerPaymentUriReturnsUri() throws MultiSafePayService.InvalidPaymentOrderIdException {
-        Assert.assertNotNull(multiSafePayService.getVolunteerPaymentUri(v, 6000));
+        Assert.assertNotNull(multiSafePayService.getVolunteerPaymentUri(v, 6000, currentUser));
     }
 }

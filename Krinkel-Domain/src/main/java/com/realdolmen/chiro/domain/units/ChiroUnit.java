@@ -7,7 +7,7 @@ import java.util.List;
 
 /**
  * Data Transfer Object for Chiro Units.
- *
+ * <p>
  * Can represent a ChiroGroup, GewestUnit, or VerbondUnit.
  */
 /*@JsonIdentityInfo(
@@ -25,18 +25,18 @@ public class ChiroUnit {
     private String name;
 
     @JsonProperty("bovenliggende_stamnummer")
-    @JsonIgnoreProperties({"bovenliggende_stamnummer", "onderliggende_stamnummers" })
+    @JsonIgnoreProperties({"bovenliggende_stamnummer", "onderliggende_stamnummers"})
     private ChiroUnit upper;
 
     @JsonProperty("onderliggende_stamnummers")
-    @JsonIgnoreProperties({"bovenliggende_stamnummer", "onderliggende_stamnummers" })
+    @JsonIgnoreProperties({"bovenliggende_stamnummer", "onderliggende_stamnummers"})
     private List<ChiroUnit> lower = new ArrayList<>();
-    
+
     @JsonProperty("aantal_ingeschreven_deelnemers")
-    private int participantsCount=0;
-    
+    private int participantsCount = 0;
+
     @JsonProperty("aantal_ingeschreven_vrijwilligers")
-    private int volunteersCount=0;
+    private int volunteersCount = 0;
 
     public ChiroUnit() {
         this.lower = new ArrayList<>();
@@ -80,52 +80,52 @@ public class ChiroUnit {
         this.lower = lower;
     }
 
-	public int getParticipantsCount() {
-		return participantsCount;
-	}
+    public int getParticipantsCount() {
+        return participantsCount;
+    }
 
-	public void setParticipantsCount(int participantsCount) {
-		this.participantsCount = participantsCount;
-	}
+    public void setParticipantsCount(int participantsCount) {
+        this.participantsCount = participantsCount;
+    }
 
-	public int getVolunteersCount() {
-		return volunteersCount;
-	}
+    public int getVolunteersCount() {
+        return volunteersCount;
+    }
 
-	public void setVolunteersCount(int volunteersCount) {
-		this.volunteersCount = volunteersCount;
-	}
+    public void setVolunteersCount(int volunteersCount) {
+        this.volunteersCount = volunteersCount;
+    }
 
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((name == null) ? 0 : name.hashCode());
-		result = prime * result + ((stam == null) ? 0 : stam.hashCode());
-		return result;
-	}
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + ((name == null) ? 0 : name.hashCode());
+        result = prime * result + ((stam == null) ? 0 : stam.hashCode());
+        return result;
+    }
 
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		ChiroUnit other = (ChiroUnit) obj;
-		if (name == null) {
-			if (other.name != null)
-				return false;
-		} else if (!name.equals(other.name))
-			return false;
-		if (stam == null) {
-			if (other.stam != null)
-				return false;
-		} else if (!stam.equals(other.stam))
-			return false;
-		return true;
-	}
-	
-	
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        ChiroUnit other = (ChiroUnit) obj;
+        if (name == null) {
+            if (other.name != null)
+                return false;
+        } else if (!name.equals(other.name))
+            return false;
+        if (stam == null) {
+            if (other.stam != null)
+                return false;
+        } else if (!stam.equals(other.stam))
+            return false;
+        return true;
+    }
+
+
 }

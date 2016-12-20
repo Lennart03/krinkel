@@ -12,19 +12,19 @@ public class GraphChiroServiceSecurity {
     @Autowired
     UserService userService;
 
-    public boolean hasPermissionToMakeSunGraph(){
+    public boolean hasPermissionToMakeSunGraph() {
         User currentUser = userService.getCurrentUser();
 
         return currentUser != null && currentUser.getRole().equals(SecurityRole.ADMIN);
     }
 
-    public boolean hasPermissionToMakeStatusGraph(){
+    public boolean hasPermissionToMakeStatusGraph() {
         User currentUser = userService.getCurrentUser();
 
         return currentUser != null && currentUser.getRole().equals(SecurityRole.ADMIN);
     }
 
-    public boolean hasPermissionToGetLoginData(){
+    public boolean hasPermissionToGetLoginData() {
         User currentUser = userService.getCurrentUser();
 
         return currentUser != null && currentUser.getRole().equals(SecurityRole.ADMIN);

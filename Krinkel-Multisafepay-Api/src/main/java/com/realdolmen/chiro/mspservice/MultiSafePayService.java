@@ -2,6 +2,8 @@ package com.realdolmen.chiro.mspservice;
 
 import com.realdolmen.chiro.domain.RegistrationParticipant;
 import com.realdolmen.chiro.domain.RegistrationVolunteer;
+import com.realdolmen.chiro.domain.User;
+import com.realdolmen.chiro.domain.dto.UserDTO;
 import com.realdolmen.chiro.mspdto.Data;
 import com.realdolmen.chiro.mspdto.OrderDto;
 import com.realdolmen.chiro.mspdto.StatusDto;
@@ -21,12 +23,18 @@ import java.util.Date;
 
 @Service
 public class MultiSafePayService {
+
     @Autowired
     private MultiSafePayConfiguration configuration;
 
     private RestTemplate restTemplate = new RestTemplate();
 
     private Logger logger = LoggerFactory.getLogger(MultiSafePayService.class);
+
+    private static String getCurrentTimeStamp() {
+        Long test = new Date().getTime();
+        return "-" + test;
+    }
 
     /**
      * Initiates a payment at Multisafepay.
@@ -36,10 +44,40 @@ public class MultiSafePayService {
      * @param amount      specifies the amount that has to be paid in eurocents
      * @return returns the JSON response in object form (an OrderDto object)
      */
-    public OrderDto createPayment(RegistrationParticipant participant, Integer amount) throws InvalidPaymentOrderIdException {
+    public OrderDto createPayment(RegistrationParticipant participant, Integer amount, User currentUser) throws InvalidPaymentOrderIdException {
         if (!createPaymentParamsAreValid(participant.getAdNumber(), amount))
             throw new InvalidParameterException("cannot create a payment with those params");
-        JSONObject jsonObject = this.createPaymentJsonObject(participant, amount);
+        JSONObject jsonObject = this.createPaymentJsonObject(participant, amount, currentUser);
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        HttpEntity<String> entity = new HttpEntity<>(jsonObject.toString(), headers);
+        String url = configuration.getURL() + "?api_key=" + configuration.getApiKey();
+
+
+        try {
+            restTemplate.getMessageConverters()
+                    .add(0, new StringHttpMessageConverter(Charset.forName("UTF-8")));
+            ResponseEntity<OrderDto> response = restTemplate.exchange(url, HttpMethod.POST, entity, OrderDto.class);
+            return response.getBody();
+        } catch (HttpClientErrorException ex) {
+            // Assume failure to be due  to a duplicate OrderID.
+            logger.warn("Request to Payment Site failed with status " + ex.getMessage());
+            throw new InvalidPaymentOrderIdException();
+        }
+    }
+
+    /**
+     * Creates order where all data is retrieved from the currentUser. Example scenario: A user registers a list of
+     * other registration participants from their basket.
+     *
+     * @param amount specifies the amount that has to be paid in eurocents
+     * @return returns the JSON response in object form (an OrderDto object)
+     * @throws InvalidPaymentOrderIdException
+     */
+    public OrderDto createPayment(Integer amount, UserDTO currentUser) throws InvalidPaymentOrderIdException {
+        if (!createPaymentParamsAreValid(currentUser.getAdNumber(), amount))
+            throw new InvalidParameterException("cannot create a payment with those params");
+        JSONObject jsonObject = this.createPaymentJsonObject(amount, currentUser);
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
         HttpEntity<String> entity = new HttpEntity<>(jsonObject.toString(), headers);
@@ -61,18 +99,16 @@ public class MultiSafePayService {
     private boolean createPaymentParamsAreValid(String orderId, Integer amount) {
         boolean res = true;
 
-        if (orderId == null)
+        if (orderId == null) {
+            logger.error("orderId payment = null");
             res = false;
+        }
 
-        if (amount == null || amount < 0)
+        if (amount == null || amount < 0) {
+            logger.error("amount payment = null or negative");
             res = false;
-
+        }
         return res;
-    }
-
-    private static String getCurrentTimeStamp() {
-        Long test = new Date().getTime();
-        return "-" + test;
     }
 
     /**
@@ -104,13 +140,12 @@ public class MultiSafePayService {
      * }
      * }
      */
-    private JSONObject createPaymentJsonObject(RegistrationParticipant participant, Integer amount) {
+    private JSONObject createPaymentJsonObject(RegistrationParticipant participant, Integer amount, User currentUser) {
         JSONObject paymentOptions = configuration.getPaymentOptions();
         JSONObject customer = new JSONObject();
+        JSONObject jsonObject = new JSONObject();
 
         customer.put("locale", "nl_BE");
-        customer.put("first_name", participant.getFirstName());
-        customer.put("last_name", participant.getLastName());
 
         if (participant.getAddress() != null) {
             customer.put("address1", participant.getAddress().getStreet());
@@ -123,17 +158,45 @@ public class MultiSafePayService {
         customer.put("phone", participant.getPhoneNumber());
 
         if (participant.getEmailSubscriber() != null) {
+            customer.put("first_name", currentUser.getFirstname());
+            customer.put("last_name", currentUser.getLastname());
             customer.put("email", participant.getEmailSubscriber());
+            jsonObject.put("description", "Betaling voor Krinkel voor:" + participant.getFirstName() + " " + participant.getLastName());
         } else {
+            customer.put("first_name", participant.getFirstName());
+            customer.put("last_name", participant.getLastName());
             customer.put("email", participant.getEmail());
+            jsonObject.put("description", "Betaling voor Krinkel");
         }
 
 
-        JSONObject jsonObject = new JSONObject();
-
         jsonObject.put("type", "redirect");
         jsonObject.put("order_id", participant.getAdNumber() + getCurrentTimeStamp());
-        jsonObject.put("description", "Payment for Krinkel ");
+        jsonObject.put("currency", "EUR");
+        jsonObject.put("amount", amount);
+        jsonObject.put("payment_options", paymentOptions);
+        jsonObject.put("customer", customer);
+
+        return jsonObject;
+    }
+
+    private JSONObject createPaymentJsonObject(Integer amount, UserDTO currentUser) {
+        JSONObject paymentOptions = configuration.getPaymentOptions();
+        JSONObject customer = new JSONObject();
+        JSONObject jsonObject = new JSONObject();
+
+        customer.put("locale", "nl_BE");
+
+        customer.put("country", "BE");
+
+        customer.put("first_name", currentUser.getFirstName());
+        customer.put("last_name", currentUser.getLastName());
+        customer.put("email", currentUser.getEmail());
+        jsonObject.put("description", "Betaling voor Krinkel");
+
+
+        jsonObject.put("type", "redirect");
+        jsonObject.put("order_id", currentUser.getAdNumber() + getCurrentTimeStamp());
         jsonObject.put("currency", "EUR");
         jsonObject.put("amount", amount);
         jsonObject.put("payment_options", paymentOptions);
@@ -150,13 +213,17 @@ public class MultiSafePayService {
      * @param amount the amount the participant or volunteer has to pay
      * @return the url at which the payment page is located
      */
-    public String getParticipantPaymentUri(RegistrationParticipant p, Integer amount) throws InvalidPaymentOrderIdException {
-        return this.createPayment(p, amount).getData().getPayment_url();
+    public String getParticipantPaymentUri(RegistrationParticipant p, Integer amount, User currentUser) throws InvalidPaymentOrderIdException {
+        return this.createPayment(p, amount, currentUser).getData().getPayment_url();
 
     }
 
-    public String getVolunteerPaymentUri(RegistrationVolunteer v, Integer amount) throws InvalidPaymentOrderIdException {
-        return this.createPayment(v, amount).getData().getPayment_url();
+    public String getBasketPaymentUri(Integer amount, UserDTO currentUser) throws InvalidPaymentOrderIdException {
+        return this.createPayment(amount, currentUser).getData().getPayment_url();
+    }
+
+    public String getVolunteerPaymentUri(RegistrationVolunteer v, Integer amount, User currentUser) throws InvalidPaymentOrderIdException {
+        return this.createPayment(v, amount, currentUser).getData().getPayment_url();
     }
 
     public boolean orderIsPaid(String testOrderId) {

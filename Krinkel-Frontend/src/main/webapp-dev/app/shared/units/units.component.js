@@ -1,28 +1,28 @@
 class UnitsController {
-    constructor(KrinkelService, AuthService, MapperService) {
+    constructor(KrinkelService, AuthService, MapperService, $route) {
         this.KrinkelService = KrinkelService;
         this.AuthService = AuthService;
         this.MapperService = MapperService;
+        this.$route = $route;
+        this.initSelectPayStatus();
     }
 
     $onInit() {
         this.KrinkelService.getVerbonden().then((results) => {
             this.verbonden = results;
-            // this.getParticipantsForUnit(this.verbonden);
         });
     }
 
     openExtraInfo(verbond) {
         this.openVerbond(verbond);
 
-        if (!verbond.stamnummer.endsWith("00") && this.AuthService.getUserRole() === 'ADMIN') {
+        if (!verbond.stamnummer.endsWith("00")) {
             this.openUsers(verbond);
         }
     }
 
-
-
     openUsers(verbond) {
+
         this.unitLevel = verbond.naam;
         this.userDetails = true;
         this.participantDetails = true;
@@ -54,31 +54,10 @@ class UnitsController {
     openVerbond(verbond) {
         this.KrinkelService.getGewestenForVerbond(verbond.stamnummer).then((results) => {
             this.unitLevel = verbond.naam;
-            this.verbonden = results.onderliggende_stamnummers;
-            this.verbond = results;
-
-            if (results.onderliggende_stamnummers != 0) {
-                // this.getParticipantsForUnit(this.verbonden);
-            }
+            this.verbonden = results;
+            this.verbond = verbond;
         });
     }
-
-    // getParticipantsForUnit(verbonden) {
-    //     // angular.forEach(verbonden, (value, index) => {
-    //     //     this.KrinkelService.getParticipantsForUnit(value.stamnummer).then((results) => {
-    //     //         value.amountParticipants = results[0];
-    //     //         value.amountVolunteers = results[1];
-    //     //     })
-    //     // });
-    //     verbonden.forEach((r) => {
-    //         this.KrinkelService.getParticipantsOfUnit(r.stamnummer).then((results) => {
-    //             this.verbonden.aantal_ingeschreven_deelnemers = results;
-    //         });
-    //         this.KrinkelService.getVolunteersOfUnit(r.stamnummer).then((results) => {
-    //             this.verbonden.aantal_ingeschreven_vrijwilligers = results;
-    //         });
-    //     })
-    // }
 
     goToPrevious(verbond) {
         this.unitLevel = null;
@@ -86,14 +65,11 @@ class UnitsController {
         this.participantDetails = false;
         this.volunteerDetails = false;
 
-        if (verbond.bovenliggende_stamnummer != null) {
-            this.openVerbond(verbond.bovenliggende_stamnummer);
-        } else if (!verbond.stamnummer.endsWith("000")) {
-            this.openVerbond(verbond.stamnummer);
+        if(verbond.bovenliggende_stamnummer != null){
+            this.openVerbond(verbond.bovenliggende_stamnummer)
         } else {
             this.KrinkelService.getVerbonden().then((results) => {
                 this.verbonden = results;
-                // this.getParticipantsForUnit(this.verbonden);
             });
         }
     }
@@ -107,6 +83,35 @@ class UnitsController {
             this.participantDetails = false;
         }
     }
+
+    //TODO: remove getElementById & setAttribute when 'reloading to same view' is implemented and uncomment the route.reload()
+    putParticipantToCancelled(participantId) {
+        if (participantId != null) {
+            this.KrinkelService.putParticipantToCancelled(participantId).then((result) => {
+                //this.$route.reload();
+            });
+
+            let id = document.getElementById(participantId);
+            id.setAttribute('style', 'display: none;');
+        }
+    }
+
+    saveData(participantId, paymentStatus) {
+        this.KrinkelService.updatePayment(participantId, paymentStatus);
+    }
+
+    initCancelModal(modalId) {
+        let modalName = '#modal' + modalId;
+        $(modalName).openModal();
+    }
+
+    initSelectPayStatus() {
+        this.statusses =  [
+            { 'value': 'TO_BE_PAID', 'label': 'Niet betaald' },
+            { 'value': 'PAID', 'label': 'Betaald' },
+            { 'value': 'CONFIRMED', 'label': 'Bevestigd'}
+            ]
+    }
 }
 
 export var UnitsComponent = {
@@ -114,4 +119,4 @@ export var UnitsComponent = {
     controller: UnitsController
 };
 
-UnitsComponent.$inject = ['KrinkelService', 'AuthService', 'MapperService'];
+UnitsComponent.$inject = ['KrinkelService', 'AuthService', 'MapperService','$route'];

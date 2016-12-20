@@ -10,7 +10,7 @@ import java.io.Serializable;
 
 /**
  * Country is always assumed to be Belgium.
- *
+ * <p>
  * While a small portion of members are from other countries,
  * these do not use the registration form provided by this app.
  * These are handled by the administration itself.
@@ -20,10 +20,9 @@ public class Address implements Serializable {
     /**
      * Longest street name in Belgium is:
      * "Burgemeester Charles Rotsart de Hertainglaan" - 44 characters
-     *
      */
     @NotBlank
-    @Size(max=60)
+    @Size(max = 60)
     private String street;
 
     /**
@@ -43,7 +42,7 @@ public class Address implements Serializable {
      * 'Nil-Saint-Vincent-Saint-Martin'(30 characters in total)
      */
     @NotBlank
-    @Size(max=50)
+    @Size(max = 50)
     private String city;
 
     public Address(String street, String houseNumber, int postalCode, String city) {
@@ -87,5 +86,10 @@ public class Address implements Serializable {
 
     public void setPostalCode(int postalCode) {
         this.postalCode = postalCode;
+    }
+
+    @Override
+    public String toString(){
+        return street + " " + houseNumber + " " + postalCode + " " + city;
     }
 }

@@ -1,18 +1,22 @@
 <ul id="slide-out" class="side-nav fixed">
     <li class="logo">
-        <a id="logo-container" ng-click="$ctrl.go()" class="brand-logo">
-            <!--<object id="front-page-logo" type="image/svg+xml" data="../../../res/logo.svg">Your browser does not support SVG</object>-->
+        <a id="logo-container" ng-click="$ctrl.redirectToLandingsPage()" href="" class="brand-logo">
         </a>
     </li>
 
     <div ng-if="$ctrl.AuthService.getLoggedinUser() != null">
+        <!--<li>-->
+        <!--<a class="subheader">-->
+        <!--Inschrijven-->
+        <!--</a>-->
+        <!--</li>-->
         <li class="collection-item" ng-if="$ctrl.getUserDetails().hasPaid == false">
             <a href="/register-participant">
                 <i class="material-icons">person_add</i> Schrijf je in
             </a>
         </li>
         <li class="collection-item">
-            <a href="/select-participant">
+            <a href="/cart">
                 <i class="material-icons">group_add</i> Schrijf anderen in
             </a>
         </li>
@@ -22,37 +26,70 @@
             </a>
         </li>
         <li>
-            <div class="divider" ng-if="$ctrl.AuthService.getUserRole() === 'ADMIN'">
+            <div class="divider">
             </div>
         </li>
         <li>
-            <a class="subheader" ng-if="$ctrl.AuthService.getUserRole() === 'ADMIN'">
+            <a class="subheader">
                 Administratie
             </a>
         </li>
-        <li class="collection-item" ng-if="$ctrl.AuthService.getUserRole() === 'ADMIN'">
+        <!--<li class="collection-item" ng-if="$ctrl.AuthService.getUserRole() === 'ADMIN'">-->
+            <!--<a href="/analytics">-->
+                <!--<i class="material-icons">equalizer</i> Overzicht inschrijvingen-->
+            <!--</a>-->
+        <!--</li>-->
+        <li class="collection-item">
             <a href="/analytics">
                 <i class="material-icons">equalizer</i> Overzicht inschrijvingen
             </a>
         </li>
         <li class="collection-item" ng-if="$ctrl.AuthService.getUserRole() === 'ADMIN'">
-            <a href="http://krinkel2017bo.azurewebsites.net/" target="_blank">
+            <a href="https://accounts.google.com/ServiceLogin?sacu=1&continue=https%3A%2F%2Fanalytics.google.com%2Fanalytics%2Fweb%2F%23&followup=https%3A%2F%2Fanalytics.google.com%2Fanalytics%2Fweb%2F&service=analytics#identifier" target="_blank">
                 <i class="material-icons">timeline</i> Statistieken
+            </a>
+        </li>
+
+        <li class="collection-item" ng-if="$ctrl.AuthService.getUserRole() === 'ADMIN'">
+            <a href="/admin">
+                <i class="material-icons">build</i> Admin
+            </a>
+        </li>
+
+        <li>
+            <div class="divider">
+            </div>
+        </li>
+        <li class="collection-item">
+            <a ng-click="$ctrl.logout()" href="#">
+                <i class="material-icons">exit_to_app</i>Afmelden
             </a>
         </li>
 
         <li>
             <br/>
         </li>
+        <a href="http://www.realdolmen.com/" target="_blank">
+            <div class="center-align col l12">
 
-        <li class="collection-item">
-            <a ng-click="$ctrl.logout()" href="#">
-                <i class="material-icons">exit_to_app</i>Afmelden
-            </a>
-        </li>
+                <img src="http://www.realdolmen.com/themes/itr_theme/images/dest/svg/sprite/individual/logo.svg"/>
+                <!--<object data="http://www.realdolmen.com/themes/itr_theme/images/dest/svg/sprite/individual/logo.svg"-->
+                <!--type="image/svg+xml">-->
+                <!--&lt;!&ndash;<img src="yourfallback.jpg" />&ndash;&gt;-->
+                <!--</object>-->
+
+                <!--<div id="rd-logo" class="col l12 bottom brand-logo">-->
+                <!--&lt;!&ndash;<img src={require("../../../res/r.jpg")} class="bottom" style="">&ndash;&gt;-->
+                <!--</div>-->
+            </div>
+        </a>
+        <!--<a id="logo-container-rd"  class="brand-logo"></a>-->
+
     </div>
 
     <div class="setlocked" ng-if="$ctrl.AuthService.getLoggedinUser() == null">
         <i class="material-icons large lockicon">lock</i>
     </div>
+
+
 </ul>

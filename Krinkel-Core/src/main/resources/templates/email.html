@@ -305,7 +305,7 @@ a[x-apple-data-detectors] {
 																						gegevens ontvangen. Hieronder vind je de gegevens
 																						die je invulde. Wil je iets veranderen aan je
 																						inschrijving? Laat het weten via
-																						inschrijvingen@krinkel.be.
+																						<a href="mailto:inschrijvingen@krinkel.be">inschrijvingen@krinkel.be</a>.
 																					</p>
 																					<p th:case="true">
 																						Hallo! Je hebt <span
@@ -316,7 +316,7 @@ a[x-apple-data-detectors] {
 																						gegevens ontvangen. Hieronder vind je de gegevens
 																						die je invulde. Wil je iets veranderen aan je
 																						inschrijving? Laat het weten via
-																						inschrijvingen@krinkel.be.
+																						<a href="mailto:inschrijvingen@krinkel.be">inschrijvingen@krinkel.be</a>.
 																					</p>
 
 																				</div>
@@ -338,7 +338,7 @@ a[x-apple-data-detectors] {
 																					<tr>
 																						<td><b>Straat en huisnummer:</b></td>
 																						<td
-																							th:text="${participant.address.street} + ', ' + ${participant.address.houseNumber}"></td>
+																							th:text="${participant.address.street}"></td>
 																						<td><b>Postcode en Gemeente:</b></td>
 																						<td
 																							th:text="${participant.address.postalCode} + ', ' + ${participant.address.city}"></td>
@@ -455,7 +455,7 @@ a[x-apple-data-detectors] {
 																					dan het hele bedrag teruggestort. Geldige redenen
 																					voor uitschrijven zijn:</p>
 																				<ul>
-																					<li>Herexamens. Je schrijft je uit voor x
+																					<li>Herexamens. Je schrijft je uit voor 6
 																						augustus.</li>
 																					<li>Huwelijken, of andere belangrijke
 																						familiale momenten zijn ook geldige redenen om je
@@ -484,20 +484,17 @@ a[x-apple-data-detectors] {
 																				<table align="center" border="0" cellpadding="0"
 																					cellspacing="0" width="100%">
 																					<tr>
-																						<td align="center"><span>Ga je hiermee
-																								akkoord klik dan op:</span></td>
+																						<td align="center"><span>Ga je akkoord met de algemene voorwaarden hieronder, klik dan op:</span></td>
 																					</tr>
 																					<tr>
 																						<td align="center" valign="middle">
 																							<table align="center" border="0" cellspacing="0"
 																								cellpadding="0" style="width: 200px" width="200">
 																								<tr>
-																									<td align="center" bgcolor="#6DC6DD"
-																										style="padding: 20px;" valign="top"><a
-																										th:href="${confirmationLink}" target="_blank"
-																										style="background-color: #6DC6DD; border-collapse: separate; border-top: 20px solid #6DC6DD; border-right: 40px solid #6DC6DD; border-bottom: 20px solid #6DC6DD; border-left: 40px solid #6DC6DD; border-radius: 3px; color: #FFFFFF; display: inline-block; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 600; letter-spacing: .3px; text-decoration: none;">Bevestigen</a>
-
-																									</td>
+                                                                                                        <td align="center" bgcolor="#6DC6DD"
+                                                                                                            style="padding: 20px;" valign="top"><a target="_blank" th:href="${confirmationLink}"
+                                                                                                            style="background-color: #6DC6DD; border-collapse: separate; border-top: 20px solid #6DC6DD; border-right: 40px solid #6DC6DD; border-bottom: 20px solid #6DC6DD; border-left: 40px solid #6DC6DD; border-radius: 3px; color: #FFFFFF; display: inline-block; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 600; letter-spacing: .3px; text-decoration: none;">Bevestigen</a>
+                                                                                                        </td>
 																								</tr>
 																							</table>
 

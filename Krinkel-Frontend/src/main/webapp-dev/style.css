@@ -21,7 +21,17 @@ i.icon-green {
     margin-bottom: 32px;
     text-align: center;
 }
-
+.add-btn{
+    padding-top: 10px;
+    width: 100%;
+    clear: both;
+}
+.pay-btn{
+    padding-top: 20px;
+}
+.table-valign{
+    vertical-align: middle;
+}
 #front-page-logo {
     display: inline-block;
     height: 100%;
@@ -147,4 +157,14 @@ body {
 
 .collection-item:hover{
     cursor: pointer;
+}
+
+#logo-container-rd {
+    background-image: url("http://www.realdolmen.com/themes/itr_theme/images/dest/svg/sprite/individual/logo.svg");
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+}
+
+.block {
+    display: block;
 }

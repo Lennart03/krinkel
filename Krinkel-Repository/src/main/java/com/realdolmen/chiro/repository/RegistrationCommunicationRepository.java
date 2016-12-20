@@ -12,7 +12,7 @@ import com.realdolmen.chiro.domain.RegistrationCommunication;
 @Repository
 public interface RegistrationCommunicationRepository extends JpaRepository<RegistrationCommunication, Long> {
     RegistrationCommunication findByAdNumber(String adNumber);
-    //@Query(value="SELECT * FROM registration_communication WHERE status IN ('WAITING', 'FAILED')", nativeQuery=true)
-    @Query(value="SELECT r FROM RegistrationCommunication r WHERE r.status IN (com.realdolmen.chiro.domain.SendStatus.WAITING, com.realdolmen.chiro.domain.SendStatus.FAILED)")
+
+    @Query(value = "SELECT r FROM RegistrationCommunication r WHERE r.status IN (com.realdolmen.chiro.domain.SendStatus.WAITING, com.realdolmen.chiro.domain.SendStatus.FAILED)")
     List<RegistrationCommunication> findAllWaitingAndFailed();
 }

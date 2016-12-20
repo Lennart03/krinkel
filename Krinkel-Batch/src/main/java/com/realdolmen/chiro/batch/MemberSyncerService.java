@@ -16,13 +16,11 @@ public class MemberSyncerService {
     private Logger logger = org.slf4j.LoggerFactory.getLogger(MemberSyncerService.class);
 
     @Autowired
-    private RegistrationParticipantService service;
+    private RegistrationParticipantService registrationParticipantService;
 
     @Autowired
-    private ChiroUserAdapter adapter;
-
-    //TODO: update the interval to be less frequent
-
+    private ChiroUserAdapter chiroUserAdapter;
+    
     /**
      * Periodically sync all people in our database that have the status CONFIRMED to the chiro's DB.
      * This done through a batch job so that when a sync fails, it can be done again. On succes, the user will also
@@ -30,22 +28,22 @@ public class MemberSyncerService {
      */
     @Scheduled(cron = "${sync.cron.timer}")
     public void syncUsersToChiroDB() {
-        List<RegistrationParticipant> all = service.getSyncReadyParticipants();
+        List<RegistrationParticipant> all = registrationParticipantService.getSyncReadyParticipants();
 
         if (all.isEmpty()) {
-            logger.info("Couldn't find any registrations for participants");
+//            logger.info("Couldn't find any registrations for participants");
         } else {
             logger.info("found " + all.size() + " participants");
 
             for (RegistrationParticipant participant: all) {
-                logger.info("Syncing participant with id: " + participant.getId());
+                logger.info("Syncing participant with id: " + participant.getId() + " and ad number " + participant.getAdNumber());
 
                 try {
-                    adapter.syncUser(participant);
-                    service.setUserToSynced(participant.getAdNumber());
-                    logger.info("succesfully synced user with id " + participant.getId());
+                    chiroUserAdapter.syncUser(participant);
+                    registrationParticipantService.setUserToSynced(participant.getAdNumber());
+                    logger.info("succesfully synced user with id " + participant.getId() + " and ad number " + participant.getAdNumber());
                 } catch (Exception e) {
-                    logger.info("Failed to sync participant with " + participant.getId());
+                    logger.info("Failed to sync participant with " + participant.getId() + " and ad number " + participant.getAdNumber());
                 }
             }
         }

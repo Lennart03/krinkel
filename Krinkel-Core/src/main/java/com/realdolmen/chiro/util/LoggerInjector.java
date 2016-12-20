@@ -10,15 +10,15 @@ import org.springframework.util.ReflectionUtils;
 /**
  * BeanPostProcessor which injects a slf4j Logger instance into the bean.
  * Adapted from http://memorynotfound.com/spring-inject-logger-annotation-example/
- *
+ * <p>
  * Searches for KrinkelLogger annotation and generates the correct logger instance.
- *
+ * <p>
  * TODO: Make it work seamlessly in tests...
  *
  * @see KrinkelLogger
  */
 @Component
-public class LoggerInjector implements BeanPostProcessor{
+public class LoggerInjector implements BeanPostProcessor {
 
     @Override
     public Object postProcessBeforeInitialization(Object bean, String name) throws BeansException {

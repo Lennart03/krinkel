@@ -48,7 +48,7 @@ public class EmailSenderServiceImpl implements EmailSenderService {
     private ConfirmationLinkService confirmationLinkService;
 
     @Override
-    public Future<String> sendMail(RegistrationParticipant participant) {
+    public Future<String> sendMail(RegistrationParticipant participant) { //todo:fix spam when subscriber email is not set
         MimeMessage message = mailSender.createMimeMessage();
         Context ctx = new Context();
 
@@ -58,6 +58,7 @@ public class EmailSenderServiceImpl implements EmailSenderService {
         ctx.setVariable("isVolunteer", participant instanceof RegistrationVolunteer);
         String url = "";
 
+        //Create confirmation URL in case the participant is registered by someone else
         if (participant.isRegisteredByOther()) {
             try {
                 ConfirmationLink confirmationLink = confirmationLinkService.createConfirmationLink(participant.getAdNumber());
@@ -67,7 +68,7 @@ public class EmailSenderServiceImpl implements EmailSenderService {
             }
         }
 
-        ctx.setVariable("isMailToSubscriber",false);
+        ctx.setVariable("isMailToSubscriber", false);
         ctx.setVariable("confirmationLink", url);
 
         String emailText = thymeleaf.process("email", ctx);
@@ -80,14 +81,14 @@ public class EmailSenderServiceImpl implements EmailSenderService {
             MimeMessageHelper helper = new MimeMessageHelper(message, true);
 
             String emailTo = participant.getEmail();
-            helper = setHelper(helper,emailText,image,emailTo);
+            helper = setHelper(helper, emailText, image, emailTo);
 
             logger.info("trying to send confirmation email to: " + participant.getEmail());
             mailSender.send(message);
 
             if (participant.isRegisteredByOther() && participant.getEmailSubscriber() != null) {
 
-                ctx.setVariable("isMailToSubscriber",true);
+                ctx.setVariable("isMailToSubscriber", true);
 
                 emailText = thymeleaf.process("email", ctx);
 
@@ -95,7 +96,7 @@ public class EmailSenderServiceImpl implements EmailSenderService {
                 emailTo = participant.getEmailSubscriber();
 
                 helper = new MimeMessageHelper(message, true);
-                helper = setHelper(helper,emailText,image,emailTo);
+                helper = setHelper(helper, emailText, image, emailTo);
 
                 mailSender.send(message);
             }
@@ -103,8 +104,8 @@ public class EmailSenderServiceImpl implements EmailSenderService {
             registrationCommunication.setStatus(SendStatus.SENT);
             registrationCommunicationRepository.save(registrationCommunication);
             logger.info("sending confirmation email to: " + participant.getEmail() + " succeeded");
-            if ( participant.getEmailSubscriber() != null) {
-            logger.info("sending email to: " + participant.getEmailSubscriber() + " succeeded");
+            if (participant.getEmailSubscriber() != null) {
+                logger.info("sending email to: " + participant.getEmailSubscriber() + " succeeded");
             }
             return new AsyncResult<String>("ok");
         } catch (Exception e) {
@@ -118,16 +119,13 @@ public class EmailSenderServiceImpl implements EmailSenderService {
 
 
     private RegistrationParticipant fillInEmptyFields(RegistrationParticipant participant) {
-        if (participant.getMedicalRemarks() == null)
-        {
+        if (participant.getMedicalRemarks() == null) {
             participant.setMedicalRemarks("geen");
         }
-        if (participant.getRemarksFood() == null)
-        {
+        if (participant.getRemarksFood() == null) {
             participant.setRemarksFood("geen");
         }
-        if (participant.getRemarks() == null)
-        {
+        if (participant.getRemarks() == null) {
             participant.setRemarks("geen");
         }
 

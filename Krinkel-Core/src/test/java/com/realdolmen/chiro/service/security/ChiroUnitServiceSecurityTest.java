@@ -1,9 +1,11 @@
 package com.realdolmen.chiro.service.security;
 
+import com.realdolmen.chiro.domain.RegistrationParticipant;
 import com.realdolmen.chiro.domain.SecurityRole;
 import com.realdolmen.chiro.domain.User;
+import com.realdolmen.chiro.domain.units.ChiroUnit;
+import com.realdolmen.chiro.domain.vo.RolesAndUpperClasses;
 import com.realdolmen.chiro.service.UserService;
-import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -11,165 +13,704 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
 
+import java.util.Map;
+import java.util.TreeMap;
+
+import static org.junit.Assert.assertEquals;
+
 @RunWith(MockitoJUnitRunner.class)
 public class ChiroUnitServiceSecurityTest {
     @InjectMocks
-    ChiroUnitServiceSecurity chiroUnitServiceSecurity;
+    private ChiroUnitServiceSecurity chiroUnitServiceSecurity;
 
     @Mock
     private UserService userService;
 
+    ///////////////////////////////////////////////////
+    //////          VERBONDEN (ONE PLOEG)      ////////
+    ///////////////////////////////////////////////////
     @Test
-    public void hasPermissionToGetUsersReturnsFalseWhenNoLoggedInUser(){
-        boolean b = chiroUnitServiceSecurity.hasPermissionToGetColleagues();
-        Assert.assertEquals(false, b);
+    public void hasPermissionToFindVerbondenFailsWhenNoLoggedInUser() {
+        boolean access = chiroUnitServiceSecurity.hasPermissionToFindVerbonden();
+        assertEquals(false, access);
     }
 
     @Test
-    public void hasPermissionToGetUsersReturnsTrueWhenLoggedInUser(){
-        User user = new User();
-        Mockito.when(userService.getCurrentUser()).thenReturn(user);
-
-        boolean b = chiroUnitServiceSecurity.hasPermissionToGetColleagues();
-
-        Assert.assertEquals(true, b);
+    public void hasPermissionToFindVerbondenSucceedsWhenLoggedIn() {
+        User arne = new User();
+        Mockito.when(userService.getCurrentUser()).thenReturn(arne);
+        boolean access = chiroUnitServiceSecurity.hasPermissionToFindVerbonden();
+        assertEquals(true, access);
     }
 
     @Test
-    public void hasPermissionToSeeColleaguesReturnsFalseWhenNoLoggedInUser(){
-        boolean b = chiroUnitServiceSecurity.hasPermissionToSeeColleagues(null);
+    public void hasPermissionToSeeVerbondFailsWhenUserHasOneGroepAndIsNotInVerbondAndNotAdminAndNotNationaal() throws Exception {
+        User mathias = new User();
+        Map<String, RolesAndUpperClasses> rolesAndUpperClassesByStam = new TreeMap<>();
+        RolesAndUpperClasses rolesAndUpperClasses = new RolesAndUpperClasses(SecurityRole.GROEP, "AG0400");
+        rolesAndUpperClassesByStam.put("AG0103", rolesAndUpperClasses);
+        mathias.setRolesAndUpperClassesByStam(rolesAndUpperClassesByStam);
+        mathias.setStamnummer("AG0103");
+        mathias.setRole(SecurityRole.GROEP);
 
-        Assert.assertEquals(false, b);
+        ChiroUnit chiroUnit = new ChiroUnit();
+        chiroUnit.setStam("BG0000");
+
+        Mockito.when(userService.getCurrentUser()).thenReturn(mathias);
+
+        boolean access = chiroUnitServiceSecurity.hasPermissionToSeeVerbonden(chiroUnit);
+        assertEquals(false, access);
     }
 
     @Test
-    public void hasPesmissionToSeeColleaguesReturnsFalseWhenNumbersNotEqual(){
-        User currentUser = new User();
-        currentUser.setStamnummer("123");
-        Mockito.when(userService.getCurrentUser()).thenReturn(currentUser);
+    public void hasPermissionToSeeVerbondFailsWhenUserHasOneGewestAndIsNotInVerbondAndIsNotAdminAndNotNationaal() throws Exception {
+        User mathias = new User();
+        Map<String, RolesAndUpperClasses> rolesAndUpperClassesByStam = new TreeMap<>();
+        RolesAndUpperClasses rolesAndUpperClasses = new RolesAndUpperClasses(SecurityRole.GEWEST, "AG0000");
+        rolesAndUpperClassesByStam.put("AG0400", rolesAndUpperClasses);
+        mathias.setRolesAndUpperClassesByStam(rolesAndUpperClassesByStam);
+        mathias.setStamnummer("AG0400");
+        mathias.setRole(SecurityRole.GROEP);
 
-        User user = new User();
-        user.setStamnummer("321");
+        ChiroUnit chiroUnit = new ChiroUnit();
+        chiroUnit.setStam("BG0000");
 
-        boolean b = chiroUnitServiceSecurity.hasPermissionToSeeColleagues(user);
-        Assert.assertEquals(false, b);
+        Mockito.when(userService.getCurrentUser()).thenReturn(mathias);
+
+        boolean access = chiroUnitServiceSecurity.hasPermissionToSeeVerbonden(chiroUnit);
+        assertEquals(false, access);
     }
 
     @Test
-    public void hasPesmissionToSeeColleaguesReturnsTrueWhenNumbersEqual(){
-        User currentUser = new User();
-        currentUser.setStamnummer("123");
-        Mockito.when(userService.getCurrentUser()).thenReturn(currentUser);
+    public void hasPermissionToSeeVerbondFailsWhenUserHasOneVerbondAndIsNotInVerbondAndIsNotAdminAndNotNationaal() throws Exception {
+        User mathias = new User();
+        Map<String, RolesAndUpperClasses> rolesAndUpperClassesByStam = new TreeMap<>();
+        RolesAndUpperClasses rolesAndUpperClasses = new RolesAndUpperClasses(SecurityRole.VERBOND, "AG0000");
+        rolesAndUpperClassesByStam.put("AG0000", rolesAndUpperClasses);
+        mathias.setRolesAndUpperClassesByStam(rolesAndUpperClassesByStam);
+        mathias.setStamnummer("AG0000");
+        mathias.setRole(SecurityRole.GROEP);
 
-        boolean b = chiroUnitServiceSecurity.hasPermissionToSeeColleagues(currentUser);
-        Assert.assertEquals(true, b);
+        ChiroUnit chiroUnit = new ChiroUnit();
+        chiroUnit.setStam("BG0000");
+
+        Mockito.when(userService.getCurrentUser()).thenReturn(mathias);
+
+        boolean access = chiroUnitServiceSecurity.hasPermissionToSeeVerbonden(chiroUnit);
+        assertEquals(false, access);
     }
 
     @Test
-    public void hasPermissionToGetVolunteersReturnsFalseWhenNoLoggedInUser(){
-        boolean b = chiroUnitServiceSecurity.hasPermissionToGetVolunteers();
+    public void hasPermissionToSeeVerbondSuccessWhenUserHasOneGroepAndIsNationaal() throws Exception {
+        User mathias = new User();
+        Map<String, RolesAndUpperClasses> rolesAndUpperClassesByStam = new TreeMap<>();
+        RolesAndUpperClasses rolesAndUpperClasses = new RolesAndUpperClasses(SecurityRole.VERBOND, "AG0000");
+        rolesAndUpperClassesByStam.put("NAT", rolesAndUpperClasses);
+        mathias.setRolesAndUpperClassesByStam(rolesAndUpperClassesByStam);
+        mathias.setStamnummer("NAT");
+        mathias.setRole(SecurityRole.GROEP);
 
-        Assert.assertEquals(false, b);
+        ChiroUnit chiroUnit = new ChiroUnit();
+        chiroUnit.setStam("BG0000");
+
+        Mockito.when(userService.getCurrentUser()).thenReturn(mathias);
+
+        boolean access = chiroUnitServiceSecurity.hasPermissionToSeeVerbonden(chiroUnit);
+        assertEquals(true, access);
     }
 
     @Test
-    public void hasPermissionToGetVolunteersReturnsFalseWhenRoleNotAdmin(){
-        User currentUser = new User();
-        currentUser.setRole(SecurityRole.GROEP);
-        Mockito.when(userService.getCurrentUser()).thenReturn(currentUser);
+    public void hasPermissionToSeeVerbondSuccessWhenUserHasOneGroepAndIsAdmin() throws Exception {
+        User mathias = new User();
+        Map<String, RolesAndUpperClasses> rolesAndUpperClassesByStam = new TreeMap<>();
+        RolesAndUpperClasses rolesAndUpperClasses = new RolesAndUpperClasses(SecurityRole.GROEP, "AG0400");
+        rolesAndUpperClassesByStam.put("AG0103", rolesAndUpperClasses);
+        mathias.setRolesAndUpperClassesByStam(rolesAndUpperClassesByStam);
+        mathias.setStamnummer("AG0103");
+        mathias.setRole(SecurityRole.ADMIN);
 
-        boolean b = chiroUnitServiceSecurity.hasPermissionToGetVolunteers();
-        Assert.assertEquals(false, b);
+        ChiroUnit chiroUnit = new ChiroUnit();
+        chiroUnit.setStam("BG0000");
+
+        Mockito.when(userService.getCurrentUser()).thenReturn(mathias);
+
+        boolean access = chiroUnitServiceSecurity.hasPermissionToSeeVerbonden(chiroUnit);
+        assertEquals(true, access);
     }
 
     @Test
-    public void hasPermissionToGetVolunteersReturnsTrueWhenRoleAdmin(){
-        User currentUser = new User();
-        currentUser.setRole(SecurityRole.ADMIN);
-        Mockito.when(userService.getCurrentUser()).thenReturn(currentUser);
+    public void hasPermissionToSeeVerbondSuccessWhenUserHasOneGroepAndIsInVerbondAndNotAdminAndNotNationaal() {
+        User mathias = new User();
+        Map<String, RolesAndUpperClasses> rolesAndUpperClassesByStam = new TreeMap<>();
+        RolesAndUpperClasses rolesAndUpperClasses = new RolesAndUpperClasses(SecurityRole.GROEP, "AG0400");
+        rolesAndUpperClassesByStam.put("AG0103", rolesAndUpperClasses);
+        mathias.setRolesAndUpperClassesByStam(rolesAndUpperClassesByStam);
+        mathias.setStamnummer("AG0103");
+        mathias.setRole(SecurityRole.GROEP);
 
-        boolean b = chiroUnitServiceSecurity.hasPermissionToGetVolunteers();
-        Assert.assertEquals(true, b);
+        ChiroUnit chiroUnit = new ChiroUnit();
+        chiroUnit.setStam("AG0000");
+
+        Mockito.when(userService.getCurrentUser()).thenReturn(mathias);
+
+        boolean access = chiroUnitServiceSecurity.hasPermissionToSeeVerbonden(chiroUnit);
+        assertEquals(true, access);
     }
 
     @Test
-    public void hasPermissionToGetParticipantsReturnsFalseWhenNoLoggedInUser(){
-        boolean b = chiroUnitServiceSecurity.hasPermissionToGetParticipants();
+    public void hasPermissionToSeeVerbondSuccessWhenUserHasOneGewestAndIsInVerbondAndNotAdminAndNotNationaal() {
+        User mathias = new User();
+        Map<String, RolesAndUpperClasses> rolesAndUpperClassesByStam = new TreeMap<>();
+        RolesAndUpperClasses rolesAndUpperClasses = new RolesAndUpperClasses(SecurityRole.GEWEST, "AG0000");
+        rolesAndUpperClassesByStam.put("AG0400", rolesAndUpperClasses);
+        mathias.setRolesAndUpperClassesByStam(rolesAndUpperClassesByStam);
+        mathias.setStamnummer("AG0400");
+        mathias.setRole(SecurityRole.GROEP);
 
-        Assert.assertEquals(false, b);
+        ChiroUnit chiroUnit = new ChiroUnit();
+        chiroUnit.setStam("AG0000");
+
+        Mockito.when(userService.getCurrentUser()).thenReturn(mathias);
+
+        boolean access = chiroUnitServiceSecurity.hasPermissionToSeeVerbonden(chiroUnit);
+        assertEquals(true, access);
     }
 
     @Test
-    public void hasPermissionToGetParticipantsReturnsFalseWhenRoleNotAdmin(){
-        User currentUser = new User();
-        currentUser.setRole(SecurityRole.GROEP);
-        Mockito.when(userService.getCurrentUser()).thenReturn(currentUser);
+    public void hasPermissionToSeeVerbondSuccessWhenUserHasOneVerbondAndIsInVerbondAndIsNotAdminAndNotNationaal() throws Exception {
+        User mathias = new User();
+        Map<String, RolesAndUpperClasses> rolesAndUpperClassesByStam = new TreeMap<>();
+        RolesAndUpperClasses rolesAndUpperClasses = new RolesAndUpperClasses(SecurityRole.VERBOND, "AG0000");
+        rolesAndUpperClassesByStam.put("AG0000", rolesAndUpperClasses);
+        mathias.setRolesAndUpperClassesByStam(rolesAndUpperClassesByStam);
+        mathias.setStamnummer("AG0000");
+        mathias.setRole(SecurityRole.GROEP);
 
-        boolean b = chiroUnitServiceSecurity.hasPermissionToGetParticipants();
-        Assert.assertEquals(false, b);
+        ChiroUnit chiroUnit = new ChiroUnit();
+        chiroUnit.setStam("AG0000");
+
+        Mockito.when(userService.getCurrentUser()).thenReturn(mathias);
+
+        boolean access = chiroUnitServiceSecurity.hasPermissionToSeeVerbonden(chiroUnit);
+        assertEquals(true, access);
+    }
+
+    ///////////////////////////////////////////////////
+    //////          GEWESTEN (ONE PLOEG)       ////////
+    ///////////////////////////////////////////////////
+    @Test
+    public void hasPermissionToFindGewestenFailsWhenNoLoggedInUser() {
+        boolean access = chiroUnitServiceSecurity.hasPermissionToFindUnits();
+        assertEquals(false, access);
     }
 
     @Test
-    public void hasPermissionToGetParticipantsReturnsTrueWhenRoleAdmin(){
-        User currentUser = new User();
-        currentUser.setRole(SecurityRole.ADMIN);
-        Mockito.when(userService.getCurrentUser()).thenReturn(currentUser);
+    public void hasPermissionToSeeGewestenFailsWhenUserHasOneGroepAndIsNotInGewestAndNotAdminAndNotNationaal() {
+        User mathias = new User();
+        Map<String, RolesAndUpperClasses> rolesAndUpperClassesByStam = new TreeMap<>();
+        RolesAndUpperClasses rolesAndUpperClasses = new RolesAndUpperClasses(SecurityRole.GROEP, "AG0400");
+        rolesAndUpperClassesByStam.put("AG0103", rolesAndUpperClasses);
+        mathias.setRolesAndUpperClassesByStam(rolesAndUpperClassesByStam);
+        mathias.setStamnummer("AG0103");
+        mathias.setRole(SecurityRole.GROEP);
 
-        boolean b = chiroUnitServiceSecurity.hasPermissionToGetParticipants();
-        Assert.assertEquals(true, b);
+        ChiroUnit chiroUnit = new ChiroUnit();
+        chiroUnit.setStam("BG0400");
+
+        Mockito.when(userService.getCurrentUser()).thenReturn(mathias);
+
+        boolean access = chiroUnitServiceSecurity.hasPermissionToSeeUnits(chiroUnit);
+        assertEquals(false, access);
     }
 
     @Test
-    public void hasPermissionToFindUnitsReturnsFalseWhenNoLoggedInUser(){
-        boolean b = chiroUnitServiceSecurity.hasPermissionToFindUnits();
+    public void hasPermissionToSeeGewestenFailsWhenUserHasOneGewestAndIsNotTheSameAndNotAdminAndNotNationaal() {
+        User mathias = new User();
+        Map<String, RolesAndUpperClasses> rolesAndUpperClassesByStam = new TreeMap<>();
+        RolesAndUpperClasses rolesAndUpperClasses = new RolesAndUpperClasses(SecurityRole.GEWEST, "AG0000");
+        rolesAndUpperClassesByStam.put("AG0400", rolesAndUpperClasses);
+        mathias.setRolesAndUpperClassesByStam(rolesAndUpperClassesByStam);
+        mathias.setStamnummer("AG0400");
+        mathias.setRole(SecurityRole.GROEP);
 
-        Assert.assertEquals(false, b);
+        ChiroUnit chiroUnit = new ChiroUnit();
+        chiroUnit.setStam("BG0400");
+
+        Mockito.when(userService.getCurrentUser()).thenReturn(mathias);
+
+        boolean access = chiroUnitServiceSecurity.hasPermissionToSeeUnits(chiroUnit);
+        assertEquals(false, access);
     }
 
     @Test
-    public void hasPermissionToFindUnitsReturnsFalseWhenRoleNotAdmin(){
-        User currentUser = new User();
-        currentUser.setRole(SecurityRole.GROEP);
-        Mockito.when(userService.getCurrentUser()).thenReturn(currentUser);
+    public void hasPermissionToSeeGewestenSuccessWhenUserHasOneVerbondAndIsNotTheSupperUnitAndNotAdminAndNotNationaal() {
+        User mathias = new User();
+        Map<String, RolesAndUpperClasses> rolesAndUpperClassesByStam = new TreeMap<>();
+        RolesAndUpperClasses rolesAndUpperClasses = new RolesAndUpperClasses(SecurityRole.VERBOND, "AG0000");
+        rolesAndUpperClassesByStam.put("AG0000", rolesAndUpperClasses);
+        mathias.setRolesAndUpperClassesByStam(rolesAndUpperClassesByStam);
+        mathias.setStamnummer("AG0000");
+        mathias.setRole(SecurityRole.GROEP);
 
-        boolean b = chiroUnitServiceSecurity.hasPermissionToFindUnits();
-        Assert.assertEquals(false, b);
+        ChiroUnit chiroUnit = new ChiroUnit();
+        chiroUnit.setStam("BG0400");
+
+        Mockito.when(userService.getCurrentUser()).thenReturn(mathias);
+
+        boolean access = chiroUnitServiceSecurity.hasPermissionToSeeUnits(chiroUnit);
+        assertEquals(true, access);
     }
 
     @Test
-    public void hasPermissionToFindUnitsReturnsTrueWhenRoleAdmin(){
-        User currentUser = new User();
-        currentUser.setRole(SecurityRole.ADMIN);
-        Mockito.when(userService.getCurrentUser()).thenReturn(currentUser);
+    public void hasPermissionToSeeGewestenSuccessWhenUserHasOneVerbondAndIsNationaal() {
+        User mathias = new User();
+        Map<String, RolesAndUpperClasses> rolesAndUpperClassesByStam = new TreeMap<>();
+        RolesAndUpperClasses rolesAndUpperClasses = new RolesAndUpperClasses(SecurityRole.NATIONAAL, "AG0000");
+        rolesAndUpperClassesByStam.put("NAT", rolesAndUpperClasses);
+        mathias.setRolesAndUpperClassesByStam(rolesAndUpperClassesByStam);
+        mathias.setStamnummer("NAT");
+        mathias.setRole(SecurityRole.GROEP);
 
-        boolean b = chiroUnitServiceSecurity.hasPermissionToFindUnits();
-        Assert.assertEquals(true, b);
+        ChiroUnit chiroUnit = new ChiroUnit();
+        chiroUnit.setStam("BG0400");
+
+        Mockito.when(userService.getCurrentUser()).thenReturn(mathias);
+
+        boolean access = chiroUnitServiceSecurity.hasPermissionToSeeUnits(chiroUnit);
+        assertEquals(true, access);
     }
 
     @Test
-    public void hasPermissionToFindVerbondenReturnsFalseWhenNoLoggedInUser(){
-        boolean b = chiroUnitServiceSecurity.hasPermissionToFindVerbonden();
+    public void hasPermissionToSeeGewestenSuccessWhenUserHasOneVerbondAndIsAdmin() {
+        User mathias = new User();
+        Map<String, RolesAndUpperClasses> rolesAndUpperClassesByStam = new TreeMap<>();
+        RolesAndUpperClasses rolesAndUpperClasses = new RolesAndUpperClasses(SecurityRole.ADMIN, "AG0000");
+        rolesAndUpperClassesByStam.put("AG0000", rolesAndUpperClasses);
+        mathias.setRolesAndUpperClassesByStam(rolesAndUpperClassesByStam);
+        mathias.setStamnummer("AG0000");
+        mathias.setRole(SecurityRole.ADMIN);
 
-        Assert.assertEquals(false, b);
+        ChiroUnit chiroUnit = new ChiroUnit();
+        chiroUnit.setStam("BG0400");
+
+        Mockito.when(userService.getCurrentUser()).thenReturn(mathias);
+
+        boolean access = chiroUnitServiceSecurity.hasPermissionToSeeUnits(chiroUnit);
+        assertEquals(true, access);
     }
 
     @Test
-    public void hasPermissionToFindVerbondenReturnsFalseWhenRoleNotAdmin(){
-        User currentUser = new User();
-        currentUser.setRole(SecurityRole.GROEP);
-        Mockito.when(userService.getCurrentUser()).thenReturn(currentUser);
+    public void hasPermissionToSeeGewestenSuccessWhenUserHasOneGroepAndIsInGewestAndNotAdminAndNotNationaal() {
+        User mathias = new User();
+        Map<String, RolesAndUpperClasses> rolesAndUpperClassesByStam = new TreeMap<>();
+        RolesAndUpperClasses rolesAndUpperClasses = new RolesAndUpperClasses(SecurityRole.GROEP, "AG0400");
+        rolesAndUpperClassesByStam.put("AG0103", rolesAndUpperClasses);
+        mathias.setRolesAndUpperClassesByStam(rolesAndUpperClassesByStam);
+        mathias.setStamnummer("AG0103");
+        mathias.setRole(SecurityRole.GROEP);
 
-        boolean b = chiroUnitServiceSecurity.hasPermissionToFindVerbonden();
-        Assert.assertEquals(false, b);
+        ChiroUnit chiroUnit = new ChiroUnit();
+        chiroUnit.setStam("AG0400");
+
+        Mockito.when(userService.getCurrentUser()).thenReturn(mathias);
+
+        boolean access = chiroUnitServiceSecurity.hasPermissionToSeeUnits(chiroUnit);
+        assertEquals(true, access);
     }
 
     @Test
-    public void hasPermissionToFindVerbondenReturnsTrueWhenRoleAdmin(){
-        User currentUser = new User();
-        currentUser.setRole(SecurityRole.ADMIN);
-        Mockito.when(userService.getCurrentUser()).thenReturn(currentUser);
+    public void hasPermissionToSeeGewestenSuccessWhenUserHasOneGewestpAndIsGewestAndNotAdminAndNotNationaal() {
+        User mathias = new User();
+        Map<String, RolesAndUpperClasses> rolesAndUpperClassesByStam = new TreeMap<>();
+        RolesAndUpperClasses rolesAndUpperClasses = new RolesAndUpperClasses(SecurityRole.GEWEST, "AG0000");
+        rolesAndUpperClassesByStam.put("AG0400", rolesAndUpperClasses);
+        mathias.setRolesAndUpperClassesByStam(rolesAndUpperClassesByStam);
+        mathias.setStamnummer("AG0400");
+        mathias.setRole(SecurityRole.GROEP);
 
-        boolean b = chiroUnitServiceSecurity.hasPermissionToFindVerbonden();
-        Assert.assertEquals(true, b);
+        ChiroUnit chiroUnit = new ChiroUnit();
+        chiroUnit.setStam("AG0400");
+
+        Mockito.when(userService.getCurrentUser()).thenReturn(mathias);
+
+        boolean access = chiroUnitServiceSecurity.hasPermissionToSeeUnits(chiroUnit);
+        assertEquals(true, access);
     }
+
+    ///////////////////////////////////////////////////
+    //////           GROEPEN (ONE PLOEG)       ////////
+    ///////////////////////////////////////////////////
+    @Test
+    public void hasPermissionToSeeGroepFailsWhenUserHasOneGroeppAndIsNotSameAndNotAdminAndNotNationaal() {
+        User mathias = new User();
+        Map<String, RolesAndUpperClasses> rolesAndUpperClassesByStam = new TreeMap<>();
+        RolesAndUpperClasses rolesAndUpperClasses = new RolesAndUpperClasses(SecurityRole.GROEP, "AG0400");
+        rolesAndUpperClassesByStam.put("AG0103", rolesAndUpperClasses);
+        mathias.setRolesAndUpperClassesByStam(rolesAndUpperClassesByStam);
+        mathias.setStamnummer("AG0103");
+        mathias.setRole(SecurityRole.GROEP);
+
+        ChiroUnit upperChiroUnit = new ChiroUnit();
+        upperChiroUnit.setStam("AG0400");
+
+        ChiroUnit chiroUnit = new ChiroUnit();
+        chiroUnit.setStam("AG0104");
+        chiroUnit.setUpper(upperChiroUnit);
+
+        Mockito.when(userService.getCurrentUser()).thenReturn(mathias);
+
+        boolean access = chiroUnitServiceSecurity.hasPermissionToSeeUnits(chiroUnit);
+        assertEquals(false, access);
+    }
+
+    @Test
+    public void hasPermissionToSeeGroepSuccessWhenUserHasOneGroepAndIsAdmin() {
+        User mathias = new User();
+        Map<String, RolesAndUpperClasses> rolesAndUpperClassesByStam = new TreeMap<>();
+        RolesAndUpperClasses rolesAndUpperClasses = new RolesAndUpperClasses(SecurityRole.GROEP, "AG0400");
+        rolesAndUpperClassesByStam.put("AG0103", rolesAndUpperClasses);
+        mathias.setRolesAndUpperClassesByStam(rolesAndUpperClassesByStam);
+        mathias.setStamnummer("AG0103");
+        mathias.setRole(SecurityRole.ADMIN);
+
+        ChiroUnit upperChiroUnit = new ChiroUnit();
+        upperChiroUnit.setStam("AG0400");
+
+        ChiroUnit chiroUnit = new ChiroUnit();
+        chiroUnit.setStam("AG0104");
+        chiroUnit.setUpper(upperChiroUnit);
+
+        Mockito.when(userService.getCurrentUser()).thenReturn(mathias);
+
+        boolean access = chiroUnitServiceSecurity.hasPermissionToSeeUnits(chiroUnit);
+        assertEquals(true, access);
+    }
+
+    @Test
+    public void hasPermissionToSeeGroepSuccessWhenUserHasOneGroepAndIsNationaal() {
+        User mathias = new User();
+        Map<String, RolesAndUpperClasses> rolesAndUpperClassesByStam = new TreeMap<>();
+        RolesAndUpperClasses rolesAndUpperClasses = new RolesAndUpperClasses(SecurityRole.NATIONAAL, "");
+        rolesAndUpperClassesByStam.put("NAT", rolesAndUpperClasses);
+        mathias.setRolesAndUpperClassesByStam(rolesAndUpperClassesByStam);
+        mathias.setStamnummer("NAT");
+        mathias.setRole(SecurityRole.ADMIN);
+
+
+        ChiroUnit chiroUnit = new ChiroUnit();
+        chiroUnit.setStam("AG0104");
+
+        Mockito.when(userService.getCurrentUser()).thenReturn(mathias);
+
+        boolean access = chiroUnitServiceSecurity.hasPermissionToSeeUnits(chiroUnit);
+        assertEquals(true, access);
+    }
+
+    @Test
+    public void hasPermissionToSeeGroepSuccessWhenUserHasOneGroepAndIsNotSameAndNotAdminAndNotNationaal() {
+        User mathias = new User();
+        Map<String, RolesAndUpperClasses> rolesAndUpperClassesByStam = new TreeMap<>();
+        RolesAndUpperClasses rolesAndUpperClasses = new RolesAndUpperClasses(SecurityRole.GROEP, "AG0400");
+        rolesAndUpperClassesByStam.put("AG0103", rolesAndUpperClasses);
+        mathias.setRolesAndUpperClassesByStam(rolesAndUpperClassesByStam);
+        mathias.setStamnummer("AG0103");
+        mathias.setRole(SecurityRole.GROEP);
+
+        ChiroUnit upperChiroUnit = new ChiroUnit();
+        upperChiroUnit.setStam("AG0400");
+
+        ChiroUnit chiroUnit = new ChiroUnit();
+        chiroUnit.setStam("AG0103");
+        chiroUnit.setUpper(upperChiroUnit);
+
+        Mockito.when(userService.getCurrentUser()).thenReturn(mathias);
+
+        boolean access = chiroUnitServiceSecurity.hasPermissionToSeeUnits(chiroUnit);
+        assertEquals(true, access);
+    }
+
+    @Test
+    public void hasPermissionToSeeGroepSuccessWhenUserHasOneVerbond() {
+        User mathias = new User();
+        Map<String, RolesAndUpperClasses> rolesAndUpperClassesByStam = new TreeMap<>();
+        RolesAndUpperClasses rolesAndUpperClasses = new RolesAndUpperClasses(SecurityRole.VERBOND, "AG0000");
+        rolesAndUpperClassesByStam.put("AG0000", rolesAndUpperClasses);
+        mathias.setRolesAndUpperClassesByStam(rolesAndUpperClassesByStam);
+        mathias.setStamnummer("AG0000");
+        mathias.setRole(SecurityRole.VERBOND);
+
+        ChiroUnit upperChiroUnit = new ChiroUnit();
+        upperChiroUnit.setStam("AG0400");
+
+        ChiroUnit chiroUnit = new ChiroUnit();
+        chiroUnit.setStam("AG0103");
+        chiroUnit.setUpper(upperChiroUnit);
+
+        Mockito.when(userService.getCurrentUser()).thenReturn(mathias);
+
+        boolean access = chiroUnitServiceSecurity.hasPermissionToSeeUnits(chiroUnit);
+        assertEquals(true, access);
+    }
+
+    ///////////////////////////////////////////////////
+    //////      PARTICIPANTS (ONE PLOEG) GET   ////////
+    ///////////////////////////////////////////////////
+    @Test
+    public void hasPermissionToGetParticipantsSuccessWhenUserHasOneGroepAndNotAdmin() {
+        User mathias = new User();
+        Map<String, RolesAndUpperClasses> rolesAndUpperClassesByStam = new TreeMap<>();
+        RolesAndUpperClasses rolesAndUpperClasses = new RolesAndUpperClasses(SecurityRole.GROEP, "AG0400");
+        rolesAndUpperClassesByStam.put("AG0103", rolesAndUpperClasses);
+        mathias.setRolesAndUpperClassesByStam(rolesAndUpperClassesByStam);
+        mathias.setStamnummer("AG0103");
+        mathias.setRole(SecurityRole.GROEP);
+
+        Mockito.when(userService.getCurrentUser()).thenReturn(mathias);
+
+        boolean access = chiroUnitServiceSecurity.hasPermissionToGetParticipants();
+        assertEquals(true, access);
+    }
+
+    @Test
+    public void hasPermissionToGetParticipantsSuccessWhenUserHasOneGroepAndAdmin() {
+        User mathias = new User();
+        Map<String, RolesAndUpperClasses> rolesAndUpperClassesByStam = new TreeMap<>();
+        RolesAndUpperClasses rolesAndUpperClasses = new RolesAndUpperClasses(SecurityRole.GROEP, "AG0400");
+        rolesAndUpperClassesByStam.put("AG0103", rolesAndUpperClasses);
+        mathias.setRolesAndUpperClassesByStam(rolesAndUpperClassesByStam);
+        mathias.setStamnummer("AG0103");
+        mathias.setRole(SecurityRole.ADMIN);
+
+        Mockito.when(userService.getCurrentUser()).thenReturn(mathias);
+
+        boolean access = chiroUnitServiceSecurity.hasPermissionToGetParticipants();
+        assertEquals(true, access);
+    }
+
+    @Test
+    public void hasPermissionToGetParticipantsFailsWhenUserHasOneGewestAndNotAdmin() {
+        User mathias = new User();
+        Map<String, RolesAndUpperClasses> rolesAndUpperClassesByStam = new TreeMap<>();
+        RolesAndUpperClasses rolesAndUpperClasses = new RolesAndUpperClasses(SecurityRole.GEWEST, "AG0000");
+        rolesAndUpperClassesByStam.put("AG0400", rolesAndUpperClasses);
+        mathias.setRolesAndUpperClassesByStam(rolesAndUpperClassesByStam);
+        mathias.setStamnummer("AG0400");
+        mathias.setRole(SecurityRole.GEWEST);
+
+        Mockito.when(userService.getCurrentUser()).thenReturn(mathias);
+
+        boolean access = chiroUnitServiceSecurity.hasPermissionToGetParticipants();
+        assertEquals(false, access);
+    }
+
+    @Test
+    public void hasPermissionToGetParticipantsFailsWhenUserHasOneVerbondAndNotAdmin() {
+        User mathias = new User();
+        Map<String, RolesAndUpperClasses> rolesAndUpperClassesByStam = new TreeMap<>();
+        RolesAndUpperClasses rolesAndUpperClasses = new RolesAndUpperClasses(SecurityRole.VERBOND, "AG0000");
+        rolesAndUpperClassesByStam.put("AG0000", rolesAndUpperClasses);
+        mathias.setRolesAndUpperClassesByStam(rolesAndUpperClassesByStam);
+        mathias.setStamnummer("AG0000");
+        mathias.setRole(SecurityRole.VERBOND);
+
+        Mockito.when(userService.getCurrentUser()).thenReturn(mathias);
+
+        boolean access = chiroUnitServiceSecurity.hasPermissionToGetParticipants();
+        assertEquals(false, access);
+    }
+
+    @Test
+    public void hasPermissionToGetParticipantsFailsWhenUserHasOneGroepAndNationaal() {
+        User mathias = new User();
+        Map<String, RolesAndUpperClasses> rolesAndUpperClassesByStam = new TreeMap<>();
+        RolesAndUpperClasses rolesAndUpperClasses = new RolesAndUpperClasses(SecurityRole.NATIONAAL, "AG0400");
+        rolesAndUpperClassesByStam.put("NAT", rolesAndUpperClasses);
+        mathias.setRolesAndUpperClassesByStam(rolesAndUpperClassesByStam);
+        mathias.setStamnummer("NAT");
+        mathias.setRole(SecurityRole.NATIONAAL);
+
+        Mockito.when(userService.getCurrentUser()).thenReturn(mathias);
+
+        boolean access = chiroUnitServiceSecurity.hasPermissionToGetParticipants();
+        assertEquals(false, access);
+    }
+
+    ///////////////////////////////////////////////////
+    //////      PARTICIPANTS (ONE PLOEG) SEE   ////////
+    ///////////////////////////////////////////////////
+    @Test
+    public void hasPermissionToSeeParticipantsFailsWhenUserHasOneGroepAndNotSameGroupAndNotOwnAndNotAdmin() {
+        User mathias = new User();
+        Map<String, RolesAndUpperClasses> rolesAndUpperClassesByStam = new TreeMap<>();
+        RolesAndUpperClasses rolesAndUpperClasses = new RolesAndUpperClasses(SecurityRole.GROEP, "AG0400");
+        rolesAndUpperClassesByStam.put("AG0103", rolesAndUpperClasses);
+        mathias.setRolesAndUpperClassesByStam(rolesAndUpperClassesByStam);
+        mathias.setStamnummer("AG0103");
+        mathias.setAdNumber("69");
+        mathias.setRole(SecurityRole.GROEP);
+
+        RegistrationParticipant registrationParticipant = new RegistrationParticipant();
+        registrationParticipant.setAdNumber("007");
+        registrationParticipant.setStamnumber("AG0104");
+
+        Mockito.when(userService.getCurrentUser()).thenReturn(mathias);
+
+        boolean access = chiroUnitServiceSecurity.hasPermissionToSeeParticipants(registrationParticipant);
+        assertEquals(false, access);
+    }
+
+    @Test
+    public void hasPermissionToSeeParticipantsSuccessRestrictedWhenUserHasOneGroepAndSameGroupAndNotOwnAndNotAdmin() {
+        User mathias = new User();
+        Map<String, RolesAndUpperClasses> rolesAndUpperClassesByStam = new TreeMap<>();
+        RolesAndUpperClasses rolesAndUpperClasses = new RolesAndUpperClasses(SecurityRole.GROEP, "AG0400");
+        rolesAndUpperClassesByStam.put("AG0103", rolesAndUpperClasses);
+        mathias.setRolesAndUpperClassesByStam(rolesAndUpperClassesByStam);
+        mathias.setStamnummer("AG0103");
+        mathias.setAdNumber("69");
+        mathias.setRole(SecurityRole.GROEP);
+
+        RegistrationParticipant registrationParticipant = new RegistrationParticipant();
+        registrationParticipant.setAdNumber("007");
+        registrationParticipant.setStamnumber("AG0103");
+        registrationParticipant.setMedicalRemarks("medische info");
+
+        Mockito.when(userService.getCurrentUser()).thenReturn(mathias);
+
+        boolean access = chiroUnitServiceSecurity.hasPermissionToSeeParticipants(registrationParticipant);
+        assertEquals(true, access);
+        assertEquals("", registrationParticipant.getMedicalRemarks());
+    }
+
+    @Test
+    public void hasPermissionToSeeParticipantsSuccessFullWhenUserHasOneGroepAndSameGroupAndOwnAndNotAdmin() {
+        User mathias = new User();
+        Map<String, RolesAndUpperClasses> rolesAndUpperClassesByStam = new TreeMap<>();
+        RolesAndUpperClasses rolesAndUpperClasses = new RolesAndUpperClasses(SecurityRole.GROEP, "AG0400");
+        rolesAndUpperClassesByStam.put("AG0103", rolesAndUpperClasses);
+        mathias.setRolesAndUpperClassesByStam(rolesAndUpperClassesByStam);
+        mathias.setStamnummer("AG0103");
+        mathias.setAdNumber("007");
+        mathias.setRole(SecurityRole.GROEP);
+
+        RegistrationParticipant registrationParticipant = new RegistrationParticipant();
+        registrationParticipant.setAdNumber("007");
+        registrationParticipant.setStamnumber("AG0103");
+        registrationParticipant.setMedicalRemarks("medische info");
+
+        Mockito.when(userService.getCurrentUser()).thenReturn(mathias);
+
+        boolean access = chiroUnitServiceSecurity.hasPermissionToSeeParticipants(registrationParticipant);
+        assertEquals(true, access);
+        assertEquals("medische info", registrationParticipant.getMedicalRemarks());
+    }
+
+    @Test
+    public void hasPermissionToSeeParticipantsSuccessFullWhenUserHasOneGroepAndAdmin() {
+        User mathias = new User();
+        Map<String, RolesAndUpperClasses> rolesAndUpperClassesByStam = new TreeMap<>();
+        RolesAndUpperClasses rolesAndUpperClasses = new RolesAndUpperClasses(SecurityRole.GROEP, "AG0400");
+        rolesAndUpperClassesByStam.put("AG0103", rolesAndUpperClasses);
+        mathias.setRolesAndUpperClassesByStam(rolesAndUpperClassesByStam);
+        mathias.setStamnummer("AG0103");
+        mathias.setAdNumber("69");
+        mathias.setRole(SecurityRole.ADMIN);
+
+        RegistrationParticipant registrationParticipant = new RegistrationParticipant();
+        registrationParticipant.setAdNumber("007");
+        registrationParticipant.setStamnumber("AG0103");
+        registrationParticipant.setMedicalRemarks("medische info");
+
+        Mockito.when(userService.getCurrentUser()).thenReturn(mathias);
+
+        boolean access = chiroUnitServiceSecurity.hasPermissionToSeeParticipants(registrationParticipant);
+        assertEquals(true, access);
+        assertEquals("medische info", registrationParticipant.getMedicalRemarks());
+    }
+
+    @Test
+    public void hasPermissionToSeeVerbondFailsWhenUserHasMultipleGroepenAndIsNotInVerbondAndNotAdminAndNotNationaal() throws Exception {
+        User mathias = new User();
+        Map<String, RolesAndUpperClasses> rolesAndUpperClassesByStam = new TreeMap<>();
+        RolesAndUpperClasses rolesAndUpperClasses = new RolesAndUpperClasses(SecurityRole.GROEP, "AG0400");
+        RolesAndUpperClasses rolesAndUpperClasses2 = new RolesAndUpperClasses(SecurityRole.GROEP, "BG0100");
+        rolesAndUpperClassesByStam.put("AG0103", rolesAndUpperClasses);
+        rolesAndUpperClassesByStam.put("BG0102",rolesAndUpperClasses2);
+        mathias.setRolesAndUpperClassesByStam(rolesAndUpperClassesByStam);
+        mathias.setStamnummer("BG0103");
+        mathias.setRole(SecurityRole.GROEP);
+
+        ChiroUnit chiroUnit = new ChiroUnit();
+        chiroUnit.setStam("WG0000");
+
+        Mockito.when(userService.getCurrentUser()).thenReturn(mathias);
+
+        boolean access = chiroUnitServiceSecurity.hasPermissionToSeeVerbonden(chiroUnit);
+        assertEquals(false, access);
+    }
+
+    @Test
+    public void hasPermissionToSeeVerbondSuccessWhenMulitpleGroepenAndNationaal() throws Exception {
+        User mathias = new User();
+        Map<String, RolesAndUpperClasses> rolesAndUpperClassesByStam = new TreeMap<>();
+        RolesAndUpperClasses rolesAndUpperClasses = new RolesAndUpperClasses(SecurityRole.GROEP, "AG0400");
+        RolesAndUpperClasses rolesAndUpperClasses2 = new RolesAndUpperClasses(SecurityRole.NATIONAAL, "BG0100");
+        rolesAndUpperClassesByStam.put("AG0103", rolesAndUpperClasses);
+        rolesAndUpperClassesByStam.put("NAT",rolesAndUpperClasses2);
+        mathias.setRolesAndUpperClassesByStam(rolesAndUpperClassesByStam);
+        mathias.setStamnummer("BG0103");
+        mathias.setRole(SecurityRole.GROEP);
+
+        ChiroUnit chiroUnit = new ChiroUnit();
+        chiroUnit.setStam("WG0000");
+
+        Mockito.when(userService.getCurrentUser()).thenReturn(mathias);
+
+        boolean access = chiroUnitServiceSecurity.hasPermissionToSeeVerbonden(chiroUnit);
+        assertEquals(true, access);
+    }
+
+    @Test
+    public void hasPermissionToSeeVerbondSuccessWhenMulitpleGroepenAndAdmin() throws Exception {
+        User mathias = new User();
+        Map<String, RolesAndUpperClasses> rolesAndUpperClassesByStam = new TreeMap<>();
+        RolesAndUpperClasses rolesAndUpperClasses = new RolesAndUpperClasses(SecurityRole.GROEP, "AG0400");
+        RolesAndUpperClasses rolesAndUpperClasses2 = new RolesAndUpperClasses(SecurityRole.GROEP, "BG0100");
+        rolesAndUpperClassesByStam.put("AG0103", rolesAndUpperClasses);
+        rolesAndUpperClassesByStam.put("BG0103",rolesAndUpperClasses2);
+        mathias.setRolesAndUpperClassesByStam(rolesAndUpperClassesByStam);
+        mathias.setStamnummer("BG0103");
+        mathias.setRole(SecurityRole.ADMIN);
+
+        ChiroUnit chiroUnit = new ChiroUnit();
+        chiroUnit.setStam("WG0000");
+
+        Mockito.when(userService.getCurrentUser()).thenReturn(mathias);
+
+        boolean access = chiroUnitServiceSecurity.hasPermissionToSeeVerbonden(chiroUnit);
+        assertEquals(true, access);
+    }
+
+    @Test
+    public void hasPermissionToSeeVerbondSuccessWhenMulitpleGroepenAndInVerbond() throws Exception {
+        User mathias = new User();
+        Map<String, RolesAndUpperClasses> rolesAndUpperClassesByStam = new TreeMap<>();
+        RolesAndUpperClasses rolesAndUpperClasses = new RolesAndUpperClasses(SecurityRole.GROEP, "AG0400");
+        RolesAndUpperClasses rolesAndUpperClasses2 = new RolesAndUpperClasses(SecurityRole.GROEP, "BG0100");
+        rolesAndUpperClassesByStam.put("AG0103", rolesAndUpperClasses);
+        rolesAndUpperClassesByStam.put("BG0103",rolesAndUpperClasses2);
+        mathias.setRolesAndUpperClassesByStam(rolesAndUpperClassesByStam);
+        mathias.setStamnummer("BG0103");
+        mathias.setRole(SecurityRole.GROEP);
+
+        ChiroUnit chiroUnit = new ChiroUnit();
+        chiroUnit.setStam("BG0000");
+
+        Mockito.when(userService.getCurrentUser()).thenReturn(mathias);
+
+        boolean access = chiroUnitServiceSecurity.hasPermissionToSeeVerbonden(chiroUnit);
+        assertEquals(true, access);
+    }
+
+
 }

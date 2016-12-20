@@ -4,6 +4,7 @@ import com.realdolmen.chiro.controller.validation.EnableRestErrorHandling;
 import com.realdolmen.chiro.domain.*;
 import com.realdolmen.chiro.mspservice.MultiSafePayService;
 import com.realdolmen.chiro.service.RegistrationVolunteerService;
+import com.realdolmen.chiro.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,9 +16,6 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.util.Arrays;
-import java.util.Calendar;
-import java.util.Date;
 
 @RestController
 @EnableRestErrorHandling
@@ -29,7 +27,10 @@ public class RegistrationVolunteerController {
     private RegistrationVolunteerService registrationVolunteerService;
 
     @Autowired
-    private MultiSafePayService mspService;
+    private MultiSafePayService multiSafePayService;
+
+    @Autowired
+    private UserService userService;
 
     /**
      * Returns HTTP status 201 Created when registration has succeeded.
@@ -86,14 +87,16 @@ public class RegistrationVolunteerController {
     @RequestMapping(method = RequestMethod.POST, value = "/api/volunteers", consumes = "application/json")
     public ResponseEntity<?> save(@Valid @RequestBody RegistrationVolunteer volunteer) throws URISyntaxException, MultiSafePayService.InvalidPaymentOrderIdException {
         RegistrationVolunteer resultingVolunteer = registrationVolunteerService.save(volunteer);
+        User currentUser = userService.getCurrentUser();
+
         if (resultingVolunteer == null) {
             logger.info("Registration for Volunteer failed.");
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
 
 
-        Integer price = registrationVolunteerService.PRICE_IN_EUROCENTS;
-        String paymentUrl = mspService.getVolunteerPaymentUri(resultingVolunteer, price);
+        Integer price = registrationVolunteerService.getPRICE_IN_EUROCENTS();
+        String paymentUrl = multiSafePayService.getVolunteerPaymentUri(resultingVolunteer, price, currentUser);
         HttpHeaders headers = new HttpHeaders();
         headers.setLocation(new URI(paymentUrl));
         logger.info("New Registration for Volunteer created.");
@@ -101,33 +104,17 @@ public class RegistrationVolunteerController {
         return new ResponseEntity<>(headers, HttpStatus.CREATED);
     }
 
-    //TODO CHECK IF WE EVEN NEED THIS METHOD. WE NEED IT
-    @RequestMapping(method = RequestMethod.GET, value = "/api/volunteers", produces = "application/json")
-    public @ResponseBody RegistrationVolunteer retrieve() {
+    @RequestMapping(method = RequestMethod.POST, value = "/api/volunteers/admin", consumes = "application/json")
+    public ResponseEntity<?> saveByAdmin(@Valid @RequestBody RegistrationVolunteer volunteer) throws URISyntaxException, MultiSafePayService.InvalidPaymentOrderIdException {
+        if (volunteer == null) {
+            logger.info("Registration for Volunteer failed.");
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
 
-        Calendar c = Calendar.getInstance();
-        c.set(1995, Calendar.AUGUST, 5);
+        registrationVolunteerService.markAsPayed(volunteer);
 
-        RegistrationVolunteer volunteer = new RegistrationVolunteer(
-                "123456789", "example@acme.com", "Aster", "Deckers", c.getTime(),
-                "AG0001", Gender.MAN, EventRole.LEADER, Eatinghabbit.VEGI,
-                CampGround.ANTWERPEN,
-                new VolunteerFunction(VolunteerFunction.Preset.KRINKEL_EDITORIAL), "aster.deckers@example.org"
-        );
-
-        PreCamp preCamp = new PreCamp();
-        preCamp.setId(1);
-        preCamp.setDate(new Date());
-        volunteer.addPreCamp(preCamp);
-
-        volunteer.setLanguage(
-                Arrays.asList(
-                        Language.ENGLISH,
-                        Language.SPANISH
-                )
-        );
-
-        volunteer.setAddress(new Address("-", "-", 1500, "-"));
-        return volunteer;
+        HttpHeaders headers = new HttpHeaders();
+        logger.info("New Registration for Volunteer created.");
+        return new ResponseEntity<>(headers, HttpStatus.CREATED);
     }
 }

@@ -5,7 +5,13 @@
         background-color: #EEE;
         cursor: pointer;
     }
-
+    select {
+        display: block;
+        cursor: pointer;
+    }
+    option {
+        cursor: pointer;
+    }
 </style>
 
 <a class="btn" ng-click="$ctrl.goToPrevious($ctrl.verbond)" ng-if="$ctrl.unitLevel">
@@ -35,7 +41,7 @@
     </thead>
 
     <tbody>
-    <tr ng-repeat="verbond in $ctrl.verbonden" ng-click="$ctrl.openExtraInfo(verbond)">
+    <tr ng-repeat="verbond in $ctrl.verbonden track by $index" ng-click="$ctrl.openExtraInfo(verbond)">
         <td>
             {{verbond.naam}}
         </td>
@@ -59,15 +65,17 @@
         <th data-field="city">Gemeente</th>
         <th data-field="eatinghabit">Eetgewoonte</th>
         <th data-field="medicalRemarks">Medische info</th>
+        <th ng-if="$ctrl.AuthService.getUserRole() === 'ADMIN'" style="min-width: 110px;">Status</th>
+        <th ng-if="$ctrl.AuthService.getUserRole() === 'ADMIN'"><i class="material-icons right icon-green">delete</i></th>
     </tr>
     </thead>
     <tbody>
-    <tr ng-repeat="participant in $ctrl.participants">
+    <tr ng-repeat="participant in $ctrl.participants track by $index" id="{{ ::participant.id }}">
         <td>
             {{participant.firstName}} {{participant.lastName}}
         </td>
         <td>
-            {{participant.address.street}} {{participant.address.houseNumber}}
+            {{participant.address.street}}
         </td>
         <td>
             {{participant.address.city}}
@@ -78,9 +86,30 @@
         <td>
             {{participant.medicalRemarks}}
         </td>
+        <td ng-if="$ctrl.AuthService.getUserRole() === 'ADMIN'" style="min-width: 110px;">
+            <select ng-model="participant.status" ng-init="participant.status" ng-options="item.value as item.label for item in $ctrl.statusses"  ng-change="$ctrl.saveData(participant.id, participant.status)">
+            </select>
+        </td>
+        <td ng-if="$ctrl.AuthService.getUserRole() === 'ADMIN'">
+            <a ng-click="$ctrl.initCancelModal(participant.id)">
+                <i class="material-icons right icon-green">clear</i>
+            </a>
+        </td>
     </tr>
     </tbody>
 </table>
+
+    <!-- Modal Structure -->
+    <div id="{{ ::'modal' + participant.id }}"ng-if="$ctrl.participantDetails" ng-repeat="participant in $ctrl.participants track by $index" class="modal">
+        <div class="modal-content">
+            <h4>Wil u deze bestelling annuleren?</h4>
+        </div>
+        <div class="modal-footer">
+            <a href="" class=" modal-action modal-close waves-effect btn-flat"
+               ng-click="$ctrl.putParticipantToCancelled(participant.id)">OK</a>
+            <a href="" class="modal-action modal-close waves-effect btn-flat">CANCEL</a>
+        </div>
+    </div>
 
 
 <table ng-if="$ctrl.volunteerDetails">
@@ -93,10 +122,12 @@
         <th data-field="medicalRemarks">Medische info</th>
         <th data-field="function">Functie</th>
         <th data-field="campground">Kampgrond</th>
+        <th ng-if="$ctrl.AuthService.getUserRole() === 'ADMIN'" style="min-width: 110px;">Status</th>
+        <th ng-if="$ctrl.AuthService.getUserRole() === 'ADMIN'"><i class="material-icons right icon-green">delete</i></th>
     </tr>
     </thead>
     <tbody>
-    <tr ng-repeat="volunteer in $ctrl.volunteers">
+    <tr ng-repeat="volunteer in $ctrl.volunteers track by $index" id="{{ volunteer.id }}">
         <td>
             {{volunteer.firstName}} {{volunteer.lastName}}
         </td>
@@ -118,6 +149,27 @@
         <td>
             {{volunteer.campGround}}
         </td>
+        <td ng-if="$ctrl.AuthService.getUserRole() === 'ADMIN'" style="min-width: 110px;">
+            <select ng-model="volunteer.status" ng-init="volunteer.status" ng-change="$ctrl.saveData(volunteer.id, volunteer.status)" ng-options="item.value as item.label for item in $ctrl.statusses">
+            </select>
+        </td>
+        <td ng-if="$ctrl.AuthService.getUserRole() === 'ADMIN'">
+            <a ng-click="$ctrl.initCancelModal(volunteer.id)">
+                <i class="material-icons right icon-green">clear</i>
+            </a>
+        </td>
     </tr>
     </tbody>
 </table>
+
+<!-- Modal Structure -->
+<div id="{{ ::'modal' + volunteer.id }}"ng-if="$ctrl.volunteerDetails" ng-repeat="volunteer in $ctrl.volunteers track by $index" class="modal">
+    <div class="modal-content">
+        <h4>Wil u deze bestelling annuleren?</h4>
+    </div>
+    <div class="modal-footer">
+        <a href="" class=" modal-action modal-close waves-effect btn-flat"
+           ng-click="$ctrl.putParticipantToCancelled(volunteer.id)">OK</a>
+        <a href="" class="modal-action modal-close waves-effect btn-flat">CANCEL</a>
+    </div>
+</div>

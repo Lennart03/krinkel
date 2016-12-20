@@ -17,6 +17,7 @@ class KrinkelSelectController {
                 resp.forEach(p => this.colleagues.push(JSON.parse(p)));
                 this.isLoading = false;
             });
+
         });
 
 
@@ -24,7 +25,7 @@ class KrinkelSelectController {
 
     selectPerson(colleague){
         this.SelectService.setColleague(colleague);
-        this.$location.path("/register-participant");
+        this.$location.path("/add-to-basket");
     }
     getUserDetails() {
 

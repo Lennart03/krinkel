@@ -11,11 +11,18 @@ import org.springframework.web.bind.annotation.*;
 public class ConfirmationLinkController {
 
     @Autowired
-    private ConfirmationLinkService service;
+    private ConfirmationLinkService confirmationLinkService;
 
+    /**
+     * used when clicking the confirmation link in the email
+     * @param adNumber
+     * @param token
+     * @param model
+     * @return
+     */
     @RequestMapping(method = RequestMethod.GET)
     public String confirm(@RequestParam("ad") String adNumber, @RequestParam("token") String token, Model model){
-        boolean success = service.checkToken(adNumber, token);
+        boolean success = confirmationLinkService.checkToken(adNumber, token);
         model.addAttribute("success", success);
         return "confirmation";
     }

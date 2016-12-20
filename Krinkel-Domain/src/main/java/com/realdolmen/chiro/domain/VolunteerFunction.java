@@ -16,23 +16,23 @@ public class VolunteerFunction {
         NATIONAL_CAMPGROUND("Aanbod nationale kampgrond"), // Aanbod nationale kampgrond
         CAMPGROUND("Kampgrondtrekker"), // Kampgrondtrekker
         KRINKEL_EDITORIAL("Klinkerredactie"), // Klinkerredactie
-        COOCKING("Kookploeg"), // Kookploeg
+        COOKING("Kookploeg"), // Kookploeg
 
         LOGISTICS_CAMPGROUND("Logistiek (kampgrond)"), // Logistiek (kampgrond)
         LOGISTICS_NATIONAL("Logistiek (nationaal)"), // Logistiek (nationaal)
 
         LIVING_GROUP_GUIDANCE("Leefgroepbegeleiding"), // Leefgroepbegeleiding
         CUSTOM("custom"); // I didn't select something from this list but instead defined my own function in the 'other' field.
-        
-        private String description;
-    	
-    	Preset(String description){
-    		this.description = description;
-    	}
 
-		public String getDescription() {
-			return description;
-		}
+        private String description;
+
+        Preset(String description) {
+            this.description = description;
+        }
+
+        public String getDescription() {
+            return description;
+        }
     }
 
 
@@ -44,9 +44,10 @@ public class VolunteerFunction {
      */
     private String other = null;
 
-    public VolunteerFunction(){}
+    public VolunteerFunction() {
+    }
 
-    public VolunteerFunction(Preset preset){
+    public VolunteerFunction(Preset preset) {
         this.preset = preset;
     }
 
@@ -55,7 +56,7 @@ public class VolunteerFunction {
      *
      * @param other A custom defined function.
      */
-    public VolunteerFunction(String other){
+    public VolunteerFunction(String other) {
         this.preset = Preset.CUSTOM;
         this.other = other;
     }
@@ -74,5 +75,10 @@ public class VolunteerFunction {
 
     public void setOther(String other) {
         this.other = other;
+    }
+
+    @Override
+    public String toString(){
+        return "[preset=" + preset.getDescription() + ",other="+other+"]";
     }
 }

@@ -6,6 +6,7 @@ import com.realdolmen.chiro.domain.User;
 import com.realdolmen.chiro.service.ChiroColleagueService;
 import com.realdolmen.chiro.service.UserService;
 import org.junit.Assert;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -63,7 +64,7 @@ public class RegistrationParticipantServiceSecurityTest {
         currentUser.setRole(SecurityRole.GROEP);
 
         Mockito.when(userService.getCurrentUser()).thenReturn(currentUser);
-        Mockito.when(chiroColleagueService.isColleague(Integer.parseInt(currentUser.getAdNumber()), Integer.parseInt(registrationParticipant.getAdNumber()))).thenReturn(true);
+        Mockito.when(chiroColleagueService.isColleague(221826, Integer.parseInt(registrationParticipant.getAdNumber()))).thenReturn(true);
 
         boolean b = registrationParticipantServiceSecurity.hasPermissionToSaveParticipant(registrationParticipant);
 
