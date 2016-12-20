@@ -12,9 +12,9 @@
 
         </div>
         <label for="startDate">Start Date:</label>
-        <input type="date" class="datepicker" id="startDate" ng-model="$ctrl.startDate">
+        <input type="date" class="datepicker" id="startDate" ng-change="$ctrl.changeStartDate" ng-model="$ctrl.startDate">
         <label for="endDate">End Date:</label>
-        <input type="date" class="datepicker" id="endDate" ng-model="$ctrl.endDate">
+        <input type="date" class="datepicker" id="endDate" ng-change="$ctrl.changeEndDate" ng-model="$ctrl.endDate">
     </div>
 </div>
 

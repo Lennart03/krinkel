@@ -47,6 +47,8 @@ public class GraphController {
         start = simpleDateFormat.parse(startDate);
         end = simpleDateFormat.parse(endDate);
 
+
+
         System.out.println("end date " +end.toString());
 
         return graphChiroService.getLoginData(start,end);

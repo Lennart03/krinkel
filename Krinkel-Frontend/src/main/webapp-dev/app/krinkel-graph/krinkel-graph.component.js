@@ -1,9 +1,18 @@
 class KrinkelGraphController {
-    constructor(KrinkelService) {
+    constructor(KrinkelService , $filter) {
         this.KrinkelService = KrinkelService;
         this.getDataForSunBurst();
         this.getDataForStatus();
         this.getDataForLogin();
+        this.$filter=$filter;
+        this.endDate = $filter('date')(Date.now(), "dd/MM/yyyy");
+        this.startDate = this.endDate;
+        var d = new Date();
+        d= this.endDate
+        this.startDate.setMonth(this.endDate.getMonth()-1);
+        console.log('endDate ' + this.endDate);
+        console.log('startDate ' + this.startDate);
+
     }
 
     getDataForSunBurst() {
@@ -11,6 +20,16 @@ class KrinkelGraphController {
             this.sunBurstData = [{name: 'Inschrijvingen'}];
             this.sunBurstData[0].children = results.children;
         });
+    }
+
+    changeEndDate()
+    {
+        console.log("changeEndDate called");
+    }
+
+    changeStartDate()
+    {
+        console.log("changeStartDate called");
     }
 
     getDataForStatus() {
@@ -49,6 +68,8 @@ class KrinkelGraphController {
             ];
         });
     }
+
+
 
     getDataForLogin() {
         this.KrinkelService.getGraphLoginInfo().then((results) => {
@@ -191,4 +212,4 @@ export var KrinkelGraphComponent = {
     controller: KrinkelGraphController
 };
 
-KrinkelGraphComponent.$inject = ['KrinkelService'];
+KrinkelGraphComponent.$inject = ['KrinkelService','$filter'];
