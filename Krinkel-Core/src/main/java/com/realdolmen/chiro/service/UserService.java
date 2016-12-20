@@ -135,9 +135,9 @@ public class UserService {
                     RegistrationParticipant r = getRegistrationParticipant(c.getAdNumber());
                     if (r == null) return true;
                     return r.getStatus() != Status.PAID
-                            || r.getStatus() != Status.CONFIRMED
-                            || r.getStatus() != Status.CANCELLED
-                            || r.getStatus() != Status.TO_BE_PAID;
+                            && r.getStatus() != Status.CONFIRMED
+                            && r.getStatus() != Status.CANCELLED
+                            && r.getStatus() != Status.TO_BE_PAID;
                 })
                 .collect(Collectors.toList());
 
