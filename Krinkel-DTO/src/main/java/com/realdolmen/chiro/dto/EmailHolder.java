@@ -1,4 +1,4 @@
-package com.realdolmen.chiro.service.dto;
+package com.realdolmen.chiro.dto;
 
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotBlank;

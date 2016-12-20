@@ -134,10 +134,6 @@ public class ChiroContact {
         return birthDate;
     }
 
-    public void setBirthDate(Date birthDate) {
-        this.birthDate = birthDate;
-    }
-
     public void setBirthDate(String birthDate) {
         if (birthDate == null || birthDate.equals("")) {
             this.birthDate = null;

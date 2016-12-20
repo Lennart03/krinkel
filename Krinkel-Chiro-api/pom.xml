@@ -42,7 +42,11 @@
             <version>${org.jackson-version}</version>
         </dependency>
         <dependency>
-            <groupId>com.h2database</groupId>
+            <groupId>com.realdolmen.chiro</groupId>
+            <artifactId>krinkel-dto</artifactId>
+        </dependency>
+        <dependency>
+        <groupId>com.h2database</groupId>
             <artifactId>h2</artifactId>
         </dependency>
     </dependencies>
