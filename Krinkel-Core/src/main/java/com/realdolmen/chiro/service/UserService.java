@@ -82,7 +82,13 @@ public class UserService {
      * @return current user
      */
     public User getCurrentUser() {
-        return CASCurrentlyLoggedInUserComponent.getCurrentUser();
+        //workaround for updating users' payment status because session data isn't ever updated. This is a UX improvement.
+        User currentUser = CASCurrentlyLoggedInUserComponent.getCurrentUser();
+        if(currentUser == null) return null;
+        Status paymentStatus = registrationParticipantRepository.getPaymentStatusByadNumber(currentUser.getAdNumber());
+        if(paymentStatus != null && (paymentStatus == Status.PAID || paymentStatus == Status.CONFIRMED)) currentUser.setHasPaid(true);
+        else currentUser.setHasPaid(false);
+        return currentUser;
     }
 
     /**
