@@ -1,4 +1,4 @@
-<form ng-submit="$ctrl.generateGroups()">
+<form ng-submit="$ctrl.generateGroups(groupSize)">
     <ul class="groups-list">
         <li class="repeat" ng-repeat="lists in $ctrl.groups">
             <ul>
@@ -19,6 +19,12 @@
         </li>
     </ul>
 
-    <button type="submit" class="btn waves-effect waves-light modal-trigger">Generate Groups</button>
+    <div class="row">
+        <div class="input-field col s8 m8 l8">
+            <input id="groupSize" type="text" ng-minlength="1" ng-model="groupSize" required>
+            <label for="groupSize">Group Size</label>
+        </div>
+    </div>
+    <button type="submit" class="btn">Generate Groups</button>
 </form>
 

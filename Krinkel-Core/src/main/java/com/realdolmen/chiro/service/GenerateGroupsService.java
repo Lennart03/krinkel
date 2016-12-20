@@ -21,7 +21,7 @@ public class GenerateGroupsService {
     @Autowired
     RegistrationParticipantRepository registrationParticipantRepository;
 
-    private static Integer GROUPSIZE = 8;
+    private Integer groupSize;
 
     private Map<String, List<RegistrationParticipant>> participantsMan = new HashMap<>();
     private Map<String, List<RegistrationParticipant>> participantsWoman = new HashMap<>();
@@ -31,6 +31,12 @@ public class GenerateGroupsService {
     private int amountWoman = 0;
 
     public List<List<RegistrationParticipant>> generateRandomGroups() {
+        return this.generateRandomGroups(12);
+    }
+
+    public List<List<RegistrationParticipant>> generateRandomGroups(int groupSize) {
+        System.out.println("groupsize " + groupSize);
+        this.groupSize = groupSize;
         //fill the lists with the currently registered members
         List<RegistrationParticipant> registrationParticipants = registrationParticipantRepository.findAllAspis();
 
@@ -88,18 +94,18 @@ public class GenerateGroupsService {
         amountMan = 0;
         amountWoman = 0;
 
-        if (unions.size() <= GROUPSIZE) {
+        if (unions.size() <= groupSize) {
             for (int i = 0; i < unions.size(); i++) {
                 String unionStam = unions.get(i).getStam();
                 addParticipantUnionToList(unionStam, singleGroup);
             }
 
-            if(singleGroup.size() < GROUPSIZE) {//in case union.size < GROUPSIZE
-                fillUpGroup(singleGroup, unions, GROUPSIZE - singleGroup.size());
+            if(singleGroup.size() < groupSize) {//in case union.size < groupSize
+                fillUpGroup(singleGroup, unions, groupSize - singleGroup.size());
             }
         } else {
             List<Integer> selectedUnions = new ArrayList<>();
-            for (int i = 0; i < GROUPSIZE;) {
+            for (int i = 0; i < groupSize;) {
                 //select random union
                 int randNumber = (int) (Math.random() * unions.size());
                 while(selectedUnions.contains(randNumber) && selectedUnions.size() < unions.size()){
@@ -118,8 +124,8 @@ public class GenerateGroupsService {
                 }
             }
 
-            if(singleGroup.size() < GROUPSIZE) {//in case there were not enough members of specific unions
-                fillUpGroup(singleGroup, unions, GROUPSIZE - singleGroup.size());
+            if(singleGroup.size() < groupSize) {//in case there were not enough members of specific unions
+                fillUpGroup(singleGroup, unions, groupSize - singleGroup.size());
             }
         }
 
@@ -152,8 +158,8 @@ public class GenerateGroupsService {
     }
 
     protected boolean addParticipantUnionToList(String unionStam, List<RegistrationParticipant> singleGroup) {
-        //this will fix the case that GROUPSIZE is not even
-        int genderGroupSize = (GROUPSIZE + 1) / 2;
+        //this will fix the case that groupSize is not even
+        int genderGroupSize = (groupSize + 1) / 2;
 
         if (amountMan < genderGroupSize && amountWoman < genderGroupSize) {
             int random = (int) (Math.random() * 2);
@@ -257,17 +263,17 @@ public class GenerateGroupsService {
     private void scrambleInRestGroup(List<List<RegistrationParticipant>> groupsOfParticipants) {
         int i;
         //only the last group should be smaller than the max groupsize
-        for(i = groupsOfParticipants.size() - 1; i > 0 && groupsOfParticipants.get(i).size() < GROUPSIZE; i--) {
+        for(i = groupsOfParticipants.size() - 1; i > 0 && groupsOfParticipants.get(i).size() < groupSize; i--) {
         }
         i++;
 
         /*
-        * add fill up groups if there are more than one group with size < GROUPSIZE
+        * add fill up groups if there are more than one group with size < groupSize
          */
         for(int p = i; p+1 < groupsOfParticipants.size(); p++) {
             while(p+1 < groupsOfParticipants.size() //because groupsofparticipants size can become smaller
                     //&& q < groupsOfParticipants.get(p+1).size() //cause you will loop over the list you will empty
-                    && groupsOfParticipants.get(p).size() < GROUPSIZE//the list you are filling up can't become bigger than the groupsize
+                    && groupsOfParticipants.get(p).size() < groupSize//the list you are filling up can't become bigger than the groupsize
                     ) {
                 groupsOfParticipants.get(p).add(groupsOfParticipants.get(p + 1).remove(0));
                 if(groupsOfParticipants.get(p+1).size() <= 0) {
@@ -406,8 +412,8 @@ public class GenerateGroupsService {
         return participantsMan;
     }
 
-    public static Integer getGROUPSIZE() {
-        return GROUPSIZE;
+    public Integer getGroupSize() {
+        return groupSize;
     }
 
     protected void setParticipantsWoman(Map<String, List<RegistrationParticipant>> participantsWoman) {

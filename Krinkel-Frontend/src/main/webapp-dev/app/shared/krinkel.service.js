@@ -310,9 +310,9 @@ export class KrinkelService {
         });
     }
 
-    generateGroups() {
+    generateGroups(groupSize) {
         console.log("generate groups");
-        return this.$http.get(`${this.BASEURL}/tools/generate-groups`).then((resp) => {
+        return this.$http.get(`${this.BASEURL}/tools/generate-groups/${groupSize}`).then((resp) => {
             return resp.data;
         });
     }

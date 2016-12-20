@@ -11,9 +11,9 @@ class GenerateGroupsController {
 
     $onInit() {}
 
-    generateGroups() {
+    generateGroups(groupSize) {
         this.groups = [];
-        this.KrinkelService.generateGroups().then((resp) => {
+        this.KrinkelService.generateGroups(groupSize).then((resp) => {
             resp.forEach((list) => {
                 var group = [];
                 list.forEach(person => {

@@ -290,7 +290,7 @@ public class GenerateGroupsServiceTest{
 
         generateGroupsService.setParticipantsMan(participantsMan);
 
-        int amountMan = generateGroupsService.getGROUPSIZE() / 2;
+        int amountMan = generateGroupsService.getGroupSize() / 2;
 
         generateGroupsService.setAmountMan(amountMan);
         generateGroupsService.addParticipantUnionToList("A", tempList);
@@ -299,7 +299,7 @@ public class GenerateGroupsServiceTest{
         Assert.assertEquals(Gender.WOMAN, tempList.get(0).getGender());
         Assert.assertEquals(1, generateGroupsService.getAmountWoman());
 
-        int amountWoman = generateGroupsService.getGROUPSIZE() / 2;
+        int amountWoman = generateGroupsService.getGroupSize() / 2;
         generateGroupsService.setAmountMan(0);
         generateGroupsService.setAmountWoman(amountWoman);
 
@@ -440,7 +440,7 @@ public class GenerateGroupsServiceTest{
 
         List<RegistrationParticipant> tempList = generateGroupsService.assignParticipantsToGroup();
 
-        Assert.assertEquals((int)generateGroupsService.getGROUPSIZE(), tempList.size());
+        Assert.assertEquals((int)generateGroupsService.getGroupSize(), tempList.size());
 
         int amountMan = 0;
         int amountWoman = 0;
@@ -452,7 +452,7 @@ public class GenerateGroupsServiceTest{
             }
         }
 
-        if(generateGroupsService.getGROUPSIZE() % 2 == 0) {
+        if(generateGroupsService.getGroupSize() % 2 == 0) {
             System.out.println(amountWoman + "  " + amountMan);
             Assert.assertEquals(amountWoman, amountMan);
         } else {
