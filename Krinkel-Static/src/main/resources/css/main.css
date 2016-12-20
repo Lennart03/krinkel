@@ -361,6 +361,18 @@ body {
   background-size: cover;
 }
 
+@media only screen and (max-width: 1200px) {
+  .landingPageMainImage {
+    background-image: url("../img/layout/BRU_9436_med.jpg");
+  }
+}
+
+@media only screen and (max-width: 800px) {
+  .landingPageMainImage {
+    background-image: url("../img/layout/BRU_9436_small.jpg");
+  }
+}
+
 .landingPageMainImageFilter {
   height: 100%;
   width: 100%;
@@ -469,9 +481,21 @@ body {
   background-color: #309583;
 }
 
+@media only screen and (max-width: 800px) {
+  .landingPageCarouselWrapper .carousel .carousel-item .gal1 {
+    background-image: url("../img/graphic/gallery/gal1_sm.jpg");
+  }
+}
+
 .landingPageCarouselWrapper .carousel .carousel-item .gal2 {
   background-image: url("../img/graphic/gallery/gal2.jpg");
   background-color: #309583;
+}
+
+@media only screen and (max-width: 800px) {
+  .landingPageCarouselWrapper .carousel .carousel-item .gal2 {
+    background-image: url("../img/graphic/gallery/gal2_sm.jpg");
+  }
 }
 
 .landingPageCarouselWrapper .carousel .carousel-item .gal3 {
@@ -479,9 +503,21 @@ body {
   background-color: #309583;
 }
 
+@media only screen and (max-width: 800px) {
+  .landingPageCarouselWrapper .carousel .carousel-item .gal3 {
+    background-image: url("../img/graphic/gallery/gal3_sm.jpg");
+  }
+}
+
 .landingPageCarouselWrapper .carousel .carousel-item .gal4 {
   background-image: url("../img/graphic/gallery/gal4.jpg");
   background-color: #309583;
+}
+
+@media only screen and (max-width: 800px) {
+  .landingPageCarouselWrapper .carousel .carousel-item .gal4 {
+    background-image: url("../img/graphic/gallery/gal4_sm.jpg");
+  }
 }
 
 .landingPageCarouselWrapper .carousel .carousel-item .gal5 {
@@ -489,9 +525,21 @@ body {
   background-color: #309583;
 }
 
+@media only screen and (max-width: 800px) {
+  .landingPageCarouselWrapper .carousel .carousel-item .gal5 {
+    background-image: url("../img/graphic/gallery/gal5_sm.jpg");
+  }
+}
+
 .landingPageCarouselWrapper .carousel .carousel-item .gal6 {
   background-image: url("../img/graphic/gallery/gal6.jpg");
   background-color: #309583;
+}
+
+@media only screen and (max-width: 800px) {
+  .landingPageCarouselWrapper .carousel .carousel-item .gal6 {
+    background-image: url("../img/graphic/gallery/gal6_sm.jpg");
+  }
 }
 
 .landingPageCarouselWrapper .carousel .carousel-item .gal7 {
@@ -499,9 +547,21 @@ body {
   background-color: #309583;
 }
 
+@media only screen and (max-width: 800px) {
+  .landingPageCarouselWrapper .carousel .carousel-item .gal7 {
+    background-image: url("../img/graphic/gallery/gal7_sm.jpg");
+  }
+}
+
 .landingPageCarouselWrapper .carousel .carousel-item .gal8 {
   background-image: url("../img/graphic/gallery/gal8.jpg");
   background-color: #309583;
+}
+
+@media only screen and (max-width: 800px) {
+  .landingPageCarouselWrapper .carousel .carousel-item .gal8 {
+    background-image: url("../img/graphic/gallery/gal8_sm.jpg");
+  }
 }
 
 .landingPageInfoWrapper {
@@ -635,6 +695,18 @@ body {
   background-size: cover;
 }
 
+@media only screen and (max-width: 1200px) {
+  .aboutPageMainImage {
+    background-image: url("../img/layout/Onthaal1_med.jpg");
+  }
+}
+
+@media only screen and (max-width: 800px) {
+  .aboutPageMainImage {
+    background-image: url("../img/layout/Onthaal1_small.jpg");
+  }
+}
+
 .aboutPageHistoriekWrapper {
   max-width: 800px;
   margin: 0 auto 75px;
@@ -758,6 +830,18 @@ body {
   background-size: cover;
 }
 
+@media only screen and (max-width: 1200px) {
+  .faqPageMainImage {
+    background-image: url("../img/layout/faq_med.jpg");
+  }
+}
+
+@media only screen and (max-width: 800px) {
+  .faqPageMainImage {
+    background-image: url("../img/layout/faq_small.jpg");
+  }
+}
+
 .row .col {
   padding: 0;
 }
@@ -834,6 +918,18 @@ body {
   }
 }
 
+@media only screen and (max-width: 1200px) {
+  .contactPageMainImage {
+    background-image: url("../img/layout/contact_med.jpg");
+  }
+}
+
+@media only screen and (max-width: 800px) {
+  .contactPageMainImage {
+    background-image: url("../img/layout/contact_small.jpg");
+  }
+}
+
 .contactPageForm {
   text-align: center;
   max-width: 900px;
@@ -864,9 +960,33 @@ body {
   background-size: cover;
 }
 
+@media only screen and (max-width: 1200px) {
+  .praktischPageMainImage {
+    background-image: url("../img/layout/JVB_Krinkel2013_63_med.jpg");
+  }
+}
+
+@media only screen and (max-width: 800px) {
+  .praktischPageMainImage {
+    background-image: url("../img/layout/JVB_Krinkel2013_63_small.jpg");
+  }
+}
+
 .nieuwsPageMainImage {
   background: url("../img/layout/JVB_Krinkel2013_61.jpg") no-repeat 50% 25%;
   background-size: cover;
+}
+
+@media only screen and (max-width: 1200px) {
+  .nieuwsPageMainImage {
+    background-image: url("../img/layout/JVB_Krinkel2013_61_med.jpg");
+  }
+}
+
+@media only screen and (max-width: 800px) {
+  .nieuwsPageMainImage {
+    background-image: url("../img/layout/JVB_Krinkel2013_61_small.jpg");
+  }
 }
 
 .nieuwsPageWrapper {

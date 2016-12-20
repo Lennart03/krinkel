@@ -1,10 +1,11 @@
 <ul id="slide-out" class="side-nav fixed">
-    <li class="logo">
+    <a id="logo-container" ng-click="$ctrl.redirectToLandingsPage()" href=""><img class="sideNavLogo" src="/res/logo_KRINKEL_simple_COLOR_small.png" alt="Logo Krinkel"></a>
+<!--    <li class="logo">
         <a id="logo-container" ng-click="$ctrl.redirectToLandingsPage()" href="" class="brand-logo">
         </a>
-    </li>
+    </li>-->
 
-    <div ng-if="$ctrl.AuthService.getLoggedinUser() != null">
+    <div style="margin-top: 0px;" ng-if="$ctrl.AuthService.getLoggedinUser() != null">
         <!--<li>-->
         <!--<a class="subheader">-->
         <!--Inschrijven-->
