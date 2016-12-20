@@ -51,10 +51,10 @@
             {{participant.address.city}}
         </td>
         <td ng-if="$ctrl.AuthService.getUserRole() === 'ADMIN'">
-            {{volunteer.eatinghabbit}}
+            {{participant.eatinghabbit}}
         </td>
         <td ng-if="$ctrl.AuthService.getUserRole() === 'ADMIN'">
-            {{volunteer.medicalRemarks}}
+            {{participant.medicalRemarks}}
         </td>
         <td ng-if="$ctrl.AuthService.getUserRole() === 'ADMIN'" style="min-width: 110px;">
             <select ng-model="participant.status" ng-init="participant.status" ng-options="item.value as item.label for item in $ctrl.statusses"  ng-change="$ctrl.saveData(participant.id, participant.status)">
@@ -69,40 +69,40 @@
     </tbody>
 </table>
 
-<h2 ng-if="$ctrl.showParticipants && $ctrl.AuthService.getUserRole() === 'ADMIN'">Geannuleerde deelnemers</h2>
+<!--<h2 ng-if="$ctrl.showParticipants && $ctrl.AuthService.getUserRole() === 'ADMIN'">Geannuleerde deelnemers</h2>-->
 
-<table ng-if="$ctrl.showParticipants && $ctrl.AuthService.getUserRole() === 'ADMIN'">
-    <thead>
-    <tr>
-        <th data-field="name">Naam</th>
-        <th data-field="address">Adres</th>
-        <th data-field="city">Gemeente</th>
-        <th ng-if="$ctrl.AuthService.getUserRole() === 'ADMIN'" data-field="eatinghabit">Eetgewoonte</th>
-        <th ng-if="$ctrl.AuthService.getUserRole() === 'ADMIN'" data-field="medicalRemarks">Medische info</th>
-    </tr>
-    </thead>
+<!--<table ng-if="$ctrl.showParticipants && $ctrl.AuthService.getUserRole() === 'ADMIN'">-->
+    <!--<thead>-->
+    <!--<tr>-->
+        <!--<th data-field="name">Naam</th>-->
+        <!--<th data-field="address">Adres</th>-->
+        <!--<th data-field="city">Gemeente</th>-->
+        <!--<th ng-if="$ctrl.AuthService.getUserRole() === 'ADMIN'" data-field="eatinghabit">Eetgewoonte</th>-->
+        <!--<th ng-if="$ctrl.AuthService.getUserRole() === 'ADMIN'" data-field="medicalRemarks">Medische info</th>-->
+    <!--</tr>-->
+    <!--</thead>-->
 
 
-    <tbody>
-    <tr ng-repeat="participant in $ctrl.participants" id="0{{ ::participant.id }}" ng-if="participant.status === 'CANCELLED'">
-        <td>
-            {{participant.firstName}} {{participant.lastName}}
-        </td>
-        <td>
-            {{participant.address.street}} {{participant.address.houseNumber}}
-        </td>
-        <td>
-            {{participant.address.city}}
-        </td>
-        <td ng-if="$ctrl.AuthService.getUserRole() === 'ADMIN'">
-            {{volunteer.eatinghabbit}}
-        </td>
-        <td ng-if="$ctrl.AuthService.getUserRole() === 'ADMIN'">
-            {{volunteer.medicalRemarks}}
-        </td>
-    </tr>
-    </tbody>
-</table>
+    <!--<tbody>-->
+    <!--<tr ng-repeat="participant in $ctrl.participants" id="0{{ ::participant.id }}" ng-if="participant.status === 'CANCELLED'">-->
+        <!--<td>-->
+            <!--{{participant.firstName}} {{participant.lastName}}-->
+        <!--</td>-->
+        <!--<td>-->
+            <!--{{participant.address.street}} {{participant.address.houseNumber}}-->
+        <!--</td>-->
+        <!--<td>-->
+            <!--{{participant.address.city}}-->
+        <!--</td>-->
+        <!--<td ng-if="$ctrl.AuthService.getUserRole() === 'ADMIN'">-->
+            <!--{{participant.eatinghabbit}}-->
+        <!--</td>-->
+        <!--<td ng-if="$ctrl.AuthService.getUserRole() === 'ADMIN'">-->
+            <!--{{participant.medicalRemarks}}-->
+        <!--</td>-->
+    <!--</tr>-->
+    <!--</tbody>-->
+<!--</table>-->
 
 <!-- Modal Structure -->
 <div id="{{ ::'modal' + participant.id }}"ng-if="$ctrl.showParticipants" ng-repeat="participant in $ctrl.participants track by $index" class="modal">
