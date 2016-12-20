@@ -107,7 +107,7 @@ class UnitsController {
 
     initSelectPayStatus() {
         this.statusses =  [
-            { 'value': 'TO_BE_PAID', 'label': 'Onbetaald' },
+            { 'value': 'TO_BE_PAID', 'label': 'Niet betaald' },
             { 'value': 'PAID', 'label': 'Betaald' },
             { 'value': 'CONFIRMED', 'label': 'Bevestigd'}
             ]

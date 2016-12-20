@@ -73,6 +73,7 @@ public class GraphChiroService {
         return status;
     }
 
+
     @PreAuthorize("@GraphChiroServiceSecurity.hasPermissionToMakeSunGraph()")
     public GraphChiroUnit summary() {
         GraphChiroUnit root = new GraphChiroUnit("Inschrijvingen", null, new ArrayList<GraphChiroUnit>());

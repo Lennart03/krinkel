@@ -48,7 +48,7 @@ public class EmailSenderServiceImpl implements EmailSenderService {
     private ConfirmationLinkService confirmationLinkService;
 
     @Override
-    public Future<String> sendMail(RegistrationParticipant participant) {
+    public Future<String> sendMail(RegistrationParticipant participant) { //todo:fix spam when subscriber email is not set
         MimeMessage message = mailSender.createMimeMessage();
         Context ctx = new Context();
 

@@ -26,12 +26,24 @@
         </dependency>
         <dependency>
             <groupId>com.realdolmen.chiro</groupId>
+            <artifactId>Krinkel-Utilities</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.realdolmen.chiro</groupId>
             <artifactId>Krinkel-Domain</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.realdolmen.chiro</groupId>
+            <artifactId>Krinkel-Test-Base</artifactId>
         </dependency>
         <dependency>
             <groupId>org.codehaus.jackson</groupId>
             <artifactId>jackson-mapper-asl</artifactId>
             <version>${org.jackson-version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.h2database</groupId>
+            <artifactId>h2</artifactId>
         </dependency>
     </dependencies>
 

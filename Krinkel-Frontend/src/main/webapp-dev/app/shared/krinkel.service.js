@@ -82,8 +82,6 @@ export class KrinkelService {
 
     updatePayment(participantId, paymentStatus) {
         return this.$http.post(`${this.BASEURL}/api/paymentStatusChange?participantId=${participantId}&paymentStatus=${paymentStatus}`).then((resp) => {
-                console.log('RESP: ' + resp.data);
-
                 return resp.data;
             },
             () => {
@@ -235,7 +233,6 @@ export class KrinkelService {
                     return {"status": false};
                 })
         ;
-        console.log("output of promise " +promise);
         return promise;
     }
 
@@ -245,9 +242,6 @@ export class KrinkelService {
      */
     getAdmins() {
         return this.$http.get(`${this.BASEURL}/api/admin`).then((resp) => {
-                console.log("get admins done");
-                console.log("Data in the response (krinkelservice): ");
-                console.log(resp.data)
             return resp.data;
         }, () => {
                 this.popup();
@@ -260,12 +254,10 @@ export class KrinkelService {
      * @param adNumber unique identiefies given by Chiro
      */
     postAdmin(adNumber) {
-        console.log("Posting: " + adNumber);
         return this.$http.post(`${this.BASEURL}/api/admin/${adNumber}`);
     }
 
     deleteAdmin(adNumber) {
-        console.log("Deleting: " + adNumber);
         return this.$http.post(`${this.BASEURL}/api/admin/delete/${adNumber}`);
     }
 
@@ -277,7 +269,6 @@ export class KrinkelService {
     }
 
     addPersonToBasket(person){
-        //console.log(person);
         return this.$http.post(`${this.BASEURL}/api/basket`, person).then((resp)=>{
            return resp.data;
         });

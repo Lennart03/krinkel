@@ -22,12 +22,12 @@
 </table>
 <div class="col s1 left">
     <div class="add-btn">
-        <a href="/select-participant" class="btn-floating btn-large waves-effect waves-light"><i class="material-icons">add</i></a>
+        <a href="/select-participant" class="btn-floating btn-large "><i class="material-icons">add</i></a>
     </div>
 </div>
 <div class="col s1 right">
     <div class="pay-btn">
-        <button data-target="modal1" class="btn right waves-effect waves-light modal-trigger" name="action"
+        <button data-target="modal1" class="btn right modal-trigger" name="action"
                 ng-show="$ctrl.colleagueList.length > 0">
             Betalen
             <i class="material-icons right">send</i>
@@ -45,7 +45,7 @@
         </div>
     </div>
     <div class="modal-footer">
-        <a href="#" ng-click="$ctrl.doPayment()" class=" modal-action modal-close waves-effect waves-green btn-flat">Betalen</a>
+        <a href="#" ng-click="$ctrl.doPayment()" class=" modal-action modal-close btn-flat">Betalen</a>
     </div>
     <div ng-show="$ctrl.functionCallAfterDOMRender()"></div>
 </div>

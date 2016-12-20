@@ -85,9 +85,6 @@ class KrinkelGraphController {
     }
 
     $onInit() {
-        // this.getDataForSunBurst();
-        // this.getDataForStatus();
-        // this.getDataForLogin();
         this.test = "sunburstChart";
 
         //sunburst------------------
@@ -106,52 +103,6 @@ class KrinkelGraphController {
         };
         //show no data found sunburst
         this.sunBurstData = [];
-        /**
-         * Old login chart*
-         */
-        // this.lineOptions = {
-        //     chart: {
-        //         type: 'stackedAreaChart',
-        //         height: 450,
-        //         margin: {
-        //             top: 20,
-        //             right: 20,
-        //             bottom: 30,
-        //             left: 40
-        //         },
-        //         x: function (d) {
-        //             return d[0];
-        //         },
-        //         y: function (d) {
-        //             return d[1];
-        //         },
-        //         showControls: false,
-        //         useVoronoi: false,
-        //         clipEdge: true,
-        //         duration: 100,
-        //         useInteractiveGuideline: true,
-        //         xAxis: {
-        //             showMaxMin: false,
-        //             tickFormat: function (d) {
-        //                 return d3.time.format('%x')(new Date(d))
-        //             }
-        //         },
-        //         yAxis: {
-        //             tickFormat: function (d) {
-        //                 return d3.format(',.0f')(d);
-        //             }
-        //         },
-        //         zoom: {
-        //             enabled: false,
-        //             scaleExtent: [1, 10],
-        //             useFixedDomain: false,
-        //             useNiceScale: false,
-        //             horizontalOff: false,
-        //             verticalOff: false,
-        //             unzoomEventType: 'dblclick.zoom'
-        //         }
-        //     }
-        // };
 
         this.lineOptions = {
             chart: {
@@ -233,8 +184,6 @@ class KrinkelGraphController {
         this.barData = [];
         console.log(this.lineOptions.values());
     }
-
-
 }
 
 export var KrinkelGraphComponent = {

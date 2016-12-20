@@ -89,13 +89,7 @@ public class RegistrationParticipant {
     @Transient
     private String httpStatus;
 
-    public String getHttpStatus() {
-        return httpStatus;
-    }
 
-    public void setHttpStatus(String httpStatus) {
-        this.httpStatus = httpStatus;
-    }
 
     /**
      * Only numbers, spaces and optionally a '+' sign are allowed.

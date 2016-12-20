@@ -14,7 +14,7 @@ public class Admin {
 
     @Id
     @Column(name = "adnr")
-    private Integer adNummer;
+    private Integer adNumber;
 
     @Column(name = "email")
     private String email;
@@ -25,22 +25,22 @@ public class Admin {
     @Column(name = "lastname")
     private String lastname;
 
-    public Integer getAdNummer() {
-        return adNummer;
+    public Integer getAdNumber() {
+        return adNumber;
     }
 
     public Admin() {
     }
 
-    public Admin(Integer adNummer, String email, String firstname, String lastname) {
-        this.adNummer = adNummer;
+    public Admin(Integer adNumber, String email, String firstname, String lastname) {
+        this.adNumber = adNumber;
         this.email = email;
         this.firstname = firstname;
         this.lastname = lastname;
     }
 
-    public void setAdNummer(Integer adNummer) {
-        this.adNummer = adNummer;
+    public void setAdNumber(Integer adNumber) {
+        this.adNumber = adNumber;
     }
 
     public String getEmail() {

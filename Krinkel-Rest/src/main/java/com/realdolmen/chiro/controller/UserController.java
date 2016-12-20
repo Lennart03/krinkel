@@ -24,8 +24,8 @@ public class UserController {
      * @throws UserNotfoundException
      */
     @RequestMapping(method = RequestMethod.GET, value = "/api/user")
-    public User getUser() throws UserNotfoundException {
-        User u = userService.getCurrentUser();
+    public User getUser() throws UserNotfoundException { //TODO: instead of getting the user from the session, get the user from DB, so that we get the most up to date state for the user.
+        User u = userService.getCurrentUser();//get only the data from our own database, as chiro's API is too slow.
         if (u == null) {
             throw new UserNotfoundException();
         }
