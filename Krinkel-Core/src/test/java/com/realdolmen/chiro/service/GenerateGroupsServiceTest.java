@@ -143,33 +143,31 @@ public class GenerateGroupsServiceTest{
         //A -> 4M 3W
         //B -> 3M 2W
         //C -> 1W
-        Assert.assertNotNull(generateGroupsService.getParticipantsMale());
-        Assert.assertNotNull(generateGroupsService.getParticipantsFemale());
-        Assert.assertNotNull(generateGroupsService.getParticipantsX());
-        Assert.assertEquals(0, generateGroupsService.getParticipantsX().size());
+        Assert.assertNotNull(generateGroupsService.getParticipantsMan());
+        Assert.assertNotNull(generateGroupsService.getParticipantsWoman());
 
-        Assert.assertEquals(2, generateGroupsService.getParticipantsMale().size());
-        Assert.assertEquals(3, generateGroupsService.getParticipantsFemale().size());
+        Assert.assertEquals(2, generateGroupsService.getParticipantsMan().size());
+        Assert.assertEquals(3, generateGroupsService.getParticipantsWoman().size());
 
-        Assert.assertEquals(4, generateGroupsService.getParticipantsMale().get("A").size());
-        Assert.assertEquals(3, generateGroupsService.getParticipantsFemale().get("A").size());
+        Assert.assertEquals(4, generateGroupsService.getParticipantsMan().get("A").size());
+        Assert.assertEquals(3, generateGroupsService.getParticipantsWoman().get("A").size());
 
-        Assert.assertEquals(3, generateGroupsService.getParticipantsMale().get("B").size());
-        Assert.assertEquals(2, generateGroupsService.getParticipantsFemale().get("B").size());
+        Assert.assertEquals(3, generateGroupsService.getParticipantsMan().get("B").size());
+        Assert.assertEquals(2, generateGroupsService.getParticipantsWoman().get("B").size());
 
-        Assert.assertEquals(1, generateGroupsService.getParticipantsFemale().get("C").size());
+        Assert.assertEquals(1, generateGroupsService.getParticipantsWoman().get("C").size());
     }
 
     @Test
-    public void addMaleToListTest() {
+    public void addManToListTest() {
         List<RegistrationParticipant> tempList = new ArrayList<>();
-        Map<String, List<RegistrationParticipant>> participantsMale = new HashMap<>();
+        Map<String, List<RegistrationParticipant>> participantsMan = new HashMap<>();
 
-        Assert.assertFalse(generateGroupsService.addMaleToList("A", tempList));
+        Assert.assertFalse(generateGroupsService.addManToList("A", tempList));
 
-        generateGroupsService.setParticipantsMale(participantsMale);
+        generateGroupsService.setParticipantsMan(participantsMan);
 
-        Assert.assertFalse(generateGroupsService.addMaleToList("A", tempList));
+        Assert.assertFalse(generateGroupsService.addManToList("A", tempList));
 
         List<RegistrationParticipant> participantsUnionA = new ArrayList<>();
         RegistrationParticipant.RegistrationParticipantBuilder builder = new RegistrationParticipant.RegistrationParticipantBuilder();
@@ -180,13 +178,13 @@ public class GenerateGroupsServiceTest{
         builder.adNumber("2");
         participantsUnionA.add(builder.build());
 
-        participantsMale.put("A", participantsUnionA);
+        participantsMan.put("A", participantsUnionA);
 
-        generateGroupsService.setParticipantsMale(participantsMale);
+        generateGroupsService.setParticipantsMan(participantsMan);
 
-        Assert.assertEquals(2, generateGroupsService.getParticipantsMale().get("A").size());
-        Assert.assertTrue(generateGroupsService.addMaleToList("A", tempList));
-        Assert.assertEquals(1, generateGroupsService.getParticipantsMale().get("A").size());
+        Assert.assertEquals(2, generateGroupsService.getParticipantsMan().get("A").size());
+        Assert.assertTrue(generateGroupsService.addManToList("A", tempList));
+        Assert.assertEquals(1, generateGroupsService.getParticipantsMan().get("A").size());
         Assert.assertEquals(1, tempList.size());
         Assert.assertEquals(Gender.MAN, tempList.get(0).getGender());
     }
@@ -196,11 +194,11 @@ public class GenerateGroupsServiceTest{
         List<RegistrationParticipant> tempList = new ArrayList<>();
         Map<String, List<RegistrationParticipant>> participantsWoman = new HashMap<>();
 
-        Assert.assertFalse(generateGroupsService.addFemaleToList("A", tempList));
+        Assert.assertFalse(generateGroupsService.addWomanToList("A", tempList));
 
-        generateGroupsService.setParticipantsFemale(participantsWoman);
+        generateGroupsService.setParticipantsWoman(participantsWoman);
 
-        Assert.assertFalse(generateGroupsService.addFemaleToList("A", tempList));
+        Assert.assertFalse(generateGroupsService.addWomanToList("A", tempList));
 
         List<RegistrationParticipant> participantsUnionA = new ArrayList<>();
         RegistrationParticipant.RegistrationParticipantBuilder builder = new RegistrationParticipant.RegistrationParticipantBuilder();
@@ -213,11 +211,11 @@ public class GenerateGroupsServiceTest{
 
         participantsWoman.put("A", participantsUnionA);
 
-        generateGroupsService.setParticipantsFemale(participantsWoman);
+        generateGroupsService.setParticipantsWoman(participantsWoman);
 
-        Assert.assertEquals(2, generateGroupsService.getParticipantsFemale().get("A").size());
-        Assert.assertTrue(generateGroupsService.addFemaleToList("A", tempList));
-        Assert.assertEquals(1, generateGroupsService.getParticipantsFemale().get("A").size());
+        Assert.assertEquals(2, generateGroupsService.getParticipantsWoman().get("A").size());
+        Assert.assertTrue(generateGroupsService.addWomanToList("A", tempList));
+        Assert.assertEquals(1, generateGroupsService.getParticipantsWoman().get("A").size());
         Assert.assertEquals(1, tempList.size());
         Assert.assertEquals(Gender.WOMAN, tempList.get(0).getGender());
     }
@@ -229,37 +227,37 @@ public class GenerateGroupsServiceTest{
         Map<String, List<RegistrationParticipant>> participantsWoman = new HashMap<>();
         Map<String, List<RegistrationParticipant>> participantsMan = new HashMap<>();
 
-        List<RegistrationParticipant> participantsMaleUnionA = new ArrayList<>();
-        List<RegistrationParticipant> participantsFemaleUnionA = new ArrayList<>();
+        List<RegistrationParticipant> participantsManUnionA = new ArrayList<>();
+        List<RegistrationParticipant> participantsWomanUnionA = new ArrayList<>();
         RegistrationParticipant.RegistrationParticipantBuilder builder = new RegistrationParticipant.RegistrationParticipantBuilder();
         builder.gender(Gender.WOMAN);
         builder.adNumber("1");
 
-        participantsFemaleUnionA.add(builder.build());
+        participantsWomanUnionA.add(builder.build());
         builder.adNumber("2");
-        participantsFemaleUnionA.add(builder.build());
+        participantsWomanUnionA.add(builder.build());
 
-        participantsWoman.put("A", participantsFemaleUnionA);
+        participantsWoman.put("A", participantsWomanUnionA);
 
-        generateGroupsService.setParticipantsFemale(participantsWoman);
+        generateGroupsService.setParticipantsWoman(participantsWoman);
 
         builder.gender(Gender.MAN);
         builder.adNumber("3");
-        participantsMaleUnionA.add(builder.build());
+        participantsManUnionA.add(builder.build());
         builder.adNumber("4");
-        participantsMaleUnionA.add(builder.build());
-        participantsMan.put("A", participantsMaleUnionA);
+        participantsManUnionA.add(builder.build());
+        participantsMan.put("A", participantsManUnionA);
 
-        generateGroupsService.setParticipantsMale(participantsMan);
+        generateGroupsService.setParticipantsMan(participantsMan);
 
-        generateGroupsService.setAmountMale(2);
-        generateGroupsService.setAmountFemale(2);
+        generateGroupsService.setAmountMan(2);
+        generateGroupsService.setAmountWoman(2);
         generateGroupsService.addParticipantUnionToList("A", tempList);
         Assert.assertEquals(1, tempList.size());
         if(tempList.get(0).getGender().equals(Gender.MAN)) {
-            Assert.assertEquals(3, generateGroupsService.getAmountMale());
+            Assert.assertEquals(3, generateGroupsService.getAmountMan());
         } else if(tempList.get(0).getGender().equals(Gender.WOMAN)) {
-            Assert.assertEquals(3, generateGroupsService.getAmountFemale());
+            Assert.assertEquals(3, generateGroupsService.getAmountWoman());
         }
     }
 
@@ -269,55 +267,55 @@ public class GenerateGroupsServiceTest{
         Map<String, List<RegistrationParticipant>> participantsWoman = new HashMap<>();
         Map<String, List<RegistrationParticipant>> participantsMan = new HashMap<>();
 
-        List<RegistrationParticipant> participantsMaleUnionA = new ArrayList<>();
-        List<RegistrationParticipant> participantsFemaleUnionA = new ArrayList<>();
+        List<RegistrationParticipant> participantsManUnionA = new ArrayList<>();
+        List<RegistrationParticipant> participantsWomanUnionA = new ArrayList<>();
         RegistrationParticipant.RegistrationParticipantBuilder builder = new RegistrationParticipant.RegistrationParticipantBuilder();
         builder.gender(Gender.WOMAN);
         builder.adNumber("1");
 
-        participantsFemaleUnionA.add(builder.build());
+        participantsWomanUnionA.add(builder.build());
         builder.adNumber("2");
-        participantsFemaleUnionA.add(builder.build());
+        participantsWomanUnionA.add(builder.build());
 
-        participantsWoman.put("A", participantsFemaleUnionA);
+        participantsWoman.put("A", participantsWomanUnionA);
 
-        generateGroupsService.setParticipantsFemale(participantsWoman);
+        generateGroupsService.setParticipantsWoman(participantsWoman);
 
         builder.gender(Gender.MAN);
         builder.adNumber("3");
-        participantsMaleUnionA.add(builder.build());
+        participantsManUnionA.add(builder.build());
         builder.adNumber("4");
-        participantsMaleUnionA.add(builder.build());
-        participantsMan.put("A", participantsMaleUnionA);
+        participantsManUnionA.add(builder.build());
+        participantsMan.put("A", participantsManUnionA);
 
-        generateGroupsService.setParticipantsMale(participantsMan);
+        generateGroupsService.setParticipantsMan(participantsMan);
 
-        int amountMale = generateGroupsService.getGROUPSIZE() / 2;
+        int amountMan = generateGroupsService.getGROUPSIZE() / 2;
 
-        generateGroupsService.setAmountMale(amountMale);
+        generateGroupsService.setAmountMan(amountMan);
         generateGroupsService.addParticipantUnionToList("A", tempList);
 
         Assert.assertEquals(1, tempList.size());
         Assert.assertEquals(Gender.WOMAN, tempList.get(0).getGender());
-        Assert.assertEquals(1, generateGroupsService.getAmountFemale());
+        Assert.assertEquals(1, generateGroupsService.getAmountWoman());
 
-        int amountFemale = generateGroupsService.getGROUPSIZE() / 2;
-        generateGroupsService.setAmountMale(0);
-        generateGroupsService.setAmountFemale(amountFemale);
+        int amountWoman = generateGroupsService.getGROUPSIZE() / 2;
+        generateGroupsService.setAmountMan(0);
+        generateGroupsService.setAmountWoman(amountWoman);
 
         generateGroupsService.addParticipantUnionToList("A", tempList);
 
         Assert.assertEquals(2, tempList.size());
         Assert.assertEquals(Gender.MAN, tempList.get(1).getGender());
-        Assert.assertEquals(1, generateGroupsService.getAmountMale());
+        Assert.assertEquals(1, generateGroupsService.getAmountMan());
 
-        amountMale = amountFemale;
-        generateGroupsService.setAmountMale(amountMale);
+        amountMan = amountWoman;
+        generateGroupsService.setAmountMan(amountMan);
 
         generateGroupsService.addParticipantUnionToList("A", tempList);
         Assert.assertEquals(2, tempList.size());
-        Assert.assertEquals(6, generateGroupsService.getAmountMale());
-        Assert.assertEquals(6, generateGroupsService.getAmountFemale());
+        Assert.assertEquals(6, generateGroupsService.getAmountMan());
+        Assert.assertEquals(6, generateGroupsService.getAmountWoman());
     }
 
     @Test
@@ -444,21 +442,21 @@ public class GenerateGroupsServiceTest{
 
         Assert.assertEquals((int)generateGroupsService.getGROUPSIZE(), tempList.size());
 
-        int amountMale = 0;
-        int amountFemale = 0;
+        int amountMan = 0;
+        int amountWoman = 0;
         for(int i = 0; i < tempList.size(); i++) {
             if(tempList.get(i).getGender().equals(Gender.MAN)) {
-                amountMale++;
+                amountMan++;
             } else if(tempList.get(i).getGender().equals((Gender.WOMAN))) {
-                amountFemale++;
+                amountWoman++;
             }
         }
 
         if(generateGroupsService.getGROUPSIZE() % 2 == 0) {
-            System.out.println(amountFemale + "  " + amountMale);
-            Assert.assertEquals(amountFemale, amountMale);
+            System.out.println(amountWoman + "  " + amountMan);
+            Assert.assertEquals(amountWoman, amountMan);
         } else {
-            Assert.assertTrue((amountFemale == amountMale + 1) || (amountFemale + 1 == amountMale));
+            Assert.assertTrue((amountWoman == amountMan + 1) || (amountWoman + 1 == amountMan));
         }
     }
 }

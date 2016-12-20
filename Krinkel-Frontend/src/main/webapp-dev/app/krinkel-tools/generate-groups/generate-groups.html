@@ -2,7 +2,7 @@
     <ul class="groups-list">
         <li class="repeat" ng-repeat="lists in $ctrl.groups">
             <ul>
-                <li><h3>Group {{$index}}</h3></li>
+                <li><h3>Group {{$index+1}}</h3></li>
                 <li class="animate-repeat" ng-repeat="person in lists">
                     <div class="row">
                         <div class="col s3 m3 l3">{{person.adNumber}}: </div>

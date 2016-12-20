@@ -5,8 +5,6 @@ import com.realdolmen.chiro.domain.RegistrationParticipant;
 import com.realdolmen.chiro.domain.units.ChiroUnit;
 import com.realdolmen.chiro.repository.ChiroUnitRepository;
 import com.realdolmen.chiro.repository.RegistrationParticipantRepository;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -23,66 +21,36 @@ public class GenerateGroupsService {
     @Autowired
     RegistrationParticipantRepository registrationParticipantRepository;
 
-    private static Integer GROUPSIZE = 16;
+    private static Integer GROUPSIZE = 8;
 
-    private Map<String, List<RegistrationParticipant>> participantsMale = new HashMap<>();
-    private Map<String, List<RegistrationParticipant>> participantsFemale = new HashMap<>();
-    private Map<String, List<RegistrationParticipant>> participantsX = new HashMap<>();
+    private Map<String, List<RegistrationParticipant>> participantsMan = new HashMap<>();
+    private Map<String, List<RegistrationParticipant>> participantsWoman = new HashMap<>();
+    //private Map<String, List<RegistrationParticipant>> participantsX = new HashMap<>();
 
-    private int amountMale = 0;
-    private int amountFemale = 0;
+    private int amountMan = 0;
+    private int amountWoman = 0;
 
     public List<List<RegistrationParticipant>> generateRandomGroups() {
-        System.out.println("Generate random groups");
-        //detailed//system.out.println("begin generateRandomGroups");
         //fill the lists with the currently registered members
         List<RegistrationParticipant> registrationParticipants = registrationParticipantRepository.findAllAspis();
-        System.out.println("amount registrationParticipants " + registrationParticipants.size());
-        //detailed//system.out.println("fetched the registrationparticipants");
 
         Iterator<RegistrationParticipant> registrationIterator = registrationParticipants.iterator();
-        //detailed//system.out.println("fetched registrationiterator");
         while (registrationIterator.hasNext()) {
-            //detailed//system.out.println("iterator has next");
             RegistrationParticipant participant = registrationIterator.next();
-            //detailed//system.out.println("fetched participant next");
             this.addParticipantInCorrectGroup(participant);
-            //detailed//system.out.println("added participant in the correct group");
         }
 
-        /*debug code
-        Set<String> keyset = participantsMale.keySet();
-        Iterator<String> it = keyset.iterator();
-        while(it.hasNext()) {
-            String next = it.next();
-            System.out.println("union: " + next);
-            for(int j =0; j < participantsMale.get(next).size(); j++) {
-                totalMale++;
-                System.out.println(participantsMale.get(next).get(j).getAdNumber());
-            }
-        }*/
-
-        //detailed//system.out.println("no registration participants left");
         //take members from the separate lists and group them
         List<List<RegistrationParticipant>> groupsOfParticipant = new ArrayList<>();
-        //detailed//system.out.println("initialize groups of participant array");
 
         Boolean stop = false;
-        //detailed//system.out.println("make boolean stop");
         do {
-            //detailed//system.out.println("enter do");
-            List<RegistrationParticipant> tempList = assignParticipantsToGroup();
-            /*system.out.println("New tempList:");
-            for(int i = 0; i < tempList.size(); i++) {
-                sytem.out.println(tempList.get(i).getAdNumber() + "    " + tempList.get(i).getGender());
-            }*/
-            //detailed//system.out.println("fetched tempList");
-            if (tempList.size() <= 0) {
-                //detailed//system.out.println("templist is empty");
+            List<RegistrationParticipant> singleGroup = assignParticipantsToGroup();
+
+            if (singleGroup.size() <= 0) {
                 stop = true;
             } else {
-                //detailed//system.out.println("add the templist to the groups");
-                groupsOfParticipant.add(tempList);
+                groupsOfParticipant.add(singleGroup);
             }
         } while (!stop);
 
@@ -92,55 +60,74 @@ public class GenerateGroupsService {
         for(int i = 0; i < groupsOfParticipant.size(); i++) {
             List<RegistrationParticipant> reglist = groupsOfParticipant.get(i);
             System.out.println("Group " + i + ":");
-            int amountMale = 0;
-            int amountFemale = 0;
+            int amountMan = 0;
+            int amountWoman = 0;
             for(int j = 0; j < reglist.size(); j++) {
                 if(reglist.get(j).getGender().equals(Gender.MAN)) {
                     System.out.println(reglist.get(j).getAdNumber() + "   MAN  " + reglist.get(j).getStamnumber());
-                    amountMale++;
+                    amountMan++;
                 } else if(reglist.get(j).getGender().equals(Gender.WOMAN)) {
                     System.out.println(reglist.get(j).getAdNumber() + "   WOMAN  " + reglist.get(j).getStamnumber());
-                    amountFemale++;
+                    amountWoman++;
                 }
             }
             System.out.println("Size group: " + reglist.size());
-            System.out.println("Amount male: " + amountMale);
-            System.out.println("Amount female: " + amountFemale);
+            System.out.println("Amount male: " + amountMan);
+            System.out.println("Amount female: " + amountWoman);
         }*/
+
+        scrambleInRestGroup(groupsOfParticipant);
+
         return groupsOfParticipant;
     }
 
     protected List<RegistrationParticipant> assignParticipantsToGroup() {
-        List<RegistrationParticipant> tempList = new ArrayList<>();
-        //detailed//system.out.println("enter assignParticipantsToGroup");
+        List<RegistrationParticipant> singleGroup = new ArrayList<>();
         List<ChiroUnit> unions = chiroUnitRepository.findAllVerbonden();
 
-        //detailed//system.out.println("alle verbonden gevonden : " + unions.size());
-        
-        amountMale = 0;
-        amountFemale = 0;
+        amountMan = 0;
+        amountWoman = 0;
 
-        //todo fix for GROUPSIZE < union.size
-        for (int i = 0; i < unions.size(); i++) {
-            String unionStam = unions.get(i).getStam();
-            //detailed//system.out.println("add participant to union list");
-            addParticipantUnionToList(unionStam, tempList);
-            //detailed//system.out.println("added participant to union list");
+        if (unions.size() <= GROUPSIZE) {
+            for (int i = 0; i < unions.size(); i++) {
+                String unionStam = unions.get(i).getStam();
+                addParticipantUnionToList(unionStam, singleGroup);
+            }
+
+            if(singleGroup.size() < GROUPSIZE) {//in case union.size < GROUPSIZE
+                fillUpGroup(singleGroup, unions, GROUPSIZE - singleGroup.size());
+            }
+        } else {
+            List<Integer> selectedUnions = new ArrayList<>();
+            for (int i = 0; i < GROUPSIZE;) {
+                //select random union
+                int randNumber = (int) (Math.random() * unions.size());
+                while(selectedUnions.contains(randNumber) && selectedUnions.size() < unions.size()){
+                    randNumber = (int) (Math.random() * unions.size());
+                }
+                selectedUnions.add(randNumber);
+
+                String unionStam = unions.get(randNumber).getStam();
+
+                if(!addParticipantUnionToList(unionStam, singleGroup)) {
+                    if(selectedUnions.size() >= unions.size()) {
+                        break; //if no other unions that can help add members stop looping
+                    }
+                } else {
+                    i++; //only increase when a member is added to the group
+                }
+            }
+
+            if(singleGroup.size() < GROUPSIZE) {//in case there were not enough members of specific unions
+                fillUpGroup(singleGroup, unions, GROUPSIZE - singleGroup.size());
+            }
         }
 
-        //if union.size < GROUPSIZE
-        if (tempList.size() < GROUPSIZE) {
-            //detailed//system.out.println("add participant to union list");
-            fillUpGroup(tempList, unions, GROUPSIZE - tempList.size());
-            //detailed//system.out.println("after fill up the group");
-        }
-
-        //detailed//system.out.println("end assignParticipantsToGroup");
-        return tempList;
+        return singleGroup;
     }
 
     /*in case groupsize > unions extra members need to be added to the groups*/
-    private void fillUpGroup(List<RegistrationParticipant> tempList, List<ChiroUnit> unions, int itemsNeeded) {
+    private void fillUpGroup(List<RegistrationParticipant> singleGroup, List<ChiroUnit> unions, int itemsNeeded) {
         List<Integer> randomIndexUnions = new ArrayList<>();
         int unionSize = unions.size();
 
@@ -158,48 +145,42 @@ public class GenerateGroupsService {
 
             String unionStam = unions.get(index).getStam();
 
-            if(addParticipantUnionToList(unionStam, tempList)) {
+            if(addParticipantUnionToList(unionStam, singleGroup)) {
                 itemsAdded++;
             }
         }
     }
 
-    protected boolean addParticipantUnionToList(String unionStam, List<RegistrationParticipant> tempList) {
+    protected boolean addParticipantUnionToList(String unionStam, List<RegistrationParticipant> singleGroup) {
         //this will fix the case that GROUPSIZE is not even
         int genderGroupSize = (GROUPSIZE + 1) / 2;
 
-        if (amountMale < genderGroupSize && amountFemale < genderGroupSize) {
+        if (amountMan < genderGroupSize && amountWoman < genderGroupSize) {
             int random = (int) (Math.random() * 2);
 
             if (random == 0) {
-                //detailed//system.out.println("random result was adding male to list");
-                if (!addMaleToList(unionStam, tempList)) {
-                    //detailed//system.out.println("failed to add male to list, trying to add female");
-                    if(addFemaleToList(unionStam, tempList)) {
+                if (!addManToList(unionStam, singleGroup)) {
+                    if(addWomanToList(unionStam, singleGroup)) {
                         return true;
                     }
                 } else {
                     return true;
                 }
             } else {
-                //detailed//system.out.println("random result was adding female to list");
-                if (!addFemaleToList(unionStam, tempList)) {
-                    //detailed//system.out.println("failed to add female to list, trying to add male");
-                    if(addMaleToList(unionStam, tempList)) {
+                if (!addWomanToList(unionStam, singleGroup)) {
+                    if(addManToList(unionStam, singleGroup)) {
                         return true;
                     }
                 } else {
                     return true;
                 }
             }
-        } else if (amountMale >= genderGroupSize && amountFemale < genderGroupSize) {
-            //detailed//system.out.println("too much males, add female");
-            if(addFemaleToList(unionStam, tempList)) { //TODO edit priorities here
+        } else if (amountMan >= genderGroupSize && amountWoman < genderGroupSize) {
+            if(addWomanToList(unionStam, singleGroup)) { //TODO edit priorities here
                 return true;
             }
-        } else if (amountFemale >= genderGroupSize && amountMale < genderGroupSize) {
-            //detailed//system.out.println("too much females, add male");
-            if(addMaleToList(unionStam, tempList)) { //TODO edit priorities here
+        } else if (amountWoman >= genderGroupSize && amountMan < genderGroupSize) {
+            if(addManToList(unionStam, singleGroup)) { //TODO edit priorities here
                 return true;
             }
         }
@@ -208,154 +189,248 @@ public class GenerateGroupsService {
     }
 
 
-    protected boolean addMaleToList(String unionName, List<RegistrationParticipant> tempList) {
-        //detailed//system.out.println("add a male to the list");
-        if(participantsMale != null){
-            //detailed//system.out.println("there are still male participants left");
-            List<RegistrationParticipant> registeredMalesUnion = participantsMale.get(unionName);
-            //detailed//system.out.println("got list of males of the selected union");
-            if (registeredMalesUnion != null && registeredMalesUnion.size() > 0) {
-                //detailed//system.out.println("there are still males left that belong to the union");
-                int randomIndex = (int) (Math.random() * registeredMalesUnion.size());
-                //detailed//system.out.println("select a random male");
-                tempList.add(registeredMalesUnion.get(randomIndex));
-                //detailed//system.out.println("add the male to the union");
-                registeredMalesUnion.remove(randomIndex);
-                //detailed//system.out.println("remove the male from the global list");
-                amountMale++;
+    protected boolean addManToList(String unionName, List<RegistrationParticipant> singleGroup) {
+        if(participantsMan != null){
+            List<RegistrationParticipant> registeredMansUnion = participantsMan.get(unionName);
+            if (registeredMansUnion != null && registeredMansUnion.size() > 0) {
+                int randomIndex = (int) (Math.random() * registeredMansUnion.size());
+
+                singleGroup.add(registeredMansUnion.get(randomIndex));
+                registeredMansUnion.remove(randomIndex);
+
+                amountMan++;
                 return true;
             }
         }
-        //detailed//system.out.println("failed to find a male to add");
         return false;
     }
 
-    protected boolean addFemaleToList(String unionStam, List<RegistrationParticipant> tempList) {
-        //detailed//system.out.println("add a female to the list");
-        if (participantsFemale != null) {
-            //detailed//system.out.println("there are still female participants left");
-            List<RegistrationParticipant> registeredFemaleUnion = participantsFemale.get(unionStam);
-            //detailed//system.out.println("got list of females of the selected union");
-            if (registeredFemaleUnion != null && registeredFemaleUnion.size() > 0) {
-                //detailed//system.out.println("there are still females left that belong to the union");
-                int randomIndex = (int) (Math.random() * registeredFemaleUnion.size());
-                //detailed//system.out.println("select a random female");
-                tempList.add(registeredFemaleUnion.get(randomIndex));
-                //detailed//system.out.println("add the female to the union");
-                registeredFemaleUnion.remove(randomIndex);
-                //detailed//system.out.println("remove the female from the global list");
-                amountFemale++;
+    protected boolean addWomanToList(String unionStam, List<RegistrationParticipant> singleGroup) {
+        if (participantsWoman != null) {
+            List<RegistrationParticipant> registeredWomanUnion = participantsWoman.get(unionStam);
+
+            if (registeredWomanUnion != null && registeredWomanUnion.size() > 0) {
+                int randomIndex = (int) (Math.random() * registeredWomanUnion.size());
+
+                singleGroup.add(registeredWomanUnion.get(randomIndex));
+                registeredWomanUnion.remove(randomIndex);
+
+                amountWoman++;
                 return true;
             }
         }
-        //detailed//system.out.println("failed to find a female to add");
         return false;
     }
 
     protected void addParticipantInCorrectGroup(RegistrationParticipant participant) {
-        //detailed//system.out.println("find union participant");
         String union = chiroUnitRepository.findUnionParticipant(participant.getAdNumber());
-        //detailed//system.out.println("union participant found");
 
         if(participant.getGender().equals(Gender.MAN)) {
-            //detailed//system.out.println("the participant was male");
-            addToMap(union, participant, participantsMale);
+            addToMap(union, participant, participantsMan);
         } else if(participant.getGender().equals(Gender.WOMAN)) {
-            //detailed//system.out.println("the participant was female");
-            addToMap(union, participant, participantsFemale);
-        } else {
-            //detailed//system.out.println("the participant is something else");
-            addToMap(union, participant, participantsX);
+            addToMap(union, participant, participantsWoman);
+        } else { //scrumble gender X participants in random male/female groups
+            if((int)(Math.random() * 2) > 0) {
+                addToMap(union, participant, participantsMan);
+            } else {
+                addToMap(union, participant, participantsWoman);
+            }
+            //addToMap(union, participant, participantsX);
         }
     }
 
     private void addToMap(String union, RegistrationParticipant participant, Map<String, List<RegistrationParticipant>> map) {
-        //detailed//system.out.println("enter addToMap");
         if(map.get(union) == null) {
-            //detailed//system.out.println("the map of the union is empty");
             List<RegistrationParticipant> registrationParticipants = new ArrayList<>();
-            //detailed//system.out.println("make now registrationparticipants list");
             registrationParticipants.add(participant);
-            //detailed//system.out.println("added the participant to the list");
             map.put(union, registrationParticipants);
-            //detailed//system.out.println("put the participants list in the map");
         } else {
-            //detailed//system.out.println("the map of the union is not empty");
             map.get(union).add(participant);
-            //detailed//system.out.println("add the participant to the map");
+        }
+    }
+    /*
+    * In the final groups there might be more than 1 group with less members than the set groupsize
+    * It might also happen that the group filled with half the groupsize of only one gender
+    * This is all a result of the implemented restrictions, to counter this the scramble function will
+    * scramble the remaining members into the complete groups.
+     */
+    private void scrambleInRestGroup(List<List<RegistrationParticipant>> groupsOfParticipants) {
+        int i;
+        //only the last group should be smaller than the max groupsize
+        for(i = groupsOfParticipants.size() - 1; i > 0 && groupsOfParticipants.get(i).size() < GROUPSIZE; i--) {
+        }
+        i++;
+
+        /*
+        * add fill up groups if there are more than one group with size < GROUPSIZE
+         */
+        for(int p = i; p+1 < groupsOfParticipants.size(); p++) {
+            while(p+1 < groupsOfParticipants.size() //because groupsofparticipants size can become smaller
+                    //&& q < groupsOfParticipants.get(p+1).size() //cause you will loop over the list you will empty
+                    && groupsOfParticipants.get(p).size() < GROUPSIZE//the list you are filling up can't become bigger than the groupsize
+                    ) {
+                groupsOfParticipants.get(p).add(groupsOfParticipants.get(p + 1).remove(0));
+                if(groupsOfParticipants.get(p+1).size() <= 0) {
+                    groupsOfParticipants.remove(p + 1);
+                }
+            }
+        }
+
+        for(;i < groupsOfParticipants.size(); i++){
+            List<RegistrationParticipant> singleGroup = groupsOfParticipants.get(i);
+
+            int amountMan = 0;
+            int amountWoman = 0;
+            for (int j = 0; j < singleGroup.size(); j++) {
+                if (singleGroup.get(j).getGender().equals(Gender.MAN)) {
+                    amountMan++;
+                } else if (singleGroup.get(j).getGender().equals(Gender.WOMAN)) {
+                    amountWoman++;
+                }
+            }
+
+
+            for(int index = 0; index < singleGroup.size(); index++) {
+                if(amountMan > amountWoman) {
+                    if (scrambleWithWoman(singleGroup, index, groupsOfParticipants, i)) {
+                        amountWoman++;
+                        amountMan--;
+                    }
+                } else if(amountWoman > amountMan) {
+                    if(scrambleWithMan(singleGroup, index, groupsOfParticipants, i)) {
+                        amountMan++;
+                        amountWoman--;
+                    }
+                } else {
+                    if(singleGroup.get(index).getGender().equals(Gender.MAN)) {
+                        if(!scrambleWithMan(singleGroup, index, groupsOfParticipants, i)) {
+                            if(scrambleWithWoman(singleGroup, index, groupsOfParticipants, i)) {
+                                amountMan--;
+                                amountWoman++;
+                            }
+                        }
+                    } else if(singleGroup.get(index).getGender().equals(Gender.WOMAN)) {
+                        if(!scrambleWithWoman(singleGroup, index, groupsOfParticipants, i)) {
+                            if(scrambleWithMan(singleGroup, index, groupsOfParticipants, i)) {
+                                amountMan++;
+                                amountWoman--;
+                            }
+                        }
+                    }
+                }
+            }
         }
     }
 
-    protected Map<String, List<RegistrationParticipant>> getParticipantsFemale() {
-        return participantsFemale;
+    private boolean scrambleWithMan(List<RegistrationParticipant> singleGroup, int index, List<List<RegistrationParticipant>> groupsOfParticipants, int posList) {
+        return scrambleWithPerson(Gender.MAN, singleGroup, index, groupsOfParticipants, posList);
     }
 
-    protected Map<String, List<RegistrationParticipant>> getParticipantsMale() {
-        return participantsMale;
+    private boolean scrambleWithWoman(List<RegistrationParticipant> singleGroup, int index, List<List<RegistrationParticipant>> groupsOfParticipants, int posList) {
+        return scrambleWithPerson(Gender.WOMAN, singleGroup, index, groupsOfParticipants, posList);
     }
 
-    protected Map<String, List<RegistrationParticipant>> getParticipantsX() {
-        return participantsX;
+    private boolean scrambleWithPerson(Gender gender, List<RegistrationParticipant> singleGroup, int index, List<List<RegistrationParticipant>> groupsOfParticipants, int posList) {
+        for(int i=0; i < groupsOfParticipants.size() && i < posList; i++) {
+            if (checkScramblePossible(groupsOfParticipants.get(i), singleGroup.get(index))) {
+                for(int j = 0; j < groupsOfParticipants.get(i).size(); j++) {
+                    if(groupsOfParticipants.get(i).get(j).getGender().equals(gender) && checkScrambleLackingList(singleGroup, groupsOfParticipants.get(i).get(j))) {
+                        RegistrationParticipant tempSG = singleGroup.get(index);
+                        RegistrationParticipant tempGOP = groupsOfParticipants.get(i).get(j);
+                        singleGroup.remove(index);
+                        singleGroup.add(tempGOP);
+                        groupsOfParticipants.get(i).remove(j);
+                        groupsOfParticipants.get(i).add(tempSG);
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
+    }
+
+    /*
+    * This function will check if it is allowed to scramble a member inside of a group
+     */
+    private boolean checkScramblePossible(List<RegistrationParticipant> singleGroup, RegistrationParticipant participant) {
+        int amountMan = 0;
+        int amountWoman = 0;
+        for (int i = 0; i < singleGroup.size(); i++) {
+            if (singleGroup.get(i).getGender().equals(Gender.MAN)) {
+                amountMan++;
+            } else if (singleGroup.get(i).getGender().equals(Gender.WOMAN)) {
+                amountWoman++;
+            }
+        }
+
+        if(amountWoman < amountMan - 1 || amountWoman > amountMan + 1){//the scramble function will not allow more than 1 gender offset
+            return false;
+        } else {
+            String unionParticipant = chiroUnitRepository.findUnionParticipant(participant.getAdNumber());
+            boolean foundOnce = false;
+            for(int i = 0; i < singleGroup.size(); i++) {
+                if(unionParticipant.equals(chiroUnitRepository.findUnionParticipant(singleGroup.get(i).getAdNumber()))) {
+                    if(foundOnce) {
+                        return false;
+                    } else {
+                        foundOnce = true;
+                    }
+                }
+            }
+        }
+        return true;
+    }
+
+    private boolean checkScrambleLackingList(List<RegistrationParticipant> lackingList, RegistrationParticipant participant) {
+        String unionParticipant = chiroUnitRepository.findUnionParticipant(participant.getAdNumber());
+        boolean foundOnce = false;
+        for(int i = 0; i < lackingList.size(); i++) {
+            if(unionParticipant.equals(chiroUnitRepository.findUnionParticipant(lackingList.get(i).getAdNumber()))) {
+                if(foundOnce) {
+                    return false;
+                } else {
+                    foundOnce = true;
+                }
+            }
+        }
+
+        return true;
+    }
+
+
+    protected Map<String, List<RegistrationParticipant>> getParticipantsWoman() {
+        return participantsWoman;
+    }
+
+    protected Map<String, List<RegistrationParticipant>> getParticipantsMan() {
+        return participantsMan;
     }
 
     public static Integer getGROUPSIZE() {
         return GROUPSIZE;
     }
 
-    protected void setParticipantsFemale(Map<String, List<RegistrationParticipant>> participantsFemale) {
-        this.participantsFemale = participantsFemale;
+    protected void setParticipantsWoman(Map<String, List<RegistrationParticipant>> participantsWoman) {
+        this.participantsWoman = participantsWoman;
     }
 
-    protected void setParticipantsMale(Map<String, List<RegistrationParticipant>> participantsMale) {
-        this.participantsMale = participantsMale;
+    protected void setParticipantsMan(Map<String, List<RegistrationParticipant>> participantsMan) {
+        this.participantsMan = participantsMan;
     }
 
-    protected void setParticipantsX(Map<String, List<RegistrationParticipant>> participantsX) {
-        this.participantsX = participantsX;
+    protected int getAmountWoman() {
+        return amountWoman;
     }
 
-    protected int getAmountFemale() {
-        return amountFemale;
+    protected int getAmountMan() {
+        return amountMan;
     }
 
-    protected int getAmountMale() {
-        return amountMale;
+    protected void setAmountWoman(int amountWoman) {
+        this.amountWoman = amountWoman;
     }
 
-    protected void setAmountFemale(int amountFemale) {
-        this.amountFemale = amountFemale;
+    protected void setAmountMan(int amountMan) {
+        this.amountMan = amountMan;
     }
-
-    protected void setAmountMale(int amountMale) {
-        this.amountMale = amountMale;
-    }
-
-    //union = verbond (trying to reduce nenglish but no proper translation)
-    /*protected class ParticipantWithUnion {
-        private RegistrationParticipant participant;
-
-        private String union;
-
-
-        public ParticipantWithUnion(RegistrationParticipant participant) {
-            this.participant = participant;
-            this.union = chiroUnitRepository.findUnionParticipant(participant.getAdNumber());
-        }
-
-        public RegistrationParticipant getParticipant() {
-            return participant;
-        }
-
-        public void setParticipant(RegistrationParticipant participant) {
-            this.participant = participant;
-        }
-
-        public String getUnion() {
-            return union;
-        }
-
-        public void setUnion(String union) {
-            this.union = union;
-        }
-    }*/
 }
