@@ -57,7 +57,7 @@ public class VerbondenService {
         List<ChiroUnit> gewesten = chiroUnitRepository.findAllGewestenWhereVerbondStamNummerIs(verbondStamNummer);
         // Set the participants and volunteers count
         for (ChiroUnit gewest : gewesten) {
-            System.err.println("Gewest stam nummer in getGewesten(): " + gewest.getStamNummer());
+//            System.err.println("Gewest stam nummer in getGewesten(): " + gewest.getStamNummer());
             int countAllParticipants = chiroUnitRepository.countParticipantsByGewest(gewest.getStamNummer());
 
             int countVolunteers = chiroUnitRepository.countVolunteersByGewest(gewest.getStamNummer());
