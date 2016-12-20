@@ -135,7 +135,6 @@ class RegisterController {
     //todo: fix the inconsistencies betwee the name for the AD number
     prefillSelf() {
         let loggedInUser = this.AuthService.getLoggedinUser();
-        console.log(loggedInUser);
         this.prefillWithAdNumber(loggedInUser.adnummer);
     }
 
@@ -144,7 +143,6 @@ class RegisterController {
      */
     prefillMember() {
         let participant = this.RegisterOtherMemberService.getParticipant();
-        console.log(participant);
         this.prefillWithAdNumber(participant.adNumber);
     }
     $onInit() {
@@ -210,6 +208,7 @@ class RegisterController {
         perzon.street = this.details.address_components[0].long_name;
 
         let mappedPerson = this.MapperService.mapParticipant(perzon);
+        console.log(mappedPerson);
         //add person to cart using service
         this.KrinkelService.addPersonToBasket(mappedPerson).then(() => {
             this.$location.path("/cart");

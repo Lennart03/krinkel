@@ -32,7 +32,6 @@ class KrinkelKarController{
         var self = this;
         this.KrinkelService.setSubscriberEmailForBasket(this.subscriberEmail).then((resp)=>{
             this.KrinkelService.doPayment().then((resp) =>{
-                console.log(resp);
                 self.$window.location.href = resp.headers().location;
             });
         });

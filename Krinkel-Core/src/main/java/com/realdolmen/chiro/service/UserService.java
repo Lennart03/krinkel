@@ -125,7 +125,6 @@ public class UserService {
     public List<ColleagueDTO> getAvailableColleagues(int adNumber) throws URISyntaxException {
 
         List<ColleagueDTO> colleagues = chiroColleagueService.getColleagues(adNumber);
-        System.err.println(colleagues.size());
 
         return colleagues.stream()
                 .filter(Objects::nonNull)

@@ -43,7 +43,6 @@ public class ChiroColleagueService {
         mapper.configure(DeserializationFeature.ACCEPT_EMPTY_STRING_AS_NULL_OBJECT, true);
         mapper.configure(DeserializationFeature.ACCEPT_SINGLE_VALUE_AS_ARRAY, true);
         String json = retrieveColleaguesFromChiroApi(adNumber);
-        System.err.println(json);
 
         //todo: think about this & fix using JavaType
         JavaType type = mapper.getTypeFactory().

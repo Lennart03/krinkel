@@ -400,7 +400,7 @@ public class ExportServiceTest extends SpringIntegrationTest {
         Files.copy(inputStream, destination);
         inputStream.close(); // Close inputstream in order to be able to delete the temp file
         List<String> rows = getContentOfCSVFile(temp);
-        assertEquals("adNummer,email,firstname,lastname",
+        assertEquals("adNumber,email,firstname,lastname",
                 rows.get(0));
         assertEquals("1,firstAdmin@krinkel.be,first,admin",
                 rows.get(1));
