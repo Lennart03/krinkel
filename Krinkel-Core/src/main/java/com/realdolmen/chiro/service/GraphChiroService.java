@@ -15,8 +15,6 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.time.ZoneId;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -52,6 +50,9 @@ public class GraphChiroService {
                     case TO_BE_PAID:
                         status.setVolunteersNotPaid(status.getVolunteersNotPaid() + 1);
                         break;
+                    case CANCELLED:
+                        status.setVolunteersCancelled(status.getVolunteersCancelled() + 1);
+                        break;
                 }
             } else {
                 switch (r.getStatus()) {
@@ -63,6 +64,9 @@ public class GraphChiroService {
                         break;
                     case TO_BE_PAID:
                         status.setParticipantsNotPaid(status.getParticipantsNotPaid() + 1);
+                        break;
+                    case CANCELLED:
+                        status.setParticipantsCancelled(status.getParticipantsCancelled() + 1);
                         break;
                 }
             }
@@ -143,7 +147,7 @@ public class GraphChiroService {
     }
 
 
-    private SortedMap<Verbond, SortedMap<String, Integer>> getUniqueLoginsPerVerbond(Date startDate,Date endDate) {
+    public SortedMap<Verbond, SortedMap<String, Integer>> getUniqueLoginsPerVerbond(Date startDate, Date endDate) {
         TreeMap<Verbond, SortedMap<String, Integer>> uniqueLoginsPerVerbond = new TreeMap<>();
         List<LoginLog> allLogs = null;
         List<String> distinctStamps;

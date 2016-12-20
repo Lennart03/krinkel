@@ -1,5 +1,5 @@
 export class KrinkelService {
-    constructor($http, BASEURL, $window) {
+    constructor($http, BASEURL, $window, startDate, endDate) {
         this.$http = $http;
         this.BASEURL = BASEURL;
         this.$window = $window;
@@ -180,8 +180,8 @@ export class KrinkelService {
         );
     }
 
-    getGraphLoginInfo() {
-        return this.$http.get(`${this.BASEURL}/api/graph/uniqueLoginsPerVerbond?startDate=01/12/2016&endDate=31/12/2016`).then((resp) => {
+    getGraphLoginInfo(start, end) {
+        return this.$http.get(`${this.BASEURL}/api/graph/uniqueLoginsPerVerbond?startDate=`+start+`&endDate=`+end).then((resp) => {
                 return resp.data;
             },
             () => {

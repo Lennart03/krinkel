@@ -5,13 +5,13 @@ class KrinkelGraphController {
         this.getDataForStatus();
         this.getDataForLogin();
         this.$filter=$filter;
-        this.endDate = $filter('date')(Date.now(), "dd/MM/yyyy");
-        this.startDate = this.endDate;
-        var d = new Date();
-        d= this.endDate
-        this.startDate.setMonth(this.endDate.getMonth()-1);
-        console.log('endDate ' + this.endDate);
-        console.log('startDate ' + this.startDate);
+        // this.endDate = $filter('date')(Date.now(), "dd/MM/yyyy");
+        // this.startDate = this.endDate;
+        // var d = new Date();
+        // d= this.endDate;
+        // this.startDate.setMonth(this.endDate.getMonth()-1);
+        // console.log('endDate ' + this.endDate);
+        // console.log('startDate ' + this.startDate);
 
 
     }
@@ -26,11 +26,13 @@ class KrinkelGraphController {
     changeEndDate()
     {
         console.log("changeEndDate called");
+    //    this.KrinkelService.getDataForLogin(startDate, endDate);
     }
 
     changeStartDate()
     {
         console.log("changeStartDate called");
+     //   this.KrinkelService.getDataForLogin(startDate, endDate);
     }
 
     getDataForStatus() {
@@ -65,6 +67,16 @@ class KrinkelGraphController {
                     key: "Onbetaald medewerker",
                     y: results.volunteersNotPaid,
                     color: "#b71c1c"
+                },
+                {
+                    key: "Geannuleerd deelnemer",
+                    y: results.participantsCancelled,
+                    color: "#ffa500"
+                },
+                {
+                    key: "Geannuleerd medewerker",
+                    y: results.volunteersCancelled,
+                    color: "#ff8c00"
                 }
             ];
         });
@@ -73,7 +85,7 @@ class KrinkelGraphController {
 
 
     getDataForLogin() {
-        this.KrinkelService.getGraphLoginInfo().then((results) => {
+        this.KrinkelService.getGraphLoginInfo(start, end).then((results) => {
             this.lineData = this.mapServerJSONToChartJSON(results);
         });
     }
@@ -130,22 +142,22 @@ class KrinkelGraphController {
             chart: {
                 rotateLabels: 90,
                 type: 'multiBarChart',
-                height: 450,
+                height: 550,
                 margin: {
                     top: 20,
                     right: 20,
-                    bottom: 30,
+                    bottom: 60, // to show the legend
                     left: 40
                 },
                 x: function (d) {
                     if (d != undefined) {
-                        console.log("d[0] = " +d[0]);
+                         console.log("d[0] = " +d[0]);
                         return d[0];
                     }
                 },
                 y: function (d) {
                     if (d != undefined) {
-                        console.log("d[1] = " +d[1]);
+                         console.log("d[1] = " +d[1]);
                         return d[1];
                     }
                 },
@@ -204,7 +216,7 @@ class KrinkelGraphController {
             }
         };
         this.barData = [];
-        console.log(this.lineOptions.values());
+        // console.log(this.lineOptions.values());
     }
 }
 
