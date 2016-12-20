@@ -119,8 +119,48 @@ export class KrinkelService {
         );
     }
 
-    getGewestenForVerbond(verbondNummer) {
-        return this.$http.get(`${this.BASEURL}/api/units/${verbondNummer}`).then((resp) => {
+    getVerbondenList() {
+        return this.$http.get(`${this.BASEURL}/api/overview?verbonden`).then((resp) => {
+                return resp.data;
+            },
+            () => {
+                this.popup();
+            }
+        );
+    }
+
+    getGewestenList(verbondStamNummer) {
+        return this.$http.get(`${this.BASEURL}/api/overview/gewesten/${verbondStamNummer}`).then((resp) => {
+                return resp.data;
+            },
+            () => {
+                this.popup();
+            }
+        );
+    }
+
+    getGroepenList(gewestStamNummer) {
+        return this.$http.get(`${this.BASEURL}/api/overview/groepen/${gewestStamNummer}`).then((resp) => {
+                return resp.data;
+            },
+            () => {
+                this.popup();
+            }
+        );
+    }
+
+    getParticipantsList(groepStamNummer) {
+        return this.$http.get(`${this.BASEURL}/api/overview/groep/${groepStamNummer}`).then((resp) => {
+                return resp.data;
+            },
+            () => {
+                this.popup();
+            }
+        );
+    }
+
+    getVolunteersList(groepStamNummer) {
+        return this.$http.get(`${this.BASEURL}/api/overview/groep/${groepStamNummer}/vrijwilligers`).then((resp) => {
                 return resp.data;
             },
             () => {

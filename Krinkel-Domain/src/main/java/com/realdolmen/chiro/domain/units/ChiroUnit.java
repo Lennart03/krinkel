@@ -16,12 +16,12 @@ import java.util.List;
 )*/
 public class ChiroUnit {
     /**
-     * Normalized stam number (without '/' and without whitespace)
+     * Normalized StamNummer number of a groep, gewest or verbond (without '/' and without whitespace)
      */
     @JsonProperty("stamnummer")
-    private String stam;
+    private String stamNummer;
 
-    @JsonProperty("naam")
+    @JsonProperty("name")
     private String name;
 
     @JsonProperty("bovenliggende_stamnummer")
@@ -44,16 +44,16 @@ public class ChiroUnit {
 
     public ChiroUnit(String stam, String name) {
         this();
-        this.stam = stam;
+        this.stamNummer = stam;
         this.name = name;
     }
 
-    public String getStam() {
-        return stam;
+    public String getStamNummer() {
+        return stamNummer;
     }
 
-    public void setStam(String stam) {
-        this.stam = stam;
+    public void setStamNummer(String stamNummer) {
+        this.stamNummer = stamNummer;
     }
 
     public String getName() {
@@ -101,7 +101,7 @@ public class ChiroUnit {
         final int prime = 31;
         int result = 1;
         result = prime * result + ((name == null) ? 0 : name.hashCode());
-        result = prime * result + ((stam == null) ? 0 : stam.hashCode());
+        result = prime * result + ((stamNummer == null) ? 0 : stamNummer.hashCode());
         return result;
     }
 
@@ -119,13 +119,26 @@ public class ChiroUnit {
                 return false;
         } else if (!name.equals(other.name))
             return false;
-        if (stam == null) {
-            if (other.stam != null)
+        if (stamNummer == null) {
+            if (other.stamNummer != null)
                 return false;
-        } else if (!stam.equals(other.stam))
+        } else if (!stamNummer.equals(other.stamNummer))
             return false;
         return true;
     }
 
+    private String trim(String stam) {
+        if (stam == null) {
+            return "";
+        } else {
+            return stam.replace("/", "")
+                    .replace("\\s", "")
+                    .replace(" ", "");
+        }
+    }
 
+    @Override
+    public String toString(){
+        return name + " - Stam nummer: " + stamNummer + ", #participants: " + participantsCount + ", #volunteers: " + volunteersCount;
+    }
 }

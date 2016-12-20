@@ -179,7 +179,7 @@ public class CASService {
     protected String getTokenFromCookie(Cookie[] cookies) {
         for (Cookie c : cookies) {
             if ("Authorization".equals(c.getName())) {
-//            if (c.getName().equals("Authorization")) {
+//            if (cc.getNaam().equals("Authorization")) {
                 return c.getValue();
             }
         }

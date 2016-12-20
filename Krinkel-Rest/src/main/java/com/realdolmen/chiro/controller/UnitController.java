@@ -4,6 +4,7 @@ import com.realdolmen.chiro.domain.RegistrationParticipant;
 import com.realdolmen.chiro.domain.RegistrationVolunteer;
 import com.realdolmen.chiro.domain.units.ChiroUnit;
 import com.realdolmen.chiro.service.ChiroUnitService;
+import com.realdolmen.chiro.service.VerbondenService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,6 +19,9 @@ public class UnitController {
 
     @Autowired
     private ChiroUnitService chiroUnitService;
+
+    @Autowired
+    VerbondenService verbondenService;
 
     /**
      * first thing you see in the table (the list of verbonden)
