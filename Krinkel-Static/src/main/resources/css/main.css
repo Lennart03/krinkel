@@ -967,6 +967,7 @@ footer {
   color: white;
   text-align: center;
   padding: 50px;
+  padding-bottom: 75px;
 }
 
 footer a {
@@ -989,6 +990,7 @@ footer div:first-child {
 
 footer div:last-child {
   float: right;
+  margin-bottom: 0;
 }
 
 @media only screen and (max-width: 850px) {
