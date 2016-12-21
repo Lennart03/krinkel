@@ -149,18 +149,12 @@ body {
     color: #333;
 }
 
-#logo-container{
-    background-image: url("res/logo.svg");
-    background-size: 100% 100%;
-    background-repeat: no-repeat;
-}
-
 .collection-item:hover{
     cursor: pointer;
 }
 
 #logo-container-rd {
-    background-image: url("http://www.realdolmen.com/themes/itr_theme/images/dest/svg/sprite/individual/logo.svg");
+    background-image: url("res/logo.svg");
     background-size: 100% 100%;
     background-repeat: no-repeat;
 }
@@ -168,3 +162,25 @@ body {
 .block {
     display: block;
 }
+
+.sideNavLogo {
+    width: 200px;
+    position: absolute;
+    top: 0;
+    left: calc(50% - 100px);
+}
+#logo-container{
+    height: 200px;
+}
+
+.side-nav > #logo-container:hover{
+    background-color: transparent;
+}
+
+/*
+#logo-container{
+    background-image: url("res/logo.svg");
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+}
+*/

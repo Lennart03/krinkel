@@ -41,7 +41,7 @@
                 <i class="material-icons prefix">date_range</i>
                 <input id="date_of_birth" name="birthdate" type="text" class="validate"
                        ng-model="$ctrl.newPerson.birthDate" ng-pattern="$ctrl.birthdatePattern" required>
-                <label for="date_of_birth">Geboortedatum (yyyy-mm-dd) *</label>
+                <label for="date_of_birth">Geboortedatum (dd-mm-yyyy) *</label>
                 <p ng-show="(personForm.birthdate.$invalid && $ctrl.validateNow) || (personForm.birthdate.$invalid && personForm.birthdate.$touched)" class="error"><i
                     class="material-icons">error_outline</i>
                     Geboortedatum is verplicht</p>
@@ -91,7 +91,7 @@
                 <input id="postal_code" name="postalCode" ng-minlength="4" ng-maxlength="4" type="text" class="validate"
                        ng-model="$ctrl.details2.name"
                        ng-pattern="$ctrl.postalcodePattern"
-                       ng-autocomplete details="$ctrl.details2"
+                       details="$ctrl.details2"
                        options="$ctrl.optionsPostalCode" required placeholder="..."
                        required/>
 
@@ -104,7 +104,6 @@
                 <i class="material-icons prefix">home</i>
                 <!--$ctrl.newPerson.city-->
                 <input id="city" name="city" type="text" class="validate" ng-model="$ctrl.details3.vicinity" required
-                       ng-autocomplete
                        options="$ctrl.optionsStad" details="$ctrl.details3" required placeholder="..."/>
 
                 <label for="city">Gemeente *</label>
@@ -216,7 +215,7 @@
                     </label>
 
                     <!-- Modal Trigger -->
-                    <a class="btn-floating waves-effect waves-light modal-trigger" href="#modal1">
+                    <a class="btn-floating modal-trigger" href="#modal1">
                         <i class="material-icons">help</i>
                     </a>
 
@@ -233,7 +232,7 @@
                         </div>
 
                         <div class="modal-footer">
-                            <a href="" class=" modal-action modal-close waves-effect waves-green btn-flat">OK</a>
+                            <a href="" class=" modal-action modal-close btn-flat">OK</a>
                         </div>
                     </div>
 
@@ -383,7 +382,7 @@
                     <input type="checkbox" id="social_promotion" ng-model="$ctrl.newPerson.socialPromotion"/>
                     <label for="social_promotion">Sociale promotie</label>
                     <!-- Modal Trigger -->
-                    <a class="btn-floating waves-effect waves-light modal-trigger" href="#modal3"><i
+                    <a class="btn-floating modal-trigger" href="#modal3"><i
                         class="material-icons">help</i></a>
                     <!-- Modal Structure -->
                     <div id="modal3" class="modal">
@@ -408,7 +407,7 @@
                         </div>
 
                         <div class="modal-footer">
-                            <a href="" class=" modal-action modal-close waves-effect waves-green btn-flat">OK</a>
+                            <a href="" class=" modal-action modal-close btn-flat">OK</a>
                         </div>
                     </div>
                 </div>
@@ -439,7 +438,7 @@
                     <label for="voorwaarden">Ik aanvaard de algemene voorwaarden.</label>
 
                     <!-- Modal Trigger -->
-                    <a class="btn-floating waves-effect waves-light modal-trigger" ng-click="$ctrl.initVoorwaardenModal()"><i
+                    <a class="btn-floating modal-trigger" ng-click="$ctrl.initVoorwaardenModal()"><i
                         class="material-icons">help</i></a>
                     <p ng-show="(personForm.voorwaarden.$invalid && $ctrl.validateNow) || (personForm.voorwaarden.$invalid && personForm.voorwaarden.$touched)" class="error">
                         <i class="material-icons">error_outline</i> Verplicht
@@ -466,14 +465,14 @@
         </p>
 
         <div ng-show="$ctrl.user !== 'admin'">
-            <a ng-click="$ctrl.initModal4(personForm.$valid)" class="btn waves-effect waves-light">
+            <a ng-click="$ctrl.initModal4(personForm.$valid)" class="btn">
                 Betalen
                 <i class="material-icons right">send</i>
             </a>
         </div>
 
         <div ng-show="$ctrl.user === 'admin'">
-            <a ng-click="$ctrl.initModal5(personForm.$valid)" class="btn waves-effect waves-light">
+            <a ng-click="$ctrl.initModal5(personForm.$valid)" class="btn">
                 Volgende
                 <i class="material-icons right">send</i>
             </a>
@@ -489,18 +488,18 @@
                 <p>De prijs voor deelnemers is €110</p>
             </div>
             <div class="modal-footer">
-                <button type="submit" class=" modal-action modal-close waves-effect btn-flat">OK</button>
-                <a href="" class="modal-action modal-close waves-effect btn-flat">CANCEL</a>
+                <button type="submit" class=" modal-action modal-close btn-flat">OK</button>
+                <a href="" class="modal-action modal-close btn-flat">CANCEL</a>
             </div>
         </div>
 
         <div id="modal5" class="modal">
             <div class="modal-content">
-                <h4>Click op OK om {{$ctrl.newPerson.firstName}} {{$ctrl.newPerson.lastName}} in te schrijven.</h4>
+                <h4>Klik op OK om {{$ctrl.newPerson.firstName}} {{$ctrl.newPerson.lastName}} in te schrijven.</h4>
             </div>
             <div class="modal-footer">
-                <button type="submit" class=" modal-action modal-close waves-effect btn-flat">OK</button>
-                <a href="" class="modal-action modal-close waves-effect btn-flat">CANCEL</a>
+                <button type="submit" class=" modal-action modal-close btn-flat">OK</button>
+                <a href="" class="modal-action modal-close btn-flat">CANCEL</a>
             </div>
         </div>
     </form>

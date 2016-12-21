@@ -45,34 +45,34 @@ public class ChiroUnitService {
 		/* Fix StamNumbers */
         verbondUnits = chiroUnitRepository.findAllVerbonden();
         for (ChiroUnit verbondUnit : verbondUnits) {
-            String normalizedStam = stamNumberTrimmer.trim(verbondUnit.getStam());
-            verbondUnit.setStam(normalizedStam);
+            String normalizedStam = stamNumberTrimmer.trim(verbondUnit.getStamNummer());
+            verbondUnit.setStamNummer(normalizedStam);
         }
 
 		/* Fix StamNumbers */
         gewestUnits = chiroUnitRepository.findAllGewesten();
         for (ChiroUnit gewestUnit : gewestUnits) {
-            String normalizedStam = stamNumberTrimmer.trim(gewestUnit.getStam());
-            gewestUnit.setStam(normalizedStam);
+            String normalizedStam = stamNumberTrimmer.trim(gewestUnit.getStamNummer());
+            gewestUnit.setStamNummer(normalizedStam);
         }
 
         List<ChiroUnit> chiroUnits = new ArrayList<>();
         // Convert all low level groups
         for (RawChiroUnit rawUnit : chiroUnitRepository.findAll()) {
             ChiroUnit unit = new ChiroUnit(
-                    stamNumberTrimmer.trim(rawUnit.getStamNumber()),
-                    rawUnit.getName()
+                    stamNumberTrimmer.trim(rawUnit.getGroepStamNummer()),
+                    rawUnit.getGroepNaam()
             );
 
-            ChiroUnit gewest = findByStam(gewestUnits, stamNumberTrimmer.trim(rawUnit.getGewest()));
+            ChiroUnit gewest = findByStam(gewestUnits, stamNumberTrimmer.trim(rawUnit.getGewestStamNummer()));
             gewest.getLower().add(unit);
-            gewest.setUpper(findByStam(verbondUnits, stamNumberTrimmer.trim(rawUnit.getVerbond())));
+            gewest.setUpper(findByStam(verbondUnits, stamNumberTrimmer.trim(rawUnit.getVerbondStamNummer())));
             unit.setUpper(gewest);
             chiroUnits.add(unit);
         }
 
         for (ChiroUnit gewestUnit : gewestUnits) {
-            ChiroUnit verbond = findByStam(verbondUnits, stamNumberTrimmer.trim(gewestUnit.getUpper().getStam()));
+            ChiroUnit verbond = findByStam(verbondUnits, stamNumberTrimmer.trim(gewestUnit.getUpper().getStamNummer()));
             verbond.getLower().add(gewestUnit);
         }
 
@@ -153,7 +153,7 @@ public class ChiroUnitService {
 
     private ChiroUnit findByStam(List<ChiroUnit> units, String stam) {
         for (ChiroUnit unit : units) {
-            if (unit.getStam().equals(stam)) {
+            if (unit.getStamNummer().equals(stam)) {
                 return unit;
             }
         }
@@ -168,12 +168,12 @@ public class ChiroUnitService {
         } else {
             if (hasNoHigherLevelUnit(unit)) {
                 unit.getLower().forEach(group -> {
-                    participants.addAll(registrationParticipantService.findParticipantsByGroup(group.getStam()));
+                    participants.addAll(registrationParticipantService.findParticipantsByGroup(group.getStamNummer()));
                 });
             } else {
                 unit.getLower().forEach(gewest -> {
                     gewest.getLower().forEach(group -> {
-                        participants.addAll(registrationParticipantService.findParticipantsByGroup(group.getStam()));
+                        participants.addAll(registrationParticipantService.findParticipantsByGroup(group.getStamNummer()));
                     });
                 });
             }
@@ -190,12 +190,12 @@ public class ChiroUnitService {
             if (hasNoHigherLevelUnit(unit)) {
                 unit.getLower().forEach(gewest -> {
                     gewest.getLower().forEach(group -> {
-                        volunteers.addAll(registrationParticipantService.findVolunteersByGroup(group.getStam()));
+                        volunteers.addAll(registrationParticipantService.findVolunteersByGroup(group.getStamNummer()));
                     });
                 });
             } else {
                 unit.getLower().forEach(group -> {
-                    volunteers.addAll(registrationParticipantService.findVolunteersByGroup(group.getStam()));
+                    volunteers.addAll(registrationParticipantService.findVolunteersByGroup(group.getStamNummer()));
                 });
             }
         }

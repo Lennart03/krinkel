@@ -46,6 +46,12 @@ nav {
   &:hover {
     fill: $white;
   }
+  .dropdown-content {
+    .active {
+      background-color: $hoofdkleur;
+      color: $white !important;
+    }
+  }
 }
 
 .brand-logo {
@@ -84,7 +90,6 @@ nav {
   }
   a:hover {
     background-color: $lightGreen;
-
   }
   .active {
     background-color: $hoofdkleur;
@@ -93,6 +98,24 @@ nav {
 
   svg {
     vertical-align: middle;
+  }
+}
+
+.dropdown-content {
+  top: 19px !important;
+  height: auto !important;
+  width: auto !important;
+  li {
+     a {
+       color: $darkGreen !important;
+       .active {
+         color: $white !important;
+       }
+     }
+    &:hover > a {
+      background-color: $lightGreen !important;
+    }
+
   }
 }
 
@@ -106,5 +129,76 @@ nav {
     img {
       float: right;
     }
+  }
+  .hide-on-med-and-down {
+    display: none !important;
+  }
+  .button-collapse {
+      display: inherit !important;
+  }
+}
+
+@media only screen and (max-width: 1045px) {
+  .hide1 {
+    display: none !important;
+  }
+}
+
+@media only screen and (max-width: 1110px) {
+  .hide2 {
+    display: none !important;
+  }
+}
+
+@media only screen and (max-width: 1175px) {
+  .hide3 {
+    display: none !important;
+  }
+}
+
+@media only screen and (max-width: 1280px) {
+  .hide4 {
+    display: none !important;
+  }
+}
+
+@media only screen and (max-width: 1280px) {
+  .hide5 {
+    display: none !important;
+  }
+}
+
+.show1 {
+  display: none !important;
+  @media only screen and (max-width: 1045px) {
+    display: block !important;
+  }
+}
+
+.show2 {
+  display: none !important;
+  @media only screen and (max-width: 1110px) {
+    display: block !important;
+  }
+}
+
+.show3 {
+  display: none !important;
+  @media only screen and (max-width: 1175px) {
+    display: block !important;
+  }
+}
+
+.show4 {
+  display: none !important;
+  @media only screen and (max-width: 1280px) {
+    display: block !important;
+  }
+}
+
+.show5 {
+  display: none !important;
+  @media only screen and (max-width: 1280px) {
+    display: block !important;
   }
 }

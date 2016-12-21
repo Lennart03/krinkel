@@ -26,10 +26,22 @@ blockquote {
   margin-bottom: 30px;
 }
 
+.marginTop50 {
+  margin-top: 50px;
+}
+
 .marginLeft15 {
   margin-left: 15px;
 }
 
+.marginBot0 {
+  margin-bottom: 0 !important;
+}
+
 .borderTop1pxHoofdkleur {
   border-top: 1px solid $hoofdkleur;
+}
+
+.quotee {
+  font-size: 14px;
 }

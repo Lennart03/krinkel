@@ -8,6 +8,8 @@ import com.realdolmen.chiro.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.io.IOException;
+
 @Component("RegistrationParticipantServiceSecurity")
 public class RegistrationParticipantServiceSecurity {
     @Autowired

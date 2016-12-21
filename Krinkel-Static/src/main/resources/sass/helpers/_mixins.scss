@@ -137,6 +137,9 @@
         .gal#{$i} {
             background-image: url('../img/graphic/gallery/gal#{$i}.jpg');
             background-color: $hoofdkleur;
+            @media only screen and(max-width: 800px) {
+                background-image: url('../img/graphic/gallery/gal#{$i}_sm.jpg');
+            }
         }
     }
 }

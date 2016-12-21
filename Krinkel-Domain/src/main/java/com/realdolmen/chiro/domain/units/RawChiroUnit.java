@@ -1,6 +1,5 @@
 package com.realdolmen.chiro.domain.units;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
@@ -9,73 +8,73 @@ import javax.persistence.Table;
 @Table(name = "groepen")
 public class RawChiroUnit {
 
-    @Column(name = "groep_stamnr")
+//    @Column(name = "groep_stamnr")
     @Id
-    private String stamNumber;
+    private String groepStamNummer;
 
-    @Column(name = "groep_naam")
-    private String name;
+//    @Column(name = "groep_naam")
+    private String groepNaam;
 
-    @Column(name = "gewest_stamnr")
-    private String gewest;
+//    @Column(name = "gewest_stamnr")
+    private String gewestStamNummer;
 
-    @Column(name = "gewest_naam")
-    private String gewestName;
+//    @Column(name = "gewest_naam")
+    private String gewestNaam;
 
-    @Column(name = "verbond_stamnr")
-    private String verbond;
+//    @Column(name = "verbond_stamnr")
+    private String verbondStamNummer;
 
-    @Column(name = "verbond_naam")
-    private String verbondName;
+//    @Column(name = "verbond_naam")
+    private String verbondNaam;
 
     public RawChiroUnit() {
     }
 
-    public String getName() {
-        return name;
+    public String getGroepNaam() {
+        return groepNaam;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setGroepNaam(String groepNaam) {
+        this.groepNaam = groepNaam;
     }
 
-    public String getStamNumber() {
-        return stamNumber;
+    public String getGroepStamNummer() {
+        return groepStamNummer;
     }
 
-    public void setStamNumber(String stamNumber) {
-        this.stamNumber = stamNumber;
+    public void setGroepStamNummer(String groepStamNummer) {
+        this.groepStamNummer = groepStamNummer;
     }
 
-    public String getGewest() {
-        return gewest;
+    public String getGewestStamNummer() {
+        return gewestStamNummer;
     }
 
-    public void setGewest(String gewest) {
-        this.gewest = gewest;
+    public void setGewestStamNummer(String gewestStamNummer) {
+        this.gewestStamNummer = gewestStamNummer;
     }
 
-    public String getGewestName() {
-        return gewestName;
+    public String getGewestNaam() {
+        return gewestNaam;
     }
 
-    public void setGewestName(String gewestName) {
-        this.gewestName = gewestName;
+    public void setGewestNaam(String gewestNaam) {
+        this.gewestNaam = gewestNaam;
     }
 
-    public String getVerbond() {
-        return verbond;
+    public String getVerbondStamNummer() {
+        return verbondStamNummer;
     }
 
-    public void setVerbond(String verbond) {
-        this.verbond = verbond;
+    public void setVerbondStamNummer(String verbondStamNummer) {
+        this.verbondStamNummer = verbondStamNummer;
     }
 
-    public String getVerbondName() {
-        return verbondName;
+    public String getVerbondNaam() {
+        return verbondNaam;
     }
 
-    public void setVerbondName(String verbondName) {
-        this.verbondName = verbondName;
+    public void setVerbondNaam(String verbondNaam) {
+        this.verbondNaam = verbondNaam;
     }
 }

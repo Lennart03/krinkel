@@ -2,18 +2,18 @@
 
 <h2>Lijst van administrators</h2>
 
-<spinner loading="$ctrl.isLoading"></spinner>
+<spinner ng-show="$ctrl.isLoading"></spinner>
 
 <div class="collection" ng-show="!$ctrl.isLoading">
     <a ng-click="$ctrl.selectPerson(colleague)"
        ng-repeat="admin in $ctrl.admins"
        class="collection-item">
-        <span class="badge">
-            <button class="waves-effect waves-light btn red" ng-click="$ctrl.deleteAdmin(admin.adNummer)">delete <i
+        <span class="badge" ng-show="!$ctrl.isCurrentUser(admin.adNumber)">
+            <button class="btn red" ng-click="$ctrl.deleteAdmin(admin.adNumber)">delete <i
                 class="material-icons" style="vertical-align: bottom">delete</i></button>
         </span>
         {{admin.firstname}} {{admin.lastname}}<br/>
-        adnummer: {{admin.adNummer}}
+        adnummer: {{admin.adNumber}}
     </a>
 
 </div>
@@ -22,17 +22,17 @@
     Geef het adnummer in om een persoon admin te maken.
 </p>
 
-<form class="col s12 m12" novalidate name="createAdmin" ng-submit="$ctrl.searchAndSaveAsAdmin(adNummer)">
+<form class="col s12 m12" novalidate name="createAdmin" ng-submit="$ctrl.searchAndSaveAsAdmin(adNumber)">
     <div class="row">
         <div class="input-field col s12 m12">
             <i class="material-icons prefix">perm_identity</i>
             <input id="adnumber" type="text" ng-minlength="1"
-                   ng-model="adNummer" required/>
+                   ng-model="adNumber" required/>
             <label for="adnumber">adnummer</label>
         </div>
     </div>
     <div class="row">
-        <button type="submit" class="btn waves-effect" ng-disabled="!createAdmin.$valid">
+        <button type="submit" class="btn" ng-disabled="!createAdmin.$valid">
             Maak admin
             <i class="material-icons right">send</i>
         </button>

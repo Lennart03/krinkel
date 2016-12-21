@@ -23,6 +23,11 @@ import {FailMessageComponent} from './shared/fail-message/fail-message.component
 import {VoorwaardenComponent} from './shared/voorwaarden/voorwaarden.component';
 import {LoadingSpinnerComponent} from './shared/loading-spinner/loading-spinner.component';
 import {KrinkelKarComponent} from './krinkel-kar/krinkelkar.component';
+import {VerbondenComponent} from './shared/units/verbonden.component';
+import {GewestenComponent} from './shared/units/gewesten.component';
+import {GroepenComponent} from './shared/units/groepen.component';
+import {GroepComponent} from './shared/units/groep.component';
+
 
 //pages
 import {KrinkelHomepageComponent} from './krinkel-homepage/krinkel-homepage.component';
@@ -33,6 +38,7 @@ import {ChooseRegistrationComponent} from './krinkel-admin/register-member/choos
 import {KrinkelAdminComponent} from './krinkel-admin/krinkel-admin.component';
 import {KrinkelExportComponent} from './krinkel-admin/krinkel-export/krinkel-export.component';
 import {AdminToevoegenComponent} from './krinkel-admin/admin-toevoegen/admin-toevoegen.component';
+
 
 
 //TODO : make BASEURL dynamic!!!
@@ -72,4 +78,11 @@ export default angular
     .component('krinkelAdmin', KrinkelAdminComponent)
     .component('adminToevoegen', AdminToevoegenComponent)
     .component('krinkelKar', KrinkelKarComponent)
+    .component('verbonden', VerbondenComponent)
+    .component('gewesten', GewestenComponent)
+    .component('groepen', GroepenComponent)
+    .component('groep', GroepComponent)
+    .filter('escape', function() { // Filter for escaping special characters in URLs
+        return window.encodeURIComponent;
+    })
     .name;

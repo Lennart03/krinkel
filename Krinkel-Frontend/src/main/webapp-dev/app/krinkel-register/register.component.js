@@ -12,7 +12,7 @@ class RegisterController {
         this.RegisterOtherMemberService = RegisterOtherMemberService;
 
         this.phoneNumberPattern = /^((\+|00)32\s?|0)(\d\s?\d{3}|\d{2}\s?\d{2})(\s?\d{2}){2}|((\+|00)32\s?|0)4(60|[789]\d)(\s?\d{2}){3}$/;
-        this.birthdatePattern = /^(\d{4})(\/|-)(\d{1,2})(\/|-)(\d{1,2})$/;
+        this.birthdatePattern = /^(?:(?:31(-)(?:0?[13578]|1[02]))\1|(?:(?:29|30)(-)(?:0?[1,3-9]|1[0-2])\2))(?:(?:1[6-9]|[2-9]\d)?\d{2})$|^(?:29(-)0?2\3(?:(?:(?:1[6-9]|[2-9]\d)?(?:0[48]|[2468][048]|[13579][26])|(?:(?:16|[2468][048]|[3579][26])00))))$|^(?:0?[1-9]|1\d|2[0-8])(-)(?:(?:0?[1-9])|(?:1[0-2]))\4(?:(?:1[6-9]|[2-9]\d)?\d{2})$/;
         this.postalcodePattern = /^(\d{4})$/;
         this.emailPattern = /^[-a-z0-9~!$%^&*_=+}{\'?]+(\.[-a-z0-9~!$%^&*_=+}{\'?]+)*@([a-z0-9_][-a-z0-9_]*(\.[-a-z0-9_]+)*\.(aero|arpa|biz|com|coop|edu|gov|info|int|mil|museum|name|net|org|pro|travel|mobi|[a-z][a-z])|([0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}))(:[0-9]{1,5})?$/i;
         this.campgrounds = ['Antwerpen', 'Kempen', 'Mechelen', 'Limburg', 'Leuven', 'Brussel', 'West-Vlaanderen', 'Heuvelland', 'Roeland', 'Reinaert', 'Nationaal', 'Internationaal'];
@@ -99,6 +99,7 @@ class RegisterController {
     }
 
     prefillWithAdNumber(adNumber, emailSubscriber){ //second var is optional, as it's only required when subscribing a colleague.
+
         this.KrinkelService.getContactFromChiro(adNumber).then((resp) => {
             if (resp) {
                 let chiroContact = resp[0];
@@ -108,7 +109,7 @@ class RegisterController {
                     firstName: chiroContact.first_name || "", //this pretty much means use the var if it's not null/undefined, else use an empty string
                     lastName: chiroContact.last_name || "",
                     email: chiroContact.email || "",
-                    birthDate: chiroContact.birth_date || "",
+                    birthDate: chiroContact.birth_date ? chiroContact.birth_date.split("-").reverse().join("-") : "",
                     emailSubscriber: emailSubscriber || "",
                     phone: chiroContact.phone ? chiroContact.phone.replace('-', '') : "",
                     gender: chiroContact.gender_id || "",
@@ -131,10 +132,10 @@ class RegisterController {
             }
         });
     }
-
+    //todo: fix the inconsistencies betwee the name for the AD number
     prefillSelf() {
         let loggedInUser = this.AuthService.getLoggedinUser();
-        this.prefillWithAdNumber(loggedInUser.adNumber);
+        this.prefillWithAdNumber(loggedInUser.adnummer);
     }
 
     /*
@@ -164,16 +165,7 @@ class RegisterController {
         } else if (this.SelectService.getColleague() !== undefined) {
             this.prefillColleague();
         } else {
-            let user = this.StorageService.getUser();
-            if (user && user.email === this.AuthService.getLoggedinUser().email) {
-                this.newPerson = user;
-            } else {
-                /**
-                 * Prefilling the form when subscribing yourself
-                 */
-                this.prefillSelf();
-
-            }
+            this.prefillSelf();
         }
 
         this.optionsStreet = {

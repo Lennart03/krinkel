@@ -100,5 +100,9 @@
 			<artifactId>commons-lang3</artifactId>
 			<version>3.4</version>
 		</dependency>
+		<dependency>
+			<groupId>com.realdolmen.chiro</groupId>
+			<artifactId>krinkel-dto</artifactId>
+		</dependency>
 	</dependencies>
 </project>

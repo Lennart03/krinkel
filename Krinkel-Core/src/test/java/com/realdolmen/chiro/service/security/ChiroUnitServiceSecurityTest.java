@@ -54,7 +54,7 @@ public class ChiroUnitServiceSecurityTest {
         mathias.setRole(SecurityRole.GROEP);
 
         ChiroUnit chiroUnit = new ChiroUnit();
-        chiroUnit.setStam("BG0000");
+        chiroUnit.setStamNummer("BG0000");
 
         Mockito.when(userService.getCurrentUser()).thenReturn(mathias);
 
@@ -73,7 +73,7 @@ public class ChiroUnitServiceSecurityTest {
         mathias.setRole(SecurityRole.GROEP);
 
         ChiroUnit chiroUnit = new ChiroUnit();
-        chiroUnit.setStam("BG0000");
+        chiroUnit.setStamNummer("BG0000");
 
         Mockito.when(userService.getCurrentUser()).thenReturn(mathias);
 
@@ -92,7 +92,7 @@ public class ChiroUnitServiceSecurityTest {
         mathias.setRole(SecurityRole.GROEP);
 
         ChiroUnit chiroUnit = new ChiroUnit();
-        chiroUnit.setStam("BG0000");
+        chiroUnit.setStamNummer("BG0000");
 
         Mockito.when(userService.getCurrentUser()).thenReturn(mathias);
 
@@ -111,7 +111,7 @@ public class ChiroUnitServiceSecurityTest {
         mathias.setRole(SecurityRole.GROEP);
 
         ChiroUnit chiroUnit = new ChiroUnit();
-        chiroUnit.setStam("BG0000");
+        chiroUnit.setStamNummer("BG0000");
 
         Mockito.when(userService.getCurrentUser()).thenReturn(mathias);
 
@@ -130,7 +130,7 @@ public class ChiroUnitServiceSecurityTest {
         mathias.setRole(SecurityRole.ADMIN);
 
         ChiroUnit chiroUnit = new ChiroUnit();
-        chiroUnit.setStam("BG0000");
+        chiroUnit.setStamNummer("BG0000");
 
         Mockito.when(userService.getCurrentUser()).thenReturn(mathias);
 
@@ -149,7 +149,7 @@ public class ChiroUnitServiceSecurityTest {
         mathias.setRole(SecurityRole.GROEP);
 
         ChiroUnit chiroUnit = new ChiroUnit();
-        chiroUnit.setStam("AG0000");
+        chiroUnit.setStamNummer("AG0000");
 
         Mockito.when(userService.getCurrentUser()).thenReturn(mathias);
 
@@ -168,7 +168,7 @@ public class ChiroUnitServiceSecurityTest {
         mathias.setRole(SecurityRole.GROEP);
 
         ChiroUnit chiroUnit = new ChiroUnit();
-        chiroUnit.setStam("AG0000");
+        chiroUnit.setStamNummer("AG0000");
 
         Mockito.when(userService.getCurrentUser()).thenReturn(mathias);
 
@@ -187,7 +187,7 @@ public class ChiroUnitServiceSecurityTest {
         mathias.setRole(SecurityRole.GROEP);
 
         ChiroUnit chiroUnit = new ChiroUnit();
-        chiroUnit.setStam("AG0000");
+        chiroUnit.setStamNummer("AG0000");
 
         Mockito.when(userService.getCurrentUser()).thenReturn(mathias);
 
@@ -215,7 +215,7 @@ public class ChiroUnitServiceSecurityTest {
         mathias.setRole(SecurityRole.GROEP);
 
         ChiroUnit chiroUnit = new ChiroUnit();
-        chiroUnit.setStam("BG0400");
+        chiroUnit.setStamNummer("BG0400");
 
         Mockito.when(userService.getCurrentUser()).thenReturn(mathias);
 
@@ -234,7 +234,7 @@ public class ChiroUnitServiceSecurityTest {
         mathias.setRole(SecurityRole.GROEP);
 
         ChiroUnit chiroUnit = new ChiroUnit();
-        chiroUnit.setStam("BG0400");
+        chiroUnit.setStamNummer("BG0400");
 
         Mockito.when(userService.getCurrentUser()).thenReturn(mathias);
 
@@ -253,7 +253,7 @@ public class ChiroUnitServiceSecurityTest {
         mathias.setRole(SecurityRole.GROEP);
 
         ChiroUnit chiroUnit = new ChiroUnit();
-        chiroUnit.setStam("BG0400");
+        chiroUnit.setStamNummer("BG0400");
 
         Mockito.when(userService.getCurrentUser()).thenReturn(mathias);
 
@@ -272,7 +272,7 @@ public class ChiroUnitServiceSecurityTest {
         mathias.setRole(SecurityRole.GROEP);
 
         ChiroUnit chiroUnit = new ChiroUnit();
-        chiroUnit.setStam("BG0400");
+        chiroUnit.setStamNummer("BG0400");
 
         Mockito.when(userService.getCurrentUser()).thenReturn(mathias);
 
@@ -291,7 +291,7 @@ public class ChiroUnitServiceSecurityTest {
         mathias.setRole(SecurityRole.ADMIN);
 
         ChiroUnit chiroUnit = new ChiroUnit();
-        chiroUnit.setStam("BG0400");
+        chiroUnit.setStamNummer("BG0400");
 
         Mockito.when(userService.getCurrentUser()).thenReturn(mathias);
 
@@ -310,7 +310,7 @@ public class ChiroUnitServiceSecurityTest {
         mathias.setRole(SecurityRole.GROEP);
 
         ChiroUnit chiroUnit = new ChiroUnit();
-        chiroUnit.setStam("AG0400");
+        chiroUnit.setStamNummer("AG0400");
 
         Mockito.when(userService.getCurrentUser()).thenReturn(mathias);
 
@@ -329,7 +329,7 @@ public class ChiroUnitServiceSecurityTest {
         mathias.setRole(SecurityRole.GROEP);
 
         ChiroUnit chiroUnit = new ChiroUnit();
-        chiroUnit.setStam("AG0400");
+        chiroUnit.setStamNummer("AG0400");
 
         Mockito.when(userService.getCurrentUser()).thenReturn(mathias);
 
@@ -351,10 +351,10 @@ public class ChiroUnitServiceSecurityTest {
         mathias.setRole(SecurityRole.GROEP);
 
         ChiroUnit upperChiroUnit = new ChiroUnit();
-        upperChiroUnit.setStam("AG0400");
+        upperChiroUnit.setStamNummer("AG0400");
 
         ChiroUnit chiroUnit = new ChiroUnit();
-        chiroUnit.setStam("AG0104");
+        chiroUnit.setStamNummer("AG0104");
         chiroUnit.setUpper(upperChiroUnit);
 
         Mockito.when(userService.getCurrentUser()).thenReturn(mathias);
@@ -374,10 +374,10 @@ public class ChiroUnitServiceSecurityTest {
         mathias.setRole(SecurityRole.ADMIN);
 
         ChiroUnit upperChiroUnit = new ChiroUnit();
-        upperChiroUnit.setStam("AG0400");
+        upperChiroUnit.setStamNummer("AG0400");
 
         ChiroUnit chiroUnit = new ChiroUnit();
-        chiroUnit.setStam("AG0104");
+        chiroUnit.setStamNummer("AG0104");
         chiroUnit.setUpper(upperChiroUnit);
 
         Mockito.when(userService.getCurrentUser()).thenReturn(mathias);
@@ -398,7 +398,7 @@ public class ChiroUnitServiceSecurityTest {
 
 
         ChiroUnit chiroUnit = new ChiroUnit();
-        chiroUnit.setStam("AG0104");
+        chiroUnit.setStamNummer("AG0104");
 
         Mockito.when(userService.getCurrentUser()).thenReturn(mathias);
 
@@ -417,10 +417,10 @@ public class ChiroUnitServiceSecurityTest {
         mathias.setRole(SecurityRole.GROEP);
 
         ChiroUnit upperChiroUnit = new ChiroUnit();
-        upperChiroUnit.setStam("AG0400");
+        upperChiroUnit.setStamNummer("AG0400");
 
         ChiroUnit chiroUnit = new ChiroUnit();
-        chiroUnit.setStam("AG0103");
+        chiroUnit.setStamNummer("AG0103");
         chiroUnit.setUpper(upperChiroUnit);
 
         Mockito.when(userService.getCurrentUser()).thenReturn(mathias);
@@ -440,10 +440,10 @@ public class ChiroUnitServiceSecurityTest {
         mathias.setRole(SecurityRole.VERBOND);
 
         ChiroUnit upperChiroUnit = new ChiroUnit();
-        upperChiroUnit.setStam("AG0400");
+        upperChiroUnit.setStamNummer("AG0400");
 
         ChiroUnit chiroUnit = new ChiroUnit();
-        chiroUnit.setStam("AG0103");
+        chiroUnit.setStamNummer("AG0103");
         chiroUnit.setUpper(upperChiroUnit);
 
         Mockito.when(userService.getCurrentUser()).thenReturn(mathias);
@@ -641,7 +641,7 @@ public class ChiroUnitServiceSecurityTest {
         mathias.setRole(SecurityRole.GROEP);
 
         ChiroUnit chiroUnit = new ChiroUnit();
-        chiroUnit.setStam("WG0000");
+        chiroUnit.setStamNummer("WG0000");
 
         Mockito.when(userService.getCurrentUser()).thenReturn(mathias);
 
@@ -662,7 +662,7 @@ public class ChiroUnitServiceSecurityTest {
         mathias.setRole(SecurityRole.GROEP);
 
         ChiroUnit chiroUnit = new ChiroUnit();
-        chiroUnit.setStam("WG0000");
+        chiroUnit.setStamNummer("WG0000");
 
         Mockito.when(userService.getCurrentUser()).thenReturn(mathias);
 
@@ -683,7 +683,7 @@ public class ChiroUnitServiceSecurityTest {
         mathias.setRole(SecurityRole.ADMIN);
 
         ChiroUnit chiroUnit = new ChiroUnit();
-        chiroUnit.setStam("WG0000");
+        chiroUnit.setStamNummer("WG0000");
 
         Mockito.when(userService.getCurrentUser()).thenReturn(mathias);
 
@@ -704,7 +704,7 @@ public class ChiroUnitServiceSecurityTest {
         mathias.setRole(SecurityRole.GROEP);
 
         ChiroUnit chiroUnit = new ChiroUnit();
-        chiroUnit.setStam("BG0000");
+        chiroUnit.setStamNummer("BG0000");
 
         Mockito.when(userService.getCurrentUser()).thenReturn(mathias);
 

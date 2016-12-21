@@ -1,10 +1,14 @@
-var gulp = require('gulp');
-var sass = require('gulp-sass');
-var sourcemaps = require('gulp-sourcemaps');
+var gulp         = require('gulp');
+var sass         = require('gulp-sass');
+var sourcemaps   = require('gulp-sourcemaps');
 var autoprefixer = require('gulp-autoprefixer');
-var sassdoc = require('sassdoc');
-var browserSync = require('browser-sync').create();
-var reload      = browserSync.reload;
+var sassdoc      = require('sassdoc');
+var browserSync  = require('browser-sync').create();
+var reload       = browserSync.reload;
+var postcss      = require("gulp-postcss");
+var processors   = [
+    require("postcss-unprefix")
+];
 
 
 var sassOptions = {
@@ -18,6 +22,7 @@ var sassdocOptions = {
 
 var input = './sass/**/*.scss';
 var output = './css';
+var prodOutput = './css/min';
 
 gulp.task('sass', function () {
   return gulp
@@ -25,7 +30,10 @@ gulp.task('sass', function () {
     .pipe(sourcemaps.init())
     // Run Sass on those files
     .pipe(sass(sassOptions).on('error', sass.logError))
-    .pipe(autoprefixer())
+      .pipe(postcss(processors))
+    .pipe(autoprefixer({
+        browsers: ['last 2 versions']
+    }))
     .pipe(sourcemaps.write('./maps'))
     // Write the resulting CSS in the output folder
     .pipe(gulp.dest(output))
@@ -45,8 +53,11 @@ gulp.task('prod', ['sassdoc'], function () {
   return gulp
     .src(input)
     .pipe(sass({ outputStyle: 'compressed' }))
-    .pipe(autoprefixer())
-    .pipe(gulp.dest(output))
+      .pipe(postcss(processors))
+    .pipe(autoprefixer({
+        browsers: ['last 2 versions']
+    }))
+    .pipe(gulp.dest(prodOutput))
     .pipe(browserSync.stream());
 });
 

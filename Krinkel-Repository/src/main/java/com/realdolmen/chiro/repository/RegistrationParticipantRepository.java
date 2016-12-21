@@ -1,6 +1,7 @@
 package com.realdolmen.chiro.repository;
 
 import com.realdolmen.chiro.domain.RegistrationParticipant;
+import com.realdolmen.chiro.domain.Status;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -55,4 +56,6 @@ public interface RegistrationParticipantRepository extends JpaRepository<Registr
     @Query(value= "SELECT COUNT(*) FROM registration_participant_pre_camp_list WHERE registration_volunteer_id = :participantId", nativeQuery = true )
     Long countPreCampRecordsAfterCancellation(@Param("participantId") Long participantId);
 
+    @Query(value = "SELECT r.status FROM  RegistrationParticipant r WHERE r.adNumber = :adNumber")
+    Status getPaymentStatusByadNumber(@Param("adNumber") String adNumber);
 }

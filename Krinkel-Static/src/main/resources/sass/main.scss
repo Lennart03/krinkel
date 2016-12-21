@@ -8,11 +8,11 @@
 
 /* SASS Utilities
 ========================================================================== */
-    
+
+@import 'helpers/_variables.scss';
 @import 'helpers/_functions.scss';
 @import 'helpers/_mixins.scss';
 @import 'helpers/_placeholders.scss';
-@import 'helpers/_variables.scss';
 
 
 /* Vendors And External Stylesheets
