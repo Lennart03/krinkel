@@ -34,7 +34,7 @@ public class ChiroUnitServiceSecurity {
 
         //role only gets set when admin but you never know
         //admin may see all verbonden
-        if (currentUser.getRole().equals(SecurityRole.ADMIN)) {
+        if (currentUser.getRole() != null && currentUser.getRole().equals(SecurityRole.ADMIN)) {
             return true;
         } else if (rolesAndUpperClassesByStam.size() == 1 && currentUserStamNumber.startsWith("NAT")){
             return true;
@@ -77,7 +77,9 @@ public class ChiroUnitServiceSecurity {
 
     public boolean hasPermissionToSeeUnits(ChiroUnit chiroUnit) {
         User currentUser = userService.getCurrentUser();
-
+        if (currentUser.getRole() != null && currentUser.getRole().equals(SecurityRole.ADMIN)) {
+            return true;
+        }
         if (chiroUnit.getStamNummer().endsWith("00")) {
             return hasPermissionToSeeGewesten(currentUser, chiroUnit);
         } else {
@@ -182,16 +184,21 @@ public class ChiroUnitServiceSecurity {
     public boolean hasPermissionToGetParticipants() {
         User currentUser = userService.getCurrentUser();
         String currentUserStamNumber = currentUser.getStamnummer();
+
+        if (currentUser.getRole() != null && currentUser.getRole().equals(SecurityRole.ADMIN)) {
+            return true;
+        }
+
         Map<String, RolesAndUpperClasses> rolesAndUpperClassesByStam = currentUser.getRolesAndUpperClassesByStam();
-        List<SecurityRole> securityRolesWithAcces = new ArrayList<>();
-        securityRolesWithAcces.add(SecurityRole.ADMIN);
-        securityRolesWithAcces.add(SecurityRole.GROEP);
+        List<SecurityRole> securityRolesWithAccess = new ArrayList<>();
+        securityRolesWithAccess.add(SecurityRole.ADMIN);
+        securityRolesWithAccess.add(SecurityRole.GROEP);
 
         if (rolesAndUpperClassesByStam.size() == 1) {
-            return securityRolesWithAcces.contains(rolesAndUpperClassesByStam.get(currentUserStamNumber).getSecurityRole());
+            return securityRolesWithAccess.contains(rolesAndUpperClassesByStam.get(currentUserStamNumber).getSecurityRole());
         } else if (rolesAndUpperClassesByStam.size() > 1) {
             for (Map.Entry<String, RolesAndUpperClasses> entry : rolesAndUpperClassesByStam.entrySet()) {
-                if (securityRolesWithAcces.contains(entry.getValue().getSecurityRole())) {
+                if (securityRolesWithAccess.contains(entry.getValue().getSecurityRole())) {
                     return true;
                 }
             }

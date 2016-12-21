@@ -40,13 +40,13 @@ public class OverviewController {
 
     @RequestMapping(value = "/groepen/{gewestStamNummer}", method = RequestMethod.GET)
     public List<ChiroUnit> getGroepen(@PathVariable("gewestStamNummer") String gewestStamNummer) {
-        //System.err.println("Groepen in overview controller: " + verbondenService.getGroepen(gewestStamNummer));
+        System.err.println("Groepen in overview controller: " + verbondenService.getGroepen(gewestStamNummer));
         return verbondenService.getGroepen(gewestStamNummer);
     }
 
     @RequestMapping(value = "/groep/{groepStamNummer}", method = RequestMethod.GET)
     public List<RegistrationParticipant> getParticipants(@PathVariable("groepStamNummer") String groepStamNummer) {
-        //System.err.println("Participants in overview controller: " + verbondenService.getRegistrationParticipants(groepStamNummer));
+        System.err.println("Participants in overview controller: " + verbondenService.getRegistrationParticipants(groepStamNummer));
         return verbondenService.getRegistrationParticipants(groepStamNummer);
     }
 

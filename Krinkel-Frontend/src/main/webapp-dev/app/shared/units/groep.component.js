@@ -75,6 +75,26 @@ class GroepController {
             { 'value': 'CONFIRMED', 'label': 'Bevestigd'}
         ]
     }
+
+    getDatesListFromList(list){
+        if(list.length > 0) {
+            function pad(s) {
+                return (s < 10) ? '0' + s : s;
+            };
+            function formatDate(d){
+                return [pad(d.getDate()), pad(d.getMonth()+1), d.getFullYear()].join('-');
+            };
+            var dates = "";
+            for (var i = 0; i < list.length -1; i++) {
+                var d = new Date(list[i].date);
+                dates += formatDate(d) + ", ";
+            }
+            var d = new Date(list[list.length-1].date);
+            dates += formatDate(d);
+            return dates;
+        }
+        return "";
+    }
 }
 
 export var GroepComponent = {
