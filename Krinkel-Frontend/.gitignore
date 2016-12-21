@@ -3,3 +3,8 @@
 coverage/
 dist/
 node_modules/
+Krinkel-Frontend/src/main/webapp
+Krinkel-Frontend/src/main/webapp/index.html
+Krinkel-Frontend/src/main/webapp-dev/node
+Krinkel-Frontend/src/main/webapp-dev/npm-debug.log
+Krinkel-Frontend/src/main/webapp-dev/app/env.url.config.js
