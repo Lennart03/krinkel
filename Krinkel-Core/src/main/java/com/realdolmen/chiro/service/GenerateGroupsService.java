@@ -21,7 +21,7 @@ public class GenerateGroupsService {
     @Autowired
     RegistrationParticipantRepository registrationParticipantRepository;
 
-    private Integer groupSize;
+    private Integer groupSize = 12;
 
     private Map<String, List<RegistrationParticipant>> participantsMan = new HashMap<>();
     private Map<String, List<RegistrationParticipant>> participantsWoman = new HashMap<>();
@@ -96,7 +96,7 @@ public class GenerateGroupsService {
 
         if (unions.size() <= groupSize) {
             for (int i = 0; i < unions.size(); i++) {
-                String unionStam = unions.get(i).getStam();
+                String unionStam = unions.get(i).getStamNummer();
                 addParticipantUnionToList(unionStam, singleGroup);
             }
 
@@ -113,7 +113,7 @@ public class GenerateGroupsService {
                 }
                 selectedUnions.add(randNumber);
 
-                String unionStam = unions.get(randNumber).getStam();
+                String unionStam = unions.get(randNumber).getStamNummer();
 
                 if(!addParticipantUnionToList(unionStam, singleGroup)) {
                     if(selectedUnions.size() >= unions.size()) {
@@ -149,7 +149,7 @@ public class GenerateGroupsService {
             }
             randomIndexUnions.add(index);
 
-            String unionStam = unions.get(index).getStam();
+            String unionStam = unions.get(index).getStamNummer();
 
             if(addParticipantUnionToList(unionStam, singleGroup)) {
                 itemsAdded++;
@@ -229,17 +229,17 @@ public class GenerateGroupsService {
     }
 
     protected void addParticipantInCorrectGroup(RegistrationParticipant participant) {
-        String union = chiroUnitRepository.findUnionParticipant(participant.getAdNumber());
+        String unionName = chiroUnitRepository.findUnionParticipant(participant.getAdNumber()).getStamNummer();
 
         if(participant.getGender().equals(Gender.MAN)) {
-            addToMap(union, participant, participantsMan);
+            addToMap(unionName, participant, participantsMan);
         } else if(participant.getGender().equals(Gender.WOMAN)) {
-            addToMap(union, participant, participantsWoman);
+            addToMap(unionName, participant, participantsWoman);
         } else { //scrumble gender X participants in random male/female groups
             if((int)(Math.random() * 2) > 0) {
-                addToMap(union, participant, participantsMan);
+                addToMap(unionName, participant, participantsMan);
             } else {
-                addToMap(union, participant, participantsWoman);
+                addToMap(unionName, participant, participantsWoman);
             }
             //addToMap(union, participant, participantsX);
         }
@@ -372,7 +372,7 @@ public class GenerateGroupsService {
         if(amountWoman < amountMan - 1 || amountWoman > amountMan + 1){//the scramble function will not allow more than 1 gender offset
             return false;
         } else {
-            String unionParticipant = chiroUnitRepository.findUnionParticipant(participant.getAdNumber());
+            String unionParticipant = chiroUnitRepository.findUnionParticipant(participant.getAdNumber()).getStamNummer();
             boolean foundOnce = false;
             for(int i = 0; i < singleGroup.size(); i++) {
                 if(unionParticipant.equals(chiroUnitRepository.findUnionParticipant(singleGroup.get(i).getAdNumber()))) {
@@ -388,7 +388,7 @@ public class GenerateGroupsService {
     }
 
     private boolean checkScrambleLackingList(List<RegistrationParticipant> lackingList, RegistrationParticipant participant) {
-        String unionParticipant = chiroUnitRepository.findUnionParticipant(participant.getAdNumber());
+        String unionParticipant = chiroUnitRepository.findUnionParticipant(participant.getAdNumber()).getStamNummer();
         boolean foundOnce = false;
         for(int i = 0; i < lackingList.size(); i++) {
             if(unionParticipant.equals(chiroUnitRepository.findUnionParticipant(lackingList.get(i).getAdNumber()))) {

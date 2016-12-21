@@ -119,19 +119,19 @@ public class GenerateGroupsServiceTest{
         builder.stamnumber("13");
         registrationParticipants.add(builder.build());
 
-        Mockito.when(chiroUnitRepository.findUnionParticipant("1")).thenReturn("A");
-        Mockito.when(chiroUnitRepository.findUnionParticipant("2")).thenReturn("A");
-        Mockito.when(chiroUnitRepository.findUnionParticipant("3")).thenReturn("B");
-        Mockito.when(chiroUnitRepository.findUnionParticipant("4")).thenReturn("B");
-        Mockito.when(chiroUnitRepository.findUnionParticipant("5")).thenReturn("A");
-        Mockito.when(chiroUnitRepository.findUnionParticipant("6")).thenReturn("A");
-        Mockito.when(chiroUnitRepository.findUnionParticipant("7")).thenReturn("B");
-        Mockito.when(chiroUnitRepository.findUnionParticipant("8")).thenReturn("C");
-        Mockito.when(chiroUnitRepository.findUnionParticipant("9")).thenReturn("A");
-        Mockito.when(chiroUnitRepository.findUnionParticipant("10")).thenReturn("B");
-        Mockito.when(chiroUnitRepository.findUnionParticipant("11")).thenReturn("B");
-        Mockito.when(chiroUnitRepository.findUnionParticipant("12")).thenReturn("A");
-        Mockito.when(chiroUnitRepository.findUnionParticipant("13")).thenReturn("A");
+        Mockito.when(chiroUnitRepository.findUnionParticipant("1")).thenReturn(new ChiroUnit("A", "A"));
+        Mockito.when(chiroUnitRepository.findUnionParticipant("2")).thenReturn(new ChiroUnit("A", "A"));
+        Mockito.when(chiroUnitRepository.findUnionParticipant("3")).thenReturn(new ChiroUnit("B", "B"));
+        Mockito.when(chiroUnitRepository.findUnionParticipant("4")).thenReturn(new ChiroUnit("B", "B"));
+        Mockito.when(chiroUnitRepository.findUnionParticipant("5")).thenReturn(new ChiroUnit("A", "A"));
+        Mockito.when(chiroUnitRepository.findUnionParticipant("6")).thenReturn(new ChiroUnit("A", "A"));
+        Mockito.when(chiroUnitRepository.findUnionParticipant("7")).thenReturn(new ChiroUnit("B", "B"));
+        Mockito.when(chiroUnitRepository.findUnionParticipant("8")).thenReturn(new ChiroUnit("C", "C"));
+        Mockito.when(chiroUnitRepository.findUnionParticipant("9")).thenReturn(new ChiroUnit("A", "A"));
+        Mockito.when(chiroUnitRepository.findUnionParticipant("10")).thenReturn(new ChiroUnit("B", "B"));
+        Mockito.when(chiroUnitRepository.findUnionParticipant("11")).thenReturn(new ChiroUnit("B", "B"));
+        Mockito.when(chiroUnitRepository.findUnionParticipant("12")).thenReturn(new ChiroUnit("A", "A"));
+        Mockito.when(chiroUnitRepository.findUnionParticipant("13")).thenReturn(new ChiroUnit("A", "A"));
 
         Iterator<RegistrationParticipant> registrationIterator = registrationParticipants.iterator();
 
@@ -389,30 +389,30 @@ public class GenerateGroupsServiceTest{
         builder.adNumber("24");
         registrationParticipants.add(builder.build());
 
-        Mockito.when(chiroUnitRepository.findUnionParticipant("1")).thenReturn("A");
-        Mockito.when(chiroUnitRepository.findUnionParticipant("13")).thenReturn("A");
-        Mockito.when(chiroUnitRepository.findUnionParticipant("2")).thenReturn("B");
-        Mockito.when(chiroUnitRepository.findUnionParticipant("14")).thenReturn("B");
-        Mockito.when(chiroUnitRepository.findUnionParticipant("3")).thenReturn("C");
-        Mockito.when(chiroUnitRepository.findUnionParticipant("15")).thenReturn("C");
-        Mockito.when(chiroUnitRepository.findUnionParticipant("4")).thenReturn("D");
-        Mockito.when(chiroUnitRepository.findUnionParticipant("16")).thenReturn("D");
-        Mockito.when(chiroUnitRepository.findUnionParticipant("5")).thenReturn("E");
-        Mockito.when(chiroUnitRepository.findUnionParticipant("17")).thenReturn("E");
-        Mockito.when(chiroUnitRepository.findUnionParticipant("6")).thenReturn("F");
-        Mockito.when(chiroUnitRepository.findUnionParticipant("18")).thenReturn("F");
-        Mockito.when(chiroUnitRepository.findUnionParticipant("7")).thenReturn("G");
-        Mockito.when(chiroUnitRepository.findUnionParticipant("19")).thenReturn("G");
-        Mockito.when(chiroUnitRepository.findUnionParticipant("8")).thenReturn("H");
-        Mockito.when(chiroUnitRepository.findUnionParticipant("20")).thenReturn("H");
-        Mockito.when(chiroUnitRepository.findUnionParticipant("9")).thenReturn("I");
-        Mockito.when(chiroUnitRepository.findUnionParticipant("21")).thenReturn("I");
-        Mockito.when(chiroUnitRepository.findUnionParticipant("10")).thenReturn("J");
-        Mockito.when(chiroUnitRepository.findUnionParticipant("22")).thenReturn("J");
-        Mockito.when(chiroUnitRepository.findUnionParticipant("11")).thenReturn("K");
-        Mockito.when(chiroUnitRepository.findUnionParticipant("23")).thenReturn("K");
-        Mockito.when(chiroUnitRepository.findUnionParticipant("12")).thenReturn("L");
-        Mockito.when(chiroUnitRepository.findUnionParticipant("24")).thenReturn("L");
+        Mockito.when(chiroUnitRepository.findUnionParticipant("1")).thenReturn(new ChiroUnit("A", "A"));
+        Mockito.when(chiroUnitRepository.findUnionParticipant("13")).thenReturn(new ChiroUnit("A", "A"));
+        Mockito.when(chiroUnitRepository.findUnionParticipant("2")).thenReturn(new ChiroUnit("B", "B"));
+        Mockito.when(chiroUnitRepository.findUnionParticipant("14")).thenReturn(new ChiroUnit("B", "B"));
+        Mockito.when(chiroUnitRepository.findUnionParticipant("3")).thenReturn(new ChiroUnit("C", "C"));
+        Mockito.when(chiroUnitRepository.findUnionParticipant("15")).thenReturn(new ChiroUnit("C", "C"));
+        Mockito.when(chiroUnitRepository.findUnionParticipant("4")).thenReturn(new ChiroUnit("D", "D"));
+        Mockito.when(chiroUnitRepository.findUnionParticipant("16")).thenReturn(new ChiroUnit("D", "D"));
+        Mockito.when(chiroUnitRepository.findUnionParticipant("5")).thenReturn(new ChiroUnit("E", "E"));
+        Mockito.when(chiroUnitRepository.findUnionParticipant("17")).thenReturn(new ChiroUnit("E", "E"));
+        Mockito.when(chiroUnitRepository.findUnionParticipant("6")).thenReturn(new ChiroUnit("F", "F"));
+        Mockito.when(chiroUnitRepository.findUnionParticipant("18")).thenReturn(new ChiroUnit("F", "F"));
+        Mockito.when(chiroUnitRepository.findUnionParticipant("7")).thenReturn(new ChiroUnit("G", "G"));
+        Mockito.when(chiroUnitRepository.findUnionParticipant("19")).thenReturn(new ChiroUnit("G", "G"));
+        Mockito.when(chiroUnitRepository.findUnionParticipant("8")).thenReturn(new ChiroUnit("H", "H"));
+        Mockito.when(chiroUnitRepository.findUnionParticipant("20")).thenReturn(new ChiroUnit("H", "H"));
+        Mockito.when(chiroUnitRepository.findUnionParticipant("9")).thenReturn(new ChiroUnit("I", "I"));
+        Mockito.when(chiroUnitRepository.findUnionParticipant("21")).thenReturn(new ChiroUnit("I", "I"));
+        Mockito.when(chiroUnitRepository.findUnionParticipant("10")).thenReturn(new ChiroUnit("J", "J"));
+        Mockito.when(chiroUnitRepository.findUnionParticipant("22")).thenReturn(new ChiroUnit("J", "J"));
+        Mockito.when(chiroUnitRepository.findUnionParticipant("11")).thenReturn(new ChiroUnit("K", "K"));
+        Mockito.when(chiroUnitRepository.findUnionParticipant("23")).thenReturn(new ChiroUnit("K", "K"));
+        Mockito.when(chiroUnitRepository.findUnionParticipant("12")).thenReturn(new ChiroUnit("L", "L"));
+        Mockito.when(chiroUnitRepository.findUnionParticipant("24")).thenReturn(new ChiroUnit("L", "L"));
 
 
         List<ChiroUnit> unions = new ArrayList<>();

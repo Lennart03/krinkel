@@ -3,7 +3,6 @@ package com.realdolmen.chiro.service.security;
 import com.realdolmen.chiro.domain.*;
 import com.realdolmen.chiro.domain.units.ChiroUnit;
 import com.realdolmen.chiro.domain.vo.RolesAndUpperClasses;
-import com.realdolmen.chiro.service.ChiroUnitService;
 import com.realdolmen.chiro.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -35,7 +34,7 @@ public class ChiroUnitServiceSecurity {
 
         //role only gets set when admin but you never know
         //admin may see all verbonden
-        if (currentUser.getRole().equals(SecurityRole.ADMIN)) {
+        if (currentUser.getRole() != null && currentUser.getRole().equals(SecurityRole.ADMIN)) {
             return true;
         } else if (rolesAndUpperClassesByStam.size() == 1 && currentUserStamNumber.startsWith("NAT")){
             return true;
@@ -44,7 +43,7 @@ public class ChiroUnitServiceSecurity {
             //can see verbond if nationaal or you are in a groep of the verbond
         } else if (rolesAndUpperClassesByStam.size() == 1 && !currentUserStamNumber.startsWith("NAT")) {
             Verbond verbondOfUser = Verbond.getVerbondFromStamNumber(currentUserStamNumber);
-            return chiroUnit.getStam().equals(verbondOfUser.getStam());
+            return chiroUnit.getStamNummer().equals(verbondOfUser.getStam());
             // there may be multiple roles
             // may be in multiple verbonden
         } else if (rolesAndUpperClassesByStam.size() > 1) {
@@ -66,7 +65,7 @@ public class ChiroUnitServiceSecurity {
             }
             allSecurityRoles.add(entry.getValue().getSecurityRole());
         }
-        if (allVerbondenStamNumbers.contains(chiroUnit.getStam())) {
+        if (allVerbondenStamNumbers.contains(chiroUnit.getStamNummer())) {
             isInVerbond = true;
         }
         List<SecurityRole> common = allSecurityRoles.stream().filter(securityRolesWithAccesToData::contains).collect(Collectors.toList());
@@ -78,8 +77,10 @@ public class ChiroUnitServiceSecurity {
 
     public boolean hasPermissionToSeeUnits(ChiroUnit chiroUnit) {
         User currentUser = userService.getCurrentUser();
-
-        if (chiroUnit.getStam().endsWith("00")) {
+        if (currentUser.getRole() != null && currentUser.getRole().equals(SecurityRole.ADMIN)) {
+            return true;
+        }
+        if (chiroUnit.getStamNummer().endsWith("00")) {
             return hasPermissionToSeeGewesten(currentUser, chiroUnit);
         } else {
             return hasPermissionToSeeGroepen(currentUser, chiroUnit);
@@ -109,9 +110,9 @@ public class ChiroUnitServiceSecurity {
     private boolean checkStamNumberForPermissionToSeeGewest(Map<String, RolesAndUpperClasses> rolesAndUpperClassesByStam, ChiroUnit chiroUnit, List<SecurityRole> securityRolesWithAccesToData, String currentUserStamNumber) {
         if (securityRolesWithAccesToData.contains(rolesAndUpperClassesByStam.get(currentUserStamNumber).getSecurityRole())) {//you have the correct role
             return true;
-        } else if (chiroUnit.getStam().equals(rolesAndUpperClassesByStam.get(currentUserStamNumber).getStamNumberUpperUnit())) {//you are in this gewest
+        } else if (chiroUnit.getStamNummer().equals(rolesAndUpperClassesByStam.get(currentUserStamNumber).getStamNumberUpperUnit())) {//you are in this gewest
             return true;
-        } else if (chiroUnit.getStam().equals(currentUserStamNumber)) {//you are this gewest
+        } else if (chiroUnit.getStamNummer().equals(currentUserStamNumber)) {//you are this gewest
             return true;
         } else {
             return false;
@@ -122,11 +123,11 @@ public class ChiroUnitServiceSecurity {
         for (Map.Entry<String, RolesAndUpperClasses> entry : rolesAndUpperClassesByStam.entrySet()) {
             if (entry.getValue().getSecurityRole().equals(SecurityRole.NATIONAAL)) {
                 return true;
-            } else if (entry.getKey().equals(chiroUnit.getStam())) { //you are this gewest
+            } else if (entry.getKey().equals(chiroUnit.getStamNummer())) { //you are this gewest
                 return true;
-            } else if (entry.getKey().equals(chiroUnit.getUpper().getStam())) { //you are its verbond
+            } else if (entry.getKey().equals(chiroUnit.getUpper().getStamNummer())) { //you are its verbond
                 return true;
-            } else if (entry.getValue().getStamNumberUpperUnit().equals(chiroUnit.getStam())) {//you are in this gewest
+            } else if (entry.getValue().getStamNumberUpperUnit().equals(chiroUnit.getStamNummer())) {//you are in this gewest
                 return true;
             }
         }
@@ -156,9 +157,9 @@ public class ChiroUnitServiceSecurity {
     private boolean checkStamNumberForPermissionToSeeGroep(Map<String, RolesAndUpperClasses> rolesAndUpperClassesByStam, ChiroUnit chiroUnit, List<SecurityRole> securityRolesWithAccesToData, String currentUserStamNumber) {
         if (securityRolesWithAccesToData.contains(rolesAndUpperClassesByStam.get(currentUserStamNumber).getSecurityRole())) {//je hebt de correcte rol
             return true;
-        } else if (chiroUnit.getUpper().getStam().equals(currentUserStamNumber)) {//je bent het gewest
+        } else if (chiroUnit.getUpper().getStamNummer().equals(currentUserStamNumber)) {//je bent het gewest
             return true;
-        } else if (chiroUnit.getStam().equals(currentUserStamNumber)) { //je eigen groep
+        } else if (chiroUnit.getStamNummer().equals(currentUserStamNumber)) { //je eigen groep
             return true;
         } else {
             return false;
@@ -169,11 +170,11 @@ public class ChiroUnitServiceSecurity {
         for (Map.Entry<String, RolesAndUpperClasses> entry : rolesAndUpperClassesByStam.entrySet()) {
             if (entry.getValue().getSecurityRole().equals(SecurityRole.NATIONAAL)) {
                 return true;
-            } else if (Verbond.getVerbondFromStamNumber(chiroUnit.getStam()).getStam().equals(entry.getKey())) {//je bent het verbond
+            } else if (Verbond.getVerbondFromStamNumber(chiroUnit.getStamNummer()).getStam().equals(entry.getKey())) {//je bent het verbond
                 return true;
-            } else if (chiroUnit.getUpper().getStam().equals(entry.getKey())) {//je bent het gewest
+            } else if (chiroUnit.getUpper().getStamNummer().equals(entry.getKey())) {//je bent het gewest
                 return true;
-            } else if (chiroUnit.getStam().equals(entry.getKey())) {//je bent de groep
+            } else if (chiroUnit.getStamNummer().equals(entry.getKey())) {//je bent de groep
                 return true;
             }
         }
@@ -183,16 +184,21 @@ public class ChiroUnitServiceSecurity {
     public boolean hasPermissionToGetParticipants() {
         User currentUser = userService.getCurrentUser();
         String currentUserStamNumber = currentUser.getStamnummer();
+
+        if (currentUser.getRole() != null && currentUser.getRole().equals(SecurityRole.ADMIN)) {
+            return true;
+        }
+
         Map<String, RolesAndUpperClasses> rolesAndUpperClassesByStam = currentUser.getRolesAndUpperClassesByStam();
-        List<SecurityRole> securityRolesWithAcces = new ArrayList<>();
-        securityRolesWithAcces.add(SecurityRole.ADMIN);
-        securityRolesWithAcces.add(SecurityRole.GROEP);
+        List<SecurityRole> securityRolesWithAccess = new ArrayList<>();
+        securityRolesWithAccess.add(SecurityRole.ADMIN);
+        securityRolesWithAccess.add(SecurityRole.GROEP);
 
         if (rolesAndUpperClassesByStam.size() == 1) {
-            return securityRolesWithAcces.contains(rolesAndUpperClassesByStam.get(currentUserStamNumber).getSecurityRole());
+            return securityRolesWithAccess.contains(rolesAndUpperClassesByStam.get(currentUserStamNumber).getSecurityRole());
         } else if (rolesAndUpperClassesByStam.size() > 1) {
             for (Map.Entry<String, RolesAndUpperClasses> entry : rolesAndUpperClassesByStam.entrySet()) {
-                if (securityRolesWithAcces.contains(entry.getValue().getSecurityRole())) {
+                if (securityRolesWithAccess.contains(entry.getValue().getSecurityRole())) {
                     return true;
                 }
             }

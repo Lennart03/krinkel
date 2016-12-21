@@ -18,7 +18,6 @@ import org.jasig.cas.client.validation.TicketValidationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.annotation.PostConstruct;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.xml.bind.DatatypeConverter;
@@ -92,7 +91,7 @@ public class CASService {
             
           List<String> adminAdNumbers = new ArrayList<>();
            for(Admin admin : adminService.getAdmins()){
-               adminAdNumbers.add(admin.getAdNummer().toString());
+               adminAdNumbers.add(admin.getAdNumber().toString());
            }
 
             if (adminAdNumbers.contains(adNumber)) {
@@ -180,7 +179,7 @@ public class CASService {
     protected String getTokenFromCookie(Cookie[] cookies) {
         for (Cookie c : cookies) {
             if ("Authorization".equals(c.getName())) {
-//            if (c.getName().equals("Authorization")) {
+//            if (cc.getNaam().equals("Authorization")) {
                 return c.getValue();
             }
         }

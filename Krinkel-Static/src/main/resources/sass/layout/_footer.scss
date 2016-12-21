@@ -1,0 +1,37 @@
+footer {
+  background-color: #000;
+  border-top: 1px solid $hoofdkleur;
+  color: $white;
+  text-align: center;
+  padding: 50px;
+  padding-bottom: 75px;
+  a {
+    color: $white;
+    &:hover {
+      color: $hoofdkleur;
+    }
+  }
+  div {
+    display: inline-block;
+    vertical-align: top;
+    text-align: left;
+  }
+  div:first-child {
+    float: left;
+  }
+  div:last-child {
+    float: right;
+    margin-bottom:0;
+  }
+
+  @media only screen and (max-width: 850px) {
+    div {
+      text-align: center;
+      display: block;
+      margin-bottom: 75px;
+    }
+    div:first-child, div:last-child {
+      float: none;
+    }
+  }
+}

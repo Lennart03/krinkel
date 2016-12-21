@@ -77,7 +77,7 @@ export class MapperService {
                 return 'KLINKER_EDITORIAL';
                 break;
             case 'KOOKPLOEG':
-                return 'COOCKING';
+                return 'COOKING';
                 break;
             case 'LOGISTIEK (KAMPGROND)':
                 return 'LOGISTICS_CAMPGROUND';
@@ -165,8 +165,6 @@ export class MapperService {
         } else if (data.rank === 'A') {
             participant.eventRole = 'ASPI';
         }
-        //console.log("LOGGING THE PARTICIPANT 123123");
-        //console.log(participant);
         return participant;
     }
 
@@ -243,7 +241,7 @@ export class MapperService {
             case 'KLINKER_EDITORIAL':
                 return 'Krinkelredactie';
                 break;
-            case 'COOCKING':
+            case 'COOKING':
                 return 'Kookploeg';
                 break;
             case 'LOGISTICS_CAMPGROUND':
@@ -420,8 +418,6 @@ export class MapperService {
         } else if (data.rank === 'A') {
             participant.eventRole = 'ASPI';
         }
-        console.log("LOGGING THE PARTICIPANT 123123");
-        console.log(participant);
         return participant;
     }
 }

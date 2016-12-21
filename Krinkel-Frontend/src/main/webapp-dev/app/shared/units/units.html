@@ -14,9 +14,13 @@
     }
 </style>
 
-<a class="btn" ng-click="$ctrl.goToPrevious($ctrl.verbond)" ng-if="$ctrl.unitLevel">
+<a class="btn" ng-click="$ctrl.goToPrevious($ctrl.verbondStamNummer)" ng-if="$ctrl.unitLevel">
     <i class="material-icons left">chevron_left</i>
     Terug
+</a>
+
+<a class="btn" href="/verbonden">
+    Verbonden
 </a>
 
 <a class="btn" ng-click="$ctrl.switchDetails('participants')" ng-if="$ctrl.userDetails">
@@ -30,7 +34,6 @@
 <h2 ng-if="$ctrl.participantDetails">Deelnemers</h2>
 <h2 ng-if="$ctrl.volunteerDetails">Medewerkers</h2>
 
-
 <table ng-if="!$ctrl.userDetails">
     <thead>
     <tr>
@@ -41,17 +44,17 @@
     </thead>
 
     <tbody>
-    <tr ng-repeat="verbond in $ctrl.verbonden track by $index" ng-click="$ctrl.openExtraInfo(verbond)">
+    <tr ng-repeat="verbondStamNummer in $ctrl.verbonden track by $index" ng-click="$ctrl.openExtraInfo(verbondStamNummer)">
         <td>
-            {{verbond.naam}}
+            {{verbondStamNummer.name}}
         </td>
         <td>
-            {{verbond.aantal_ingeschreven_deelnemers}}
+            {{verbondStamNummer.aantal_ingeschreven_deelnemers}}
         </td>
         <td>
-            {{verbond.aantal_ingeschreven_vrijwilligers}}
+            {{verbondStamNummer.aantal_ingeschreven_vrijwilligers}}
             <i class="material-icons right icon-green"
-               ng-if="verbond.stamnummer.endsWith('00') || $ctrl.AuthService.getUserRole() === 'ADMIN'">send</i>
+               ng-if="verbondStamNummer.stamnummer.endsWith('00') || $ctrl.AuthService.getUserRole() === 'ADMIN'">send</i>
         </td>
     </tr>
     </tbody>

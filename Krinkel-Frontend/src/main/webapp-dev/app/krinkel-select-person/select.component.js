@@ -14,7 +14,8 @@ class KrinkelSelectController {
         this.SelectService.setSelectedFlag(false);
         this.AuthService.getUserDetails().then((resp) => {
             this.KrinkelService.getColleagues(resp.stamnummer).then((resp) => {
-                resp.forEach(p => this.colleagues.push(JSON.parse(p)));
+                //resp.forEach(p => this.colleagues.push(JSON.parse(p)));
+                resp.forEach(p => this.colleagues.push(p));
                 this.isLoading = false;
             });
 
@@ -24,7 +25,6 @@ class KrinkelSelectController {
     }
 
     selectPerson(colleague){
-        console.log(colleague);
         this.SelectService.setColleague(colleague);
         this.$location.path("/add-to-basket");
     }

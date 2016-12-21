@@ -1,6 +1,7 @@
 package com.realdolmen.chiro.repository;
 
 import com.realdolmen.chiro.domain.RegistrationParticipant;
+import com.realdolmen.chiro.domain.Status;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -59,4 +60,6 @@ public interface RegistrationParticipantRepository extends JpaRepository<Registr
             "r.eventRole = 'ASPI'")
     List<RegistrationParticipant> findAllAspis();
 
+    @Query(value = "SELECT r.status FROM  RegistrationParticipant r WHERE r.adNumber = :adNumber")
+    Status getPaymentStatusByadNumber(@Param("adNumber") String adNumber);
 }

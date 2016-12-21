@@ -1,6 +1,7 @@
 package com.realdolmen.chiro.controller;
 
 import com.realdolmen.chiro.domain.RegistrationParticipant;
+import com.realdolmen.chiro.domain.units.ChiroContact;
 import com.realdolmen.chiro.exception.NoContactFoundException;
 import com.realdolmen.chiro.service.ChiroContactService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,43 +50,15 @@ public class ChiroContactController {
         }
     }
 
-    @ResponseStatus(value=HttpStatus.NOT_FOUND,reason="Er bestaat geen persoon met deze adNummer")
-    public class NoContactFoundExcep extends RuntimeException {
-        private static final long serialVersionUID = -3712981290802922344L;
-        private String message;
-
-        public String getMessage() {
-            return message;
-        }
-
-        public void setMessage(String message) {
-            this.message = message;
-        }
-
-        public NoContactFoundExcep(String message) {
-            super("Er bestaat geen persoon met deze adNummer");
-            this.message=message;
-            System.out.println("Controller class throw error");
-        }
-    }
-/*
-    @ExceptionHandler(NoContactFoundExcep.class)
-      public ModelAndView handleNoContactFoundExcep(NoContactFoundExcep ex)
-    {
-        System.out.println("Called exception handler");
-        ModelAndView model = new ModelAndView("error");
-        model.addObject("exception",ex);
-        return model;
-    }
-*/
     @RequestMapping("/api/participant/{adNumber}")
-    public@ResponseBody RegistrationParticipant getParticipant(@PathVariable Integer adNumber) {
+    public@ResponseBody
+    ChiroContact getParticipant(@PathVariable Integer adNumber) {
         try {
-            return chiroContactService.getRegistrationParticipant(adNumber);
+            return chiroContactService.getChiroContact(adNumber);
         } catch (URISyntaxException e) {
             throw new InvalidAdNumber();
-        } catch( NoContactFoundException e){
-            throw new NoContactFoundExcep(e.getMessage());
+        } catch (IOException e) {
+            return null;
         }
     }
 

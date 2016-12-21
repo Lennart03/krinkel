@@ -44,7 +44,7 @@
                         <argument>run</argument>
                         <argument>build</argument>
                     </arguments>
-                    <workingDirectory>./src/main/webapp-dev</workingDirectory>
+                    <workingDirectory>./src/main/webapp-dev/</workingDirectory>
                 </configuration>
             </plugin>
             <plugin>

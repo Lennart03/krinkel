@@ -1,14 +1,14 @@
 package com.realdolmen.chiro.service;
 
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.realdolmen.chiro.component.CASCurrentlyLoggedInUserComponent;
+import com.realdolmen.chiro.component.RegistrationBasketComponent;
 import com.realdolmen.chiro.domain.RegistrationParticipant;
 import com.realdolmen.chiro.domain.SecurityRole;
 import com.realdolmen.chiro.domain.Status;
 import com.realdolmen.chiro.domain.User;
 import com.realdolmen.chiro.domain.vo.RolesAndUpperClasses;
 import com.realdolmen.chiro.domain.vo.StamNumbersRolesVO;
+import com.realdolmen.chiro.dto.ColleagueDTO;
 import com.realdolmen.chiro.repository.RegistrationParticipantRepository;
 import com.realdolmen.chiro.util.StamNumberTrimmer;
 import org.slf4j.Logger;
@@ -21,30 +21,28 @@ import org.springframework.stereotype.Service;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.net.URISyntaxException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
+import java.util.stream.Collectors;
 
 @Service("userService")
 @Profile("!test")
 public class UserService {
 
+    private final Logger logger = LoggerFactory.getLogger(this.getClass());
     @Autowired
     private RegistrationParticipantRepository registrationParticipantRepository;
-
     @Autowired
     private ChiroColleagueService chiroColleagueService;
-
     @Autowired
     private ChiroPloegService chiroPloegService;
-
     @Autowired
     private CASCurrentlyLoggedInUserComponent CASCurrentlyLoggedInUserComponent;
-
     @Autowired
     private StamNumberTrimmer stamNumberTrimmer;
-
-    private final Logger logger = LoggerFactory.getLogger(this.getClass());
+    @Autowired
+    private RegistrationBasketComponent registrationBasketComponent;
 
     /**
      * get a participant or volunteer from our DB
@@ -84,7 +82,13 @@ public class UserService {
      * @return current user
      */
     public User getCurrentUser() {
-        return CASCurrentlyLoggedInUserComponent.getCurrentUser();
+        //workaround for updating users' payment status because session data isn't ever updated. This is a UX improvement.
+        User currentUser = CASCurrentlyLoggedInUserComponent.getCurrentUser();
+        if(currentUser == null) return null;
+        Status paymentStatus = registrationParticipantRepository.getPaymentStatusByadNumber(currentUser.getAdNumber());
+        if(paymentStatus != null && (paymentStatus == Status.PAID || paymentStatus == Status.CONFIRMED)) currentUser.setHasPaid(true);
+        else currentUser.setHasPaid(false);
+        return currentUser;
     }
 
     /**
@@ -127,40 +131,23 @@ public class UserService {
      * @throws URISyntaxException
      */
     @PreAuthorize("@UserServiceSecurity.hasPermissionToGetColleagues()")
-    public List<String> getColleagues(int adNumber) throws URISyntaxException {
-        List<String> listOfAvailableColleagues = new ArrayList<>();
+    public List<ColleagueDTO> getAvailableColleagues(int adNumber) throws URISyntaxException {
 
-        String body = chiroColleagueService.getColleagues(adNumber);
+        List<ColleagueDTO> colleagues = chiroColleagueService.getColleagues(adNumber);
+        List<ColleagueDTO> filteredColls = colleagues.stream()
+                .filter(Objects::nonNull)
+                .filter(c -> !registrationBasketComponent.getUsersInBasket().stream().anyMatch(rp -> rp.getAdNumber().equals(c.getAdNumber())))
+                .filter(c -> {
+                    RegistrationParticipant r = getRegistrationParticipant(c.getAdNumber());
+                    if (r == null) return true;
+                    return r.getStatus() != Status.PAID
+                            && r.getStatus() != Status.CONFIRMED
+                            && r.getStatus() != Status.CANCELLED
+                            && r.getStatus() != Status.TO_BE_PAID;
+                })
+                .collect(Collectors.toList());
 
-        ObjectMapper mapper = new ObjectMapper();
-
-
-        try {
-            JsonNode jsonNode = mapper.readTree(body);
-            JsonNode values = jsonNode.get("values");
-
-
-            values.forEach(v -> {
-                RegistrationParticipant participant = getRegistrationParticipant(v.get("adnr").asText());
-
-                if (participant != null) {
-                    if (participant.getStatus() == Status.PAID
-                            || participant.getStatus() == Status.CONFIRMED
-                            || participant.getStatus() == Status.CANCELLED ) {
-                        return;
-                    }
-                }
-
-                listOfAvailableColleagues.add(v.toString());
-            });
-
-        } catch (IOException e) {
-            // Chiro API borked..
-            logger.error("Chiro API probably broken again.");
-        }
-
-
-        return listOfAvailableColleagues;
+        return filteredColls;
     }
 
     public StamNumbersRolesVO getAllStamnumbersRolesAndUpperUnits(String adNumber) {

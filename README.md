@@ -1,6 +1,5 @@
 # Krinkel
-[![Build Status](https://travis-ci.org/Nawsen/Krinkel.svg?branch=master)](https://travis-ci.org/Nawsen/Krinkel)
-[![Coverage Status](https://coveralls.io/repos/github/Nawsen/Krinkel/badge.svg)](https://coveralls.io/github/Nawsen/Krinkel)
+[![Build Status](https://travis-ci.com/Bumbolt/krinkel.svg?token=Zeuk5x1ZDC7EQTmDtyaK&branch=master)](https://travis-ci.com/Bumbolt/krinkel)
 
 ## Module dependencies
 ![alt tag](http://i.imgur.com/Pj9z23V.png)
@@ -84,11 +83,11 @@ Only builds one of the submodules, not everything:
 | Method   | URL                                           | Description
 | -------- |:---------------------------------------------:|:---------------------------
 | GET      | $HOSTNAME:$PORT/api/units                           | Get alle Verbonden
-| GET      | $HOSTNAME:$PORT/api/units/{stam}                    | Get alle Gewest/Groepen by stamNumber
-| GET      | $HOSTNAME:$PORT/api/units/{stamNumber}/participants | Get alle participants by stamNumber groep
-| GET      | $HOSTNAME:$PORT/api/units/{stamNumber}/volunteers   | Get alle volunteers by stamNumber groep
+| GET      | $HOSTNAME:$PORT/api/units/{stamNummer}                    | Get alle Gewest/Groepen by stamNummer
+| GET      | $HOSTNAME:$PORT/api/units/{stamNummer}/participants | Get alle participants by stamNummer groep
+| GET      | $HOSTNAME:$PORT/api/units/{stamNummer}/volunteers   | Get alle volunteers by stamNummer groep
 
-## /api/units/{stam}
+## /api/units/{stamNummer}
 Should return the following info:
 
     {
