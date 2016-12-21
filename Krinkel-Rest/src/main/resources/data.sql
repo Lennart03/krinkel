@@ -3,10 +3,13 @@ INSERT INTO admins VALUES (152504, 'blyweert.roel@gmail.com', 'Roel', 'Blyweert'
 INSERT INTO admins VALUES (109318, 'tom@horre.com', 'Tom', 'Horre');
 
 -- TODO these records need to be removed because these are the Realdolmen developers
-INSERT INTO admins VALUES (396943, 'lennart.vandamme@realdolmen.com', 'Lennart', 'Van Damme');
+-- Lennart for testing: leider bij chiro dolfijn
+-- INSERT INTO admins VALUES (396943, 'lennart.vandamme@realdolmen.com', 'Lennart', 'Van Damme');
 INSERT INTO admins VALUES (396949, 'wesley.vanmalcot@realdolmen.com', 'Wesley', 'Van Malcot');
 INSERT INTO admins VALUES (396945, 'nicky.fasoel@realdolmen.com', 'Nicky', 'Fasoel');
+-- Melvin for testing: groepsleiding verbond Mechelen
 -- INSERT INTO admins VALUES (396944, 'melvin.hulsmans@realdolmen.com', 'Melvin', 'Hulsmans');
+-- Shenno for testing: groepsleiding van gewest Zip
 -- INSERT INTO admins VALUES (396946, 'shenno.willaert@realdolmen.com', 'Shenno', 'Willaert');
 INSERT INTO admins VALUES (396947, 'thomas.simons@realdolmen.com', 'Thomas', 'Simons');
 INSERT INTO admins VALUES (396948, 'thomas.vandevyvere@realdolmen.com', 'Thomas', 'Vandevyvere');
