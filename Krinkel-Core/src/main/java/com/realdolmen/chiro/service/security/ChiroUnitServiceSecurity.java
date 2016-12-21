@@ -35,7 +35,6 @@ public class ChiroUnitServiceSecurity {
         //role only gets set when admin but you never know
         //admin may see all verbonden
         if (currentUser.getRole().equals(SecurityRole.ADMIN)) {
-            System.err.println("HasPermisionGets in admin");
             return true;
         } else if (rolesAndUpperClassesByStam.size() == 1 && currentUserStamNumber.startsWith("NAT")){
             return true;
