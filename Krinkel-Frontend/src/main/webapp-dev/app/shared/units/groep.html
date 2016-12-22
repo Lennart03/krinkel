@@ -127,7 +127,8 @@
         <th ng-if="$ctrl.AuthService.getUserRole() === 'ADMIN'" data-field="medicalRemarks">Medische info</th>
         <th data-field="function">Functie</th>
         <th data-field="campground">Kampgrond</th>
-        <th data-field="data">Wachten</th>
+        <th data-field="voorwacht">Voorwacht</th>
+        <th data-field="nawacht">Nawacht</th>
         <th ng-if="$ctrl.AuthService.getUserRole() === 'ADMIN'" style="min-width: 110px;">Status</th>
         <th ng-if="$ctrl.AuthService.getUserRole() === 'ADMIN'"><i class="material-icons right icon-green">delete</i></th>
     </tr>
@@ -157,6 +158,9 @@
         </td>
         <td>
             {{$ctrl.getDatesListFromList(volunteer.preCampList)}}
+        </td>
+        <td>
+            {{$ctrl.getDatesListFromList(volunteer.postCampList)}}
         </td>
         <td ng-if="$ctrl.AuthService.getUserRole() === 'ADMIN'" style="min-width: 110px;">
             <select ng-model="volunteer.status" ng-init="volunteer.status" ng-options="item.value as item.label for item in $ctrl.statusses"  ng-change="$ctrl.saveData(volunteer.id, volunteer.status)">
