@@ -1,18 +1,29 @@
 class KrinkelGraphController {
     constructor(KrinkelService , $filter) {
+        this.$filter=$filter;
+        var month = $filter('date')(Date.now(), "MM");
+        var year = $filter('date')(Date.now(), "yyyy");
+        var day = $filter('date')(Date.now(), "dd");
+        this.startDate = new Date(year,month,day);
+        month= month-1;
+        this.endDate = new Date(year,month,day);
+        this.endDate = this.formatDate(this.endDate);
+        this.startDate = new Date(year,month-1,day);
+        this.startDate = this.formatDate(this.startDate);
+        console.log('startDate ' + this.startDate);
+        console.log('endDate ' + this.endDate);
         this.KrinkelService = KrinkelService;
         this.getDataForSunBurst();
         this.getDataForStatus();
         this.getDataForLogin();
-        this.$filter=$filter;
-        this.endDate = $filter('date')(Date.now(), "dd/MM/yyyy");
-        this.startDate = this.endDate;
-        var d = new Date();
-        d= this.endDate
-        this.startDate.setMonth(this.endDate.getMonth()-1);
-        console.log('endDate ' + this.endDate);
-        console.log('startDate ' + this.startDate);
+    }
 
+    formatDate (inDate)
+    {   console.log('inDate ' + inDate);
+        var outDate =new Date();
+        outDate= this.$filter('date')(inDate,"dd/MM/yyyy");
+        console.log('outdate = ' +outDate);
+        return outDate;
     }
 
     getDataForSunBurst() {
@@ -72,7 +83,7 @@ class KrinkelGraphController {
 
 
     getDataForLogin() {
-        this.KrinkelService.getGraphLoginInfo().then((results) => {
+        this.KrinkelService.getGraphLoginInfo(this.startDate,this.endDate).then((results) => {
             this.lineData = this.mapServerJSONToChartJSON(results);
         });
     }
@@ -129,22 +140,22 @@ class KrinkelGraphController {
             chart: {
                 rotateLabels: 90,
                 type: 'multiBarChart',
-                height: 450,
+                height: 550,
                 margin: {
                     top: 20,
                     right: 20,
-                    bottom: 30,
+                    bottom: 60,
                     left: 40
                 },
                 x: function (d) {
                     if (d != undefined) {
-                        console.log("d[0] = " +d[0]);
+                        console.log('x '+ d[0]);
                         return d[0];
                     }
                 },
                 y: function (d) {
                     if (d != undefined) {
-                        console.log("d[1] = " +d[1]);
+                        console.log('y '+ d[1]);
                         return d[1];
                     }
                 },
@@ -155,6 +166,7 @@ class KrinkelGraphController {
                 xAxis: {
                     showMaxMin: false,
                     tickFormat: function (d) {
+                        console.log('xAxis' + d3.time.format('%x')(new Date(d)));
                         return d3.time.format('%x')(new Date(d))
                     }
                 },
@@ -203,7 +215,7 @@ class KrinkelGraphController {
             }
         };
         this.barData = [];
-        console.log(this.lineOptions.values());
+
     }
 }
 

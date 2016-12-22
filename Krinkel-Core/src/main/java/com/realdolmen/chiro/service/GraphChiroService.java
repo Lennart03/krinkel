@@ -158,20 +158,25 @@ public class GraphChiroService {
                     .map(date->frmt.format(date))
                     .collect(Collectors.toList());
 
-
         allLogs.parallelStream().forEach(log -> mapLoginLogs(log, uniqueLoginsPerVerbond));
 
         uniqueLoginsPerVerbond.forEach((key, value) -> {
             uniqueLoginsPerVerbond.put(key, fillMapWithZeroValuesOnDaysWhereThereAreNoLogins(value, distinctStamps));
         });
 
+
+        for(Map.Entry<Verbond, SortedMap<String, Integer>> entry : uniqueLoginsPerVerbond.entrySet())
+        {
+            System.out.println("key "+entry.getKey());
+            System.out.println("value "+entry.getValue());
+        }
         return uniqueLoginsPerVerbond;
     }
 
     private void mapLoginLogs(LoginLog log, SortedMap<Verbond, SortedMap<String, Integer>> treeMap) {
         Verbond verbondFromStamNumber = Verbond.getVerbondFromStamNumber(log.getStamNumber());
-
-        SortedMap<String, Integer> dateIntegerSortedMap = fillMapWithDateToLoginCount(log.getStamp().toString(), treeMap.get(verbondFromStamNumber));
+        SimpleDateFormat frmt = new SimpleDateFormat("dd/MM/yyyy");
+        SortedMap<String, Integer> dateIntegerSortedMap = fillMapWithDateToLoginCount(frmt.format(log.getStamp()), treeMap.get(verbondFromStamNumber));
 
         treeMap.put(verbondFromStamNumber, dateIntegerSortedMap);
     }
