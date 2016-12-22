@@ -50,11 +50,11 @@ public class VerbondenService {
     @PostFilter("@ChiroUnitServiceSecurity.hasPermissionToSeeUnits(filterObject)")
     public List<ChiroUnit> getGewesten(String verbondStamNummer){
 //        System.err.println("Hi from getGewesten");
-        // first untrim the verbondStamNummer
-        verbondStamNummer = stamNumberTrimmer.untrim(verbondStamNummer);
+        // first get the untrimmed verbondStamNummer for searching the DB
+        String unTimmedverbondStamNummer = stamNumberTrimmer.untrim(verbondStamNummer);
 
         // Get the gewesten: the name + stamNummer
-        List<ChiroUnit> gewesten = chiroUnitRepository.findAllGewestenWhereVerbondStamNummerIs(verbondStamNummer);
+        List<ChiroUnit> gewesten = chiroUnitRepository.findAllGewestenWhereVerbondStamNummerIs(unTimmedverbondStamNummer);
         // Set the participants and volunteers count
         for (ChiroUnit gewest : gewesten) {
 //            System.err.println("Gewest stam nummer in getGewesten(): " + gewest.getStamNummer());
@@ -78,10 +78,10 @@ public class VerbondenService {
     @PostFilter("@ChiroUnitServiceSecurity.hasPermissionToSeeUnits(filterObject)")
     public List<ChiroUnit> getGroepen(String gewestStamNummer){
 //        System.err.println("Hi from getGroepen");
-        // first untrim the verbondStamNummer
-        gewestStamNummer = stamNumberTrimmer.untrim(gewestStamNummer);
+        // first get the untrimed verbondStamNummer for searching inside the DB
+        String untrimmedGewestStamNummer = stamNumberTrimmer.untrim(gewestStamNummer);
         // Get the gewesten: the name + stamNummer
-        List<ChiroUnit> groepen = chiroUnitRepository.findAllGroepenWhereGewestStamNummerIs(gewestStamNummer);
+        List<ChiroUnit> groepen = chiroUnitRepository.findAllGroepenWhereGewestStamNummerIs(untrimmedGewestStamNummer);
         // Set the participants and volunteers count
         for (ChiroUnit groep : groepen) {
             int countAllParticipants = chiroUnitRepository.countParticipantsByGroep(groep.getStamNummer());
