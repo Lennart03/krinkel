@@ -4,7 +4,7 @@
 
 <spinner ng-show="$ctrl.isLoading"></spinner>
 
-<div class="collection" ng-show="!$ctrl.isLoading">
+<div class="collection">
     <a ng-click="$ctrl.selectPerson(colleague)"
        ng-repeat="admin in $ctrl.admins"
        class="collection-item">
@@ -15,7 +15,6 @@
         {{admin.firstname}} {{admin.lastname}}<br/>
         adnummer: {{admin.adNumber}}
     </a>
-
 </div>
 
 <p class="flow-text"><i class="material-icons">info_outline</i>
@@ -32,10 +31,9 @@
         </div>
     </div>
     <div class="row">
-        <button type="submit" class="btn" ng-disabled="!createAdmin.$valid">
+        <button type="submit" class="btn" ng-disabled="!createAdmin.$valid" ng-show="!$ctrl.isLoading">
             Maak admin
             <i class="material-icons right">send</i>
         </button>
     </div>
 </form>
-
