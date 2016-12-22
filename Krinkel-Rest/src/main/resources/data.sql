@@ -4,7 +4,7 @@ INSERT INTO admins VALUES (109318, 'tom@horre.com', 'Tom', 'Horre');
 
 -- TODO these records need to be removed because these are the Realdolmen developers
 -- Lennart for testing: leider bij chiro dolfijn
--- INSERT INTO admins VALUES (396943, 'lennart.vandamme@realdolmen.com', 'Lennart', 'Van Damme');
+INSERT INTO admins VALUES (396943, 'lennart.vandamme@realdolmen.com', 'Lennart', 'Van Damme');
 INSERT INTO admins VALUES (396949, 'wesley.vanmalcot@realdolmen.com', 'Wesley', 'Van Malcot');
 INSERT INTO admins VALUES (396945, 'nicky.fasoel@realdolmen.com', 'Nicky', 'Fasoel');
 -- Melvin for testing: groepsleiding verbond Mechelen
