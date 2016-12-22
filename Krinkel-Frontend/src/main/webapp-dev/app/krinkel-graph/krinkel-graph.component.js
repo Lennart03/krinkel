@@ -18,6 +18,7 @@ class KrinkelGraphController {
         this.getDataForLogin();
     }
 
+
     formatDate (inDate)
     {
         var outDate =new Date();
@@ -36,11 +37,13 @@ class KrinkelGraphController {
     changeEndDate()
     {
         console.log("changeEndDate called");
+    //    this.KrinkelService.getDataForLogin(startDate, endDate);
     }
 
     changeStartDate()
     {
         console.log("changeStartDate called");
+     //   this.KrinkelService.getDataForLogin(startDate, endDate);
     }
 
     getDataForStatus() {
@@ -75,6 +78,16 @@ class KrinkelGraphController {
                     key: "Onbetaald medewerker",
                     y: results.volunteersNotPaid,
                     color: "#b71c1c"
+                },
+                {
+                    key: "Geannuleerd deelnemer",
+                    y: results.participantsCancelled,
+                    color: "#ffa500"
+                },
+                {
+                    key: "Geannuleerd medewerker",
+                    y: results.volunteersCancelled,
+                    color: "#ff8c00"
                 }
             ];
         });
@@ -84,6 +97,7 @@ class KrinkelGraphController {
 
     getDataForLogin() {
         this.KrinkelService.getGraphLoginInfo(this.startDate,this.endDate).then((results) => {
+
             this.lineData = this.mapServerJSONToChartJSON(results);
         });
     }
@@ -144,7 +158,8 @@ class KrinkelGraphController {
                 margin: {
                     top: 20,
                     right: 20,
-                    bottom: 60,
+
+                    bottom: 60, // to show the legend
                     left: 40
                 },
                 x: function (d) {
