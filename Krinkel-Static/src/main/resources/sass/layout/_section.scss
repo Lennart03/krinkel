@@ -2,11 +2,17 @@ section {}
 
 .landingPageMainImage {
   @extend %mainImage;
-  height: 100%;
+  height: 100vh;
   background-repeat: no-repeat;
   background-position: 0% 20%;
   background-image: url("../img/layout/BRU_9436.jpg");
   background-size: cover;
+  @media only screen and(max-width: 1200px) {
+    background-image: url("../img/layout/BRU_9436_med.jpg");
+  }
+  @media only screen and(max-width: 800px) {
+    background-image: url("../img/layout/BRU_9436_small.jpg");
+  }
 }
 
 .landingPageMainImageFilter {
@@ -77,28 +83,25 @@ section {}
 
 .landingPageCarouselWrapper {
   position: relative;
-  max-height: 100%;
-  height: 750px !important;
+  height: 100vh;
   border-top: 1px solid $hoofdkleur;
-  .indicators {
-    border-bottom: 1px solid $hoofdkleur;
-  }
   .carousel {
-    height: 100%;
+    height: 100vh !important;
     position: relative;
+    border-bottom: 1px solid $hoofdkleur;
     .carousel-item {
-       .gal2, .gal3, .gal4, .gal5, .gal7, .gal8 {
-         height: 100%;
-         background: no-repeat center center;
-         background-size: cover;
+      .gal2, .gal3, .gal4, .gal5, .gal7, .gal8 {
+        height: 100vh;
+        background: no-repeat center center;
+        background-size: cover;
       }
       .gal1 {
-        height: 100%;
+        height: 100vh;
         background: no-repeat 50% 25%;
         background-size: cover;
       }
       .gal6 {
-        height: 100%;
+        height: 100vh;
         background: no-repeat 100% 100%;
         background-size: cover;
       }
@@ -214,6 +217,12 @@ section {}
   @extend %mainImage;
   background: url("../img/layout/Onthaal1.jpg") no-repeat 50% 30%;
   background-size: cover;
+  @media only screen and(max-width: 1200px) {
+    background-image: url("../img/layout/Onthaal1_med.jpg");
+  }
+  @media only screen and(max-width: 800px) {
+    background-image: url("../img/layout/Onthaal1_small.jpg");
+  }
 }
 
 .aboutPageHistoriekWrapper {
@@ -332,6 +341,12 @@ section {}
   @extend %mainImage;
   background: url("../img/layout/faq.jpg") no-repeat 50% 25%;
   background-size: cover;
+  @media only screen and(max-width: 1200px) {
+    background-image: url("../img/layout/faq_med.jpg");
+  }
+  @media only screen and(max-width: 800px) {
+    background-image: url("../img/layout/faq_small.jpg");
+  }
 }
 
 .row .col {
@@ -399,6 +414,12 @@ section {}
   @media only screen and (min-width: 1930px) {
     background-position: 50% 30% !important;
   }
+  @media only screen and(max-width: 1200px) {
+    background-image: url("../img/layout/contact_med.jpg");
+  }
+  @media only screen and(max-width: 800px) {
+    background-image: url("../img/layout/contact_small.jpg");
+  }
 }
 
 .contactPageForm {
@@ -427,12 +448,24 @@ section {}
   @extend %mainImage;
   background: url("../img/layout/JVB_Krinkel2013_63.jpg") no-repeat 50% 25%;
   background-size: cover;
+  @media only screen and(max-width: 1200px) {
+    background-image: url("../img/layout/JVB_Krinkel2013_63_med.jpg");
+  }
+  @media only screen and(max-width: 800px) {
+    background-image: url("../img/layout/JVB_Krinkel2013_63_small.jpg");
+  }
 }
 
 .nieuwsPageMainImage {
   @extend %mainImage;
   background: url("../img/layout/JVB_Krinkel2013_61.jpg") no-repeat 50% 25%;
   background-size: cover;
+  @media only screen and(max-width: 1200px) {
+    background-image: url("../img/layout/JVB_Krinkel2013_61_med.jpg");
+  }
+  @media only screen and(max-width: 800px) {
+    background-image: url("../img/layout/JVB_Krinkel2013_61_small.jpg");
+  }
 }
 
 .nieuwsPageWrapper {
@@ -485,33 +518,41 @@ section {}
   }
 }
 
-#carrNext{
-  position: absolute;
-  color:white;
-  right:1%;
-  top:calc(50% - 32px);
-  width: 70px;
+#carrNext, #carrPrev {
+  display: none;
 }
-#carrNext i{
-  font-size: 64px;
-}
-#carrNext:hover{
-  color:$lightGreen;
-  cursor: pointer;
-}
-#carrPrev{
-  position: absolute;
-  color:white;
-  left:1%;
-  top:calc(50% - 32px);
-  width: 70px;
-}
-#carrPrev i {
-  font-size: 64px;
-  width: 100%;
-  overflow: hidden;
-}
-#carrPrev:hover{
-  color:$lightGreen;
-  cursor: pointer;
+
+@media only screen and (min-width: 500px) {
+  #carrNext{
+    position: absolute;
+    color:white;
+    right:1%;
+    top:calc(50% - 32px);
+    width: 70px;
+    display: inline;
+  }
+  #carrNext i{
+    font-size: 64px;
+  }
+  #carrNext:hover{
+    color:$lightGreen;
+    cursor: pointer;
+  }
+  #carrPrev{
+    position: absolute;
+    color:white;
+    left:1%;
+    top:calc(50% - 32px);
+    width: 70px;
+    display: inline;
+  }
+  #carrPrev i {
+    font-size: 64px;
+    width: 100%;
+    overflow: hidden;
+  }
+  #carrPrev:hover{
+    color:$lightGreen;
+    cursor: pointer;
+  }
 }

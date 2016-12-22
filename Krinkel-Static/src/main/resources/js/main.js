@@ -1,19 +1,19 @@
 $( document ).ready(function(){
-    let carousel = $('.carousel');
+    var carousel = $('.carousel');
     $(".button-collapse").sideNav();
     carousel.carousel();
     $(".dropdown-button1").dropdown( { hover: false } );
     checkBrowser();
     //carousel buttons
-    $('#carrNext').on('click', ()=>{
+    $('#carrNext').on('click', function(){
         carousel.carousel('next');
 
     });
-    $('#carrPrev').on('click', ()=>{
+    $('#carrPrev').on('click', function(){
         carousel.carousel('prev');
     });
-    $('body').keydown((e)=>{
-        let scrollPos = $(this).scrollTop();
+    $('body').keydown(function(e){
+        var scrollPos = $(this).scrollTop();
         if(!(scrollPos > 800 && scrollPos < 2500)) return;
         switch (e.keyCode){
             case 37:
@@ -26,26 +26,26 @@ $( document ).ready(function(){
                 break;
         }
     });
-    $('#sendBtn').on("click", ()=>{
+    $('#sendBtn').on("click", function (){
         window.location = "mailto:info@krinkel.be?subject="+"Vraagje over krinkel: "+$('#subject').val()+"&body="+"Gesteld door: "+$('#name').val()
             +"%0D%0AReturn email: " + $('#email').val() + "%0D%0AVraag:%0D%0A"+$("#messageArea").val();
     });
 });
 
 function checkBrowser() {
-    let isChromium = window.chrome,
+    var isChromium = window.chrome,
         winNav = window.navigator,
         vendorName = winNav.vendor,
         isOpera = winNav.userAgent.indexOf("OPR") > -1,
         isIEedge = winNav.userAgent.indexOf("Edge") > -1,
         isIOSChrome = winNav.userAgent.match("CriOS");
 
-    let parallaxHome = document.getElementById('parallaxHome');
-    let parallaxOver = document.getElementById('parallaxOver');
-    let parallaxFaq = document.getElementById('parallaxFaq');
-    let parallaxPraktisch = document.getElementById('parallaxPraktisch');
-    let parallaxNieuws = document.getElementById('parallaxNieuws');
-    let browser = navigator.userAgent.toLowerCase();
+    var parallaxHome = document.getElementById('parallaxHome');
+    var parallaxOver = document.getElementById('parallaxOver');
+    var parallaxFaq = document.getElementById('parallaxFaq');
+    var parallaxPraktisch = document.getElementById('parallaxPraktisch');
+    var parallaxNieuws = document.getElementById('parallaxNieuws');
+    var browser = navigator.userAgent.toLowerCase();
 
     if ( isChrome() || browser.indexOf('firefox') > -1 ) {
         // is Google Chrome

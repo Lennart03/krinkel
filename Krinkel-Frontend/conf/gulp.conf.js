@@ -11,7 +11,19 @@
 const path = require('path');
 const gutil = require('gulp-util');
 
+/**
+ * storing environment variable in 'gulp' command
+ */
+if (gutil.env.production) {
+  exports.environment = 'production';
+}
+else if(gutil.env.testing){
+   exports.environment = 'testing';
+}
+
+
 exports.ngModule = 'app';
+
 
 /**
  *  The main paths of your project handle these with care

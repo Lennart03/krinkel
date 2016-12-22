@@ -1,8 +1,8 @@
 package com.realdolmen.chiro.controller;
 
 import com.realdolmen.chiro.domain.RegistrationParticipant;
+import com.realdolmen.chiro.dto.EmailHolder;
 import com.realdolmen.chiro.service.BasketService;
-import com.realdolmen.chiro.service.dto.EmailHolder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;

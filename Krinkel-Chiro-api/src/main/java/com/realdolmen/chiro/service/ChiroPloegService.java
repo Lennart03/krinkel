@@ -72,7 +72,7 @@ public class ChiroPloegService {
 
     public Map<String, String> getStamNumbers(String adNumber) {
         //TODO use adNumber variable and not hardcoded 308986
-        String url = chiroUrl + "?key=" + chiroKey + "&api_key=" + apiKey + "&entity=Light&action=getploeg&json=%7B%22adnr%22:" + 308986 + "%7D";
+        String url = chiroUrl + "?key=" + chiroKey + "&api_key=" + apiKey + "&entity=Light&action=getploeg&json=%7B%22adnr%22:" + adNumber + "%7D";
         Map<String, String> stamNumbers = new TreeMap<>();
         try {
             URI uri = new URI(url);

@@ -105,7 +105,7 @@ blockquote {
 }
 
 html {
-  height: 100%;
+  height: auto;
 }
 
 header {
@@ -346,7 +346,7 @@ nav .dropdown-content .active {
 }
 
 body {
-  height: 100%;
+  height: auto;
   font-family: RobotoCondensed, sans-serif;
   line-height: 29px;
   font-size: 18px;
@@ -354,11 +354,23 @@ body {
 }
 
 .landingPageMainImage {
-  height: 100%;
+  height: 100vh;
   background-repeat: no-repeat;
   background-position: 0% 20%;
   background-image: url("../img/layout/BRU_9436.jpg");
   background-size: cover;
+}
+
+@media only screen and (max-width: 1200px) {
+  .landingPageMainImage {
+    background-image: url("../img/layout/BRU_9436_med.jpg");
+  }
+}
+
+@media only screen and (max-width: 800px) {
+  .landingPageMainImage {
+    background-image: url("../img/layout/BRU_9436_small.jpg");
+  }
 }
 
 .landingPageMainImageFilter {
@@ -432,34 +444,30 @@ body {
 
 .landingPageCarouselWrapper {
   position: relative;
-  max-height: 100%;
-  height: 750px !important;
+  height: 100vh;
   border-top: 1px solid #309583;
 }
 
-.landingPageCarouselWrapper .indicators {
+.landingPageCarouselWrapper .carousel {
+  height: 100vh !important;
+  position: relative;
   border-bottom: 1px solid #309583;
 }
 
-.landingPageCarouselWrapper .carousel {
-  height: 100%;
-  position: relative;
-}
-
 .landingPageCarouselWrapper .carousel .carousel-item .gal2, .landingPageCarouselWrapper .carousel .carousel-item .gal3, .landingPageCarouselWrapper .carousel .carousel-item .gal4, .landingPageCarouselWrapper .carousel .carousel-item .gal5, .landingPageCarouselWrapper .carousel .carousel-item .gal7, .landingPageCarouselWrapper .carousel .carousel-item .gal8 {
-  height: 100%;
+  height: 100vh;
   background: no-repeat center center;
   background-size: cover;
 }
 
 .landingPageCarouselWrapper .carousel .carousel-item .gal1 {
-  height: 100%;
+  height: 100vh;
   background: no-repeat 50% 25%;
   background-size: cover;
 }
 
 .landingPageCarouselWrapper .carousel .carousel-item .gal6 {
-  height: 100%;
+  height: 100vh;
   background: no-repeat 100% 100%;
   background-size: cover;
 }
@@ -469,9 +477,21 @@ body {
   background-color: #309583;
 }
 
+@media only screen and (max-width: 800px) {
+  .landingPageCarouselWrapper .carousel .carousel-item .gal1 {
+    background-image: url("../img/graphic/gallery/gal1_sm.jpg");
+  }
+}
+
 .landingPageCarouselWrapper .carousel .carousel-item .gal2 {
   background-image: url("../img/graphic/gallery/gal2.jpg");
   background-color: #309583;
+}
+
+@media only screen and (max-width: 800px) {
+  .landingPageCarouselWrapper .carousel .carousel-item .gal2 {
+    background-image: url("../img/graphic/gallery/gal2_sm.jpg");
+  }
 }
 
 .landingPageCarouselWrapper .carousel .carousel-item .gal3 {
@@ -479,9 +499,21 @@ body {
   background-color: #309583;
 }
 
+@media only screen and (max-width: 800px) {
+  .landingPageCarouselWrapper .carousel .carousel-item .gal3 {
+    background-image: url("../img/graphic/gallery/gal3_sm.jpg");
+  }
+}
+
 .landingPageCarouselWrapper .carousel .carousel-item .gal4 {
   background-image: url("../img/graphic/gallery/gal4.jpg");
   background-color: #309583;
+}
+
+@media only screen and (max-width: 800px) {
+  .landingPageCarouselWrapper .carousel .carousel-item .gal4 {
+    background-image: url("../img/graphic/gallery/gal4_sm.jpg");
+  }
 }
 
 .landingPageCarouselWrapper .carousel .carousel-item .gal5 {
@@ -489,9 +521,21 @@ body {
   background-color: #309583;
 }
 
+@media only screen and (max-width: 800px) {
+  .landingPageCarouselWrapper .carousel .carousel-item .gal5 {
+    background-image: url("../img/graphic/gallery/gal5_sm.jpg");
+  }
+}
+
 .landingPageCarouselWrapper .carousel .carousel-item .gal6 {
   background-image: url("../img/graphic/gallery/gal6.jpg");
   background-color: #309583;
+}
+
+@media only screen and (max-width: 800px) {
+  .landingPageCarouselWrapper .carousel .carousel-item .gal6 {
+    background-image: url("../img/graphic/gallery/gal6_sm.jpg");
+  }
 }
 
 .landingPageCarouselWrapper .carousel .carousel-item .gal7 {
@@ -499,9 +543,21 @@ body {
   background-color: #309583;
 }
 
+@media only screen and (max-width: 800px) {
+  .landingPageCarouselWrapper .carousel .carousel-item .gal7 {
+    background-image: url("../img/graphic/gallery/gal7_sm.jpg");
+  }
+}
+
 .landingPageCarouselWrapper .carousel .carousel-item .gal8 {
   background-image: url("../img/graphic/gallery/gal8.jpg");
   background-color: #309583;
+}
+
+@media only screen and (max-width: 800px) {
+  .landingPageCarouselWrapper .carousel .carousel-item .gal8 {
+    background-image: url("../img/graphic/gallery/gal8_sm.jpg");
+  }
 }
 
 .landingPageInfoWrapper {
@@ -635,6 +691,18 @@ body {
   background-size: cover;
 }
 
+@media only screen and (max-width: 1200px) {
+  .aboutPageMainImage {
+    background-image: url("../img/layout/Onthaal1_med.jpg");
+  }
+}
+
+@media only screen and (max-width: 800px) {
+  .aboutPageMainImage {
+    background-image: url("../img/layout/Onthaal1_small.jpg");
+  }
+}
+
 .aboutPageHistoriekWrapper {
   max-width: 800px;
   margin: 0 auto 75px;
@@ -758,6 +826,18 @@ body {
   background-size: cover;
 }
 
+@media only screen and (max-width: 1200px) {
+  .faqPageMainImage {
+    background-image: url("../img/layout/faq_med.jpg");
+  }
+}
+
+@media only screen and (max-width: 800px) {
+  .faqPageMainImage {
+    background-image: url("../img/layout/faq_small.jpg");
+  }
+}
+
 .row .col {
   padding: 0;
 }
@@ -834,6 +914,18 @@ body {
   }
 }
 
+@media only screen and (max-width: 1200px) {
+  .contactPageMainImage {
+    background-image: url("../img/layout/contact_med.jpg");
+  }
+}
+
+@media only screen and (max-width: 800px) {
+  .contactPageMainImage {
+    background-image: url("../img/layout/contact_small.jpg");
+  }
+}
+
 .contactPageForm {
   text-align: center;
   max-width: 900px;
@@ -864,9 +956,33 @@ body {
   background-size: cover;
 }
 
+@media only screen and (max-width: 1200px) {
+  .praktischPageMainImage {
+    background-image: url("../img/layout/JVB_Krinkel2013_63_med.jpg");
+  }
+}
+
+@media only screen and (max-width: 800px) {
+  .praktischPageMainImage {
+    background-image: url("../img/layout/JVB_Krinkel2013_63_small.jpg");
+  }
+}
+
 .nieuwsPageMainImage {
   background: url("../img/layout/JVB_Krinkel2013_61.jpg") no-repeat 50% 25%;
   background-size: cover;
+}
+
+@media only screen and (max-width: 1200px) {
+  .nieuwsPageMainImage {
+    background-image: url("../img/layout/JVB_Krinkel2013_61_med.jpg");
+  }
+}
+
+@media only screen and (max-width: 800px) {
+  .nieuwsPageMainImage {
+    background-image: url("../img/layout/JVB_Krinkel2013_61_small.jpg");
+  }
 }
 
 .nieuwsPageWrapper {
@@ -925,40 +1041,43 @@ body {
   }
 }
 
-#carrNext {
-  position: absolute;
-  color: white;
-  right: 1%;
-  top: calc(50% - 32px);
-  width: 70px;
+#carrNext, #carrPrev {
+  display: none;
 }
 
-#carrNext i {
-  font-size: 64px;
-}
-
-#carrNext:hover {
-  color: #a4ccbc;
-  cursor: pointer;
-}
-
-#carrPrev {
-  position: absolute;
-  color: white;
-  left: 1%;
-  top: calc(50% - 32px);
-  width: 70px;
-}
-
-#carrPrev i {
-  font-size: 64px;
-  width: 100%;
-  overflow: hidden;
-}
-
-#carrPrev:hover {
-  color: #a4ccbc;
-  cursor: pointer;
+@media only screen and (min-width: 500px) {
+  #carrNext {
+    position: absolute;
+    color: white;
+    right: 1%;
+    top: calc(50% - 32px);
+    width: 70px;
+    display: inline;
+  }
+  #carrNext i {
+    font-size: 64px;
+  }
+  #carrNext:hover {
+    color: #a4ccbc;
+    cursor: pointer;
+  }
+  #carrPrev {
+    position: absolute;
+    color: white;
+    left: 1%;
+    top: calc(50% - 32px);
+    width: 70px;
+    display: inline;
+  }
+  #carrPrev i {
+    font-size: 64px;
+    width: 100%;
+    overflow: hidden;
+  }
+  #carrPrev:hover {
+    color: #a4ccbc;
+    cursor: pointer;
+  }
 }
 
 footer {
@@ -967,6 +1086,7 @@ footer {
   color: white;
   text-align: center;
   padding: 50px;
+  padding-bottom: 75px;
 }
 
 footer a {
@@ -989,6 +1109,7 @@ footer div:first-child {
 
 footer div:last-child {
   float: right;
+  margin-bottom: 0;
 }
 
 @media only screen and (max-width: 850px) {

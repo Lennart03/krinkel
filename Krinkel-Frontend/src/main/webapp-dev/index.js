@@ -7,6 +7,7 @@ import 'angular';
 import 'd3/d3.js';
 import 'nvd3/build/nv.d3.js';
 import 'angular-nvd3/dist/angular-nvd3.js';
+import configModule from './app/env.url.config.js';
 
 
 import appModule from './app/app.module';

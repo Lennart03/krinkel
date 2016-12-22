@@ -77,7 +77,7 @@ export class MapperService {
                 return 'KLINKER_EDITORIAL';
                 break;
             case 'KOOKPLOEG':
-                return 'COOCKING';
+                return 'COOKING';
                 break;
             case 'LOGISTIEK (KAMPGROND)':
                 return 'LOGISTICS_CAMPGROUND';
@@ -241,7 +241,7 @@ export class MapperService {
             case 'KLINKER_EDITORIAL':
                 return 'Krinkelredactie';
                 break;
-            case 'COOCKING':
+            case 'COOKING':
                 return 'Kookploeg';
                 break;
             case 'LOGISTICS_CAMPGROUND':

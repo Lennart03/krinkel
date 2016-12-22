@@ -1,8 +1,8 @@
-$(document).ready(()=>{
-    $('#searchBtn').on('click', ()=>{
+$(document).ready(function (){
+    $('#searchBtn').on('click', function(){
         findInPage($('#searchBarFaq').val());
     });
-    $('#searchBarFaq').keyup((event)=>{
+    $('#searchBarFaq').keyup(function(event){
         if(event.keyCode == 13){
             $('#searchBtn').click();
         }

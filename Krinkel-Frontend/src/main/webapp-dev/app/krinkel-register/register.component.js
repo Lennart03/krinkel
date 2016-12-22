@@ -38,6 +38,7 @@ class RegisterController {
         this.newPerson.city = this.details3.vicinity;
         this.newPerson.postalCode = this.details2.name;
         this.newPerson.street = this.details.address_components[0].long_name;
+        this.newPerson.birthDate = this.newPerson.birthDate.split("-").reverse().join("-");
 
         if(this.user === "admin") {
             if (this.type === 'volunteer') {
@@ -135,7 +136,6 @@ class RegisterController {
     //todo: fix the inconsistencies betwee the name for the AD number
     prefillSelf() {
         let loggedInUser = this.AuthService.getLoggedinUser();
-        console.log(loggedInUser);
         this.prefillWithAdNumber(loggedInUser.adnummer);
     }
 
@@ -144,7 +144,6 @@ class RegisterController {
      */
     prefillMember() {
         let participant = this.RegisterOtherMemberService.getParticipant();
-        console.log(participant);
         this.prefillWithAdNumber(participant.adNumber);
     }
     $onInit() {
@@ -208,7 +207,7 @@ class RegisterController {
         perzon.city = this.details3.vicinity;
         perzon.postalCode = this.details2.name;
         perzon.street = this.details.address_components[0].long_name;
-
+        perzon.birthDate = perzon.birthDate.split("-").reverse().join("-");
         let mappedPerson = this.MapperService.mapParticipant(perzon);
         //add person to cart using service
         this.KrinkelService.addPersonToBasket(mappedPerson).then(() => {
