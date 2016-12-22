@@ -12,3 +12,4 @@ Krinkel-Rest/src/main/resources/static/
 *.xlsx
 *.xls
 
+node/
