@@ -10,7 +10,7 @@ class AdminToevoegenController {
     }
 
     init() {
-        this.loading = true;
+        this.isLoading = true;
         this.KrinkelService.getAdmins().then((resp) => {
             resp.forEach(admin => {
                 var admin = {
@@ -21,7 +21,7 @@ class AdminToevoegenController {
                 };
                 this.admins.push(admin);
             });
-            this.loading = false;
+            this.isLoading = false;
         });
 
     }
@@ -33,7 +33,7 @@ class AdminToevoegenController {
      * @param adNumber Unique identifier given by Chiro.
      */
     searchAndSaveAsAdmin(adNumber) {
-        this.loading = true;
+        this.isLoading = true;
         if (!this.isAdmin(adNumber)) {
             let response = this.KrinkelService.getContactFromChiro(adNumber).then((resp) => {
                 if((resp[0] !== undefined)){
@@ -45,14 +45,14 @@ class AdminToevoegenController {
                     };
                     this.admins.push(newAdmin);
                     this.KrinkelService.postAdmin(adNumber);
-                    this.loading = false;
+                    this.isLoading = false;
                 } else {
-                    this.loading = false;
+                    this.isLoading = false;
                     this.popup(adNumber);
                 }
             });
         } else {
-            this.loading = false;
+            this.isLoading = false;
             this.popupAlreadyAdmin();
         }
 
@@ -86,7 +86,7 @@ class AdminToevoegenController {
      * @param adNumber Unique identifier given by Chiro.
      */
     deleteAdmin(adNumber) {
-        this.loading = true;
+        this.isLoading = true;
         this.KrinkelService.deleteAdmin(adNumber);
         let newAdmins = [];
         this.admins.forEach(admin => {
@@ -95,7 +95,7 @@ class AdminToevoegenController {
             }
         });
         this.admins = newAdmins;
-        this.loading = false;
+        this.isLoading = false;
     }
 
 }

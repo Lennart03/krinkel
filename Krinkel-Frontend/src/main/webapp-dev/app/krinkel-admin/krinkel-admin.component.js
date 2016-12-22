@@ -1,12 +1,14 @@
 /*@ngInject*/
 class KrinkelAdminController {
-    constructor(KrinkelService, $location) {
+    constructor(KrinkelService, AuthService, $location) {
         this.KrinkelService = KrinkelService;
+        this.AuthService = AuthService;
         this.$location = $location;
     }
 
     $onInit() {
-
+        let currentAdnumber = this.AuthService.getLoggedinUser().adnummer;
+        this.isSuperAdmin = (currentAdnumber == 152504 || currentAdnumber == 109318 || currentAdnumber == 396943);
     }
 }
 
@@ -15,4 +17,4 @@ export var KrinkelAdminComponent = {
     controller : KrinkelAdminController
 };
 
-KrinkelAdminComponent.$inject = ['KrinkelService', '$location'];
+KrinkelAdminComponent.$inject = ['KrinkelService', 'AuthService', '$location'];

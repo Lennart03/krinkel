@@ -10,6 +10,8 @@ public class StatusChiroUnit {
     private Integer volunteersNotConfirmed = 0;
     private Integer participantsNotPaid = 0;
     private Integer volunteersNotPaid = 0;
+    private Integer participantsCancelled = 0;
+    private Integer volunteersCancelled = 0;
 
     public StatusChiroUnit() {
     }
@@ -60,6 +62,22 @@ public class StatusChiroUnit {
 
     public void setVolunteersNotPaid(Integer volunteersNotPaid) {
         this.volunteersNotPaid = volunteersNotPaid;
+    }
+
+    public Integer getParticipantsCancelled() {
+        return participantsCancelled;
+    }
+
+    public void setParticipantsCancelled(Integer participantsCancelled) {
+        this.participantsCancelled = participantsCancelled;
+    }
+
+    public Integer getVolunteersCancelled() {
+        return volunteersCancelled;
+    }
+
+    public void setVolunteersCancelled(Integer volunteersCancelled) {
+        this.volunteersCancelled = volunteersCancelled;
     }
 }
 

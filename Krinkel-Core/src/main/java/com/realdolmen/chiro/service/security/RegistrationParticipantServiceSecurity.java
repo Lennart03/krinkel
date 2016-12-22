@@ -21,14 +21,14 @@ public class RegistrationParticipantServiceSecurity {
     public boolean hasPermissionToSaveParticipant(RegistrationParticipant participant) {
         User currentUser = userService.getCurrentUser();
 
-//        return currentUser != null && (currentUser.getRole().equals(SecurityRole.ADMIN) ||
-//                chiroColleagueService.isColleague(Integer.parseInt(currentUser.getAdNumber()), Integer.parseInt(participant.getAdNumber())));
+        return currentUser != null && (currentUser.getRole().equals(SecurityRole.ADMIN) ||
+                chiroColleagueService.isColleague(Integer.parseInt(currentUser.getAdNumber()), Integer.parseInt(participant.getAdNumber())));
 
         /*
          * TODO THIS IS DUMMY, REPLACE BY LINE ABOVE
          */
-        return currentUser != null && (participant.getAdNumber().equals(currentUser.getAdNumber()) || currentUser.getRole().equals(SecurityRole.ADMIN) ||
-                chiroColleagueService.isColleague(221826, Integer.parseInt(participant.getAdNumber())));
+        //return currentUser != null && (participant.getAdNumber().equals(currentUser.getAdNumber()) || currentUser.getRole().equals(SecurityRole.ADMIN) ||
+        //        chiroColleagueService.isColleague(221826, Integer.parseInt(participant.getAdNumber())));
     }
 
 }
