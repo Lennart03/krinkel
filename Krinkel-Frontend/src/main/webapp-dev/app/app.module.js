@@ -42,12 +42,10 @@ import {GenerateGroupsComponent} from './krinkel-tools/generate-groups/generate-
 
 
 
-//TODO : make BASEURL dynamic!!!
 export default angular
-    .module('contactsApp', ['ngRoute', 'nvd3', 'ngAutocomplete'])
+    .module('contactsApp', ['ngRoute', 'nvd3', 'ngAutocomplete','ngConstants'])
     .config(appConfig)
     .constant('appVersion', 'BETA')
-    .constant('BASEURL', 'http://localhost:8080')
     .run((appVersion)=> {
         console.log(`version: ${appVersion}`);
     })
