@@ -157,7 +157,7 @@ public class MultiSafePayService {
 
         customer.put("phone", participant.getPhoneNumber());
 
-        if (participant.getEmailSubscriber() != null) {
+        if (participant.getEmailSubscriber() != null && !participant.getEmailSubscriber().trim().isEmpty()) {
             customer.put("first_name", currentUser.getFirstname());
             customer.put("last_name", currentUser.getLastname());
             customer.put("email", participant.getEmailSubscriber());

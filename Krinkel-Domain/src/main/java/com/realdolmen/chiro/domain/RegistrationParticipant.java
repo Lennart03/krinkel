@@ -74,9 +74,12 @@ public class RegistrationParticipant {
     @Enumerated(EnumType.STRING)
     private Eatinghabbit eatinghabbit;
 
+    @Size(max = 256)
     private String remarksFood;
     private boolean socialPromotion = false;
+    @Size(max = 256)
     private String medicalRemarks;
+    @Size(max = 256)
     private String remarks;
 
     @Enumerated(EnumType.STRING)
