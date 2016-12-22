@@ -76,7 +76,6 @@ public class ChiroUnitServiceSecurity {
     }
 
     public boolean hasPermissionToSeeUnits(ChiroUnit chiroUnit) {
-        System.err.println("Inside hasPermissionToSeeUnits");
         User currentUser = userService.getCurrentUser();
         if (currentUser.getRole() != null && currentUser.getRole().equals(SecurityRole.ADMIN)) {
             return true;
@@ -96,13 +95,6 @@ public class ChiroUnitServiceSecurity {
         List<SecurityRole> securityRolesWithAccesToData = new ArrayList<>();
         securityRolesWithAccesToData.add(SecurityRole.NATIONAAL);
         securityRolesWithAccesToData.add(SecurityRole.VERBOND);
-
-        System.err.println("rolesAndUpperClassesByStam in hasPermissionToSeeGewesten");
-        for (Map.Entry<String, RolesAndUpperClasses> stringRolesAndUpperClassesEntry : rolesAndUpperClassesByStam.entrySet()) {
-            System.err.println("key: " + stringRolesAndUpperClassesEntry.getKey());
-            System.err.println("value:: role:" + stringRolesAndUpperClassesEntry.getValue().getSecurityRole() +
-                    " --- stamNumberUpperUnit: " + stringRolesAndUpperClassesEntry.getValue().getStamNumberUpperUnit());
-        }
 
         if (currentUser.getRole().equals(SecurityRole.ADMIN)) {
             return true;
@@ -146,13 +138,6 @@ public class ChiroUnitServiceSecurity {
     private boolean hasPermissionToSeeGroepen(User currentUser, ChiroUnit chiroUnit) {
         //get current user and some shit he has
         Map<String, RolesAndUpperClasses> rolesAndUpperClassesByStam = currentUser.getRolesAndUpperClassesByStam();
-
-        System.err.println("rolesAndUpperClassesByStam");
-        for (Map.Entry<String, RolesAndUpperClasses> stringRolesAndUpperClassesEntry : rolesAndUpperClassesByStam.entrySet()) {
-            System.err.println("key: " + stringRolesAndUpperClassesEntry.getKey());
-            System.err.println("value:: role:" + stringRolesAndUpperClassesEntry.getValue().getSecurityRole() +
-                " --- stamNumberUpperUnit: " + stringRolesAndUpperClassesEntry.getValue().getStamNumberUpperUnit());
-        }
 
         String currentUserStamNumber = currentUser.getStamnummer();
         List<SecurityRole> securityRolesWithAccesToData = new ArrayList<>();
