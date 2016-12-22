@@ -36,15 +36,17 @@ class RegisterController {
     }
 
     registerPerson(newPerson) {
-        this.newPerson.city = this.details3.vicinity;
-        this.newPerson.postalCode = this.details2.name;
-        this.newPerson.street = this.details.address_components[0].long_name;
-        this.newPerson.birthDate = this.newPerson.birthDate.split("-").reverse().join("-");
-
+        let newPerzon = angular.copy(newPerson);
+        newPerzon.city = this.details3.vicinity;
+        newPerzon.postalCode = this.details2.name;
+        newPerzon.street = this.details.address_components[0].long_name;
+        newPerzon.birthDate = newPerzon.birthDate.split("-").reverse().join("-");
+        console.log(newPerson.birthDate);
+        console.log(newPerzon.birthDate);
         if(this.user === "admin") {
             if (this.type === 'volunteer') {
                 var thiz = this;
-                this.KrinkelService.postVolunteerByAdmin(this.MapperService.mapVolunteerByAdmin(newPerson)).then(function (resp) {
+                this.KrinkelService.postVolunteerByAdmin(this.MapperService.mapVolunteerByAdmin(newPerzon)).then(function (resp) {
                     thiz.dataIsRemoved = true;
                     thiz.StorageService.removeUser();
                     thiz.$location.path("/admin");
@@ -56,7 +58,7 @@ class RegisterController {
 
             if (this.type === 'participant') {
                 var thiz = this;
-                this.KrinkelService.postParticipantByAdmin(this.MapperService.mapParticipantByAdmin(newPerson)).then(function (resp) {
+                this.KrinkelService.postParticipantByAdmin(this.MapperService.mapParticipantByAdmin(newPerzon)).then(function (resp) {
                     thiz.dataIsRemoved = true;
                     thiz.StorageService.removeUser();
                     thiz.SelectService.setSelectedFlag(false);
@@ -72,7 +74,7 @@ class RegisterController {
         } else {
             if (this.type === 'volunteer') {
                 var thiz = this;
-                this.KrinkelService.postVolunteer(this.MapperService.mapVolunteer(newPerson)).then(function (resp) {
+                this.KrinkelService.postVolunteer(this.MapperService.mapVolunteer(newPerzon)).then(function (resp) {
                     thiz.dataIsRemoved = true;
                     thiz.StorageService.removeUser();
                     thiz.$window.location.href = resp.headers().location;
@@ -82,7 +84,7 @@ class RegisterController {
 
             if (this.type === 'participant') {
                 var thiz = this;
-                this.KrinkelService.postParticipant(this.MapperService.mapParticipant(newPerson)).then(function (resp) {
+                this.KrinkelService.postParticipant(this.MapperService.mapParticipant(newPerzon)).then(function (resp) {
                     thiz.dataIsRemoved = true;
                     thiz.StorageService.removeUser();
                     thiz.SelectService.setSelectedFlag(false);
@@ -204,7 +206,7 @@ class RegisterController {
     }
 
     addToBasket(person){
-        let perzon = person;
+        let perzon = angular.copy(person);
         perzon.city = this.details3.vicinity;
         perzon.postalCode = this.details2.name;
         perzon.street = this.details.address_components[0].long_name;
