@@ -198,9 +198,10 @@
         <div class="row">
             <div class="input-field col s12">
                 <i class="material-icons prefix">restaurant</i>
+                <pre ng-show="(personForm.dietary.$invalid && $ctrl.validateNow) || (personForm.dietary.$invalid && personForm.dietary.$touched)" class="error">      <i class="material-icons">error_outline</i> Max 256 tekens.</pre>
                 <textarea
-                    placeholder="Zijn er zaken waar we bij maaltijden aandacht aan moeten besteden? Geef hier aan of je bepaalde voedselallergieën hebt."
-                    id="dietary" class="materialize-textarea" ng-model="$ctrl.newPerson.dietaryText"></textarea>
+                    placeholder="Zijn er zaken waar we bij maaltijden aandacht aan moeten besteden? Geef hier aan of je bepaalde voedselallergieën hebt. (max. 256)"
+                    name = "dietary" id="dietary" class="materialize-textarea" ng-model="$ctrl.newPerson.dietaryText" ng-pattern="$ctrl.inputPattern"></textarea>
                 <label for="dietary">Opmerkingen maaltijd</label>
             </div>
         </div>
@@ -417,16 +418,18 @@
         <div class="row">
             <div class="input-field col s12">
                 <i class="material-icons prefix">favorite</i>
-                <textarea id="medical" class="materialize-textarea" ng-model="$ctrl.newPerson.medicalText"></textarea>
-                <label for="medical">Medische opmerkingen</label>
+                <pre ng-show="(personForm.medical.$invalid && $ctrl.validateNow) || (personForm.medical.$invalid && personForm.medical.$touched)" class="error">      <i class="material-icons">error_outline</i> Max 256 tekens.</pre>
+                <textarea name="medical" id="medical" class="materialize-textarea" ng-model="$ctrl.newPerson.medicalText" ng-pattern="$ctrl.inputPattern"></textarea>
+                <label for="medical">Medische opmerkingen (max. 256)</label>
             </div>
         </div>
 
         <div class="row">
             <div class="input-field col s12">
                 <i class="material-icons prefix">mode_edit</i>
-                <textarea id="others" class="materialize-textarea" ng-model="$ctrl.newPerson.otherText"></textarea>
-                <label for="others">Andere opmerkingen</label>
+                <pre ng-show="(personForm.others.$invalid && $ctrl.validateNow) || (personForm.others.$invalid && personForm.others.$touched)" class="error">     <i class="material-icons">error_outline</i> Max 256 tekens.</pre>
+                <textarea name="others" id="others" class="materialize-textarea" ng-model="$ctrl.newPerson.otherText" ng-pattern="$ctrl.inputPattern"></textarea>
+                <label for="others">Andere opmerkingen (max. 256)</label>
             </div>
         </div>
 
