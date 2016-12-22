@@ -263,15 +263,15 @@
 
         <div class="row" ng-show="$ctrl.type === 'volunteer'">
             <div class="input-field col s12 m6">
-                <!--<i class="material-icons prefix">date_range</i>-->
-                <select name="voorwacht" ng-model="$ctrl.newPerson.preCamp" class="browser-default" required>
+                <i class="material-icons prefix">date_range</i>
+                <select multiple name="voorwacht" ng-model="$ctrl.newPerson.preCamp" class="validate" required>
                     <option value="" disabled selected>Voorwacht *</option>
                     <option value="2017-08-21">maandag 21 augustus</option>
                     <option value="2017-08-22">dinsdag 22 augustus</option>
                     <option value="2017-08-23">woensdag 23 augustus</option>
                     <option value="2017-08-24">donderdag 24 augustus</option>
                 </select>
-                <!--<label>Voorwacht *</label>-->
+                <label>Voorwacht *</label>
                 <p ng-show="(personForm.voorwacht.$invalid && $ctrl.validateNow) || (personForm.voorwacht.$invalid && personForm.voorwacht.$touched)" class="error">
                     <i class="material-icons">error_outline</i>
                     Voorwacht is verplicht
@@ -279,14 +279,14 @@
             </div>
 
             <div class="input-field col s12 m6">
-                <!--<i class="material-icons prefix">date_range</i>-->
-                <select name="nawacht" ng-model="$ctrl.newPerson.postCamp" class="browser-default" required>
+                <i class="material-icons prefix">date_range</i>
+                <select multiple name="nawacht" ng-model="$ctrl.newPerson.postCamp" class="validate" required>
                     <option value="" disabled selected>Nawacht *</option>
                     <option value="2017-08-31">donderdag 31 augustus</option>
                     <option value="2017-09-01">vrijdag 1 september</option>
                     <option value="2017-09-02">zaterdag 2 september</option>
                 </select>
-                <!--<label>Nawacht *</label>-->
+                <label>Nawacht *</label>
                 <p ng-show="(personForm.nawacht.$invalid && $ctrl.validateNow) || (personForm.nawacht.$invalid && personForm.nawacht.$touched)" class="error">
                     <i class="material-icons">error_outline</i>
                     Nawacht is verplicht
