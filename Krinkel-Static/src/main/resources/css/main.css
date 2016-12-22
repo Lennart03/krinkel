@@ -105,7 +105,7 @@ blockquote {
 }
 
 html {
-  height: 100%;
+  height: auto;
 }
 
 header {
@@ -346,7 +346,7 @@ nav .dropdown-content .active {
 }
 
 body {
-  height: 100%;
+  height: auto;
   font-family: RobotoCondensed, sans-serif;
   line-height: 29px;
   font-size: 18px;
@@ -354,7 +354,7 @@ body {
 }
 
 .landingPageMainImage {
-  height: 100%;
+  height: 100vh;
   background-repeat: no-repeat;
   background-position: 0% 20%;
   background-image: url("../img/layout/BRU_9436.jpg");
@@ -444,34 +444,30 @@ body {
 
 .landingPageCarouselWrapper {
   position: relative;
-  max-height: 100%;
-  height: 750px !important;
+  height: 100vh;
   border-top: 1px solid #309583;
 }
 
-.landingPageCarouselWrapper .indicators {
+.landingPageCarouselWrapper .carousel {
+  height: 100vh !important;
+  position: relative;
   border-bottom: 1px solid #309583;
 }
 
-.landingPageCarouselWrapper .carousel {
-  height: 100%;
-  position: relative;
-}
-
 .landingPageCarouselWrapper .carousel .carousel-item .gal2, .landingPageCarouselWrapper .carousel .carousel-item .gal3, .landingPageCarouselWrapper .carousel .carousel-item .gal4, .landingPageCarouselWrapper .carousel .carousel-item .gal5, .landingPageCarouselWrapper .carousel .carousel-item .gal7, .landingPageCarouselWrapper .carousel .carousel-item .gal8 {
-  height: 100%;
+  height: 100vh;
   background: no-repeat center center;
   background-size: cover;
 }
 
 .landingPageCarouselWrapper .carousel .carousel-item .gal1 {
-  height: 100%;
+  height: 100vh;
   background: no-repeat 50% 25%;
   background-size: cover;
 }
 
 .landingPageCarouselWrapper .carousel .carousel-item .gal6 {
-  height: 100%;
+  height: 100vh;
   background: no-repeat 100% 100%;
   background-size: cover;
 }
@@ -1045,40 +1041,43 @@ body {
   }
 }
 
-#carrNext {
-  position: absolute;
-  color: white;
-  right: 1%;
-  top: calc(50% - 32px);
-  width: 70px;
+#carrNext, #carrPrev {
+  display: none;
 }
 
-#carrNext i {
-  font-size: 64px;
-}
-
-#carrNext:hover {
-  color: #a4ccbc;
-  cursor: pointer;
-}
-
-#carrPrev {
-  position: absolute;
-  color: white;
-  left: 1%;
-  top: calc(50% - 32px);
-  width: 70px;
-}
-
-#carrPrev i {
-  font-size: 64px;
-  width: 100%;
-  overflow: hidden;
-}
-
-#carrPrev:hover {
-  color: #a4ccbc;
-  cursor: pointer;
+@media only screen and (min-width: 500px) {
+  #carrNext {
+    position: absolute;
+    color: white;
+    right: 1%;
+    top: calc(50% - 32px);
+    width: 70px;
+    display: inline;
+  }
+  #carrNext i {
+    font-size: 64px;
+  }
+  #carrNext:hover {
+    color: #a4ccbc;
+    cursor: pointer;
+  }
+  #carrPrev {
+    position: absolute;
+    color: white;
+    left: 1%;
+    top: calc(50% - 32px);
+    width: 70px;
+    display: inline;
+  }
+  #carrPrev i {
+    font-size: 64px;
+    width: 100%;
+    overflow: hidden;
+  }
+  #carrPrev:hover {
+    color: #a4ccbc;
+    cursor: pointer;
+  }
 }
 
 footer {
