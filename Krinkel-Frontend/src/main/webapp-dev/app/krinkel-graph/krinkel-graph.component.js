@@ -19,7 +19,7 @@ class KrinkelGraphController {
     }
 
     formatDate (inDate)
-    {   console.log('inDate ' + inDate);
+    {
         var outDate =new Date();
         outDate= this.$filter('date')(inDate,"dd/MM/yyyy");
         console.log('outdate = ' +outDate);
@@ -138,7 +138,7 @@ class KrinkelGraphController {
 
         this.lineOptions = {
             chart: {
-                rotateLabels: 90,
+                rotateLabels: 45,
                 type: 'multiBarChart',
                 height: 550,
                 margin: {
@@ -149,13 +149,11 @@ class KrinkelGraphController {
                 },
                 x: function (d) {
                     if (d != undefined) {
-                        console.log('x '+ d[0]);
                         return d[0];
                     }
                 },
                 y: function (d) {
                     if (d != undefined) {
-                        console.log('y '+ d[1]);
                         return d[1];
                     }
                 },
@@ -165,9 +163,8 @@ class KrinkelGraphController {
                 stacked: true,
                 xAxis: {
                     showMaxMin: false,
-                    tickFormat: function (d) {
-                        console.log('xAxis' + d3.time.format('%x')(new Date(d)));
-                        return d3.time.format('%x')(new Date(d))
+                    tickFormat: d =>  {
+                        return d;
                     }
                 },
                 yAxis: {
