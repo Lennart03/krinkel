@@ -13,3 +13,5 @@ Krinkel-Rest/src/main/resources/static/
 *.xls
 
 node/
+
+env.url.config.js
