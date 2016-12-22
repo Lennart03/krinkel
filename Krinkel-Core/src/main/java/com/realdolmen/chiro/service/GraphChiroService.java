@@ -52,6 +52,9 @@ public class GraphChiroService {
                     case TO_BE_PAID:
                         status.setVolunteersNotPaid(status.getVolunteersNotPaid() + 1);
                         break;
+                    case CANCELLED:
+                        status.setVolunteersCancelled(status.getVolunteersCancelled() + 1);
+                        break;
                 }
             } else {
                 switch (r.getStatus()) {
@@ -63,6 +66,9 @@ public class GraphChiroService {
                         break;
                     case TO_BE_PAID:
                         status.setParticipantsNotPaid(status.getParticipantsNotPaid() + 1);
+                        break;
+                    case CANCELLED:
+                        status.setParticipantsCancelled(status.getParticipantsCancelled() + 1);
                         break;
                 }
             }

@@ -46,6 +46,16 @@ class KrinkelGraphController {
                     key: "Onbetaald medewerker",
                     y: results.volunteersNotPaid,
                     color: "#b71c1c"
+                },
+                {
+                    key: "Geannuleerd deelnemer",
+                    y: results.participantsCancelled,
+                    color: "#ffa500"
+                },
+                {
+                    key: "Geannuleerd medewerker",
+                    y: results.volunteersCancelled,
+                    color: "#ff8c00"
                 }
             ];
         });
@@ -118,7 +128,7 @@ class KrinkelGraphController {
                 margin: {
                     top: 20,
                     right: 20,
-                    bottom: 30,
+                    bottom: 60, // to show the legend
                     left: 40
                 },
                 x: function (d) {
