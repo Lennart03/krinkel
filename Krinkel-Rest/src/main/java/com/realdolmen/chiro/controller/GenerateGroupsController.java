@@ -23,7 +23,7 @@ public class GenerateGroupsController {
         return generateGroupsService.generateRandomGroups(Integer.valueOf(groupSize));
     }
 
-    /*public static void generateTestData () {
+    public static void generateTestData () {
         String repl_email = "@example.com";
         String repl_firstName = "firstName";
         String repl_lastName = "lastName";
@@ -59,5 +59,5 @@ public class GenerateGroupsController {
 
     public static void main(String [] args) {
         generateTestData();
-    }*/
+    }
 }

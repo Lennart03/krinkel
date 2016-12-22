@@ -57,18 +57,18 @@
             </a>
         </li>
 
-        <li>
+        <li ng-if="$ctrl.AuthService.getUserRole() === 'ADMIN'">
             <div class="divider">
             </div>
         </li>
 
-        <li>
+        <li ng-if="$ctrl.AuthService.getUserRole() === 'ADMIN'">
             <a class="subheader">
                 Tools
             </a>
         </li>
 
-        <li class="collection-item">
+        <li class="collection-item" ng-if="$ctrl.AuthService.getUserRole() === 'ADMIN'">
             <a href="/generate-groups">
                 <i class="material-icons">loop</i> Random groepen verdelen
             </a>
