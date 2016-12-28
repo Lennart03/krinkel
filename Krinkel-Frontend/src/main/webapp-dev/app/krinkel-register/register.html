@@ -262,7 +262,7 @@
         <!--</div>-->
 
         <div class="row" ng-show="$ctrl.type === 'volunteer'">
-            <div class="input-field col s12 m6">
+            <div class="input-field col s12 m6" ng-if="$ctrl.type === 'volunteer'">
                 <i class="material-icons prefix">date_range</i>
                 <select multiple name="voorwacht" ng-model="$ctrl.newPerson.preCamp" class="validate" required>
                     <option value="" disabled selected>Voorwacht *</option>
@@ -278,7 +278,7 @@
                 </p>
             </div>
 
-            <div class="input-field col s12 m6">
+            <div class="input-field col s12 m6" ng-if="$ctrl.type === 'volunteer'">
                 <i class="material-icons prefix">date_range</i>
                 <select multiple name="nawacht" ng-model="$ctrl.newPerson.postCamp" class="validate" required>
                     <option value="" disabled selected>Nawacht *</option>

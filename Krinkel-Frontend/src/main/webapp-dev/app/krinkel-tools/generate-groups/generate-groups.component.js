@@ -7,11 +7,13 @@ class GenerateGroupsController {
         this.$location = $location;
         this.$log = $log;
         this.groups = [];
+        this.groupsSize = 0;
     }
 
     $onInit() {}
 
     generateGroups(groupSize) {
+        this.groupsSize = groupSize;
         this.groups = [];
         this.KrinkelService.generateGroups(groupSize).then((resp) => {
             resp.forEach((list) => {
@@ -39,6 +41,28 @@ class GenerateGroupsController {
             this.$log.debug(this.groups.get(i));
             this.$log.debug("test4");
         }*/
+    }
+
+    PrintGroups(elem) {
+        this.$log.debug("testing printing")
+        var mywindow = window.open('', 'PRINT', 'height=400,width=600');
+
+        mywindow.document.write('<html><head><title>' + "Groepen van " + this.groupsSize  + '</title>');
+
+        mywindow.document.write('</head><body>');
+        mywindow.document.write('<h1>' + "Groepen van " + this.groupsSize  + '</h1>');
+        mywindow.document.write(document.getElementById(elem).innerHTML);
+        this.$log.debug("inner html");
+        this.$log.debug(document.getElementById(elem).innerHTML);
+        mywindow.document.write('</body></html>');
+
+        mywindow.document.close(); // necessary for IE >= 10
+        mywindow.focus(); // necessary for IE >= 10*/
+
+        mywindow.print();
+        mywindow.close();
+
+        return true;
     }
 }
 

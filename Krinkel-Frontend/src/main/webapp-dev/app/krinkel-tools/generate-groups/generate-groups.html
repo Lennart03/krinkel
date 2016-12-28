@@ -1,5 +1,5 @@
 <form ng-submit="$ctrl.generateGroups(groupSize)">
-    <ul class="groups-list">
+    <ul id="lijsten-van-groepen" class="groups-list">
         <li class="repeat" ng-repeat="lists in $ctrl.groups">
             <ul>
                 <li><h3>Groep {{$index+1}}</h3></li>
@@ -22,9 +22,11 @@
     <div class="row">
         <div class="input-field col s8 m8 l8">
             <input id="groupSize" type="text" ng-minlength="1" ng-model="groupSize" required>
-            <label for="groupSize">Group Size</label>
+            <label for="groupSize">Groepsgrootte</label>
         </div>
     </div>
-    <button type="submit" class="btn">Generate Groups</button>
+    <button type="submit" class="btn">Groepen Genereren</button>
+
+    <button ng-click="$ctrl.PrintGroups('lijsten-van-groepen')" class="btn">Printen</button>
 </form>
 

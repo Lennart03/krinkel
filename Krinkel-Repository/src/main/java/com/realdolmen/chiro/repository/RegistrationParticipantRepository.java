@@ -57,8 +57,10 @@ public interface RegistrationParticipantRepository extends JpaRepository<Registr
     Long countPreCampRecordsAfterCancellation(@Param("participantId") Long participantId);
 
     @Query(value= "SELECT r FROM RegistrationParticipant r WHERE " +
-            "r.eventRole = 'ASPI'")
-    List<RegistrationParticipant> findAllAspis();
+            "r.eventRole = 'ASPI'"
+            + " AND "
+            + "r.buddy = false")
+    List<RegistrationParticipant> findAllAspisNoBuddy();
 
     @Query(value = "SELECT r.status FROM  RegistrationParticipant r WHERE r.adNumber = :adNumber")
     Status getPaymentStatusByadNumber(@Param("adNumber") String adNumber);

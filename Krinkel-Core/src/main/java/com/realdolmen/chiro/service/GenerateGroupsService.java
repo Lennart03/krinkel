@@ -37,7 +37,7 @@ public class GenerateGroupsService {
     public List<List<RegistrationParticipant>> generateRandomGroups(int groupSize) {
         this.groupSize = groupSize;
         //fill the lists with the currently registered members
-        List<RegistrationParticipant> registrationParticipants = registrationParticipantRepository.findAllAspis();
+        List<RegistrationParticipant> registrationParticipants = registrationParticipantRepository.findAllAspisNoBuddy();
 
         Iterator<RegistrationParticipant> registrationIterator = registrationParticipants.iterator();
         while (registrationIterator.hasNext()) {
