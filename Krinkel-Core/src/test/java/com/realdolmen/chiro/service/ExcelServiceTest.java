@@ -81,16 +81,5 @@ public class ExcelServiceTest extends SpringIntegrationTest {
     public void writeParticipantsTest() {
         assertEquals(5, exportService.getRegistrationParticipantsWithoutVolunteers().size());
     }
-
-    @Test
-    public void fieldsToStringTest(){
-        List<RegistrationVolunteer> allVolunteers = registrationVolunteerRepository.findAll();
-        System.err.println("");
-        System.err.println("With stringbuilder: ");
-        String variableNamesOfObjectWithBuilder = exportService.getVariableNamesOfObjectWithBuilder(allVolunteers.get(0));
-        System.err.println(variableNamesOfObjectWithBuilder);
-
-
-    }
 }
 
