@@ -242,11 +242,32 @@ class RegisterController {
         }
     }
 
+    initModal4Volunteer(form) {
+        this.validateNow = true;
+        if(form && this.preCampSet() && this.postCampSet()) {
+            $('#modal4').openModal();
+        }
+    }
+
     initModal5(form) {
         this.validateNow = true;
         if(form) {
             $('#modal5').openModal();
         }
+    }
+
+    postCampSet() {
+        if(this.newPerson.postCamp == null || this.newPerson.postCamp.length == 0) {
+            return false;
+        }
+        return true;
+    }
+
+    preCampSet() {
+        if(this.newPerson.preCamp == null || this.newPerson.preCamp.length == 0) {
+            return false;
+        }
+        return true;
     }
 
 }
