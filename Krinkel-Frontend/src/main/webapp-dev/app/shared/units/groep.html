@@ -14,13 +14,13 @@
     }
 </style>
 
-<a class="btn" ng-click="$ctrl.switchShowParticipantsVolunteers()" ng-if="!$ctrl.showParticipants && $ctrl.AuthService.getUserRole() === 'ADMIN'">
-    Deelnemers
-</a>
+<!--<a class="btn" ng-click="$ctrl.switchShowParticipantsVolunteers()" ng-if="!$ctrl.showParticipants && $ctrl.AuthService.getUserRole() === 'ADMIN'">-->
+    <!--Deelnemers-->
+<!--</a>-->
 
-<a class="btn" ng-click="$ctrl.switchShowParticipantsVolunteers()" ng-if="$ctrl.showParticipants && $ctrl.AuthService.getUserRole() === 'ADMIN'">
-    Medewerkers
-</a>
+<!--<a class="btn" ng-click="$ctrl.switchShowParticipantsVolunteers()" ng-if="$ctrl.showParticipants && $ctrl.AuthService.getUserRole() === 'ADMIN'">-->
+    <!--Medewerkers-->
+<!--</a>-->
 
 <h2 ng-if="$ctrl.showParticipants">Deelnemers</h2>
 
@@ -116,73 +116,73 @@
     </div>
 </div>
 
-<h2 ng-if="!$ctrl.showParticipants && $ctrl.AuthService.getUserRole() === 'ADMIN'">Medewerkers</h2>
-<table ng-if="!$ctrl.showParticipants && $ctrl.AuthService.getUserRole() === 'ADMIN'">
-    <thead>
-    <tr>
-        <th data-field="name">Naam</th>
-        <th data-field="address">Adres</th>
-        <th data-field="city">Gemeente</th>
-        <th ng-if="$ctrl.AuthService.getUserRole() === 'ADMIN'" data-field="eatinghabit">Eetgewoonte</th>
-        <th ng-if="$ctrl.AuthService.getUserRole() === 'ADMIN'" data-field="medicalRemarks">Medische info</th>
-        <th data-field="function">Functie</th>
-        <th data-field="campground">Kampgrond</th>
-        <th data-field="voorwacht">Voorwacht</th>
-        <th data-field="nawacht">Nawacht</th>
-        <th ng-if="$ctrl.AuthService.getUserRole() === 'ADMIN'" style="min-width: 110px;">Status</th>
-        <th ng-if="$ctrl.AuthService.getUserRole() === 'ADMIN'"><i class="material-icons right icon-green">delete</i></th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr ng-repeat="volunteer in $ctrl.volunteers" id="{{ volunteer.id }}" ng-if="volunteer.status !== 'CANCELLED'">
-        <td>
-            {{volunteer.firstName}} {{volunteer.lastName}}
-        </td>
-        <td>
-            {{volunteer.address.street}} {{volunteer.address.houseNumber}}
-        </td>
-        <td>
-            {{volunteer.address.city}}
-        </td>
-        <td ng-if="$ctrl.AuthService.getUserRole() === 'ADMIN'">
-            {{volunteer.eatinghabbit}}
-        </td>
-        <td ng-if="$ctrl.AuthService.getUserRole() === 'ADMIN'">
-            {{volunteer.medicalRemarks}}
-        </td>
-        <td>
-            {{volunteer.function.preset}}
-        </td>
-        <td>
-            {{volunteer.campGround}}
-        </td>
-        <td>
-            {{$ctrl.getDatesListFromList(volunteer.preCampList)}}
-        </td>
-        <td>
-            {{$ctrl.getDatesListFromList(volunteer.postCampList)}}
-        </td>
-        <td ng-if="$ctrl.AuthService.getUserRole() === 'ADMIN'" style="min-width: 110px;">
-            <select ng-model="volunteer.status" ng-init="volunteer.status" ng-options="item.value as item.label for item in $ctrl.statusses"  ng-change="$ctrl.saveData(volunteer.id, volunteer.status)">
-            </select>
-        </td>
-        <td ng-if="$ctrl.AuthService.getUserRole() === 'ADMIN'">
-            <a ng-click="$ctrl.initCancelModal(volunteer.id)">
-                <i class="material-icons right icon-green">clear</i>
-            </a>
-        </td>
-    </tr>
-    </tbody>
-</table>
+<!--<h2 ng-if="!$ctrl.showParticipants && $ctrl.AuthService.getUserRole() === 'ADMIN'">Medewerkers</h2>-->
+<!--<table ng-if="!$ctrl.showParticipants && $ctrl.AuthService.getUserRole() === 'ADMIN'">-->
+    <!--<thead>-->
+    <!--<tr>-->
+        <!--<th data-field="name">Naam</th>-->
+        <!--<th data-field="address">Adres</th>-->
+        <!--<th data-field="city">Gemeente</th>-->
+        <!--<th ng-if="$ctrl.AuthService.getUserRole() === 'ADMIN'" data-field="eatinghabit">Eetgewoonte</th>-->
+        <!--<th ng-if="$ctrl.AuthService.getUserRole() === 'ADMIN'" data-field="medicalRemarks">Medische info</th>-->
+        <!--<th data-field="function">Functie</th>-->
+        <!--<th data-field="campground">Kampgrond</th>-->
+        <!--<th data-field="voorwacht">Voorwacht</th>-->
+        <!--<th data-field="nawacht">Nawacht</th>-->
+        <!--<th ng-if="$ctrl.AuthService.getUserRole() === 'ADMIN'" style="min-width: 110px;">Status</th>-->
+        <!--<th ng-if="$ctrl.AuthService.getUserRole() === 'ADMIN'"><i class="material-icons right icon-green">delete</i></th>-->
+    <!--</tr>-->
+    <!--</thead>-->
+    <!--<tbody>-->
+    <!--<tr ng-repeat="volunteer in $ctrl.volunteers" id="{{ volunteer.id }}" ng-if="volunteer.status !== 'CANCELLED'">-->
+        <!--<td>-->
+            <!--{{volunteer.firstName}} {{volunteer.lastName}}-->
+        <!--</td>-->
+        <!--<td>-->
+            <!--{{volunteer.address.street}} {{volunteer.address.houseNumber}}-->
+        <!--</td>-->
+        <!--<td>-->
+            <!--{{volunteer.address.city}}-->
+        <!--</td>-->
+        <!--<td ng-if="$ctrl.AuthService.getUserRole() === 'ADMIN'">-->
+            <!--{{volunteer.eatinghabbit}}-->
+        <!--</td>-->
+        <!--<td ng-if="$ctrl.AuthService.getUserRole() === 'ADMIN'">-->
+            <!--{{volunteer.medicalRemarks}}-->
+        <!--</td>-->
+        <!--<td>-->
+            <!--{{volunteer.function.preset}}-->
+        <!--</td>-->
+        <!--<td>-->
+            <!--{{volunteer.campGround}}-->
+        <!--</td>-->
+        <!--<td>-->
+            <!--{{$ctrl.getDatesListFromList(volunteer.preCampList)}}-->
+        <!--</td>-->
+        <!--<td>-->
+            <!--{{$ctrl.getDatesListFromList(volunteer.postCampList)}}-->
+        <!--</td>-->
+        <!--<td ng-if="$ctrl.AuthService.getUserRole() === 'ADMIN'" style="min-width: 110px;">-->
+            <!--<select ng-model="volunteer.status" ng-init="volunteer.status" ng-options="item.value as item.label for item in $ctrl.statusses"  ng-change="$ctrl.saveData(volunteer.id, volunteer.status)">-->
+            <!--</select>-->
+        <!--</td>-->
+        <!--<td ng-if="$ctrl.AuthService.getUserRole() === 'ADMIN'">-->
+            <!--<a ng-click="$ctrl.initCancelModal(volunteer.id)">-->
+                <!--<i class="material-icons right icon-green">clear</i>-->
+            <!--</a>-->
+        <!--</td>-->
+    <!--</tr>-->
+    <!--</tbody>-->
+<!--</table>-->
 
-<!-- Modal Structure -->
-<div id="{{ ::'modal' + volunteer.id }}"ng-if="!$ctrl.showParticipants" ng-repeat="volunteer in $ctrl.volunteers track by $index" class="modal">
-    <div class="modal-content">
-        <h4>Wilt u deze bestelling annuleren?</h4>
-    </div>
-    <div class="modal-footer">
-        <a href="" class=" modal-action modal-close btn-flat"
-           ng-click="$ctrl.putParticipantToCancelled(volunteer.id)">OK</a>
-        <a href="" class="modal-action modal-close  btn-flat">CANCEL</a>
-    </div>
-</div>
+<!--&lt;!&ndash; Modal Structure &ndash;&gt;-->
+<!--<div id="{{ ::'modal' + volunteer.id }}"ng-if="!$ctrl.showParticipants" ng-repeat="volunteer in $ctrl.volunteers track by $index" class="modal">-->
+    <!--<div class="modal-content">-->
+        <!--<h4>Wilt u deze bestelling annuleren?</h4>-->
+    <!--</div>-->
+    <!--<div class="modal-footer">-->
+        <!--<a href="" class=" modal-action modal-close btn-flat"-->
+           <!--ng-click="$ctrl.putParticipantToCancelled(volunteer.id)">OK</a>-->
+        <!--<a href="" class="modal-action modal-close  btn-flat">CANCEL</a>-->
+    <!--</div>-->
+<!--</div>-->

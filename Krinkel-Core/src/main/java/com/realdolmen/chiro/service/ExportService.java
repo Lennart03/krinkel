@@ -4,6 +4,7 @@ import com.realdolmen.chiro.domain.*;
 import com.realdolmen.chiro.domain.units.Admin;
 import com.realdolmen.chiro.repository.*;
 import jxl.write.WritableWorkbook;
+import org.apache.commons.lang3.builder.StandardToStringStyle;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -458,16 +459,18 @@ public class ExportService {
 //        return fieldNames;
 //    }
 
-    public String getVariableNamesOfObjectWithBuilder(Object object){
-        return ToStringBuilder.reflectionToString(object);
-    }
-
     public ArrayList<ArrayList<String>> getStringListForBackupCSV(Object[] objects){
 
         ArrayList<ArrayList<String>> stringListForBackupCSV = new ArrayList<ArrayList<String>>();
 
         for (Object object : objects) {
-            String variableNamesOfObjectWithBuilder = getVariableNamesOfObjectWithBuilder(object);
+
+            StandardToStringStyle fieldsSeparator = new StandardToStringStyle();
+            // A string which is 300+ times "-" + "___" + 300+ times "-" so that user input can not break the splitting on ","
+            String fieldsSeparatorString = "------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------___------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------";
+            fieldsSeparator.setFieldSeparator(fieldsSeparatorString);
+
+            String variableNamesOfObjectWithBuilder = ToStringBuilder.reflectionToString(object, fieldsSeparator);
 
             // Get only the variables list:
             // First split on the first occurence of [
@@ -476,20 +479,22 @@ public class ExportService {
             variablesList = variablesList.substring(0,variablesList.length()-1);
 //            System.err.println(variablesList);
 
-            // Replace all brackets [ and ] with a quote " so it is easier to split
-            variablesList = variablesList.replaceAll("\\[","\"");
-            variablesList = variablesList.replaceAll("\\]","\"");
-//            System.err.println("Replaced all [ ] with \"");
-//            System.err.println(variablesList);
+//            // Replace all brackets [ and ] with a quote " so it is easier to split
+//            variablesList = variablesList.replaceAll("\\[","\"");
+//            variablesList = variablesList.replaceAll("\\]","\"");
+////            System.err.println("Replaced all [ ] with \"");
+////            System.err.println(variablesList);
 
-            String[] variables = variablesList.split(",(?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)", -1);
+            // split on comma unless it is between quotes
+//            String[] variables = variablesList.split(",(?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)", -1);
+            String [] variables = variablesList.split(fieldsSeparatorString);
 
 //            System.err.println("Split on ',' unless it is between '[' and '], in this case unless it is between \" quotes");
             ArrayList<String> variablesNames = new ArrayList<String>();
             ArrayList<String> variablesValues = new ArrayList<String>();
             for (String variable : variables) {
 //                System.err.println(variable);
-                //Split on = to separate the name and value
+                //Split on the first "=" to separate the name and value
                 String[] split = variable.split("=",2);
                 variablesNames.add(split[0]);
 
@@ -520,7 +525,13 @@ public class ExportService {
     }
 
     private ArrayList<String> getHeadersForBackupCSV(Object object) {
-        String variableNamesOfObjectWithBuilder = getVariableNamesOfObjectWithBuilder(object);
+        StandardToStringStyle fieldsSeparator = new StandardToStringStyle();
+        // A string which is 300+ times "-" + "___" + 300+ times "-" so that user input can not break the splitting on ","
+        String fieldsSeparatorString = "------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------___------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------";
+        fieldsSeparator.setFieldSeparator(fieldsSeparatorString);
+
+        String variableNamesOfObjectWithBuilder = ToStringBuilder.reflectionToString(object, fieldsSeparator);
+
 
         // Get only the variables list:
         // First split on the first occurence of [
@@ -530,12 +541,13 @@ public class ExportService {
 //        System.err.println(variablesList);
 
         // Replace all brackets [ and ] with a quote " so it is easier to split
-        variablesList = variablesList.replaceAll("\\[","\"");
-        variablesList = variablesList.replaceAll("\\]","\"");
+//        variablesList = variablesList.replaceAll("\\[","\"");
+//        variablesList = variablesList.replaceAll("\\]","\"");
 //        System.err.println("Replaced all [ ] with \"");
 //        System.err.println(variablesList);
 
-        String[] variables = variablesList.split(",(?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)", -1);
+//        String[] variables = variablesList.split(",(?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)", -1);
+        String[] variables = variablesList.split(fieldsSeparatorString);
 
 //        System.err.println("Split on ',' unless it is between '[' and '], in this case unless it is between \" quotes");
         ArrayList<String> variablesNames = new ArrayList<String>();
