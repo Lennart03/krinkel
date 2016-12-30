@@ -387,10 +387,10 @@ body {
   text-shadow: 0 5px 10px rgba(0, 0, 0, 0.5);
 }
 
-.landingPageMainImageText h1 {
+.landingPageMainImageText h1, .landingPageMainImageText h2 {
   top: 40%;
   position: relative;
-  font-size: 48px;
+  font-size: 36px;
   line-height: 64px;
   letter-spacing: 5px;
   padding: 0 5px;
@@ -401,10 +401,14 @@ body {
   line-height: 55px;
 }
 
-@media only screen and (min-width: 540px) {
-  .landingPageMainImageText h1 {
+@media only screen and (min-width: 755px) {
+  .landingPageMainImageText h1, .landingPageMainImageText h2 {
+    top: 20%;
     font-size: 60px;
     line-height: 97px;
+  }
+  .landingPageMainImageText h2 {
+    font-size: 20px;
   }
   .landingPageMainImageText .internationale {
     font-size: 60px;
