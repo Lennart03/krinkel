@@ -7,9 +7,11 @@ class KrinkelAdminController {
     }
 
     $onInit() {
-        let currentAdnumber = this.AuthService.getLoggedinUser().adnummer;
-        this.isSuperAdmin = (currentAdnumber == 152504 || currentAdnumber == 109318 || currentAdnumber == 396943);
+        this.KrinkelService.isSuperAdmin(this.AuthService.getLoggedinUser().adnummer).then((resp) => {
+            this.isSuperAdmin = resp;
+        });
     }
+
 }
 
 export var KrinkelAdminComponent = {

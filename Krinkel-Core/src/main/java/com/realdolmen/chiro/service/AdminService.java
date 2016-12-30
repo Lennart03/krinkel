@@ -2,14 +2,18 @@ package com.realdolmen.chiro.service;
 
 import com.realdolmen.chiro.domain.units.Admin;
 import com.realdolmen.chiro.domain.units.ChiroContact;
+import com.realdolmen.chiro.domain.units.SuperAdmin;
 import com.realdolmen.chiro.exception.NoContactFoundException;
 import com.realdolmen.chiro.repository.AdminRepository;
+import javafx.print.Collation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.PostConstruct;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * This service is used by the ChiroAdminController to add new admin member and to retrieve all the admins
@@ -26,6 +30,17 @@ public class AdminService {
     @Autowired
     private AdminRepository adminRepository;
 
+    private List<Integer> superAdminAdNumbers;
+
+    @PostConstruct
+    public void initService() {
+        this.superAdminAdNumbers = adminRepository.findAll().stream()
+                .filter(admin -> admin instanceof SuperAdmin)
+                .map(Admin::getAdNumber)
+                .collect(Collectors.toList());
+        System.out.println(this.superAdminAdNumbers);
+    }
+
     /**
      * Commands the AdminRepository to find all the admins.
      *
@@ -33,6 +48,10 @@ public class AdminService {
      */
     public List<Admin> getAdmins() {
         return adminRepository.findAll();
+    }
+
+    public List<Integer> getSuperAdmins() {
+        return this.superAdminAdNumbers;
     }
 
     /**
@@ -54,5 +73,10 @@ public class AdminService {
 
     public void deleteAdmin(Integer adNumber) {
         adminRepository.delete(adNumber);
+    }
+
+    public Boolean isSuperAdmin(Integer adNumber) {
+        System.out.println("Processing if is super admin: " + adNumber);
+        return this.superAdminAdNumbers.contains(adNumber);
     }
 }
