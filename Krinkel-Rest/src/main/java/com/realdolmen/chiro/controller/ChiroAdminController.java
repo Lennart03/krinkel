@@ -1,8 +1,10 @@
 package com.realdolmen.chiro.controller;
 
 import com.realdolmen.chiro.domain.units.Admin;
+import com.realdolmen.chiro.domain.units.SuperAdmin;
 import com.realdolmen.chiro.exception.NoContactFoundException;
 import com.realdolmen.chiro.service.AdminService;
+import com.sun.org.apache.xpath.internal.operations.Bool;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,7 +24,7 @@ public class ChiroAdminController {
     @Autowired
     private AdminService adminService;
 
-    @RequestMapping(method = RequestMethod.POST, value = "/api/admin/{adNumber}")
+    @RequestMapping(method = RequestMethod.POST, value = "/api/admins/{adNumber}")
     public void addNewAdmin(@PathVariable Integer adNumber){
         try {
             adminService.addNewAdmin(adNumber);
@@ -36,12 +38,21 @@ public class ChiroAdminController {
     }
 
 
-    @RequestMapping(method = RequestMethod.GET, value = "/api/admin")
+    @RequestMapping(method = RequestMethod.GET, value = "/api/admins")
     public List<Admin> getAdmins() {
         return adminService.getAdmins();
     }
 
-    @RequestMapping(method = RequestMethod.GET, value = "/api/admin/{adNumber}")
+    @RequestMapping(method = RequestMethod.GET, value = "api/superadmins")
+    public List<Integer> getSuperAdmins() {return adminService.getSuperAdmins(); }
+
+    @RequestMapping(method = RequestMethod.GET, value = "api/superadmins/{adNumber}")
+    public Boolean isSuperAdmin(@PathVariable Integer adNumber) {
+        System.out.println("Request is super admin: " + adNumber);
+        return adminService.isSuperAdmin(adNumber);
+    }
+
+    @RequestMapping(method = RequestMethod.GET, value = "/api/admins/{adNumber}")
     public String getChiroMember(@PathVariable Integer adNumber) {
         try {
             return adminService.getChiroMember(adNumber);
@@ -51,7 +62,7 @@ public class ChiroAdminController {
         return "redirect:/admin";
     }
 
-    @RequestMapping(method = RequestMethod.POST, value = "api/admin/delete/{adNumber}")
+    @RequestMapping(method = RequestMethod.DELETE, value = "api/admins/{adNumber}")
     public void deleteAdmin(@PathVariable Integer adNumber) {
         adminService.deleteAdmin(adNumber);
     }

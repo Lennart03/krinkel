@@ -8,7 +8,7 @@
     <a ng-click="$ctrl.selectPerson(colleague)"
        ng-repeat="admin in $ctrl.admins"
        class="collection-item">
-        <span class="badge" ng-show="!$ctrl.isCurrentUser(admin.adNumber)">
+        <span class="badge" ng-show="!$ctrl.isSuperAdmin(admin.adNumber)">
             <button class="btn red" ng-click="$ctrl.deleteAdmin(admin.adNumber)">delete <i
                 class="material-icons" style="vertical-align: bottom">delete</i></button>
         </span>
