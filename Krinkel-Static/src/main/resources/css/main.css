@@ -387,7 +387,7 @@ body {
   text-shadow: 0 5px 10px rgba(0, 0, 0, 0.5);
 }
 
-.landingPageMainImageText h1, .landingPageMainImageText h2 {
+.landingPageMainImageText h1 {
   top: 40%;
   position: relative;
   font-size: 36px;
@@ -402,13 +402,10 @@ body {
 }
 
 @media only screen and (min-width: 755px) {
-  .landingPageMainImageText h1, .landingPageMainImageText h2 {
-    top: 20%;
+  .landingPageMainImageText h1 {
+    top: 40%;
     font-size: 60px;
     line-height: 97px;
-  }
-  .landingPageMainImageText h2 {
-    font-size: 20px;
   }
   .landingPageMainImageText .internationale {
     font-size: 60px;

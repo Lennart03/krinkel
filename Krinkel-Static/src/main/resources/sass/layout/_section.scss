@@ -27,7 +27,7 @@ section {}
   z-index: 9999;
   color: $white;
   text-shadow: 0 5px 10px rgba(0,0,0,.5);
-  h1, h2{
+  h1{
     top: 40%;
     position: relative;
     font-size: 36px;
@@ -35,28 +35,21 @@ section {}
     letter-spacing: 5px;
     padding: 0 5px;
   }
-  h2{
-
-  }
   .internationale {
     font-size: 40px;
     line-height: 55px;
   }
   @media only screen and (min-width: 755px) {
-    h1,h2{
-      top:20%;
+    h1{
+      top:40%;
       font-size: 60px;
       line-height: 97px;
-    }
-    h2{
-      font-size: 20px;
     }
     .internationale {
       font-size: 60px;
       line-height: 97px;
     }
   }
-
 }
 
 .landingPageSignUpWrapper {
