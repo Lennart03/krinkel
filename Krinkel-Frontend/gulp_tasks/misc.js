@@ -6,21 +6,31 @@ const filter = require('gulp-filter');
 
 const conf = require('../conf/gulp.conf');
 
+const rename = require('gulp-rename');
+
 gulp.task('clean', clean);
+gulp.task('copyRes', copyResources);
 gulp.task('other', other);
 
 function clean() {
-  return del([conf.paths.dist, conf.paths.tmp], {force: true});
+    return del([conf.paths.dist, conf.paths.tmp], {force: true});
 }
 
 function other() {
-  const fileFilter = filter(file => file.stat.isFile());
-
-  return gulp.src([
-    path.join(conf.paths.src, '/**/*'),
-    path.join(`!${conf.paths.src}`, '/**/*.{css,js,html}'),
-    path.join(`!${conf.paths.src}`, '/node/**')
-  ])
-    .pipe(fileFilter)
-    .pipe(gulp.dest(conf.paths.dist));
+    const fileFilter = filter(file => file.stat.isFile());
+    copyResources();
+    return gulp.src([
+        path.join(conf.paths.src, '/**/*'),
+        path.join(`!${conf.paths.src}`, '/**/*.{css,js,html}'),
+        path.join(`!${conf.paths.src}`, '/node/**')
+    ])
+        .pipe(fileFilter)
+        .pipe(gulp.dest(conf.paths.dist));
 }
+
+function copyResources() {
+    return gulp.src(path.join(conf.paths.src, '/res/**/*'))
+        .pipe(rename({dirname: "/res"}))
+        .pipe(gulp.dest(conf.paths.dist));
+}
+
