@@ -41,13 +41,18 @@ section {}
   }
   @media only screen and (min-width: 755px) {
     h1{
-      top:30%;
+      top:40%;
       font-size: 60px;
       line-height: 97px;
     }
     .internationale {
       font-size: 60px;
       line-height: 97px;
+    }
+  }
+  @media only screen and (max-width: 755px) {
+    h1 {
+      top:30%;
     }
   }
   @media only screen and(max-width: 355px) {
