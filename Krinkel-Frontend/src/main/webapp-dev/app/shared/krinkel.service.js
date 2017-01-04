@@ -1,8 +1,9 @@
 export class KrinkelService {
-    constructor($http, BASEURL, $window, startDate, endDate) {
+    constructor($http, BASEURL, $window,$filter) {
         this.$http = $http;
         this.BASEURL = BASEURL;
         this.$window = $window;
+        this.$filter = $filter;
         this.adNumber = "";
     }
 
@@ -221,13 +222,21 @@ export class KrinkelService {
 
 
     getGraphLoginInfo(start, end) {
-        return this.$http.get(`${this.BASEURL}/api/graph/uniqueLoginsPerVerbond?startDate=`+start+`&endDate=`+end).then((resp) => {
-                return resp.data;
+        console.log("start " + start);
+        return this.$http.get(`${this.BASEURL}/api/graph/uniqueLoginsPerVerbond?startDate=`+this.formatDate(start)+`&endDate=`+this.formatDate(end)).then((resp) => {
+            return resp.data;
             },
             () => {
                 this.popup();
             }
         );
+    }
+
+    formatDate (inDate)
+    {
+        var outDate = new Date();
+        outDate= this.$filter('date')(inDate,"dd/MM/yyyy");
+        return outDate;
     }
 
     getContactFromChiro(adNumber) {
@@ -346,4 +355,4 @@ export class KrinkelService {
     }
 }
 
-KrinkelService.$inject = ['$http', 'BASEURL', '$window'];
+KrinkelService.$inject = ['$http', 'BASEURL', '$window', '$filter'];

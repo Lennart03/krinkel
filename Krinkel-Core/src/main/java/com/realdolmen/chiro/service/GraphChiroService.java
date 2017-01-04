@@ -14,6 +14,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 
+import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -142,53 +144,106 @@ public class GraphChiroService {
     }
 */
     @PreAuthorize("@GraphChiroServiceSecurity.hasPermissionToGetLoginData()")
-    public SortedMap getLoginData(Date startDate,Date endDate) {
+    public LinkedHashMap<Verbond, LinkedHashMap<String, Integer>> getLoginData(Date startDate,Date endDate) throws ParseException {
         return getUniqueLoginsPerVerbond(startDate,endDate);
     }
 
 
-    public SortedMap<Verbond, SortedMap<String, Integer>> getUniqueLoginsPerVerbond(Date startDate, Date endDate) {
-        TreeMap<Verbond, SortedMap<String, Integer>> uniqueLoginsPerVerbond = new TreeMap<>();
+    public LinkedHashMap<Verbond, LinkedHashMap<String, Integer>> getUniqueLoginsPerVerbond(Date startDate, Date endDate) throws ParseException {
+        LinkedHashMap<Verbond, SortedMap<Date, Integer>> uniqueLoginsPerVerbond = new LinkedHashMap<>();
+        LinkedHashMap<Verbond,LinkedHashMap<String,Integer>> returnMap =  new LinkedHashMap<>();
         List<LoginLog> allLogs = null;
-        List<String> distinctStamps;
+        List<Date> distinctStamps;
 
         fillMapWithAllVerbonden(uniqueLoginsPerVerbond);
-        SimpleDateFormat frmt = new SimpleDateFormat("dd/MM/yyyy");
+        DateFormat frmt = new SimpleDateFormat("dd/MM/yyyy");
 
             allLogs = loginLoggerRepository.findLogsBetweenDates(startDate, endDate);
-
+            distinctStamps = loginLoggerRepository.findDistinctStamps(startDate,endDate);
+/*
             distinctStamps = loginLoggerRepository.findDistinctStamps(startDate, endDate)
-                    .stream()
+                    .stream().sorted()
                     .map(date->frmt.format(date))
-                    .collect(Collectors.toList());
+                    .collect(Collectors.toList());*/
+/*
+        int y=0;
+        for(Date i : distinctStamps)
+        {   y++;
+            System.out.println(i.toString()+" distinct stamps " + y);
+        }
+*/
+        allLogs.parallelStream().forEach(log -> {
+            try {
+                mapLoginLogs(log, uniqueLoginsPerVerbond);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+        });
 
-        allLogs.parallelStream().forEach(log -> mapLoginLogs(log, uniqueLoginsPerVerbond));
+        for(LoginLog l: allLogs)
+        {
+            System.out.println("all logs print " + frmt.format(l.getStamp()));
+        }
 
         uniqueLoginsPerVerbond.forEach((key, value) -> {
-            uniqueLoginsPerVerbond.put(key, fillMapWithZeroValuesOnDaysWhereThereAreNoLogins(value, distinctStamps));
+            try {
+                uniqueLoginsPerVerbond.put(key, fillMapWithZeroValuesOnDaysWhereThereAreNoLogins(value, distinctStamps));
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
         });
 
 
-        for(Map.Entry<Verbond, SortedMap<String, Integer>> entry : uniqueLoginsPerVerbond.entrySet())
+        for(Map.Entry<Verbond, SortedMap<Date, Integer>> entry : uniqueLoginsPerVerbond.entrySet())
         {
-            System.out.println("key "+entry.getKey());
-            System.out.println("value "+entry.getValue());
+            System.out.println(entry.getValue().size() + " sorted map size");
+            LinkedHashMap<String,Integer> conversionMap = new LinkedHashMap<>();
+            for(Map.Entry<Date,Integer> e : entry.getValue().entrySet())
+            {
+            System.out.println("formated date " +frmt.format(e.getKey()));
+            conversionMap.put(frmt.format(e.getKey()),e.getValue());
+            System.out.println("key: "+e.getKey()+" value "+e.getValue());
+           // System.out.println("key "+entry.getKey());
+           // System.out.println("value "+entry.getValue());
+            }
+            System.out.println("size of conversionmap " + conversionMap.size());
+            System.out.println("entry.key " +entry.getKey());
+            System.out.println("conversionmap.values.tostring " + conversionMap.values().toString());
+            returnMap.put(entry.getKey(),conversionMap);
         }
-        return uniqueLoginsPerVerbond;
+        System.out.println(returnMap.size() + " returnmap size");
+        System.out.println("returnmaps.values.tostring " + returnMap.values().toString());
+        return returnMap;
     }
 
-    private void mapLoginLogs(LoginLog log, SortedMap<Verbond, SortedMap<String, Integer>> treeMap) {
+    private void mapLoginLogs(LoginLog log, LinkedHashMap<Verbond, SortedMap<Date, Integer>> treeMap) throws ParseException {
+        System.out.println("call mapLoginLogs");
         Verbond verbondFromStamNumber = Verbond.getVerbondFromStamNumber(log.getStamNumber());
-        SimpleDateFormat frmt = new SimpleDateFormat("dd/MM/yyyy");
-        SortedMap<String, Integer> dateIntegerSortedMap = fillMapWithDateToLoginCount(frmt.format(log.getStamp()), treeMap.get(verbondFromStamNumber));
+        SortedMap<Date, Integer> dateIntegerSortedMap = fillMapWithDateToLoginCount(log.getStamp(), treeMap.get(verbondFromStamNumber));
 
         treeMap.put(verbondFromStamNumber, dateIntegerSortedMap);
     }
 
-    private SortedMap<String, Integer> fillMapWithZeroValuesOnDaysWhereThereAreNoLogins(SortedMap<String, Integer> sortedMap, List<String> distinctStamps) {
+    private SortedMap<Date, Integer> fillMapWithZeroValuesOnDaysWhereThereAreNoLogins(SortedMap<Date, Integer> sortedMap, List<Date> distinctStamps) throws ParseException {
+        System.out.println("call fillMapWithZeroValesOnDaysWhereThereAreNoLogins");
+        SimpleDateFormat frmt = new SimpleDateFormat("dd/MM/yyyy");
+        SortedMap<String,Integer> buffer= new TreeMap<>();
+        /*for(Map.Entry<Date,Integer> entry : sortedMap.entrySet()) {
+            Date key = entry.getKey();
+            Integer value = entry.getValue();
+            buffer.put(frmt.format(key),value);
+            System.out.println(key + " => " + value);
+        }*/
+        /*
+        Iterator<Date> i = distinctStamps.iterator();
+        while(i.hasNext())
+        {   java.util.Date a = i.next();
+            System.out.println(a);
+        }*/
         if (sortedMap.size() != distinctStamps.size()) {
-            distinctStamps.parallelStream().forEach(stamp -> {
+            distinctStamps.stream().sorted().forEach(stamp -> {
                 if (!sortedMap.containsKey(stamp)) {
+                            System.out.println("stamp = " + stamp);
                     sortedMap.put(stamp, 0);
                 }
             });
@@ -199,10 +254,14 @@ public class GraphChiroService {
         return sortedMap;
     }
 
-    private SortedMap<String, Integer> fillMapWithDateToLoginCount(String date, SortedMap<String, Integer> map) {
+    private SortedMap<Date, Integer> fillMapWithDateToLoginCount(java.util.Date date, SortedMap<Date, Integer> map) throws ParseException {
+        System.out.println("call fillMapWithDateToLoginCount");
+        SimpleDateFormat frmt = new SimpleDateFormat("dd/MM/yyyy");
         if (map.containsKey(date)) {
+            //System.out.println("fillMapWithDateToLoginCount " + frmt.format(date));
             map.put(date, map.get(date) + 1);
         } else {
+            //System.out.println("fillMapWithDateToLoginCount " + date);
             map.put(date, 1);
         }
         return map;
@@ -214,9 +273,10 @@ public class GraphChiroService {
      *
      * @param map
      */
-    private void fillMapWithAllVerbonden(SortedMap<Verbond, SortedMap<String, Integer>> map) {
+    private void fillMapWithAllVerbonden(LinkedHashMap<Verbond, SortedMap<Date, Integer>> map) {
+        System.out.println("call fillMapWithAllVerbonden");
         for (Verbond verbond : Verbond.values()) {
-            TreeMap<String, Integer> uniqueLoginsPerDate = new TreeMap<>();
+            SortedMap<Date, Integer> uniqueLoginsPerDate = new TreeMap<>();
             map.put(verbond, uniqueLoginsPerDate);
         }
     }

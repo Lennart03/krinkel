@@ -11,6 +11,7 @@ import org.springframework.test.context.ContextConfiguration;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.SortedMap;
 
@@ -29,8 +30,8 @@ public class GraphChiroServiceTest extends SpringIntegrationTest {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
         Date start = simpleDateFormat.parse("01/12/2016");
         Date end = simpleDateFormat.parse("31/12/2016");
-        SortedMap<Verbond, SortedMap<String, Integer>> uniqueLoginsPerVerbond = graphChiroService.getUniqueLoginsPerVerbond(start, end);
-        for (Map.Entry<Verbond, SortedMap<String, Integer>> verbondSortedMapEntry : uniqueLoginsPerVerbond.entrySet()) {
+        LinkedHashMap<Verbond, LinkedHashMap<String, Integer>> uniqueLoginsPerVerbond = graphChiroService.getUniqueLoginsPerVerbond(start, end);
+        for (Map.Entry<Verbond, LinkedHashMap<String, Integer>> verbondSortedMapEntry : uniqueLoginsPerVerbond.entrySet()) {
             System.err.println("VERBOND: " + verbondSortedMapEntry.getKey());
             int counter = 1;
             for (Map.Entry<String, Integer> stringIntegerEntry : verbondSortedMapEntry.getValue().entrySet()) {

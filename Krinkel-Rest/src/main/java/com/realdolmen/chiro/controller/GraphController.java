@@ -14,10 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.List;
-import java.util.SortedMap;
-import java.util.TreeMap;
+import java.util.*;
 
 
 @RestController
@@ -37,7 +34,7 @@ public class GraphController {
 
 
     @RequestMapping("/api/graph/uniqueLoginsPerVerbond")
-    public SortedMap<Verbond, SortedMap<String, Integer>> getUniqueLoginsPerVerbond(@RequestParam("startDate") String startDate,@RequestParam("endDate") String endDate) throws ParseException {
+    public LinkedHashMap<Verbond, LinkedHashMap<String, Integer>> getUniqueLoginsPerVerbond(@RequestParam("startDate") String startDate, @RequestParam("endDate") String endDate) throws ParseException {
             System.out.println("startDate = " + startDate.toString());
             System.out.println("endDate = " + endDate.toString());
         Date start;
