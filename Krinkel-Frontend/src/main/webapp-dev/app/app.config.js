@@ -59,6 +59,10 @@ export function appConfig($routeProvider, $locationProvider) {
         template: '<krinkel-export></krinkel-export>'
     });
 
+    $routeProvider.when('/generate-groups', {
+        template: '<generate-groups></generate-groups>'
+    });
+
     $routeProvider.when('/verbonden', {
         template: '<verbonden></verbonden>'
     });

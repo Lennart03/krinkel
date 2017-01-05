@@ -120,6 +120,7 @@ public class ChiroUnitServiceSecurity {
     }
 
     private boolean checkMultipleStamNumbersForPermissionToSeeGewest(Map<String, RolesAndUpperClasses> rolesAndUpperClassesByStam, ChiroUnit chiroUnit, List<SecurityRole> securityRolesWithAccesToData) {
+
         for (Map.Entry<String, RolesAndUpperClasses> entry : rolesAndUpperClassesByStam.entrySet()) {
             if (entry.getValue().getSecurityRole().equals(SecurityRole.NATIONAAL)) {
                 return true;
@@ -137,6 +138,7 @@ public class ChiroUnitServiceSecurity {
     private boolean hasPermissionToSeeGroepen(User currentUser, ChiroUnit chiroUnit) {
         //get current user and some shit he has
         Map<String, RolesAndUpperClasses> rolesAndUpperClassesByStam = currentUser.getRolesAndUpperClassesByStam();
+
         String currentUserStamNumber = currentUser.getStamnummer();
         List<SecurityRole> securityRolesWithAccesToData = new ArrayList<>();
         securityRolesWithAccesToData.add(SecurityRole.NATIONAAL);

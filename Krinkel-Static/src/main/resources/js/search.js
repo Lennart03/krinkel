@@ -55,8 +55,8 @@ function findInPage(seachText){
     }
     console.log("Searching for: " + seachText);
     seachText = seachText.trim().toLowerCase();
-	let result;
-	for(let i = 0; i < keywords.length; i++){
+	var result;
+	for(var i = 0; i < keywords.length; i++){
         if(keywords[i].keywords.indexOf(seachText) != -1){
             result = keywords[i].id;
             break;
@@ -73,7 +73,7 @@ function findInPage(seachText){
 
 function fallback(searchText){
     console.log("No results, running fallback...");
-    let searchBar = $("#searchBarFaq");
+    var searchBar = $("#searchBarFaq");
     searchBar.val(""); //make the value empty, otherwise it will be included in search
 	if(isChrome || isBlink){
         console.log("Using chrome fallback");
@@ -91,8 +91,8 @@ function fallback(searchText){
 
 function showError(){
 	//show an error about using ctrl-F/find in page
-	let OS= getMobileOperatingSystem();
-	let message;
+	var OS= getMobileOperatingSystem();
+	var message;
 	switch(OS){
         case "unknown":
             message="Geen resultaat gevonden, probeer een andere zoekterm of gebruik de zoekfunctie van je browser (CTRL+F)";

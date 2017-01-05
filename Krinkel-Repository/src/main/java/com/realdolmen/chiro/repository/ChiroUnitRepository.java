@@ -45,6 +45,11 @@ public interface ChiroUnitRepository extends JpaRepository<RawChiroUnit, String>
             "GROUP BY c.verbondStamNummer, c.verbondNaam")
     List<ChiroUnit> findAllVerbonden();
 
+    @Query("SELECT NEW com.realdolmen.chiro.domain.units.ChiroUnit(c.verbondStamNummer, c.verbondNaam) FROM RegistrationParticipant r, RawChiroUnit c WHERE " +
+            "r.adNumber = ?1" +
+            " AND " +
+            "r.stamnumber = c.groepStamNummer")
+    ChiroUnit findUnionParticipant(String adNumber);
     /**
      * Get the nr of participants + volunteers who are in the verbond specified by the given verbondStamNummer
      * @param verbondStamNummer
@@ -119,5 +124,4 @@ public interface ChiroUnitRepository extends JpaRepository<RawChiroUnit, String>
     @Query("SELECT p FROM RegistrationParticipant p, RawChiroUnit c " +
             "WHERE c.groepStamNummer = ?1 AND p.stamnumber = c.groepStamNummer")
     List<RegistrationParticipant> returnParticipantsByGroep (String groepStamNummer);
-
 }

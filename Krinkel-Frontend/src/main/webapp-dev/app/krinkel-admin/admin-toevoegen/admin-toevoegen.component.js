@@ -5,14 +5,13 @@ class AdminToevoegenController {
         this.KrinkelService = KrinkelService;
         this.AuthService = AuthService;
         this.admins = [];
-        this.init();
-
+        this.superAdmins = [];
     }
 
-    init() {
+    $onInit() {
         this.isLoading = true;
         this.KrinkelService.getAdmins().then((resp) => {
-            resp.forEach(admin => {
+            resp.forEach((admin) => {
                 var admin = {
                     firstname: admin.firstname,
                     lastname: admin.lastname,
@@ -21,9 +20,13 @@ class AdminToevoegenController {
                 };
                 this.admins.push(admin);
             });
+        });
+        this.KrinkelService.getSuperAdmins().then((resp) => {
+            resp.forEach((adNumber)  => {
+                this.superAdmins.push(adNumber);
+            });
             this.isLoading = false;
         });
-
     }
 
     /**
@@ -59,26 +62,30 @@ class AdminToevoegenController {
     }
 
     popup(adNumber) {
-        Materialize.toast('Geen gebruiker gevonden voor ingegeven AD nummer '+ adNumber, 10000, 'red rounded');
+        Materialize.toast('Geen gebruiker gevonden voor ingegeven AD nummer '+ adNumber, 5000, 'red rounded');
     }
 
     popupAlreadyAdmin() {
-        Materialize.toast('Deze persoon heeft al admin rechten.', 10000, 'red rounded');
+        Materialize.toast('Deze persoon heeft al admin rechten.', 5000, 'red rounded');
     }
 
-    isCurrentUser(adNumber) {
-        let user = this.AuthService.getLoggedinUser();
-        return (user.adnummer == adNumber);
+    isSuperAdmin(adNumber) {
+        let isSuperAdmin = false;
+        this.superAdmins.forEach((admin) => {
+            if(admin ==  adNumber){
+                isSuperAdmin = true;
+            }
+        });
+        return isSuperAdmin;
     }
 
     isAdmin(adNumber) {
-        let isAdmin = false;
-        this.admins.forEach(admin => {
+        this.admins.forEach(function(admin) {
             if (admin.adNumber == adNumber) {
-                isAdmin = true;
+                    return true;
             }
         });
-        return isAdmin;
+        return false;
     }
 
     /**

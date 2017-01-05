@@ -34,5 +34,6 @@ public class EmailBatchService {
 			RegistrationParticipant participant = registrationParticipantRepository.findByAdNumber(r.getAdNumber());
 			emailSenderService.sendMail(participant);
 		});
+		Integer i;
 	}
 }

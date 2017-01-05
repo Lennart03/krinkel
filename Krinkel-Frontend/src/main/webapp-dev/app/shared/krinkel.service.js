@@ -290,7 +290,7 @@ export class KrinkelService {
      * @returns {*}
      */
     getAdmins() {
-        return this.$http.get(`${this.BASEURL}/api/admin`).then((resp) => {
+        return this.$http.get(`${this.BASEURL}/api/admins`).then((resp) => {
             return resp.data;
         }, () => {
                 this.popup();
@@ -299,15 +299,32 @@ export class KrinkelService {
     }
 
     /**
+     * Used to retrieve all the super admins in the application
+     * */
+    getSuperAdmins() {
+        return this.$http.get(`${this.BASEURL}/api/superadmins`).then((resp) => {
+            return resp.data;
+        }, () => {
+            this.popup();
+        });
+    }
+
+    isSuperAdmin(adNumber) {
+        return this.$http.get(`${this.BASEURL}/api/superadmins/${adNumber}`).then((resp) => {
+            return resp.data;
+        });
+    }
+
+    /**
      * Requests to give the person admin rights with the given adnumber
      * @param adNumber unique identiefies given by Chiro
      */
     postAdmin(adNumber) {
-        return this.$http.post(`${this.BASEURL}/api/admin/${adNumber}`);
+        return this.$http.post(`${this.BASEURL}/api/admins/${adNumber}`);
     }
 
     deleteAdmin(adNumber) {
-        return this.$http.post(`${this.BASEURL}/api/admin/delete/${adNumber}`);
+        return this.$http.delete(`${this.BASEURL}/api/admins/${adNumber}`);
     }
 
     getBasket() {
@@ -338,6 +355,13 @@ export class KrinkelService {
 
     removePersonFromBasket(adNumber) {
         return this.$http.get(`${this.BASEURL}/api/basket/delete/${adNumber}`).then((resp) => {
+            return resp.data;
+        });
+    }
+
+    generateGroups(groupSize) {
+        console.log("generate groups");
+        return this.$http.get(`${this.BASEURL}/tools/generate-groups/${groupSize}`).then((resp) => {
             return resp.data;
         });
     }

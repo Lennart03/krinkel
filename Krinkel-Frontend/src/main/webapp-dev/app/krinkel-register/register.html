@@ -211,8 +211,7 @@
                 <div>
                     <!--<i class="small material-icons prefix">mood</i>-->
                     <input type="checkbox" id="buddy" ng-model="$ctrl.newPerson.buddy"/>
-                    <label for="buddy">Ik wil mee als buddy op de internationale kampgrond en spreek vlot volgende
-                        talen:
+                    <label for="buddy">Ik wil mee op de internationale kampgrond en spreek de volgende talen:
                     </label>
 
                     <!-- Modal Trigger -->
@@ -223,13 +222,9 @@
                     <!-- Modal Structure -->
                     <div id="modal1" class="modal">
                         <div class="modal-content">
-                            <h4>Wat is een <i>buddy</i></h4>
-                            <p> Als buddy zit je in een leefgroep met internationale deelnemers en andere buddy’s.
-                                Je
-                                verblijft
-                                ook op de internationale kampgrond. Je bent mee verantwoordelijk voor een vlotte
-                                Krinkel
-                                voor internationale gasten.</p>
+                            <h4>Wat is <i>Krinkel internationaal</i>?</h4>
+                            <p>Bij Krinkel internationaal zit je in een leefgroep met internationale deelnemers en andere Chiro-leden.
+                                Je verblijft ook op de internationale kampgrond.</p>
                         </div>
 
                         <div class="modal-footer">
@@ -264,25 +259,33 @@
         <div class="row" ng-show="$ctrl.type === 'volunteer'">
             <div class="input-field col s12 m6">
                 <i class="material-icons prefix">date_range</i>
-                <select multiple ng-model="$ctrl.newPerson.preCamp">
+                <select multiple name="voorwacht" ng-model="$ctrl.newPerson.preCamp">
                     <option value="" disabled selected>Voorwacht</option>
                     <option value="2017-08-21">maandag 21 augustus</option>
                     <option value="2017-08-22">dinsdag 22 augustus</option>
                     <option value="2017-08-23">woensdag 23 augustus</option>
                     <option value="2017-08-24">donderdag 24 augustus</option>
                 </select>
-                <label>Voorwacht</label>
+                <label>Voorwacht *</label>
+                <p ng-show="(($ctrl.validateNow || personForm.voorwacht.$touched) && !$ctrl.preCampSet())" class="error">
+                    <i class="material-icons">error_outline</i>
+                    Voorwacht is verplicht
+                </p>
             </div>
 
             <div class="input-field col s12 m6">
                 <i class="material-icons prefix">date_range</i>
-                <select multiple ng-model="$ctrl.newPerson.postCamp">
+                <select multiple name="nawacht" ng-model="$ctrl.newPerson.postCamp">
                     <option value="" disabled selected>Nawacht</option>
                     <option value="2017-08-31">donderdag 31 augustus</option>
                     <option value="2017-09-01">vrijdag 1 september</option>
                     <option value="2017-09-02">zaterdag 2 september</option>
                 </select>
-                <label>Nawacht</label>
+                <label>Nawacht *</label>
+                <p ng-show="(($ctrl.validateNow || personForm.nawacht.$touched) && !$ctrl.postCampSet())" class="error">
+                    <i class="material-icons">error_outline</i>
+                    Nawacht is verplicht
+                </p>
             </div>
         </div>
 
@@ -467,8 +470,15 @@
             kunnen zoeken. Je kan ons contacteren op 03/231 07 95 of <a href="mailto:info@krinkel.be">info@krinkel.be</a>.
         </p>
 
-        <div ng-show="$ctrl.user !== 'admin'">
+        <div ng-show="$ctrl.user !== 'admin' && $ctrl.type !== 'volunteer'">
             <a ng-click="$ctrl.initModal4(personForm.$valid)" class="btn">
+                Betalen
+                <i class="material-icons right">send</i>
+            </a>
+        </div>
+
+        <div ng-show="$ctrl.user !== 'admin' && $ctrl.type === 'volunteer'">
+            <a ng-click="$ctrl.initModal4Volunteer(personForm.$valid)" class="btn">
                 Betalen
                 <i class="material-icons right">send</i>
             </a>

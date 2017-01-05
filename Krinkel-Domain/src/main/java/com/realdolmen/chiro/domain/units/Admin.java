@@ -1,15 +1,17 @@
 package com.realdolmen.chiro.domain.units;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import org.hibernate.validator.constraints.Email;
+import org.hibernate.validator.constraints.NotBlank;
+
+import javax.persistence.*;
 
 /**
  * Created by LVDBB73 on 8/12/2016.
  */
 @Entity
 @Table(name = "admins")
+@DiscriminatorColumn(name="ADMIN_TYPE")
+@DiscriminatorValue("admin")
 public class Admin {
 
     @Id
@@ -17,12 +19,16 @@ public class Admin {
     private Integer adNumber;
 
     @Column(name = "email")
+    @Email
+    @NotBlank
     private String email;
 
     @Column(name = "firstname")
+    @NotBlank
     private String firstname;
 
     @Column(name = "lastname")
+    @NotBlank
     private String lastname;
 
     public Integer getAdNumber() {
