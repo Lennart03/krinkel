@@ -14,7 +14,9 @@ public enum Verbond {
     HEUVELLAND("OG3000"),
     ROELAND("OG1000"),
     LIMBURG("LG0000"),
-    RD("0RD"); // For testing...
+    RD("0RD"),
+    WERKGROEPKRINKEL("4WK"),
+    OTHERS("OTHERS");// For testing...
 
 
     public static Verbond getVerbondFromStamNumber(String stamNumber) {
@@ -30,9 +32,17 @@ public enum Verbond {
 
         } else if (stamNumber.length() == 7) {
             return switchVerbondOnFirst3Letters(stamNumber);
-        } else if (stamNumber.equals("0RD")){ // For testing ...
+        } else if (stamNumber.equals("0RD")) { // For testing ...
             return Verbond.RD;
-        } else {
+        } else if (stamNumber.equals("4WK")) { // For testing ...
+            return Verbond.WERKGROEPKRINKEL;
+        }
+            else if(stamNumber != null)
+        {
+            return Verbond.OTHERS;
+        }
+
+        else {
             throw new RuntimeException("Invalid adNumber length in Verbond.getVerbondFromStamNumber()" + stamNumber);
         }
     }
