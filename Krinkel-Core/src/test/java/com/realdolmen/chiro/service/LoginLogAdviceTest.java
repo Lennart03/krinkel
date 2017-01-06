@@ -38,7 +38,7 @@ public class LoginLogAdviceTest extends IntegrationTest {
 	}
 
 	@Test
-	public void whenCasServiceCreatesTokenLoginLogsShouldContainUserAdNumber(){		
+	public void whenCasServiceCreatesTokenLoginLogsShouldContainUserAdNumber(){
 		Assert.assertNotNull(casService);
 		Assert.assertNotNull(loginLoggerRepository);		
 		casService.createToken(user);

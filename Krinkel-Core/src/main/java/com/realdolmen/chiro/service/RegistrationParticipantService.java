@@ -185,6 +185,20 @@ public class RegistrationParticipantService {
         return registrationParticipantRepository.save(participant);
     }
 
+    public boolean isUserAlreadyRegistered(String adNumber)
+    {
+        RegistrationParticipant participant = registrationParticipantRepository.findByAdNumber(adNumber);
+        System.out.println("participant tostring: " + participant.toString());
+        if (participant == null)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
     public RegistrationParticipant updatePaymentStatusAdmin(Long participantId, String paymentStatus) {
         RegistrationParticipant participant = registrationParticipantRepository.findOne(participantId);
         participant.updateLastChange();

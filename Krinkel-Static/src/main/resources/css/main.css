@@ -114,6 +114,19 @@ header {
   position: absolute;
 }
 
+.gradientNavbar {
+  /* FF3.6-15 */
+  /* Chrome10-25,Safari5.1-6 */
+  background: linear-gradient(to bottom, rgba(0, 0, 0, 0.4) 0%, rgba(0, 0, 0, 0.5) 71%, transparent 100%);
+  /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#66000000', endColorstr='#00000000',GradientType=0 );
+  /* IE6-9 */
+}
+
+.plainNavbar {
+  background-color: rgba(0, 0, 0, 0.7);
+}
+
 nav {
   background-color: transparent;
   box-shadow: none;
@@ -122,6 +135,7 @@ nav {
 
 nav .nav-wrapper {
   padding: 0 20px;
+  transition: top 0.2s ease-in-out;
 }
 
 nav .nav-wrapper .hide-on-med-and-down ul,
@@ -154,7 +168,6 @@ nav .nav-wrapper .hide-on-med-and-down li a:hover > svg {
 
 nav a.button-collapse i {
   font-size: 45px;
-  padding: 5px 10px 0 10px;
   line-height: 64px;
 }
 
@@ -178,9 +191,12 @@ nav .dropdown-content .active {
 }
 
 .brand-logo .logoDate {
-  vertical-align: middle;
+  top: 19px;
+  vertical-align: top;
   letter-spacing: 2px;
   font-size: 1rem;
+  position: relative;
+  padding-left: 20px;
 }
 
 .brand-logo:hover > .logoDate {
@@ -192,9 +208,15 @@ nav .dropdown-content .active {
 }
 
 .brand-logo img {
-  border-radius: 50%;
-  width: 100px;
+  padding-top: 15px;
+  width: 60px;
   vertical-align: middle;
+}
+
+@media only screen and (max-width: 992px) {
+  .brand-logo {
+    left: auto !important;
+  }
 }
 
 .sideNavLogo {
@@ -228,6 +250,10 @@ nav .dropdown-content .active {
   vertical-align: middle;
 }
 
+#sidenav-overlay {
+  z-index: auto;
+}
+
 .dropdown-content {
   top: 19px !important;
   height: auto !important;
@@ -248,11 +274,11 @@ nav .dropdown-content .active {
 
 @media only screen and (max-width: 992px) {
   .brand-logo img {
-    width: 150px;
+    width: 90px;
+    padding-left: 20px;
   }
   nav .brand-logo {
-    transform: translateX(0);
-    right: 0;
+    right: -20px;
   }
   nav .brand-logo img {
     float: right;
@@ -262,6 +288,12 @@ nav .dropdown-content .active {
   }
   .button-collapse {
     display: inherit !important;
+    height: 100% !important;
+  }
+  .button-collapse i {
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%);
   }
 }
 
@@ -345,6 +377,14 @@ nav .dropdown-content .active {
   }
 }
 
+.navUp {
+  top: -100px !important;
+}
+
+#sidenavSpacer {
+  padding-bottom: 50px;
+}
+
 body {
   height: auto;
   font-family: RobotoCondensed, sans-serif;
@@ -403,8 +443,8 @@ body {
 
 @media only screen and (min-width: 755px) {
   .landingPageMainImageText h1 {
-    top: 40%;
-    font-size: 60px;
+    bottom: 60%;
+    font-size: 55px;
     line-height: 97px;
   }
   .landingPageMainImageText .internationale {
@@ -447,8 +487,8 @@ body {
 }
 
 .landingPageKrinkelSlagzin2Date {
+  height: 0;
   margin-top: -30px;
-  padding-bottom: 20px;
 }
 
 .landingPageKrinkelSignUpText {
@@ -457,30 +497,30 @@ body {
 
 .landingPageCarouselWrapper {
   position: relative;
-  height: 100vh;
+  height: 90vh;
   border-top: 1px solid #309583;
 }
 
 .landingPageCarouselWrapper .carousel {
-  height: 100vh !important;
+  height: 90vh !important;
   position: relative;
   border-bottom: 1px solid #309583;
 }
 
 .landingPageCarouselWrapper .carousel .carousel-item .gal2, .landingPageCarouselWrapper .carousel .carousel-item .gal3, .landingPageCarouselWrapper .carousel .carousel-item .gal4, .landingPageCarouselWrapper .carousel .carousel-item .gal5, .landingPageCarouselWrapper .carousel .carousel-item .gal7, .landingPageCarouselWrapper .carousel .carousel-item .gal8 {
-  height: 100vh;
+  height: 90vh;
   background: no-repeat center center;
   background-size: cover;
 }
 
 .landingPageCarouselWrapper .carousel .carousel-item .gal1 {
-  height: 100vh;
+  height: 90vh;
   background: no-repeat 50% 25%;
   background-size: cover;
 }
 
 .landingPageCarouselWrapper .carousel .carousel-item .gal6 {
-  height: 100vh;
+  height: 90vh;
   background: no-repeat 100% 100%;
   background-size: cover;
 }
@@ -768,6 +808,10 @@ body {
   transform: rotate(-3deg);
 }
 
+#smallerTitle {
+  font-size: 21px;
+}
+
 .aboutPageTeamWrapper {
   text-align: center;
   max-width: 900px;
@@ -806,17 +850,14 @@ body {
 }
 
 .aboutPageTeamBannerTitle {
-  width: 100%;
-  text-align: center;
-  margin: 0 auto;
   font-family: aleo, sans-serif;
   font-weight: 600;
   font-size: 35px;
   color: white;
   position: absolute;
   top: calc(50% - 14px);
-  transform: rotate(-3deg);
-  left: 0;
+  left: 50%;
+  transform: translateX(-50%) rotate(-3deg);
 }
 
 .englishHomePageTeamBannerTitle {
@@ -1093,6 +1134,39 @@ body {
   }
 }
 
+#clockdiv {
+  font-weight: 100;
+  font-size: 1rem;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-pack: center;
+      justify-content: center;
+  -ms-flex-align: center;
+      align-items: center;
+  padding-bottom: 50px;
+}
+
+#clockdiv > div {
+  padding: .6em;
+  text-align: center;
+  background: rgba(48, 149, 131, 0.5);
+  border-radius: .1em;
+  border: 1px solid #309583;
+}
+
+#clockdiv > div > span {
+  font-size: 2em;
+  padding: .5em;
+  border-radius: 3px;
+  background: rgba(48, 149, 131, 0.7);
+  display: inline-block;
+}
+
+.smalltext {
+  padding-top: .3em;
+  font-size: 1rem;
+}
+
 footer {
   background-color: #000;
   border-top: 1px solid #309583;
@@ -1134,6 +1208,12 @@ footer div:last-child {
   footer div:first-child, footer div:last-child {
     float: none;
   }
+}
+
+.footerSpacer {
+  visibility: hidden;
+  height: 13px;
+  display: block;
 }
 
 /* Components and Modules - Re-usable site elements.

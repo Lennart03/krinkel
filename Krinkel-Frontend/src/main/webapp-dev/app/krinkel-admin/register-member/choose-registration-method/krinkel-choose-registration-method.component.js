@@ -17,8 +17,11 @@ class ChooseRegistrationController {
     }
 
     subscribeMember() {
-        this.RegisterOtherMemberService.setSubscribeMember(true);
-        this.$location.path("/register-participant");
+        var adNumber = this.RegisterOtherMemberService.getParticipant().adNumber;
+        if(this.RegisterOtherMemeberService.checkIfParticipantIsAdded(adNumber)) {
+            this.RegisterOtherMemberService.setSubscribeMember(true);
+            this.$location.path("/register-participant");
+        }
     }
 
     subscribeColleague() {

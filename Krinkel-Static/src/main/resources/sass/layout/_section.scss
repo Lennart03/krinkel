@@ -41,8 +41,8 @@ section {}
   }
   @media only screen and (min-width: 755px) {
     h1{
-      top:40%;
-      font-size: 60px;
+      bottom:60%;
+      font-size: 55px;
       line-height: 97px;
     }
     .internationale {
@@ -84,8 +84,8 @@ section {}
 }
 
 .landingPageKrinkelSlagzin2Date {
-  margin-top: -30px;
-  padding-bottom: 20px;
+  height: 0;
+  margin-top: -30px
 }
 
 .landingPageKrinkelSignUpText {
@@ -94,25 +94,25 @@ section {}
 
 .landingPageCarouselWrapper {
   position: relative;
-  height: 100vh;
+  height: $heightCarousel;
   border-top: 1px solid $hoofdkleur;
   .carousel {
-    height: 100vh !important;
+    height: $heightCarousel !important;
     position: relative;
     border-bottom: 1px solid $hoofdkleur;
     .carousel-item {
       .gal2, .gal3, .gal4, .gal5, .gal7, .gal8 {
-        height: 100vh;
+        height: $heightCarousel;
         background: no-repeat center center;
         background-size: cover;
       }
       .gal1 {
-        height: 100vh;
+        height: $heightCarousel;
         background: no-repeat 50% 25%;
         background-size: cover;
       }
       .gal6 {
-        height: 100vh;
+        height: $heightCarousel;
         background: no-repeat 100% 100%;
         background-size: cover;
       }
@@ -286,6 +286,10 @@ section {}
   transform: rotate(-3deg);
 }
 
+#smallerTitle {
+  font-size: 21px;
+}
+
 .aboutPageTeamWrapper {
   text-align: center;
   max-width: $contentWidth + 100px;
@@ -320,17 +324,14 @@ section {}
 }
 
 .aboutPageTeamBannerTitle {
-  width: 100%;
-  text-align: center;
-  margin: 0 auto;
   font-family: aleo, sans-serif;
   font-weight: 600;
   font-size: 35px;
   color: $white;
   position: absolute;
   top: calc(50% - 14px);
-  -webkit-transform: rotate(-3deg);
-  left: 0;
+  left: 50%;
+  transform: translateX(-50%) rotate(-3deg);
 }
 
 .englishHomePageTeamBannerTitle {
@@ -387,7 +388,6 @@ section {}
   }
 }
 @media (max-width: 993px) {
-
   .faqPageSearchWrapper {
     margin: 50px;
 
@@ -566,4 +566,34 @@ section {}
     color:$lightGreen;
     cursor: pointer;
   }
+}
+
+#clockdiv {
+  font-weight: 100;
+  font-size: 1rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-bottom: 50px;
+}
+
+#clockdiv > div {
+  padding: .6em;
+  text-align: center;
+  background: rgba($hoofdkleur, .5);
+  border-radius: .1em;
+  border: 1px solid $hoofdkleur;
+}
+
+#clockdiv > div > span {
+  font-size: 2em;
+  padding: .5em;
+  border-radius: 3px;
+  background: rgba($hoofdkleur, .7);
+  display: inline-block;
+}
+
+.smalltext {
+  padding-top: .3em;
+  font-size: 1rem;
 }
