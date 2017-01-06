@@ -28,10 +28,10 @@ nav {
       .hide-on-med-and-down li a:hover > svg {
         fill: $hoofdkleur;
       }
+      transition: top 0.2s ease-in-out;
     }
   a.button-collapse i {
     font-size: 45px;
-    padding: 5px 10px 0 10px;
     line-height: 64px;
     &:hover {
       color: $darkGreen;
@@ -56,9 +56,12 @@ nav {
 
 .brand-logo {
   .logoDate {
-    vertical-align: middle;
+    top: 19px;
+    vertical-align: top;
     letter-spacing: 2px;
     font-size: 1rem;
+    position: relative;
+    padding-left: 20px;
   }
   &:hover > .logoDate {
     color: $hoofdkleur;
@@ -67,9 +70,12 @@ nav {
     color: $darkGreen;
   }
   img {
-    border-radius: 50%;
-    width: 100px;
+    padding-top: 15px;
+    width: 60px;
     vertical-align: middle;
+  }
+  @media only screen and (max-width: 992px) {
+    left: auto !important;
   }
 }
 
@@ -101,6 +107,10 @@ nav {
   }
 }
 
+#sidenav-overlay {
+  z-index: auto;
+}
+
 .dropdown-content {
   top: 19px !important;
   height: auto !important;
@@ -121,11 +131,11 @@ nav {
 
 @media only screen and (max-width: 992px) {
   .brand-logo img {
-    width: 150px;
+    width: 90px;
+    padding-left: 20px;
   }
   nav .brand-logo {
-    transform: translateX(0);
-    right: 0;
+    right: -20px;
     img {
       float: right;
     }
@@ -134,8 +144,13 @@ nav {
     display: none !important;
   }
   .button-collapse {
-      display: inherit !important;
+    display: inherit !important;
+    height: 100% !important;
+    i {
+      @include vertical-align;
+    }
   }
+
 }
 
 @media only screen and (max-width: 1045px) {
@@ -201,4 +216,12 @@ nav {
   @media only screen and (max-width: 1280px) {
     display: block !important;
   }
+}
+
+.navUp {
+  top: -100px !important;
+}
+
+#sidenavSpacer {
+  padding-bottom: 50px;
 }

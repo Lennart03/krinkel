@@ -31,6 +31,7 @@ public interface LoginLoggerRepository extends JpaRepository<LoginLog, Long> {
 
     @Query("SELECT DISTINCT l.stamp " +
             "FROM LoginLog l " +
-            "WHERE l.stamp BETWEEN :startDate AND :endDate")
+            "WHERE l.stamp BETWEEN :startDate AND :endDate " +
+            "ORDER BY l.stamp asc")
     List<Date> findDistinctStamps(@Param("startDate") Date startDate, @Param("endDate") Date endDate);
 }
