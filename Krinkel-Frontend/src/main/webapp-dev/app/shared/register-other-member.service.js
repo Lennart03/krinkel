@@ -21,17 +21,19 @@ export class RegisterOtherMemberService {
         );
     }
 
-    checkIfParticipantIsAdded(adNumber)
+    /*
+    Returns true if not yet registered, returns false if is registered
+     */
+    checkIfParticipantIsNotYetAdded(adNumber)
     {
-        return this.$http.get(`${this.BASEURL}/api/notYetAdded?adNumber=${adNumber}`).then((resp) => {
+        console.log('CHECKING IF PARTICIPANT IS ADDED')
+        return this.$http.get(`${this.BASEURL}/api/notYetAdded/${adNumber}`).then((resp) => {
                 console.log('response from service: ' +resp);
-                console.log('response.data from service: ' + JSON.stringify(resp.data));
-                return resp;
+                console.log('response.data from service: ' + resp.data);
+                return resp.data;
             },
             (resp) => {
-                console.log('response error from service ' +resp);
-                console.log('response error from service ' +resp.data);
-                return resp;
+                popup();
             }
         );
     }
@@ -61,10 +63,7 @@ export class RegisterOtherMemberService {
     }
 
     popup() {
-        Materialize.toast('Sessie verlopen, binnen 10 seconden herstart de applicatie', 10000, 'red rounded');
-        setTimeout(() => {
-            this.$window.location.reload();
-        }, 10000);
+        Materialize.toast('Er is iets fout gelopen bij het nakijken of de gebruiker al geregistreerd is, onze excuses.', 10000, 'red rounded');
     }
 }
 RegisterOtherMemberService.$inject = ['$http', 'BASEURL', '$window'];

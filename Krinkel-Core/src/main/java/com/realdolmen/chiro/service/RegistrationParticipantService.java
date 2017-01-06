@@ -185,17 +185,13 @@ public class RegistrationParticipantService {
         return registrationParticipantRepository.save(participant);
     }
 
-    public boolean isUserAlreadyRegistered(String adNumber)
-    {
+    public boolean isUserAlreadyRegistered(String adNumber) {
         RegistrationParticipant participant = registrationParticipantRepository.findByAdNumber(adNumber);
-        System.out.println("participant tostring: " + participant.toString());
-        if (participant == null)
-        {
-            return true;
-        }
-        else
-        {
+        if (participant == null) {
             return false;
+        }
+        else {
+            return true;
         }
     }
 
