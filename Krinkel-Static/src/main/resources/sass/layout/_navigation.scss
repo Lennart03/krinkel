@@ -217,9 +217,15 @@ nav {
     display: block !important;
   }
 }
-
+#animNav{
+  top: 0;
+}
 .navUp {
   top: -100px !important;
+  transition: all 1s ease-in-out;
+}
+.clickThrough{
+  pointer-events: none;
 }
 
 #sidenavSpacer {
