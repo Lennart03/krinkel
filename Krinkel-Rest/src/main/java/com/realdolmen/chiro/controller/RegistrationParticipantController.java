@@ -9,6 +9,7 @@ import com.realdolmen.chiro.mspservice.MultiSafePayService;
 import com.realdolmen.chiro.service.RegistrationParticipantService;
 import com.realdolmen.chiro.service.UserService;
 import com.realdolmen.chiro.util.StamNumberTrimmer;
+import com.sun.org.apache.xpath.internal.operations.Bool;
 import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -101,11 +102,11 @@ public class RegistrationParticipantController {
     }
 
     //zal checken of een
-    @RequestMapping(method = RequestMethod.POST, value = "/api/notYetAdded")
-    public ResponseEntity<?> notYetAdded(@RequestParam("adNumber") String adNumber)
-    {
+    @RequestMapping(method = RequestMethod.GET, value = "/api/notYetAdded/{adNumber}")
+    public Boolean notYetAdded(@PathVariable("adNumber") String adNumber) {
         boolean registered = registrationParticipantService.isUserAlreadyRegistered(adNumber);
-        if(registered)
+        return !registered;
+        /*if(registered)
         {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
@@ -113,8 +114,7 @@ public class RegistrationParticipantController {
         {
             HttpHeaders headers = new HttpHeaders();
             return new ResponseEntity<>(headers,HttpStatus.ACCEPTED);
-        }
-
+        }*/
     }
 
 
