@@ -33,4 +33,3 @@ function copyResources() {
         .pipe(rename({dirname: "/res"}))
         .pipe(gulp.dest(conf.paths.dist));
 }
-
