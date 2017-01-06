@@ -3,7 +3,9 @@ INSERT INTO admins VALUES ('super-admin', 152504, 'blyweert.roel@gmail.com', 'Ro
 INSERT INTO admins VALUES ('super-admin', 109318, 'tom@horre.com', 'Tom', 'Horre');
 
 -- TODO these records need to be removed because these are the Realdolmen developers
+INSERT INTO admins VALUES ('admin',396942, 'jeroen.compagnie@realdolmen.com', 'Jeroen', 'Compagnie');
 -- Lennart for testing: leider bij chiro dolfijn
+/*
 INSERT INTO admins VALUES ('super-admin' , 396943, 'lennart.vandamme@realdolmen.com', 'Lennart', 'Van Damme');
 INSERT INTO admins VALUES ('admin',396949, 'wesley.vanmalcot@realdolmen.com', 'Wesley', 'Van Malcot');
 INSERT INTO admins VALUES ('admin',396945, 'nicky.fasoel@realdolmen.com', 'Nicky', 'Fasoel');
@@ -3020,3 +3022,4 @@ INSERT INTO groepen (groep_naam,groep_stam_nummer,gewest_stam_nummer,gewest_naam
 INSERT INTO groepen (groep_naam,groep_stam_nummer,gewest_stam_nummer,gewest_naam,verbond_stam_nummer,verbond_naam) VALUES ('FREEDOM','WM /1905','WG /1900','Oe Est','WG /0000','West-Vlaanderen');
 INSERT INTO groepen (groep_naam,groep_stam_nummer,gewest_stam_nummer,gewest_naam,verbond_stam_nummer,verbond_naam) VALUES ('Gaverke Beregoed!','WM /1907','WG /1900','Oe Est','WG /0000','West-Vlaanderen');
 INSERT INTO groepen (groep_naam,groep_stam_nummer,gewest_stam_nummer,gewest_naam,verbond_stam_nummer,verbond_naam) VALUES ('Klimop','WM /1908','WG /1900','Oe Est','WG /0000','West-Vlaanderen');
+*/

@@ -31,6 +31,10 @@ $( document ).ready(function(){
             +"%0D%0AReturn email: " + $('#email').val() + "%0D%0AVraag:%0D%0A"+$("#messageArea").val();
     });
     initializeClock();
+    $('.inscr').on('click', function(){
+        //alert("Coming soon!");
+        Materialize.toast('Coming soon!', 4000);
+    })
 });
 
 function checkBrowser() {
