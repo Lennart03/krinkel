@@ -30,6 +30,7 @@ $( document ).ready(function(){
         window.location = "mailto:info@krinkel.be?subject="+"Vraagje over krinkel: "+$('#subject').val()+"&body="+"Gesteld door: "+$('#name').val()
             +"%0D%0AReturn email: " + $('#email').val() + "%0D%0AVraag:%0D%0A"+$("#messageArea").val();
     });
+    initializeClock();
 });
 
 function checkBrowser() {
@@ -89,14 +90,15 @@ $('.scrollToSignup').on('click', function(){
     }, 1000); //tijd in ms
 });
 
-
+//hiding navbar
 var lastScrollPos = 0;
 $(window).scroll(function() {
     var scroll = $(window).scrollTop();
     var nav = $(".nav-wrapper");
 
-    if (!(/*@cc_on!@*/false || !!document.documentMode)) {
-        if ( scroll > lastScrollPos ) {
+    if (!(/*@cc_on!@*/false || !!document.documentMode)) {//if not IE
+        if (scroll >= $('.fixedHeader' ).height() - 100 && scroll > lastScrollPos ) {
+            //always show navbar when close to top because safari triggers a scroll down when it does the bounce effect
             nav.addClass("navUp");
         } else {
             nav.removeClass("navUp");
@@ -112,6 +114,8 @@ $(window).scroll(function() {
     }
 });
 
+
+//clock code
 function getTimeRemaining(endtime) {
     var t = Date.parse(endtime) - Date.parse(new Date());
     var seconds = Math.floor((t / 1000) % 60);
@@ -155,14 +159,4 @@ function initializeClock(id, endtime) {
         var timeinterval = setInterval(updateClock, 1000);
     }
 }
-
-function ready(fn) {
-    if (document.readyState != 'loading'){
-        fn();
-    } else {
-        document.addEventListener('DOMContentLoaded', fn);
-    }
-}
-
 var deadline = new Date(Date.parse('Aug 25 2017'));
-ready(initializeClock);

@@ -377,8 +377,13 @@ nav .dropdown-content .active {
   }
 }
 
+#animNav {
+  top: 0;
+}
+
 .navUp {
   top: -100px !important;
+  transition: all 1s ease-in-out;
 }
 
 #sidenavSpacer {
