@@ -35,8 +35,8 @@ public class GraphController {
 
     @RequestMapping("/api/graph/uniqueLoginsPerVerbond")
     public LinkedHashMap<Verbond, LinkedHashMap<String, Integer>> getUniqueLoginsPerVerbond(@RequestParam("startDate") String startDate, @RequestParam("endDate") String endDate) throws ParseException {
-            System.out.println("startDate = " + startDate.toString());
-            System.out.println("endDate = " + endDate.toString());
+            //System.out.println("startDate = " + startDate.toString());
+            //System.out.println("endDate = " + endDate.toString());
         Date start;
         Date end;
 
@@ -46,7 +46,7 @@ public class GraphController {
 
 
 
-        System.out.println("end date " +end.toString());
+        //System.out.println("end date " +end.toString());
 
         return graphChiroService.getLoginData(start,end);
     }

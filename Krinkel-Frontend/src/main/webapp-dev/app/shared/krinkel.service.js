@@ -222,7 +222,6 @@ export class KrinkelService {
 
 
     getGraphLoginInfo(start, end) {
-        console.log("start " + start);
         return this.$http.get(`${this.BASEURL}/api/graph/uniqueLoginsPerVerbond?startDate=`+this.formatDate(start)+`&endDate=`+this.formatDate(end)).then((resp) => {
             return resp.data;
             },
