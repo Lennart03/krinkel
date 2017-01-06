@@ -164,5 +164,11 @@ function ready(fn) {
     }
 }
 
-var deadline = new Date(Date.parse('Aug 25 2017'));
+var deadline;
+if ( document.title == 'Krinkel - Home' ) {
+    deadline = new Date(Date.parse('Aug 25 2017'));
+} else {
+    deadline = new Date(Date.parse('Aug 24 2017'));
+}
+
 ready(initializeClock);
