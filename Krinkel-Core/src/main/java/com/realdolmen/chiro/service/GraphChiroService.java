@@ -182,7 +182,7 @@ public class GraphChiroService {
 
         for(LoginLog l: allLogs)
         {
-            System.out.println("all logs print " + frmt.format(l.getStamp()));
+            //System.out.println("all logs print " + frmt.format(l.getStamp()));
         }
 
         uniqueLoginsPerVerbond.forEach((key, value) -> {
@@ -196,28 +196,28 @@ public class GraphChiroService {
 
         for(Map.Entry<Verbond, SortedMap<Date, Integer>> entry : uniqueLoginsPerVerbond.entrySet())
         {
-            System.out.println(entry.getValue().size() + " sorted map size");
+            //System.out.println(entry.getValue().size() + " sorted map size");
             LinkedHashMap<String,Integer> conversionMap = new LinkedHashMap<>();
             for(Map.Entry<Date,Integer> e : entry.getValue().entrySet())
             {
-            System.out.println("formated date " +frmt.format(e.getKey()));
+            //System.out.println("formated date " +frmt.format(e.getKey()));
             conversionMap.put(frmt.format(e.getKey()),e.getValue());
-            System.out.println("key: "+e.getKey()+" value "+e.getValue());
+            //System.out.println("key: "+e.getKey()+" value "+e.getValue());
            // System.out.println("key "+entry.getKey());
            // System.out.println("value "+entry.getValue());
             }
-            System.out.println("size of conversionmap " + conversionMap.size());
-            System.out.println("entry.key " +entry.getKey());
-            System.out.println("conversionmap.values.tostring " + conversionMap.values().toString());
+            //System.out.println("size of conversionmap " + conversionMap.size());
+            //System.out.println("entry.key " +entry.getKey());
+            //System.out.println("conversionmap.values.tostring " + conversionMap.values().toString());
             returnMap.put(entry.getKey(),conversionMap);
         }
-        System.out.println(returnMap.size() + " returnmap size");
-        System.out.println("returnmaps.values.tostring " + returnMap.values().toString());
+        //System.out.println(returnMap.size() + " returnmap size");
+        //System.out.println("returnmaps.values.tostring " + returnMap.values().toString());
         return returnMap;
     }
 
     private void mapLoginLogs(LoginLog log, LinkedHashMap<Verbond, SortedMap<Date, Integer>> treeMap) throws ParseException {
-        System.out.println("call mapLoginLogs");
+        //System.out.println("call mapLoginLogs");
         Verbond verbondFromStamNumber = Verbond.getVerbondFromStamNumber(log.getStamNumber());
         SortedMap<Date, Integer> dateIntegerSortedMap = fillMapWithDateToLoginCount(log.getStamp(), treeMap.get(verbondFromStamNumber));
 
@@ -225,7 +225,7 @@ public class GraphChiroService {
     }
 
     private SortedMap<Date, Integer> fillMapWithZeroValuesOnDaysWhereThereAreNoLogins(SortedMap<Date, Integer> sortedMap, List<Date> distinctStamps) throws ParseException {
-        System.out.println("call fillMapWithZeroValesOnDaysWhereThereAreNoLogins");
+        //System.out.println("call fillMapWithZeroValesOnDaysWhereThereAreNoLogins");
         SimpleDateFormat frmt = new SimpleDateFormat("dd/MM/yyyy");
         SortedMap<String,Integer> buffer= new TreeMap<>();
         /*for(Map.Entry<Date,Integer> entry : sortedMap.entrySet()) {
@@ -243,7 +243,7 @@ public class GraphChiroService {
         if (sortedMap.size() != distinctStamps.size()) {
             distinctStamps.stream().sorted().forEach(stamp -> {
                 if (!sortedMap.containsKey(stamp)) {
-                            System.out.println("stamp = " + stamp);
+                            //System.out.println("stamp = " + stamp);
                     sortedMap.put(stamp, 0);
                 }
             });
@@ -255,7 +255,7 @@ public class GraphChiroService {
     }
 
     private SortedMap<Date, Integer> fillMapWithDateToLoginCount(java.util.Date date, SortedMap<Date, Integer> map) throws ParseException {
-        System.out.println("call fillMapWithDateToLoginCount");
+        //System.out.println("call fillMapWithDateToLoginCount");
         SimpleDateFormat frmt = new SimpleDateFormat("dd/MM/yyyy");
         if (map.containsKey(date)) {
             //System.out.println("fillMapWithDateToLoginCount " + frmt.format(date));
@@ -274,7 +274,7 @@ public class GraphChiroService {
      * @param map
      */
     private void fillMapWithAllVerbonden(LinkedHashMap<Verbond, SortedMap<Date, Integer>> map) {
-        System.out.println("call fillMapWithAllVerbonden");
+        //System.out.println("call fillMapWithAllVerbonden");
         for (Verbond verbond : Verbond.values()) {
             SortedMap<Date, Integer> uniqueLoginsPerDate = new TreeMap<>();
             map.put(verbond, uniqueLoginsPerDate);
