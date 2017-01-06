@@ -1009,7 +1009,7 @@ INSERT INTO groepen (groep_naam,groep_stam_nummer,gewest_stam_nummer,gewest_naam
 INSERT INTO groepen (groep_naam,groep_stam_nummer,gewest_stam_nummer,gewest_naam,verbond_stam_nummer,verbond_naam) VALUES ('Klimop','WM /1908','WG /1900','Oe Est','WG /0000','West-Vlaanderen');
 
 
-INSERT INTO admins VALUES (1 , 'firstAdmin@krinkel.be', 'first', 'admin');
-INSERT INTO admins VALUES (2, 'secondAdmin@krinkel.be', 'second', 'admin');
-INSERT INTO admins VALUES (3, 'thirdAdmin@krinkel.be', 'third', 'admin');
-INSERT INTO admins VALUES (4, 'fourthAdmin@krinkel.be', 'fourth', 'admin');
+INSERT INTO admins VALUES ('admin',1 , 'firstAdmin@krinkel.be', 'first', 'admin');
+INSERT INTO admins VALUES ('admin',2, 'secondAdmin@krinkel.be', 'second', 'admin');
+INSERT INTO admins VALUES ('admin',3, 'thirdAdmin@krinkel.be', 'third', 'admin');
+INSERT INTO admins VALUES ('admin',4, 'fourthAdmin@krinkel.be', 'fourth', 'admin');

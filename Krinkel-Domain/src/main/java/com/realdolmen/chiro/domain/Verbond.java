@@ -21,6 +21,7 @@ public enum Verbond {
         /**
          * Most stamNumbers are length 6, except for Leuven which is 7. The stamNumbers with OG's also have to be checked by the first 3 letters. That's why this logic is here.
          */
+        System.out.println(stamNumber + " stamNumber");
         if (stamNumber.length() == 6) {
             if (stamNumber.startsWith("O")) {
                 return switchVerbondOnFirst3Letters(stamNumber);
@@ -32,7 +33,7 @@ public enum Verbond {
         } else if (stamNumber.equals("0RD")){ // For testing ...
             return Verbond.RD;
         } else {
-            throw new RuntimeException("Invalid adNumber length in Verbond.getVerbondFromStamNumber()");
+            throw new RuntimeException("Invalid adNumber length in Verbond.getVerbondFromStamNumber()" + stamNumber);
         }
     }
 

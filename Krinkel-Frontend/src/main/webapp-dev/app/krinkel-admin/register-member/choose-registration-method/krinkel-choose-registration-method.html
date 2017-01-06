@@ -23,7 +23,9 @@
     </div>
 </div>
 
-<div class="row" style="margin-top: 30px">
+<p ng-if="$ctrl.isRegistered">Deze persoon is reeds ingeschreven.</p>
+
+<div class="row" style="margin-top: 30px" ng-if="$ctrl.isRegistered === false">
     <div class="col s6">
         <button class="btn waves-effect waves-light" ng-click="$ctrl.subscribeMember()" name="action">Schrijf in als deelnemer
             <i class="material-icons right">send</i>

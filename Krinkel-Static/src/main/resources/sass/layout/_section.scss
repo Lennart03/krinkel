@@ -1,4 +1,11 @@
-section {}
+section {
+  a {
+    color: darken($darkYellow, 10%);
+    &:hover {
+      color: $darkYellow;
+    }
+  }
+}
 
 .landingPageMainImage {
   @extend %mainImage;
@@ -41,23 +48,12 @@ section {}
   }
   @media only screen and (min-width: 755px) {
     h1{
-      bottom:60%;
       font-size: 55px;
       line-height: 97px;
     }
     .internationale {
       font-size: 60px;
       line-height: 97px;
-    }
-  }
-  @media only screen and (max-width: 755px) {
-    h1 {
-      top:30%;
-    }
-  }
-  @media only screen and(max-width: 355px) {
-    h1{
-      top:22%;
     }
   }
 }
@@ -207,11 +203,16 @@ section {}
 .icon2,
 .icon3,
 .icon4,
-.icon5,
 .icon6 {
   height: 80%;
   background: no-repeat center;
 }
+.icon5 {
+  height: 75%;
+  background: no-repeat center;
+  background-size: contain;
+}
+
 .icon1Description,
 .icon2Description,
 .icon3Description,
@@ -443,7 +444,7 @@ section {}
   }
 }
 #contactTitle{
-  margin-top: 30px;
+  margin-top: 85px;
 }
 #sendBtn{
   width: 100% !important;
