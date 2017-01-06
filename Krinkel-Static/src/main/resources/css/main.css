@@ -75,6 +75,14 @@ b {
   color: #309583;
 }
 
+.yellowText {
+  color: #e8bb24;
+}
+
+.yellowText:hover {
+  color: #edc952;
+}
+
 blockquote {
   border-left: 5px solid #309583;
 }
@@ -102,6 +110,46 @@ blockquote {
 
 .quotee {
   font-size: 14px;
+}
+
+.textAreaFix {
+  padding: 0 !important;
+}
+
+.paddingBot75 {
+  padding-bottom: 75px;
+}
+
+.aboutPageHerexamenBannerTitle,
+.aboutPageTeamBannerTitle,
+.englishHomePageTeamBannerTitle {
+  white-space: nowrap;
+  overflow: hidden;
+  height: 35px;
+}
+
+@media only screen and (min-width: 755px) {
+  .responsiveImageText h1 {
+    bottom: 60%;
+    font-size: 55px;
+    line-height: 97px;
+  }
+  .responsiveImageText .internationale {
+    font-size: 60px;
+    line-height: 97px;
+  }
+}
+
+@media only screen and (max-width: 755px) {
+  .responsiveImageText h1 {
+    top: 30%;
+  }
+}
+
+@media only screen and (max-width: 355px) {
+  .responsiveImageText h1 {
+    top: 22%;
+  }
 }
 
 html {
@@ -398,6 +446,14 @@ body {
   background-color: white;
 }
 
+section a {
+  color: #e8bb24;
+}
+
+section a:hover {
+  color: #edc952;
+}
+
 .landingPageMainImage {
   height: 100vh;
   background-repeat: no-repeat;
@@ -448,25 +504,12 @@ body {
 
 @media only screen and (min-width: 755px) {
   .landingPageMainImageText h1 {
-    bottom: 60%;
     font-size: 55px;
     line-height: 97px;
   }
   .landingPageMainImageText .internationale {
     font-size: 60px;
     line-height: 97px;
-  }
-}
-
-@media only screen and (max-width: 755px) {
-  .landingPageMainImageText h1 {
-    top: 30%;
-  }
-}
-
-@media only screen and (max-width: 355px) {
-  .landingPageMainImageText h1 {
-    top: 22%;
   }
 }
 
@@ -704,10 +747,15 @@ body {
 .icon2,
 .icon3,
 .icon4,
-.icon5,
 .icon6 {
   height: 80%;
   background: no-repeat center;
+}
+
+.icon5 {
+  height: 75%;
+  background: no-repeat center;
+  background-size: contain;
 }
 
 .icon1Description,
@@ -997,7 +1045,7 @@ body {
 }
 
 #contactTitle {
-  margin-top: 30px;
+  margin-top: 85px;
 }
 
 #sendBtn {
@@ -1219,6 +1267,11 @@ footer div:last-child {
   visibility: hidden;
   height: 13px;
   display: block;
+}
+
+.landingPageFooterContactData img {
+  height: 100px;
+  width: auto;
 }
 
 /* Components and Modules - Re-usable site elements.

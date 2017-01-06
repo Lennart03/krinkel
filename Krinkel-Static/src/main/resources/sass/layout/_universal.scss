@@ -17,6 +17,13 @@
   color: $hoofdkleur;
 }
 
+.yellowText {
+  color: darken($darkYellow, 10%);
+  &:hover {
+    color: $darkYellow;
+  }
+}
+
 blockquote {
   border-left: 5px solid $hoofdkleur;
 }
@@ -44,4 +51,44 @@ blockquote {
 
 .quotee {
   font-size: 14px;
+}
+
+.textAreaFix {
+  padding: 0 !important;
+}
+
+.paddingBot75 {
+  padding-bottom: 75px;
+}
+
+.aboutPageHerexamenBannerTitle,
+.aboutPageTeamBannerTitle,
+.englishHomePageTeamBannerTitle {
+  white-space: nowrap;
+  overflow: hidden;
+  height: 35px;
+}
+
+.responsiveImageText {
+  @media only screen and (min-width: 755px) {
+    h1{
+      bottom:60%;
+      font-size: 55px;
+      line-height: 97px;
+    }
+    .internationale {
+      font-size: 60px;
+      line-height: 97px;
+    }
+  }
+  @media only screen and (max-width: 755px) {
+    h1 {
+      top:30%;
+    }
+  }
+  @media only screen and(max-width: 355px) {
+    h1{
+      top:22%;
+    }
+  }
 }
