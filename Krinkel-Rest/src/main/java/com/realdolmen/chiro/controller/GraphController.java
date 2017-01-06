@@ -12,10 +12,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.Date;
-import java.util.List;
-import java.util.SortedMap;
-import java.util.TreeMap;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 
 @RestController
@@ -35,11 +34,25 @@ public class GraphController {
 
 
     @RequestMapping("/api/graph/uniqueLoginsPerVerbond")
-    public SortedMap<Verbond, SortedMap<String, Integer>> getUniqueLoginsPerVerbond() {
-        return graphChiroService.getLoginData();
+    public LinkedHashMap<Verbond, LinkedHashMap<String, Integer>> getUniqueLoginsPerVerbond(@RequestParam("startDate") String startDate, @RequestParam("endDate") String endDate) throws ParseException {
+            System.out.println("startDate = " + startDate.toString());
+            System.out.println("endDate = " + endDate.toString());
+        Date start;
+        Date end;
+
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
+        start = simpleDateFormat.parse(startDate);
+        end = simpleDateFormat.parse(endDate);
+
+
+
+        System.out.println("end date " +end.toString());
+
+        return graphChiroService.getLoginData(start,end);
     }
+    /*
     @RequestMapping("/api/graph/uniqueLoginsPerVerbondLastTwoWeeks")
     public SortedMap<Verbond, SortedMap<String, Integer>> getUniqueLoginsPerVerbondLastTwoWeeks() {
         return graphChiroService.getLoginDataFromLastTwoWeeks();
-    }
+    }*/
 }

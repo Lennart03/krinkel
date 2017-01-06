@@ -100,6 +100,23 @@ public class RegistrationParticipantController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
+    //zal checken of een
+    @RequestMapping(method = RequestMethod.POST, value = "/api/notYetAdded")
+    public ResponseEntity<?> notYetAdded(@RequestParam("adNumber") String adNumber)
+    {
+        boolean registered = registrationParticipantService.isUserAlreadyRegistered(adNumber);
+        if(registered)
+        {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+        else
+        {
+            HttpHeaders headers = new HttpHeaders();
+            return new ResponseEntity<>(headers,HttpStatus.ACCEPTED);
+        }
+
+    }
+
 
     @RequestMapping(method = RequestMethod.POST, value = "/api/paymentStatusChange")
     public ResponseEntity<?> updatePayment(@RequestParam("participantId") String participantId, @RequestParam("paymentStatus") String paymentStatus) throws URISyntaxException {

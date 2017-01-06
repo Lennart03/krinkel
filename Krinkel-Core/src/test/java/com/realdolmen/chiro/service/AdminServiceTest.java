@@ -33,13 +33,13 @@ public class AdminServiceTest extends SpringIntegrationTest {
 
     @Test
     public void addNewAdminSucces() throws URISyntaxException, NoContactFoundException, IOException {
-        adminService.addNewAdmin(397768);
+        adminService.addNewAdmin(396947);
         List<Admin> admins = adminService.getAdmins();
         Assert.assertEquals(5, admins.size());
         for(Admin admin: admins) {
-            if(admin.getAdNumber().equals(397768)){
-                Assert.assertEquals(new Integer(397768), admin.getAdNumber());
-                Assert.assertEquals("thomas", admin.getFirstname());
+            if(admin.getAdNumber().equals(396947)){
+                Assert.assertEquals(new Integer(396947), admin.getAdNumber());
+                Assert.assertEquals("Thomas", admin.getFirstname());
                 Assert.assertEquals("thomas.simons@realdolmen.com", admin.getEmail());
                 Assert.assertEquals("simons", admin.getLastname());
             }

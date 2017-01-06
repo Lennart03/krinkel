@@ -21,6 +21,21 @@ export class RegisterOtherMemberService {
         );
     }
 
+    checkIfParticipantIsAdded(adNumber)
+    {
+        return this.$http.get(`${this.BASEURL}/api/notYetAdded?adNumber=${adNumber}`).then((resp) => {
+                console.log('response from service: ' +resp);
+                console.log('response.data from service: ' + JSON.stringify(resp.data));
+                return resp;
+            },
+            (resp) => {
+                console.log('response error from service ' +resp);
+                console.log('response error from service ' +resp.data);
+                return resp;
+            }
+        );
+    }
+
     setParticipant(participant) {
         this.participant = participant;
     }
