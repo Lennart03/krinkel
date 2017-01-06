@@ -75,7 +75,7 @@ class KrinkelGraphController {
 
 
 
-    getDataForLogin(startDate,endDate) {
+        getDataForLogin(startDate,endDate) {
         this.lineData = [];
         this.lineOptions = {};
         this.KrinkelService.getGraphLoginInfo(startDate,endDate).then((results) => {
