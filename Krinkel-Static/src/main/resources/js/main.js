@@ -95,13 +95,16 @@ var lastScrollPos = 0;
 $(window).scroll(function() {
     var scroll = $(window).scrollTop();
     var nav = $(".nav-wrapper");
+    var container = $(".navbar-fixed > nav");
 
     if (!(/*@cc_on!@*/false || !!document.documentMode)) {//if not IE
         if (scroll >= $('.fixedHeader' ).height() - 100 && scroll > lastScrollPos ) {
             //always show navbar when close to top because safari triggers a scroll down when it does the bounce effect
             nav.addClass("navUp");
+            container.addClass("clickThrough");
         } else {
             nav.removeClass("navUp");
+            container.removeClass("clickThrough");
         }
         lastScrollPos = scroll;
     }
