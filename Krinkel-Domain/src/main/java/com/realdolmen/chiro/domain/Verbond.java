@@ -74,7 +74,8 @@ public enum Verbond {
             case "LM":
                 return Verbond.LIMBURG;
             default:
-                throw new RuntimeException("Verbond " + stamNumber.substring(0, 2).toUpperCase() + " in statistics switch not found. Implement it.");
+                //throw new RuntimeException("Verbond " + stamNumber.substring(0, 2).toUpperCase() + " in statistics switch not found. Implement it.");
+                return Verbond.OTHERS;
         }
 
     }
@@ -98,7 +99,8 @@ public enum Verbond {
             case "OM2":
                 return Verbond.REINAERT;
             default:
-                throw new RuntimeException("Verbond " + stamNumber.substring(0, 3).toUpperCase() + " in statistics switch not found. Implement it.");
+                //throw new RuntimeException("Verbond " + stamNumber.substring(0, 3).toUpperCase() + " in statistics switch not found. Implement it.");
+                return Verbond.OTHERS;
         }
     }
 
