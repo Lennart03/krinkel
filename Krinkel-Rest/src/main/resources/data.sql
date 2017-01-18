@@ -3052,3 +3052,30 @@ INSERT INTO groepen (groep_naam,groep_stam_nummer,gewest_stam_nummer,gewest_naam
 --     HEUVELLAND("OG3000"),
 --     ROELAND("OG1000"),
 --     LIMBURG("LG0000"),
+
+INSERT INTO pre_camp VALUES (2, '2017-08-19') ON DUPLICATE KEY UPDATE id = 2;
+INSERT INTO pre_camp VALUES (5, '2017-08-20') ON DUPLICATE KEY UPDATE id = 5;
+INSERT INTO pre_camp VALUES (10, '2017-08-21') ON DUPLICATE KEY UPDATE id = 10;
+INSERT INTO pre_camp VALUES (20, '2017-08-22') ON DUPLICATE KEY UPDATE id = 20;
+INSERT INTO pre_camp VALUES (30, '2017-08-23') ON DUPLICATE KEY UPDATE id = 30;
+INSERT INTO pre_camp VALUES (40, '2017-08-24') ON DUPLICATE KEY UPDATE id = 40;
+
+INSERT INTO post_camp VALUES (60, '2017-08-31') ON DUPLICATE KEY UPDATE id = 60;
+INSERT INTO post_camp VALUES (70, '2017-09-01') ON DUPLICATE KEY UPDATE id = 70;
+INSERT INTO post_camp VALUES (80, '2017-09-02') ON DUPLICATE KEY UPDATE id = 80;
+
+--todo not sure if actually required
+/*
+INSERT INTO registration_participant_language (registration_participant_id,language)
+VALUES('50', '0');
+
+INSERT INTO registration_participant_language (registration_participant_id,language)
+VALUES('50', '1');
+
+INSERT INTO registration_participant_pre_camp_list VALUES (60,10);
+INSERT INTO registration_participant_pre_camp_list VALUES (60,20);
+INSERT INTO registration_participant_pre_camp_list VALUES (60,30);
+
+INSERT INTO registration_participant_post_camp_list VALUES (60,60);
+INSERT INTO registration_participant_post_camp_list VALUES (60,70);
+INSERT INTO registration_participant_post_camp_list VALUES (60,80);*/

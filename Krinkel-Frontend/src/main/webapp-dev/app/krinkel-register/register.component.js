@@ -75,6 +75,7 @@ class RegisterController {
             if (this.type === 'volunteer') {
                 var thiz = this;
                 this.KrinkelService.postVolunteer(this.MapperService.mapVolunteer(newPerzon)).then(function (resp) {
+                    console.log(resp); //todo remove
                     thiz.dataIsRemoved = true;
                     thiz.StorageService.removeUser();
                     thiz.$window.location.href = resp.headers().location;
@@ -107,18 +108,27 @@ class RegisterController {
         this.KrinkelService.getContactFromChiro(adNumber).then((resp) => {
             if (resp) {
                 let chiroContact = resp[0];
-                this.newPerson = {
-                    adNumber: adNumber,
-                    job: "Aanbod nationale kampgrond",
-                    firstName: chiroContact.first_name || "", //this pretty much means use the var if it's not null/undefined, else use an empty string
-                    lastName: chiroContact.last_name || "",
-                    email: chiroContact.email || "",
-                    birthDate: chiroContact.birth_date ? chiroContact.birth_date.split("-").reverse().join("-") : "",
-                    emailSubscriber: emailSubscriber || "",
-                    phone: chiroContact.phone ? chiroContact.phone.replace('-', '') : "",
-                    gender: chiroContact.gender_id || "",
-                    rank: chiroContact.afdeling.toUpperCase() || ""
-                };
+                if(chiroContact) {
+                    this.newPerson = {
+                        adNumber: adNumber,
+                        job: "Aanbod nationale kampgrond",
+                        firstName: chiroContact.first_name || "", //this pretty much means use the var if it's not null/undefined, else use an empty string
+                        lastName: chiroContact.last_name || "",
+                        email: chiroContact.email || "",
+                        birthDate: chiroContact.birth_date ? chiroContact.birth_date.split("-").reverse().join("-") : "",
+                        emailSubscriber: emailSubscriber || "",
+                        phone: chiroContact.phone ? chiroContact.phone.replace('-', '') : "",
+                        gender: chiroContact.gender_id || "",
+                        rank: chiroContact.afdeling.toUpperCase() || ""
+                    };
+                    this.details2.name = chiroContact.postal_code;
+
+                    this.details.address_components = [];
+                    this.details.address_components.push({
+                        long_name: chiroContact.street_address
+                    });
+                    this.details3.vicinity = chiroContact.city;
+                }
                 this.KrinkelService.getPloegen(adNumber).then((resp) => {
                     this.options = [];
                     resp.forEach((r) => {
@@ -126,13 +136,6 @@ class RegisterController {
                     });
                     this.newPerson.group = this.options[0].stamnr;
                 });
-                this.details2.name = chiroContact.postal_code;
-
-                this.details.address_components = [];
-                this.details.address_components.push({
-                    long_name: chiroContact.street_address
-                });
-                this.details3.vicinity = chiroContact.city;
             }
         });
     }
