@@ -37,7 +37,7 @@ public class GenerateGroupsService {
     public List<List<RegistrationParticipant>> generateRandomGroups(int groupSize) {
         this.groupSize = groupSize;
         //fill the lists with the currently registered members
-        List<RegistrationParticipant> registrationParticipants = registrationParticipantRepository.findAllAspisNoBuddy();
+        List<RegistrationParticipant> registrationParticipants = registrationParticipantRepository.findAllParticipantsNoBuddy();
 
         Iterator<RegistrationParticipant> registrationIterator = registrationParticipants.iterator();
         while (registrationIterator.hasNext()) {
@@ -141,7 +141,7 @@ public class GenerateGroupsService {
         }
 
         int itemsAdded = 0;
-        while (itemsAdded < itemsNeeded && randomIndexUnions.size() < unionSize && itemsNeeded < unionSize && unionSize > 0) { //todo throw exception if itemsNeeded < unionSize
+        while (itemsAdded < itemsNeeded && randomIndexUnions.size() < unionSize && itemsNeeded < unionSize && unionSize > 0) {
             int index = (int) (Math.random() * unionSize);
             while (randomIndexUnions.contains(index)) {
                 index = (int) (Math.random() * unionSize);
@@ -181,11 +181,11 @@ public class GenerateGroupsService {
                 }
             }
         } else if (amountMan >= genderGroupSize && amountWoman < genderGroupSize) {
-            if(addWomanToList(unionStam, singleGroup)) { //TODO edit priorities here
+            if(addWomanToList(unionStam, singleGroup)) {
                 return true;
             }
         } else if (amountWoman >= genderGroupSize && amountMan < genderGroupSize) {
-            if(addManToList(unionStam, singleGroup)) { //TODO edit priorities here
+            if(addManToList(unionStam, singleGroup)) {
                 return true;
             }
         }

@@ -13,7 +13,6 @@ import org.springframework.util.ReflectionUtils;
  * <p>
  * Searches for KrinkelLogger annotation and generates the correct logger instance.
  * <p>
- * TODO: Make it work seamlessly in tests...
  *
  * @see KrinkelLogger
  */

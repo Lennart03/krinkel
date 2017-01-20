@@ -21,7 +21,6 @@ public class StamNumberTrimmer {
         }
     }
 
-    // TODO: test on stamnummers for Leuven
     // Untrims a trimmed stam nummer
     public String untrim(String verbondStamNummer) {
         if(verbondStamNummer != null && !verbondStamNummer.contains("/") && verbondStamNummer.length() > 3){

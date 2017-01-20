@@ -1,26 +1,22 @@
 package com.realdolmen.chiro.service;
 
-import com.realdolmen.chiro.domain.RegistrationParticipant;
 import com.realdolmen.chiro.repository.RegistrationParticipantRepository;
 import jxl.Workbook;
-import jxl.write.*;
-import jxl.write.Number;
+import jxl.write.Label;
+import jxl.write.WritableSheet;
+import jxl.write.WritableWorkbook;
+import jxl.write.WriteException;
 import jxl.write.biff.RowsExceededException;
 import org.apache.poi.xssf.usermodel.*;
-import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.util.FileCopyUtils;
 
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
 import java.io.*;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.util.*;
+import java.util.Map;
+import java.util.Set;
 import java.util.logging.Logger;
-import java.util.zip.ZipEntry;
-import java.util.zip.ZipOutputStream;
 
 
 /**
@@ -136,7 +132,6 @@ public class ExcelOutputService{
                     obj = "";
                 }
                 sheet.addCell(new Label(columnNr, rowNr, obj.toString()));
-                //TODO: if necessary, type check everything like this:
 //            if(obj instanceof Integer){
 //                sheet.addCell(new Number(i, 0, (Integer) obj));
 //            }

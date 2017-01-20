@@ -75,7 +75,6 @@ class RegisterController {
             if (this.type === 'volunteer') {
                 var thiz = this;
                 this.KrinkelService.postVolunteer(this.MapperService.mapVolunteer(newPerzon)).then(function (resp) {
-                    console.log(resp); //todo remove
                     thiz.dataIsRemoved = true;
                     thiz.StorageService.removeUser();
                     thiz.$window.location.href = resp.headers().location;
@@ -117,7 +116,7 @@ class RegisterController {
                         email: chiroContact.email || "",
                         birthDate: chiroContact.birth_date ? chiroContact.birth_date.split("-").reverse().join("-") : "",
                         emailSubscriber: emailSubscriber || "",
-                        phone: chiroContact.phone ? chiroContact.phone.replace('-', '') : "",
+                        phone: chiroContact.phone ? chiroContact.phone.replace(/\s|[-]/g, '') : "",
                         gender: chiroContact.gender_id || "",
                         rank: chiroContact.afdeling.toUpperCase() || ""
                     };
@@ -139,7 +138,6 @@ class RegisterController {
             }
         });
     }
-    //todo: fix the inconsistencies betwee the name for the AD number
     prefillSelf() {
         let loggedInUser = this.AuthService.getLoggedinUser();
         this.prefillWithAdNumber(loggedInUser.adnummer);

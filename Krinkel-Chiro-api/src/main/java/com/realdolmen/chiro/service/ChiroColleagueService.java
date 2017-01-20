@@ -44,7 +44,6 @@ public class ChiroColleagueService {
         mapper.configure(DeserializationFeature.ACCEPT_SINGLE_VALUE_AS_ARRAY, true);
         String json = retrieveColleaguesFromChiroApi(adNumber);
 
-        //todo: think about this & fix using JavaType
         JavaType type = mapper.getTypeFactory().
                 constructParametricType(ContainerResponse.class, ColleagueDTO.class);
 

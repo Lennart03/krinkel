@@ -1,10 +1,8 @@
 package com.realdolmen.chiro.chiro_api;
 
 
-import org.junit.Assert;
 import org.junit.Test;
 
-//TODO write some actual tests
 public class ChiroUserAdapterTest {
 
     private ChiroUserAdapter adapter = new ChiroUserAdapter();

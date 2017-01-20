@@ -293,7 +293,8 @@ public class ExportService {
                 "E-mailadres inschrijver",
                 "Status",
                 "Synchstatus",
-                "Laatste wijziging"
+                "Laatste wijziging",
+                "Originele stamnummer"
         };
         return header;
     }
@@ -384,7 +385,8 @@ public class ExportService {
                     r.getEmailSubscriber(),
                     r.getStatus().getDescription(),
                     syncStatus,
-                    lastChange
+                    lastChange,
+                    r.getOriginalStamNumber()
             });
         }
         return data;

@@ -1,7 +1,8 @@
 package com.realdolmen.chiro.controller;
 
 import com.realdolmen.chiro.controller.validation.EnableRestErrorHandling;
-import com.realdolmen.chiro.domain.*;
+import com.realdolmen.chiro.domain.RegistrationVolunteer;
+import com.realdolmen.chiro.domain.User;
 import com.realdolmen.chiro.mspservice.MultiSafePayService;
 import com.realdolmen.chiro.service.RegistrationVolunteerService;
 import com.realdolmen.chiro.service.UserService;
@@ -11,7 +12,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
 import java.net.URI;
@@ -86,6 +90,7 @@ public class RegistrationVolunteerController {
      */
     @RequestMapping(method = RequestMethod.POST, value = "/api/volunteers", consumes = "application/json")
     public ResponseEntity<?> save(@Valid @RequestBody RegistrationVolunteer volunteer) throws URISyntaxException, MultiSafePayService.InvalidPaymentOrderIdException {
+
         RegistrationVolunteer resultingVolunteer = registrationVolunteerService.save(volunteer);
         User currentUser = userService.getCurrentUser();
 
@@ -117,4 +122,5 @@ public class RegistrationVolunteerController {
         logger.info("New Registration for Volunteer created.");
         return new ResponseEntity<>(headers, HttpStatus.CREATED);
     }
+
 }

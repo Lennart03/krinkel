@@ -25,6 +25,7 @@ public interface RegistrationParticipantRepository extends JpaRepository<Registr
             " AND " +
             "(SUBSTRING(p.stamnumber, LOCATE('/', p.stamnumber)+1, 4) = SUBSTRING(?1, 3, 4)" +
             "OR SUBSTRING(p.stamnumber, LOCATE('/', p.stamnumber)+1, 4) = SUBSTRING(?1, 4, 4))" +
+            " OR p.stamnumber = ?1 " +
             "AND " +
             "((p.status = com.realdolmen.chiro.domain.Status.CONFIRMED)" +
             " OR " +
@@ -57,10 +58,10 @@ public interface RegistrationParticipantRepository extends JpaRepository<Registr
     Long countPreCampRecordsAfterCancellation(@Param("participantId") Long participantId);
 
     @Query(value= "SELECT r FROM RegistrationParticipant r WHERE " +
-            "r.eventRole = 'ASPI'"
+            "(r.eventRole = 'ASPI' OR r.eventRole = 'LEADER')"
             + " AND "
             + "r.buddy = false")
-    List<RegistrationParticipant> findAllAspisNoBuddy();
+    List<RegistrationParticipant> findAllParticipantsNoBuddy();
 
     @Query(value = "SELECT r.status FROM  RegistrationParticipant r WHERE r.adNumber = :adNumber")
     Status getPaymentStatusByadNumber(@Param("adNumber") String adNumber);

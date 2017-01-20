@@ -3,14 +3,10 @@ package com.realdolmen.chiro.controller;
 import com.realdolmen.chiro.controller.validation.EnableRestErrorHandling;
 import com.realdolmen.chiro.domain.RegistrationParticipant;
 import com.realdolmen.chiro.domain.User;
-import com.realdolmen.chiro.domain.Verbond;
-import com.realdolmen.chiro.domain.units.ChiroUnit;
 import com.realdolmen.chiro.mspservice.MultiSafePayService;
 import com.realdolmen.chiro.service.RegistrationParticipantService;
 import com.realdolmen.chiro.service.UserService;
 import com.realdolmen.chiro.util.StamNumberTrimmer;
-import com.sun.org.apache.xpath.internal.operations.Bool;
-import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -78,6 +74,7 @@ public class RegistrationParticipantController {
     public ResponseEntity<?> save(@Valid @RequestBody RegistrationParticipant participant) throws URISyntaxException, MultiSafePayService.InvalidPaymentOrderIdException {
         participant.updateLastChange();
 
+
         RegistrationParticipant resultingParticipant = registrationParticipantService.save(participant);
         User currentUser = userService.getCurrentUser();
 
@@ -140,4 +137,6 @@ public class RegistrationParticipantController {
         logger.info("New registration created.");
         return new ResponseEntity<>(headers, HttpStatus.CREATED);
     }
+
+
 }

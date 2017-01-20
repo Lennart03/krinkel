@@ -58,6 +58,12 @@ public class RegistrationParticipant {
     @NotBlank
     private String stamnumber;
 
+    /**
+     * this will contain the original stamnummer if it is changed to other during saving.
+     * see the comment in the participant repository for more info
+     * */
+    private String originalStamNumber;
+
     @Enumerated(EnumType.STRING)
     @NotNull
     private Gender gender = Gender.X;
@@ -139,6 +145,14 @@ public class RegistrationParticipant {
         this.remarks = builder.remarks;
         this.phoneNumber = builder.phoneNumber;
         this.language = builder.language;
+    }
+
+    public String getOriginalStamNumber() {
+        return originalStamNumber;
+    }
+
+    public void setOriginalStamNumber(String originalStamNumber) {
+        this.originalStamNumber = originalStamNumber;
     }
 
     public boolean isRegisteredByOther() {

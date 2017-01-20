@@ -17,7 +17,7 @@ class UnitsController {
     openExtraInfo(verbond) {
         this.openVerbond(verbond);
 
-        if (!verbond.stamnummer.endsWith("00")) {
+        if (!verbond.stamnummer.endsWith("00") || this.unitLevel) {
             this.openUsers(verbond);
         }
     }
@@ -53,7 +53,7 @@ class UnitsController {
     }
 
     openVerbond(verbond) {
-        this.KrinkelService.getGewestenForVerbond(verbond.stamnummer).then((results) => {
+        this.KrinkelService.getGewestenList(verbond.stamnummer).then((results) => {
             this.unitLevel = verbond.name;
             this.verbonden = results;
             this.verbond = verbond;
@@ -66,7 +66,7 @@ class UnitsController {
         this.participantDetails = false;
         this.volunteerDetails = false;
 
-        if(verbond.bovenliggende_stamnummer != null){
+        if(verbond.bovenliggende_stamnummer /*!= null*/){
             this.openVerbond(verbond.bovenliggende_stamnummer)
         } else {
             this.KrinkelService.getVerbonden().then((results) => {
@@ -85,7 +85,6 @@ class UnitsController {
         }
     }
 
-    //TODO: remove getElementById & setAttribute when 'reloading to same view' is implemented and uncomment the route.reload()
     putParticipantToCancelled(participantId) {
         if (participantId != null) {
             this.KrinkelService.putParticipantToCancelled(participantId).then((result) => {

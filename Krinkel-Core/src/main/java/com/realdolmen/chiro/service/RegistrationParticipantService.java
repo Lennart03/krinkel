@@ -45,6 +45,8 @@ public class RegistrationParticipantService {
         if (participantFromOurDB == null) {
             User currentUser = userService.getCurrentUser();
             participant.setRegisteredBy(currentUser.getAdNumber());
+
+            validateStamNumber(participant);
             if (participant.getAdNumber().equals(participant.getRegisteredBy())) {
                 userService.updateCurrentUserRegisteredStatus();
             }
@@ -54,6 +56,8 @@ public class RegistrationParticipantService {
             participant.setId(participantFromOurDB.getId());
             User currentUser = userService.getCurrentUser();
             participantFromOurDB.setRegisteredBy(currentUser.getAdNumber());
+
+            validateStamNumber(participant);
             return registrationParticipantRepository.save(participant);
 
         } else if (participantFromOurDB.getStatus().equals(Status.PAID) || participantFromOurDB.getStatus().equals(Status.CONFIRMED)) {
@@ -217,5 +221,21 @@ public class RegistrationParticipantService {
             throw new NoParticipantFoundException("No Member found with Ad number ");
         }
         return participant;
+    }
+
+    /**
+     * Changes the stamnumber to OTHERS if it's not known by the system, and sets the original stamno for export.
+     * we do this as a band-aid, because the app doesn't inherently support linking unknown stam numbers
+     * @param participant
+     */
+    private void validateStamNumber(RegistrationParticipant participant){
+        Verbond verbond = Verbond.getVerbondFromStamNumber(participant.getStamnumber());
+        System.out.println("Checking number for AD: "+ participant.getAdNumber());
+        System.out.println("verbond = " + verbond);
+        if(verbond == Verbond.OTHERS && !participant.getStamnumber().equals("OTHERS")) {
+            System.out.println("Verbond unknown, changing to others...");
+            participant.setOriginalStamNumber(participant.getStamnumber());
+            participant.setStamnumber(Verbond.OTHERS.getStam());
+        }
     }
 }

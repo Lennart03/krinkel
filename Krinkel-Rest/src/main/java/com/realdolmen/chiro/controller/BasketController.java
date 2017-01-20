@@ -59,7 +59,6 @@ public class BasketController {
         return new ResponseEntity<>(headers, HttpStatus.CREATED);
     }
 
-    //todo: When using the DELETE method spring will return "invalid cors request". Find out why and fix!
     @RequestMapping(value = "/api/basket/delete/{adNumber}", method = RequestMethod.GET)
     public ResponseEntity removeUser(@PathVariable String adNumber) {
         Optional<RegistrationParticipant> user = basketService.getUsersInBasket().stream().filter(u -> u.getAdNumber().equals(adNumber)).findFirst();

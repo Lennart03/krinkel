@@ -5,8 +5,10 @@ import com.realdolmen.chiro.domain.User;
 import com.realdolmen.chiro.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.RestController;
 
 /**
  * UserController class
@@ -24,7 +26,7 @@ public class UserController {
      * @throws UserNotfoundException
      */
     @RequestMapping(method = RequestMethod.GET, value = "/api/user")
-    public User getUser() throws UserNotfoundException { //TODO: instead of getting the user from the session, get the user from DB, so that we get the most up to date state for the user.
+    public User getUser() throws UserNotfoundException {
         User u = userService.getCurrentUser();//get only the data from our own database, as chiro's API is too slow.
         if (u == null) {
             throw new UserNotfoundException();

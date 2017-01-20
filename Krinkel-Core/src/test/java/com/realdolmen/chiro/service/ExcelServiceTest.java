@@ -5,21 +5,12 @@ import com.realdolmen.chiro.domain.RegistrationVolunteer;
 import com.realdolmen.chiro.repository.RegistrationParticipantRepository;
 import com.realdolmen.chiro.repository.RegistrationVolunteerRepository;
 import com.realdolmen.chiro.spring_test.SpringIntegrationTest;
-import jxl.write.WritableSheet;
-import jxl.write.WritableWorkbook;
-import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
-import org.apache.poi.ss.usermodel.Sheet;
-import org.apache.poi.ss.usermodel.Workbook;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
@@ -45,7 +36,6 @@ public class ExcelServiceTest extends SpringIntegrationTest {
         assertEquals(6, all.size());
         Boolean xlsx = false;
 
-        // TODO: re-write test
 //        File myFile = excelService.writeExcel(all, xlsx);
 //
 //        FileInputStream fileInputStream = new FileInputStream(myFile);

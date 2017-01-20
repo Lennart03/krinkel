@@ -13,7 +13,6 @@ export class KrinkelService {
         });
     }
 
-    //FIXME post instead of get (security?)
     logIn(user, password) {
         return this.$http.get(`${this.BASEURL}/api/users?user=${user}&password=${password}`).then((resp) => {
             return resp.data;
