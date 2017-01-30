@@ -60,7 +60,7 @@ public class RegistrationParticipant {
 
     /**
      * this will contain the original stamnummer if it is changed to other during saving.
-     * see the comment in the participant repository for more info
+     * see the comment in the participant service for more info
      * */
     private String originalStamNumber;
 

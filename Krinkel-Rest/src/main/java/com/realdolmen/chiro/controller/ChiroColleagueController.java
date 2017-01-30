@@ -1,6 +1,5 @@
 package com.realdolmen.chiro.controller;
 
-import com.realdolmen.chiro.domain.RegistrationParticipant;
 import com.realdolmen.chiro.dto.ColleagueDTO;
 import com.realdolmen.chiro.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +25,7 @@ public class ChiroColleagueController {
     @RequestMapping("/api/colleagues")
     public List<ColleagueDTO> getAvailableColleagues() {
         try {
-            return userService.getAvailableColleagues(Integer.parseInt(userService.getCurrentUser().getAdNumber()));
+            return userService.getAvailableColleagues(Integer.parseInt(userService.getCurrentUser().getAdNumber())); // FIXME: 24/01/2017
         } catch (URISyntaxException e) {
             throw new InvalidAdNumber();
         }

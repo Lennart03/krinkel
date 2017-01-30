@@ -24,6 +24,8 @@ public enum Verbond {
          * Most stamNumbers are length 6, except for Leuven which is 7. The stamNumbers with OG's also have to be checked by the first 3 letters. That's why this logic is here.
          */
 
+        if(stamNumber == null) return Verbond.OTHERS;
+
         if(stamNumber.contains("/")) { //remove the slashy thing before checking
             if (stamNumber.contains(" /")) {
                 stamNumber = stamNumber.replace(" /", "");

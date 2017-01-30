@@ -171,6 +171,14 @@ export class MapperService {
     mapPreCampToObject(listOfPreCamp) {
         if (listOfPreCamp !== undefined) {
             var preCamp = {
+                '2017-08-19': {
+                    id: 2,
+                    date: '2017-08-19'
+                },
+                '2017-08-20': {
+                    id: 5,
+                    date: '2017-08-19'
+                },
                 '2017-08-21': {
                     id: 10,
                     date: '2017-08-21'

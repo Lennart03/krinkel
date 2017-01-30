@@ -46,10 +46,12 @@ public class RegistrationParticipantService {
             User currentUser = userService.getCurrentUser();
             participant.setRegisteredBy(currentUser.getAdNumber());
 
-            validateStamNumber(participant);
+
             if (participant.getAdNumber().equals(participant.getRegisteredBy())) {
                 userService.updateCurrentUserRegisteredStatus();
             }
+
+            validateStamNumber(participant);
             return registrationParticipantRepository.save(participant);
         } else if (participantFromOurDB.getStatus().equals(Status.TO_BE_PAID)) {
 
@@ -228,7 +230,7 @@ public class RegistrationParticipantService {
      * we do this as a band-aid, because the app doesn't inherently support linking unknown stam numbers
      * @param participant
      */
-    private void validateStamNumber(RegistrationParticipant participant){
+    private void validateStamNumber(RegistrationParticipant participant){ //fixme
         Verbond verbond = Verbond.getVerbondFromStamNumber(participant.getStamnumber());
         System.out.println("Checking number for AD: "+ participant.getAdNumber());
         System.out.println("verbond = " + verbond);

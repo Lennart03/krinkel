@@ -59,7 +59,7 @@ export class AuthService {
             }
             // The service parameter is not recognized by the Chiro CAS.
             // This feature is probably deactivated.
-            this.$window.location = 'https://login.chiro.be/cas/logout?service=https://krinkel.be';
+            this.$window.location = 'https://login.chiro.be/cas/logout?service=https://www.krinkel.be';
         });
     }
 
