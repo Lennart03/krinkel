@@ -207,6 +207,7 @@ public class RegistrationParticipantService {
         if (Status.valueOf(paymentStatus) == Status.TO_BE_PAID) {
             participant.setStatus(Status.TO_BE_PAID);
         } else if (Status.valueOf(paymentStatus) == Status.PAID) {
+            //see if we can replace this with a call to markAsPayed, in order to also set the flag to send a mail.
             participant.setStatus(Status.PAID);
         } else if (Status.valueOf(paymentStatus) == Status.CONFIRMED) {
             participant.setStatus(Status.CONFIRMED);
