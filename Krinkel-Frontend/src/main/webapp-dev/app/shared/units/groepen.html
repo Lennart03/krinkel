@@ -10,28 +10,30 @@
 <table>
     <thead>
     <tr>
-        <!--<th data-field="stamNummer">Stam nummer</th>-->
+        <th data-field="stamNummer">Stam nummer</th>
         <th data-field="naam">Naam</th>
         <th data-field="amountParticipants">Aantal deelnemers</th>
-        <!--<th data-field="amountVolunteers">Aantal medewerkers</th>-->
+        <th data-field="amountVolunteers" ng-if="$ctrl.AuthService.getUserRole() === 'ADMIN'">Aantal medewerkers</th>
     </tr>
     </thead>
 
 
     <tbody>
     <tr ng-repeat="groep in $ctrl.groepen" ng-click="$ctrl.redirectToGroep(groep.stamnummer, groep.name)">
-        <!--<td>-->
-            <!--{{groep.stamnummer}}-->
-        <!--</td>-->
+        <td>
+            {{groep.stamnummer}}
+        </td>
         <td>
             {{groep.name}}
         </td>
         <td>
             {{groep.aantal_ingeschreven_deelnemers}}
+            <i class="material-icons right icon-green" ng-if="$ctrl.AuthService.getUserRole() !== 'ADMIN'">send</i>
         </td>
-        <!--<td>-->
-            <!--{{groep.aantal_ingeschreven_vrijwilligers}}-->
-        <!--</td>-->
+        <td ng-if="$ctrl.AuthService.getUserRole() === 'ADMIN'">
+            {{groep.aantal_ingeschreven_vrijwilligers}}
+            <i class="material-icons right icon-green">send</i>
+        </td>
     </tr>
     </tbody>
 </table>

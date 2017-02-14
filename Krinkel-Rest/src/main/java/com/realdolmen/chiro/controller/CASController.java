@@ -32,7 +32,7 @@ public class CASController {
             return "redirect:/index.html";
         } else {
             // Redirect to CAS server so the user can login.
-            if(true)throw new NullPointerException("ayy");
+            //if(true)throw new NullPointerException("ayy");
             System.out.println("redirecting user to login casService");
             return "redirect:" + casConfiguration.getCasRedirectUrl();
         }

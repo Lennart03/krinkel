@@ -5,7 +5,7 @@ class GroepController {
         this.AuthService = AuthService;
         this.$location = $location;
         this.MapperService = MapperService;
-        this.lolo = $routeParams.groepNr;
+        this.groepNr = $routeParams.groepNr;
         this.groepNaam = $routeParams.groepNaam;
         this.showParticipants = true;
         //console.log(this.lolo + 'groep.component.js says hi!');
@@ -15,7 +15,7 @@ class GroepController {
     $onInit() {
         this.participants = [];
         this.volunteers = [];
-        this.KrinkelService.getParticipantsList(this.lolo).then((results) => {
+        this.KrinkelService.getParticipantsList(this.groepNr).then((results) => {
             results.forEach((r) => {
                 r.participant = "Deelnemer";
                 r.eatinghabbit = this.MapperService.mapEatingHabbit(r.eatinghabbit);

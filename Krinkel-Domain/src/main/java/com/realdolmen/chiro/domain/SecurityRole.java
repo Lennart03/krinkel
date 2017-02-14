@@ -16,4 +16,15 @@ public enum SecurityRole {
     public int getValue() {
         return value;
     }
+
+    public String toString(){
+        switch (getValue()){
+            case 4 : return "admin";
+            case 3 : return "nationaal";
+            case 2 : return "verbond";
+            case 1 : return "gewest";
+            case 0 : return "groep";
+            default : return "INVALID";
+        }
+    }
 }

@@ -38,6 +38,12 @@ public class ChiroUnit {
     @JsonProperty("aantal_ingeschreven_vrijwilligers")
     private int volunteersCount = 0;
 
+    @JsonProperty("aantal_ingeschreven_deelnemers_betaald")
+    private int participantsCountPaid = 0;
+
+    @JsonProperty("aantal_ingeschreven_vrijwilligers_betaald")
+    private int volunteersCountPaid = 0;
+
     public ChiroUnit() {
         this.lower = new ArrayList<>();
     }
@@ -140,5 +146,13 @@ public class ChiroUnit {
     @Override
     public String toString(){
         return name + " - Stam nummer: " + stamNummer + ", #participants: " + participantsCount + ", #volunteers: " + volunteersCount;
+    }
+
+    public void setParticipantsCountPaid(int participantsCountPaid) {
+        this.participantsCountPaid = participantsCountPaid;
+    }
+
+    public void setVolunteersCountPaid(int volunteersCountPaid) {
+        this.volunteersCountPaid = volunteersCountPaid;
     }
 }

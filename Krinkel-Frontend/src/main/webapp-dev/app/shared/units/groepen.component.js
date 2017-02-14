@@ -4,22 +4,23 @@ class GroepenController {
         this.$route = $route;
         this.AuthService = AuthService;
         this.$location = $location;
-        this.lolo = $routeParams.gewestNr;
+        this.gewestNr = $routeParams.gewestNr;
         this.gewestNaam = $routeParams.gewestNaam;
         //console.log(this.lolo + 'groepen.component.js says hi!');
     }
 
     $onInit() {
-        this.KrinkelService.getGroepenList(this.lolo).then((results) => {
+        this.KrinkelService.getGroepenList(this.gewestNr).then((results) => {
             //console.log(results);
             this.groepen = results;
         });
     }
 
-    redirectToGroep(groepStamNr, groepNaam) {
+    redirectToGroep(groepNr, groepNaam) {
         //console.log('Tried to redirect via javascript to groep with groepStamNummer: ' + groepStamNr);
 
-        this.$location.path('/groep/' + groepStamNr + '/' + groepNaam);
+        this.$location.path('/groep/'+
+            groepNr + '/' + groepNaam);
     }
 }
 

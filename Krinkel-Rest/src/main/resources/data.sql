@@ -42,15 +42,15 @@ INSERT INTO post_camp VALUES (80, '2017-09-02') ON DUPLICATE KEY UPDATE id = 80;
 
 INSERT INTO registration_participant (dtype,id,ad_number,city, house_number, postal_code, street, birthdate,
 social_promotion, eatinghabbit, email, email_subscriber, first_name, gender, last_name, remarks_food, medical_remarks, remarks,
-event_role, buddy, stamnumber, status, phone_number, camp_ground, other, preset, registered_by)
+event_role, buddy, stamnumber, status, phone_number, camp_ground, other, preset, registered_by, sync_status, last_change)
 VALUES('RegistrationParticipant', '10', '123456', 'Brussel', '123', '1000', 'Veldstraat', '1995-08-21', false, 'FISHANDMEAT',
-                              'email@test.be', 'email@test.be', 'Johnny', 'MAN', 'Flodder', 'food remarks', 'medical remarks', 'remarks', 'ASPI', false, 'AG /0103', 'TO_BE_PAID', 1, '', '', '', '123456');
+                              'email@test.be', 'email@test.be', 'Johnny', 'MAN', 'Flodder', 'food remarks', 'medical remarks', 'remarks', 'ASPI', false, 'AG /0103', 'TO_BE_PAID', 1, '', '', '', '123456','SYNCED', '2017-02-14');
 
 INSERT INTO registration_participant (dtype,id,ad_number,city, house_number, postal_code, street, birthdate,
 social_promotion, eatinghabbit, email, email_subscriber, first_name, gender, last_name, remarks_food, medical_remarks, remarks,
-event_role, buddy, stamnumber, status, phone_number, camp_ground, other, preset, registered_by)
+event_role, buddy, stamnumber, status, phone_number, camp_ground, other, preset, registered_by, sync_status, last_change)
 VALUES('RegistrationParticipant', '20', '234567', 'Brussel', '123', '1000', 'Veldstraat', '1995-08-21', false, 'FISHANDMEAT',
-                              'email@test.be', 'email@test.be', 'Kees', 'MAN', 'Flodder', '', '', '', 'ASPI', false, 'BG /0301', 'TO_BE_PAID', 1, '', '', '', '234567');
+                              'email@test.be', 'email@test.be', 'Kees', 'MAN', 'Flodder', '', '', '', 'ASPI', false, 'BG /0301', 'PAID', 1, '', '', '', '234567','SYNCED', '2017-02-14');
 
 INSERT INTO registration_participant (dtype,id,ad_number,city, house_number, postal_code, street, birthdate,
 social_promotion, eatinghabbit, email, email_subscriber, first_name, gender, last_name, remarks_food, medical_remarks, remarks,
@@ -3071,8 +3071,8 @@ VALUES('50', '0');
 
 INSERT INTO registration_participant_language (registration_participant_id,language)
 VALUES('50', '1');
-
-INSERT INTO registration_participant_pre_camp_list VALUES (60,10);
+*/
+/*INSERT INTO registration_participant_pre_camp_list VALUES (60,10);
 INSERT INTO registration_participant_pre_camp_list VALUES (60,20);
 INSERT INTO registration_participant_pre_camp_list VALUES (60,30);
 
