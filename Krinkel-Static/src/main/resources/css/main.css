@@ -7,7 +7,7 @@
 */
 /* SASS Utilities
 ========================================================================== */
-.landingPageMainImage, .aboutPageMainImage, .faqPageMainImage, .praktischPageMainImage, .nieuwsPageMainImage {
+.landingPageVideo, .landingPageMainImage, .aboutPageMainImage, .faqPageMainImage, .praktischPageMainImage, .nieuwsPageMainImage {
   height: 500px;
   width: 100%;
   border-bottom: 1px solid #309583;
@@ -450,6 +450,39 @@ body {
   background-color: white;
 }
 
+html {
+  overflow-x: hidden;
+}
+
+#promovideo {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translateX(-50%) translateY(-50%);
+  width: 70%;
+  height: 70%;
+}
+
+#darkenback {
+  display: none;
+  position: absolute;
+  background-color: rgba(0, 0, 0, 0.8);
+  width: 100%;
+  height: 100%;
+  z-index: 9999;
+}
+
+#videolink {
+  position: absolute;
+  top: 15%;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+#videolink:hover {
+  cursor: pointer;
+}
+
 section a {
   color: #e8bb24;
 }
@@ -458,23 +491,39 @@ section a:hover {
   color: #edc952;
 }
 
+.landingPageVideo {
+  position: absolute;
+  height: 100vh;
+  width: auto;
+  left: -5%;
+  z-index: -50;
+}
+
+@media only screen and (max-width: 1200px) {
+  .landingPageVideo {
+    display: none;
+  }
+}
+
 .landingPageMainImage {
   height: 100vh;
-  background-repeat: no-repeat;
+  /*background-repeat: no-repeat;
   background-position: 0% 20%;
   background-image: url("../img/layout/BRU_9436.jpg");
-  background-size: cover;
+  background-size: cover;*/
 }
 
 @media only screen and (max-width: 1200px) {
   .landingPageMainImage {
-    background-image: url("../img/layout/BRU_9436_med.jpg");
+    background-size: cover;
+    background: url("../img/layout/BRU_9436_med.jpg") no-repeat 0% 20%;
   }
 }
 
 @media only screen and (max-width: 800px) {
   .landingPageMainImage {
-    background-image: url("../img/layout/BRU_9436_small.jpg");
+    background-size: cover;
+    background: url("../img/layout/BRU_9436_small.jpg") no-repeat 0% 20%;
   }
 }
 
@@ -518,6 +567,7 @@ section a:hover {
 }
 
 .landingPageSignUpWrapper {
+  background-color: white;
   max-width: 800px;
   margin: 50px auto 75px;
 }
