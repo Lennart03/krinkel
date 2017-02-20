@@ -106,7 +106,7 @@ class RegisterController {
         this.KrinkelService.getContactFromChiro(adNumber).then((resp) => {
             if (resp) {
                 let chiroContact = resp[0];
-                if(chiroContact) {
+                if (chiroContact) {
                     this.newPerson = {
                         firstNameIsEmpty: chiroContact.first_name == "",
                         lastNameIsEmpty: chiroContact.last_name == "",
@@ -136,7 +136,10 @@ class RegisterController {
                         this.newPerson.group = this.options[0].stamnr;
                     });
                 } else {
-                    // TODO Nicky: Show toast met Error met uw gegevens op te halen
+                    this.newPerson = {
+                        firstNameIsEmpty: true,
+                        lastNameIsEmpty: true
+                    }
                 }
             }
         });
