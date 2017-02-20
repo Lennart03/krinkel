@@ -20,7 +20,7 @@
             <div class="input-field col s12 m6">
                 <i class="material-icons prefix">perm_identity</i>
                 <input id="first_name" name="firstName" type="text" class="validate" ng-minlength="1"
-                       ng-model="$ctrl.newPerson.firstName" required>
+                       ng-model="$ctrl.newPerson.firstName" ng-disabled="!$ctrl.newPerson.firstNameIsEmpty" required>
                 <label for="first_name">Voornaam *</label>
                 <p ng-show="(personForm.firstName.$invalid && $ctrl.validateNow) || (personForm.firstName.$invalid && personForm.firstName.$touched)" class="error"><i
                     class="material-icons">error_outline</i> Voornaam is verplicht</p>
@@ -28,7 +28,7 @@
             <div class="input-field col s12 m6">
                 <i class="material-icons prefix">perm_identity</i>
                 <input id="last_name" name="lastName" type="text" class="validate" ng-model="$ctrl.newPerson.lastName"
-                       required>
+                       ng-disabled="!$ctrl.newPerson.lastNameIsEmpty" required>
                 <label for="last_name">Achternaam *</label>
                 <p ng-show="(personForm.lastName.$invalid && $ctrl.validateNow) || (personForm.lastName.$invalid && personForm.lastName.$touched)" class="error"><i
                     class="material-icons">error_outline</i> Achternaam is verplicht

@@ -103,12 +103,13 @@ class RegisterController {
     }
 
     prefillWithAdNumber(adNumber, emailSubscriber){ //second var is optional, as it's only required when subscribing a colleague.
-
         this.KrinkelService.getContactFromChiro(adNumber).then((resp) => {
             if (resp) {
                 let chiroContact = resp[0];
                 if(chiroContact) {
                     this.newPerson = {
+                        firstNameIsEmpty: chiroContact.first_name == "",
+                        lastNameIsEmpty: chiroContact.last_name == "",
                         adNumber: adNumber,
                         job: "Aanbod nationale kampgrond",
                         firstName: chiroContact.first_name || "", //this pretty much means use the var if it's not null/undefined, else use an empty string
@@ -127,14 +128,16 @@ class RegisterController {
                         long_name: chiroContact.street_address
                     });
                     this.details3.vicinity = chiroContact.city;
-                }
-                this.KrinkelService.getPloegen(adNumber).then((resp) => {
-                    this.options = [];
-                    resp.forEach((r) => {
-                        this.options.push(JSON.parse(r));
+                    this.KrinkelService.getPloegen(adNumber).then((resp) => {
+                        this.options = [];
+                        resp.forEach((r) => {
+                            this.options.push(JSON.parse(r));
+                        });
+                        this.newPerson.group = this.options[0].stamnr;
                     });
-                    this.newPerson.group = this.options[0].stamnr;
-                });
+                } else {
+                    // TODO Nicky: Show toast met Error met uw gegevens op te halen
+                }
             }
         });
     }
