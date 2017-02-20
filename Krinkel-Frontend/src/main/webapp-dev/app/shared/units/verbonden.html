@@ -5,6 +5,34 @@
         background-color: #EEE;
         cursor: pointer;
     }
+    .tooltip {
+        position: relative;
+        display: inline;
+    }
+
+    .tooltip .tooltiptext {
+        visibility: hidden;
+        width: 330px;
+        background-color: green;
+        color: #fff;
+        text-align: center;
+        border-radius: 6px;
+        padding: 5px 0;
+
+        /* Position the tooltip */
+        position: relative;
+        z-index: 1;
+    }
+
+    .tooltip:hover .tooltiptext {
+        visibility: visible;
+    }
+    .bevestigd{
+        color : blue;
+    }
+    .betaald{
+        color : green;
+    }
 </style>
 
 <a class="btn right" href="/graph" ng-if="$ctrl.AuthService.getUserRole() === 'ADMIN'">Bekijk Grafieken</a>
@@ -17,8 +45,8 @@
     <tr>
         <th data-field="stamNummmer">Stam nummer</th>
         <th data-field="naam">Naam</th>
-        <th data-field="amountParticipants">Aantal deelnemers</th>
-        <th data-field="amountVolunteers" ng-if="$ctrl.AuthService.getUserRole() === 'ADMIN'">Aantal medewerkers</th>
+        <th data-field="amountParticipants">Aantal deelnemers (<span class="bevestigd">Bevestigd</span> -- <span class="betaald">Betaald</span>)</th>
+        <th data-field="amountVolunteers" ng-if="$ctrl.AuthService.getUserRole() === 'ADMIN'">Aantal medewerkers (<span class="bevestigd">Bevestigd</span> -- <span class="betaald">Betaald</span>)</th>
     </tr>
     </thead>
 
@@ -35,12 +63,16 @@
 
         </td>
         <td >
-            {{verbond.aantal_ingeschreven_deelnemers}}
+            <!--<div class="tooltip">-->
+                {{verbond.aantal_ingeschreven_deelnemers}}
+                <!--<span class="tooltiptext">Aantal bevestigd ingeschreven deelnemers: {{verbond.aantal_ingeschreven_deelnemers_bevestigd}}<br>Aantal betaald/onbevestigd ingeschreven deelnemers:{{verbond.aantal_ingeschreven_deelnemers_betaald}}</span>-->
+            <!--</div>-->
+            <span class="bevestigd">({{verbond.aantal_ingeschreven_deelnemers_bevestigd}}</span> -- <span class="betaald">{{verbond.aantal_ingeschreven_deelnemers_betaald}})</span>
             <i class="material-icons right icon-green" ng-if="$ctrl.AuthService.getUserRole() !== 'ADMIN'">send</i>
         </td>
         <!-- getUserRole geeft admin terug in case of admin of super-admin; anders geeft het groep terug -->
         <td ng-if="$ctrl.AuthService.getUserRole() === 'ADMIN'">
-            {{verbond.aantal_ingeschreven_vrijwilligers}}
+            {{verbond.aantal_ingeschreven_vrijwilligers}} (<span class="bevestigd">{{verbond.aantal_ingeschreven_vrijwilligers_bevestigd}}</span> -- <span class="betaald">{{verbond.aantal_ingeschreven_vrijwilligers_betaald}}</span>)
             <i class="material-icons right icon-green">send</i>
         </td>
     </tr>

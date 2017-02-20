@@ -7,6 +7,8 @@ import com.realdolmen.chiro.domain.units.ChiroUnit;
 import com.realdolmen.chiro.repository.ChiroUnitRepository;
 import com.realdolmen.chiro.util.StamNumberTrimmer;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PostFilter;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -23,9 +25,9 @@ public class VerbondenService {
 
     @Autowired
     StamNumberTrimmer stamNumberTrimmer;
-// Security
-    /*@PreAuthorize("@ChiroUnitServiceSecurity.hasPermissionToFindVerbonden()")
-    @PostFilter("@ChiroUnitServiceSecurity.hasPermissionToSeeVerbonden(filterObject)")*/
+    // Security
+    @PreAuthorize("@ChiroUnitServiceSecurity.hasPermissionToFindVerbonden()")
+    @PostFilter("@ChiroUnitServiceSecurity.hasPermissionToSeeVerbonden(filterObject)")
     public List<ChiroUnit> getVerbonden() {
         // Get the verbonden: the name + stamNummer
         List<ChiroUnit> verbonden = chiroUnitRepository.findAllVerbonden();
@@ -43,6 +45,11 @@ public class VerbondenService {
             verbond.setParticipantsCountPaid(countAllParticipantsPaid - countVolunteersPaid);
             verbond.setVolunteersCountPaid(countVolunteersPaid);
 
+            int countAllParticipantsConfirmed = chiroUnitRepository.countParticipantsByVerbond(verbond.getStamNummer(), Status.CONFIRMED);
+            int countVolunteersConfirmed = chiroUnitRepository.countVolunteersByVerbond(verbond.getStamNummer(), Status.CONFIRMED);
+            verbond.setParticipantsCountConfirmed(countAllParticipantsConfirmed - countVolunteersConfirmed);
+            verbond.setVolunteersCountConfirmed(countVolunteersConfirmed);
+
             // Trim the stam nummers
             verbond.setStamNummer(stamNumberTrimmer.trim(verbond.getStamNummer()));
         }
@@ -50,8 +57,8 @@ public class VerbondenService {
         return verbonden;
     }
     // Security
-    /*@PreAuthorize("@ChiroUnitServiceSecurity.hasPermissionToFindUnits()")
-    @PostFilter("@ChiroUnitServiceSecurity.hasPermissionToSeeUnits(filterObject)")*/
+    @PreAuthorize("@ChiroUnitServiceSecurity.hasPermissionToFindUnits()")
+    @PostFilter("@ChiroUnitServiceSecurity.hasPermissionToSeeUnits(filterObject)")
     public List<ChiroUnit> getGewesten(String verbondStamNummer){
 //        System.err.println("Hi from getGewesten");
         // first get the untrimmed verbondStamNummer for searching the DB
@@ -78,8 +85,8 @@ public class VerbondenService {
         return gewesten;
     }
     // Security
-    /*@PreAuthorize("@ChiroUnitServiceSecurity.hasPermissionToFindUnits()")
-    @PostFilter("@ChiroUnitServiceSecurity.hasPermissionToSeeUnits(filterObject)")*/
+    @PreAuthorize("@ChiroUnitServiceSecurity.hasPermissionToFindUnits()")
+    @PostFilter("@ChiroUnitServiceSecurity.hasPermissionToSeeUnits(filterObject)")
     public List<ChiroUnit> getGroepen(String gewestStamNummer){
 //        System.err.println("Hi from getGroepen");
         // first get the untrimed verbondStamNummer for searching inside the DB
@@ -108,8 +115,8 @@ public class VerbondenService {
         return groepen;
     }
     // Security
-    /*@PreAuthorize("@ChiroUnitServiceSecurity.hasPermissionToGetParticipants()")
-    @PostFilter("@ChiroUnitServiceSecurity.hasPermissionToSeeParticipants(filterObject)")*/
+    @PreAuthorize("@ChiroUnitServiceSecurity.hasPermissionToGetParticipants()")
+    @PostFilter("@ChiroUnitServiceSecurity.hasPermissionToSeeParticipants(filterObject)")
     public List<RegistrationParticipant> getRegistrationParticipants(String groepStamNummer){
 //        System.err.println("Hi from getRegistrationParticipants");
         // first untrim the groepStamNummer
@@ -117,7 +124,7 @@ public class VerbondenService {
 
         List<RegistrationParticipant> registrationParticipants = chiroUnitRepository.returnParticipantsByGroep(groepStamNummer);
 
-        List<RegistrationParticipant> registrationParticipantsWithoutVolunteers = new ArrayList<>();
+        List<RegistrationParticipant> registrationParticipantsWithoutVolunteers = new ArrayList<RegistrationParticipant>();
 
         for (RegistrationParticipant registrationParticipant : registrationParticipants) {
             if(! (registrationParticipant instanceof RegistrationVolunteer) ){
@@ -128,8 +135,8 @@ public class VerbondenService {
         return registrationParticipantsWithoutVolunteers;
     }
     // Security
-    /*@PreAuthorize("@ChiroUnitServiceSecurity.hasPermissionToGetVolunteers()")
-    @PostFilter("@ChiroUnitServiceSecurity.hasPermissionToSeeVolunteers(filterObject)")*/
+    @PreAuthorize("@ChiroUnitServiceSecurity.hasPermissionToGetVolunteers()")
+    @PostFilter("@ChiroUnitServiceSecurity.hasPermissionToSeeVolunteers(filterObject)")
     public List<RegistrationVolunteer> getRegistrationVolunteers(String groepStamNummer){
 //        System.err.println("Hi from getRegistrationVolunteers");
         // first untrim the groepStamNummer

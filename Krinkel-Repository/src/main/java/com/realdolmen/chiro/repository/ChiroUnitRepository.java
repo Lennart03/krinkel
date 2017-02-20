@@ -70,7 +70,7 @@ public interface ChiroUnitRepository extends JpaRepository<RawChiroUnit, String>
      * @return
      */
     @Query("SELECT COUNT(p) FROM RegistrationVolunteer p, RawChiroUnit c " +
-                  "WHERE c.verbondStamNummer = ?1 AND p.stamnumber = c.groepStamNummer")
+            "WHERE c.verbondStamNummer = ?1 AND p.stamnumber = c.groepStamNummer")
     int countVolunteersByVerbond(String verbondStamNummer);
 
     @Query("SELECT COUNT(p) FROM RegistrationVolunteer p, RawChiroUnit c " +
@@ -144,7 +144,5 @@ public interface ChiroUnitRepository extends JpaRepository<RawChiroUnit, String>
     @Query("SELECT p FROM RegistrationParticipant p, RawChiroUnit c " +
             "WHERE c.groepStamNummer = ?1 AND p.stamnumber = c.groepStamNummer")
     List<RegistrationParticipant> returnParticipantsByGroep (String groepStamNummer);
-
-
 
 }

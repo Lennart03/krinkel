@@ -13,22 +13,22 @@ class VerbondenController {
     $onInit() {
         this.KrinkelService.getVerbondenList().then((results) => {
             this.verbonden = results;
-            console.log('VERBONDEN');
-            console.log(this.verbonden);
-
-            this.filterVerbonden();
-
-            console.log('VERBONDEN AFTER FILTERING');
-            console.log(this.verbonden);
+            // console.log('VERBONDEN');
+            // console.log(this.verbonden);
+            //
+            // this.filterVerbonden();
+            //
+            // console.log('VERBONDEN AFTER FILTERING');
+            // console.log(this.verbonden);
         });
         this.user = this.AuthService.getLoggedinUser();
         this.userRole = this.user.role;
         this.userRoles = this.user.roles;
 
-        console.log('USER ROLE')
-        console.log(this.userRole);
-        console.log('USER ROLES');
-        console.log(this.userRoles);
+        // console.log('USER ROLE')
+        // console.log(this.userRole);
+        // console.log('USER ROLES');
+        // console.log(this.userRoles);
 
     }
 
@@ -51,7 +51,7 @@ class VerbondenController {
     }
 
     canSee(verbondNr){
-        if(this.userRole === 'ADMIN'){
+        if(this.userRole === 'ADMIN'){ // TODO: here maybe + NATIONAAL
             return true;
         }
         var thiz = this;
@@ -134,6 +134,8 @@ export var VerbondenComponent = {
     template: require('./verbonden.html'),
     controller: VerbondenController
 };
+
+
 
 VerbondenComponent.$inject = ['KrinkelService', 'AuthService', '$route', '$location', '$http'];
 

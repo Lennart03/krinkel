@@ -23,7 +23,7 @@ class GroepController {
                 this.participants.push(r);
             });
         });
-        this.KrinkelService.getVolunteersList(this.lolo).then((results) => {
+        this.KrinkelService.getVolunteersList(this.groepNr).then((results) => {
             results.forEach((r) => {
                 r.participant = "Vrijwilliger";
                 r.function.preset = this.MapperService.mapVolunteerFunction(r.function.preset);
