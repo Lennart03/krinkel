@@ -47,6 +47,21 @@ section {
   }
 }
 
+.landingPageEnglishMainImage {
+  @extend %mainImage;
+  height: 100vh;
+  background: url("../img/layout/BRU_9436.jpg") no-repeat 0% 20%;
+  background-size: cover;
+  @media only screen and(max-width: 1200px) {
+    background-size: cover;
+    background: url("../img/layout/BRU_9436_med.jpg") no-repeat 0% 20%;
+  }
+  @media only screen and(max-width: 800px) {
+    background-size: cover;
+    background: url("../img/layout/BRU_9436_small.jpg") no-repeat 0% 20%;
+  }
+}
+
 .landingPageMainImage {
   @extend %mainImage;
   height: 100vh;

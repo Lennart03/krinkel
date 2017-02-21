@@ -7,7 +7,7 @@
 */
 /* SASS Utilities
 ========================================================================== */
-.landingPageVideo, .landingPageMainImage, .aboutPageMainImage, .faqPageMainImage, .praktischPageMainImage, .nieuwsPageMainImage {
+.landingPageVideo, .landingPageEnglishMainImage, .landingPageMainImage, .aboutPageMainImage, .faqPageMainImage, .praktischPageMainImage, .nieuwsPageMainImage {
   height: 500px;
   width: 100%;
   border-bottom: 1px solid #309583;
@@ -502,6 +502,26 @@ section a:hover {
 @media only screen and (max-width: 1200px) {
   .landingPageVideo {
     display: none;
+  }
+}
+
+.landingPageEnglishMainImage {
+  height: 100vh;
+  background: url("../img/layout/BRU_9436.jpg") no-repeat 0% 20%;
+  background-size: cover;
+}
+
+@media only screen and (max-width: 1200px) {
+  .landingPageEnglishMainImage {
+    background-size: cover;
+    background: url("../img/layout/BRU_9436_med.jpg") no-repeat 0% 20%;
+  }
+}
+
+@media only screen and (max-width: 800px) {
+  .landingPageEnglishMainImage {
+    background-size: cover;
+    background: url("../img/layout/BRU_9436_small.jpg") no-repeat 0% 20%;
   }
 }
 
