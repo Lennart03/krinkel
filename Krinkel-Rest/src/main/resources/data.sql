@@ -30,7 +30,7 @@ INSERT INTO admins VALUES ('admin',386287, 'frank.claes@realdolmen.com', 'Frank'
 INSERT INTO admins VALUES ('super-admin', 386286, 'matthias.vanderwilt@realdolmen.com', 'Matthias', 'Vanderwilt');
 INSERT INTO admins VALUES ('admin', 386285, 'gil.mathijs@realdolmen.com', 'Gil', 'Mathijs');
 
-
+*/
 INSERT INTO pre_camp VALUES (10, '2017-08-21') ON DUPLICATE KEY UPDATE id = 10;
 INSERT INTO pre_camp VALUES (20, '2017-08-22') ON DUPLICATE KEY UPDATE id = 20;
 INSERT INTO pre_camp VALUES (30, '2017-08-23') ON DUPLICATE KEY UPDATE id = 30;
@@ -77,6 +77,21 @@ VALUES('RegistrationVolunteer', '60', '876543', 'Brussel', '123', '1000', 'Velds
                               'email@test.be', 'email@test.be', 'Jos', 'MAN', 'Flodder', '', '', '', 'VOLUNTEER', false,
                               'AG /0103', 'CONFIRMED', 'SYNCED', 1, 'KEMPEN', '', 'CAMPGROUND', '876543', '2016-12-13');
 
+INSERT INTO registration_participant (dtype,id,ad_number,city, house_number, postal_code, street, birthdate,
+social_promotion, eatinghabbit, email, email_subscriber, first_name, gender, last_name, remarks_food, medical_remarks, remarks,
+event_role, buddy, stamnumber, status, sync_status, phone_number, camp_ground, other, preset, registered_by, last_change)
+VALUES('RegistrationVolunteer', '70', '85048', 'Hasselt', '123', '1000', 'Veldstraat', '1995-08-21', false, 'FISHANDMEAT',
+                              'email@test.be', 'email@test.be', 'Jos', 'MAN', 'Flodder', '', '', '', 'VOLUNTEER', false,
+                              'LG /0000', 'CONFIRMED', 'SYNCED', 1, 'KEMPEN', '', 'CAMPGROUND', '876543', '2016-12-13');
+
+
+INSERT INTO registration_participant (dtype,id,ad_number,city, house_number, postal_code, street, birthdate,
+social_promotion, eatinghabbit, email, email_subscriber, first_name, gender, last_name, remarks_food, medical_remarks, remarks,
+event_role, buddy, stamnumber, status, sync_status, phone_number, camp_ground, other, preset, registered_by, last_change)
+VALUES('RegistrationVolunteer', '80', '203872', 'Hasselt', '123', '1000', 'Veldstraat', '1995-08-21', false, 'FISHANDMEAT',
+                              'email@test.be', 'email@test.be', 'Jos', 'MAN', 'Flodder', '', '', '', 'VOLUNTEER', false,
+                              'BM /0202', 'CONFIRMED', 'SYNCED', 1, 'KEMPEN', '', 'CAMPGROUND', '876543', '2016-12-13');
+
 
 INSERT INTO registration_participant_language (registration_participant_id,language)
 VALUES('50', '0');
@@ -110,6 +125,7 @@ INSERT INTO registration_participant_post_camp_list VALUES (60,80);
 -- INSERT INTO login_log (id,ad_number,stam_number,stamp) VALUES (10,'123856','OG3301',{d '2016-10-04'});
 -- INSERT INTO login_log (id,ad_number,stam_number,stamp) VALUES (11,'133456','LG0301',{d '2016-10-07'});
 -- INSERT INTO login_log (id,ad_number,stam_number,stamp) VALUES (12,'126556','OM1301',{d '2016-10-07'});
+
 INSERT INTO login_log (id,ad_number,stam_number,stamp) VALUES (1,'123456','LEG0000',{d '2016-10-15'});
 INSERT INTO login_log (id,ad_number,stam_number,stamp) VALUES (2,'123456','LG0301',{d '2016-07-15'});
 INSERT INTO login_log (id,ad_number,stam_number,stamp) VALUES (3,'123456','WG0301',{d '2016-09-12'});
@@ -2110,7 +2126,7 @@ INSERT INTO login_log (id,ad_number,stam_number,stamp) VALUES (1997,'123456','LE
 INSERT INTO login_log (id,ad_number,stam_number,stamp) VALUES (1998,'123456','OG3301',{d '2016-12-7'});
 INSERT INTO login_log (id,ad_number,stam_number,stamp) VALUES (1999,'123456','AG0301',{d '2016-01-5'});
 INSERT INTO login_log (id,ad_number,stam_number,stamp) VALUES (2000,'123456','OG1301',{d '2016-01-17'});
-
+/*
 
 
 */

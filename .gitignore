@@ -16,3 +16,6 @@ node/
 node_modules/
 
 env.url.config.js
+
+*.properties
+data.sql
