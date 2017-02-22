@@ -50,6 +50,18 @@ public class ChiroUnit {
     @JsonProperty("aantal_ingeschreven_vrijwilligers_bevestigd")
     private int volunteersCountConfirmed = 0;
 
+    @JsonProperty("aantal_ingeschreven_deelnemers_onbetaald")
+    private int participantsCountUnpaid = 0;
+
+    @JsonProperty("aantal_ingeschreven_vrijwilligers_onbetaald")
+    private int volunteersCountUnpaid  = 0;
+
+    @JsonProperty("aantal_ingeschreven_deelnemers_geannuleerd")
+    private int participantsCountCancelled= 0;
+
+    @JsonProperty("aantal_ingeschreven_vrijwilligers_geannuleerd")
+    private int volunteersCountCancelled = 0;
+
     public ChiroUnit() {
         this.lower = new ArrayList<ChiroUnit>();
     }
@@ -151,7 +163,10 @@ public class ChiroUnit {
 
     @Override
     public String toString(){
-        return name + " - Stam nummer: " + stamNummer + ", #participants: " + participantsCount + ", #volunteers: " + volunteersCount;
+        return name + " - Stam nummer: " + stamNummer + ", #participants: " + participantsCountConfirmed + " - " + participantsCountPaid
+                + " - " + participantsCountUnpaid + " - " + participantsCountCancelled
+                + ", #volunteers: " + volunteersCountConfirmed + " - " + volunteersCountPaid + " - " + volunteersCountUnpaid + " - " + volunteersCountCancelled;
+
     }
 
     public int getParticipantsCountPaid() {
@@ -184,5 +199,37 @@ public class ChiroUnit {
 
     public void setVolunteersCountConfirmed(int volunteersCountConfirmed) {
         this.volunteersCountConfirmed = volunteersCountConfirmed;
+    }
+
+    public int getParticipantsCountUnpaid() {
+        return participantsCountUnpaid;
+    }
+
+    public void setParticipantsCountUnpaid(int participantsCountUnpaid) {
+        this.participantsCountUnpaid = participantsCountUnpaid;
+    }
+
+    public int getVolunteersCountUnpaid() {
+        return volunteersCountUnpaid;
+    }
+
+    public void setVolunteersCountUnpaid(int volunteersCountUnpaid) {
+        this.volunteersCountUnpaid = volunteersCountUnpaid;
+    }
+
+    public int getParticipantsCountCancelled() {
+        return participantsCountCancelled;
+    }
+
+    public void setParticipantsCountCancelled(int participantsCountCancelled) {
+        this.participantsCountCancelled = participantsCountCancelled;
+    }
+
+    public int getVolunteersCountCancelled() {
+        return volunteersCountCancelled;
+    }
+
+    public void setVolunteersCountCancelled(int volunteersCountCancelled) {
+        this.volunteersCountCancelled = volunteersCountCancelled;
     }
 }

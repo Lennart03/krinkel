@@ -5,7 +5,26 @@
         background-color: #EEE;
         cursor: pointer;
     }
+    .bevestigd{
+        color : blue;
+    }
+    .betaald{
+        color : green;
+    }
+    .onbetaald{
+        color : red;
+    }
+    .geannuleerd{
+        color : grey;
+    }
+    .inlineDiv{
+        display:inline;
+    }
 </style>
+
+<div ng-if="$ctrl.AuthService.getUserRole() === 'ADMIN'">
+    <span class="bevestigd">Bevestigd</span> - <span class="betaald">Betaald</span> - <span class="onbetaald">Onbetaald</span> - <span class="geannuleerd">Geannuleerd</span>
+</div>
 
 <table>
     <thead>
@@ -13,7 +32,7 @@
         <th data-field="stamNummer">Stam nummer</th>
         <th data-field="naam">Naam</th>
         <th data-field="amountParticipants">Aantal deelnemers</th>
-        <th data-field="amountVolunteers" ng-if="$ctrl.AuthService.getUserRole() === 'ADMIN'">Aantal medewerkers</th>
+        <!--<th data-field="amountVolunteers" ng-if="$ctrl.AuthService.getUserRole() === 'ADMIN'">Aantal medewerkers</th>-->
     </tr>
     </thead>
 
@@ -27,13 +46,17 @@
             {{groep.name}}
         </td>
         <td>
-            {{groep.aantal_ingeschreven_deelnemers}}
-            <i class="material-icons right icon-green" ng-if="$ctrl.AuthService.getUserRole() !== 'ADMIN'">send</i>
+            <div class="inlineDiv" ng-if="$ctrl.AuthService.getUserRole() !== 'ADMIN'">
+                {{groep.aantal_ingeschreven_deelnemers_bevestigd}}
+            </div>
+            <div class="inlineDiv" ng-if="$ctrl.AuthService.getUserRole() === 'ADMIN'">
+                <span class="bevestigd">{{groep.aantal_ingeschreven_deelnemers_bevestigd}}</span> - <span class="betaald">{{groep.aantal_ingeschreven_deelnemers_betaald}}</span> - <span class="onbetaald">{{groep.aantal_ingeschreven_deelnemers_onbetaald}}</span> - <span class="geannuleerd">{{groep.aantal_ingeschreven_deelnemers_geannuleerd}}</span>
+            </div>
         </td>
-        <td ng-if="$ctrl.AuthService.getUserRole() === 'ADMIN'">
-            {{groep.aantal_ingeschreven_vrijwilligers}}
-            <i class="material-icons right icon-green">send</i>
-        </td>
+        <!--<td ng-if="$ctrl.AuthService.getUserRole() === 'ADMIN'">-->
+            <!--{{groep.aantal_ingeschreven_vrijwilligers}}-->
+            <!--<i class="material-icons right icon-green">send</i>-->
+        <!--</td>-->
     </tr>
     </tbody>
 </table>

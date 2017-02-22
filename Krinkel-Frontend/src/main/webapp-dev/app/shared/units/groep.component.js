@@ -37,6 +37,19 @@ class GroepController {
         });
     }
 
+    // changeBackgroundColorStatus(){
+    //     $(document).ready(function(){
+    //         //Iterate through each of the rows
+    //         $('tr').each(function(){
+    //             //Check the value of the last <td> element in the row (trimmed to ignore white-space)
+    //             if($(this).find('td:last').text().trim() === "Geannuleerd"){
+    //                 //Set the row to green
+    //                 $(this).css('background','green');
+    //             }
+    //         });
+    //     });
+    // }
+
     /**
      *
      * FOR CHANGING PAYMENT STATUS AND CANCELLING PAYMENT
@@ -75,7 +88,9 @@ class GroepController {
             { 'value': 'CONFIRMED', 'label': 'Bevestigd'}
         ]
     }
-
+    /*
+    To parse dates from a list of data objects
+     */
     getDatesListFromList(list){
         if(list.length > 0) {
             function pad(s) {

@@ -16,7 +16,7 @@ class VerbondenController {
             // console.log('VERBONDEN');
             // console.log(this.verbonden);
             //
-            // this.filterVerbonden();
+            this.filterVerbonden();
             //
             // console.log('VERBONDEN AFTER FILTERING');
             // console.log(this.verbonden);
@@ -24,6 +24,9 @@ class VerbondenController {
         this.user = this.AuthService.getLoggedinUser();
         this.userRole = this.user.role;
         this.userRoles = this.user.roles;
+        console.log('userRoles');
+        console.log(this.userRoles);
+
 
         // console.log('USER ROLE')
         // console.log(this.userRole);

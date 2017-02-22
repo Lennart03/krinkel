@@ -169,6 +169,16 @@ export class KrinkelService {
         );
     }
 
+    getVolunteersListByCampground(campground) {
+        return this.$http.get(`${this.BASEURL}/api/overview/campground/${campground}/vrijwilligers`).then((resp) => {
+                return resp.data;
+            },
+            () => {
+                this.popupMessage('Fout bij het inladen van vrijwilligers van kamgrond ' + campground, 5000, );
+            }
+        );
+    }
+
     getParticipantsForUnit(stamNummer) {
         return this.$http.get(`${this.BASEURL}/api/units/${stamNummer}`).then((resp) => {
                 return resp.data;
@@ -369,6 +379,10 @@ export class KrinkelService {
         setTimeout(() => {
             this.$window.location.reload();
         }, 10000);
+    }
+
+    popupMessage(message, millis, color) {
+        Materialize.toast(message, millis, '' + color + ' rounded');
     }
 
 

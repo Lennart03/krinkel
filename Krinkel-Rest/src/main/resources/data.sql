@@ -9,7 +9,7 @@ INSERT INTO admins VALUES ('super-admin', 152504, 'blyweert.roel@gmail.com', 'Ro
 INSERT INTO admins VALUES ('super-admin', 109318, 'tom@horre.com', 'Tom', 'Horre');
 
 -- TODO these records need to be removed because these are the Realdolmen developers
-INSERT INTO admins VALUES ('admin',396942, 'jeroen.compagnie@realdolmen.com', 'Jeroen', 'Compagnie');
+-- INSERT INTO admins VALUES ('admin',396942, 'jeroen.compagnie@realdolmen.com', 'Jeroen', 'Compagnie');
 -- Lennart for testing: leider bij chiro dolfijn
 /*
 INSERT INTO admins VALUES ('super-admin' , 396943, 'lennart.vandamme@realdolmen.com', 'Lennart', 'Van Damme');
@@ -57,12 +57,12 @@ social_promotion, eatinghabbit, email, email_subscriber, first_name, gender, las
 event_role, buddy, stamnumber, status, phone_number, camp_ground, other, preset, registered_by)
 VALUES('RegistrationParticipant', '30', '345678', 'Brussel', '123', '1000', 'Veldstraat', '1995-08-21', false, 'FISHANDMEAT',
                               'email@test.be', 'email@test.be', 'Ma', 'WOMAN', 'Flodder', '', '', '', 'ASPI', false, 'AG /0103', 'CONFIRMED', 1, '', '', '', '345678');
-
+*/
 INSERT INTO registration_participant (dtype,id,ad_number,city, house_number, postal_code, street, birthdate,
 social_promotion, eatinghabbit, email, email_subscriber, first_name, gender, last_name, remarks_food, medical_remarks, remarks,
 event_role, buddy, stamnumber, status, phone_number, camp_ground, other, preset, registered_by)
 VALUES('RegistrationParticipant', '40', '456789', 'Brussel', '123', '1000', 'Veldstraat', '1995-08-21', false, 'FISHANDMEAT',
-                              'email@test.be', 'email@test.be', 'Cees', 'WOMAN', 'Flodder', '', '', '', 'ASPI', false, 'LEG/0101', 'PAID', 1, '', '', '',  '456789');
+                              'email@test.be', 'email@test.be', 'Cees', 'WOMAN', 'Flodder', '', '', '', 'ASPI', true, 'LEG/0101', 'PAID', 1, '', '', '',  '456789');
 
 INSERT INTO registration_participant (dtype,id,ad_number,city, house_number, postal_code, street, birthdate,
 social_promotion, eatinghabbit, email, email_subscriber, first_name, gender, last_name, remarks_food, medical_remarks, remarks,
@@ -75,8 +75,8 @@ social_promotion, eatinghabbit, email, email_subscriber, first_name, gender, las
 event_role, buddy, stamnumber, status, sync_status, phone_number, camp_ground, other, preset, registered_by, last_change)
 VALUES('RegistrationVolunteer', '60', '876543', 'Brussel', '123', '1000', 'Veldstraat', '1995-08-21', false, 'FISHANDMEAT',
                               'email@test.be', 'email@test.be', 'Jos', 'MAN', 'Flodder', '', '', '', 'VOLUNTEER', false,
-                              'AG /0103', 'CONFIRMED', 'SYNCED', 1, 'KEMPEN', '', 'CAMPGROUND', '876543', '2016-12-13');
-
+                              'AG /0103', 'CONFIRMED', 'SYNCED', 1, 'BRUSSEL', '', 'COOKING', '876543', '2016-12-13');
+/*
 
 INSERT INTO registration_participant_language (registration_participant_id,language)
 VALUES('50', '0');
@@ -3031,8 +3031,8 @@ INSERT INTO groepen (groep_naam,groep_stam_nummer,gewest_stam_nummer,gewest_naam
 
 --For verbond-level entries
 INSERT INTO groepen (groep_naam,groep_stam_nummer,gewest_stam_nummer,gewest_naam,verbond_stam_nummer,verbond_naam) VALUES ('Limburg verbond','LG /0000','LG /0000','Limburg verbond','LG /0000','Limburg');
-INSERT INTO groepen (groep_naam,groep_stam_nummer,gewest_stam_nummer,gewest_naam,verbond_stam_nummer,verbond_naam) VALUES ('Others','OTHERS','OTHERS','Others','OTHERS','Others');
-INSERT INTO groepen (groep_naam,groep_stam_nummer,gewest_stam_nummer,gewest_naam,verbond_stam_nummer,verbond_naam) VALUES ('Werkgroep Krinkel','4WK','4WK','Werkgroep Krinkel','OTHERS','Others');
+INSERT INTO groepen (groep_naam,groep_stam_nummer,gewest_stam_nummer,gewest_naam,verbond_stam_nummer,verbond_naam) VALUES ('Overige','OTHERS','OTHERS','Overige','OTHERS','Overige');
+INSERT INTO groepen (groep_naam,groep_stam_nummer,gewest_stam_nummer,gewest_naam,verbond_stam_nummer,verbond_naam) VALUES ('Werkgroep Krinkel','4WK','4WK','Werkgroep Krinkel','OTHERS','Overige');
 INSERT INTO groepen (groep_naam,groep_stam_nummer,gewest_stam_nummer,gewest_naam,verbond_stam_nummer,verbond_naam) VALUES ('West Vlaanderen verbond','WG /0000','WG /0000','West Vlaanderen verbond','WG /0000','West-Vlaanderen');
 INSERT INTO groepen (groep_naam,groep_stam_nummer,gewest_stam_nummer,gewest_naam,verbond_stam_nummer,verbond_naam) VALUES ('Mechelen verbond','MG /0000','MG /0000','Mechelen verbond','MG /0000','Mechelen');
 INSERT INTO groepen (groep_naam,groep_stam_nummer,gewest_stam_nummer,gewest_naam,verbond_stam_nummer,verbond_naam) VALUES ('Leuven verbond','LEG /0000','LEG /0000','Leuven verbond','LEG /0000','Leuven');
@@ -3042,6 +3042,10 @@ INSERT INTO groepen (groep_naam,groep_stam_nummer,gewest_stam_nummer,gewest_naam
 INSERT INTO groepen (groep_naam,groep_stam_nummer,gewest_stam_nummer,gewest_naam,verbond_stam_nummer,verbond_naam) VALUES ('Kempen verbond','KG /0000','KG /0000','Kempen verbond','KG /0000','Kempen');
 INSERT INTO groepen (groep_naam,groep_stam_nummer,gewest_stam_nummer,gewest_naam,verbond_stam_nummer,verbond_naam) VALUES ('Heuvelland verbond','OG /3000','OG /3000','Heuvelland verbond','OG /3000','Heuvelland');
 INSERT INTO groepen (groep_naam,groep_stam_nummer,gewest_stam_nummer,gewest_naam,verbond_stam_nummer,verbond_naam) VALUES ('Roeland verbond','OG /1000','OG /1000','Roeland verbond','OG /1000','Roeland');
+-- For international and national campground
+INSERT INTO groepen (groep_naam,groep_stam_nummer,gewest_stam_nummer,gewest_naam,verbond_stam_nummer,verbond_naam) VALUES ('Internationaal','INT','INT','Internationaal','INT','Internationaal');
+INSERT INTO groepen (groep_naam,groep_stam_nummer,gewest_stam_nummer,gewest_naam,verbond_stam_nummer,verbond_naam) VALUES ('Nationaal','NAT','NAT','Nationaal','NAT','Nationaal');
+
 --     WEST_VLAANDEREN("WG0000"),
 --     MECHELEN("MG0000"),
 --     LEUVEN("LEG0000"),

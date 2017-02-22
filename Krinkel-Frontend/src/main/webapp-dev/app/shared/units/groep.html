@@ -14,13 +14,13 @@
     }
 </style>
 
-<a class="btn right" ng-click="$ctrl.switchShowParticipantsVolunteers()" ng-if="!$ctrl.showParticipants && $ctrl.AuthService.getUserRole() === 'ADMIN'">
-    Deelnemers
-</a>
+<!--<a class="btn right" ng-click="$ctrl.switchShowParticipantsVolunteers()" ng-if="!$ctrl.showParticipants && $ctrl.AuthService.getUserRole() === 'ADMIN'">-->
+    <!--Deelnemers-->
+<!--</a>-->
 
-<a class="btn right" ng-click="$ctrl.switchShowParticipantsVolunteers()" ng-if="$ctrl.showParticipants && $ctrl.AuthService.getUserRole() === 'ADMIN'">
-    Medewerkers
-</a>
+<!--<a class="btn right" ng-click="$ctrl.switchShowParticipantsVolunteers()" ng-if="$ctrl.showParticipants && $ctrl.AuthService.getUserRole() === 'ADMIN'">-->
+    <!--Medewerkers-->
+<!--</a>-->
 
 <h2 ng-if="$ctrl.showParticipants">Deelnemers</h2>
 
@@ -28,8 +28,8 @@
     <thead>
     <tr>
         <th data-field="name">Naam</th>
-        <th data-field="address">Adres</th>
-        <th data-field="city">Gemeente</th>
+        <th ng-if="$ctrl.AuthService.getUserRole() === 'ADMIN'" data-field="address">Adres</th>
+        <th ng-if="$ctrl.AuthService.getUserRole() === 'ADMIN'" data-field="city">Gemeente</th>
         <th ng-if="$ctrl.AuthService.getUserRole() === 'ADMIN'" data-field="eatinghabit">Eetgewoonte</th>
         <th ng-if="$ctrl.AuthService.getUserRole() === 'ADMIN'" data-field="medicalRemarks">Medische info</th>
         <th ng-if="$ctrl.AuthService.getUserRole() === 'ADMIN'" style="min-width: 110px;">Status</th>
@@ -40,7 +40,7 @@
 
 
     <tbody>
-    <tr ng-repeat="participant in $ctrl.participants" id="{{ ::participant.id }}" ng-if="participant.status !== 'CANCELLED'">
+    <tr ng-repeat="participant in $ctrl.participants" id="{{ ::participant.id }}" ng-if="participant.status === 'CONFIRMED' || ($ctrl.AuthService.getUserRole() === 'ADMIN' && participant.status !== 'CANCELLED')">
         <td>
             {{participant.firstName}} {{participant.lastName}}
         </td>
@@ -112,7 +112,7 @@
     <div class="modal-footer">
         <a href="" class=" modal-action modal-close btn-flat"
            ng-click="$ctrl.putParticipantToCancelled(participant.id)">OK</a>
-        <a href="" class="modal-action modal-close btn-flat">CANCEL</a>
+        <a href="" class="modal-action modal-close btn-flat">Annuleren</a>
     </div>
 </div>
 
@@ -183,6 +183,6 @@
     <div class="modal-footer">
         <a href="" class=" modal-action modal-close btn-flat"
            ng-click="$ctrl.putParticipantToCancelled(volunteer.id)">OK</a>
-        <a href="" class="modal-action modal-close  btn-flat">CANCEL</a>
+        <a href="" class="modal-action modal-close  btn-flat">Annuleren</a>
     </div>
 </div>
