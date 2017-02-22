@@ -9,7 +9,7 @@ INSERT INTO admins VALUES ('super-admin', 152504, 'blyweert.roel@gmail.com', 'Ro
 INSERT INTO admins VALUES ('super-admin', 109318, 'tom@horre.com', 'Tom', 'Horre');
 
 -- TODO these records need to be removed because these are the Realdolmen developers
--- INSERT INTO admins VALUES ('admin',396942, 'jeroen.compagnie@realdolmen.com', 'Jeroen', 'Compagnie');
+INSERT INTO admins VALUES ('admin',396942, 'jeroen.compagnie@realdolmen.com', 'Jeroen', 'Compagnie');
 -- Lennart for testing: leider bij chiro dolfijn
 /*
 INSERT INTO admins VALUES ('super-admin' , 396943, 'lennart.vandamme@realdolmen.com', 'Lennart', 'Van Damme');
@@ -57,7 +57,7 @@ social_promotion, eatinghabbit, email, email_subscriber, first_name, gender, las
 event_role, buddy, stamnumber, status, phone_number, camp_ground, other, preset, registered_by)
 VALUES('RegistrationParticipant', '30', '345678', 'Brussel', '123', '1000', 'Veldstraat', '1995-08-21', false, 'FISHANDMEAT',
                               'email@test.be', 'email@test.be', 'Ma', 'WOMAN', 'Flodder', '', '', '', 'ASPI', false, 'AG /0103', 'CONFIRMED', 1, '', '', '', '345678');
-*/
+
 INSERT INTO registration_participant (dtype,id,ad_number,city, house_number, postal_code, street, birthdate,
 social_promotion, eatinghabbit, email, email_subscriber, first_name, gender, last_name, remarks_food, medical_remarks, remarks,
 event_role, buddy, stamnumber, status, phone_number, camp_ground, other, preset, registered_by)
