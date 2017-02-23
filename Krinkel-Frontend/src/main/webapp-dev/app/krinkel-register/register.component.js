@@ -22,7 +22,8 @@ class RegisterController {
         this.dataIsRemoved = false;
         this.voorwaarden = false;
         window.scrollTo(0, 0);
-
+        this.disableEverything = true;
+        this.gettingDataFromChiro = true;
 
         if (this.SelectService.getSelectedFlag()) {
             this.SelectService.setColleague(undefined);
@@ -107,6 +108,7 @@ class RegisterController {
             if (resp) {
                 let chiroContact = resp[0];
                 if (chiroContact) {
+
                     this.newPerson = {
                         firstNameIsEmpty: chiroContact.first_name == "",
                         lastNameIsEmpty: chiroContact.last_name == "",
@@ -134,16 +136,56 @@ class RegisterController {
                             this.options.push(JSON.parse(r));
                         });
                         this.newPerson.group = this.options[0].stamnr;
+                        console.log('OPTIONS inside getploegen call');
+                        console.log(this.options);
+                        // Als this.options leeg is => geen groep gevonden
+                        if(typeof this.options === 'undefined' || this.options.length == 0){
+                            console.log('undefined or options.length == 0')
+                            this.dataCouldNotBeLoaded();
+                        } else if(this.options.length == 0){
+                            console.log('options.length == 0')
+                            this.dataCouldNotBeLoaded();
+                        } else {
+                            console.log('Loading data successful');
+                            this.gettingDataFromChiro = false;
+                            this.disableEverything = false;
+
+                            document.getElementById("abc").style.display = "inline";
+                            document.getElementById("def").style.display = "inline";
+                            // document.getElementById("nawachtSelect").style.display = "inline";
+                            // console.log('voorwachtSelect element');
+                            // console.log($('voorwachtSelect'));
+                            // $('voorwachtSelect').material_select();
+                            // console.log('nawachtSelect element');
+                            // console.log($('nawachtSelect'));
+                            // $('nawachtSelect').material_select();
+                        }
                     });
+
+
                 } else {
-                    this.newPerson = {
-                        firstNameIsEmpty: true,
-                        lastNameIsEmpty: true
-                    }
+                    // Geen chiro contact gevonden
+                    console.log('// Geen chiro contact gevonden');
+                    this.dataCouldNotBeLoaded();
                 }
             }
         });
     }
+
+    dataCouldNotBeLoaded(){
+        this.gettingDataFromChiro = false;
+        this.disableEverything = true;
+        /*
+         this.KrinkelService.popupMessage('Uw gegevens zijn onvolledig in de databank van de Chiro. ' +
+         'Gelieve contact op te nemen met ... om uw ', 30000, 'blue');
+         */
+        //popupMessage(message, millis, color)
+        /*this.newPerson = {
+         firstNameIsEmpty: true,
+         lastNameIsEmpty: true
+         }*/
+    }
+
     prefillSelf() {
         let loggedInUser = this.AuthService.getLoggedinUser();
         this.prefillWithAdNumber(loggedInUser.adnummer);

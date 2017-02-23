@@ -9,7 +9,7 @@ INSERT INTO admins VALUES ('super-admin', 152504, 'blyweert.roel@gmail.com', 'Ro
 INSERT INTO admins VALUES ('super-admin', 109318, 'tom@horre.com', 'Tom', 'Horre');
 
 -- TODO these records need to be removed because these are the Realdolmen developers
--- INSERT INTO admins VALUES ('admin',396942, 'jeroen.compagnie@realdolmen.com', 'Jeroen', 'Compagnie');
+INSERT INTO admins VALUES ('admin',396942, 'jeroen.compagnie@realdolmen.com', 'Jeroen', 'Compagnie');
 -- Lennart for testing: leider bij chiro dolfijn
 /*
 INSERT INTO admins VALUES ('super-admin' , 396943, 'lennart.vandamme@realdolmen.com', 'Lennart', 'Van Damme');
@@ -3045,6 +3045,16 @@ INSERT INTO groepen (groep_naam,groep_stam_nummer,gewest_stam_nummer,gewest_naam
 -- For international and national campground
 INSERT INTO groepen (groep_naam,groep_stam_nummer,gewest_stam_nummer,gewest_naam,verbond_stam_nummer,verbond_naam) VALUES ('Internationaal','INT','INT','Internationaal','INT','Internationaal');
 INSERT INTO groepen (groep_naam,groep_stam_nummer,gewest_stam_nummer,gewest_naam,verbond_stam_nummer,verbond_naam) VALUES ('Nationaal','NAT','NAT','Nationaal','NAT','Nationaal');
+
+------------------------------------------------ GEWESTEN GROEPEN ------------------------------------------------
+------------------------------------------------ GEWESTEN GROEPEN ------------------------------------------------
+
+
+
+------------------------------------------------ GEWESTEN GROEPEN ------------------------------------------------
+------------------------------------------------ GEWESTEN GROEPEN ------------------------------------------------
+
+
 
 --     WEST_VLAANDEREN("WG0000"),
 --     MECHELEN("MG0000"),
