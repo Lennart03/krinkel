@@ -30,7 +30,7 @@ INSERT INTO admins VALUES ('admin',386287, 'frank.claes@realdolmen.com', 'Frank'
 INSERT INTO admins VALUES ('super-admin', 386286, 'matthias.vanderwilt@realdolmen.com', 'Matthias', 'Vanderwilt');
 INSERT INTO admins VALUES ('admin', 386285, 'gil.mathijs@realdolmen.com', 'Gil', 'Mathijs');
 
-*/
+
 INSERT INTO pre_camp VALUES (10, '2017-08-21') ON DUPLICATE KEY UPDATE id = 10;
 INSERT INTO pre_camp VALUES (20, '2017-08-22') ON DUPLICATE KEY UPDATE id = 20;
 INSERT INTO pre_camp VALUES (30, '2017-08-23') ON DUPLICATE KEY UPDATE id = 30;
@@ -93,7 +93,7 @@ VALUES('RegistrationVolunteer', '80', '203872', 'Hasselt', '123', '1000', 'Velds
                               'email@test.be', 'email@test.be', 'Jos', 'MAN', 'Flodder', '', '', '', 'VOLUNTEER', false,
                               'BM /0202', 'CONFIRMED', 'SYNCED', 1, 'KEMPEN', '', 'CAMPGROUND', '876543', '2016-12-13');
 
-/*
+
 
 --data to test generating random groups
 /*
@@ -1092,11 +1092,8 @@ INSERT INTO registration_participant (dtype,id,ad_number,city, house_number, pos
 INSERT INTO registration_participant (dtype,id,ad_number,city, house_number, postal_code, street, birthdate, social_promotion, eatinghabbit, email, email_subscriber, first_name, gender, last_name, remarks_food, medical_remarks, remarks, event_role, buddy, stamnumber, status, phone_number, camp_ground, other, preset, registered_by) VALUES('RegistrationParticipant', '999', '999000', 'Brussel', '123', '1000', 'Veldstraat', '1995-08-21', false, 'FISHANDMEAT', 'email@test.be', 'email@test.be', 'Ma', 'MAN', 'Flodder', '', '', '', 'ASPI', false, 'OG /1000', 'CONFIRMED', 1, '', '', '', '345678');
 
 
-                              'AG /0103', 'CONFIRMED', 'SYNCED', 1, 'BRUSSEL', '', 'COOKING', '876543', '2016-12-13');
-/*
 
-/*
->>>>>>> 592801cd66e28a6cb4d1759f43425f81889e501e
+
 INSERT INTO registration_participant_language (registration_participant_id,language)
 VALUES('50', '0');
 
@@ -1111,7 +1108,7 @@ INSERT INTO registration_participant_post_camp_list VALUES (60,60);
 INSERT INTO registration_participant_post_camp_list VALUES (60,70);
 INSERT INTO registration_participant_post_camp_list VALUES (60,80);
 
-
+*/
 -- OLD INSERTS
 -- INSERT INTO login_log (id,ad_number,stam_number,stamp) VALUES (1,'123456','OM1301',{d '2016-10-01'});
 -- INSERT INTO login_log (id,ad_number,stam_number,stamp) VALUES (13,'123546','OG1301',{d '2016-10-02'});
