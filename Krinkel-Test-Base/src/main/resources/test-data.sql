@@ -24,7 +24,7 @@ INSERT INTO registration_participant (dtype,id,ad_number,city, house_number, pos
 social_promotion, eatinghabbit, email, email_subscriber, first_name, gender, last_name, remarks_food, medical_remarks, remarks,
 event_role, buddy, stamnumber, status, phone_number, camp_ground, other, preset, registered_by)
 VALUES('RegistrationParticipant', '40', '456789', 'Brussel', '123', '1000', 'Veldstraat', '1995-08-21', false, 'FISHANDMEAT',
-                              'email@test.be', 'email@test.be', 'Cees', 'WOMAN', 'Flodder', '', '', '', 'ASPI', false, 'LEG/0101', 'PAID', 1, '', '', '',  '456789');
+                              'email@test.be', 'email@test.be', 'Cees', 'WOMAN', 'Flodder', '', '', '', 'ASPI', true, 'LEG/0101', 'PAID', 1, '', '', '',  '456789');
 
 INSERT INTO registration_participant (dtype,id,ad_number,city, house_number, postal_code, street, birthdate,
 social_promotion, eatinghabbit, email, email_subscriber, first_name, gender, last_name, remarks_food, medical_remarks, remarks,
@@ -36,7 +36,7 @@ INSERT INTO registration_participant (dtype,id,ad_number,city, house_number, pos
 social_promotion, eatinghabbit, email, email_subscriber, first_name, gender, last_name, remarks_food, medical_remarks, remarks,
 event_role, buddy, stamnumber, status, sync_status, last_change, phone_number, camp_ground, other, preset, registered_by)
 VALUES('RegistrationVolunteer', '60', '876543', 'Brussel', '123', '1000', 'Veldstraat', '1995-08-21', false, 'FISHANDMEAT',
-                              'email@test.be', 'email@test.be', 'Jos', 'MAN', 'Flodder', '', '', '', 'VOLUNTEER', false, 'AG /0103', 'CONFIRMED', 'SYNCED', '2016-12-13', 1, 'KEMPEN', '', 'CAMPGROUND', '876543');
+                              'email@test.be', 'email@test.be', 'Jos', 'MAN', 'Flodder', '', '', '', 'VOLUNTEER', false, 'AG /0103', 'CONFIRMED', 'SYNCED', '2016-12-13', 1, 'INTERNATIONAAL', '', 'CAMPGROUND', '876543');
 
 INSERT INTO registration_participant_language (registration_participant_id,language)
 VALUES('50', '0');
@@ -1007,6 +1007,12 @@ INSERT INTO groepen (groep_naam,groep_stam_nummer,gewest_stam_nummer,gewest_naam
 INSERT INTO groepen (groep_naam,groep_stam_nummer,gewest_stam_nummer,gewest_naam,verbond_stam_nummer,verbond_naam) VALUES ('FREEDOM','WM /1905','WG /1900','Oe Est','WG /0000','West-Vlaanderen');
 INSERT INTO groepen (groep_naam,groep_stam_nummer,gewest_stam_nummer,gewest_naam,verbond_stam_nummer,verbond_naam) VALUES ('Gaverke Beregoed!','WM /1907','WG /1900','Oe Est','WG /0000','West-Vlaanderen');
 INSERT INTO groepen (groep_naam,groep_stam_nummer,gewest_stam_nummer,gewest_naam,verbond_stam_nummer,verbond_naam) VALUES ('Klimop','WM /1908','WG /1900','Oe Est','WG /0000','West-Vlaanderen');
+
+-------
+INSERT INTO groepen (groep_naam,groep_stam_nummer,gewest_stam_nummer,gewest_naam,verbond_stam_nummer,verbond_naam) VALUES ('Overige','OTHERS','OTHERS','Overige','OTHERS','Overige');
+INSERT INTO groepen (groep_naam,groep_stam_nummer,gewest_stam_nummer,gewest_naam,verbond_stam_nummer,verbond_naam) VALUES ('Werkgroep Krinkel','4WK','4WK','Werkgroep Krinkel','OTHERS','Overige');
+INSERT INTO groepen (groep_naam,groep_stam_nummer,gewest_stam_nummer,gewest_naam,verbond_stam_nummer,verbond_naam) VALUES ('Internationale kampgrond','INT','INT','Internationale kampgrond','INT','Internationale kampgrond');
+INSERT INTO groepen (groep_naam,groep_stam_nummer,gewest_stam_nummer,gewest_naam,verbond_stam_nummer,verbond_naam) VALUES ('Nationale kampgrond','NAT','NAT','Nationale kampgrond','NAT','Nationale kampgrond');
 
 
 INSERT INTO admins VALUES ('admin',1 , 'firstAdmin@krinkel.be', 'first', 'admin');

@@ -3,7 +3,6 @@ package com.realdolmen.chiro.controller;
 import com.realdolmen.chiro.domain.RegistrationParticipant;
 import com.realdolmen.chiro.domain.RegistrationVolunteer;
 import com.realdolmen.chiro.domain.units.ChiroUnit;
-import com.realdolmen.chiro.service.ChiroUnitService;
 import com.realdolmen.chiro.service.VerbondenService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -54,5 +53,11 @@ public class OverviewController {
     public List<RegistrationVolunteer> getVolunteers(@PathVariable("groepStamNummer") String groepStamNummer) {
         //System.err.println("Participants in overview controller: " + verbondenService.getRegistrationVolunteers(groepStamNummer));
         return verbondenService.getRegistrationVolunteers(groepStamNummer);
+    }
+
+    @RequestMapping(value = "/campground/{campground}/vrijwilligers", method = RequestMethod.GET)
+    public List<RegistrationVolunteer> getVolunteersByCampground (@PathVariable("campground") String campground){
+
+        return verbondenService.getRegistrationVolunteersByCampground(campground);
     }
 }
