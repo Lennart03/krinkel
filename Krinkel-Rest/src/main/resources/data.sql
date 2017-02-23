@@ -4066,7 +4066,78 @@ INSERT INTO groepen (groep_naam,groep_stam_nummer,gewest_stam_nummer,gewest_naam
 ------------------------------------------------ GEWESTEN GROEPEN ------------------------------------------------
 ------------------------------------------------ GEWESTEN GROEPEN ------------------------------------------------
 
-
+INSERT INTO groepen (groep_naam,groep_stam_nummer,gewest_stam_nummer,gewest_naam,verbond_stam_nummer,verbond_naam) VALUES ('Groep Zac','AG /0400','AG /0400','Zac','AG /0000','Antwerpen');
+INSERT INTO groepen (groep_naam,groep_stam_nummer,gewest_stam_nummer,gewest_naam,verbond_stam_nummer,verbond_naam) VALUES ('Groep Lach','AG /0200','AG /0200','Lach','AG /0000','Antwerpen');
+INSERT INTO groepen (groep_naam,groep_stam_nummer,gewest_stam_nummer,gewest_naam,verbond_stam_nummer,verbond_naam) VALUES ('Groep Zip','AG /0300','AG /0300','Zip','AG /0000','Antwerpen');
+INSERT INTO groepen (groep_naam,groep_stam_nummer,gewest_stam_nummer,gewest_naam,verbond_stam_nummer,verbond_naam) VALUES ('Groep Pol','AG /0500','AG /0500','Pol','AG /0000','Antwerpen');
+INSERT INTO groepen (groep_naam,groep_stam_nummer,gewest_stam_nummer,gewest_naam,verbond_stam_nummer,verbond_naam) VALUES ('Groep GEWEST GLIM','AG /0700','AG /0700','GEWEST GLIM','AG /0000','Antwerpen');
+INSERT INTO groepen (groep_naam,groep_stam_nummer,gewest_stam_nummer,gewest_naam,verbond_stam_nummer,verbond_naam) VALUES ('Groep Pink','AG /0800','AG /0800','Pink','AG /0000','Antwerpen');
+INSERT INTO groepen (groep_naam,groep_stam_nummer,gewest_stam_nummer,gewest_naam,verbond_stam_nummer,verbond_naam) VALUES ('Groep Ket','BG /0100','BG /0100','Ket','BG /0000','Brussel');
+INSERT INTO groepen (groep_naam,groep_stam_nummer,gewest_stam_nummer,gewest_naam,verbond_stam_nummer,verbond_naam) VALUES ('Groep Zizo','BG /0200','BG /0200','Zizo','BG /0000','Brussel');
+INSERT INTO groepen (groep_naam,groep_stam_nummer,gewest_stam_nummer,gewest_naam,verbond_stam_nummer,verbond_naam) VALUES ('Groep Zonienrand','BG /0300','BG /0300','Zonienrand','BG /0000','Brussel');
+INSERT INTO groepen (groep_naam,groep_stam_nummer,gewest_stam_nummer,gewest_naam,verbond_stam_nummer,verbond_naam) VALUES ('Groep Zennevallei','BG /0400','BG /0400','Zennevallei','BG /0000','Brussel');
+INSERT INTO groepen (groep_naam,groep_stam_nummer,gewest_stam_nummer,gewest_naam,verbond_stam_nummer,verbond_naam) VALUES ('Groep West','BG /0500','BG /0500','West','BG /0000','Brussel');
+INSERT INTO groepen (groep_naam,groep_stam_nummer,gewest_stam_nummer,gewest_naam,verbond_stam_nummer,verbond_naam) VALUES ('Groep Zoetgeur  Randstad','BG /0600','BG /0600','Zoetgeur  Randstad','BG /0000','Brussel');
+INSERT INTO groepen (groep_naam,groep_stam_nummer,gewest_stam_nummer,gewest_naam,verbond_stam_nummer,verbond_naam) VALUES ('Groep Pajottenland','BG /0700','BG /0700','Pajottenland','BG /0000','Brussel');
+INSERT INTO groepen (groep_naam,groep_stam_nummer,gewest_stam_nummer,gewest_naam,verbond_stam_nummer,verbond_naam) VALUES ('Groep Taxandria','KG /0100','KG /0100','Taxandria','KG /0000','Kempen');
+INSERT INTO groepen (groep_naam,groep_stam_nummer,gewest_stam_nummer,gewest_naam,verbond_stam_nummer,verbond_naam) VALUES ('Groep Bremstampers','KG /0200','KG /0200','Bremstampers','KG /0000','Kempen');
+INSERT INTO groepen (groep_naam,groep_stam_nummer,gewest_stam_nummer,gewest_naam,verbond_stam_nummer,verbond_naam) VALUES ('Groep Zilato','KG /0300','KG /0300','Zilato','KG /0000','Kempen');
+INSERT INTO groepen (groep_naam,groep_stam_nummer,gewest_stam_nummer,gewest_naam,verbond_stam_nummer,verbond_naam) VALUES ('Groep Kwarekken','KG /0400','KG /0400','Kwarekken','KG /0000','Kempen');
+INSERT INTO groepen (groep_naam,groep_stam_nummer,gewest_stam_nummer,gewest_naam,verbond_stam_nummer,verbond_naam) VALUES ('Groep Noke','KG /0500','KG /0500','Noke','KG /0000','Kempen');
+INSERT INTO groepen (groep_naam,groep_stam_nummer,gewest_stam_nummer,gewest_naam,verbond_stam_nummer,verbond_naam) VALUES ('Groep Zesje','KG /0600','KG /0600','Zesje','KG /0000','Kempen');
+INSERT INTO groepen (groep_naam,groep_stam_nummer,gewest_stam_nummer,gewest_naam,verbond_stam_nummer,verbond_naam) VALUES ('Groep Demer En Dijle','LEG/0100','LEG/0100','Demer En Dijle','LEG /0000','Leuven');
+INSERT INTO groepen (groep_naam,groep_stam_nummer,gewest_stam_nummer,gewest_naam,verbond_stam_nummer,verbond_naam) VALUES ('Groep Meerdaal','LEG/0200','LEG/0200','Meerdaal','LEG /0000','Leuven');
+INSERT INTO groepen (groep_naam,groep_stam_nummer,gewest_stam_nummer,gewest_naam,verbond_stam_nummer,verbond_naam) VALUES ('Groep Suikerspin','LEG/0300','LEG/0300','Suikerspin','LEG /0000','Leuven');
+INSERT INTO groepen (groep_naam,groep_stam_nummer,gewest_stam_nummer,gewest_naam,verbond_stam_nummer,verbond_naam) VALUES ('Groep Hageland','LEG/0400','LEG/0400','Hageland','LEG /0000','Leuven');
+INSERT INTO groepen (groep_naam,groep_stam_nummer,gewest_stam_nummer,gewest_naam,verbond_stam_nummer,verbond_naam) VALUES ('Groep Heuvelland','LEG/0500','LEG/0500','Heuvelland','LEG /0000','Leuven');
+INSERT INTO groepen (groep_naam,groep_stam_nummer,gewest_stam_nummer,gewest_naam,verbond_stam_nummer,verbond_naam) VALUES ('Groep Demerdal','LEG/0600','LEG/0600','Demerdal','LEG /0000','Leuven');
+INSERT INTO groepen (groep_naam,groep_stam_nummer,gewest_stam_nummer,gewest_naam,verbond_stam_nummer,verbond_naam) VALUES ('Groep Kaboetsjistan','LG /0100','LG /0100','Kaboetsjistan','LG /0000','Limburg');
+INSERT INTO groepen (groep_naam,groep_stam_nummer,gewest_stam_nummer,gewest_naam,verbond_stam_nummer,verbond_naam) VALUES ('Groep In T Sant','LG /0200','LG /0200','In T Sant','LG /0000','Limburg');
+INSERT INTO groepen (groep_naam,groep_stam_nummer,gewest_stam_nummer,gewest_naam,verbond_stam_nummer,verbond_naam) VALUES ('Groep Hey','LG /0300','LG /0300','Hey','LG /0000','Limburg');
+INSERT INTO groepen (groep_naam,groep_stam_nummer,gewest_stam_nummer,gewest_naam,verbond_stam_nummer,verbond_naam) VALUES ('Groep Kluts','LG /0400','LG /0400','Kluts','LG /0000','Limburg');
+INSERT INTO groepen (groep_naam,groep_stam_nummer,gewest_stam_nummer,gewest_naam,verbond_stam_nummer,verbond_naam) VALUES ('Groep Mejoge','LG /0500','LG /0500','Mejoge','LG /0000','Limburg');
+INSERT INTO groepen (groep_naam,groep_stam_nummer,gewest_stam_nummer,gewest_naam,verbond_stam_nummer,verbond_naam) VALUES ('Groep Sprankel','LG /0600','LG /0600','Sprankel','LG /0000','Limburg');
+INSERT INTO groepen (groep_naam,groep_stam_nummer,gewest_stam_nummer,gewest_naam,verbond_stam_nummer,verbond_naam) VALUES ('Groep Snorkel','LG /0700','LG /0700','Snorkel','LG /0000','Limburg');
+INSERT INTO groepen (groep_naam,groep_stam_nummer,gewest_stam_nummer,gewest_naam,verbond_stam_nummer,verbond_naam) VALUES ('Groep Langeman','LG /0800','LG /0800','Langeman','LG /0000','Limburg');
+INSERT INTO groepen (groep_naam,groep_stam_nummer,gewest_stam_nummer,gewest_naam,verbond_stam_nummer,verbond_naam) VALUES ('Groep Raffifant','LG /0900','LG /0900','Raffifant','LG /0000','Limburg');
+INSERT INTO groepen (groep_naam,groep_stam_nummer,gewest_stam_nummer,gewest_naam,verbond_stam_nummer,verbond_naam) VALUES ('Groep Kroinjel','LG /1000','LG /1000','Kroinjel','LG /0000','Limburg');
+INSERT INTO groepen (groep_naam,groep_stam_nummer,gewest_stam_nummer,gewest_naam,verbond_stam_nummer,verbond_naam) VALUES ('Groep Pallieter','MG /0100','MG /0100','Pallieter','MG /0000','Mechelen');
+INSERT INTO groepen (groep_naam,groep_stam_nummer,gewest_stam_nummer,gewest_naam,verbond_stam_nummer,verbond_naam) VALUES ('Groep Rupel','MG /0300','MG /0300','Rupel','MG /0000','Mechelen');
+INSERT INTO groepen (groep_naam,groep_stam_nummer,gewest_stam_nummer,gewest_naam,verbond_stam_nummer,verbond_naam) VALUES ('Groep Hest','MG /0400','MG /0400','Hest','MG /0000','Mechelen');
+INSERT INTO groepen (groep_naam,groep_stam_nummer,gewest_stam_nummer,gewest_naam,verbond_stam_nummer,verbond_naam) VALUES ('Groep Kla''bant','MG /0500','MG /0500','Kla''bant','MG /0000','Mechelen');
+INSERT INTO groepen (groep_naam,groep_stam_nummer,gewest_stam_nummer,gewest_naam,verbond_stam_nummer,verbond_naam) VALUES ('Groep Maneschijn','MG /0800','MG /0800','Maneschijn','MG /0000','Mechelen');
+INSERT INTO groepen (groep_naam,groep_stam_nummer,gewest_stam_nummer,gewest_naam,verbond_stam_nummer,verbond_naam) VALUES ('Groep Maas','MG /0700','MG /0700','Maas','MG /0000','Mechelen');
+INSERT INTO groepen (groep_naam,groep_stam_nummer,gewest_stam_nummer,gewest_naam,verbond_stam_nummer,verbond_naam) VALUES ('Groep Goorland','OG /1200','OG /1200','Goorland','OG /1000','Roeland');
+INSERT INTO groepen (groep_naam,groep_stam_nummer,gewest_stam_nummer,gewest_naam,verbond_stam_nummer,verbond_naam) VALUES ('Groep Meersvliet','OG /1300','OG /1300','Meersvliet','OG /1000','Roeland');
+INSERT INTO groepen (groep_naam,groep_stam_nummer,gewest_stam_nummer,gewest_naam,verbond_stam_nummer,verbond_naam) VALUES ('Groep Scheldekant','OG /1400','OG /1400','Scheldekant','OG /1000','Roeland');
+INSERT INTO groepen (groep_naam,groep_stam_nummer,gewest_stam_nummer,gewest_naam,verbond_stam_nummer,verbond_naam) VALUES ('Groep Houtland','OG /1500','OG /1500','Houtland','OG /1000','Roeland');
+INSERT INTO groepen (groep_naam,groep_stam_nummer,gewest_stam_nummer,gewest_naam,verbond_stam_nummer,verbond_naam) VALUES ('Groep Grenskant','OG /1600','OG /1600','Grenskant','OG /1000','Roeland');
+INSERT INTO groepen (groep_naam,groep_stam_nummer,gewest_stam_nummer,gewest_naam,verbond_stam_nummer,verbond_naam) VALUES ('Groep Aymon','OG /2100','OG /2100','Aymon','OG /2000','Reinaert');
+INSERT INTO groepen (groep_naam,groep_stam_nummer,gewest_stam_nummer,gewest_naam,verbond_stam_nummer,verbond_naam) VALUES ('Groep Reinaertland','OG /2200','OG /2200','Reinaertland','OG /2000','Reinaert');
+INSERT INTO groepen (groep_naam,groep_stam_nummer,gewest_stam_nummer,gewest_naam,verbond_stam_nummer,verbond_naam) VALUES ('Groep Scheldeland','OG /2300','OG /2300','Scheldeland','OG /2000','Reinaert');
+INSERT INTO groepen (groep_naam,groep_stam_nummer,gewest_stam_nummer,gewest_naam,verbond_stam_nummer,verbond_naam) VALUES ('Groep Rondom','OG /2400','OG /2400','Rondom','OG /2000','Reinaert');
+INSERT INTO groepen (groep_naam,groep_stam_nummer,gewest_stam_nummer,gewest_naam,verbond_stam_nummer,verbond_naam) VALUES ('Groep Wetteren','OG /2500','OG /2500','Wetteren','OG /2000','Reinaert');
+INSERT INTO groepen (groep_naam,groep_stam_nummer,gewest_stam_nummer,gewest_naam,verbond_stam_nummer,verbond_naam) VALUES ('Groep Aalst','OG /3100','OG /3100','Aalst','OG /3000','Heuvelland');
+INSERT INTO groepen (groep_naam,groep_stam_nummer,gewest_stam_nummer,gewest_naam,verbond_stam_nummer,verbond_naam) VALUES ('Groep Denderland','OG /3300','OG /3300','Denderland','OG /3000','Heuvelland');
+INSERT INTO groepen (groep_naam,groep_stam_nummer,gewest_stam_nummer,gewest_naam,verbond_stam_nummer,verbond_naam) VALUES ('Groep Vl''ar','OG /3400','OG /3400','Vl''ar','OG /3000','Heuvelland');
+INSERT INTO groepen (groep_naam,groep_stam_nummer,gewest_stam_nummer,gewest_naam,verbond_stam_nummer,verbond_naam) VALUES ('Groep Zottegem','OG /3500','OG /3500','Zottegem','OG /3000','Heuvelland');
+INSERT INTO groepen (groep_naam,groep_stam_nummer,gewest_stam_nummer,gewest_naam,verbond_stam_nummer,verbond_naam) VALUES ('Groep Leiestreek','OG /3200','OG /3200','Leiestreek','OG /3000','Heuvelland');
+INSERT INTO groepen (groep_naam,groep_stam_nummer,gewest_stam_nummer,gewest_naam,verbond_stam_nummer,verbond_naam) VALUES ('Groep Streuvelsland','WG /0100','WG /0100','Streuvelsland','WG /0000','West-Vlaanderen');
+INSERT INTO groepen (groep_naam,groep_stam_nummer,gewest_stam_nummer,gewest_naam,verbond_stam_nummer,verbond_naam) VALUES ('Groep Brok','WG /0200','WG /0200','Brok','WG /0000','West-Vlaanderen');
+INSERT INTO groepen (groep_naam,groep_stam_nummer,gewest_stam_nummer,gewest_naam,verbond_stam_nummer,verbond_naam) VALUES ('Groep T Groene','WG /0400','WG /0400','T Groene','WG /0000','West-Vlaanderen');
+INSERT INTO groepen (groep_naam,groep_stam_nummer,gewest_stam_nummer,gewest_naam,verbond_stam_nummer,verbond_naam) VALUES ('Groep Zakolekehohawe','WG /0500','WG /0500','Zakolekehohawe','WG /0000','West-Vlaanderen');
+INSERT INTO groepen (groep_naam,groep_stam_nummer,gewest_stam_nummer,gewest_naam,verbond_stam_nummer,verbond_naam) VALUES ('Groep Koekerond','WG /0600','WG /0600','Koekerond','WG /0000','West-Vlaanderen');
+INSERT INTO groepen (groep_naam,groep_stam_nummer,gewest_stam_nummer,gewest_naam,verbond_stam_nummer,verbond_naam) VALUES ('Groep Baeckelandt','WG /0700','WG /0700','Baeckelandt','WG /0000','West-Vlaanderen');
+INSERT INTO groepen (groep_naam,groep_stam_nummer,gewest_stam_nummer,gewest_naam,verbond_stam_nummer,verbond_naam) VALUES ('Groep Win-gewestStamNummer','WG /0900','WG /0900','Win-gewestStamNummer','WG /0000','West-Vlaanderen');
+INSERT INTO groepen (groep_naam,groep_stam_nummer,gewest_stam_nummer,gewest_naam,verbond_stam_nummer,verbond_naam) VALUES ('Groep Widder','WG /1000','WG /1000','Widder','WG /0000','West-Vlaanderen');
+INSERT INTO groepen (groep_naam,groep_stam_nummer,gewest_stam_nummer,gewest_naam,verbond_stam_nummer,verbond_naam) VALUES ('Groep GEWEST GOE EN ME GIE','WG /1100','WG /1100','GEWEST GOE EN ME GIE','WG /0000','West-Vlaanderen');
+INSERT INTO groepen (groep_naam,groep_stam_nummer,gewest_stam_nummer,gewest_naam,verbond_stam_nummer,verbond_naam) VALUES ('Groep GEWEST KUST','WG /1300','WG /1300','GEWEST KUST','WG /0000','West-Vlaanderen');
+INSERT INTO groepen (groep_naam,groep_stam_nummer,gewest_stam_nummer,gewest_naam,verbond_stam_nummer,verbond_naam) VALUES ('Groep Sante Me Ratje','WG /1400','WG /1400','Sante Me Ratje','WG /0000','West-Vlaanderen');
+INSERT INTO groepen (groep_naam,groep_stam_nummer,gewest_stam_nummer,gewest_naam,verbond_stam_nummer,verbond_naam) VALUES ('Groep Jakkedoe','WG /1500','WG /1500','Jakkedoe','WG /0000','West-Vlaanderen');
+INSERT INTO groepen (groep_naam,groep_stam_nummer,gewest_stam_nummer,gewest_naam,verbond_stam_nummer,verbond_naam) VALUES ('Groep Topekom','WG /1600','WG /1600','Topekom','WG /0000','West-Vlaanderen');
+INSERT INTO groepen (groep_naam,groep_stam_nummer,gewest_stam_nummer,gewest_naam,verbond_stam_nummer,verbond_naam) VALUES ('Groep Foefel','WG /1700','WG /1700','Foefel','WG /0000','West-Vlaanderen');
+INSERT INTO groepen (groep_naam,groep_stam_nummer,gewest_stam_nummer,gewest_naam,verbond_stam_nummer,verbond_naam) VALUES ('Groep Doppe Drip','WG /1800','WG /1800','Doppe Drip','WG /0000','West-Vlaanderen');
+INSERT INTO groepen (groep_naam,groep_stam_nummer,gewest_stam_nummer,gewest_naam,verbond_stam_nummer,verbond_naam) VALUES ('Groep Oe Est','WG /1900','WG /1900','Oe Est','WG /0000','West-Vlaanderen');
 
 ------------------------------------------------ GEWESTEN GROEPEN ------------------------------------------------
 ------------------------------------------------ GEWESTEN GROEPEN ------------------------------------------------

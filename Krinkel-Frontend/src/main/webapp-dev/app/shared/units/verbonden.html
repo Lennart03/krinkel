@@ -144,8 +144,11 @@
 
         </td>
         <td ng-if="$ctrl.canSeeDeelnemersAantallen">
-            <div class="inlineDiv" ng-if="$ctrl.AuthService.getUserRole() !== 'ADMIN'">
+            <div class="inlineDiv" ng-if="$ctrl.checkCanSeeAantallen2(gewest.stamnummer) && $ctrl.AuthService.getUserRole() !== 'ADMIN'">
                 {{verbond.aantal_ingeschreven_deelnemers_bevestigd}}
+            </div>
+            <div class="inlineDiv" ng-if="$ctrl.checkCanSeeAantallen2(gewest.stamnummer) === false && $ctrl.AuthService.getUserRole() !== 'ADMIN'">
+                x (no rights)
             </div>
             <div class="inlineDiv" ng-if="$ctrl.AuthService.getUserRole() === 'ADMIN'">
                 <span class="bevestigd">{{verbond.aantal_ingeschreven_deelnemers_bevestigd}}</span> - <span class="betaald">{{verbond.aantal_ingeschreven_deelnemers_betaald}}</span> - <span class="onbetaald">{{verbond.aantal_ingeschreven_deelnemers_onbetaald}}</span> - <span class="geannuleerd">{{verbond.aantal_ingeschreven_deelnemers_geannuleerd}}</span>
@@ -154,10 +157,10 @@
         </td>
         <!-- getUserRole geeft admin terug in case of admin of super-admin; anders geeft het groep terug -->
         <td ng-if="$ctrl.canSeeMedewerkersAantallen || $ctrl.AuthService.getUserRole() === 'ADMIN'">
-            <div class="inlineDiv" ng-if="$ctrl.checkCanSeeAantallen2(gewest.stamnummer)">
+            <div class="inlineDiv" ng-if="$ctrl.checkCanSeeAantallen2(gewest.stamnummer) && $ctrl.AuthService.getUserRole() !== 'ADMIN'">
                 {{verbond.aantal_ingeschreven_vrijwilligers_bevestigd}}
             </div>
-            <div class="inlineDiv" ng-if="$ctrl.checkCanSeeAantallen2(gewest.stamnummer) === false">
+            <div class="inlineDiv" ng-if="$ctrl.checkCanSeeAantallen2(gewest.stamnummer) === false && $ctrl.AuthService.getUserRole() !== 'ADMIN'">
                 x (no rights)
             </div>
             <div class="inlineDiv" ng-if="$ctrl.AuthService.getUserRole() === 'ADMIN'">

@@ -61,7 +61,7 @@
             {{gewest.name}}
         </td>
         <td ng-if="$ctrl.canSeeDeelnemersAantallen">
-            <div class="inlineDiv" ng-if="$ctrl.checkCanSeeAantallen2(gewest.stamnummer)">
+            <div class="inlineDiv" ng-if="$ctrl.checkCanSeeAantallen2(gewest.stamnummer) && $ctrl.AuthService.getUserRole() !== 'ADMIN'">
                 {{gewest.aantal_ingeschreven_deelnemers_bevestigd}}
             </div>
             <!--<div class="inlineDiv" ng-if="$ctrl.checkCanSeeAantallen2(gewest.stamnummer) === false">-->
