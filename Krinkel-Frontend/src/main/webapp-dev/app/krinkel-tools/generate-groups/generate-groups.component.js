@@ -8,6 +8,7 @@ class GenerateGroupsController {
         this.$log = $log;
         this.groups = [];
         this.groupsSize = 0;
+        this.option = "-1";
     }
 
     $onInit() {}
@@ -15,7 +16,7 @@ class GenerateGroupsController {
     generateGroups(groupSize) {
         this.groupsSize = groupSize;
         this.groups = [];
-        this.KrinkelService.generateGroups(groupSize).then((resp) => {
+        this.KrinkelService.generateGroups(groupSize, this.option).then((resp) => {
             resp.forEach((list) => {
                 var group = [];
                 list.forEach(person => {
@@ -32,16 +33,9 @@ class GenerateGroupsController {
             })
         });
 
-        //this.groups = [[{"adNumber": "0"} , {"adNumber": "1"}], [{"adNumber": "2"}, {"adNumber": "3"}, {"adNumber": "4"}], [{"adNumber": "5"}]];
         this.$log.debug(this.groups);
-
-
-        /*for(var i=0; i < this.groups.size(); i++) {
-            this.$log.debug("test3");
-            this.$log.debug(this.groups.get(i));
-            this.$log.debug("test4");
-        }*/
     }
+
 
     PrintGroups(elem) {
         this.$log.debug("testing printing")

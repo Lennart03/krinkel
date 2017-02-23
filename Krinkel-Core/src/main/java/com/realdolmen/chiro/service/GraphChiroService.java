@@ -88,6 +88,7 @@ public class GraphChiroService {
 
         for (RawChiroUnit chiroUnit : allChiroUnits) {
             //check if verbond exists
+            System.out.println("gewestnaam: " + chiroUnit.getGewestNaam() + " groepsnaam" + chiroUnit.getGroepNaam() + " verbondnaam:"  + chiroUnit.getVerbondNaam());
             if (getGraphChiroUnitByLowerUnitName(root.getChildren(), chiroUnit.getVerbondNaam()) == null) {
                 GraphChiroUnit verbond = new GraphChiroUnit(chiroUnit.getVerbondNaam(), null, new ArrayList<GraphChiroUnit>());
                 GraphChiroUnit gewest = new GraphChiroUnit(chiroUnit.getGewestNaam(), null, new ArrayList<GraphChiroUnit>());

@@ -89,8 +89,11 @@ public class VerbondenService {
         // Get the gewesten: the name + stamNummer
         List<ChiroUnit> gewesten = chiroUnitRepository.findAllGewestenWhereVerbondStamNummerIs(unTimmedverbondStamNummer);
         // Set the participants and volunteers count
+        System.out.println("Gewesten in verbond "+verbondStamNummer+": ");
         for (ChiroUnit gewest : gewesten) {
             // if internationaal => enkel buddy = true tellen anders enkel buddy = false tellen
+
+            System.out.println(gewest.getName());
             boolean internationaal = checkForInternational(gewest.getStamNummer());
 
             if(internationaal) {

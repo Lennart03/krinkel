@@ -17,10 +17,10 @@ public class GenerateGroupsController {
     @Autowired
     GenerateGroupsService generateGroupsService;
 
-    @RequestMapping(value = "/tools/generate-groups/{groupSize}", produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.GET)
+    @RequestMapping(value = "/tools/generate-groups/{groupSize}/{option}", produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.GET)
     @ResponseBody
-    public List<List<RegistrationParticipant>> generateGroups(@PathVariable String groupSize) {
-        return generateGroupsService.generateRandomGroups(Integer.valueOf(groupSize));
+    public List<List<RegistrationParticipant>> generateGroups(@PathVariable String groupSize, @PathVariable String option) {
+        return generateGroupsService.generateRandomGroups(Integer.valueOf(groupSize), Integer.valueOf(option));
     }
 
     public static void generateTestData () {
