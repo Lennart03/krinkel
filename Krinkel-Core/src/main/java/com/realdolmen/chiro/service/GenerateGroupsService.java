@@ -31,24 +31,27 @@ public class GenerateGroupsService {
     private int amountWoman = 0;
 
     public List<List<RegistrationParticipant>> generateRandomGroups() {
-        return this.generateRandomGroups(12);
+        return this.generateRandomGroups(12, -1);
     }
 
-    public List<List<RegistrationParticipant>> generateRandomGroups(int groupSize) {
+    public List<List<RegistrationParticipant>> generateRandomGroups(int groupSize, int option) {
+        System.out.print("enter generateRandomGroups");
+
         this.groupSize = groupSize;
+        System.out.println("groupSize " + groupSize);
         //fill the lists with the currently registered members
         List<RegistrationParticipant> registrationParticipants = registrationParticipantRepository.findAllParticipantsNoBuddy();
 
-        Iterator<RegistrationParticipant> registrationIterator = registrationParticipants.iterator();
-        while (registrationIterator.hasNext()) {
-            RegistrationParticipant participant = registrationIterator.next();
+        System.out.println("size participants " + registrationParticipants.size());
+
+        for(RegistrationParticipant participant : registrationParticipants) {
             this.addParticipantInCorrectGroup(participant);
         }
 
         //take members from the separate lists and group them
         List<List<RegistrationParticipant>> groupsOfParticipant = new ArrayList<>();
 
-        Boolean stop = false;
+        boolean stop = false;
         do {
             List<RegistrationParticipant> singleGroup = assignParticipantsToGroup();
 
@@ -81,10 +84,19 @@ public class GenerateGroupsService {
             System.out.println("Amount female: " + amountWoman);
         }*/
 
-        scrambleInRestGroup(groupsOfParticipant);
+        switch(option) {
+            case 1:
+                scrambleInRestGroup(groupsOfParticipant);
+                break;
+            case 0:
+                combineNotFullGroups(groupsOfParticipant);
+                break;
+        }
 
         return groupsOfParticipant;
     }
+
+
 
     protected List<RegistrationParticipant> assignParticipantsToGroup() {
         List<RegistrationParticipant> singleGroup = new ArrayList<>();
@@ -95,8 +107,7 @@ public class GenerateGroupsService {
 
         if (unions.size() <= groupSize) {
             for (int i = 0; i < unions.size(); i++) {
-                String unionStam = unions.get(i).getStamNummer();
-                addParticipantUnionToList(unionStam, singleGroup);
+                addParticipantUnionToList(unions.get(i).getStamNummer(), singleGroup);
             }
 
             if(singleGroup.size() < groupSize) {//in case union.size < groupSize
@@ -327,6 +338,14 @@ public class GenerateGroupsService {
         }
     }
 
+    /*
+    * public function to put behind a button
+     */
+    public List<List<RegistrationParticipant>> scrambleTheRestGroup(List<List<RegistrationParticipant>> groupsOfParticipants) {
+        this.scrambleInRestGroup(groupsOfParticipants);
+        return groupsOfParticipants;
+    }
+
     private boolean scrambleWithMan(List<RegistrationParticipant> singleGroup, int index, List<List<RegistrationParticipant>> groupsOfParticipants, int posList) {
         return scrambleWithPerson(Gender.MAN, singleGroup, index, groupsOfParticipants, posList);
     }
@@ -400,6 +419,35 @@ public class GenerateGroupsService {
         }
 
         return true;
+    }
+
+    /*
+    * put all the groups with a size smaller then groupsize into 1 group so they can be manually sorted later on
+    * */
+    private void combineNotFullGroups(List<List<RegistrationParticipant>> groupsOfParticipants) {
+        int i;
+        //only the last group should be smaller than the max groupsize
+        for(i = groupsOfParticipants.size() - 1; i > 0 && groupsOfParticipants.get(i).size() < groupSize; i--) {
+        }
+        i++;
+
+        List<RegistrationParticipant> restGroup = new ArrayList<>();
+        while(i > 0 && i < groupsOfParticipants.size()) {
+            restGroup.addAll(groupsOfParticipants.get(i));
+            groupsOfParticipants.remove(i);
+        }
+
+        if(restGroup.size() > 0) {
+            groupsOfParticipants.add(restGroup);
+        }
+    }
+
+    /*
+    * public function to put behind a button
+     */
+    public List<List<RegistrationParticipant>> combineRestGroups(List<List<RegistrationParticipant>> groupsOfParticipants) {
+        this.combineNotFullGroups(groupsOfParticipants);
+        return groupsOfParticipants;
     }
 
 

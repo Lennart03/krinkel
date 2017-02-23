@@ -60,7 +60,9 @@ public interface RegistrationParticipantRepository extends JpaRepository<Registr
     @Query(value= "SELECT r FROM RegistrationParticipant r WHERE " +
             "(r.eventRole = 'ASPI' OR r.eventRole = 'LEADER')"
             + " AND "
-            + "r.buddy = false")
+            + "r.buddy = false"
+            + " AND "
+            + "r.status = 'CONFIRMED'")
     List<RegistrationParticipant> findAllParticipantsNoBuddy();
 
     @Query(value = "SELECT r.status FROM  RegistrationParticipant r WHERE r.adNumber = :adNumber")

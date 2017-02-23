@@ -357,9 +357,9 @@ export class KrinkelService {
         });
     }
 
-    generateGroups(groupSize) {
+    generateGroups(groupSize, option) {
         console.log("generate groups");
-        return this.$http.get(`${this.BASEURL}/tools/generate-groups/${groupSize}`).then((resp) => {
+        return this.$http.get(`${this.BASEURL}/tools/generate-groups/${groupSize}/${option}`).then((resp) => {
             return resp.data;
         });
     }
