@@ -6,9 +6,11 @@ import com.realdolmen.chiro.domain.RegistrationParticipant;
 import com.realdolmen.chiro.domain.SecurityRole;
 import com.realdolmen.chiro.domain.Status;
 import com.realdolmen.chiro.domain.User;
+import com.realdolmen.chiro.domain.units.ChiroGroepGewestVerbond;
 import com.realdolmen.chiro.domain.vo.RolesAndUpperClasses;
 import com.realdolmen.chiro.domain.vo.StamNumbersRolesVO;
 import com.realdolmen.chiro.dto.ColleagueDTO;
+import com.realdolmen.chiro.repository.ChiroUnitRepository;
 import com.realdolmen.chiro.repository.RegistrationParticipantRepository;
 import com.realdolmen.chiro.util.StamNumberTrimmer;
 import org.slf4j.Logger;
@@ -19,7 +21,6 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
-import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.List;
 import java.util.Map;
@@ -43,6 +44,9 @@ public class UserService {
     private StamNumberTrimmer stamNumberTrimmer;
     @Autowired
     private RegistrationBasketComponent registrationBasketComponent;
+
+    @Autowired
+    private ChiroUnitRepository chiroUnitRepository;
 
     /**
      * get a participant or volunteer from our DB
@@ -167,5 +171,19 @@ public class UserService {
         }
 
         return securityStamNumberVO;
+    }
+
+    public ChiroGroepGewestVerbond getChiroUnitByGroepStamNummer(String groepstamnummer){
+        ChiroGroepGewestVerbond chiroUnitByGroepStamNummer = chiroUnitRepository.getChiroUnitByGroepStamNummer(stamNumberTrimmer.untrim(groepstamnummer));
+//        System.err.println("From userservice getChiroUnitByGroepStamNummer("+groepstamnummer+")");
+        if(chiroUnitByGroepStamNummer == null){
+            System.err.println("Couldn't find it!!!!");
+            return new ChiroGroepGewestVerbond();
+        }
+//        System.err.println(chiroUnitByGroepStamNummer.toString());
+        chiroUnitByGroepStamNummer.setGroepStamNummer(stamNumberTrimmer.trim(chiroUnitByGroepStamNummer.getGroepStamNummer()));
+        chiroUnitByGroepStamNummer.setGewestStamNummer(stamNumberTrimmer.trim(chiroUnitByGroepStamNummer.getGewestStamNummer()));
+        chiroUnitByGroepStamNummer.setVerbondStamNummer(stamNumberTrimmer.trim(chiroUnitByGroepStamNummer.getVerbondStamNummer()));
+        return chiroUnitByGroepStamNummer;
     }
 }

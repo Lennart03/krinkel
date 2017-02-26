@@ -151,10 +151,16 @@ public class VerbondenService {
                 groep.setParticipantsCountCancelled(getCountsParticipantsOnlyGroepen(groep.getStamNummer(), Status.CANCELLED, internationaal));
             }
 
+            // Set the upper gewest with upper verbond
+            ChiroUnit gewestChiroUnit = new ChiroUnit(gewestStamNummer, "");
+            String verbondNr = chiroUnitRepository.findVerbondNrWithGewestNr(untrimmedGewestStamNummer);
+            ChiroUnit verbondChiroUnit = new ChiroUnit(stamNumberTrimmer.trim(verbondNr), "");
+            gewestChiroUnit.setUpper(verbondChiroUnit);
+            groep.setUpper(gewestChiroUnit);
+
             // Trim the stam nummers.
             groep.setStamNummer(stamNumberTrimmer.trim(groep.getStamNummer()));
 
-            groep.setUpper(new ChiroUnit(gewestStamNummer, ""));
         }
         return groepen;
     }

@@ -1,9 +1,6 @@
 package com.realdolmen.chiro.domain.units;
 
-import com.fasterxml.jackson.annotation.*;
-
-import java.util.ArrayList;
-import java.util.List;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
  * Data Transfer Object for Chiro Units.
@@ -14,118 +11,46 @@ import java.util.List;
         generator = ObjectIdGenerators.PropertyGenerator.class,
         property = "stamnummer"
 )*/
-public class ChiroUnit {
-    /**
-     * Normalized StamNummer number of a groep, gewest or verbond (without '/' and without whitespace)
-     */
-    @JsonProperty("stamnummer")
-    private String stamNummer;
+public class ChiroGroepGewestVerbond {
 
-    @JsonProperty("name")
-    private String name;
+    @JsonProperty("groepstamnummer")
+    private String groepStamNummer;
 
-    @JsonProperty("bovenliggende_stamnummer")
-    @JsonIgnoreProperties({"bovenliggende_stamnummer", "onderliggende_stamnummers"})
-    private ChiroUnit upper;
+    @JsonProperty("groepnaam")
+    private String groepNaam;
 
-    @JsonProperty("onderliggende_stamnummers")
-    @JsonIgnoreProperties({"bovenliggende_stamnummer", "onderliggende_stamnummers"})
-    private List<ChiroUnit> lower = new ArrayList<ChiroUnit>();
+    @JsonProperty("geweststamnummer")
+    private String gewestStamNummer;
 
-    @JsonProperty("aantal_ingeschreven_deelnemers")
-    private int participantsCount = 0;
+    @JsonProperty("gewestnaam")
+    private String gewestNaam;
 
-    @JsonProperty("aantal_ingeschreven_vrijwilligers")
-    private int volunteersCount = 0;
+    @JsonProperty("verbondstamnummer")
+    private String verbondStamNummer;
 
-    @JsonProperty("aantal_ingeschreven_deelnemers_betaald")
-    private int participantsCountPaid = 0;
+    @JsonProperty("verbondnaam")
+    private String verbondNaam;
 
-    @JsonProperty("aantal_ingeschreven_vrijwilligers_betaald")
-    private int volunteersCountPaid = 0;
 
-    @JsonProperty("aantal_ingeschreven_deelnemers_bevestigd")
-    private int participantsCountConfirmed = 0;
+    public ChiroGroepGewestVerbond() {
 
-    @JsonProperty("aantal_ingeschreven_vrijwilligers_bevestigd")
-    private int volunteersCountConfirmed = 0;
-
-    @JsonProperty("aantal_ingeschreven_deelnemers_onbetaald")
-    private int participantsCountUnpaid = 0;
-
-    @JsonProperty("aantal_ingeschreven_vrijwilligers_onbetaald")
-    private int volunteersCountUnpaid  = 0;
-
-    @JsonProperty("aantal_ingeschreven_deelnemers_geannuleerd")
-    private int participantsCountCancelled= 0;
-
-    @JsonProperty("aantal_ingeschreven_vrijwilligers_geannuleerd")
-    private int volunteersCountCancelled = 0;
-
-    public ChiroUnit() {
-        this.lower = new ArrayList<ChiroUnit>();
     }
 
-    public ChiroUnit(String stam, String name) {
-        this();
-        this.stamNummer = stam;
-        this.name = name;
-    }
-
-    public String getStamNummer() {
-        return stamNummer;
-    }
-
-    public void setStamNummer(String stamNummer) {
-        this.stamNummer = stamNummer;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public ChiroUnit getUpper() {
-        return upper;
-    }
-
-    public void setUpper(ChiroUnit upper) {
-        this.upper = upper;
-    }
-
-    public List<ChiroUnit> getLower() {
-        return lower;
-    }
-
-    public void setLower(List<ChiroUnit> lower) {
-        this.lower = lower;
-    }
-
-    public int getParticipantsCount() {
-        return participantsCount;
-    }
-
-    public void setParticipantsCount(int participantsCount) {
-        this.participantsCount = participantsCount;
-    }
-
-    public int getVolunteersCount() {
-        return volunteersCount;
-    }
-
-    public void setVolunteersCount(int volunteersCount) {
-        this.volunteersCount = volunteersCount;
+    public ChiroGroepGewestVerbond(String groepStamNummer, String groepNaam, String gewestStamNummer, String gewestNaam, String verbondStamNummer, String verbondNaam) {
+        this.groepStamNummer = groepStamNummer;
+        this.groepNaam = groepNaam;
+        this.gewestStamNummer = gewestStamNummer;
+        this.gewestNaam = gewestNaam;
+        this.verbondStamNummer = verbondStamNummer;
+        this.verbondNaam = verbondNaam;
     }
 
     @Override
     public int hashCode() {
         final int prime = 31;
         int result = 1;
-        result = prime * result + ((name == null) ? 0 : name.hashCode());
-        result = prime * result + ((stamNummer == null) ? 0 : stamNummer.hashCode());
+        result = prime * result + ((groepNaam == null) ? 0 : groepNaam.hashCode());
+        result = prime * result + ((groepStamNummer == null) ? 0 : groepStamNummer.hashCode());
         return result;
     }
 
@@ -137,16 +62,16 @@ public class ChiroUnit {
             return false;
         if (getClass() != obj.getClass())
             return false;
-        ChiroUnit other = (ChiroUnit) obj;
-        if (name == null) {
-            if (other.name != null)
+        ChiroGroepGewestVerbond other = (ChiroGroepGewestVerbond) obj;
+        if (groepNaam == null) {
+            if (other.groepNaam != null)
                 return false;
-        } else if (!name.equals(other.name))
+        } else if (!groepNaam.equals(other.groepNaam))
             return false;
-        if (stamNummer == null) {
-            if (other.stamNummer != null)
+        if (groepStamNummer == null) {
+            if (other.groepStamNummer != null)
                 return false;
-        } else if (!stamNummer.equals(other.stamNummer))
+        } else if (!groepStamNummer.equals(other.groepStamNummer))
             return false;
         return true;
     }
@@ -161,75 +86,57 @@ public class ChiroUnit {
         }
     }
 
+    public String getGroepStamNummer() {
+        return groepStamNummer;
+    }
+
+    public void setGroepStamNummer(String groepStamNummer) {
+        this.groepStamNummer = groepStamNummer;
+    }
+
+    public String getGroepNaam() {
+        return groepNaam;
+    }
+
+    public void setGroepNaam(String groepNaam) {
+        this.groepNaam = groepNaam;
+    }
+
+    public String getGewestStamNummer() {
+        return gewestStamNummer;
+    }
+
+    public void setGewestStamNummer(String gewestStamNummer) {
+        this.gewestStamNummer = gewestStamNummer;
+    }
+
+    public String getGewestNaam() {
+        return gewestNaam;
+    }
+
+    public void setGewestNaam(String gewestNaam) {
+        this.gewestNaam = gewestNaam;
+    }
+
+    public String getVerbondStamNummer() {
+        return verbondStamNummer;
+    }
+
+    public void setVerbondStamNummer(String verbondStamNummer) {
+        this.verbondStamNummer = verbondStamNummer;
+    }
+
+    public String getVerbondNaam() {
+        return verbondNaam;
+    }
+
+    public void setVerbondNaam(String verbondNaam) {
+        this.verbondNaam = verbondNaam;
+    }
+
     @Override
     public String toString(){
-        return name + " - Stam nummer: " + stamNummer + ", #participants: " + participantsCountConfirmed + " - " + participantsCountPaid
-                + " - " + participantsCountUnpaid + " - " + participantsCountCancelled
-                + ", #volunteers: " + volunteersCountConfirmed + " - " + volunteersCountPaid + " - " + volunteersCountUnpaid + " - " + volunteersCountCancelled;
-
+        return "ChiroGroepGewestVerbond: Groep " + groepStamNummer + " " + groepNaam+", Gewest " + gewestStamNummer + " " + gewestNaam + ", Verbond " + verbondStamNummer + " " + verbondNaam;
     }
 
-    public int getParticipantsCountPaid() {
-        return participantsCountPaid;
-    }
-
-    public void setParticipantsCountPaid(int participantsCountPaid) {
-        this.participantsCountPaid = participantsCountPaid;
-    }
-
-    public void setVolunteersCountPaid(int volunteersCountPaid) {
-        this.volunteersCountPaid = volunteersCountPaid;
-    }
-
-    public int getVolunteersCountPaid() {
-        return volunteersCountPaid;
-    }
-
-    public int getParticipantsCountConfirmed() {
-        return participantsCountConfirmed;
-    }
-
-    public void setParticipantsCountConfirmed(int participantsCountConfirmed) {
-        this.participantsCountConfirmed = participantsCountConfirmed;
-    }
-
-    public int getVolunteersCountConfirmed() {
-        return volunteersCountConfirmed;
-    }
-
-    public void setVolunteersCountConfirmed(int volunteersCountConfirmed) {
-        this.volunteersCountConfirmed = volunteersCountConfirmed;
-    }
-
-    public int getParticipantsCountUnpaid() {
-        return participantsCountUnpaid;
-    }
-
-    public void setParticipantsCountUnpaid(int participantsCountUnpaid) {
-        this.participantsCountUnpaid = participantsCountUnpaid;
-    }
-
-    public int getVolunteersCountUnpaid() {
-        return volunteersCountUnpaid;
-    }
-
-    public void setVolunteersCountUnpaid(int volunteersCountUnpaid) {
-        this.volunteersCountUnpaid = volunteersCountUnpaid;
-    }
-
-    public int getParticipantsCountCancelled() {
-        return participantsCountCancelled;
-    }
-
-    public void setParticipantsCountCancelled(int participantsCountCancelled) {
-        this.participantsCountCancelled = participantsCountCancelled;
-    }
-
-    public int getVolunteersCountCancelled() {
-        return volunteersCountCancelled;
-    }
-
-    public void setVolunteersCountCancelled(int volunteersCountCancelled) {
-        this.volunteersCountCancelled = volunteersCountCancelled;
-    }
 }

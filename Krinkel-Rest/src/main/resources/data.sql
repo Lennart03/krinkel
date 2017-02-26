@@ -9,7 +9,7 @@ INSERT INTO admins VALUES ('super-admin', 152504, 'blyweert.roel@gmail.com', 'Ro
 INSERT INTO admins VALUES ('super-admin', 109318, 'tom@horre.com', 'Tom', 'Horre');
 
 -- TODO these records need to be removed because these are the Realdolmen developers
-INSERT INTO admins VALUES ('admin',396942, 'jeroen.compagnie@realdolmen.com', 'Jeroen', 'Compagnie');
+-- INSERT INTO admins VALUES ('admin',396942, 'jeroen.compagnie@realdolmen.com', 'Jeroen', 'Compagnie');
 -- Lennart for testing: leider bij chiro dolfijn
 /*
 INSERT INTO admins VALUES ('super-admin' , 396943, 'lennart.vandamme@realdolmen.com', 'Lennart', 'Van Damme');

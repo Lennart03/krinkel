@@ -2,40 +2,80 @@
  * Created by JCPBB69 on 15/12/2016.
  */
 class VerbondenController {
-    constructor(KrinkelService, AuthService, $route, $location, $http) {
+    constructor(KrinkelService, AuthService, $route, $location, $http, $q) {
         this.KrinkelService = KrinkelService;
         this.AuthService = AuthService;
         this.$route = $route;
         this.$location = $location;
         this.$http = $http;
+        this.$q = $q;
+    }
+
+    checkIfNationaal(stamnummer){
+        return this.nationaalStamnummers.indexOf(stamnummer) > -1;
+    }
+    checkIfInternationaal(stamnummer){
+        return this.internationaalStamnummer === stamnummer;
     }
 
     $onInit() {
+        this.nationaalStamnummers = ['4AF', '4AG', '4AL', '4CF', '4CR', '4KL', '4WB', '4WJ', '4WK', '5AA', '5CA', '5CC', '5CD', '5CG', '5CJ', '5CL', '5CP', '5CV', '5DI', '5IG', '5IP', '5IT', '5KA', '5PA', '5PG', '5PM', '5PP', '5PV', '5RA', '5RD', '5RI', '5RP', '5RV', '5RW', '5SB', '5UG', '5UK', '5UL', '6KV', '7WD', '7WH', '7WK', '7WO', '7WW', '8BB', '8BC', '8BH', '8BR', '8BZ', '8DB', '8HD', '8HH', '8HK', '8HO', '8HW', '9KO'];
+        this.internationaalStamnummer = '5DI';
+        this.gettingData = true;
+
         this.user = this.AuthService.getLoggedinUser();
         this.userRole = this.user.role;
+
+        // TODO TODO TODO
         this.userRoles = this.user.roles;
-        this.canSeeDeelnemersAantallen = this.checkCanSeeAantallen();
-        this.canSeeMedewerkersAantallen = this.checkCanSeeAantallen();
-        console.log('===== VERBONDEN ====')
-        console.log('userRoles');
-        console.log(this.userRoles);
 
-        this.gettingData = true;
-        this.KrinkelService.getVerbondenList().then((results) => {
-            this.verbonden = results;
-            // console.log('VERBONDEN');
-            // console.log(this.verbonden);
-            //
-            this.filterVerbonden();
-            //
-            // console.log('VERBONDEN AFTER FILTERING');
-            // console.log(this.verbonden);
+        this.promiseList = [];
+
+        var self = this;
+
+        for(var i = 0; i < this.userRoles.length; i++){
+            if(this.userRoles[i].role === 'groep'){
+                this.promiseList.push(this.KrinkelService.getChiroGroepGewestVerbondByGroepStamNummer(this.userRoles[i].adNumber, i));
+            }
+        }
+
+
+        this.$q.all(this.promiseList).then(function(value) {
+            console.log('Result from promiseList');
+            console.log(value);
+
+            for(var j = 0; j < value.length; j++){
+                if (typeof value[j].groepstamnummer !== null) {
+                    self.userRoles[value[j].index].chiroGroepGewestVerbond = value[j];
+                }
+            }
+
+            // self.userRoles = self.user.roles;
+            self.canSeeDeelnemersAantallen = self.checkCanSeeAantallen();
+            self.canSeeMedewerkersAantallen = self.checkCanSeeAantallen();
+            console.log('===== VERBONDEN ====')
+            console.log('userRoles');
+            console.log(self.userRoles);
+
+
+            self.KrinkelService.getVerbondenList().then((results) => {
+                self.verbonden = results;
+                // console.log('VERBONDEN');
+                // console.log(self.verbonden);
+                //
+                self.filterVerbonden();
+                //
+                // console.log('VERBONDEN AFTER FILTERING');
+                // console.log(self.verbonden);
+            });
+
+            self.gettingData = false;
+
+            // console.log('USER ROLE')
+            // console.log(self.userRole);
         });
-        setTimeout(console.log('finished timeout'), 2000);
-        this.gettingData = false;
 
-        // console.log('USER ROLE')
-        // console.log(this.userRole);
+
     }
 
     checkCanSeeAantallen2(verbondNr){
@@ -44,7 +84,7 @@ class VerbondenController {
         }
         for(var i = 0; i < this.userRoles.length; i++){
             // Verbond role kan enkel zijn verbond zien dus hiermee ook aantallen van zijn verbond laten zien!!!
-            if(this.userRoles[i].adNumber.substring(0,3) === 'NAT'
+            if( this.checkIfNationaal(this.userRoles[i].adNumber)
                 || (this.userRoles[i].role === 'verbond' && this.userRoles[i].adNumber === verbondNr)){
                 return true;
             }
@@ -58,7 +98,7 @@ class VerbondenController {
         }
         for(var i = 0; i < this.userRoles.length; i++){
             // Verbond role kan enkel zijn verbond zien dus hiermee ook aantallen van zijn verbond laten zien!!!
-            if(this.userRoles[i].adNumber.substring(0,3) === 'NAT' || this.userRoles[i].role === 'verbond'){
+            if(this.checkIfNationaal(this.userRoles[i].adNumber) || this.userRoles[i].role === 'verbond'){
                 return true;
             }
         }
@@ -129,7 +169,14 @@ class VerbondenController {
                 // return (nr.substring(0,nrLetters) === verbondNr.substring(0,nrLetters)) ? true : false;
                 break;
             case 'groep':
-                if(nr.substring(0,nrLetters) === verbondNr.substring(0,nrLetters) || this.checkForOthers(nr, verbondNr)){
+                //TODO => mss nog aparte check voor '4WK' en '5DI' hier of in de default checken of voor dat ge gaat filteren
+                var chiroGroepGewestVerbond = roleAndAdNumber.chiroGroepGewestVerbond;
+                // if undefined => hoort bij others
+                if((verbondNr === 'OTHERS' && typeof chiroGroepGewestVerbond === 'undefined')
+                    || chiroGroepGewestVerbond.verbondstamnummer === verbondNr
+                    || (verbondNr === 'INT' && this.checkIfInternationaal(nr))
+                    || this.checkIfNationaal(nr)){
+                // if(nr.substring(0,nrLetters) === verbondNr.substring(0,nrLetters) || this.checkForOthers(nr, verbondNr)){
                     console.log('### TRUE groep met nr: ' + nr);
                     return true;
                 } else {
@@ -138,26 +185,23 @@ class VerbondenController {
                 // return (nr.substring(0,nrLetters) === verbondNr.substring(0,nrLetters)) ? true : false;
                 break;
             default:
-                if(nr.substring(0,3) === 'NAT'){
-                    console.log('### TRUE Nationaal met nr: ' + nr);
-                    return true;
-                }
                 return false;
         }
         return false;
     }
 
-    checkForOthers(nr, verbondNr){
-        if(verbondNr === 'OTHERS') {
-            var normalBeginnings = ['AG', 'AJ', 'AM',
-                'BG', 'BJ', 'BM', 'INT', 'KG', 'KJ', 'KM', 'LEG', 'LEJ', 'LEM',
-                'LG', 'LJ', 'LM', 'MG', 'MJ', 'MM', 'NAT', 'OG', 'OJ', 'OM', 'WG', 'WJ', 'WM'];
-            if (!normalBeginnings.includes(nr.substr(0, 2))) {
-                return true; // Groepnr is part of others
-            }
-        }
-        return false;
-    }
+    // TODO: verwijderen, wordt niet meer gebruikt
+    // checkForOthers(nr, verbondNr){
+    //     if(verbondNr === 'OTHERS') {
+    //         var normalBeginnings = ['AG', 'AJ', 'AM',
+    //             'BG', 'BJ', 'BM', 'INT', 'KG', 'KJ', 'KM', 'LEG', 'LEJ', 'LEM',
+    //             'LG', 'LJ', 'LM', 'MG', 'MJ', 'MM', 'NAT', 'OG', 'OJ', 'OM', 'WG', 'WJ', 'WM'];
+    //         if (!normalBeginnings.includes(nr.substr(0, 2))) {
+    //             return true; // Groepnr is part of others
+    //         }
+    //     }
+    //     return false;
+    // }
 
     redirectToGewesten(lol, verbondNaam){
         //console.log('Tried to redirect via javascript to gewesten with verbondStamNummer: ' + lol);
@@ -172,5 +216,5 @@ export var VerbondenComponent = {
 
 
 
-VerbondenComponent.$inject = ['KrinkelService', 'AuthService', '$route', '$location', '$http'];
+VerbondenComponent.$inject = ['KrinkelService', 'AuthService', '$route', '$location', '$http', '$q'];
 

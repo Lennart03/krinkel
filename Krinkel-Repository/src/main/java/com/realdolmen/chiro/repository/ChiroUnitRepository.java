@@ -5,6 +5,7 @@ import com.realdolmen.chiro.domain.CampGround;
 import com.realdolmen.chiro.domain.RegistrationParticipant;
 import com.realdolmen.chiro.domain.RegistrationVolunteer;
 import com.realdolmen.chiro.domain.Status;
+import com.realdolmen.chiro.domain.units.ChiroGroepGewestVerbond;
 import com.realdolmen.chiro.domain.units.ChiroUnit;
 import com.realdolmen.chiro.domain.units.RawChiroUnit;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -179,4 +180,13 @@ public interface ChiroUnitRepository extends JpaRepository<RawChiroUnit, String>
     @Query("SELECT p FROM RegistrationParticipant p " +
             "WHERE p.buddy = true")
     List<RegistrationParticipant> returnParticipantsInternationaal();
+
+    @Query("SELECT DISTINCT c.verbondStamNummer FROM RawChiroUnit c " +
+            "WHERE c.gewestStamNummer = ?1")
+    String findVerbondNrWithGewestNr(String untrimmedGewestStamNummer);
+
+    @Query("SELECT NEW com.realdolmen.chiro.domain.units.ChiroGroepGewestVerbond(c.groepStamNummer, c.groepNaam, c.gewestStamNummer, c.gewestNaam, c.verbondStamNummer, c.verbondNaam) FROM RawChiroUnit c " +
+            "WHERE c.groepStamNummer = ?1")
+    ChiroGroepGewestVerbond getChiroUnitByGroepStamNummer(String groepstamnummer);
+
 }
