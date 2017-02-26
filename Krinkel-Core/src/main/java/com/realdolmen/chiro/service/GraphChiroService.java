@@ -3,6 +3,7 @@ package com.realdolmen.chiro.service;
 import com.realdolmen.chiro.domain.EventRole;
 import com.realdolmen.chiro.domain.LoginLog;
 import com.realdolmen.chiro.domain.Verbond;
+import com.realdolmen.chiro.domain.units.ChiroUnit;
 import com.realdolmen.chiro.domain.units.GraphChiroUnit;
 import com.realdolmen.chiro.domain.units.RawChiroUnit;
 import com.realdolmen.chiro.domain.units.StatusChiroUnit;
@@ -84,11 +85,10 @@ public class GraphChiroService {
     public GraphChiroUnit summary() {
         GraphChiroUnit root = new GraphChiroUnit("Inschrijvingen", null, new ArrayList<GraphChiroUnit>());
 
-        List<RawChiroUnit> allChiroUnits = findAll();
+        List<RawChiroUnit> allChiroUnits = findAllUnitsWithRegisteredParticipants();
 
         for (RawChiroUnit chiroUnit : allChiroUnits) {
             //check if verbond exists
-            System.out.println("gewestnaam: " + chiroUnit.getGewestNaam() + " groepsnaam" + chiroUnit.getGroepNaam() + " verbondnaam:"  + chiroUnit.getVerbondNaam());
             if (getGraphChiroUnitByLowerUnitName(root.getChildren(), chiroUnit.getVerbondNaam()) == null) {
                 GraphChiroUnit verbond = new GraphChiroUnit(chiroUnit.getVerbondNaam(), null, new ArrayList<GraphChiroUnit>());
                 GraphChiroUnit gewest = new GraphChiroUnit(chiroUnit.getGewestNaam(), null, new ArrayList<GraphChiroUnit>());
@@ -117,6 +117,21 @@ public class GraphChiroService {
         }
         return root;
     }
+/*
+    @PreAuthorize("@GraphChiroServiceSecurity.hasPermissionToMakeSunGraph()")
+    public GraphChiroUnit summaryThomas() {
+        GraphChiroUnit root = new GraphChiroUnit("Inschrijvingen", null, new ArrayList<GraphChiroUnit>());
+
+        List<RawChiroUnit> allChiroUnits = findAll();
+
+        for (RawChiroUnit unit : allChiroUnits) {
+            //System.out.println()unit.getVerbondNaam();
+        }
+
+
+        return root;
+    }
+*/
 
     private GraphChiroUnit getGraphChiroUnitByLowerUnitName(List<GraphChiroUnit> units, String unitName) {
         for (GraphChiroUnit unit : units) {
@@ -134,9 +149,13 @@ public class GraphChiroService {
         int volunteers = registrationParticipantService.findVolunteersByGroup(normalizedStamNumber).size();
         return participants + volunteers;
     }
-
+    /*
     private List<RawChiroUnit> findAll() {
         return chiroUnitRepository.findAll();
+    }*/
+    //Added by Thomas
+    private List<RawChiroUnit> findAllUnitsWithRegisteredParticipants() {
+        return chiroUnitRepository.findAllUnitsWithRegisteredParticipants();
     }
 /* commented by thomas no longer needed
     @PreAuthorize("@GraphChiroServiceSecurity.hasPermissionToGetLoginData()")

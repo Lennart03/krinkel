@@ -31,6 +31,13 @@ public interface ChiroUnitRepository extends JpaRepository<RawChiroUnit, String>
             "GROUP BY c.gewestStamNummer, c.gewestNaam")
     List<ChiroUnit> findAllGewesten();
 
+    @Query("SELECT c " +
+            "FROM RawChiroUnit c " +
+            "WHERE c.groepStamNummer in (SELECT distinct d.stamnumber FROM RegistrationParticipant d) " +
+            "ORDER BY c.groepNaam desc"
+            )
+    List<RawChiroUnit> findAllUnitsWithRegisteredParticipants();
+
     @Query("SELECT NEW com.realdolmen.chiro.domain.units.ChiroUnit(c.gewestStamNummer, c.gewestNaam)" +
             "FROM RawChiroUnit c " +
             "WHERE c.verbondStamNummer = ?1 " +
