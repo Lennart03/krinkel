@@ -11,6 +11,16 @@ class VerbondenController {
     }
 
     $onInit() {
+        this.user = this.AuthService.getLoggedinUser();
+        this.userRole = this.user.role;
+        this.userRoles = this.user.roles;
+        this.canSeeDeelnemersAantallen = this.checkCanSeeAantallen();
+        this.canSeeMedewerkersAantallen = this.checkCanSeeAantallen();
+        console.log('===== VERBONDEN ====')
+        console.log('userRoles');
+        console.log(this.userRoles);
+
+        this.gettingData = true;
         this.KrinkelService.getVerbondenList().then((results) => {
             this.verbonden = results;
             // console.log('VERBONDEN');
@@ -21,21 +31,44 @@ class VerbondenController {
             // console.log('VERBONDEN AFTER FILTERING');
             // console.log(this.verbonden);
         });
-        this.user = this.AuthService.getLoggedinUser();
-        this.userRole = this.user.role;
-        this.userRoles = this.user.roles;
-        console.log('userRoles');
-        console.log(this.userRoles);
-
+        setTimeout(console.log('finished timeout'), 2000);
+        this.gettingData = false;
 
         // console.log('USER ROLE')
         // console.log(this.userRole);
-        // console.log('USER ROLES');
-        // console.log(this.userRoles);
+    }
 
+    checkCanSeeAantallen2(verbondNr){
+        if(this.userRole === 'ADMIN'){
+            return true;
+        }
+        for(var i = 0; i < this.userRoles.length; i++){
+            // Verbond role kan enkel zijn verbond zien dus hiermee ook aantallen van zijn verbond laten zien!!!
+            if(this.userRoles[i].adNumber.substring(0,3) === 'NAT'
+                || (this.userRoles[i].role === 'verbond' && this.userRoles[i].adNumber === verbondNr)){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    checkCanSeeAantallen(){
+        if(this.userRole === 'ADMIN'){
+            return true;
+        }
+        for(var i = 0; i < this.userRoles.length; i++){
+            // Verbond role kan enkel zijn verbond zien dus hiermee ook aantallen van zijn verbond laten zien!!!
+            if(this.userRoles[i].adNumber.substring(0,3) === 'NAT' || this.userRoles[i].role === 'verbond'){
+                return true;
+            }
+        }
+        return false;
     }
 
     filterVerbonden(){
+        if(this.userRole === 'ADMIN'){
+            return;
+        }
         var temp = [];
         for(var i = 0; i < this.verbonden.length; i++){
             if(this.canSee(this.verbonden[i].stamnummer)) {
@@ -54,14 +87,11 @@ class VerbondenController {
     }
 
     canSee(verbondNr){
-        if(this.userRole === 'ADMIN'){ // TODO: here maybe + NATIONAAL
-            return true;
-        }
         var thiz = this;
-        console.log('###############################')
+        console.log('######## Verbond #########')
         console.log('#### cansee('+verbondNr+') ####');
-        console.log('###############################')
-        if( Object.prototype.toString.call( this.userRoles ) === '[object Array]' ){
+        console.log('##########################')
+        if( Object.prototype.toString.call( this.userRoles ) === '[object Array]' ){ // array check
             for(var i = 0; i < this.userRoles.length; i++){
                 var roleAndAdNumber = this.userRoles[i];
                 console.log('* ' + roleAndAdNumber.role + ' : ' + roleAndAdNumber.adNumber);
@@ -99,7 +129,7 @@ class VerbondenController {
                 // return (nr.substring(0,nrLetters) === verbondNr.substring(0,nrLetters)) ? true : false;
                 break;
             case 'groep':
-                if(nr.substring(0,nrLetters) === verbondNr.substring(0,nrLetters)){
+                if(nr.substring(0,nrLetters) === verbondNr.substring(0,nrLetters) || this.checkForOthers(nr, verbondNr)){
                     console.log('### TRUE groep met nr: ' + nr);
                     return true;
                 } else {
@@ -108,28 +138,30 @@ class VerbondenController {
                 // return (nr.substring(0,nrLetters) === verbondNr.substring(0,nrLetters)) ? true : false;
                 break;
             default:
+                if(nr.substring(0,3) === 'NAT'){
+                    console.log('### TRUE Nationaal met nr: ' + nr);
+                    return true;
+                }
                 return false;
+        }
+        return false;
+    }
+
+    checkForOthers(nr, verbondNr){
+        if(verbondNr === 'OTHERS') {
+            var normalBeginnings = ['AG', 'AJ', 'AM',
+                'BG', 'BJ', 'BM', 'INT', 'KG', 'KJ', 'KM', 'LEG', 'LEJ', 'LEM',
+                'LG', 'LJ', 'LM', 'MG', 'MJ', 'MM', 'NAT', 'OG', 'OJ', 'OM', 'WG', 'WJ', 'WM'];
+            if (!normalBeginnings.includes(nr.substr(0, 2))) {
+                return true; // Groepnr is part of others
+            }
         }
         return false;
     }
 
     redirectToGewesten(lol, verbondNaam){
         //console.log('Tried to redirect via javascript to gewesten with verbondStamNummer: ' + lol);
-
         this.$location.path('/gewesten/'+ lol +'/'+ verbondNaam);
-
-        // console.log(this.$location.url);
-        // console.log(this.$location.path('/gewesten/'+verbondStamNummer));
-
-        // this.$http.get(`/gewesten/stamNummerTest`).then((resp) => {
-        //
-        // });
-
-        // this.$http.get(`/gewesten/${verbondStamNummer}`).then((resp) => {
-        //
-        // });
-        // this.$location.path('/gewesten/${verbondStamNummer}');
-
     }
 }
 

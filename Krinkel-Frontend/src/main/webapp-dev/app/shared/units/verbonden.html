@@ -1,6 +1,75 @@
 <h1>Lijst van verbonden</h1>
 
 <style>
+    .loader {
+        margin: 100px auto;
+        font-size: 25px;
+        width: 1em;
+        height: 1em;
+        border-radius: 50%;
+        position: relative;
+        text-indent: -9999em;
+        -webkit-animation: load5 1.1s infinite ease;
+        animation: load5 1.1s infinite ease;
+        -webkit-transform: translateZ(0);
+        -ms-transform: translateZ(0);
+        transform: translateZ(0);
+    }
+    @-webkit-keyframes load5 {
+        0%,
+        100% {
+            box-shadow: 0em -2.6em 0em 0em #319683, 1.8em -1.8em 0 0em rgba(49,150,131, 0.2), 2.5em 0em 0 0em rgba(49,150,131, 0.2), 1.75em 1.75em 0 0em rgba(49,150,131, 0.2), 0em 2.5em 0 0em rgba(49,150,131, 0.2), -1.8em 1.8em 0 0em rgba(49,150,131, 0.2), -2.6em 0em 0 0em rgba(49,150,131, 0.5), -1.8em -1.8em 0 0em rgba(49,150,131, 0.7);
+        }
+        12.5% {
+            box-shadow: 0em -2.6em 0em 0em rgba(49,150,131, 0.7), 1.8em -1.8em 0 0em #319683, 2.5em 0em 0 0em rgba(49,150,131, 0.2), 1.75em 1.75em 0 0em rgba(49,150,131, 0.2), 0em 2.5em 0 0em rgba(49,150,131, 0.2), -1.8em 1.8em 0 0em rgba(49,150,131, 0.2), -2.6em 0em 0 0em rgba(49,150,131, 0.2), -1.8em -1.8em 0 0em rgba(49,150,131, 0.5);
+        }
+        25% {
+            box-shadow: 0em -2.6em 0em 0em rgba(49,150,131, 0.5), 1.8em -1.8em 0 0em rgba(49,150,131, 0.7), 2.5em 0em 0 0em #319683, 1.75em 1.75em 0 0em rgba(49,150,131, 0.2), 0em 2.5em 0 0em rgba(49,150,131, 0.2), -1.8em 1.8em 0 0em rgba(49,150,131, 0.2), -2.6em 0em 0 0em rgba(49,150,131, 0.2), -1.8em -1.8em 0 0em rgba(49,150,131, 0.2);
+        }
+        37.5% {
+            box-shadow: 0em -2.6em 0em 0em rgba(49,150,131, 0.2), 1.8em -1.8em 0 0em rgba(49,150,131, 0.5), 2.5em 0em 0 0em rgba(49,150,131, 0.7), 1.75em 1.75em 0 0em #319683, 0em 2.5em 0 0em rgba(49,150,131, 0.2), -1.8em 1.8em 0 0em rgba(49,150,131, 0.2), -2.6em 0em 0 0em rgba(49,150,131, 0.2), -1.8em -1.8em 0 0em rgba(49,150,131, 0.2);
+        }
+        50% {
+            box-shadow: 0em -2.6em 0em 0em rgba(49,150,131, 0.2), 1.8em -1.8em 0 0em rgba(49,150,131, 0.2), 2.5em 0em 0 0em rgba(49,150,131, 0.5), 1.75em 1.75em 0 0em rgba(49,150,131, 0.7), 0em 2.5em 0 0em #319683, -1.8em 1.8em 0 0em rgba(49,150,131, 0.2), -2.6em 0em 0 0em rgba(49,150,131, 0.2), -1.8em -1.8em 0 0em rgba(49,150,131, 0.2);
+        }
+        62.5% {
+            box-shadow: 0em -2.6em 0em 0em rgba(49,150,131, 0.2), 1.8em -1.8em 0 0em rgba(49,150,131, 0.2), 2.5em 0em 0 0em rgba(49,150,131, 0.2), 1.75em 1.75em 0 0em rgba(49,150,131, 0.5), 0em 2.5em 0 0em rgba(49,150,131, 0.7), -1.8em 1.8em 0 0em #319683, -2.6em 0em 0 0em rgba(49,150,131, 0.2), -1.8em -1.8em 0 0em rgba(49,150,131, 0.2);
+        }
+        75% {
+            box-shadow: 0em -2.6em 0em 0em rgba(49,150,131, 0.2), 1.8em -1.8em 0 0em rgba(49,150,131, 0.2), 2.5em 0em 0 0em rgba(49,150,131, 0.2), 1.75em 1.75em 0 0em rgba(49,150,131, 0.2), 0em 2.5em 0 0em rgba(49,150,131, 0.5), -1.8em 1.8em 0 0em rgba(49,150,131, 0.7), -2.6em 0em 0 0em #319683, -1.8em -1.8em 0 0em rgba(49,150,131, 0.2);
+        }
+        87.5% {
+            box-shadow: 0em -2.6em 0em 0em rgba(49,150,131, 0.2), 1.8em -1.8em 0 0em rgba(49,150,131, 0.2), 2.5em 0em 0 0em rgba(49,150,131, 0.2), 1.75em 1.75em 0 0em rgba(49,150,131, 0.2), 0em 2.5em 0 0em rgba(49,150,131, 0.2), -1.8em 1.8em 0 0em rgba(49,150,131, 0.5), -2.6em 0em 0 0em rgba(49,150,131, 0.7), -1.8em -1.8em 0 0em #319683;
+        }
+    }
+    @keyframes load5 {
+        0%,
+        100% {
+            box-shadow: 0em -2.6em 0em 0em #319683, 1.8em -1.8em 0 0em rgba(49,150,131, 0.2), 2.5em 0em 0 0em rgba(49,150,131, 0.2), 1.75em 1.75em 0 0em rgba(49,150,131, 0.2), 0em 2.5em 0 0em rgba(49,150,131, 0.2), -1.8em 1.8em 0 0em rgba(49,150,131, 0.2), -2.6em 0em 0 0em rgba(49,150,131, 0.5), -1.8em -1.8em 0 0em rgba(49,150,131, 0.7);
+        }
+        12.5% {
+            box-shadow: 0em -2.6em 0em 0em rgba(49,150,131, 0.7), 1.8em -1.8em 0 0em #319683, 2.5em 0em 0 0em rgba(49,150,131, 0.2), 1.75em 1.75em 0 0em rgba(49,150,131, 0.2), 0em 2.5em 0 0em rgba(49,150,131, 0.2), -1.8em 1.8em 0 0em rgba(49,150,131, 0.2), -2.6em 0em 0 0em rgba(49,150,131, 0.2), -1.8em -1.8em 0 0em rgba(49,150,131, 0.5);
+        }
+        25% {
+            box-shadow: 0em -2.6em 0em 0em rgba(49,150,131, 0.5), 1.8em -1.8em 0 0em rgba(49,150,131, 0.7), 2.5em 0em 0 0em #319683, 1.75em 1.75em 0 0em rgba(49,150,131, 0.2), 0em 2.5em 0 0em rgba(49,150,131, 0.2), -1.8em 1.8em 0 0em rgba(49,150,131, 0.2), -2.6em 0em 0 0em rgba(49,150,131, 0.2), -1.8em -1.8em 0 0em rgba(49,150,131, 0.2);
+        }
+        37.5% {
+            box-shadow: 0em -2.6em 0em 0em rgba(49,150,131, 0.2), 1.8em -1.8em 0 0em rgba(49,150,131, 0.5), 2.5em 0em 0 0em rgba(49,150,131, 0.7), 1.75em 1.75em 0 0em #319683, 0em 2.5em 0 0em rgba(49,150,131, 0.2), -1.8em 1.8em 0 0em rgba(49,150,131, 0.2), -2.6em 0em 0 0em rgba(49,150,131, 0.2), -1.8em -1.8em 0 0em rgba(49,150,131, 0.2);
+        }
+        50% {
+            box-shadow: 0em -2.6em 0em 0em rgba(49,150,131, 0.2), 1.8em -1.8em 0 0em rgba(49,150,131, 0.2), 2.5em 0em 0 0em rgba(49,150,131, 0.5), 1.75em 1.75em 0 0em rgba(49,150,131, 0.7), 0em 2.5em 0 0em #319683, -1.8em 1.8em 0 0em rgba(49,150,131, 0.2), -2.6em 0em 0 0em rgba(49,150,131, 0.2), -1.8em -1.8em 0 0em rgba(49,150,131, 0.2);
+        }
+        62.5% {
+            box-shadow: 0em -2.6em 0em 0em rgba(49,150,131, 0.2), 1.8em -1.8em 0 0em rgba(49,150,131, 0.2), 2.5em 0em 0 0em rgba(49,150,131, 0.2), 1.75em 1.75em 0 0em rgba(49,150,131, 0.5), 0em 2.5em 0 0em rgba(49,150,131, 0.7), -1.8em 1.8em 0 0em #319683, -2.6em 0em 0 0em rgba(49,150,131, 0.2), -1.8em -1.8em 0 0em rgba(49,150,131, 0.2);
+        }
+        75% {
+            box-shadow: 0em -2.6em 0em 0em rgba(49,150,131, 0.2), 1.8em -1.8em 0 0em rgba(49,150,131, 0.2), 2.5em 0em 0 0em rgba(49,150,131, 0.2), 1.75em 1.75em 0 0em rgba(49,150,131, 0.2), 0em 2.5em 0 0em rgba(49,150,131, 0.5), -1.8em 1.8em 0 0em rgba(49,150,131, 0.7), -2.6em 0em 0 0em #319683, -1.8em -1.8em 0 0em rgba(49,150,131, 0.2);
+        }
+        87.5% {
+            box-shadow: 0em -2.6em 0em 0em rgba(49,150,131, 0.2), 1.8em -1.8em 0 0em rgba(49,150,131, 0.2), 2.5em 0em 0 0em rgba(49,150,131, 0.2), 1.75em 1.75em 0 0em rgba(49,150,131, 0.2), 0em 2.5em 0 0em rgba(49,150,131, 0.2), -1.8em 1.8em 0 0em rgba(49,150,131, 0.5), -2.6em 0em 0 0em rgba(49,150,131, 0.7), -1.8em -1.8em 0 0em #319683;
+        }
+    }
+
     tbody tr:hover {
         background-color: #EEE;
         cursor: pointer;
@@ -51,13 +120,14 @@
 <div ng-if="$ctrl.AuthService.getUserRole() === 'ADMIN'">
     <span class="bevestigd">Bevestigd</span> - <span class="betaald">Betaald</span> - <span class="onbetaald">Onbetaald</span> - <span class="geannuleerd">Geannuleerd</span>
 </div>
-<table>
+<table ng-if="$ctrl.gettingData === false">
     <thead>
     <tr>
         <th data-field="stamNummmer" ng-if="$ctrl.AuthService.getUserRole() === 'ADMIN'">Stam nummer</th>
         <th data-field="naam">Naam</th>
-        <th data-field="amountParticipants">Aantal deelnemers</th>
-        <th data-field="amountVolunteers" ng-if="$ctrl.AuthService.getUserRole() === 'ADMIN'">Aantal medewerkers</th>
+        <th data-field="amountParticipants" ng-if="$ctrl.canSeeDeelnemersAantallen">Aantal deelnemers</th>
+        <th data-field="amountVolunteers" ng-if="$ctrl.canSeeMedewerkersAantallen || ctrl.AuthService.getUserRole() === 'ADMIN'">Aantal medewerkers</th>
+        <th data-field="iconSend"></th>
     </tr>
     </thead>
 
@@ -73,23 +143,37 @@
             <!-- <p ng-if="$ctrl.canSee(verbond.stamnummer) == false" style="color:red">{{verbond.name}}</p>-->
 
         </td>
-        <td >
-            <div class="inlineDiv" ng-if="$ctrl.AuthService.getUserRole() !== 'ADMIN'">
+        <td ng-if="$ctrl.canSeeDeelnemersAantallen">
+            <div class="inlineDiv" ng-if="$ctrl.checkCanSeeAantallen2(gewest.stamnummer) && $ctrl.AuthService.getUserRole() !== 'ADMIN'">
                 {{verbond.aantal_ingeschreven_deelnemers_bevestigd}}
+            </div>
+            <div class="inlineDiv" ng-if="$ctrl.checkCanSeeAantallen2(gewest.stamnummer) === false && $ctrl.AuthService.getUserRole() !== 'ADMIN'">
+                x (no rights)
             </div>
             <div class="inlineDiv" ng-if="$ctrl.AuthService.getUserRole() === 'ADMIN'">
                 <span class="bevestigd">{{verbond.aantal_ingeschreven_deelnemers_bevestigd}}</span> - <span class="betaald">{{verbond.aantal_ingeschreven_deelnemers_betaald}}</span> - <span class="onbetaald">{{verbond.aantal_ingeschreven_deelnemers_onbetaald}}</span> - <span class="geannuleerd">{{verbond.aantal_ingeschreven_deelnemers_geannuleerd}}</span>
             </div>
-            <i class="material-icons right icon-green" ng-if="$ctrl.AuthService.getUserRole() !== 'ADMIN'">send</i>
+            <!--<i class="material-icons right icon-green" ng-if="$ctrl.canSeeMedewerkersAantallen === false || $ctrl.AuthService.getUserRole() !== 'ADMIN'">send</i>-->
         </td>
         <!-- getUserRole geeft admin terug in case of admin of super-admin; anders geeft het groep terug -->
-        <td ng-if="$ctrl.AuthService.getUserRole() === 'ADMIN'">
-            <div class="inlineDiv" ng-if="$ctrl.AuthService.getUserRole() !== 'ADMIN'">
+        <td ng-if="$ctrl.canSeeMedewerkersAantallen || $ctrl.AuthService.getUserRole() === 'ADMIN'">
+            <div class="inlineDiv" ng-if="$ctrl.checkCanSeeAantallen2(gewest.stamnummer) && $ctrl.AuthService.getUserRole() !== 'ADMIN'">
                 {{verbond.aantal_ingeschreven_vrijwilligers_bevestigd}}
             </div>
-            <span class="bevestigd">{{verbond.aantal_ingeschreven_vrijwilligers_bevestigd}}</span> - <span class="betaald">{{verbond.aantal_ingeschreven_vrijwilligers_betaald}}</span> - <span class="onbetaald">{{verbond.aantal_ingeschreven_vrijwilligers_onbetaald}}</span> - <span class="geannuleerd">{{verbond.aantal_ingeschreven_vrijwilligers_geannuleerd}}</span>
+            <div class="inlineDiv" ng-if="$ctrl.checkCanSeeAantallen2(gewest.stamnummer) === false && $ctrl.AuthService.getUserRole() !== 'ADMIN'">
+                x (no rights)
+            </div>
+            <div class="inlineDiv" ng-if="$ctrl.AuthService.getUserRole() === 'ADMIN'">
+                <span class="bevestigd">{{verbond.aantal_ingeschreven_vrijwilligers_bevestigd}}</span> - <span class="betaald">{{verbond.aantal_ingeschreven_vrijwilligers_betaald}}</span> - <span class="onbetaald">{{verbond.aantal_ingeschreven_vrijwilligers_onbetaald}}</span> - <span class="geannuleerd">{{verbond.aantal_ingeschreven_vrijwilligers_geannuleerd}}</span>
+            </div>
+            <!--<i class="material-icons right icon-green">send</i>-->
+        </td>
+        <td>
             <i class="material-icons right icon-green">send</i>
         </td>
     </tr>
     </tbody>
 </table>
+
+<div class="loader" ng-if="$ctrl.gettingData">Loading...</div>
+<div style="font-size: 20px; text-align: center; padding-top: 20px;" ng-if="$ctrl.gettingData">De gegevens worden opgehaald</div>

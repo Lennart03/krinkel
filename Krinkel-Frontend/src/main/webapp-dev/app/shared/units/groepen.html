@@ -31,8 +31,9 @@
     <tr>
         <th data-field="stamNummer">Stam nummer</th>
         <th data-field="naam">Naam</th>
-        <th data-field="amountParticipants">Aantal deelnemers</th>
+        <th ng-if="$ctrl.canSeeDeelnemersAantallen" data-field="amountParticipants">Aantal deelnemers</th>
         <!--<th data-field="amountVolunteers" ng-if="$ctrl.AuthService.getUserRole() === 'ADMIN'">Aantal medewerkers</th>-->
+        <th data-field="iconSend"></th>
     </tr>
     </thead>
 
@@ -45,7 +46,7 @@
         <td>
             {{groep.name}}
         </td>
-        <td>
+        <td ng-if="$ctrl.canSeeDeelnemersAantallen">
             <div class="inlineDiv" ng-if="$ctrl.AuthService.getUserRole() !== 'ADMIN'">
                 {{groep.aantal_ingeschreven_deelnemers_bevestigd}}
             </div>
@@ -57,6 +58,9 @@
             <!--{{groep.aantal_ingeschreven_vrijwilligers}}-->
             <!--<i class="material-icons right icon-green">send</i>-->
         <!--</td>-->
+        <td ng-if="$ctrl.canDirectTo(groep.stamnummer)">
+            <i class="material-icons right icon-green">send</i>
+        </td>
     </tr>
     </tbody>
 </table>

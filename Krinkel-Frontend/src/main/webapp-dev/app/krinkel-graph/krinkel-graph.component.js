@@ -9,12 +9,22 @@ class KrinkelGraphController {
         this.endDate = new Date(year,month,day);
         this.startDate = new Date(year,month-1,day);
         this.KrinkelService = KrinkelService;
+        this.getAllGraphData();
+    }
+    //added so all graphs are refreshed
+    getAllGraphData()
+    {
         this.getDataForSunBurst();
+        //console.log("done with getDataForSunBurst");
         this.getDataForStatus();
+        //console.log("done with getDataForStatus");
         this.getDataForLogin(this.startDate,this.endDate);
+        //console.log("done with getDataForLogin");
+        this.$onInit();
     }
 
     getDataForSunBurst() {
+        //console.log("in getDataForSunBurst");
         this.KrinkelService.getGraphSunInfo().then((results) => {
             this.sunBurstData = [{name: 'Inschrijvingen'}];
             this.sunBurstData[0].children = results.children;
@@ -23,10 +33,11 @@ class KrinkelGraphController {
 
     changeDate()
     {
-        this.getDataForLogin(this.startDate, this.endDate);
+        this.getAllGraphData();
     }
 
     getDataForStatus() {
+        //console.log("in getDataForStatus");
         this.KrinkelService.getGraphStatusInfo().then((results) => {
             this.barData = [
                 {
@@ -76,6 +87,7 @@ class KrinkelGraphController {
 
 
         getDataForLogin(startDate,endDate) {
+            //console.log("in getDataForLogin");
         this.lineData = [];
         this.lineOptions = {};
         this.KrinkelService.getGraphLoginInfo(startDate,endDate).then((results) => {
@@ -113,6 +125,7 @@ class KrinkelGraphController {
     }
 
     $onInit() {
+        //console.log("onInit executed")//remove
         this.test = "sunburstChart";
 
         //sunburst------------------
