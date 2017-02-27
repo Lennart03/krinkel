@@ -9,7 +9,7 @@ INSERT INTO admins VALUES ('super-admin', 152504, 'blyweert.roel@gmail.com', 'Ro
 INSERT INTO admins VALUES ('super-admin', 109318, 'tom@horre.com', 'Tom', 'Horre');
 
 -- TODO these records need to be removed because these are the Realdolmen developers
--- INSERT INTO admins VALUES ('admin',396942, 'jeroen.compagnie@realdolmen.com', 'Jeroen', 'Compagnie');
+INSERT INTO admins VALUES ('admin',396942, 'jeroen.compagnie@realdolmen.com', 'Jeroen', 'Compagnie');
 -- Lennart for testing: leider bij chiro dolfijn
 /*
 INSERT INTO admins VALUES ('super-admin' , 396943, 'lennart.vandamme@realdolmen.com', 'Lennart', 'Van Damme');
@@ -96,7 +96,7 @@ VALUES('RegistrationVolunteer', '80', '203872', 'Hasselt', '123', '1000', 'Velds
 
 
 --data to test generating random groups
-
+/*
 INSERT INTO registration_participant (dtype,id,ad_number,city, house_number, postal_code, street, birthdate, social_promotion, eatinghabbit, email, email_subscriber, first_name, gender, last_name, remarks_food, medical_remarks, remarks, event_role, buddy, stamnumber, status, phone_number, camp_ground, other, preset, registered_by) VALUES('RegistrationParticipant', '0', '0', 'Brussel', '123', '1000', 'Veldstraat', '1995-08-21', false, 'FISHANDMEAT', 'email@test.be', 'email@test.be', 'Ma', 'MAN', 'Flodder', '', '', '', 'ASPI', false, 'MG /0000', 'TO_BE_PAID', 1, '', '', '', '345678');
 INSERT INTO registration_participant (dtype,id,ad_number,city, house_number, postal_code, street, birthdate, social_promotion, eatinghabbit, email, email_subscriber, first_name, gender, last_name, remarks_food, medical_remarks, remarks, event_role, buddy, stamnumber, status, phone_number, camp_ground, other, preset, registered_by) VALUES('RegistrationParticipant', '1', '1000', 'Brussel', '123', '1000', 'Veldstraat', '1995-08-21', false, 'FISHANDMEAT', 'email@test.be', 'email@test.be', 'Ma', 'WOMAN', 'Flodder', '', '', '', 'ASPI', false, 'OG /3100', 'TO_BE_PAID', 1, '', '', '', '345678');
 INSERT INTO registration_participant (dtype,id,ad_number,city, house_number, postal_code, street, birthdate, social_promotion, eatinghabbit, email, email_subscriber, first_name, gender, last_name, remarks_food, medical_remarks, remarks, event_role, buddy, stamnumber, status, phone_number, camp_ground, other, preset, registered_by) VALUES('RegistrationParticipant', '2', '2000', 'Brussel', '123', '1000', 'Veldstraat', '1995-08-21', false, 'FISHANDMEAT', 'email@test.be', 'email@test.be', 'Ma', 'WOMAN', 'Flodder', '', '', '', 'ASPI', false, 'WG /0000', 'TO_BE_PAID', 1, '', '', '', '345678');
@@ -1091,7 +1091,7 @@ INSERT INTO registration_participant (dtype,id,ad_number,city, house_number, pos
 INSERT INTO registration_participant (dtype,id,ad_number,city, house_number, postal_code, street, birthdate, social_promotion, eatinghabbit, email, email_subscriber, first_name, gender, last_name, remarks_food, medical_remarks, remarks, event_role, buddy, stamnumber, status, phone_number, camp_ground, other, preset, registered_by) VALUES('RegistrationParticipant', '998', '998000', 'Brussel', '123', '1000', 'Veldstraat', '1995-08-21', false, 'FISHANDMEAT', 'email@test.be', 'email@test.be', 'Ma', 'WOMAN', 'Flodder', '', '', '', 'ASPI', false, 'LG /0000', 'PAID', 1, '', '', '', '345678');
 INSERT INTO registration_participant (dtype,id,ad_number,city, house_number, postal_code, street, birthdate, social_promotion, eatinghabbit, email, email_subscriber, first_name, gender, last_name, remarks_food, medical_remarks, remarks, event_role, buddy, stamnumber, status, phone_number, camp_ground, other, preset, registered_by) VALUES('RegistrationParticipant', '999', '999000', 'Brussel', '123', '1000', 'Veldstraat', '1995-08-21', false, 'FISHANDMEAT', 'email@test.be', 'email@test.be', 'Ma', 'MAN', 'Flodder', '', '', '', 'ASPI', false, 'OG /1000', 'PAID', 1, '', '', '', '345678');
 
-
+*/
 
 /*
 INSERT INTO registration_participant_language (registration_participant_id,language)

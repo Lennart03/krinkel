@@ -93,12 +93,14 @@ class GewestenController {
                 if(self.userRole === 'ADMIN'){
                     for(var i = 0; i < self.volunteers.length; i++){
                         if(self.volunteers[i].status !== 'CANCELLED') {
+                            console.log('volunteersLength for admin');
                             self.volunteersLength += 1;
                         }
                     }
                 } else if(self.userRole !== 'ADMIN'){
                     for(var i = 0; i < self.volunteers.length; i++){
                         if(self.volunteers[i].status === 'CONFIRMED') {
+                            console.log('volunteersLength for not admin => so international/national');
                             self.volunteersLength += 1;
                         }
                     }

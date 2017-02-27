@@ -13,16 +13,16 @@
         cursor: pointer;
     }
     .bevestigd{
-        color : blue;
+        color : green;
     }
     .betaald{
-        color : green;
+        color : blue;
     }
     .onbetaald{
         color : red;
     }
     .geannuleerd{
-        color : grey;
+        color : yellow;
     }
     .inlineDiv{
         display:inline;
@@ -60,7 +60,7 @@
 
     <tbody>
     <tr ng-repeat="gewest in $ctrl.gewesten" ng-click="$ctrl.redirectToGroepen(gewest.stamnummer, gewest.name)">
-        <td ng-if="true || $ctrl.AuthService.getUserRole() === 'ADMIN'">
+        <td ng-if="$ctrl.AuthService.getUserRole() === 'ADMIN'">
             {{gewest.stamnummer}}
         </td>
         <td>
