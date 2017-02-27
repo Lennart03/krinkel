@@ -25,7 +25,7 @@ public class ChiroUnit {
     private String name;
 
     @JsonProperty("bovenliggende_stamnummer")
-    @JsonIgnoreProperties({"bovenliggende_stamnummer", "onderliggende_stamnummers"})
+    //@JsonIgnoreProperties({"bovenliggende_stamnummer", "onderliggende_stamnummers"})
     private ChiroUnit upper;
 
     @JsonProperty("onderliggende_stamnummers")

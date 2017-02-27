@@ -152,13 +152,6 @@ class RegisterController {
 
                             document.getElementById("abc").style.display = "inline";
                             document.getElementById("def").style.display = "inline";
-                            // document.getElementById("nawachtSelect").style.display = "inline";
-                            // console.log('voorwachtSelect element');
-                            // console.log($('voorwachtSelect'));
-                            // $('voorwachtSelect').material_select();
-                            // console.log('nawachtSelect element');
-                            // console.log($('nawachtSelect'));
-                            // $('nawachtSelect').material_select();
                         }
                     });
 
@@ -175,15 +168,6 @@ class RegisterController {
     dataCouldNotBeLoaded(){
         this.gettingDataFromChiro = false;
         this.disableEverything = true;
-        /*
-         this.KrinkelService.popupMessage('Uw gegevens zijn onvolledig in de databank van de Chiro. ' +
-         'Gelieve contact op te nemen met ... om uw ', 30000, 'blue');
-         */
-        //popupMessage(message, millis, color)
-        /*this.newPerson = {
-         firstNameIsEmpty: true,
-         lastNameIsEmpty: true
-         }*/
     }
 
     prefillSelf() {

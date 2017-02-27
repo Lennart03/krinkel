@@ -271,6 +271,20 @@ export class KrinkelService {
         );
     }
 
+    getChiroGroepGewestVerbondByGroepStamNummer(groepstamnummer, index){
+        // console.log('getChiroGroepGewestVerbondByGroepStamNummer inside krinkel service');
+        return this.$http.get(`${this.BASEURL}/api/overview/groepstamnummer/${groepstamnummer}`).then((resp) => {
+                // console.log('RESP.DATA getRawChiroUnitByGroepStamNummer');
+                // console.log(resp.data);
+                resp.data.index = index;
+                return resp.data;
+            },
+            () => {
+                this.popupMessage('Fout bij ophalen van verbond en gewest op basis van groep stam nummer: ' + groepstamnummer, 5000, 'red');
+            }
+        );
+    }
+
     exportCompleteEntryList() {
         return this.$http.get(`${this.BASEURL}/downloadExcel`).then((resp) => {
 

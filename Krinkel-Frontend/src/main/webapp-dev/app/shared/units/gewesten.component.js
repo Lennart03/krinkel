@@ -1,10 +1,11 @@
 class GewestenController {
-    constructor(KrinkelService, $route, AuthService, $location, $routeParams, MapperService) {
+    constructor(KrinkelService, $route, AuthService, $location, $routeParams, MapperService, $q) {
         this.KrinkelService = KrinkelService;
         this.$route = $route;
         this.AuthService = AuthService;
         this.MapperService = MapperService;
         this.$location = $location;
+        this.$q = $q;
         this.verbondNr = $routeParams.verbondNr;
         this.verbondNaam = $routeParams.verbondNaam;
         this.showVolunteers = false;
@@ -12,44 +13,102 @@ class GewestenController {
         //console.log(this.lolo + ' gewesten.component.js says hi! ' + this.verbondNaam);
     }
 
+    checkIfNationaal(stamnummer){
+        return this.nationaalStamnummers.indexOf(stamnummer) > -1;
+    }
+    checkForNationaalToSeeNrOfMedewerkers(){
+        for(var i = 0; i < this.userRoles.length; i++){
+            if(this.checkIfNationaal(this.userRoles[i].adNumber)){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    checkIfInternationaal(stamnummer){
+        return this.internationaalStamnummer === stamnummer;
+    }
+
     $onInit() {
+        this.nationaalStamnummers = ['4AF', '4AG', '4AL', '4CF', '4CR', '4KL', '4WB', '4WJ', '4WK', '5AA', '5CA', '5CC', '5CD', '5CG', '5CJ', '5CL', '5CP', '5CV', '5DI', '5IG', '5IP', '5IT', '5KA', '5PA', '5PG', '5PM', '5PP', '5PV', '5RA', '5RD', '5RI', '5RP', '5RV', '5RW', '5SB', '5UG', '5UK', '5UL', '6KV', '7WD', '7WH', '7WK', '7WO', '7WW', '8BB', '8BC', '8BH', '8BR', '8BZ', '8DB', '8HD', '8HH', '8HK', '8HO', '8HW', '9KO'];
+        this.internationaalStamnummer = '5DI';
+        this.gettingData = true;
         this.user = this.AuthService.getLoggedinUser();
         this.userRole = this.user.role;
         this.userRoles = this.user.roles;
-        this.canSeeDeelnemersAantallen = this.checkCanSeeAantallen();
-        this.canSeeMedewerkers = this.checkCanSeeMedewerkers();
-        console.log('===== GEWESTEN ====')
-        console.log('userRoles');
-        console.log(this.userRoles);
 
-        this.KrinkelService.getGewestenList(this.verbondNr).then((results) => {
-            //console.log(results);
-            this.gewesten = results;
-            if(this.verbondNr !== 'OTHERS') {
-                this.filterGewesten();
-            } else{
-                console.log('Show gewesten of OTHERS')
+        this.promiseList = [];
+
+        var self = this;
+
+        for(var i = 0; i < this.userRoles.length; i++){
+            if(this.userRoles[i].role === 'groep'){
+                this.promiseList.push(this.KrinkelService.getChiroGroepGewestVerbondByGroepStamNummer(this.userRoles[i].adNumber, i));
             }
-        });
+        }
 
-        this.volunteers = [];
 
-        this.KrinkelService.getVolunteersListByCampground(this.verbondNaam).then((results) => {
-            console.log('Result from this.KrinkelService.getVolunteersListByCampground(this.verbondNaam)');
-            console.log(results);
-            results.forEach((r) => {
-                r.participant = "Vrijwilliger";
-                r.function.preset = this.MapperService.mapVolunteerFunction(r.function.preset);
-                r.eatinghabbit = this.MapperService.mapEatingHabbit(r.eatinghabbit);
-                r.campGround = this.MapperService.mapCampground(r.campGround);
-                if (r.function.preset == "CUSTOM"){
-                    r.function.preset = r.function.other;
+        this.$q.all(this.promiseList).then(function(value) {
+            console.log('Result from promiseList');
+            console.log(value);
+
+            for (var j = 0; j < value.length; j++) {
+                if (typeof value[j].groepstamnummer !== null) {
+                    self.userRoles[value[j].index].chiroGroepGewestVerbond = value[j];
                 }
-                this.volunteers.push(r);
-            })
-        },
+            }
+
+            self.canSeeDeelnemersAantallen = self.checkCanSeeAantallen();
+            self.canSeeMedewerkers = self.checkCanSeeMedewerkers();
+            console.log('===== GEWESTEN ====');
+            console.log('userRoles');
+            console.log(self.userRoles);
+
+            self.KrinkelService.getGewestenList(self.verbondNr).then((results) => {
+                //console.log(results);
+                self.gewesten = results;
+                if (self.verbondNr !== 'OTHERS') {
+                    self.filterGewesten();
+                } else {
+                    console.log('Show gewesten of OTHERS')
+                }
+            });
+
+            self.volunteers = [];
+
+            self.KrinkelService.getVolunteersListByCampground(self.verbondNaam).then((results) => {
+                console.log('Result from self.KrinkelService.getVolunteersListByCampground(self.verbondNaam)');
+                console.log(results);
+                results.forEach((r) => {
+                    r.participant = "Vrijwilliger";
+                    r.function.preset = self.MapperService.mapVolunteerFunction(r.function.preset);
+                    r.eatinghabbit = self.MapperService.mapEatingHabbit(r.eatinghabbit);
+                    r.campGround = self.MapperService.mapCampground(r.campGround);
+                    if (r.function.preset == "CUSTOM") {
+                        r.function.preset = r.function.other;
+                    }
+                    self.volunteers.push(r);
+                });
+                self.volunteersLength = 0;
+                if(self.userRole === 'ADMIN'){
+                    for(var i = 0; i < self.volunteers.length; i++){
+                        if(self.volunteers[i].status !== 'CANCELLED') {
+                            console.log('volunteersLength for admin');
+                            self.volunteersLength += 1;
+                        }
+                    }
+                } else if(self.userRole !== 'ADMIN'){
+                    for(var i = 0; i < self.volunteers.length; i++){
+                        if(self.volunteers[i].status === 'CONFIRMED') {
+                            console.log('volunteersLength for not admin => so international/national');
+                            self.volunteersLength += 1;
+                        }
+                    }
+                }
+            },
             () => {
-                console.log('Something wrong met getVolunteersListByCampground(this.verbondNaam)')
+                console.log('Something wrong met getVolunteersListByCampground(self.verbondNaam)')
+            });
         });
     }
 
@@ -62,7 +121,7 @@ class GewestenController {
         }
         for(var i = 0; i < this.userRoles.length; i++){
             // Verbond role kan enkel zijn verbond zien dus hiermee ook aantallen van zijn verbond laten zien!!!
-            if(this.userRoles[i].adNumber.substring(0,3) === 'NAT'
+            if(this.checkIfNationaal(this.userRoles[i].adNumber)
                     || (this.userRoles[i].role === 'verbond' && this.verbondNr === this.userRoles[i].adNumber)
                     || (this.userRoles[i].role === 'gewest' && this.userRoles[i].adNumber === gewestNr)){
                 return true;
@@ -77,7 +136,9 @@ class GewestenController {
         }
         for(var i = 0; i < this.userRoles.length; i++){
             // Verbond role kan enkel zijn verbond zien dus hiermee ook aantallen van zijn verbond laten zien!!!
-            if(this.userRoles[i].adNumber.substring(0,3) === 'NAT' || this.userRoles[i].role === 'verbond' || this.userRoles[i].role === 'gewest'){
+            if(this.checkIfNationaal(this.userRoles[i].adNumber) ||
+                this.userRoles[i].role === 'verbond' ||
+                this.userRoles[i].role === 'gewest'){
                 return true;
             }
         }
@@ -89,8 +150,12 @@ class GewestenController {
             return true;
         }
         for(var i = 0; i < this.userRoles.length; i++){
-            // Verbond role kan enkel zijn verbond zien dus hiermee ook aantallen van zijn verbond laten zien!!!
+            // Verbond mag primaire gegevens van medewerkers zien
             if(this.userRoles[i].role === 'verbond' && this.userRoles[i].adNumber === this.verbondNr){
+                return true;
+            }
+            // Internationaal mag medewerkers zien binnen internationaal met verbondNr INT
+            if(this.verbondNr === 'INT' && this.checkIfInternationaal(this.userRoles[i].adNumber)){
                 return true;
             }
         }
@@ -103,7 +168,7 @@ class GewestenController {
         }
         var temp = [];
         for(var i = 0; i < this.gewesten.length; i++){
-            if(this.canSee(this.gewesten[i].stamnummer)) {
+            if(this.canSee(this.gewesten[i])) {
                 temp.push(this.gewesten[i]);
             }
         }
@@ -113,7 +178,8 @@ class GewestenController {
         }
     }
 
-    canSee(gewestNr){
+    canSee(gewest){
+        var gewestNr = gewest.stamnummer;
         var thiz = this;
         console.log('######### GEWESTEN ######')
         console.log('#### cansee('+gewestNr+') ####');
@@ -122,7 +188,7 @@ class GewestenController {
             for(var i = 0; i < this.userRoles.length; i++){
                 var roleAndAdNumber = this.userRoles[i];
                 console.log('* ' + roleAndAdNumber.role + ' : ' + roleAndAdNumber.adNumber);
-                if(this.checkForRoleAndAdNumber(roleAndAdNumber, gewestNr)){
+                if(this.checkForRoleAndAdNumber(roleAndAdNumber, gewest)){
                     return true;
                 }
             }
@@ -130,7 +196,8 @@ class GewestenController {
         return false;
     }
 
-    checkForRoleAndAdNumber(roleAndAdNumber, gewestNr){
+    checkForRoleAndAdNumber(roleAndAdNumber, gewest){
+        var gewestNr = gewest.stamnummer; //TODO maybe checken met gewest.upper
         var nr = roleAndAdNumber.adNumber;
         // Nr of letters to check => in case of leuven it is 3, otherwise 2
         //      ==> want to check the first letters by which the verbond can be identified
@@ -159,7 +226,14 @@ class GewestenController {
                 // return (nr.substring(0,nrLetters) === gewestNr.substring(0,nrLetters)) ? true : false;
                 break;
             case 'groep':
-                if(nr.substring(0,nrLettersGewest) === gewestNr.substring(0,nrLettersGewest) || this.checkForOthers(nr, gewestNr)){
+                //TODO => mss nog aparte check voor '4WK' en '5DI' hier of in de default checken of voor dat ge gaat filteren
+                var chiroGroepGewestVerbond = roleAndAdNumber.chiroGroepGewestVerbond;
+                // if undefined => hoort bij others
+                if((gewestNr === 'OTHERS' && typeof chiroGroepGewestVerbond === 'undefined')
+                    || chiroGroepGewestVerbond.geweststamnummer === gewestNr
+                    || (gewestNr === 'INT' && this.checkIfInternationaal(nr))
+                    || this.checkIfNationaal(nr)){
+                // if(nr.substring(0,nrLettersGewest) === gewestNr.substring(0,nrLettersGewest) || this.checkForOthers(nr, gewestNr)){
                     console.log('### TRUE groep met nr: ' + nr);
                     return true;
                 } else {
@@ -168,26 +242,23 @@ class GewestenController {
                 // return (nr.substring(0,nrLetters) === gewestNr.substring(0,nrLetters)) ? true : false;
                 break;
             default:
-                if(nr.substring(0,3) === 'NAT'){
-                    console.log('### TRUE Nationaal met nr: ' + nr);
-                    return true;
-                }
                 return false;
         }
         return false;
     }
 
-    checkForOthers(nr, gewestNr){
-        if(gewestNr === 'OTHERS') {
-            var normalBeginnings = ['AG', 'AJ', 'AM',
-                'BG', 'BJ', 'BM', 'INT', 'KG', 'KJ', 'KM', 'LEG', 'LEJ', 'LEM',
-                'LG', 'LJ', 'LM', 'MG', 'MJ', 'MM', 'NAT', 'OG', 'OJ', 'OM', 'WG', 'WJ', 'WM'];
-            if (!normalBeginnings.includes(nr.substr(0, 2))) {
-                return true; // Groepnr is part of others
-            }
-        }
-        return false;
-    }
+    //TODO remove NOT USED ANYMORE
+    // checkForOthers(nr, gewestNr){
+    //     if(gewestNr === 'OTHERS') {
+    //         var normalBeginnings = ['AG', 'AJ', 'AM',
+    //             'BG', 'BJ', 'BM', 'INT', 'KG', 'KJ', 'KM', 'LEG', 'LEJ', 'LEM',
+    //             'LG', 'LJ', 'LM', 'MG', 'MJ', 'MM', 'NAT', 'OG', 'OJ', 'OM', 'WG', 'WJ', 'WM'];
+    //         if (!normalBeginnings.includes(nr.substr(0, 2))) {
+    //             return true; // Groepnr is part of others
+    //         }
+    //     }
+    //     return false;
+    // }
 
     /**
      * REDIRECTING
@@ -270,4 +341,4 @@ export var GewestenComponent = {
     controller: GewestenController
 };
 
-GewestenComponent.$inject = ['KrinkelService', '$route', 'AuthService', '$location', '$routeParams', 'MapperService'];
+GewestenComponent.$inject = ['KrinkelService', '$route', 'AuthService', '$location', '$routeParams', 'MapperService', '$q'];

@@ -77,4 +77,8 @@ public class RawChiroUnit {
     public void setVerbondNaam(String verbondNaam) {
         this.verbondNaam = verbondNaam;
     }
+
+    public String toString(){
+        return "RAWCHIROUNIT: Groep " + groepStamNummer + " " + groepNaam+", Gewest " + gewestStamNummer + " " + gewestNaam + ", Verbond " + verbondStamNummer + " " + verbondNaam;
+    }
 }

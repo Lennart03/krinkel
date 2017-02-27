@@ -79,6 +79,6 @@ public class VolunteerFunction {
 
     @Override
     public String toString(){
-        return "[preset=" + preset.getDescription() + ",other="+other+"]";
+        return "[Functie:" + preset.getDescription() + ", Beschrijving andere:"+other+"]";
     }
 }

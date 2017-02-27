@@ -2,7 +2,9 @@ package com.realdolmen.chiro.controller;
 
 import com.realdolmen.chiro.domain.RegistrationParticipant;
 import com.realdolmen.chiro.domain.RegistrationVolunteer;
+import com.realdolmen.chiro.domain.units.ChiroGroepGewestVerbond;
 import com.realdolmen.chiro.domain.units.ChiroUnit;
+import com.realdolmen.chiro.service.UserService;
 import com.realdolmen.chiro.service.VerbondenService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -10,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -20,6 +23,9 @@ import java.util.List;
 public class OverviewController {
     @Autowired
     private VerbondenService verbondenService;
+
+    @Autowired
+    private UserService userService;
 
     /**
      *
@@ -59,5 +65,19 @@ public class OverviewController {
     public List<RegistrationVolunteer> getVolunteersByCampground (@PathVariable("campground") String campground){
 
         return verbondenService.getRegistrationVolunteersByCampground(campground);
+    }
+
+
+    @RequestMapping(value = "/participants/{status}", method = RequestMethod.GET)
+    public List<RegistrationVolunteer> getParticipantsByStatus (@PathVariable("staus") String status){
+        // TODO status enum ophalen op basis van string en die ophalen
+//        return verbondenService.getRegistrationVolunteersByCampground(status);
+        return new ArrayList<RegistrationVolunteer>();
+    }
+
+    @RequestMapping(value = "/groepstamnummer/{groepstamnummer}", method = RequestMethod.GET)
+    public ChiroGroepGewestVerbond getRawChiroUnitByGroepStamNummer(@PathVariable("groepstamnummer") String groepstamnummer) {
+//        System.err.println("INSIDE getRawChiroUnitByGroepStamNummer in overviewcontroller");
+        return userService.getChiroUnitByGroepStamNummer(groepstamnummer);
     }
 }

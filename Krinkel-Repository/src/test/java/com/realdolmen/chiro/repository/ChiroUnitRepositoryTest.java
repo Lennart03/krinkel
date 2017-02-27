@@ -4,6 +4,7 @@ import com.realdolmen.chiro.domain.CampGround;
 import com.realdolmen.chiro.domain.RegistrationParticipant;
 import com.realdolmen.chiro.domain.RegistrationVolunteer;
 import com.realdolmen.chiro.domain.Status;
+import com.realdolmen.chiro.domain.units.ChiroGroepGewestVerbond;
 import com.realdolmen.chiro.domain.units.ChiroUnit;
 import com.realdolmen.chiro.domain.units.RawChiroUnit;
 import com.realdolmen.chiro.spring_test.SpringIntegrationTest;
@@ -157,5 +158,18 @@ public class ChiroUnitRepositoryTest extends SpringIntegrationTest{
         i = chiroUnitRepository.countParticipantsByGroep("AG /0103", Status.CANCELLED, false);
         assertEquals(0,i);
 
+    }
+
+    @Test
+    public void testgetRawChiroUnitByGroepStamNummer(){
+        ChiroGroepGewestVerbond chiroUnitByGroepStamNummer1 = chiroUnitRepository.getChiroUnitByGroepStamNummer("AJ /0708");
+        System.err.println("Testing to get rawChiroUnitByGroepStamNummer");
+        System.err.println(chiroUnitByGroepStamNummer1.toString());
+        assertEquals(chiroUnitByGroepStamNummer1.getVerbondNaam(),"Antwerpen");
+        assertEquals(chiroUnitByGroepStamNummer1.getGewestNaam(),"GEWEST GLIM");
+        ChiroGroepGewestVerbond chiroUnitByGroepStamNummer2 = chiroUnitRepository.getChiroUnitByGroepStamNummer("AG /0103");
+        System.err.println(chiroUnitByGroepStamNummer2);
+        assertEquals(chiroUnitByGroepStamNummer2.getVerbondNaam(),"Antwerpen");
+        assertEquals(chiroUnitByGroepStamNummer2.getGewestNaam(),"Zac");
     }
 }

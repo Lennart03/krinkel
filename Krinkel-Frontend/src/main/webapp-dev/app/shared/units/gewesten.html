@@ -13,16 +13,16 @@
         cursor: pointer;
     }
     .bevestigd{
-        color : blue;
+        color : green;
     }
     .betaald{
-        color : green;
+        color : blue;
     }
     .onbetaald{
         color : red;
     }
     .geannuleerd{
-        color : grey;
+        color : yellow;
     }
     .inlineDiv{
         display:inline;
@@ -33,13 +33,19 @@
     <span class="bevestigd">Bevestigd</span> - <span class="betaald">Betaald</span> - <span class="onbetaald">Onbetaald</span> - <span class="geannuleerd">Geannuleerd</span>
 </div>
 
-<a class="btn right" ng-click="$ctrl.switchShowParticipantsVolunteers()" ng-if="canSeeMedewerkers && !$ctrl.showVolunteers && $ctrl.AuthService.getUserRole() === 'ADMIN'">
-    Medewerkers ({{$ctrl.volunteers.length}})
+<a class="btn right" ng-click="$ctrl.switchShowParticipantsVolunteers()" ng-if="$ctrl.canSeeMedewerkers && !$ctrl.showVolunteers">
+    Medewerkers ({{$ctrl.volunteersLength}})
 </a>
 
-<a class="btn right" ng-click="$ctrl.switchShowParticipantsVolunteers()" ng-if="canSeeMedewerkers && $ctrl.showVolunteers && $ctrl.AuthService.getUserRole() === 'ADMIN'">
+<a class="btn right" ng-click="$ctrl.switchShowParticipantsVolunteers()" ng-if="$ctrl.canSeeMedewerkers && $ctrl.showVolunteers">
     Overzicht gewesten
 </a>
+
+<!--show nr of volunteers if nationaal-->
+<a class="btn right" disabled ng-if="$ctrl.canSeeMedewerkers === false && $ctrl.checkForNationaalToSeeNrOfMedewerkers();">
+    Aantal medewerkers: {{$ctrl.volunteersLength}}
+</a>
+
 
 <table ng-if="!$ctrl.showVolunteers">
     <thead>
@@ -54,7 +60,7 @@
 
     <tbody>
     <tr ng-repeat="gewest in $ctrl.gewesten" ng-click="$ctrl.redirectToGroepen(gewest.stamnummer, gewest.name)">
-        <td ng-if="true || $ctrl.AuthService.getUserRole() === 'ADMIN'">
+        <td ng-if="$ctrl.AuthService.getUserRole() === 'ADMIN'">
             {{gewest.stamnummer}}
         </td>
         <td>
@@ -64,9 +70,9 @@
             <div class="inlineDiv" ng-if="$ctrl.checkCanSeeAantallen2(gewest.stamnummer) && $ctrl.AuthService.getUserRole() !== 'ADMIN'">
                 {{gewest.aantal_ingeschreven_deelnemers_bevestigd}}
             </div>
-            <!--<div class="inlineDiv" ng-if="$ctrl.checkCanSeeAantallen2(gewest.stamnummer) === false">-->
-                <!--x (no rights)-->
-            <!--</div>-->
+            <div class="inlineDiv" ng-if="$ctrl.checkCanSeeAantallen2(gewest.stamnummer) === false">
+                x (no rights)
+            </div>
             <div class="inlineDiv" ng-if="$ctrl.AuthService.getUserRole() === 'ADMIN'">
                 <span class="bevestigd">{{gewest.aantal_ingeschreven_deelnemers_bevestigd}}</span> - <span class="betaald">{{gewest.aantal_ingeschreven_deelnemers_betaald}}</span> - <span class="onbetaald">{{gewest.aantal_ingeschreven_deelnemers_onbetaald}}</span> - <span class="geannuleerd">{{gewest.aantal_ingeschreven_deelnemers_geannuleerd}}</span>
             </div>
@@ -101,14 +107,16 @@
     </tr>
     </thead>
     <tbody>
-    <tr ng-repeat="volunteer in $ctrl.volunteers" id="{{ volunteer.id }}" ng-if="volunteer.status !== 'CANCELLED'">
+    <!-- admin can see everyone but cancelled, international can see everyone who is confirmed-->
+    <tr ng-repeat="volunteer in $ctrl.volunteers" id="{{ volunteer.id }}"
+            ng-if="(volunteer.status === 'CONFIRMED' && $ctrl.AuthService.getUserRole() !== 'ADMIN') || (volunteer.status !== 'CANCELLED' && $ctrl.AuthService.getUserRole() === 'ADMIN')">
         <td>
             {{volunteer.firstName}} {{volunteer.lastName}}
         </td>
-        <td>
+        <td ng-if="$ctrl.AuthService.getUserRole() === 'ADMIN'">
             {{volunteer.address.street}}
         </td>
-        <td>
+        <td ng-if="$ctrl.AuthService.getUserRole() === 'ADMIN'">
             {{volunteer.address.city}}
         </td>
         <td ng-if="$ctrl.AuthService.getUserRole() === 'ADMIN'">
@@ -117,16 +125,16 @@
         <td ng-if="$ctrl.AuthService.getUserRole() === 'ADMIN'">
             {{volunteer.medicalRemarks}}
         </td>
-        <td>
+        <td ng-if="$ctrl.AuthService.getUserRole() === 'ADMIN'">
             {{volunteer.function.preset}}
         </td>
-        <td>
+        <td ng-if="$ctrl.AuthService.getUserRole() === 'ADMIN'">
             {{volunteer.campGround}}
         </td>
-        <td>
+        <td ng-if="$ctrl.AuthService.getUserRole() === 'ADMIN'">
             {{$ctrl.getDatesListFromList(volunteer.preCampList)}}
         </td>
-        <td>
+        <td ng-if="$ctrl.AuthService.getUserRole() === 'ADMIN'">
             {{$ctrl.getDatesListFromList(volunteer.postCampList)}}
         </td>
         <td ng-if="$ctrl.AuthService.getUserRole() === 'ADMIN'" style="min-width: 110px;">

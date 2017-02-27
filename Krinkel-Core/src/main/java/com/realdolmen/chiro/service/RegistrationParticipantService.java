@@ -235,6 +235,7 @@ public class RegistrationParticipantService {
         Verbond verbond = Verbond.getVerbondFromStamNumber(participant.getStamnumber());
         System.out.println("Checking number for AD: "+ participant.getAdNumber());
         System.out.println("verbond = " + verbond);
+        //TODO: check if stam number is part of list of national => change stamNumber to "NAT" or "INT" if "5DI"
         if(verbond == Verbond.OTHERS && !participant.getStamnumber().equals("OTHERS")) {
             System.out.println("Verbond unknown, changing to others...");
             participant.setOriginalStamNumber(participant.getStamnumber());
