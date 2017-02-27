@@ -60,6 +60,13 @@ public interface ChiroUnitRepository extends JpaRepository<RawChiroUnit, String>
             " AND " +
             "r.stamnumber = c.groepStamNummer")
     ChiroUnit findUnionParticipant(String adNumber);
+
+
+    @Query("SELECT c.verbondStamNummer FROM RegistrationParticipant r, RawChiroUnit c WHERE " +
+            "r.adNumber = ?1" +
+            " AND " +
+            "r.stamnumber = c.groepStamNummer")
+    String findUnionUsingAD(String adNumber);
     /**
      * Get the nr of participants + volunteers who are in the verbond specified by the given verbondStamNummer
      * @param verbondStamNummer

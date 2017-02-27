@@ -43,37 +43,37 @@ INSERT INTO post_camp VALUES (80, '2017-09-02') ON DUPLICATE KEY UPDATE id = 80;
 INSERT INTO registration_participant (dtype,id,ad_number,city, house_number, postal_code, street, birthdate,
 social_promotion, eatinghabbit, email, email_subscriber, first_name, gender, last_name, remarks_food, medical_remarks, remarks,
 event_role, buddy, stamnumber, status, phone_number, camp_ground, other, preset, registered_by, sync_status, last_change)
-VALUES('RegistrationParticipant', '10', '123456', 'Brussel', '123', '1000', 'Veldstraat', '1995-08-21', false, 'FISHANDMEAT',
+VALUES('RegistrationParticipant', '1010', '123456', 'Brussel', '123', '1000', 'Veldstraat', '1995-08-21', false, 'FISHANDMEAT',
                               'email@test.be', 'email@test.be', 'Johnny', 'MAN', 'Flodder', 'food remarks', 'medical remarks', 'remarks', 'ASPI', false, 'AG /0103', 'TO_BE_PAID', 1, '', '', '', '123456','SYNCED', '2017-02-14');
 
 INSERT INTO registration_participant (dtype,id,ad_number,city, house_number, postal_code, street, birthdate,
 social_promotion, eatinghabbit, email, email_subscriber, first_name, gender, last_name, remarks_food, medical_remarks, remarks,
 event_role, buddy, stamnumber, status, phone_number, camp_ground, other, preset, registered_by, sync_status, last_change)
-VALUES('RegistrationParticipant', '20', '234567', 'Brussel', '123', '1000', 'Veldstraat', '1995-08-21', false, 'FISHANDMEAT',
+VALUES('RegistrationParticipant', '1020', '234567', 'Brussel', '123', '1000', 'Veldstraat', '1995-08-21', false, 'FISHANDMEAT',
                               'email@test.be', 'email@test.be', 'Kees', 'MAN', 'Flodder', '', '', '', 'ASPI', false, 'BG /0301', 'PAID', 1, '', '', '', '234567','SYNCED', '2017-02-14');
 
 INSERT INTO registration_participant (dtype,id,ad_number,city, house_number, postal_code, street, birthdate,
 social_promotion, eatinghabbit, email, email_subscriber, first_name, gender, last_name, remarks_food, medical_remarks, remarks,
 event_role, buddy, stamnumber, status, phone_number, camp_ground, other, preset, registered_by)
-VALUES('RegistrationParticipant', '30', '345678', 'Brussel', '123', '1000', 'Veldstraat', '1995-08-21', false, 'FISHANDMEAT',
+VALUES('RegistrationParticipant', '1030', '345678', 'Brussel', '123', '1000', 'Veldstraat', '1995-08-21', false, 'FISHANDMEAT',
                               'email@test.be', 'email@test.be', 'Ma', 'WOMAN', 'Flodder', '', '', '', 'ASPI', false, 'AG /0103', 'CONFIRMED', 1, '', '', '', '345678');
 
 INSERT INTO registration_participant (dtype,id,ad_number,city, house_number, postal_code, street, birthdate,
 social_promotion, eatinghabbit, email, email_subscriber, first_name, gender, last_name, remarks_food, medical_remarks, remarks,
 event_role, buddy, stamnumber, status, phone_number, camp_ground, other, preset, registered_by)
-VALUES('RegistrationParticipant', '40', '456789', 'Brussel', '123', '1000', 'Veldstraat', '1995-08-21', false, 'FISHANDMEAT',
+VALUES('RegistrationParticipant', '1040', '456789', 'Brussel', '123', '1000', 'Veldstraat', '1995-08-21', false, 'FISHANDMEAT',
                               'email@test.be', 'email@test.be', 'Cees', 'WOMAN', 'Flodder', '', '', '', 'ASPI', true, 'LEG/0101', 'PAID', 1, '', '', '',  '456789');
 
 INSERT INTO registration_participant (dtype,id,ad_number,city, house_number, postal_code, street, birthdate,
 social_promotion, eatinghabbit, email, email_subscriber, first_name, gender, last_name, remarks_food, medical_remarks, remarks,
 event_role, buddy, stamnumber, status, phone_number, camp_ground, other, preset, registered_by)
-VALUES('RegistrationParticipant', '50', '987654', 'Brussel', '123', '1000', 'Veldstraat', '1995-08-21', false, 'FISHANDMEAT',
+VALUES('RegistrationParticipant', '1050', '987654', 'Brussel', '123', '1000', 'Veldstraat', '1995-08-21', false, 'FISHANDMEAT',
                               'email@test.be', 'email@test.be', 'Frederik', 'MAN', 'Flodder', '', '', '', 'ASPI', true, 'AG /0202', 'CONFIRMED', 1, '', '', '', '987654');
 
 INSERT INTO registration_participant (dtype,id,ad_number,city, house_number, postal_code, street, birthdate,
 social_promotion, eatinghabbit, email, email_subscriber, first_name, gender, last_name, remarks_food, medical_remarks, remarks,
 event_role, buddy, stamnumber, status, sync_status, phone_number, camp_ground, other, preset, registered_by, last_change)
-VALUES('RegistrationVolunteer', '60', '876543', 'Brussel', '123', '1000', 'Veldstraat', '1995-08-21', false, 'FISHANDMEAT',
+VALUES('RegistrationVolunteer', '1060', '876543', 'Brussel', '123', '1000', 'Veldstraat', '1995-08-21', false, 'FISHANDMEAT',
                               'email@test.be', 'email@test.be', 'Jos', 'MAN', 'Flodder', '', '', '', 'VOLUNTEER', false,
                               'AG /0103', 'CONFIRMED', 'SYNCED', 1, 'KEMPEN', '', 'CAMPGROUND', '876543', '2016-12-13');
 
@@ -97,6 +97,7 @@ VALUES('RegistrationVolunteer', '80', '203872', 'Hasselt', '123', '1000', 'Velds
 
 --data to test generating random groups
 /*
+
 INSERT INTO registration_participant (dtype,id,ad_number,city, house_number, postal_code, street, birthdate, social_promotion, eatinghabbit, email, email_subscriber, first_name, gender, last_name, remarks_food, medical_remarks, remarks, event_role, buddy, stamnumber, status, phone_number, camp_ground, other, preset, registered_by) VALUES('RegistrationParticipant', '0', '0', 'Brussel', '123', '1000', 'Veldstraat', '1995-08-21', false, 'FISHANDMEAT', 'email@test.be', 'email@test.be', 'Ma', 'MAN', 'Flodder', '', '', '', 'ASPI', false, 'MG /0000', 'TO_BE_PAID', 1, '', '', '', '345678');
 INSERT INTO registration_participant (dtype,id,ad_number,city, house_number, postal_code, street, birthdate, social_promotion, eatinghabbit, email, email_subscriber, first_name, gender, last_name, remarks_food, medical_remarks, remarks, event_role, buddy, stamnumber, status, phone_number, camp_ground, other, preset, registered_by) VALUES('RegistrationParticipant', '1', '1000', 'Brussel', '123', '1000', 'Veldstraat', '1995-08-21', false, 'FISHANDMEAT', 'email@test.be', 'email@test.be', 'Ma', 'WOMAN', 'Flodder', '', '', '', 'ASPI', false, 'OG /3100', 'TO_BE_PAID', 1, '', '', '', '345678');
 INSERT INTO registration_participant (dtype,id,ad_number,city, house_number, postal_code, street, birthdate, social_promotion, eatinghabbit, email, email_subscriber, first_name, gender, last_name, remarks_food, medical_remarks, remarks, event_role, buddy, stamnumber, status, phone_number, camp_ground, other, preset, registered_by) VALUES('RegistrationParticipant', '2', '2000', 'Brussel', '123', '1000', 'Veldstraat', '1995-08-21', false, 'FISHANDMEAT', 'email@test.be', 'email@test.be', 'Ma', 'WOMAN', 'Flodder', '', '', '', 'ASPI', false, 'WG /0000', 'TO_BE_PAID', 1, '', '', '', '345678');
@@ -1091,9 +1092,14 @@ INSERT INTO registration_participant (dtype,id,ad_number,city, house_number, pos
 INSERT INTO registration_participant (dtype,id,ad_number,city, house_number, postal_code, street, birthdate, social_promotion, eatinghabbit, email, email_subscriber, first_name, gender, last_name, remarks_food, medical_remarks, remarks, event_role, buddy, stamnumber, status, phone_number, camp_ground, other, preset, registered_by) VALUES('RegistrationParticipant', '998', '998000', 'Brussel', '123', '1000', 'Veldstraat', '1995-08-21', false, 'FISHANDMEAT', 'email@test.be', 'email@test.be', 'Ma', 'WOMAN', 'Flodder', '', '', '', 'ASPI', false, 'LG /0000', 'PAID', 1, '', '', '', '345678');
 INSERT INTO registration_participant (dtype,id,ad_number,city, house_number, postal_code, street, birthdate, social_promotion, eatinghabbit, email, email_subscriber, first_name, gender, last_name, remarks_food, medical_remarks, remarks, event_role, buddy, stamnumber, status, phone_number, camp_ground, other, preset, registered_by) VALUES('RegistrationParticipant', '999', '999000', 'Brussel', '123', '1000', 'Veldstraat', '1995-08-21', false, 'FISHANDMEAT', 'email@test.be', 'email@test.be', 'Ma', 'MAN', 'Flodder', '', '', '', 'ASPI', false, 'OG /1000', 'PAID', 1, '', '', '', '345678');
 
+
 */
 
 /*
+                              'AG /0103', 'CONFIRMED', 'SYNCED', 1, 'BRUSSEL', '', 'COOKING', '876543', '2016-12-13');
+
+
+
 INSERT INTO registration_participant_language (registration_participant_id,language)
 VALUES('50', '0');
 

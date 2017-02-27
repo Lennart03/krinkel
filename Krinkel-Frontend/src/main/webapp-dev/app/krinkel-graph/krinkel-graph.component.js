@@ -4,6 +4,7 @@ class KrinkelGraphController {
         var month = $filter('date')(Date.now(), "MM");
         var year = $filter('date')(Date.now(), "yyyy");
         var day = $filter('date')(Date.now(), "dd");
+        this.datePattern = /./;
         this.startDate = new Date(year,month,day);
         month= month-1;
         this.endDate = new Date(year,month,day);
@@ -14,6 +15,7 @@ class KrinkelGraphController {
     //added so all graphs are refreshed
     getAllGraphData()
     {
+        console.log("is date geldig " +this.endDate.$invalid);
         this.getDataForSunBurst();
         //console.log("done with getDataForSunBurst");
         this.getDataForStatus();
@@ -33,7 +35,7 @@ class KrinkelGraphController {
 
     changeDate()
     {
-        this.getAllGraphData();
+            this.getAllGraphData();
     }
 
     getDataForStatus() {
@@ -127,7 +129,6 @@ class KrinkelGraphController {
     $onInit() {
         //console.log("onInit executed")//remove
         this.test = "sunburstChart";
-
         //sunburst------------------
         this.sunBurstOptions = {
             chart: {
@@ -144,6 +145,7 @@ class KrinkelGraphController {
         };
         //show no data found sunburst
         this.sunBurstData = [];
+
 
         this.lineOptions = {
             chart: {
@@ -191,7 +193,7 @@ class KrinkelGraphController {
             }
         };
 
-
+        console.log("sunburst " + this.sunBurstData.active);
         this.lineData = [];
         //barchart ------------------- chart.tooltip.valueFormatter(function(d){return d.toFixed(4)});
         this.barOptions = {
@@ -228,6 +230,7 @@ class KrinkelGraphController {
             }
         };
         this.barData = [];
+
 
     }
 }
