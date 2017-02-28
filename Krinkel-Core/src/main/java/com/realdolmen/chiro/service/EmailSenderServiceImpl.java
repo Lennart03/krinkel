@@ -48,6 +48,12 @@ public class EmailSenderServiceImpl implements EmailSenderService {
 
     @Override
     public Future<String> sendMail(RegistrationParticipant participant) {
+        return this.sendMail(participant, false);
+    }
+
+
+    @Override
+    public Future<String> sendMail(RegistrationParticipant participant, boolean update) {
 
         MimeMessage message = mailSender.createMimeMessage();
         Context ctx = new Context();
@@ -59,7 +65,7 @@ public class EmailSenderServiceImpl implements EmailSenderService {
         String url = "";
 
         //Create confirmation URL in case the participant is registered by someone else
-        if (participant.isRegisteredByOther()) {
+        if (participant.isRegisteredByOther() || (update && participant.getStatus().equals(Status.PAID))) {
             try {
                 ConfirmationLink confirmationLink = confirmationLinkService.createConfirmationLink(participant.getAdNumber());
                 url = confirmationLinkService.generateURLFromConfirmationLink(confirmationLink);
@@ -70,6 +76,9 @@ public class EmailSenderServiceImpl implements EmailSenderService {
 
         ctx.setVariable("isMailToSubscriber", false);
         ctx.setVariable("confirmationLink", url);
+        ctx.setVariable("status", participant.getStatus().toString());
+        System.out.println("STATUS PARTICIPANT: " + participant.getStatus().toString());
+        ctx.setVariable("updateByAdmin", update);
 
         String emailText = thymeleaf.process("email", ctx);
         ClassPathResource image = new ClassPathResource("/static/img/logo.png");
@@ -123,12 +132,6 @@ public class EmailSenderServiceImpl implements EmailSenderService {
             return new AsyncResult<String>("notOk");
         }
     }
-
-    @Override
-    public Future<String> resendMail(RegistrationParticipant participant, ConfirmationLink confirmationLink) {
-        return null;
-    }
-
 
     private RegistrationParticipant fillInEmptyFields(RegistrationParticipant participant) {
         if (participant.getMedicalRemarks() == null) {

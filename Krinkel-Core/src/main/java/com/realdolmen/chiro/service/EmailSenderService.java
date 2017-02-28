@@ -8,5 +8,6 @@ import java.util.concurrent.Future;
 public interface EmailSenderService {
 	Future<String> sendMail(RegistrationParticipant participant);
 
-	Future<String> resendMail(RegistrationParticipant participant, ConfirmationLink confirmationLink);
+    Future<String> sendMail(RegistrationParticipant participant, boolean update);
+
 }
