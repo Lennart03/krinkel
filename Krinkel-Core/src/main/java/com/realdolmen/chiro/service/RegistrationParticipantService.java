@@ -100,16 +100,33 @@ public class RegistrationParticipantService {
         }
     }
 
-
     public void createRegistrationCommunication(RegistrationParticipant participant) {
-        RegistrationCommunication registrationCommunication = new RegistrationCommunication();
-        registrationCommunication.setStatus(SendStatus.WAITING);
-        registrationCommunication.setCommunicationAttempt(0);
-        registrationCommunication.setAdNumber(participant.getAdNumber());
-        if (registrationCommunicationRepository.findByAdNumber(participant.getAdNumber()) == null) {
-            logger.info("registering communication to participant/volunteer with ad-number: "
+        this.createRegistrationCommunication(participant, false);
+    }
+
+    public void createRegistrationCommunication(RegistrationParticipant participant, boolean update) {
+        RegistrationCommunication communication = registrationCommunicationRepository.findByAdNumber(participant.getAdNumber());
+        if (communication == null) {
+            String info = "";
+            RegistrationCommunication registrationCommunication = new RegistrationCommunication();
+            if(update) {
+                registrationCommunication.setStatus(SendStatus.SENDUPDATE);
+                info = "updating ";
+            } else {
+                registrationCommunication.setStatus(SendStatus.WAITING);
+            }
+            registrationCommunication.setCommunicationAttempt(0);
+            registrationCommunication.setAdNumber(participant.getAdNumber());
+
+            logger.info(info + "registering communication to participant/volunteer with ad-number: "
                     + participant.getAdNumber() + " with status: " + registrationCommunication.getStatus());
             registrationCommunicationRepository.save(registrationCommunication);
+        } else if (update) {
+            communication.setStatus(SendStatus.SENDUPDATE);
+            communication.setCommunicationAttempt(0);
+            logger.info("updating registering communication to participant/volunteer with ad-number: "
+                    + participant.getAdNumber() + " with status: " + communication.getStatus());
+            registrationCommunicationRepository.save(communication);
         }
     }
 
@@ -206,11 +223,13 @@ public class RegistrationParticipantService {
         participant.updateLastChange();
         if (Status.valueOf(paymentStatus) == Status.TO_BE_PAID) {
             participant.setStatus(Status.TO_BE_PAID);
+            createRegistrationCommunication(participant, true);
         } else if (Status.valueOf(paymentStatus) == Status.PAID) {
-            //see if we can replace this with a call to markAsPayed, in order to also set the flag to send a mail.
             participant.setStatus(Status.PAID);
+            createRegistrationCommunication(participant, true);
         } else if (Status.valueOf(paymentStatus) == Status.CONFIRMED) {
             participant.setStatus(Status.CONFIRMED);
+            createRegistrationCommunication(participant, true);
         }
         return registrationParticipantRepository.save(participant);
     }

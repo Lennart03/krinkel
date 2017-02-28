@@ -6,4 +6,6 @@ import java.util.concurrent.Future;
 
 public interface EmailSenderService {
 	Future<String> sendMail(RegistrationParticipant participant);
+
+    Future<String> sendMail(RegistrationParticipant participant, boolean update);
 }
