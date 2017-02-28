@@ -67,4 +67,6 @@ public interface RegistrationParticipantRepository extends JpaRepository<Registr
 
     @Query(value = "SELECT r.status FROM  RegistrationParticipant r WHERE r.adNumber = :adNumber")
     Status getPaymentStatusByadNumber(@Param("adNumber") String adNumber);
+
+    List<RegistrationParticipant> findAll();
 }

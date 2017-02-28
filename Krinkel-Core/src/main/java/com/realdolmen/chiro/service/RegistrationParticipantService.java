@@ -1,6 +1,7 @@
 package com.realdolmen.chiro.service;
 
 import com.realdolmen.chiro.domain.*;
+import com.realdolmen.chiro.exception.DuplicateEntryException;
 import com.realdolmen.chiro.exception.NoParticipantFoundException;
 import com.realdolmen.chiro.mspservice.MultiSafePayService;
 import com.realdolmen.chiro.repository.RegistrationCommunicationRepository;
@@ -36,6 +37,12 @@ public class RegistrationParticipantService {
 
     @Autowired
     private MultiSafePayService multiSafePayService;
+
+    @Autowired
+    private EmailSenderServiceImpl emailSenderServiceImpl;
+
+    @Autowired
+    private ConfirmationLinkService confirmationLinkService;
 
     @PreAuthorize("@RegistrationParticipantServiceSecurity.hasPermissionToSaveParticipant(#participant)")
     public RegistrationParticipant save(RegistrationParticipant participant) {
@@ -236,10 +243,46 @@ public class RegistrationParticipantService {
         System.out.println("Checking number for AD: "+ participant.getAdNumber());
         System.out.println("verbond = " + verbond);
         //TODO: check if stam number is part of list of national => change stamNumber to "NAT" or "INT" if "5DI"
-        if(verbond == Verbond.OTHERS && !participant.getStamnumber().equals("OTHERS")) {
+        if(verbond == Verbond.NATIONAAL && !participant.getStamnumber().equals("NAT")){
+            System.out.println("Verbond NATIONAAL, changing to NAT...");
+            participant.setOriginalStamNumber(participant.getStamnumber());
+            participant.setStamnumber(Verbond.NATIONAAL.getStam());
+        } else if (verbond == Verbond.INTERNATIONAAL && !participant.getStamnumber().equals("INT")) {
+            System.out.println("Verbond INTERNATIONAAL, changing to INT...");
+            participant.setOriginalStamNumber(participant.getStamnumber());
+            participant.setStamnumber(Verbond.INTERNATIONAAL.getStam());
+        }else if(verbond == Verbond.OTHERS && !participant.getStamnumber().equals("OTHERS")) {
             System.out.println("Verbond unknown, changing to others...");
             participant.setOriginalStamNumber(participant.getStamnumber());
             participant.setStamnumber(Verbond.OTHERS.getStam());
         }
+    }
+
+    public Boolean resendConfirmationEmails(List<String> adNumbers){
+        List<RegistrationParticipant> participants = new ArrayList<RegistrationParticipant>();
+        for (String adnr :adNumbers){
+            RegistrationParticipant participant = registrationParticipantRepository.findByAdNumber(adnr);
+            ConfirmationLink confirmationLink = confirmationLinkService.findByAdNumber(adnr);
+
+            // If it doens't exist yet => make one
+            if(confirmationLink == null){
+                try {
+                    confirmationLink = confirmationLinkService.createConfirmationLink(adnr);
+                } catch (DuplicateEntryException e) {
+                    System.err.println("duplicate confirmation link"); // SHOULD NEVER HAPPEN SINCE WE'RE CHECKING
+                }
+            }
+
+            // Send the email
+            emailSenderServiceImpl.resendMail(participant, confirmationLink);
+
+        }
+
+
+        return true;
+    }
+
+    public List<RegistrationParticipant> findAll() {
+        return registrationParticipantRepository.findAll();
     }
 }

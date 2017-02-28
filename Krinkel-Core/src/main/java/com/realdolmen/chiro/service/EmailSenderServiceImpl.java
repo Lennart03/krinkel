@@ -1,13 +1,8 @@
 package com.realdolmen.chiro.service;
 
-import java.util.concurrent.Future;
-
-import javax.mail.MessagingException;
-import javax.mail.internet.AddressException;
-import javax.mail.internet.MimeMessage;
-
 import com.realdolmen.chiro.domain.*;
 import com.realdolmen.chiro.exception.DuplicateEntryException;
+import com.realdolmen.chiro.repository.RegistrationCommunicationRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +16,10 @@ import org.springframework.stereotype.Service;
 import org.thymeleaf.context.Context;
 import org.thymeleaf.spring4.SpringTemplateEngine;
 
-import com.realdolmen.chiro.repository.RegistrationCommunicationRepository;
+import javax.mail.MessagingException;
+import javax.mail.internet.AddressException;
+import javax.mail.internet.MimeMessage;
+import java.util.concurrent.Future;
 
 @Service
 @Async
@@ -89,7 +87,7 @@ public class EmailSenderServiceImpl implements EmailSenderService {
             mailSender.send(message);
 
             //check for empty string is REQUIRED, empty strings are not null. if this code fails, the user will be spammed because the service keeps trying
-            if (participant.isRegisteredByOther() && participant.getEmailSubscriber() != null && !participant.getEmailSubscriber().trim().isEmpty()) {
+            if (!participant.getAdNumber().equals(participant.getRegisteredBy()) && participant.isRegisteredByOther() && participant.getEmailSubscriber() != null && !participant.getEmailSubscriber().trim().isEmpty()) {
 
                 ctx.setVariable("isMailToSubscriber", true);
 
@@ -124,6 +122,11 @@ public class EmailSenderServiceImpl implements EmailSenderService {
             registrationCommunicationRepository.save(registrationCommunication);
             return new AsyncResult<String>("notOk");
         }
+    }
+
+    @Override
+    public Future<String> resendMail(RegistrationParticipant participant, ConfirmationLink confirmationLink) {
+        return null;
     }
 
 
