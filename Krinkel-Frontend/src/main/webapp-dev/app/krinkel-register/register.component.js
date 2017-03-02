@@ -24,6 +24,7 @@ class RegisterController {
         window.scrollTo(0, 0);
         this.disableEverything = true;
         this.gettingDataFromChiro = true;
+        console.log('GETTING DATA FROM CHIRO SET TO TRUE')
 
         if (this.SelectService.getSelectedFlag()) {
             this.SelectService.setColleague(undefined);
@@ -75,6 +76,10 @@ class RegisterController {
         } else {
             if (this.type === 'volunteer') {
                 var thiz = this;
+                console.log('Campground: ');
+                console.log(newPerzon.campGround);
+                console.log(newPerzon.campGround.toUpperCase());
+
                 this.KrinkelService.postVolunteer(this.MapperService.mapVolunteer(newPerzon)).then(function (resp) {
                     thiz.dataIsRemoved = true;
                     thiz.StorageService.removeUser();
@@ -150,15 +155,15 @@ class RegisterController {
                             this.gettingDataFromChiro = false;
                             this.disableEverything = false;
 
-                            document.getElementById("abc").style.display = "inline";
-                            document.getElementById("def").style.display = "inline";
+                            document.getElementById("divAroundTopText").style.display = "inline";
+                            document.getElementById("divAroundForm").style.display = "inline";
                         }
                     });
 
 
                 } else {
                     // Geen chiro contact gevonden
-                    console.log('// Geen chiro contact gevonden');
+                    console.log('==> Geen chiro contact gevonden');
                     this.dataCouldNotBeLoaded();
                 }
             }

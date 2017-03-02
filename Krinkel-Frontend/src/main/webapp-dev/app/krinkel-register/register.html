@@ -1,75 +1,4 @@
-<style>
-    .loader {
-        margin: 100px auto;
-        font-size: 25px;
-        width: 1em;
-        height: 1em;
-        border-radius: 50%;
-        position: relative;
-        text-indent: -9999em;
-         -webkit-animation: load5 1.1s infinite ease;
-        animation: load5 1.1s infinite ease;
-         -webkit-transform: translateZ(0);
-         -ms-transform: translateZ(0);
-        transform: translateZ(0);
-    }
-    @-webkit-keyframes load5 {
-        0%,
-        100% {
-            box-shadow: 0em -2.6em 0em 0em #319683, 1.8em -1.8em 0 0em rgba(49,150,131, 0.2), 2.5em 0em 0 0em rgba(49,150,131, 0.2), 1.75em 1.75em 0 0em rgba(49,150,131, 0.2), 0em 2.5em 0 0em rgba(49,150,131, 0.2), -1.8em 1.8em 0 0em rgba(49,150,131, 0.2), -2.6em 0em 0 0em rgba(49,150,131, 0.5), -1.8em -1.8em 0 0em rgba(49,150,131, 0.7);
-        }
-        12.5% {
-            box-shadow: 0em -2.6em 0em 0em rgba(49,150,131, 0.7), 1.8em -1.8em 0 0em #319683, 2.5em 0em 0 0em rgba(49,150,131, 0.2), 1.75em 1.75em 0 0em rgba(49,150,131, 0.2), 0em 2.5em 0 0em rgba(49,150,131, 0.2), -1.8em 1.8em 0 0em rgba(49,150,131, 0.2), -2.6em 0em 0 0em rgba(49,150,131, 0.2), -1.8em -1.8em 0 0em rgba(49,150,131, 0.5);
-        }
-        25% {
-            box-shadow: 0em -2.6em 0em 0em rgba(49,150,131, 0.5), 1.8em -1.8em 0 0em rgba(49,150,131, 0.7), 2.5em 0em 0 0em #319683, 1.75em 1.75em 0 0em rgba(49,150,131, 0.2), 0em 2.5em 0 0em rgba(49,150,131, 0.2), -1.8em 1.8em 0 0em rgba(49,150,131, 0.2), -2.6em 0em 0 0em rgba(49,150,131, 0.2), -1.8em -1.8em 0 0em rgba(49,150,131, 0.2);
-        }
-        37.5% {
-            box-shadow: 0em -2.6em 0em 0em rgba(49,150,131, 0.2), 1.8em -1.8em 0 0em rgba(49,150,131, 0.5), 2.5em 0em 0 0em rgba(49,150,131, 0.7), 1.75em 1.75em 0 0em #319683, 0em 2.5em 0 0em rgba(49,150,131, 0.2), -1.8em 1.8em 0 0em rgba(49,150,131, 0.2), -2.6em 0em 0 0em rgba(49,150,131, 0.2), -1.8em -1.8em 0 0em rgba(49,150,131, 0.2);
-        }
-        50% {
-            box-shadow: 0em -2.6em 0em 0em rgba(49,150,131, 0.2), 1.8em -1.8em 0 0em rgba(49,150,131, 0.2), 2.5em 0em 0 0em rgba(49,150,131, 0.5), 1.75em 1.75em 0 0em rgba(49,150,131, 0.7), 0em 2.5em 0 0em #319683, -1.8em 1.8em 0 0em rgba(49,150,131, 0.2), -2.6em 0em 0 0em rgba(49,150,131, 0.2), -1.8em -1.8em 0 0em rgba(49,150,131, 0.2);
-        }
-        62.5% {
-            box-shadow: 0em -2.6em 0em 0em rgba(49,150,131, 0.2), 1.8em -1.8em 0 0em rgba(49,150,131, 0.2), 2.5em 0em 0 0em rgba(49,150,131, 0.2), 1.75em 1.75em 0 0em rgba(49,150,131, 0.5), 0em 2.5em 0 0em rgba(49,150,131, 0.7), -1.8em 1.8em 0 0em #319683, -2.6em 0em 0 0em rgba(49,150,131, 0.2), -1.8em -1.8em 0 0em rgba(49,150,131, 0.2);
-        }
-        75% {
-            box-shadow: 0em -2.6em 0em 0em rgba(49,150,131, 0.2), 1.8em -1.8em 0 0em rgba(49,150,131, 0.2), 2.5em 0em 0 0em rgba(49,150,131, 0.2), 1.75em 1.75em 0 0em rgba(49,150,131, 0.2), 0em 2.5em 0 0em rgba(49,150,131, 0.5), -1.8em 1.8em 0 0em rgba(49,150,131, 0.7), -2.6em 0em 0 0em #319683, -1.8em -1.8em 0 0em rgba(49,150,131, 0.2);
-        }
-        87.5% {
-            box-shadow: 0em -2.6em 0em 0em rgba(49,150,131, 0.2), 1.8em -1.8em 0 0em rgba(49,150,131, 0.2), 2.5em 0em 0 0em rgba(49,150,131, 0.2), 1.75em 1.75em 0 0em rgba(49,150,131, 0.2), 0em 2.5em 0 0em rgba(49,150,131, 0.2), -1.8em 1.8em 0 0em rgba(49,150,131, 0.5), -2.6em 0em 0 0em rgba(49,150,131, 0.7), -1.8em -1.8em 0 0em #319683;
-        }
-    }
-    @keyframes load5 {
-        0%,
-        100% {
-            box-shadow: 0em -2.6em 0em 0em #319683, 1.8em -1.8em 0 0em rgba(49,150,131, 0.2), 2.5em 0em 0 0em rgba(49,150,131, 0.2), 1.75em 1.75em 0 0em rgba(49,150,131, 0.2), 0em 2.5em 0 0em rgba(49,150,131, 0.2), -1.8em 1.8em 0 0em rgba(49,150,131, 0.2), -2.6em 0em 0 0em rgba(49,150,131, 0.5), -1.8em -1.8em 0 0em rgba(49,150,131, 0.7);
-        }
-        12.5% {
-            box-shadow: 0em -2.6em 0em 0em rgba(49,150,131, 0.7), 1.8em -1.8em 0 0em #319683, 2.5em 0em 0 0em rgba(49,150,131, 0.2), 1.75em 1.75em 0 0em rgba(49,150,131, 0.2), 0em 2.5em 0 0em rgba(49,150,131, 0.2), -1.8em 1.8em 0 0em rgba(49,150,131, 0.2), -2.6em 0em 0 0em rgba(49,150,131, 0.2), -1.8em -1.8em 0 0em rgba(49,150,131, 0.5);
-        }
-        25% {
-            box-shadow: 0em -2.6em 0em 0em rgba(49,150,131, 0.5), 1.8em -1.8em 0 0em rgba(49,150,131, 0.7), 2.5em 0em 0 0em #319683, 1.75em 1.75em 0 0em rgba(49,150,131, 0.2), 0em 2.5em 0 0em rgba(49,150,131, 0.2), -1.8em 1.8em 0 0em rgba(49,150,131, 0.2), -2.6em 0em 0 0em rgba(49,150,131, 0.2), -1.8em -1.8em 0 0em rgba(49,150,131, 0.2);
-        }
-        37.5% {
-            box-shadow: 0em -2.6em 0em 0em rgba(49,150,131, 0.2), 1.8em -1.8em 0 0em rgba(49,150,131, 0.5), 2.5em 0em 0 0em rgba(49,150,131, 0.7), 1.75em 1.75em 0 0em #319683, 0em 2.5em 0 0em rgba(49,150,131, 0.2), -1.8em 1.8em 0 0em rgba(49,150,131, 0.2), -2.6em 0em 0 0em rgba(49,150,131, 0.2), -1.8em -1.8em 0 0em rgba(49,150,131, 0.2);
-        }
-        50% {
-            box-shadow: 0em -2.6em 0em 0em rgba(49,150,131, 0.2), 1.8em -1.8em 0 0em rgba(49,150,131, 0.2), 2.5em 0em 0 0em rgba(49,150,131, 0.5), 1.75em 1.75em 0 0em rgba(49,150,131, 0.7), 0em 2.5em 0 0em #319683, -1.8em 1.8em 0 0em rgba(49,150,131, 0.2), -2.6em 0em 0 0em rgba(49,150,131, 0.2), -1.8em -1.8em 0 0em rgba(49,150,131, 0.2);
-        }
-        62.5% {
-            box-shadow: 0em -2.6em 0em 0em rgba(49,150,131, 0.2), 1.8em -1.8em 0 0em rgba(49,150,131, 0.2), 2.5em 0em 0 0em rgba(49,150,131, 0.2), 1.75em 1.75em 0 0em rgba(49,150,131, 0.5), 0em 2.5em 0 0em rgba(49,150,131, 0.7), -1.8em 1.8em 0 0em #319683, -2.6em 0em 0 0em rgba(49,150,131, 0.2), -1.8em -1.8em 0 0em rgba(49,150,131, 0.2);
-        }
-        75% {
-            box-shadow: 0em -2.6em 0em 0em rgba(49,150,131, 0.2), 1.8em -1.8em 0 0em rgba(49,150,131, 0.2), 2.5em 0em 0 0em rgba(49,150,131, 0.2), 1.75em 1.75em 0 0em rgba(49,150,131, 0.2), 0em 2.5em 0 0em rgba(49,150,131, 0.5), -1.8em 1.8em 0 0em rgba(49,150,131, 0.7), -2.6em 0em 0 0em #319683, -1.8em -1.8em 0 0em rgba(49,150,131, 0.2);
-        }
-        87.5% {
-            box-shadow: 0em -2.6em 0em 0em rgba(49,150,131, 0.2), 1.8em -1.8em 0 0em rgba(49,150,131, 0.2), 2.5em 0em 0 0em rgba(49,150,131, 0.2), 1.75em 1.75em 0 0em rgba(49,150,131, 0.2), 0em 2.5em 0 0em rgba(49,150,131, 0.2), -1.8em 1.8em 0 0em rgba(49,150,131, 0.5), -2.6em 0em 0 0em rgba(49,150,131, 0.7), -1.8em -1.8em 0 0em #319683;
-        }
-    }
-</style>
-
-<div class="loader" ng-if="$ctrl.gettingDataFromChiro">Loading...</div>
+<spinner loading="$ctrl.gettingDataFromChiro"></spinner>
 <div style="font-size: 20px; text-align: center; padding-top: 20px;" ng-if="$ctrl.gettingDataFromChiro">Uw gegevens worden opgehaald</div>
 
 <div ng-if="$ctrl.gettingDataFromChiro === false && $ctrl.disableEverything">
@@ -81,7 +10,7 @@
 </div>
 
 <!--<div class="row" ng-if="$ctrl.disableEverything === false">-->
-<div class="row" id="abc" style="display:none">
+<div class="row" id="divAroundTopText" style="display:none">
     <h1 ng-if="$ctrl.type === 'volunteer'">Medewerker inschrijven</h1>
     <h1 ng-if="$ctrl.type === 'participant' && !$ctrl.SelectService.getSelectedFlag()">Deelnemer inschrijven</h1>
     <h1 ng-if="$ctrl.SelectService.getSelectedFlag()">Andere deelnemer inschrijven</h1>
@@ -97,7 +26,7 @@
 </div>
 
 <!--<div class="row" ng-if="$ctrl.disableEverything === false">-->
-<div class="row" id="def" style="display:none">
+<div class="row" id="divAroundForm" style="display:none">
 
     <form class="col s12 m12" novalidate name="personForm" ng-submit="personForm.$valid && $ctrl.registerPerson($ctrl.newPerson)">
         <div class="row">

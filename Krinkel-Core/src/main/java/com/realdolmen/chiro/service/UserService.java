@@ -178,7 +178,7 @@ public class UserService {
         System.out.println("untrimmed stamnummer " + stamNumberTrimmer.untrim(groepstamnummer)+" gewoon stamnummer");
         //        System.err.println("From userservice getChiroUnitByGroepStamNummer("+groepstamnummer+")");
         if(chiroUnitByGroepStamNummer == null){
-            System.err.println("Couldn't find it!!!!");
+            System.err.println("Could not find chirounit for  "+ groepstamnummer);
             return new ChiroGroepGewestVerbond();
         }
 //        System.err.println(chiroUnitByGroepStamNummer.toString());

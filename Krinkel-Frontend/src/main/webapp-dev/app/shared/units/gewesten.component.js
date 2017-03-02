@@ -13,26 +13,10 @@ class GewestenController {
         //console.log(this.lolo + ' gewesten.component.js says hi! ' + this.verbondNaam);
     }
 
-    checkIfNationaal(stamnummer){
-        return this.nationaalStamnummers.indexOf(stamnummer) > -1;
-    }
-    checkForNationaalToSeeNrOfMedewerkers(){
-        for(var i = 0; i < this.userRoles.length; i++){
-            if(this.checkIfNationaal(this.userRoles[i].adNumber)){
-                return true;
-            }
-        }
-        return false;
-    }
-
-    checkIfInternationaal(stamnummer){
-        return this.internationaalStamnummer === stamnummer;
-    }
-
     $onInit() {
+        this.gettingData = true;
         this.nationaalStamnummers = ['4AF', '4AG', '4AL', '4CF', '4CR', '4KL', '4WB', '4WJ', '4WK', '5AA', '5CA', '5CC', '5CD', '5CG', '5CJ', '5CL', '5CP', '5CV', '5DI', '5IG', '5IP', '5IT', '5KA', '5PA', '5PG', '5PM', '5PP', '5PV', '5RA', '5RD', '5RI', '5RP', '5RV', '5RW', '5SB', '5UG', '5UK', '5UL', '6KV', '7WD', '7WH', '7WK', '7WO', '7WW', '8BB', '8BC', '8BH', '8BR', '8BZ', '8DB', '8HD', '8HH', '8HK', '8HO', '8HW', '9KO'];
         this.internationaalStamnummer = '5DI';
-        this.gettingData = true;
         this.user = this.AuthService.getLoggedinUser();
         this.userRole = this.user.role;
         this.userRoles = this.user.roles;
@@ -72,6 +56,13 @@ class GewestenController {
                 } else {
                     console.log('Show gewesten of OTHERS')
                 }
+                // console.log('self.gewesten.length ' + self.gewesten.length);
+                if(self.gewesten.length > 0) {
+                    // console.log(' > 0 ');
+                    self.lastGewest = self.gewesten[self.gewesten.length - 1];
+                } else {
+                    self.gettingData = false;
+                }
             });
 
             self.volunteers = [];
@@ -110,6 +101,31 @@ class GewestenController {
                 console.log('Something wrong met getVolunteersListByCampground(self.verbondNaam)')
             });
         });
+    }
+
+    checkForLastGewest(gewestNr){
+        if(gewestNr === this.lastGewest.stamnummer){
+            this.gettingData = false;
+            var tableGewesten = document.getElementById("tableGewesten");
+            tableGewesten.style.display = "inline";
+        }
+        return true;
+    }
+
+    checkIfNationaal(stamnummer){
+        return this.nationaalStamnummers.indexOf(stamnummer) > -1;
+    }
+    checkForNationaalToSeeNrOfMedewerkers(){
+        for(var i = 0; i < this.userRoles.length; i++){
+            if(this.checkIfNationaal(this.userRoles[i].adNumber)){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    checkIfInternationaal(stamnummer){
+        return this.internationaalStamnummer === stamnummer;
     }
 
     /**
@@ -230,6 +246,7 @@ class GewestenController {
                 var chiroGroepGewestVerbond = roleAndAdNumber.chiroGroepGewestVerbond;
                 // if undefined => hoort bij others
                 if((gewestNr === 'OTHERS' && typeof chiroGroepGewestVerbond === 'undefined')
+                    || this.checkForOthers(nr, gewestNr)
                     || chiroGroepGewestVerbond.geweststamnummer === gewestNr
                     || (gewestNr === 'INT' && this.checkIfInternationaal(nr))
                     || this.checkIfNationaal(nr)){
@@ -247,18 +264,17 @@ class GewestenController {
         return false;
     }
 
-    //TODO remove NOT USED ANYMORE
-    // checkForOthers(nr, gewestNr){
-    //     if(gewestNr === 'OTHERS') {
-    //         var normalBeginnings = ['AG', 'AJ', 'AM',
-    //             'BG', 'BJ', 'BM', 'INT', 'KG', 'KJ', 'KM', 'LEG', 'LEJ', 'LEM',
-    //             'LG', 'LJ', 'LM', 'MG', 'MJ', 'MM', 'NAT', 'OG', 'OJ', 'OM', 'WG', 'WJ', 'WM'];
-    //         if (!normalBeginnings.includes(nr.substr(0, 2))) {
-    //             return true; // Groepnr is part of others
-    //         }
-    //     }
-    //     return false;
-    // }
+    checkForOthers(nr, gewestNr){
+        if(gewestNr === 'OTHERS') {
+            var normalBeginnings = ['AG', 'AJ', 'AM',
+                'BG', 'BJ', 'BM', 'INT', 'KG', 'KJ', 'KM', 'LEG', 'LEJ', 'LEM',
+                'LG', 'LJ', 'LM', 'MG', 'MJ', 'MM', 'NAT', 'OG', 'OJ', 'OM', 'WG', 'WJ', 'WM'];
+            if (!normalBeginnings.includes(nr.substr(0, 2)) && !this.checkIfNationaal(nr) && !this.checkIfInternationaal(nr)) {
+                return true; // Groepnr is part of others
+            }
+        }
+        return false;
+    }
 
     /**
      * REDIRECTING

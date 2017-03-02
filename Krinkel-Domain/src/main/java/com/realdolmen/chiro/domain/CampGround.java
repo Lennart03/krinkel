@@ -11,6 +11,7 @@ public enum CampGround {
     LEUVEN("Leuven"),
     BRUSSEL("Brussel"),
     WEST_VLAANDEREN("West-Vlaanderen"),
+    WESTVLAANDEREN("WestVlaanderen"),
     HEUVELLAND("Heuvelland"),
     ROELAND("Roeland"),
     REINAERT("Reinaert"),

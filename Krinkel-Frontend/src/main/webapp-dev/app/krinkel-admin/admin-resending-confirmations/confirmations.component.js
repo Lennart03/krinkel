@@ -8,11 +8,8 @@ class ConfirmationsController {
     }
 
     $onInit() {
+        this.dataIsLoaded = false;
         var self = this;
-        this.KrinkelService.getVerbonden().then((results) => {
-            console.log('verbonden');
-            console.log(results);
-        });
 
         this.KrinkelService.getParticipantsListAll().then((results) => {
             self.participants = [];
@@ -28,6 +25,8 @@ class ConfirmationsController {
                     self.nrOfParticipantsPaid += 1;
                 }
             });
+
+            self.dataIsLoaded = true;
         });
     }
 

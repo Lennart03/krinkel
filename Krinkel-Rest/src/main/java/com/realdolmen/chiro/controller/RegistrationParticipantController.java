@@ -123,23 +123,21 @@ public class RegistrationParticipantController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    //TODO
     @RequestMapping(method = RequestMethod.POST, value = "/api/participantsResendConfirmationEmails")
     public Boolean resendConfirmationEmails(@RequestParam("participants") List<String> participantsAdNumbers) throws URISyntaxException {
-        System.err.println("resendConfirmationEmails INIT");
+//        System.err.println("resendConfirmationEmails INIT");
 
-        System.err.println("resendConfirmationEmails to participants: ");
+//        System.err.println("resendConfirmationEmails to participants: ");
         for (String adnr : participantsAdNumbers) {
-            System.err.println("Participant: " + adnr) ;
+//            System.err.println("Participant: " + adnr) ;
         }
         return registrationParticipantService.resendConfirmationEmails(participantsAdNumbers);
     }
 
-    //TODO
     @RequestMapping(method = RequestMethod.GET, value = "/api/participants/all", produces = "application/json")
     public List<RegistrationParticipant> getAllParticipants() {
         List<RegistrationParticipant> all = registrationParticipantService.findAll();
-        System.err.println("Length of findAll() in registrationParticipantController: " + all.size());
+//        System.err.println("Length of findAll() in registrationParticipantController: " + all.size());
         return all;
     }
 

@@ -336,7 +336,7 @@ a[x-apple-data-detectors] {
 																								Hallo <span
 																									th:text="${participant.firstName}"></span>, we hebben je
 																								inschrijving aangepast naar 'betaald'.
-																								Nu moet je enkel nog op de confirmed link onderaan deze mail drukken om je inschrijving te voltooien.
+																								Nu moet je enkel nog op de <span style="font-weight: bold;">bevestigingslink</span> onderaan deze mail klikken om je inschrijving te voltooien.
 																								Hieronder vind je alvast de gegevens van je inschrijving.
 																								Wil je iets veranderen aan je inschrijving? Laat het weten via
 																								<a href="mailto:inschrijvingen@krinkel.be">inschrijvingen@krinkel.be</a>.
@@ -344,7 +344,7 @@ a[x-apple-data-detectors] {
 																							<p th:case="'CONFIRMED'">
 																								Hallo <span
 																									th:text="${participant.firstName}"></span>, we hebben
-																								je inschrijving aangepast naar 'Bevestigd'.
+																								je inschrijving aangepast naar 'bevestigd'.
 																								Deze mail zie je vermoedelijk omdat er iets mis is gelopen in ons systeem en een van onze
 																								knappe koppen is correcties aan het maken.
 																								Je inschrijving is dus in orde. Hieronder vind je de gegevens van je inschrijving.
@@ -516,7 +516,7 @@ a[x-apple-data-detectors] {
 																		</tr>
 																		<!-- END Hoera // -->
 
-																		<!-- BEGIN BevestiginsLink // -->
+																		<!-- BEGIN BevestigingsLink // -->
 																		<tr
 																			th:if="${not isMailToSubscriber and participant.isRegisteredByOther() or (updateByAdmin and status == 'PAID')}">
 																			<td align="center" style="padding-bottom: 60px;"
@@ -543,7 +543,7 @@ a[x-apple-data-detectors] {
 																				</table>
 																			</td>
 																		</tr>
-																		<!-- END BevestiginsLink // -->
+																		<!-- END BevestigingsLink // -->
 
 																		<!-- BEGIN Algemene voorwaarden // -->
 																		<tr
