@@ -193,8 +193,6 @@ public class GraphChiroService {
 
         }
 
-        System.out.println(status.toString());
-        System.out.println(status.getParticipantsCancelled()+status.getParticipantsConfirmed()+status.getParticipantsNotConfirmed()+status.getParticipantsNotPaid());
         return status;
     }
 
