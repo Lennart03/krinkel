@@ -28,8 +28,8 @@ public class GraphController {
     }
 
     @RequestMapping("/api/graph/status")
-    public StatusChiroUnit getStatus() {
-        return graphChiroService.getStatusChiro();
+    public StatusChiroUnit getStatus(@RequestParam("name") String name,@RequestParam("depth") Integer depth) {
+        return graphChiroService.getStatusChiro(name,depth);
     }
 
 
