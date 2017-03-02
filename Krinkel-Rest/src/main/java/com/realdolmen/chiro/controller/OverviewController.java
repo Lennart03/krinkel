@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -27,6 +26,7 @@ public class OverviewController {
     @Autowired
     private UserService userService;
 
+
     /**
      *
      * @return list of all Verbonden
@@ -36,6 +36,8 @@ public class OverviewController {
         //System.err.println("Verbonden in overview controller: " + verbondenService.getVerbonden());
         return verbondenService.getVerbonden();
     }
+
+
 
     @RequestMapping(value = "/gewesten/{verbondStamNummer}", method = RequestMethod.GET)
     public List<ChiroUnit> getGewesten(@PathVariable("verbondStamNummer") String verbondStamNummer) {
@@ -68,12 +70,12 @@ public class OverviewController {
     }
 
 
-    @RequestMapping(value = "/participants/{status}", method = RequestMethod.GET)
-    public List<RegistrationVolunteer> getParticipantsByStatus (@PathVariable("staus") String status){
-        // TODO status enum ophalen op basis van string en die ophalen
-//        return verbondenService.getRegistrationVolunteersByCampground(status);
-        return new ArrayList<RegistrationVolunteer>();
-    }
+//    @RequestMapping(value = "/participants/{status}", method = RequestMethod.GET)
+//    public List<RegistrationVolunteer> getParticipantsByStatus (@PathVariable("staus") String status){
+//        // TODO status enum ophalen op basis van string en die ophalen
+////        return verbondenService.getRegistrationVolunteersByCampground(status);
+//        return new ArrayList<RegistrationVolunteer>();
+//    }
 
     @RequestMapping(value = "/groepstamnummer/{groepstamnummer}", method = RequestMethod.GET)
     public ChiroGroepGewestVerbond getRawChiroUnitByGroepStamNummer(@PathVariable("groepstamnummer") String groepstamnummer) {

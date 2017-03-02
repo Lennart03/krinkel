@@ -79,6 +79,10 @@ export function appConfig($routeProvider, $locationProvider) {
         template: '<groep></groep>'
     });
 
+    $routeProvider.when('/confirmations', {
+        template: '<confirmations></confirmations>'
+    })
+
     $routeProvider.otherwise({
         redirectTo: '/home'
     });

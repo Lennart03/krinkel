@@ -1,5 +1,8 @@
 package com.realdolmen.chiro.domain;
 
+import java.util.Arrays;
+import java.util.List;
+
 /**
  * Created by MBTAZ48 on 22/11/2016.
  */
@@ -15,10 +18,12 @@ public enum Verbond {
     ROELAND("OG1000"),
     LIMBURG("LG0000"),
     RD("0RD"),
-    WERKGROEPKRINKEL("4WK"),
-    OTHERS("OTHERS");// For testing...
+    OTHERS("OTHERS"),
+    NATIONAAL("NAT"),
+    INTERNATIONAAL("INT");// For testing...
 
-
+    private static List<String> nationaleStamnummers = Arrays.asList("4AF", "4AG", "4AL", "4CF", "4CR", "4KL", "4WB", "4WJ", "4WK", "5AA", "5CA", "5CC", "5CD", "5CG", "5CJ", "5CL", "5CP", "5CV", "5DI", "5IG", "5IP", "5IT", "5KA", "5PA", "5PG", "5PM", "5PP", "5PV", "5RA", "5RD", "5RI", "5RP", "5RV", "5RW", "5SB", "5UG", "5UK", "5UL", "6KV", "7WD", "7WH", "7WK", "7WO", "7WW", "8BB", "8BC", "8BH", "8BR", "8BZ", "8DB", "8HD", "8HH", "8HK", "8HO", "8HW", "9KO");
+    private static String internationaalStamnummer = "5DI";
         public static Verbond getVerbondFromStamNumber(String stamNumber) {
         /**
          * Most stamNumbers are length 6, except for Leuven which is 7. The stamNumbers with OG's also have to be checked by the first 3 letters. That's why this logic is here.
@@ -43,10 +48,10 @@ public enum Verbond {
 
         } else if (stamNumber.length() == 7) {
             return switchVerbondOnFirst3Letters(stamNumber);
-        } else if (stamNumber.equals("0RD")) {
-            return Verbond.OTHERS;
-        } else if (stamNumber.equals("4WK")) {
-            return Verbond.WERKGROEPKRINKEL;
+        } else if (stamNumber.equals(internationaalStamnummer)) {
+            return Verbond.INTERNATIONAAL;
+        } else if (nationaleStamnummers.contains(stamNumber)){
+            return Verbond.NATIONAAL;
         } else {
             return Verbond.OTHERS;
         }

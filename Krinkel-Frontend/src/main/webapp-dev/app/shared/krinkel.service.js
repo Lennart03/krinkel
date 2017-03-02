@@ -89,6 +89,27 @@ export class KrinkelService {
         );
     }
 
+    resendConfirmationEmails(participants) {
+        return this.$http.post(`${this.BASEURL}/api/participantsResendConfirmationEmails?participants=${participants}`).then((resp) => {
+                return resp.data;
+            }, () => {
+                console.log('Fout bij het zenden van mails met bevestiginslinks naar de gebruikers: ');
+                console.log(participants);
+                this.popupMessage('Fout bij het zenden van mails met bevestiginslinks',4000,'red');
+            }
+        );
+    }
+
+    getParticipantsListAll(){
+        return this.$http.get(`${this.BASEURL}/api/participants/all`).then((resp) => {
+                return resp.data;
+            },
+            () => {
+                this.popupMessage('Er is iets misgelopen bij het ophalen van alle ingeschreven deelnemers. getParticipantsListAll', 4000, 'red');
+            }
+        );
+    }
+
     getColleagues(adNumber) {
         return this.$http.get(`${this.BASEURL}/api/colleagues`).then((resp) => {
                 return resp.data;

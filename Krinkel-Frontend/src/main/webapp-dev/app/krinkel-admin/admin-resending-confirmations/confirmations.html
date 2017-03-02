@@ -1,0 +1,36 @@
+<h1>Bevestigingsmail opnieuw verzenden</h1>
+
+<table ng-if=" $ctrl.AuthService.getUserRole() === 'ADMIN'">
+    <thead>
+    <tr>
+        <th data-field="adNummer">Ad nummer</th>
+        <th data-field="stamnumber">Stamnummer</th>
+        <th data-field="name">Naam</th>
+        <th data-field="email">email</th>
+
+    </tr>
+    </thead>
+
+    <h2>Ingeschreven personen met status "betaald"</h2>
+
+    <a class="btn right" ng-click="$ctrl.resendConfirmationEmails()">
+        Verstuur mail met bevestigingslink naar {{$ctrl.nrOfParticipantsPaid}} deelnemers
+    </a>
+
+    <tbody>
+    <tr ng-repeat="participant in $ctrl.participants" id="{{ ::participant.id }}" ng-if="participant.status === 'PAID'">
+        <td>
+            {{participant.adNumber}}
+        </td>
+        <td>
+            {{participant.stamnumber}}
+        </td>
+        <td>
+            {{participant.firstName}} {{participant.lastName}}
+        </td>
+        <td>
+            {{participant.email}}
+        </td>
+    </tr>
+    </tbody>
+</table>

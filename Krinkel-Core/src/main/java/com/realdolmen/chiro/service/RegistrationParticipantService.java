@@ -1,6 +1,7 @@
 package com.realdolmen.chiro.service;
 
 import com.realdolmen.chiro.domain.*;
+import com.realdolmen.chiro.exception.DuplicateEntryException;
 import com.realdolmen.chiro.exception.NoParticipantFoundException;
 import com.realdolmen.chiro.mspservice.MultiSafePayService;
 import com.realdolmen.chiro.repository.RegistrationCommunicationRepository;
@@ -36,6 +37,12 @@ public class RegistrationParticipantService {
 
     @Autowired
     private MultiSafePayService multiSafePayService;
+
+    @Autowired
+    private EmailSenderServiceImpl emailSenderServiceImpl;
+
+    @Autowired
+    private ConfirmationLinkService confirmationLinkService;
 
     @PreAuthorize("@RegistrationParticipantServiceSecurity.hasPermissionToSaveParticipant(#participant)")
     public RegistrationParticipant save(RegistrationParticipant participant) {
@@ -100,16 +107,33 @@ public class RegistrationParticipantService {
         }
     }
 
-
     public void createRegistrationCommunication(RegistrationParticipant participant) {
-        RegistrationCommunication registrationCommunication = new RegistrationCommunication();
-        registrationCommunication.setStatus(SendStatus.WAITING);
-        registrationCommunication.setCommunicationAttempt(0);
-        registrationCommunication.setAdNumber(participant.getAdNumber());
-        if (registrationCommunicationRepository.findByAdNumber(participant.getAdNumber()) == null) {
-            logger.info("registering communication to participant/volunteer with ad-number: "
+        this.createRegistrationCommunication(participant, false);
+    }
+
+    public void createRegistrationCommunication(RegistrationParticipant participant, boolean update) {
+        RegistrationCommunication communication = registrationCommunicationRepository.findByAdNumber(participant.getAdNumber());
+        if (communication == null) {
+            String info = "";
+            RegistrationCommunication registrationCommunication = new RegistrationCommunication();
+            if(update) {
+                registrationCommunication.setStatus(SendStatus.SENDUPDATE);
+                info = "updating ";
+            } else {
+                registrationCommunication.setStatus(SendStatus.WAITING);
+            }
+            registrationCommunication.setCommunicationAttempt(0);
+            registrationCommunication.setAdNumber(participant.getAdNumber());
+
+            logger.info(info + "registering communication to participant/volunteer with ad-number: "
                     + participant.getAdNumber() + " with status: " + registrationCommunication.getStatus());
             registrationCommunicationRepository.save(registrationCommunication);
+        } else if (update) {
+            communication.setStatus(SendStatus.SENDUPDATE);
+            communication.setCommunicationAttempt(0);
+            logger.info("updating registering communication to participant/volunteer with ad-number: "
+                    + participant.getAdNumber() + " with status: " + communication.getStatus());
+            registrationCommunicationRepository.save(communication);
         }
     }
 
@@ -206,11 +230,13 @@ public class RegistrationParticipantService {
         participant.updateLastChange();
         if (Status.valueOf(paymentStatus) == Status.TO_BE_PAID) {
             participant.setStatus(Status.TO_BE_PAID);
+            createRegistrationCommunication(participant, true);
         } else if (Status.valueOf(paymentStatus) == Status.PAID) {
-            //see if we can replace this with a call to markAsPayed, in order to also set the flag to send a mail.
             participant.setStatus(Status.PAID);
+            createRegistrationCommunication(participant, true);
         } else if (Status.valueOf(paymentStatus) == Status.CONFIRMED) {
             participant.setStatus(Status.CONFIRMED);
+            createRegistrationCommunication(participant, true);
         }
         return registrationParticipantRepository.save(participant);
     }
@@ -236,10 +262,46 @@ public class RegistrationParticipantService {
         System.out.println("Checking number for AD: "+ participant.getAdNumber());
         System.out.println("verbond = " + verbond);
         //TODO: check if stam number is part of list of national => change stamNumber to "NAT" or "INT" if "5DI"
-        if(verbond == Verbond.OTHERS && !participant.getStamnumber().equals("OTHERS")) {
+        if(verbond == Verbond.NATIONAAL && !participant.getStamnumber().equals("NAT")){
+            System.out.println("Verbond NATIONAAL, changing to NAT...");
+            participant.setOriginalStamNumber(participant.getStamnumber());
+            participant.setStamnumber(Verbond.NATIONAAL.getStam());
+        } else if (verbond == Verbond.INTERNATIONAAL && !participant.getStamnumber().equals("INT")) {
+            System.out.println("Verbond INTERNATIONAAL, changing to INT...");
+            participant.setOriginalStamNumber(participant.getStamnumber());
+            participant.setStamnumber(Verbond.INTERNATIONAAL.getStam());
+        }else if(verbond == Verbond.OTHERS && !participant.getStamnumber().equals("OTHERS")) {
             System.out.println("Verbond unknown, changing to others...");
             participant.setOriginalStamNumber(participant.getStamnumber());
             participant.setStamnumber(Verbond.OTHERS.getStam());
         }
+    }
+
+    public Boolean resendConfirmationEmails(List<String> adNumbers){
+        List<RegistrationParticipant> participants = new ArrayList<RegistrationParticipant>();
+        for (String adnr :adNumbers){
+            RegistrationParticipant participant = registrationParticipantRepository.findByAdNumber(adnr);
+            ConfirmationLink confirmationLink = confirmationLinkService.findByAdNumber(adnr);
+
+            // If it doens't exist yet => make one
+            if(confirmationLink == null){
+                try {
+                    confirmationLink = confirmationLinkService.createConfirmationLink(adnr);
+                } catch (DuplicateEntryException e) {
+                    System.err.println("duplicate confirmation link"); // SHOULD NEVER HAPPEN SINCE WE'RE CHECKING
+                }
+            }
+
+            // Send the email
+            emailSenderServiceImpl.resendMail(participant, confirmationLink);
+
+        }
+
+
+        return true;
+    }
+
+    public List<RegistrationParticipant> findAll() {
+        return registrationParticipantRepository.findAll();
     }
 }

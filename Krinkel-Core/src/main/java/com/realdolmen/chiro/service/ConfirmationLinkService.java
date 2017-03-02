@@ -86,4 +86,8 @@ public class ConfirmationLinkService {
 							.build();
 		return uriComponents.toUriString();
     }
+
+    public ConfirmationLink findByAdNumber(String adnr) {
+        return confirmationLinkRepository.findByAdNumber(adnr);
+    }
 }

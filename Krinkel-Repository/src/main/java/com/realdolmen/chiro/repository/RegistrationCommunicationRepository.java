@@ -15,4 +15,7 @@ public interface RegistrationCommunicationRepository extends JpaRepository<Regis
 
     @Query(value = "SELECT r FROM RegistrationCommunication r WHERE r.status IN (com.realdolmen.chiro.domain.SendStatus.WAITING, com.realdolmen.chiro.domain.SendStatus.FAILED)")
     List<RegistrationCommunication> findAllWaitingAndFailed();
+
+    @Query(value = "SELECT r FROM RegistrationCommunication r WHERE r.status IN (com.realdolmen.chiro.domain.SendStatus.SENDUPDATE)")
+    List<RegistrationCommunication> findAllSendUpdate();
 }

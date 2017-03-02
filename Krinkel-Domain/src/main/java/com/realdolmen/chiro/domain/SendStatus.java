@@ -1,5 +1,5 @@
 package com.realdolmen.chiro.domain;
 
 public enum SendStatus {
-    SENT, FAILED, WAITING, CANCELLED
+    SENT, FAILED, WAITING, CANCELLED, SENDUPDATE
 }

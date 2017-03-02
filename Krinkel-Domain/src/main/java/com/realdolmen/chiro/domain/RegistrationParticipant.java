@@ -156,7 +156,8 @@ public class RegistrationParticipant {
     }
 
     public boolean isRegisteredByOther() {
-        return !this.getAdNumber().equals(this.registeredBy);
+        return this.getEmailSubscriber() != null && !this.getEmailSubscriber().equals("");
+//        return !this.getAdNumber().equals(this.registeredBy);
     }
 
     public String getFirstName() {
