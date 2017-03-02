@@ -152,6 +152,7 @@ public class RegistrationParticipantController {
         //Integer price = registrationParticipantService.getPRICE_IN_EUROCENTS();
         //String paymentUrl = multiSafePayService.getParticipantPaymentUri(resultingParticipant, price, currentUser);
         //admin moet niet betalen dus payment status op betaald zetten
+        participant.setEmailSubscriber(userService.getCurrentUser().getEmail());
         registrationParticipantService.markAsPayed(participant);
 
         HttpHeaders headers = new HttpHeaders();

@@ -6,7 +6,7 @@
 <div style="font-size: 20px; text-align: center; padding-top: 20px;" ng-if="$ctrl.dataIsLoaded === false">De gegevens worden opgehaald</div>
 
 <div ng-if="$ctrl.dataIsLoaded">
-    <a class="btn right" ng-click="$ctrl.resendConfirmationEmails()">
+    <a class="btn right" ng-click="$ctrl.resendConfirmationEmails()" ng-disabled="$ctrl.nrOfParticipantsPaid === 0">
         Verstuur mail met bevestigingslink naar {{$ctrl.nrOfParticipantsPaid}} deelnemer(s)
     </a>
 
