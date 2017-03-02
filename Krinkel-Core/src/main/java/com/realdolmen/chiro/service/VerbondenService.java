@@ -92,7 +92,7 @@ public class VerbondenService {
         for (ChiroUnit gewest : gewesten) {
             // if internationaal => enkel buddy = true tellen anders enkel buddy = false tellen
 
-            System.out.println(gewest.getName());
+//            System.out.println(gewest.getName());
             boolean internationaal = checkForInternational(gewest.getStamNummer());
 
             if(internationaal) {

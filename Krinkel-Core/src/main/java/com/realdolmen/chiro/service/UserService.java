@@ -177,7 +177,7 @@ public class UserService {
         ChiroGroepGewestVerbond chiroUnitByGroepStamNummer = chiroUnitRepository.getChiroUnitByGroepStamNummer(stamNumberTrimmer.untrim(groepstamnummer));
 //        System.err.println("From userservice getChiroUnitByGroepStamNummer("+groepstamnummer+")");
         if(chiroUnitByGroepStamNummer == null){
-            System.err.println("Couldn't find it!!!!");
+            System.err.println("Could not find chirounit for  "+ groepstamnummer);
             return new ChiroGroepGewestVerbond();
         }
 //        System.err.println(chiroUnitByGroepStamNummer.toString());

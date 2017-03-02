@@ -83,7 +83,7 @@ public interface ChiroUnitRepository extends JpaRepository<RawChiroUnit, String>
     //TODO: countParticipantsByVerbond etc op enkel status doen en buddy = true etc...
 
     @Query("SELECT COUNT(p) FROM RegistrationParticipant p " +
-            "WHERE p.status = ?1 AND p.buddy = true")
+            "WHERE p.status = ?1 AND (p.buddy = true OR p.stamnumber = 'INT')")
     int countParticipantsInternationaal(Status status);
 
     /**
@@ -192,7 +192,7 @@ public interface ChiroUnitRepository extends JpaRepository<RawChiroUnit, String>
     List<RegistrationVolunteer> returnVolunteersByCampGround(CampGround camgroundByName);
 
     @Query("SELECT p FROM RegistrationParticipant p " +
-            "WHERE p.buddy = true")
+            "WHERE p.buddy = true OR p.stamnumber = 'INT'")
     List<RegistrationParticipant> returnParticipantsInternationaal();
 
     @Query("SELECT DISTINCT c.verbondStamNummer FROM RawChiroUnit c " +

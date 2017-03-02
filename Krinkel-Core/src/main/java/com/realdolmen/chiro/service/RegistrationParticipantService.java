@@ -1,7 +1,6 @@
 package com.realdolmen.chiro.service;
 
 import com.realdolmen.chiro.domain.*;
-import com.realdolmen.chiro.exception.DuplicateEntryException;
 import com.realdolmen.chiro.exception.NoParticipantFoundException;
 import com.realdolmen.chiro.mspservice.MultiSafePayService;
 import com.realdolmen.chiro.repository.RegistrationCommunicationRepository;
@@ -261,7 +260,7 @@ public class RegistrationParticipantService {
         Verbond verbond = Verbond.getVerbondFromStamNumber(participant.getStamnumber());
         System.out.println("Checking number for AD: "+ participant.getAdNumber());
         System.out.println("verbond = " + verbond);
-        //TODO: check if stam number is part of list of national => change stamNumber to "NAT" or "INT" if "5DI"
+        //Check if stam number is part of list of national => change stamNumber to "NAT" or "INT" if "5DI"
         if(verbond == Verbond.NATIONAAL && !participant.getStamnumber().equals("NAT")){
             System.out.println("Verbond NATIONAAL, changing to NAT...");
             participant.setOriginalStamNumber(participant.getStamnumber());
@@ -271,7 +270,7 @@ public class RegistrationParticipantService {
             participant.setOriginalStamNumber(participant.getStamnumber());
             participant.setStamnumber(Verbond.INTERNATIONAAL.getStam());
         }else if(verbond == Verbond.OTHERS && !participant.getStamnumber().equals("OTHERS")) {
-            System.out.println("Verbond unknown, changing to others...");
+            System.out.println("Verbond unknown, changing to OTHERS...");
             participant.setOriginalStamNumber(participant.getStamnumber());
             participant.setStamnumber(Verbond.OTHERS.getStam());
         }
@@ -281,22 +280,12 @@ public class RegistrationParticipantService {
         List<RegistrationParticipant> participants = new ArrayList<RegistrationParticipant>();
         for (String adnr :adNumbers){
             RegistrationParticipant participant = registrationParticipantRepository.findByAdNumber(adnr);
-            ConfirmationLink confirmationLink = confirmationLinkService.findByAdNumber(adnr);
 
-            // If it doens't exist yet => make one
-            if(confirmationLink == null){
-                try {
-                    confirmationLink = confirmationLinkService.createConfirmationLink(adnr);
-                } catch (DuplicateEntryException e) {
-                    System.err.println("duplicate confirmation link"); // SHOULD NEVER HAPPEN SINCE WE'RE CHECKING
-                }
-            }
+            // Update the status of their
+            System.err.println("UPDATING TO RESEND CONFIRMATIONEMAIL for " + adnr + " " + participant.getFirstName() + " " + participant.getLastName());
 
-            // Send the email
-            emailSenderServiceImpl.resendMail(participant, confirmationLink);
-
+            createRegistrationCommunication(participant, true);
         }
-
 
         return true;
     }

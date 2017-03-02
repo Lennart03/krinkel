@@ -13,151 +13,156 @@
         cursor: pointer;
     }
     .bevestigd{
-        color : green;
+        color : #4caf50;
     }
     .betaald{
-        color : blue;
+        color : #2196f3;
     }
     .onbetaald{
-        color : red;
+        color : #f44336;
     }
     .geannuleerd{
-        color : yellow;
+        color : #ffa500;
     }
     .inlineDiv{
         display:inline;
     }
 </style>
 
-<div ng-if="$ctrl.AuthService.getUserRole() === 'ADMIN'">
-    <span class="bevestigd">Bevestigd</span> - <span class="betaald">Betaald</span> - <span class="onbetaald">Onbetaald</span> - <span class="geannuleerd">Geannuleerd</span>
-</div>
-
-<a class="btn right" ng-click="$ctrl.switchShowParticipantsVolunteers()" ng-if="$ctrl.canSeeMedewerkers && !$ctrl.showVolunteers">
-    Medewerkers ({{$ctrl.volunteersLength}})
-</a>
-
-<a class="btn right" ng-click="$ctrl.switchShowParticipantsVolunteers()" ng-if="$ctrl.canSeeMedewerkers && $ctrl.showVolunteers">
-    Overzicht gewesten
-</a>
-
-<!--show nr of volunteers if nationaal-->
-<a class="btn right" disabled ng-if="$ctrl.canSeeMedewerkers === false && $ctrl.checkForNationaalToSeeNrOfMedewerkers();">
-    Aantal medewerkers: {{$ctrl.volunteersLength}}
-</a>
+<spinner loading="$ctrl.gettingData"></spinner>
+<div style="font-size: 20px; text-align: center; padding-top: 20px;" ng-if="$ctrl.gettingData">De gegevens worden opgehaald</div>
 
 
-<table ng-if="!$ctrl.showVolunteers">
-    <thead>
-    <tr>
-        <th ng-if="true || $ctrl.AuthService.getUserRole() === 'ADMIN'" data-field="stamNummer">Stam nummer</th>
-        <th data-field="naam">Naam</th>
-        <th ng-if="$ctrl.canSeeDeelnemersAantallen" data-field="amountParticipants">Aantal deelnemers</th>
-        <!--<th data-field="amountVolunteers" ng-if="$ctrl.AuthService.getUserRole() === 'ADMIN'">Aantal medewerkers</th>-->
-        <th data-field="iconSend"></th>
-    </tr>
-    </thead>
-
-    <tbody>
-    <tr ng-repeat="gewest in $ctrl.gewesten" ng-click="$ctrl.redirectToGroepen(gewest.stamnummer, gewest.name)">
-        <td ng-if="$ctrl.AuthService.getUserRole() === 'ADMIN'">
-            {{gewest.stamnummer}}
-        </td>
-        <td>
-            {{gewest.name}}
-        </td>
-        <td ng-if="$ctrl.canSeeDeelnemersAantallen">
-            <div class="inlineDiv" ng-if="$ctrl.checkCanSeeAantallen2(gewest.stamnummer) && $ctrl.AuthService.getUserRole() !== 'ADMIN'">
-                {{gewest.aantal_ingeschreven_deelnemers_bevestigd}}
-            </div>
-            <div class="inlineDiv" ng-if="$ctrl.checkCanSeeAantallen2(gewest.stamnummer) === false">
-                x (no rights)
-            </div>
-            <div class="inlineDiv" ng-if="$ctrl.AuthService.getUserRole() === 'ADMIN'">
-                <span class="bevestigd">{{gewest.aantal_ingeschreven_deelnemers_bevestigd}}</span> - <span class="betaald">{{gewest.aantal_ingeschreven_deelnemers_betaald}}</span> - <span class="onbetaald">{{gewest.aantal_ingeschreven_deelnemers_onbetaald}}</span> - <span class="geannuleerd">{{gewest.aantal_ingeschreven_deelnemers_geannuleerd}}</span>
-            </div>
-
-        </td>
-        <!--<td ng-if="$ctrl.AuthService.getUserRole() === 'ADMIN'">-->
-            <!--{{gewest.aantal_ingeschreven_vrijwilligers}}-->
-            <!--<i class="material-icons right icon-green">send</i>-->
-        <!--</td>-->
-        <td>
-            <i class="material-icons right icon-green">send</i>
-        </td>
-    </tr>
-    </tbody>
-</table>
-
-<h2 ng-if="$ctrl.showVolunteers && $ctrl.AuthService.getUserRole() === 'ADMIN'">Medewerkers</h2>
-<table class="responsive-table" ng-if="$ctrl.showVolunteers && $ctrl.AuthService.getUserRole() === 'ADMIN'">
-    <thead>
-    <tr>
-        <th data-field="name">Naam</th>
-        <th data-field="address">Adres</th>
-        <th data-field="city">Gemeente</th>
-        <th ng-if="$ctrl.AuthService.getUserRole() === 'ADMIN'" data-field="eatinghabit">Eetgewoonte</th>
-        <th ng-if="$ctrl.AuthService.getUserRole() === 'ADMIN'" data-field="medicalRemarks">Medische info</th>
-        <th data-field="function">Functie</th>
-        <th data-field="campground">Kampgrond</th>
-        <th data-field="voorwacht">Voorwacht</th>
-        <th data-field="nawacht">Nawacht</th>
-        <th ng-if="$ctrl.AuthService.getUserRole() === 'ADMIN'" style="min-width: 110px;">Status</th>
-        <th ng-if="$ctrl.AuthService.getUserRole() === 'ADMIN'"><i class="material-icons right icon-green">delete</i></th>
-    </tr>
-    </thead>
-    <tbody>
-    <!-- admin can see everyone but cancelled, international can see everyone who is confirmed-->
-    <tr ng-repeat="volunteer in $ctrl.volunteers" id="{{ volunteer.id }}"
-            ng-if="(volunteer.status === 'CONFIRMED' && $ctrl.AuthService.getUserRole() !== 'ADMIN') || (volunteer.status !== 'CANCELLED' && $ctrl.AuthService.getUserRole() === 'ADMIN')">
-        <td>
-            {{volunteer.firstName}} {{volunteer.lastName}}
-        </td>
-        <td ng-if="$ctrl.AuthService.getUserRole() === 'ADMIN'">
-            {{volunteer.address.street}}
-        </td>
-        <td ng-if="$ctrl.AuthService.getUserRole() === 'ADMIN'">
-            {{volunteer.address.city}}
-        </td>
-        <td ng-if="$ctrl.AuthService.getUserRole() === 'ADMIN'">
-            {{volunteer.eatinghabbit}}
-        </td>
-        <td ng-if="$ctrl.AuthService.getUserRole() === 'ADMIN'">
-            {{volunteer.medicalRemarks}}
-        </td>
-        <td ng-if="$ctrl.AuthService.getUserRole() === 'ADMIN'">
-            {{volunteer.function.preset}}
-        </td>
-        <td ng-if="$ctrl.AuthService.getUserRole() === 'ADMIN'">
-            {{volunteer.campGround}}
-        </td>
-        <td ng-if="$ctrl.AuthService.getUserRole() === 'ADMIN'">
-            {{$ctrl.getDatesListFromList(volunteer.preCampList)}}
-        </td>
-        <td ng-if="$ctrl.AuthService.getUserRole() === 'ADMIN'">
-            {{$ctrl.getDatesListFromList(volunteer.postCampList)}}
-        </td>
-        <td ng-if="$ctrl.AuthService.getUserRole() === 'ADMIN'" style="min-width: 110px;">
-            <select ng-model="volunteer.status" ng-init="volunteer.status" ng-options="item.value as item.label for item in $ctrl.statusses"  ng-change="$ctrl.saveData(volunteer.id, volunteer.status)">
-            </select>
-        </td>
-        <td ng-if="$ctrl.AuthService.getUserRole() === 'ADMIN'">
-            <a ng-click="$ctrl.initCancelModal(volunteer.id)">
-                <i class="material-icons right icon-green">clear</i>
-            </a>
-        </td>
-    </tr>
-    </tbody>
-</table>
-
-<!-- Modal Structure -->
-<div id="{{ ::'modal' + volunteer.id }}"ng-if="$ctrl.showVolunteers" ng-repeat="volunteer in $ctrl.volunteers track by $index" class="modal">
-    <div class="modal-content">
-        <h4>Bent u zeker dat u de inschrijving van {{volunteer.firstName}} {{volunteer.lastName}} wilt annuleren?</h4>
+<div id="tableGewesten" style="display: none">
+    <div ng-if="$ctrl.AuthService.getUserRole() === 'ADMIN'">
+        <span class="bevestigd">Bevestigd</span> - <span class="betaald">Betaald</span> - <span class="onbetaald">Onbetaald</span> - <span class="geannuleerd">Geannuleerd</span>
     </div>
-    <div class="modal-footer">
-        <a href="" class=" modal-action modal-close btn-flat"
-           ng-click="$ctrl.putParticipantToCancelled(volunteer.id)">OK</a>
-        <a href="" class="modal-action modal-close  btn-flat">Annuleren</a>
+
+    <a class="btn right" ng-click="$ctrl.switchShowParticipantsVolunteers()" ng-if="$ctrl.canSeeMedewerkers && !$ctrl.showVolunteers">
+        Medewerkers ({{$ctrl.volunteersLength}})
+    </a>
+
+    <a class="btn right" ng-click="$ctrl.switchShowParticipantsVolunteers()" ng-if="$ctrl.canSeeMedewerkers && $ctrl.showVolunteers">
+        Overzicht gewesten
+    </a>
+
+    <!--show nr of volunteers if nationaal-->
+    <a class="btn right" disabled ng-if="$ctrl.canSeeMedewerkers === false && $ctrl.checkForNationaalToSeeNrOfMedewerkers();">
+        Aantal medewerkers: {{$ctrl.volunteersLength}}
+    </a>
+
+    <table ng-if="!$ctrl.showVolunteers">
+        <thead>
+        <tr>
+            <th ng-if="true || $ctrl.AuthService.getUserRole() === 'ADMIN'" data-field="stamNummer">Stam nummer</th>
+            <th data-field="naam">Naam</th>
+            <th ng-if="$ctrl.canSeeDeelnemersAantallen" data-field="amountParticipants">Aantal deelnemers</th>
+            <!--<th data-field="amountVolunteers" ng-if="$ctrl.AuthService.getUserRole() === 'ADMIN'">Aantal medewerkers</th>-->
+            <th data-field="iconSend"></th>
+        </tr>
+        </thead>
+
+        <tbody>
+        <tr ng-repeat="gewest in $ctrl.gewesten" ng-click="$ctrl.redirectToGroepen(gewest.stamnummer, gewest.name)">
+            <td ng-if="true || $ctrl.AuthService.getUserRole() === 'ADMIN'">
+                {{gewest.stamnummer}}
+            </td>
+            <td>
+                {{gewest.name}}
+            </td>
+            <td ng-if="$ctrl.canSeeDeelnemersAantallen">
+                <div class="inlineDiv" ng-if="$ctrl.checkCanSeeAantallen2(gewest.stamnummer) && $ctrl.AuthService.getUserRole() !== 'ADMIN'">
+                    {{gewest.aantal_ingeschreven_deelnemers_bevestigd}}
+                </div>
+                <div class="inlineDiv" ng-if="$ctrl.checkCanSeeAantallen2(gewest.stamnummer) === false">
+                    x (no rights)
+                </div>
+                <div class="inlineDiv" ng-if="$ctrl.AuthService.getUserRole() === 'ADMIN'">
+                    <span class="bevestigd">{{gewest.aantal_ingeschreven_deelnemers_bevestigd}}</span> - <span class="betaald">{{gewest.aantal_ingeschreven_deelnemers_betaald}}</span> - <span class="onbetaald">{{gewest.aantal_ingeschreven_deelnemers_onbetaald}}</span> - <span class="geannuleerd">{{gewest.aantal_ingeschreven_deelnemers_geannuleerd}}</span>
+                </div>
+
+            </td>
+            <!--<td ng-if="$ctrl.AuthService.getUserRole() === 'ADMIN'">-->
+                <!--{{gewest.aantal_ingeschreven_vrijwilligers}}-->
+                <!--<i class="material-icons right icon-green">send</i>-->
+            <!--</td>-->
+            <td ng-if="$ctrl.checkForLastGewest(gewest.stamnummer)">
+                <i class="material-icons right icon-green">send</i>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+    <h2 ng-if="$ctrl.showVolunteers">Medewerkers</h2>
+    <table class="responsive-table" ng-if="$ctrl.showVolunteers">
+        <thead>
+        <tr>
+            <th data-field="name">Naam</th>
+            <th data-field="address">Adres</th>
+            <th data-field="city">Gemeente</th>
+            <th ng-if="$ctrl.AuthService.getUserRole() === 'ADMIN'" data-field="eatinghabit">Eetgewoonte</th>
+            <th ng-if="$ctrl.AuthService.getUserRole() === 'ADMIN'" data-field="medicalRemarks">Medische info</th>
+            <th data-field="function">Functie</th>
+            <th data-field="campground">Kampgrond</th>
+            <th data-field="voorwacht">Voorwacht</th>
+            <th data-field="nawacht">Nawacht</th>
+            <th ng-if="$ctrl.AuthService.getUserRole() === 'ADMIN'" style="min-width: 110px;">Status</th>
+            <th ng-if="$ctrl.AuthService.getUserRole() === 'ADMIN'"><i class="material-icons right icon-green">delete</i></th>
+        </tr>
+        </thead>
+        <tbody>
+        <!-- admin can see everyone but cancelled, international can see everyone who is confirmed-->
+        <tr ng-repeat="volunteer in $ctrl.volunteers" id="{{ volunteer.id }}"
+                ng-if="(volunteer.status === 'CONFIRMED' && $ctrl.AuthService.getUserRole() !== 'ADMIN') || (volunteer.status !== 'CANCELLED' && $ctrl.AuthService.getUserRole() === 'ADMIN')">
+            <td>
+                {{volunteer.firstName}} {{volunteer.lastName}}
+            </td>
+            <td ng-if="$ctrl.AuthService.getUserRole() === 'ADMIN'">
+                {{volunteer.address.street}}
+            </td>
+            <td ng-if="$ctrl.AuthService.getUserRole() === 'ADMIN'">
+                {{volunteer.address.city}}
+            </td>
+            <td ng-if="$ctrl.AuthService.getUserRole() === 'ADMIN'">
+                {{volunteer.eatinghabbit}}
+            </td>
+            <td ng-if="$ctrl.AuthService.getUserRole() === 'ADMIN'">
+                {{volunteer.medicalRemarks}}
+            </td>
+            <td ng-if="$ctrl.AuthService.getUserRole() === 'ADMIN'">
+                {{volunteer.function.preset}}
+            </td>
+            <td ng-if="$ctrl.AuthService.getUserRole() === 'ADMIN'">
+                {{volunteer.campGround}}
+            </td>
+            <td ng-if="$ctrl.AuthService.getUserRole() === 'ADMIN'">
+                {{$ctrl.getDatesListFromList(volunteer.preCampList)}}
+            </td>
+            <td ng-if="$ctrl.AuthService.getUserRole() === 'ADMIN'">
+                {{$ctrl.getDatesListFromList(volunteer.postCampList)}}
+            </td>
+            <td ng-if="$ctrl.AuthService.getUserRole() === 'ADMIN'" style="min-width: 110px;">
+                <select ng-model="volunteer.status" ng-init="volunteer.status" ng-options="item.value as item.label for item in $ctrl.statusses"  ng-change="$ctrl.saveData(volunteer.id, volunteer.status)">
+                </select>
+            </td>
+            <td ng-if="$ctrl.AuthService.getUserRole() === 'ADMIN'">
+                <a ng-click="$ctrl.initCancelModal(volunteer.id)">
+                    <i class="material-icons right icon-green">clear</i>
+                </a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+    <!-- Modal Structure -->
+    <div id="{{ ::'modal' + volunteer.id }}"ng-if="$ctrl.showVolunteers" ng-repeat="volunteer in $ctrl.volunteers track by $index" class="modal">
+        <div class="modal-content">
+            <h4>Bent u zeker dat u de inschrijving van {{volunteer.firstName}} {{volunteer.lastName}} wilt annuleren?</h4>
+        </div>
+        <div class="modal-footer">
+            <a href="" class=" modal-action modal-close btn-flat"
+               ng-click="$ctrl.putParticipantToCancelled(volunteer.id)">OK</a>
+            <a href="" class="modal-action modal-close  btn-flat">Annuleren</a>
+        </div>
     </div>
 </div>

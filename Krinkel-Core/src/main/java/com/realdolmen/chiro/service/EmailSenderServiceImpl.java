@@ -66,11 +66,20 @@ public class EmailSenderServiceImpl implements EmailSenderService {
 
         //Create confirmation URL in case the participant is registered by someone else
         if (participant.isRegisteredByOther() || (update && participant.getStatus().equals(Status.PAID))) {
-            try {
-                ConfirmationLink confirmationLink = confirmationLinkService.createConfirmationLink(participant.getAdNumber());
+
+
+            ConfirmationLink confirmationLink = confirmationLinkService.findByAdNumber(participant.getAdNumber());
+            if(confirmationLink != null){
                 url = confirmationLinkService.generateURLFromConfirmationLink(confirmationLink);
-            } catch (DuplicateEntryException e) {
-                logger.warn("Attempted to make a duplicate confirmation link");
+                logger.info("Confirmation link retrieved: " + url);
+            } else {
+                try {
+                    confirmationLink = confirmationLinkService.createConfirmationLink(participant.getAdNumber());
+                    url = confirmationLinkService.generateURLFromConfirmationLink(confirmationLink);
+                    logger.info("New confirmation link created: " + url);
+                } catch (DuplicateEntryException e) {
+                    logger.warn("Attempted to make a duplicate confirmation link");
+                }
             }
         }
 
@@ -96,7 +105,7 @@ public class EmailSenderServiceImpl implements EmailSenderService {
             mailSender.send(message);
 
             //check for empty string is REQUIRED, empty strings are not null. if this code fails, the user will be spammed because the service keeps trying
-            if (!participant.getAdNumber().equals(participant.getRegisteredBy()) && participant.isRegisteredByOther() && participant.getEmailSubscriber() != null && !participant.getEmailSubscriber().trim().isEmpty()) {
+            if (!update && !participant.getAdNumber().equals(participant.getRegisteredBy()) && participant.isRegisteredByOther() && participant.getEmailSubscriber() != null && !participant.getEmailSubscriber().trim().isEmpty()) {
 
                 ctx.setVariable("isMailToSubscriber", true);
 

@@ -9,7 +9,7 @@ INSERT INTO admins VALUES ('super-admin', 152504, 'blyweert.roel@gmail.com', 'Ro
 INSERT INTO admins VALUES ('super-admin', 109318, 'tom@horre.com', 'Tom', 'Horre');
 
 -- TODO these records need to be removed because these are the Realdolmen developers
-INSERT INTO admins VALUES ('admin',396942, 'jeroen.compagnie@realdolmen.com', 'Jeroen', 'Compagnie');
+INSERT INTO admins VALUES ('super-admin',396942, 'jeroen.compagnie@realdolmen.com', 'Jeroen', 'Compagnie');
 -- Lennart for testing: leider bij chiro dolfijn
 /*
 INSERT INTO admins VALUES ('super-admin' , 396943, 'lennart.vandamme@realdolmen.com', 'Lennart', 'Van Damme');
@@ -50,7 +50,7 @@ INSERT INTO registration_participant (dtype,id,ad_number,city, house_number, pos
 social_promotion, eatinghabbit, email, email_subscriber, first_name, gender, last_name, remarks_food, medical_remarks, remarks,
 event_role, buddy, stamnumber, status, phone_number, camp_ground, other, preset, registered_by, sync_status, last_change)
 VALUES('RegistrationParticipant', '1020', '234567', 'Brussel', '123', '1000', 'Veldstraat', '1995-08-21', false, 'FISHANDMEAT',
-                              'email@test.be', 'email@test.be', 'Kees', 'MAN', 'Flodder', '', '', '', 'ASPI', false, 'BG /0301', 'PAID', 1, '', '', '', '234567','SYNCED', '2017-02-14');
+                              'email@test.be', 'email@test.be', 'Kees', 'MAN', 'Flodder', '', '', '', 'ASPI', false, 'BG /0301', 'CONFIRMED', 1, '', '', '', '234567','SYNCED', '2017-02-14');
 
 INSERT INTO registration_participant (dtype,id,ad_number,city, house_number, postal_code, street, birthdate,
 social_promotion, eatinghabbit, email, email_subscriber, first_name, gender, last_name, remarks_food, medical_remarks, remarks,
@@ -62,13 +62,13 @@ INSERT INTO registration_participant (dtype,id,ad_number,city, house_number, pos
 social_promotion, eatinghabbit, email, email_subscriber, first_name, gender, last_name, remarks_food, medical_remarks, remarks,
 event_role, buddy, stamnumber, status, phone_number, camp_ground, other, preset, registered_by)
 VALUES('RegistrationParticipant', '1040', '456789', 'Brussel', '123', '1000', 'Veldstraat', '1995-08-21', false, 'FISHANDMEAT',
-                              'email@test.be', 'email@test.be', 'Cees', 'WOMAN', 'Flodder', '', '', '', 'ASPI', true, 'LEG/0101', 'PAID', 1, '', '', '',  '456789');
+                              'email@test.be', 'email@test.be', 'Cees', 'WOMAN', 'Flodder', '', '', '', 'ASPI', true, 'LEG/0101', 'CONFIRMED', 1, '', '', '',  '456789');
 
 INSERT INTO registration_participant (dtype,id,ad_number,city, house_number, postal_code, street, birthdate,
 social_promotion, eatinghabbit, email, email_subscriber, first_name, gender, last_name, remarks_food, medical_remarks, remarks,
 event_role, buddy, stamnumber, status, phone_number, camp_ground, other, preset, registered_by)
 VALUES('RegistrationParticipant', '1050', '987654', 'Brussel', '123', '1000', 'Veldstraat', '1995-08-21', false, 'FISHANDMEAT',
-                              'email@test.be', 'email@test.be', 'Frederik', 'MAN', 'Flodder', '', '', '', 'ASPI', true, 'AG /0202', 'CONFIRMED', 1, '', '', '', '987654');
+                              'email@test.be', 'email@test.be', 'Frederik', 'MAN', 'Flodder', '', '', '', 'ASPI', false, 'INT', 'CONFIRMED', 1, '', '', '', '987654');
 
 INSERT INTO registration_participant (dtype,id,ad_number,city, house_number, postal_code, street, birthdate,
 social_promotion, eatinghabbit, email, email_subscriber, first_name, gender, last_name, remarks_food, medical_remarks, remarks,
@@ -90,8 +90,8 @@ INSERT INTO registration_participant (dtype,id,ad_number,city, house_number, pos
 social_promotion, eatinghabbit, email, email_subscriber, first_name, gender, last_name, remarks_food, medical_remarks, remarks,
 event_role, buddy, stamnumber, status, sync_status, phone_number, camp_ground, other, preset, registered_by, last_change)
 VALUES('RegistrationVolunteer', '80', '203872', 'Hasselt', '123', '1000', 'Veldstraat', '1995-08-21', false, 'FISHANDMEAT',
-                              'email@test.be', 'email@test.be', 'Jos', 'MAN', 'Flodder', '', '', '', 'VOLUNTEER', false,
-                              'BM /0202', 'CONFIRMED', 'SYNCED', 1, 'KEMPEN', '', 'CAMPGROUND', '876543', '2016-12-13');
+                              'jeroen.compagnie@realdolmen.com', 'email@test.be', 'Jos', 'MAN', 'Flodder', '', '', '', 'VOLUNTEER', false,
+                              'BM /0202', 'PAID', 'SYNCED', 1, 'KEMPEN', '', 'CAMPGROUND', '876543', '2016-12-13');
 
 
 
