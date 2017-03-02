@@ -15,12 +15,12 @@
     <form name="graphForm">
         <input type="date" class="datepicker" id="startDate" name="startDate" ng-model="$ctrl.startDate" class="validate" ng-pattern="$ctrl.datePattern" required>
         <p ng-show="graphForm.startDate.$invalid" class="error"><i
-            class="material-icons">error_outline</i> Geef een datum in in het correcte formaat (MM-DD-YYYY)
+            class="material-icons">error_outline</i> Geef een datum in in het correcte formaat (MM/DD/YYYY)
         </p>
         <label for="endDate">End Date:</label>
         <input type="date" class="datepicker" id="endDate" name="endDate" ng-model="$ctrl.endDate" class="validate" ng-pattern="$ctrl.datePattern" required>
         <p ng-show="(graphForm.endDate.$invalid)" class="error"><i
-            class="material-icons">error_outline</i> Geef een datum in in het correcte formaat (MM-DD-YYYY)
+            class="material-icons">error_outline</i> Geef een datum in in het correcte formaat (MM/DD/YYYY)
         </p>
         <input type="button" value="Herteken" ng-click="graphForm.$valid && $ctrl.changeDate()">
     </form>

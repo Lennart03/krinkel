@@ -65,6 +65,23 @@ public interface RegistrationParticipantRepository extends JpaRepository<Registr
             + "r.status = 'CONFIRMED'")
     List<RegistrationParticipant> findAllParticipantsNoBuddy();
 
+    @Query("SELECT a FROM RegistrationParticipant a, RawChiroUnit b " +
+            "where a.stamnumber=b.groepStamNummer " +
+            "and b.verbondNaam= :verbondNaam")
+    List<RegistrationParticipant> findAllParticipantsWithVerbondName(@Param("verbondNaam") String verbondNaam);
+
+    @Query("SELECT a FROM RegistrationParticipant a, RawChiroUnit b " +
+            "where a.stamnumber=b.groepStamNummer " +
+            "and b.gewestNaam= :gewestNaam")
+    List<RegistrationParticipant> findAllParticipantsWithGewestName(@Param("gewestNaam") String gewestNaam);
+
+    @Query("SELECT a FROM RegistrationParticipant  a, RawChiroUnit b " +
+            "where a.stamnumber=b.groepStamNummer " +
+            "and b.groepNaam= :groepNaam")
+    List<RegistrationParticipant> findAllParticipantsWithGroepName(@Param("groepNaam") String groepNaam);
+
+
+
     @Query(value = "SELECT r.status FROM  RegistrationParticipant r WHERE r.adNumber = :adNumber")
     Status getPaymentStatusByadNumber(@Param("adNumber") String adNumber);
 
