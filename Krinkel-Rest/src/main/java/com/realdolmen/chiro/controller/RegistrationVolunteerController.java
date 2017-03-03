@@ -128,6 +128,7 @@ public class RegistrationVolunteerController {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
 
+        volunteer.setEmailSubscriber(userService.getCurrentUser().getEmail());
         registrationVolunteerService.markAsPayed(volunteer);
 
         HttpHeaders headers = new HttpHeaders();

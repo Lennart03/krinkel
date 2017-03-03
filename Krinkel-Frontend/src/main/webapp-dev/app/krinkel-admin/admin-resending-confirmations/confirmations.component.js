@@ -31,6 +31,10 @@ class ConfirmationsController {
     }
 
     resendConfirmationEmails(){
+        if(this.nrOfParticipantsPaid === 0){
+            return;
+        }
+
         var self = this;
         var participantsPAID = [];
         this.participants.forEach((p) => {
