@@ -4,11 +4,27 @@ class KrinkelGraphController {
         var month = $filter('date')(Date.now(), "MM");
         var year = $filter('date')(Date.now(), "yyyy");
         var day = $filter('date')(Date.now(), "dd");
-        this.datePattern = /./;
         this.startDate = new Date(year,month,day);
-        month = month-1;
+        month = month - 1;
         this.endDate = new Date(year,month,day);
         this.startDate = new Date(year,month-1,day);
+        year = year +50;
+        this.maxDate = new Date(year,1,1);
+       /* $('#startDate').pickadate({
+            format: 'dd-mm-yyyy',
+            formatSumbit: 'dd-mm-yyyy',
+            selectMonths: true, // Creates a dropdown to control month
+            selectYears: 15 // Creates a dropdown of 15 years to control year
+        });
+        $('#endDate').pickadate({
+            format: 'dd-mm-yyyy',
+            formatSumbit: 'dd-mm-yyyy',
+            selectMonths: true, // Creates a dropdown to control month
+            selectYears: 15 // Creates a dropdown of 15 years to control year
+        });*/
+        /*
+        //this.datePattern = /./;
+        */
         this.KrinkelService = KrinkelService;
         this.selectedName = null;
         this.depth = 0;
@@ -25,14 +41,6 @@ class KrinkelGraphController {
         this.getDataForLogin(this.startDate,this.endDate);
         //console.log("done with getDataForLogin");
         this.$onInit();
-        /*
-        chart.sunburst.dispatch.on("elementClick", function(e) {
-            console.log("first log " +e);
-        });
-
-        this.sunBurstOptions.dispatch.on("elementClick", function(e) {
-            console.log("second log " +e);
-        });*/
     }
 
     getDataForSunBurst() {
@@ -97,8 +105,6 @@ class KrinkelGraphController {
             ];
         });
     }
-
-
 
         getDataForLogin(startDate,endDate) {
             //console.log("in getDataForLogin");
