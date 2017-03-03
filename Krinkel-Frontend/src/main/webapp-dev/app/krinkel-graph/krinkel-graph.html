@@ -27,7 +27,7 @@
 
         <label for="startDate">Start Date:</label>
         <input type="date" id="startDate" name="startDate" ng-model="$ctrl.startDate"
-               placeholder="dd-MM-yyyy" max="2100-01-01" min="1980-01-01" required />
+               placeholder="dd-MM-yyyy" max="2100-12-31" min="1980-01-01" required />
         <br/>
         <span class="error" ng-show="graphForm.startDate.$error.required">
          Start datum moet ingevuld zijn</span>
@@ -37,7 +37,7 @@
 
         <label for="endDate">End Date:</label>
         <input type="date" id="endDate" name="endDate" ng-model="$ctrl.endDate"
-               placeholder="yyyy-MM-dd" max="2100-01-01" min="1980-01-01" required />
+               placeholder="yyyy-MM-dd" max="2100-12-31" min="1980-01-01" required />
         <br/>
         <span class="error" ng-show="graphForm.endDate.$error.required">
          Eind datum moet ingevuld zijn</span>
