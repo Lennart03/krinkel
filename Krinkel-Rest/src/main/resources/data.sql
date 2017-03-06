@@ -3671,6 +3671,31 @@ INSERT INTO post_camp VALUES (60, '2017-08-31') ON DUPLICATE KEY UPDATE id = 60;
 INSERT INTO post_camp VALUES (70, '2017-09-01') ON DUPLICATE KEY UPDATE id = 70;
 INSERT INTO post_camp VALUES (80, '2017-09-02') ON DUPLICATE KEY UPDATE id = 80;
 
+
+update krinkel.groepen
+set groep_naam = concat(groep_naam, ' Gemengd')
+where groep_stam_nummer in ('KG /0409','LEG/0222','LEG/0221','LG /0615','MG /0509','MG /0503','OG /3125');
+
+update krinkel.groepen
+set groep_naam = concat(groep_naam, ' Jongens')
+where groep_stam_nummer in ('BJ /0202','BJ /0206','BJ /0502','BJ /0505',
+'BJ /0515','BJ /0705','BJ /0707','KJ /0412',
+'KJ /0109','KJ /0111','KJ /0302','KJ /0310','KJ /0410','KJ /0503','KJ /0601','KJ /0602',
+'KJ /0606','LEJ/0216','LEJ/0220','LJ /0609',
+'LJ /0606','LJ /0906',
+'MJ /0302','MJ /0506','MJ /0508','MJ /0701','MJ /0805','MJ /0806',
+'MJ /0808','MJ /0814','OJ /1201','OJ /1202',
+'OJ /2110','OJ /2406','OJ /3302','OJ /3509',
+'WJ /0506','WJ /1101','WJ /1202','WJ /1709','WJ /1803','WJ /1902','WJ /1904','LJ /0604');
+
+update krinkel.groepen
+set groep_naam = concat(groep_naam, ' Meisjes')
+where groep_stam_nummer in ('BM /0202','BM /0206','BM /0502','BM /0505','BM /0515','BM /0705','BM /0707','KM /0109','KM /0111','KM /0302','KM /0310',
+'KM /0410','KM /0601','KM /0602','KM /0606','KM /0503','LEM/0216','LEM/0220','LM /0606','LM /0906','MM /0302','MM /0506',
+'MM /0508','MM /0701','MM /0805','LM /0305','LM /0302','MM /0806','MM /0808','mm /0814','MM /0510','MM /0507','WM /1902',
+'WM /0506','WM /1101','WM /1202','WM /1709','WM /1803','OM /3112','OM /1201','OM /1202','OM /2110','OM /2406','OM /3302',
+'OM /3509','WM /1904','LM /0604');
+
 --todo not sure if actually required
 /*
 INSERT INTO registration_participant_language (registration_participant_id,language)
