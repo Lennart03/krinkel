@@ -7,7 +7,11 @@ class GewestenController {
         this.$location = $location;
         this.$q = $q;
         this.verbondNr = $routeParams.verbondNr;
-        this.verbondNaam = $routeParams.verbondNaam;
+        this.verbondNaam = $routeParams.verbondNaam
+        this.showGewesten = true;
+        if(this.verbondNr === 'NAT' ||this.verbondNr === 'INT' ||this.verbondNr === 'OTHERS'){
+            this.showGewesten = false;
+        }
         this.showVolunteers = false;
         this.initSelectPayStatus();
         //console.log(this.lolo + ' gewesten.component.js says hi! ' + this.verbondNaam);
@@ -48,25 +52,39 @@ class GewestenController {
             console.log('userRoles');
             console.log(self.userRoles);
 
-            self.KrinkelService.getGewestenList(self.verbondNr).then((results) => {
-                //console.log(results);
-                self.gewesten = results;
-                if (self.verbondNr !== 'OTHERS') {
-                    self.filterGewesten();
-                } else {
-                    console.log('Show gewesten of OTHERS')
-                }
-                // console.log('self.gewesten.length ' + self.gewesten.length);
-                if(self.gewesten.length > 0) {
-                    // console.log(' > 0 ');
-                    self.lastGewest = self.gewesten[self.gewesten.length - 1];
-                } else {
-                    self.gettingData = false;
-                }
-            });
+            if(self.showGewesten) {
+                self.KrinkelService.getGewestenList(self.verbondNr).then((results) => {
+                    //console.log(results);
+                    self.gewesten = results;
+                    if (self.verbondNr !== 'OTHERS') {
+                        self.filterGewesten();
+                    } else {
+                        console.log('Show gewesten of OTHERS')
+                    }
+                    // console.log('self.gewesten.length ' + self.gewesten.length);
+                    if (self.gewesten.length > 0) {
+                        // console.log(' > 0 ');
+                        self.lastGewest = self.gewesten[self.gewesten.length - 1];
+                    } else {
+                        self.gettingData = false;
+                    }
+
+
+                });
+            } else {
+                self.participants = [];
+                self.KrinkelService.getParticipantsList(self.verbondNr).then((results) => {
+                    results.forEach((r) => {
+                        r.participant = "Deelnemer";
+                        r.eatinghabbit = self.MapperService.mapEatingHabbit(r.eatinghabbit);
+                        r.campGround = self.MapperService.mapCampground(r.campGround);
+                        self.participants.push(r);
+                    });
+                    self.dataIsLoaded();
+                });
+            }
 
             self.volunteers = [];
-
             self.KrinkelService.getVolunteersListByCampground(self.verbondNaam).then((results) => {
                 console.log('Result from self.KrinkelService.getVolunteersListByCampground(self.verbondNaam)');
                 console.log(results);
@@ -105,11 +123,67 @@ class GewestenController {
 
     checkForLastGewest(gewestNr){
         if(gewestNr === this.lastGewest.stamnummer){
-            this.gettingData = false;
-            var tableGewesten = document.getElementById("tableGewesten");
-            tableGewesten.style.display = "inline";
+            this.dataIsLoaded();
         }
         return true;
+    }
+
+    searchFunction() {
+        console.log('init search function')
+        // Declare variables
+        var input, filter, table, tr, td, i;
+        input = document.getElementById("inputLanguageSearch");
+        filter = input.value.toUpperCase();
+        table = document.getElementById("tableBuddies");
+        tr = table.getElementsByTagName("tr");
+
+        // Loop through all table rows, and hide those who don't match the search query
+        for (i = 0; i < tr.length; i++) {
+            // CHANGE THE INDEX BETWEEN [ ] to match the right column for the search
+            td = tr[i].getElementsByTagName("td")[1];
+            if (td) {
+                if (td.innerHTML.toUpperCase().indexOf(filter.toUpperCase()) > -1) {
+                    tr[i].style.display = "";
+                } else {
+                    tr[i].style.display = "none";
+                }
+            }
+        }
+    }
+
+    getLanguages(languages){
+        if(languages.length === 0 ){
+            return 'Geen talen gevonden'
+        }
+        var result = '';
+        for(var i = 0; i < languages.length-1; i++){
+            result += this.getLanguage(languages[i]) + ', ';
+        }
+        result += this.getLanguage(languages[languages.length-1]);
+        return result;
+    }
+
+    getLanguage(language){
+        switch (language){
+            case 'ENGLISH':
+                return 'Engels';
+                break;
+            case 'SPANISH':
+                return 'Spaans';
+                break;
+            case 'FRENCH':
+                return 'Frans';
+                break;
+            default :
+                return language;
+                break;
+        }
+    }
+
+    dataIsLoaded(){
+        this.gettingData = false;
+        var tableGewesten = document.getElementById("tableGewesten");
+        tableGewesten.style.display = "inline";
     }
 
     checkIfNationaal(stamnummer){

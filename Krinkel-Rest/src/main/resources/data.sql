@@ -63,6 +63,18 @@ social_promotion, eatinghabbit, email, email_subscriber, first_name, gender, las
 event_role, buddy, stamnumber, status, phone_number, camp_ground, other, preset, registered_by)
 VALUES('RegistrationParticipant', '1040', '456789', 'Brussel', '123', '1000', 'Veldstraat', '1995-08-21', false, 'FISHANDMEAT',
                               'email@test.be', 'email@test.be', 'Cees', 'WOMAN', 'Flodder', '', '', '', 'ASPI', true, 'LEG/0101', 'CONFIRMED', 1, '', '', '',  '456789');
+INSERT INTO registration_participant (dtype,id,ad_number,city, house_number, postal_code, street, birthdate,
+social_promotion, eatinghabbit, email, email_subscriber, first_name, gender, last_name, remarks_food, medical_remarks, remarks,
+event_role, buddy, stamnumber, status, phone_number, camp_ground, other, preset, registered_by)
+VALUES('RegistrationParticipant', '1041', '456790', 'Brussel', '123', '1000', 'Veldstraat', '1995-08-21', false, 'FISHANDMEAT',
+                              'email@test.be', 'email@test.be', 'Cees', 'WOMAN', 'Flodder', '', '', '', 'ASPI', true, 'LEG/0101', 'CONFIRMED', 1, '', '', '',  '456789');
+
+INSERT INTO registration_participant_language (registration_participant_id,language)
+VALUES('1040', '0');
+INSERT INTO registration_participant_language (registration_participant_id,language)
+VALUES('1040', '2');
+INSERT INTO registration_participant_language (registration_participant_id,language)
+VALUES('1041', '2');
 
 INSERT INTO registration_participant (dtype,id,ad_number,city, house_number, postal_code, street, birthdate,
 social_promotion, eatinghabbit, email, email_subscriber, first_name, gender, last_name, remarks_food, medical_remarks, remarks,

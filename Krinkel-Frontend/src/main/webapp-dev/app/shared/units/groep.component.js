@@ -22,6 +22,9 @@ class GroepController {
     $onInit() {
         this.nationaalStamnummers = ['4AF', '4AG', '4AL', '4CF', '4CR', '4KL', '4WB', '4WJ', '4WK', '5AA', '5CA', '5CC', '5CD', '5CG', '5CJ', '5CL', '5CP', '5CV', '5DI', '5IG', '5IP', '5IT', '5KA', '5PA', '5PG', '5PM', '5PP', '5PV', '5RA', '5RD', '5RI', '5RP', '5RV', '5RW', '5SB', '5UG', '5UK', '5UL', '6KV', '7WD', '7WH', '7WK', '7WO', '7WW', '8BB', '8BC', '8BH', '8BR', '8BZ', '8DB', '8HD', '8HH', '8HK', '8HO', '8HW', '9KO'];
         this.internationaalStamnummer = '5DI';
+        this.user = this.AuthService.getLoggedinUser();
+        this.userRole = this.user.role;
+        this.userRoles = this.user.roles;
         this.participants = [];
         this.volunteers = [];
         this.KrinkelService.getParticipantsList(this.groepNr).then((results) => {
