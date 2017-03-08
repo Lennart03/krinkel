@@ -1,6 +1,7 @@
 package com.realdolmen.chiro.controller;
 
 import com.realdolmen.chiro.controller.validation.EnableRestErrorHandling;
+import com.realdolmen.chiro.domain.CampGround;
 import com.realdolmen.chiro.domain.RegistrationVolunteer;
 import com.realdolmen.chiro.domain.User;
 import com.realdolmen.chiro.mspservice.MultiSafePayService;
@@ -90,11 +91,16 @@ public class RegistrationVolunteerController {
      */
     @RequestMapping(method = RequestMethod.POST, value = "/api/volunteers", consumes = "application/json")
     public ResponseEntity<?> save(@Valid @RequestBody RegistrationVolunteer volunteer) throws URISyntaxException, MultiSafePayService.InvalidPaymentOrderIdException {
-
+        // Rest POST can't handle 'WEST-VLAANDEREN' => dummy 'WESTVLAANDEREN' added => replace again here
+        if(volunteer.getCampGround() == CampGround.WESTVLAANDEREN){
+            volunteer.setCampGround(CampGround.WEST_VLAANDEREN);
+        }
+        System.err.println("Campground: " + volunteer.getCampGround());
         RegistrationVolunteer resultingVolunteer = registrationVolunteerService.save(volunteer);
         User currentUser = userService.getCurrentUser();
 
         if (resultingVolunteer == null) {
+            System.err.println("resultingVolunteer == null");
             logger.info("Registration for Volunteer failed.");
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
@@ -111,11 +117,18 @@ public class RegistrationVolunteerController {
 
     @RequestMapping(method = RequestMethod.POST, value = "/api/volunteers/admin", consumes = "application/json")
     public ResponseEntity<?> saveByAdmin(@Valid @RequestBody RegistrationVolunteer volunteer) throws URISyntaxException, MultiSafePayService.InvalidPaymentOrderIdException {
+        // Rest POST can't handle 'WEST-VLAANDEREN' => dummy 'WESTVLAANDEREN' added => replace again here
+        if(volunteer.getCampGround() == CampGround.WESTVLAANDEREN){
+            volunteer.setCampGround(CampGround.WEST_VLAANDEREN);
+        }
+        System.err.println("Campground: " + volunteer.getCampGround());
+
         if (volunteer == null) {
             logger.info("Registration for Volunteer failed.");
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
 
+        volunteer.setEmailSubscriber(userService.getCurrentUser().getEmail());
         registrationVolunteerService.markAsPayed(volunteer);
 
         HttpHeaders headers = new HttpHeaders();

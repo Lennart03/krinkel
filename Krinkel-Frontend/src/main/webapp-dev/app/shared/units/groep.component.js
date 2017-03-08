@@ -5,17 +5,29 @@ class GroepController {
         this.AuthService = AuthService;
         this.$location = $location;
         this.MapperService = MapperService;
-        this.lolo = $routeParams.groepNr;
+        this.groepNr = $routeParams.groepNr;
         this.groepNaam = $routeParams.groepNaam;
         this.showParticipants = true;
         //console.log(this.lolo + 'groep.component.js says hi!');
         this.initSelectPayStatus();
     }
 
+    checkIfNationaal(stamnummer){
+        return this.nationaalStamnummers.indexOf(stamnummer) > -1;
+    }
+    checkIfInternationaal(stamnummer){
+        return this.internationaalStamnummer === stamnummer;
+    }
+
     $onInit() {
+        this.nationaalStamnummers = ['4AF', '4AG', '4AL', '4CF', '4CR', '4KL', '4WB', '4WJ', '4WK', '5AA', '5CA', '5CC', '5CD', '5CG', '5CJ', '5CL', '5CP', '5CV', '5DI', '5IG', '5IP', '5IT', '5KA', '5PA', '5PG', '5PM', '5PP', '5PV', '5RA', '5RD', '5RI', '5RP', '5RV', '5RW', '5SB', '5UG', '5UK', '5UL', '6KV', '7WD', '7WH', '7WK', '7WO', '7WW', '8BB', '8BC', '8BH', '8BR', '8BZ', '8DB', '8HD', '8HH', '8HK', '8HO', '8HW', '9KO'];
+        this.internationaalStamnummer = '5DI';
+        this.user = this.AuthService.getLoggedinUser();
+        this.userRole = this.user.role;
+        this.userRoles = this.user.roles;
         this.participants = [];
         this.volunteers = [];
-        this.KrinkelService.getParticipantsList(this.lolo).then((results) => {
+        this.KrinkelService.getParticipantsList(this.groepNr).then((results) => {
             results.forEach((r) => {
                 r.participant = "Deelnemer";
                 r.eatinghabbit = this.MapperService.mapEatingHabbit(r.eatinghabbit);
@@ -23,7 +35,7 @@ class GroepController {
                 this.participants.push(r);
             });
         });
-        this.KrinkelService.getVolunteersList(this.lolo).then((results) => {
+        this.KrinkelService.getVolunteersList(this.groepNr).then((results) => {
             results.forEach((r) => {
                 r.participant = "Vrijwilliger";
                 r.function.preset = this.MapperService.mapVolunteerFunction(r.function.preset);
@@ -36,6 +48,19 @@ class GroepController {
             })
         });
     }
+
+    // changeBackgroundColorStatus(){
+    //     $(document).ready(function(){
+    //         //Iterate through each of the rows
+    //         $('tr').each(function(){
+    //             //Check the value of the last <td> element in the row (trimmed to ignore white-space)
+    //             if($(this).find('td:last').text().trim() === "Geannuleerd"){
+    //                 //Set the row to green
+    //                 $(this).css('background','green');
+    //             }
+    //         });
+    //     });
+    // }
 
     /**
      *
@@ -75,7 +100,9 @@ class GroepController {
             { 'value': 'CONFIRMED', 'label': 'Bevestigd'}
         ]
     }
-
+    /*
+    To parse dates from a list of data objects
+     */
     getDatesListFromList(list){
         if(list.length > 0) {
             function pad(s) {

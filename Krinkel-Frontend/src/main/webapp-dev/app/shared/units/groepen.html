@@ -5,33 +5,67 @@
         background-color: #EEE;
         cursor: pointer;
     }
+    .bevestigd{
+        color : #4caf50;
+    }
+    .betaald{
+        color : #2196f3;
+    }
+    .onbetaald{
+        color : #f44336;
+    }
+    .geannuleerd{
+        color : #ffa500;
+    }
+    .inlineDiv{
+        display:inline;
+    }
 </style>
 
-<table>
-    <thead>
-    <tr>
-        <!--<th data-field="stamNummer">Stam nummer</th>-->
-        <th data-field="naam">Naam</th>
-        <th data-field="amountParticipants">Aantal deelnemers</th>
-        <!--<th data-field="amountVolunteers">Aantal medewerkers</th>-->
-    </tr>
-    </thead>
+<div ng-if="$ctrl.userRole === 'ADMIN'">
+    <span class="bevestigd">Bevestigd</span> - <span class="betaald">Betaald</span> - <span class="onbetaald">Onbetaald</span> - <span class="geannuleerd">Geannuleerd</span>
+</div>
+
+<spinner loading="$ctrl.gettingData"></spinner>
+<div style="font-size: 20px; text-align: center; padding-top: 20px;" ng-if="$ctrl.gettingData">De gegevens worden opgehaald</div>
+
+<div id="tableGroepen" style="display: none">
+    <table >
+        <thead>
+        <tr>
+            <th data-field="stamNummer" ng-if="true || $ctrl.userRole === 'ADMIN'"com>Stam nummer</th>
+            <th data-field="naam">Naam</th>
+            <th ng-if="$ctrl.canSeeDeelnemersAantallen" data-field="amountParticipants">Aantal deelnemers</th>
+            <!--<th data-field="amountVolunteers" ng-if="$ctrl.userRole === 'ADMIN'">Aantal medewerkers</th>-->
+            <th data-field="iconSend"></th>
+        </tr>
+        </thead>
 
 
-    <tbody>
-    <tr ng-repeat="groep in $ctrl.groepen" ng-click="$ctrl.redirectToGroep(groep.stamnummer, groep.name)">
-        <!--<td>-->
-            <!--{{groep.stamnummer}}-->
-        <!--</td>-->
-        <td>
-            {{groep.name}}
-        </td>
-        <td>
-            {{groep.aantal_ingeschreven_deelnemers}}
-        </td>
-        <!--<td>-->
+        <tbody>
+        <tr ng-repeat="groep in $ctrl.groepen" ng-click="$ctrl.redirectToGroep(groep.stamnummer, groep.name)">
+            <td ng-if="true || $ctrl.userRole === 'ADMIN'">
+                {{groep.stamnummer}}
+            </td>
+            <td>
+                {{groep.name}}
+            </td>
+            <td ng-if="$ctrl.canSeeDeelnemersAantallen">
+                <div class="inlineDiv" ng-if="$ctrl.AuthService.getUserRole() !== 'ADMIN'">
+                    {{groep.aantal_ingeschreven_deelnemers_bevestigd}}
+                </div>
+                <div class="inlineDiv" ng-if="$ctrl.userRole === 'ADMIN'">
+                    <span class="bevestigd">{{groep.aantal_ingeschreven_deelnemers_bevestigd}}</span> - <span class="betaald">{{groep.aantal_ingeschreven_deelnemers_betaald}}</span> - <span class="onbetaald">{{groep.aantal_ingeschreven_deelnemers_onbetaald}}</span> - <span class="geannuleerd">{{groep.aantal_ingeschreven_deelnemers_geannuleerd}}</span>
+                </div>
+            </td>
+            <!--<td ng-if="$ctrl.userRole === 'ADMIN'">-->
             <!--{{groep.aantal_ingeschreven_vrijwilligers}}-->
-        <!--</td>-->
-    </tr>
-    </tbody>
-</table>
+            <!--<i class="material-icons right icon-green">send</i>-->
+            <!--</td>-->
+            <td ng-if="$ctrl.checkForLastGroep(groep.stamnummer) && $ctrl.canDirectTo(groep.stamnummer)">
+                <i class="material-icons right icon-green">send</i>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>

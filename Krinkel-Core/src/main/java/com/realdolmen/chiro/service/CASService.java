@@ -7,6 +7,7 @@ import com.realdolmen.chiro.domain.SecurityRole;
 import com.realdolmen.chiro.domain.Status;
 import com.realdolmen.chiro.domain.User;
 import com.realdolmen.chiro.domain.units.Admin;
+import com.realdolmen.chiro.domain.vo.RolesAndUpperClasses;
 import com.realdolmen.chiro.domain.vo.StamNumbersRolesVO;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
@@ -21,7 +22,10 @@ import org.springframework.stereotype.Service;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.xml.bind.DatatypeConverter;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.Map;
 
 @Service
 public class CASService {
@@ -88,11 +92,11 @@ public class CASService {
 
             user.setRolesAndUpperClassesByStam(stamNumbersRolesVO.getRolesAndUpperClassesByStam());
             user.setStamnummer(stamNumbersRolesVO.getStamNumber());
-            
-          List<String> adminAdNumbers = new ArrayList<>();
-           for(Admin admin : adminService.getAdmins()){
-               adminAdNumbers.add(admin.getAdNumber().toString());
-           }
+
+            List<String> adminAdNumbers = new ArrayList<>();
+            for (Admin admin : adminService.getAdmins()) {
+                adminAdNumbers.add(admin.getAdNumber().toString());
+            }
 
             if (adminAdNumbers.contains(adNumber)) {
                 user.setRole(SecurityRole.ADMIN);
@@ -103,7 +107,7 @@ public class CASService {
          /*   if(userService.getCurrentUser() == null || userService.getCurrentUser().getRole() == null || !userService.getCurrentUser().getRole().equals(SecurityRole.ADMIN)) {
                 userService.setCurrentUser(user);
             }*/
-            if(userService.getCurrentUser() == null || userService.getCurrentUser().getRole() == null || !userService.getCurrentUser().getAdNumber().equals(user.getAdNumber())) {
+            if (userService.getCurrentUser() == null || userService.getCurrentUser().getRole() == null || !userService.getCurrentUser().getAdNumber().equals(user.getAdNumber())) {
                 userService.setCurrentUser(user);
             }
 
@@ -113,7 +117,7 @@ public class CASService {
         return null;
     }
 
-    private User createUserFromOurDB(RegistrationParticipant registrationParticipant){
+    private User createUserFromOurDB(RegistrationParticipant registrationParticipant) {
         User user = new User();
         user.setFirstname(registrationParticipant.getFirstName());
         user.setLastname(registrationParticipant.getLastName());
@@ -134,7 +138,7 @@ public class CASService {
         return user;
     }
 
-    private User createNewUser(AttributePrincipal principal, String adNumber){
+    private User createNewUser(AttributePrincipal principal, String adNumber) {
         User user = new User();
         String firstName = principal.getAttributes().get("first_name").toString();
         String lastName = principal.getAttributes().get("last_name").toString();
@@ -195,7 +199,28 @@ public class CASService {
                 .claim("adnummer", user.getAdNumber())
                 .claim("email", user.getEmail())
                 .claim("role", user.getRole())
+                .claim("roles", getRolesAndUpperClasses(user))
                 .setIssuedAt(new Date())
                 .signWith(SignatureAlgorithm.HS256, jwtConfiguration.getJwtSecret()).compact();
+    }
+
+    public ArrayList<RoleAndAdNumber> getRolesAndUpperClasses(User user) {
+        Map<String, RolesAndUpperClasses> rolesAndUpperClassesByStam = user.getRolesAndUpperClassesByStam();
+        ArrayList<RoleAndAdNumber> rolesPlusAdNumber = new ArrayList<RoleAndAdNumber>();
+        for (Map.Entry<String, RolesAndUpperClasses> entry : rolesAndUpperClassesByStam.entrySet()) {
+            rolesPlusAdNumber.add(new RoleAndAdNumber(entry.getValue().getSecurityRole().toString(), entry.getKey()));
+        }
+        return rolesPlusAdNumber;
+    }
+
+    public class RoleAndAdNumber {
+        private String role;
+        private String adNumber;
+        RoleAndAdNumber(String role, String adNumber){
+            this.role = role;
+            this.adNumber = adNumber;
+        }
+        public String getRole(){return role;}
+        public String getAdNumber(){return adNumber;}
     }
 }

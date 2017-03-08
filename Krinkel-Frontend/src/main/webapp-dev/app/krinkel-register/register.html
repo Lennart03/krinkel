@@ -1,4 +1,16 @@
-<div class="row">
+<spinner loading="$ctrl.gettingDataFromChiro"></spinner>
+<div style="font-size: 20px; text-align: center; padding-top: 20px;" ng-if="$ctrl.gettingDataFromChiro">Uw gegevens worden opgehaald</div>
+
+<div ng-if="$ctrl.gettingDataFromChiro === false && $ctrl.disableEverything">
+    <h1>Fout bij laden van gegevens</h1>
+    <p class="flow-text"><i class="material-icons">error_outline</i>
+        Er is iets misgelopen bij het inladen van je gegevens uit de databank.
+        Om je toch te kunnen inschrijven kun je contact opnemen via <a
+            href="mailto:inschrijvingen@krinkel.be">inschrijvingen@krinkel.be</a>.</p>
+</div>
+
+<!--<div class="row" ng-if="$ctrl.disableEverything === false">-->
+<div class="row" id="divAroundTopText" style="display:none">
     <h1 ng-if="$ctrl.type === 'volunteer'">Medewerker inschrijven</h1>
     <h1 ng-if="$ctrl.type === 'participant' && !$ctrl.SelectService.getSelectedFlag()">Deelnemer inschrijven</h1>
     <h1 ng-if="$ctrl.SelectService.getSelectedFlag()">Andere deelnemer inschrijven</h1>
@@ -13,14 +25,15 @@
     </p>
 </div>
 
+<!--<div class="row" ng-if="$ctrl.disableEverything === false">-->
+<div class="row" id="divAroundForm" style="display:none">
 
-<div class="row">
     <form class="col s12 m12" novalidate name="personForm" ng-submit="personForm.$valid && $ctrl.registerPerson($ctrl.newPerson)">
         <div class="row">
             <div class="input-field col s12 m6">
                 <i class="material-icons prefix">perm_identity</i>
                 <input id="first_name" name="firstName" type="text" class="validate" ng-minlength="1"
-                       ng-model="$ctrl.newPerson.firstName" required>
+                       ng-model="$ctrl.newPerson.firstName" ng-disabled="!$ctrl.newPerson.firstNameIsEmpty" required>
                 <label for="first_name">Voornaam *</label>
                 <p ng-show="(personForm.firstName.$invalid && $ctrl.validateNow) || (personForm.firstName.$invalid && personForm.firstName.$touched)" class="error"><i
                     class="material-icons">error_outline</i> Voornaam is verplicht</p>
@@ -28,7 +41,7 @@
             <div class="input-field col s12 m6">
                 <i class="material-icons prefix">perm_identity</i>
                 <input id="last_name" name="lastName" type="text" class="validate" ng-model="$ctrl.newPerson.lastName"
-                       required>
+                       ng-disabled="!$ctrl.newPerson.lastNameIsEmpty" required>
                 <label for="last_name">Achternaam *</label>
                 <p ng-show="(personForm.lastName.$invalid && $ctrl.validateNow) || (personForm.lastName.$invalid && personForm.lastName.$touched)" class="error"><i
                     class="material-icons">error_outline</i> Achternaam is verplicht
@@ -259,7 +272,7 @@
         <div class="row" ng-show="$ctrl.type === 'volunteer'">
             <div class="input-field col s12 m6">
                 <i class="material-icons prefix">date_range</i>
-                <select multiple name="voorwacht" ng-model="$ctrl.newPerson.preCamp">
+                <select multiple id="voorwachtSelect" name="voorwacht" ng-model="$ctrl.newPerson.preCamp">
                     <option value="" disabled selected>Voorwacht</option>
                     <option value="2017-08-19">zaterdag 19 augustus</option>
                     <option value="2017-08-20">zondag 20 augustus</option>
@@ -277,7 +290,7 @@
 
             <div class="input-field col s12 m6">
                 <i class="material-icons prefix">date_range</i>
-                <select multiple name="nawacht" ng-model="$ctrl.newPerson.postCamp">
+                <select multiple id="nawachtSelect" name="nawacht" ng-model="$ctrl.newPerson.postCamp">
                     <option value="" disabled selected>Nawacht</option>
                     <option value="2017-08-31">donderdag 31 augustus</option>
                     <option value="2017-09-01">vrijdag 1 september</option>
@@ -312,7 +325,7 @@
                 <!--<label>Keuze kampgrond:</label>-->
                 <p ng-show="(personForm.campground.$invalid && $ctrl.validateNow) || (personForm.campground.$invalid && personForm.campground.$touched)" class="error">
                     <i class="material-icons">error_outline</i>
-                    Verplicht
+                    Keuze kampgrond is verplicht
                 </p>
             </div>
         </div>
@@ -334,7 +347,7 @@
 
                 <p>
                     <input class="with-gap" name="group3" type="radio" id="Krinkelredactie"
-                           ng-model="$ctrl.newPerson.job" value="Krinkelredactie"/>
+                           ng-model="$ctrl.newPerson.job" value="Klinkerredactie"/>
                     <label for="Krinkelredactie">Klinkerredactie</label>
                 </p>
 

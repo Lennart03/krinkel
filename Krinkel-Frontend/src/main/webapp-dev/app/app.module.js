@@ -39,6 +39,7 @@ import {KrinkelAdminComponent} from './krinkel-admin/krinkel-admin.component';
 import {KrinkelExportComponent} from './krinkel-admin/krinkel-export/krinkel-export.component';
 import {AdminToevoegenComponent} from './krinkel-admin/admin-toevoegen/admin-toevoegen.component';
 import {GenerateGroupsComponent} from './krinkel-tools/generate-groups/generate-groups.component';
+import {ConfirmationsComponent} from './krinkel-admin/admin-resending-confirmations/confirmations.component';
 
 
 
@@ -76,6 +77,7 @@ export default angular
     .component('krinkelChooseRegistration', ChooseRegistrationComponent)
     .component('krinkelAdmin', KrinkelAdminComponent)
     .component('adminToevoegen', AdminToevoegenComponent)
+    .component('confirmations', ConfirmationsComponent)
     .component('krinkelKar', KrinkelKarComponent)
     .component('generateGroups', GenerateGroupsComponent)
     .component('verbonden', VerbondenComponent)

@@ -1,8 +1,11 @@
 package com.realdolmen.chiro.repository;
 
 
+import com.realdolmen.chiro.domain.CampGround;
 import com.realdolmen.chiro.domain.RegistrationParticipant;
 import com.realdolmen.chiro.domain.RegistrationVolunteer;
+import com.realdolmen.chiro.domain.Status;
+import com.realdolmen.chiro.domain.units.ChiroGroepGewestVerbond;
 import com.realdolmen.chiro.domain.units.ChiroUnit;
 import com.realdolmen.chiro.domain.units.RawChiroUnit;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -28,6 +31,13 @@ public interface ChiroUnitRepository extends JpaRepository<RawChiroUnit, String>
             "GROUP BY c.gewestStamNummer, c.gewestNaam")
     List<ChiroUnit> findAllGewesten();
 
+    @Query("SELECT c " +
+            "FROM RawChiroUnit c " +
+            "WHERE c.groepStamNummer in (SELECT distinct d.stamnumber FROM RegistrationParticipant d) " +
+            "ORDER BY c.groepNaam desc"
+            )
+    List<RawChiroUnit> findAllUnitsWithRegisteredParticipants();
+
     @Query("SELECT NEW com.realdolmen.chiro.domain.units.ChiroUnit(c.gewestStamNummer, c.gewestNaam)" +
             "FROM RawChiroUnit c " +
             "WHERE c.verbondStamNummer = ?1 " +
@@ -50,6 +60,13 @@ public interface ChiroUnitRepository extends JpaRepository<RawChiroUnit, String>
             " AND " +
             "r.stamnumber = c.groepStamNummer")
     ChiroUnit findUnionParticipant(String adNumber);
+
+
+    @Query("SELECT c.verbondStamNummer FROM RegistrationParticipant r, RawChiroUnit c WHERE " +
+            "r.adNumber = ?1" +
+            " AND " +
+            "r.stamnumber = c.groepStamNummer")
+    String findUnionUsingAD(String adNumber);
     /**
      * Get the nr of participants + volunteers who are in the verbond specified by the given verbondStamNummer
      * @param verbondStamNummer
@@ -59,14 +76,28 @@ public interface ChiroUnitRepository extends JpaRepository<RawChiroUnit, String>
             "WHERE c.verbondStamNummer = ?1 AND p.stamnumber = c.groepStamNummer")
     int countParticipantsByVerbond(String verbondStamNummer);
 
+    @Query("SELECT COUNT(p) FROM RegistrationParticipant p, RawChiroUnit c " +
+            "WHERE c.verbondStamNummer LIKE ?1 AND p.stamnumber = c.groepStamNummer AND p.status = ?2 AND p.buddy = ?3")
+    int countParticipantsByVerbond(String verbondStamNummer, Status status, boolean countBuddies);
+
+    //TODO: countParticipantsByVerbond etc op enkel status doen en buddy = true etc...
+
+    @Query("SELECT COUNT(p) FROM RegistrationParticipant p " +
+            "WHERE p.status = ?1 AND (p.buddy = true OR p.stamnumber = 'INT')")
+    int countParticipantsInternationaal(Status status);
+
     /**
      * Get the nr of volunteers who are in the verbond specified by the given verbondStamNummer
      * @param verbondStamNummer
      * @return
      */
     @Query("SELECT COUNT(p) FROM RegistrationVolunteer p, RawChiroUnit c " +
-                  "WHERE c.verbondStamNummer = ?1 AND p.stamnumber = c.groepStamNummer")
+            "WHERE c.verbondStamNummer LIKE ?1 AND p.stamnumber = c.groepStamNummer")
     int countVolunteersByVerbond(String verbondStamNummer);
+
+    @Query("SELECT COUNT(p) FROM RegistrationVolunteer p, RawChiroUnit c " +
+            "WHERE c.verbondStamNummer = ?1 AND p.stamnumber = c.groepStamNummer AND p.status = ?2 AND p.buddy = ?3")
+    int countVolunteersByVerbond(String verbondStamNummer, Status status, boolean countBuddies);
 
     /**
      * Get the nr of participants + volunteers who are in the gewest specified by the given gewestStamNummer
@@ -77,6 +108,10 @@ public interface ChiroUnitRepository extends JpaRepository<RawChiroUnit, String>
             "WHERE c.gewestStamNummer = ?1 AND p.stamnumber = c.groepStamNummer")
     int countParticipantsByGewest(String gewestStamNummer);
 
+    @Query("SELECT COUNT(p) FROM RegistrationParticipant p, RawChiroUnit c " +
+            "WHERE c.gewestStamNummer = ?1 AND p.stamnumber = c.groepStamNummer AND p.status = ?2 AND p.buddy = ?3")
+    int countParticipantsByGewest(String gewestStamNummer, Status status, boolean countBuddies);
+
     /**
      * Get the nr of volunteers who are in the gewest specified by the given gewestStamNummer
      * @param gewestStamNummer
@@ -86,15 +121,31 @@ public interface ChiroUnitRepository extends JpaRepository<RawChiroUnit, String>
             "WHERE c.gewestStamNummer = ?1 AND p.stamnumber = c.groepStamNummer")
     int countVolunteersByGewest(String gewestStamNummer);
 
+    @Query("SELECT COUNT(p) FROM RegistrationVolunteer p, RawChiroUnit c " +
+            "WHERE c.gewestStamNummer = ?1 AND p.stamnumber = c.groepStamNummer AND p.status = ?2 AND p.buddy = ?3")
+    int countVolunteersByGewest(String gewestStamNummer, Status status, boolean countBuddies);
+
     /**
      * Get the nr of participants + volunteers who are in the groep specified by the given groepStamNummer
      * @param groepStamNummer
      * @return
      */
     @Query("SELECT COUNT(p) FROM RegistrationParticipant p, RawChiroUnit c " +
-            "WHERE c.groepStamNummer = ?1 AND p.stamnumber = c.groepStamNummer")
+            "WHERE c.groepStamNummer = ?1 AND p.stamnumber = c.groepStamNummer AND p.status = ?2")
     int countParticipantsByGroep(String groepStamNummer);
 
+    @Query("SELECT COUNT(p) FROM RegistrationParticipant p, RawChiroUnit c " +
+            "WHERE c.groepStamNummer = ?1 AND p.stamnumber = c.groepStamNummer AND p.status = ?2 AND p.buddy = ?3")
+    int countParticipantsByGroep(String stamNummer, Status status, boolean countBuddies);
+
+    /**
+     * Get the nr of participants + volunteers who are in the groep specified by the given groepStamNummer + who have the given paymentstatus
+     * @param groepStamNummer
+     * @return
+     */
+    @Query("SELECT COUNT(p) FROM RegistrationParticipant p, RawChiroUnit c " +
+            "WHERE c.groepStamNummer = ?1 AND p.stamnumber = c.groepStamNummer AND p.status = ?2")
+    int countParticipantsByGroep(String groepStamNummer, Status status);
 
     /**
      * Get the nr of volunteers who are in the groep specified by the given groepStamNummer
@@ -105,6 +156,13 @@ public interface ChiroUnitRepository extends JpaRepository<RawChiroUnit, String>
             "WHERE c.groepStamNummer = ?1 AND p.stamnumber = c.groepStamNummer")
     int countVolunteersByGroep(String groepStamNummer);
 
+    @Query("SELECT COUNT(p) FROM RegistrationVolunteer p, RawChiroUnit c " +
+            "WHERE c.groepStamNummer = ?1 AND p.stamnumber = c.groepStamNummer AND p.status = ?2")
+    int countVolunteersByGroep(String groepStamNummer, Status status);
+
+    @Query("SELECT COUNT(p) FROM RegistrationVolunteer p, RawChiroUnit c " +
+            "WHERE c.groepStamNummer = ?1 AND p.stamnumber = c.groepStamNummer AND p.status = ?2 AND p.buddy = ?3")
+    int countVolunteersByGroep(String stamNummer, Status status, boolean countBuddies);
 
     /**
      * Return a list with volunteers who are in the groep specified by the given groepStamNummer
@@ -122,6 +180,27 @@ public interface ChiroUnitRepository extends JpaRepository<RawChiroUnit, String>
      * @return
      */
     @Query("SELECT p FROM RegistrationParticipant p, RawChiroUnit c " +
-            "WHERE c.groepStamNummer = ?1 AND p.stamnumber = c.groepStamNummer")
-    List<RegistrationParticipant> returnParticipantsByGroep (String groepStamNummer);
+            "WHERE c.groepStamNummer = ?1 AND p.stamnumber = c.groepStamNummer AND p.buddy = ?2")
+    List<RegistrationParticipant> returnParticipantsByGroep (String groepStamNummer, boolean countBuddies);
+
+    @Query("SELECT COUNT(p) FROM RegistrationVolunteer p " +
+            "WHERE p.campGround = ?1 AND p.status = ?2")
+    int getCountsVolunteersByCampgroundAndStatus(CampGround campGround, Status status);
+
+    @Query("SELECT p FROM RegistrationParticipant p " +
+            "WHERE p.campGround = ?1")
+    List<RegistrationVolunteer> returnVolunteersByCampGround(CampGround camgroundByName);
+
+    @Query("SELECT p FROM RegistrationParticipant p " +
+            "WHERE p.buddy = true OR p.stamnumber = 'INT'")
+    List<RegistrationParticipant> returnParticipantsInternationaal();
+
+    @Query("SELECT DISTINCT c.verbondStamNummer FROM RawChiroUnit c " +
+            "WHERE c.gewestStamNummer = ?1")
+    String findVerbondNrWithGewestNr(String untrimmedGewestStamNummer);
+
+    @Query("SELECT NEW com.realdolmen.chiro.domain.units.ChiroGroepGewestVerbond(c.groepStamNummer, c.groepNaam, c.gewestStamNummer, c.gewestNaam, c.verbondStamNummer, c.verbondNaam) FROM RawChiroUnit c " +
+            "WHERE c.groepStamNummer = ?1")
+    ChiroGroepGewestVerbond getChiroUnitByGroepStamNummer(String groepstamnummer);
+
 }

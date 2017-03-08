@@ -8,6 +8,7 @@ import com.realdolmen.chiro.repository.RegistrationParticipantRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.sql.rowset.serial.SerialRef;
 import java.util.*;
 
 /**
@@ -16,12 +17,14 @@ import java.util.*;
 @Service
 public class GenerateGroupsService {
     @Autowired
-    ChiroUnitRepository chiroUnitRepository;
+    private ChiroUnitRepository chiroUnitRepository;
 
     @Autowired
-    RegistrationParticipantRepository registrationParticipantRepository;
+    private RegistrationParticipantRepository registrationParticipantRepository;
 
-    private Integer groupSize = 12;
+    private int groupSize = 12;
+    private int maleGroupSize = (groupSize + 1) / 2; //standard groupsize
+    private int femaleGroupSize = (groupSize + 1) / 2;
 
     private Map<String, List<RegistrationParticipant>> participantsMan = new HashMap<>();
     private Map<String, List<RegistrationParticipant>> participantsWoman = new HashMap<>();
@@ -31,26 +34,28 @@ public class GenerateGroupsService {
     private int amountWoman = 0;
 
     public List<List<RegistrationParticipant>> generateRandomGroups() {
-        return this.generateRandomGroups(12);
+        return this.generateRandomGroups(12, -1);
     }
 
-    public List<List<RegistrationParticipant>> generateRandomGroups(int groupSize) {
+    public List<List<RegistrationParticipant>> generateRandomGroups(int groupSize, int option) {
         this.groupSize = groupSize;
         //fill the lists with the currently registered members
         List<RegistrationParticipant> registrationParticipants = registrationParticipantRepository.findAllParticipantsNoBuddy();
 
-        Iterator<RegistrationParticipant> registrationIterator = registrationParticipants.iterator();
-        while (registrationIterator.hasNext()) {
-            RegistrationParticipant participant = registrationIterator.next();
+        for(RegistrationParticipant participant : registrationParticipants) {
             this.addParticipantInCorrectGroup(participant);
         }
+
+        //determine the genderGroupSize depending on the amount of male/female members
+        determineGenderGroupSizes();
 
         //take members from the separate lists and group them
         List<List<RegistrationParticipant>> groupsOfParticipant = new ArrayList<>();
 
-        Boolean stop = false;
+        boolean stop = false;
+        List<ChiroUnit> unions = chiroUnitRepository.findAllVerbonden();
         do {
-            List<RegistrationParticipant> singleGroup = assignParticipantsToGroup();
+            List<RegistrationParticipant> singleGroup = assignParticipantsToGroup(unions);
 
             if (singleGroup.size() <= 0) {
                 stop = true;
@@ -59,44 +64,48 @@ public class GenerateGroupsService {
             }
         } while (!stop);
 
-
-        /*System.out.println("the whole group seperation is finished");
-
-        for(int i = 0; i < groupsOfParticipant.size(); i++) {
-            List<RegistrationParticipant> reglist = groupsOfParticipant.get(i);
-            System.out.println("Group " + i + ":");
-            int amountMan = 0;
-            int amountWoman = 0;
-            for(int j = 0; j < reglist.size(); j++) {
-                if(reglist.get(j).getGender().equals(Gender.MAN)) {
-                    System.out.println(reglist.get(j).getAdNumber() + "   MAN  " + reglist.get(j).getStamnumber());
-                    amountMan++;
-                } else if(reglist.get(j).getGender().equals(Gender.WOMAN)) {
-                    System.out.println(reglist.get(j).getAdNumber() + "   WOMAN  " + reglist.get(j).getStamnumber());
-                    amountWoman++;
-                }
-            }
-            System.out.println("Size group: " + reglist.size());
-            System.out.println("Amount male: " + amountMan);
-            System.out.println("Amount female: " + amountWoman);
-        }*/
-
-        scrambleInRestGroup(groupsOfParticipant);
+        switch(option) {
+            case 1:
+                scrambleInRestGroup(groupsOfParticipant);
+                break;
+            case 0:
+                combineNotFullGroups(groupsOfParticipant);
+                break;
+        }
 
         return groupsOfParticipant;
     }
 
-    protected List<RegistrationParticipant> assignParticipantsToGroup() {
+    private void determineGenderGroupSizes() {
+        double totalMale = 0;
+        double totalFemale = 0;
+
+        Set<String> keys = participantsMan.keySet();
+        for(String key : keys) {
+            totalMale += participantsMan.get(key).size();
+        }
+
+        keys = participantsWoman.keySet();
+        for(String key : keys) {
+            totalFemale += participantsWoman.get(key).size();
+        }
+
+        double total = totalMale + totalFemale;
+
+        this.maleGroupSize = (int) ((totalMale / total) * groupSize + 0.5);
+        this.femaleGroupSize = (int) ((totalFemale / total) * groupSize + 0.5);
+    }
+
+
+    protected List<RegistrationParticipant> assignParticipantsToGroup(List<ChiroUnit> unions) {
         List<RegistrationParticipant> singleGroup = new ArrayList<>();
-        List<ChiroUnit> unions = chiroUnitRepository.findAllVerbonden();
 
         amountMan = 0;
         amountWoman = 0;
 
         if (unions.size() <= groupSize) {
-            for (int i = 0; i < unions.size(); i++) {
-                String unionStam = unions.get(i).getStamNummer();
-                addParticipantUnionToList(unionStam, singleGroup);
+            for (ChiroUnit union : unions) {
+                addParticipantUnionToList(union.getStamNummer(), singleGroup);
             }
 
             if(singleGroup.size() < groupSize) {//in case union.size < groupSize
@@ -135,92 +144,131 @@ public class GenerateGroupsService {
     private void fillUpGroup(List<RegistrationParticipant> singleGroup, List<ChiroUnit> unions, int itemsNeeded) {
         List<Integer> randomIndexUnions = new ArrayList<>();
         int unionSize = unions.size();
-
+/*
         if(unionSize > 0) {
             randomIndexUnions.add((int) (Math.random() * unionSize));
         }
-
+*/
         int itemsAdded = 0;
-        while (itemsAdded < itemsNeeded && randomIndexUnions.size() < unionSize && itemsNeeded < unionSize && unionSize > 0) {
+        String unionStam;
+        //loop taking genders into account
+        while (itemsAdded < itemsNeeded && unionSize > 0 && randomIndexUnions.size() < unionSize) {
             int index = (int) (Math.random() * unionSize);
-            while (randomIndexUnions.contains(index)) {
-                index = (int) (Math.random() * unionSize);
-            }
-            randomIndexUnions.add(index);
 
-            String unionStam = unions.get(index).getStamNummer();
-
-            if(addParticipantUnionToList(unionStam, singleGroup)) {
-                itemsAdded++;
+            unionStam = unions.get(index).getStamNummer();
+            if (!randomIndexUnions.contains(index)) {
+                if (!participantLeftInUnion(unionStam)) {
+                    randomIndexUnions.add(index);
+                } else if (addParticipantUnionToList(unionStam, singleGroup)) {
+                    itemsAdded++;
+                } else {
+                    randomIndexUnions.add(index);
+                }
             }
         }
+
+        randomIndexUnions.clear();
+        //loop discarding gender restriction
+        while (itemsAdded < itemsNeeded && unionSize > 0 && randomIndexUnions.size() < unionSize) {
+            int index = (int) (Math.random() * unionSize);
+
+            unionStam = unions.get(index).getStamNummer();
+            if(!randomIndexUnions.contains(index)) {
+                if (!participantLeftInUnion(unionStam)) {
+                    randomIndexUnions.add(index);
+                } else if (addParticipantUnionToListNoGenderRestriction(unionStam, singleGroup)) {
+                    itemsAdded++;
+                } else {
+                    randomIndexUnions.add(index);
+                }
+            }
+        }
+    }
+
+    protected boolean participantLeftInUnion(String unionStam) {
+        return (!(this.participantsMan.get(unionStam) == null) && this.participantsMan.get(unionStam).size() > 0)
+                || (!(this.participantsWoman.get(unionStam) == null) && this.participantsWoman.get(unionStam).size() > 0);
+    }
+
+    protected boolean OnlyOneOrNoGenderLeftInUnion(String unionStam) {
+        return (!(this.participantsMan.get(unionStam) == null) && this.participantsMan.get(unionStam).size() > 0)
+                && (!(this.participantsWoman.get(unionStam) == null) && this.participantsWoman.get(unionStam).size() > 0);
     }
 
     protected boolean addParticipantUnionToList(String unionStam, List<RegistrationParticipant> singleGroup) {
         //this will fix the case that groupSize is not even
-        int genderGroupSize = (groupSize + 1) / 2;
+        //genderGroupSize = (groupSize + 1) / 2;
 
-        if (amountMan < genderGroupSize && amountWoman < genderGroupSize) {
+        if (amountMan < maleGroupSize && amountWoman < femaleGroupSize) {
             int random = (int) (Math.random() * 2);
 
             if (random == 0) {
-                if (!addManToList(unionStam, singleGroup)) {
-                    if(addWomanToList(unionStam, singleGroup)) {
-                        return true;
-                    }
-                } else {
-                    return true;
-                }
+                return addManToList(unionStam, singleGroup) || addWomanToList(unionStam, singleGroup);
             } else {
-                if (!addWomanToList(unionStam, singleGroup)) {
-                    if(addManToList(unionStam, singleGroup)) {
-                        return true;
-                    }
-                } else {
-                    return true;
-                }
+                return addWomanToList(unionStam, singleGroup) || addManToList(unionStam, singleGroup);
             }
-        } else if (amountMan >= genderGroupSize && amountWoman < genderGroupSize) {
-            if(addWomanToList(unionStam, singleGroup)) {
-                return true;
-            }
-        } else if (amountWoman >= genderGroupSize && amountMan < genderGroupSize) {
-            if(addManToList(unionStam, singleGroup)) {
-                return true;
-            }
+        } else if (amountMan >= maleGroupSize && amountWoman < femaleGroupSize) {
+            return addWomanToList(unionStam, singleGroup);
+        } else if (amountWoman >= femaleGroupSize && amountMan < maleGroupSize) {
+            return addManToList(unionStam, singleGroup);
         }
 
         return false;
     }
 
+    protected boolean addParticipantUnionToListNoGenderRestriction(String unionStam, List<RegistrationParticipant> singleGroup) {
+        int random = (int) (Math.random() * 2);
+
+        if (random == 0)
+            return addManToList(unionStam, singleGroup) || addWomanToList(unionStam, singleGroup);
+
+        return addWomanToList(unionStam, singleGroup) || addManToList(unionStam, singleGroup);
+    }
 
     protected boolean addManToList(String unionName, List<RegistrationParticipant> singleGroup) {
-        if(participantsMan != null){
-            List<RegistrationParticipant> registeredMansUnion = participantsMan.get(unionName);
-            if (registeredMansUnion != null && registeredMansUnion.size() > 0) {
-                int randomIndex = (int) (Math.random() * registeredMansUnion.size());
+        if(addMemberToList(unionName, singleGroup, participantsMan)) {
+            amountMan++;
+            return true;
+        }
+        return false;
+    }
 
-                singleGroup.add(registeredMansUnion.get(randomIndex));
-                registeredMansUnion.remove(randomIndex);
+    protected boolean addWomanToList(String unionName, List<RegistrationParticipant> singleGroup) {
+        if(addMemberToList(unionName, singleGroup, participantsWoman)) {
+            amountWoman++;
+            return true;
+        }
+        return false;
+    }
 
-                amountMan++;
-                return true;
+    private boolean addMemberToList(String unionName, List<RegistrationParticipant> singleGroup, Map<String, List<RegistrationParticipant>> participants) {
+        if(participants != null){
+            List<RegistrationParticipant> participantsUnion = participants.get(unionName);
+            if (participantsUnion != null && participantsUnion.size() > 0) {
+                List<Integer> selectedParticipants = new ArrayList<>();
+                while (selectedParticipants.size() < participantsUnion.size()) {
+                    int randomIndex = (int) (Math.random() * participantsUnion.size());
+
+                    if (!selectedParticipants.contains(randomIndex)) {
+                        selectedParticipants.add(randomIndex);
+                        RegistrationParticipant participant = participantsUnion.get(randomIndex);
+
+                        if (!twoMembersInOneGroup(participant, singleGroup)) {//two members can't be in the same group
+                            //if a member found that doesn't break any condition add him/her to the group
+                            singleGroup.add(participant);
+                            participantsUnion.remove(randomIndex);
+                            return true;
+                        }
+                    }
+                }
             }
         }
         return false;
     }
 
-    protected boolean addWomanToList(String unionStam, List<RegistrationParticipant> singleGroup) {
-        if (participantsWoman != null) {
-            List<RegistrationParticipant> registeredWomanUnion = participantsWoman.get(unionStam);
-
-            if (registeredWomanUnion != null && registeredWomanUnion.size() > 0) {
-                int randomIndex = (int) (Math.random() * registeredWomanUnion.size());
-
-                singleGroup.add(registeredWomanUnion.get(randomIndex));
-                registeredWomanUnion.remove(randomIndex);
-
-                amountWoman++;
+    protected boolean twoMembersInOneGroup(RegistrationParticipant participant, List<RegistrationParticipant> singleGroup) {
+        for(RegistrationParticipant member : singleGroup) {
+            if(participant.getStamnumber().equals(member.getStamnumber())) {
                 return true;
             }
         }
@@ -228,14 +276,23 @@ public class GenerateGroupsService {
     }
 
     protected void addParticipantInCorrectGroup(RegistrationParticipant participant) {
-        String unionName = chiroUnitRepository.findUnionParticipant(participant.getAdNumber()).getStamNummer();
+        /*ChiroUnit unit = chiroUnitRepository.findUnionParticipant(adNumber);
+        if(unit == null) {
+            System.err.println("unit is null");
+        }
+        String unionName = unit.getStamNummer();*/
 
-        if(participant.getGender().equals(Gender.MAN)) {
+        String unionName = chiroUnitRepository.findUnionUsingAD(participant.getAdNumber());
+        if(unionName == null || unionName == "") {
+           unionName = "Other";
+        }
+
+        if (participant.getGender().equals(Gender.MAN)) {
             addToMap(unionName, participant, participantsMan);
-        } else if(participant.getGender().equals(Gender.WOMAN)) {
+        } else if (participant.getGender().equals(Gender.WOMAN)) {
             addToMap(unionName, participant, participantsWoman);
         } else { //scrumble gender X participants in random male/female groups
-            if((int)(Math.random() * 2) > 0) {
+            if ((int) (Math.random() * 2) > 0) {
                 addToMap(unionName, participant, participantsMan);
             } else {
                 addToMap(unionName, participant, participantsWoman);
@@ -284,16 +341,12 @@ public class GenerateGroupsService {
         for(;i < groupsOfParticipants.size(); i++){
             List<RegistrationParticipant> singleGroup = groupsOfParticipants.get(i);
 
-            int amountMan = 0;
-            int amountWoman = 0;
-            for (int j = 0; j < singleGroup.size(); j++) {
-                if (singleGroup.get(j).getGender().equals(Gender.MAN)) {
-                    amountMan++;
-                } else if (singleGroup.get(j).getGender().equals(Gender.WOMAN)) {
-                    amountWoman++;
-                }
-            }
+            WrapInt wrapAmountMan = new WrapInt();
+            WrapInt wrapAmountWoman = new WrapInt();
 
+            countGenders(singleGroup, wrapAmountMan, wrapAmountWoman);
+            int amountMan = wrapAmountMan.value;
+            int amountWoman = wrapAmountWoman.value;
 
             for(int index = 0; index < singleGroup.size(); index++) {
                 if(amountMan > amountWoman) {
@@ -327,6 +380,14 @@ public class GenerateGroupsService {
         }
     }
 
+    /*
+    * public function to put behind a button
+     */
+    public List<List<RegistrationParticipant>> scrambleTheRestGroup(List<List<RegistrationParticipant>> groupsOfParticipants) {
+        this.scrambleInRestGroup(groupsOfParticipants);
+        return groupsOfParticipants;
+    }
+
     private boolean scrambleWithMan(List<RegistrationParticipant> singleGroup, int index, List<List<RegistrationParticipant>> groupsOfParticipants, int posList) {
         return scrambleWithPerson(Gender.MAN, singleGroup, index, groupsOfParticipants, posList);
     }
@@ -358,17 +419,11 @@ public class GenerateGroupsService {
     * This function will check if it is allowed to scramble a member inside of a group
      */
     private boolean checkScramblePossible(List<RegistrationParticipant> singleGroup, RegistrationParticipant participant) {
-        int amountMan = 0;
-        int amountWoman = 0;
-        for (int i = 0; i < singleGroup.size(); i++) {
-            if (singleGroup.get(i).getGender().equals(Gender.MAN)) {
-                amountMan++;
-            } else if (singleGroup.get(i).getGender().equals(Gender.WOMAN)) {
-                amountWoman++;
-            }
-        }
+        WrapInt amountMan = new WrapInt();
+        WrapInt amountWoman = new WrapInt();
+        countGenders(singleGroup, amountMan, amountWoman);
 
-        if(amountWoman < amountMan - 1 || amountWoman > amountMan + 1){//the scramble function will not allow more than 1 gender offset
+        if(amountWoman.value < amountMan.value - 1 || amountWoman.value > amountMan.value + 1){//the scramble function will not allow more than 1 gender offset
             return false;
         } else {
             String unionParticipant = chiroUnitRepository.findUnionParticipant(participant.getAdNumber()).getStamNummer();
@@ -386,6 +441,21 @@ public class GenerateGroupsService {
         return true;
     }
 
+    private class WrapInt {
+        public int value = 0;
+    }
+
+
+    private void countGenders(List<RegistrationParticipant> singleGroup, WrapInt amountMan, WrapInt amountWoman) {
+        for (RegistrationParticipant participant : singleGroup) {
+            if (participant.getGender().equals(Gender.MAN)) {
+                amountMan.value++;
+            } else if (participant.getGender().equals(Gender.WOMAN)) {
+                amountWoman.value++;
+            }
+        }
+    }
+
     private boolean checkScrambleLackingList(List<RegistrationParticipant> lackingList, RegistrationParticipant participant) {
         String unionParticipant = chiroUnitRepository.findUnionParticipant(participant.getAdNumber()).getStamNummer();
         boolean foundOnce = false;
@@ -400,6 +470,35 @@ public class GenerateGroupsService {
         }
 
         return true;
+    }
+
+    /*
+    * put all the groups with a size smaller then groupsize into 1 group so they can be manually sorted later on
+    * */
+    private void combineNotFullGroups(List<List<RegistrationParticipant>> groupsOfParticipants) {
+        int i;
+        //only the last group should be smaller than the max groupsize
+        for(i = groupsOfParticipants.size() - 1; i > 0 && groupsOfParticipants.get(i).size() < groupSize; i--) {
+        }
+        i++;
+
+        List<RegistrationParticipant> restGroup = new ArrayList<>();
+        while(i > 0 && i < groupsOfParticipants.size()) {
+            restGroup.addAll(groupsOfParticipants.get(i));
+            groupsOfParticipants.remove(i);
+        }
+
+        if(restGroup.size() > 0) {
+            groupsOfParticipants.add(restGroup);
+        }
+    }
+
+    /*
+    * public function to put behind a button
+     */
+    public List<List<RegistrationParticipant>> combineRestGroups(List<List<RegistrationParticipant>> groupsOfParticipants) {
+        this.combineNotFullGroups(groupsOfParticipants);
+        return groupsOfParticipants;
     }
 
 

@@ -1,4 +1,4 @@
-<a class="btn right" href="/analytics">Bekijk tabel</a>
+<a class="btn right" href="/verbonden">Bekijk tabel</a>
 <h1>Statistieken</h1>
 <div class="row">
     <input class="col s12 m12">
@@ -11,10 +11,41 @@
             <br/>
 
         </div>
-        <label for="startDate">Start Date:</label>
-        <input type="date" class="datepicker" id="startDate" ng-model="$ctrl.startDate" ng-change="$ctrl.changeDate()">
+
+    <form name="graphForm">
+        <!--
+        <input type="date" id="startDate" name="startDate" placeholder="dd-MM-yyyy" ng-model="$ctrl.startDate" class="validate" required>
+        <p ng-show="graphForm.startDate.$invalid" class="error"><i
+            class="material-icons">error_outline</i> Geef een datum in in het correcte formaat (MM/DD/YYYY)
+        </p>
         <label for="endDate">End Date:</label>
-        <input type="date" class="datepicker" id="endDate" ng-change="$ctrl.changeDate()" ng-model="$ctrl.endDate">
+        <input type="date" id="endDate" name="endDate" ng-model="$ctrl.endDate" class="validate" required>
+        <p ng-show="(graphForm.endDate.$invalid)" class="error"><i
+            class="material-icons">error_outline</i> Geef een datum in in het correcte formaat (MM/DD/YYYY)
+        </p>
+-->
+
+        <label for="startDate">Start Date:</label>
+        <input type="date" id="startDate" name="startDate" ng-model="$ctrl.startDate"
+               placeholder="dd-MM-yyyy" max="2100-12-31" min="1980-01-01" required />
+        <br/>
+        <span class="error" ng-show="graphForm.startDate.$error.required">
+         Start datum moet ingevuld zijn</span>
+        <span class="error" ng-show="graphForm.startDate.$error.date">
+         Geen geldige start datum (MM/dd/yyyy)</span>
+        <br/>
+
+        <label for="endDate">End Date:</label>
+        <input type="date" id="endDate" name="endDate" ng-model="$ctrl.endDate"
+               placeholder="yyyy-MM-dd" max="2100-12-31" min="1980-01-01" required />
+        <br/>
+        <span class="error" ng-show="graphForm.endDate.$error.required">
+         Eind datum moet ingevuld zijn</span>
+        <span class="error" ng-show="graphForm.endDate.$error.date">
+         Geen geldige eind datum (MM/dd/yyyy)</span>
+    <br/>
+        <input type="button" value="Herteken" ng-click="graphForm.$valid && $ctrl.changeDate()">
+    </form>
     </div>
 </div>
 

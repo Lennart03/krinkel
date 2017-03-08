@@ -22,7 +22,9 @@ class RegisterController {
         this.dataIsRemoved = false;
         this.voorwaarden = false;
         window.scrollTo(0, 0);
-
+        this.disableEverything = true;
+        this.gettingDataFromChiro = true;
+        console.log('GETTING DATA FROM CHIRO SET TO TRUE')
 
         if (this.SelectService.getSelectedFlag()) {
             this.SelectService.setColleague(undefined);
@@ -74,6 +76,10 @@ class RegisterController {
         } else {
             if (this.type === 'volunteer') {
                 var thiz = this;
+                console.log('Campground: ');
+                console.log(newPerzon.campGround);
+                console.log(newPerzon.campGround.toUpperCase());
+
                 this.KrinkelService.postVolunteer(this.MapperService.mapVolunteer(newPerzon)).then(function (resp) {
                     thiz.dataIsRemoved = true;
                     thiz.StorageService.removeUser();
@@ -103,12 +109,14 @@ class RegisterController {
     }
 
     prefillWithAdNumber(adNumber, emailSubscriber){ //second var is optional, as it's only required when subscribing a colleague.
-
         this.KrinkelService.getContactFromChiro(adNumber).then((resp) => {
             if (resp) {
                 let chiroContact = resp[0];
-                if(chiroContact) {
+                if (chiroContact) {
+
                     this.newPerson = {
+                        firstNameIsEmpty: chiroContact.first_name == "",
+                        lastNameIsEmpty: chiroContact.last_name == "",
                         adNumber: adNumber,
                         job: "Aanbod nationale kampgrond",
                         firstName: chiroContact.first_name || "", //this pretty much means use the var if it's not null/undefined, else use an empty string
@@ -127,17 +135,46 @@ class RegisterController {
                         long_name: chiroContact.street_address
                     });
                     this.details3.vicinity = chiroContact.city;
-                }
-                this.KrinkelService.getPloegen(adNumber).then((resp) => {
-                    this.options = [];
-                    resp.forEach((r) => {
-                        this.options.push(JSON.parse(r));
+                    this.KrinkelService.getPloegen(adNumber).then((resp) => {
+                        this.options = [];
+                        resp.forEach((r) => {
+                            this.options.push(JSON.parse(r));
+                        });
+                        this.newPerson.group = this.options[0].stamnr;
+                        console.log('OPTIONS inside getploegen call');
+                        console.log(this.options);
+                        // Als this.options leeg is => geen groep gevonden
+                        if(typeof this.options === 'undefined' || this.options.length == 0){
+                            console.log('undefined or options.length == 0')
+                            this.dataCouldNotBeLoaded();
+                        } else if(this.options.length == 0){
+                            console.log('options.length == 0')
+                            this.dataCouldNotBeLoaded();
+                        } else {
+                            console.log('Loading data successful');
+                            this.gettingDataFromChiro = false;
+                            this.disableEverything = false;
+
+                            document.getElementById("divAroundTopText").style.display = "inline";
+                            document.getElementById("divAroundForm").style.display = "inline";
+                        }
                     });
-                    this.newPerson.group = this.options[0].stamnr;
-                });
+
+
+                } else {
+                    // Geen chiro contact gevonden
+                    console.log('==> Geen chiro contact gevonden');
+                    this.dataCouldNotBeLoaded();
+                }
             }
         });
     }
+
+    dataCouldNotBeLoaded(){
+        this.gettingDataFromChiro = false;
+        this.disableEverything = true;
+    }
+
     prefillSelf() {
         let loggedInUser = this.AuthService.getLoggedinUser();
         this.prefillWithAdNumber(loggedInUser.adnummer);

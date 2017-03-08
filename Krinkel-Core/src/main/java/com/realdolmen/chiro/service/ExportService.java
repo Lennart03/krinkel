@@ -309,15 +309,16 @@ public class ExportService {
             // In case of volunteers:
             String campGround = "";
             String preset = "";
-            String other = "";
             //Set precamp and postcamp data for volunteers
             String precampDates = "";
             String postcampDates = "";
             if(r instanceof RegistrationVolunteer) {
                 RegistrationVolunteer volunteer = (RegistrationVolunteer) r;
                 campGround = volunteer.getCampGround().getDescription();
-                preset = volunteer.getFunction().getPreset().getDescription();
-                other = volunteer.getFunction().getOther();
+                if(volunteer.getFunction() == null){
+                    preset = "GEEN WAARDE GEVONDEN";
+                }
+                preset = volunteer.getFunction().toString();
                 precampDates = transformPreCampListToString(volunteer.getPreCampList());
                 postcampDates = transformPostCampListToString(volunteer.getPostCampList());
             }
@@ -379,7 +380,6 @@ public class ExportService {
                     r.getRemarks(),
                     campGround,
                     preset,
-                    other,
                     socialPromotion,
                     r.getRegisteredBy(),
                     r.getEmailSubscriber(),

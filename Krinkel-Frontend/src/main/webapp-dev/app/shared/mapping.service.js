@@ -42,17 +42,25 @@ export class MapperService {
         }
 
         var mappedJob = this.mapJob(data.job);
-
-        if (mappedJob === 'CUSTOM') {
+        console.log('mappedJob in volunteerMapper');
+        console.log(mappedJob);
+        if(mappedJob === 'ERROR'){
+            console.log('ERROR at mapping service js => job is malformed');
+            volunteer.function={
+                preset: 'CUSTOM',
+                other: 'Iets is misgelopen in de mapping.service.js: de aangeduide functie is incorrect geparst!'
+            };
+        }
+        else if (mappedJob === 'CUSTOM') {
+            console.log('MappedJob = custom');
             volunteer.function = {
                 preset: 'CUSTOM',
                 other: data.jobOther
             };
         } else {
+            console.log('MappedJob != custom');
             volunteer.function = {
                 preset: mappedJob
-
-
             };
         }
 
@@ -74,7 +82,7 @@ export class MapperService {
                 return 'CAMPGROUND';
                 break;
             case 'KLINKERREDACTIE':
-                return 'KLINKER_EDITORIAL';
+                return 'KRINKEL_EDITORIAL';
                 break;
             case 'KOOKPLOEG':
                 return 'COOKING';
@@ -90,6 +98,9 @@ export class MapperService {
                 break;
             case 'OTHER':
                 return 'CUSTOM';
+                break;
+            default :
+                return 'ERROR';
                 break;
         }
 

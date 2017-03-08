@@ -15,4 +15,10 @@ Krinkel-Rest/src/main/resources/static/
 node/
 node_modules/
 
+Krinkel-Fontend/node_modules/
+Krinkel-Fontend/gulp/
+
 env.url.config.js
+
+*.properties
+

@@ -30,3 +30,19 @@
     <button ng-click="$ctrl.PrintGroups('lijsten-van-groepen')" class="btn">Printen</button>
 </form>
 
+<form>
+    <p>
+        <input type="radio" ng-model="$ctrl.option" value="-1" id="standardCheckbox" />
+        <label for="standardCheckbox">Niets doen met onvolledige groepen</label>
+    </p>
+    <p>
+        <input type="radio" ng-model="$ctrl.option" value="0" id="combineRestCheckbox" />
+        <label for="combineRestCheckbox">Overblijvende groepen combineren</label>
+    </p>
+    <p>
+        <input type="radio" ng-model="$ctrl.option" value="1" id="shuffleRestGroupCheckbox" />
+        <label for="shuffleRestGroupCheckbox">Overblijvende groep shuffelen in andere groepen</label>
+    </p>
+</form>
+
+

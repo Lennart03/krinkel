@@ -1,0 +1,40 @@
+<h1>Bevestigingsmail opnieuw verzenden</h1>
+
+<h4>Ingeschreven personen met status "betaald"</h4>
+
+<spinner loading="$ctrl.dataIsLoaded === false"></spinner>
+<div style="font-size: 20px; text-align: center; padding-top: 20px;" ng-if="$ctrl.dataIsLoaded === false">De gegevens worden opgehaald</div>
+
+<div ng-if="$ctrl.dataIsLoaded">
+    <a class="btn right" ng-click="$ctrl.resendConfirmationEmails()" ng-disabled="$ctrl.nrOfParticipantsPaid === 0">
+        Verstuur mail met bevestigingslink naar {{$ctrl.nrOfParticipantsPaid}} deelnemer(s)
+    </a>
+
+    <table ng-if="$ctrl.AuthService.getUserRole() === 'ADMIN'">
+        <thead>
+        <tr>
+            <th data-field="adNummer">Ad nummer</th>
+            <th data-field="stamnumber">Stamnummer</th>
+            <th data-field="name">Naam</th>
+            <th data-field="email">email</th>
+
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="participant in $ctrl.participants" id="{{ ::participant.id }}" ng-if="participant.status === 'PAID'">
+            <td>
+                {{participant.adNumber}}
+            </td>
+            <td>
+                {{participant.stamnumber}}
+            </td>
+            <td>
+                {{participant.firstName}} {{participant.lastName}}
+            </td>
+            <td>
+                {{participant.email}}
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>

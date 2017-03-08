@@ -291,32 +291,75 @@ a[x-apple-data-detectors] {
 																		<tr>
 																			<td align="left" valign="top"
 																				style="padding-bottom: 40px;"><br />
-																				<h1
-																					style="text-align: left; color: rgb(115, 115, 115); padding-top: 30px; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-weight: 700; margin-top: 0px;">
-																					Hoera!</h1>
-																				<div th:switch="${isMailToSubscriber}">
-																					<p th:case="false">
-																						Dag <span th:text="${participant.firstName}"></span>!
-																						Je bent succesvol ingeschreven <span
-																							th:if='${isVolunteer}'>als medewerker</span> voor
-																						Krinkel. Je betaling is gelukt en we hebben je
-																						gegevens ontvangen. Hieronder vind je de gegevens
-																						die je invulde. Wil je iets veranderen aan je
-																						inschrijving? Laat het weten via
-																						<a href="mailto:inschrijvingen@krinkel.be">inschrijvingen@krinkel.be</a>.
-																					</p>
-																					<p th:case="true">
-																						Hallo! Je hebt <span
-																							th:text="${participant.firstName}"></span>
-																						succesvol ingeschreven <span
-																							th:if='${isVolunteer}'>als medewerker</span> voor
-																						Krinkel. Je betaling is gelukt en we hebben je
-																						gegevens ontvangen. Hieronder vind je de gegevens
-																						die je invulde. Wil je iets veranderen aan je
-																						inschrijving? Laat het weten via
-																						<a href="mailto:inschrijvingen@krinkel.be">inschrijvingen@krinkel.be</a>.
-																					</p>
-
+																				<div th:switch="${updateByAdmin}">
+																					<div th:case="false">
+																						<h1
+																								style="text-align: left; color: rgb(115, 115, 115); padding-top: 30px; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-weight: 700; margin-top: 0px;">
+																							Hoera!</h1>
+																						<div th:switch="${isMailToSubscriber}">
+																							<p th:case="false">
+																								Dag <span th:text="${participant.firstName}"></span>!
+																								Je bent succesvol ingeschreven <span
+																									th:if='${isVolunteer}'>als medewerker</span> voor
+																								Krinkel. Je betaling is gelukt en we hebben je
+																								gegevens ontvangen. Hieronder vind je de gegevens
+																								die je invulde. Wil je iets veranderen aan je
+																								inschrijving? Laat het weten via
+																								<a href="mailto:inschrijvingen@krinkel.be">inschrijvingen@krinkel.be</a>.
+																							</p>
+																							<p th:case="true">
+																								Hallo! Je hebt <span
+																									th:text="${participant.firstName}"></span>
+																								succesvol ingeschreven <span
+																									th:if='${isVolunteer}'>als medewerker</span> voor
+																								Krinkel. Je betaling is gelukt en we hebben je
+																								gegevens ontvangen. Hieronder vind je de gegevens
+																								die je invulde. Wil je iets veranderen aan je
+																								inschrijving? Laat het weten via
+																								<a href="mailto:inschrijvingen@krinkel.be">inschrijvingen@krinkel.be</a>.
+																							</p>
+																						</div>
+																					</div>
+																					<div th:case="true">
+																						<div th:switch="${status}">
+																							<p th:case="'TO_BE_PAID'">
+																								Hallo <span
+																									th:text="${participant.firstName}"></span>, we hebben je inschrijving
+																								aangepast naar 'nog niet betaald'.
+																								Je ziet deze mail vermoedelijk omdat je gekozen hebt niet via de site te betalen.
+																								Voor de verdere behandeling van de inschrijving, of indien je al betaald hebt, gelieven
+																								iemand van de administratie te contacteren. Dit kan onder andere via
+																								<a href="mailto:inschrijvingen@krinkel.be">inschrijvingen@krinkel.be</a>.
+																								Hieronder vind je alvast de details van je voorlopige inschrijving.
+																							</p>
+																							<p th:case="'PAID'">
+																								Hallo <span
+																									th:text="${participant.firstName}"></span>, we hebben je
+																								inschrijving aangepast naar 'betaald'.
+																								Nu moet je enkel nog op de <span style="font-weight: bold;">bevestigingslink</span> onderaan deze mail klikken om je inschrijving te voltooien.
+																								Hieronder vind je alvast de gegevens van je inschrijving.
+																								Wil je iets veranderen aan je inschrijving? Laat het weten via
+																								<a href="mailto:inschrijvingen@krinkel.be">inschrijvingen@krinkel.be</a>.
+																							</p>
+																							<p th:case="'CONFIRMED'">
+																								Hallo <span
+																									th:text="${participant.firstName}"></span>, we hebben
+																								je inschrijving aangepast naar 'bevestigd'.
+																								Deze mail zie je vermoedelijk omdat er iets mis is gelopen in ons systeem en een van onze
+																								knappe koppen is correcties aan het maken.
+																								Je inschrijving is dus in orde. Hieronder vind je de gegevens van je inschrijving.
+																								Wil je iets veranderen aan je inschrijving? Laat het weten via
+																								<a href="mailto:inschrijvingen@krinkel.be">inschrijvingen@krinkel.be</a>.
+																							</p>
+																							<p th:case="'CANCELLED'">
+																								Hallo <span
+																									th:text="${participant.firstName}"></span>, we hebben u inschrijving geannuleerd.
+																								Vermoedelijk weet u al hoe dit komt, indien dit niet het geval is kunt u ons best zo snel mogelijk contacteren op
+																								<a href="mailto:inschrijvingen@krinkel.be">inschrijvingen@krinkel.be</a>.
+																								Hier volgen nog de gegevens over de geanulleerde inschrijving.
+																							</p>
+																						</div>
+																					</div>
 																				</div>
 																				<table width="100%" align="center"
 																					id="bodyTableInfo" border="0" style="height: 100%;">
@@ -472,9 +515,9 @@ a[x-apple-data-detectors] {
 																		</tr>
 																		<!-- END Hoera // -->
 
-																		<!-- BEGIN BevestiginsLink // -->
+																		<!-- BEGIN BevestigingsLink // -->
 																		<tr
-																			th:if="${not isMailToSubscriber and participant.isRegisteredByOther()}">
+																			th:if="${not isMailToSubscriber and participant.isRegisteredByOther() or (updateByAdmin and status == 'PAID')}">
 																			<td align="center" style="padding-bottom: 60px;"
 																				valign="top">
 																				<table align="center" border="0" cellpadding="0"
@@ -499,31 +542,38 @@ a[x-apple-data-detectors] {
 																				</table>
 																			</td>
 																		</tr>
-																		<!-- END BevestiginsLink // -->
+																		<!-- END BevestigingsLink // -->
 
 																		<!-- BEGIN Algemene voorwaarden // -->
 																		<tr
-																			th:if="${not isMailToSubscriber and participant.isRegisteredByOther() }">
+																			th:if="${not isMailToSubscriber and participant.isRegisteredByOther() or (updateByAdmin and status == 'PAID')}">
 																			<td align="left" valign="top"
 																				style="padding-top: 10px; padding-bottom: 40px;">
 																				<div>
 																					<h4
 																						style="text-align: center; color: rgb(115, 115, 115); line-height: 24px; padding-top: 0px; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-weight: 700; margin-top: 0px;">
 																						Algemene voorwaarden</h4>
-																					<p><b>Informatie vanwege de organisator: </b>
+																					<p>
+																						<b>Informatie vanwege de organisator: </b>
 																						Krinkel wordt georganiseerd door Chirojeugd Vlaanderen vzw,
 																						Kipdorp 30, 2000 Antwerpen, ondernemingsnummer 04515.651.928,
 																						telefoon 03/231.07.95, email:
 																						<a href="mailto:info@krinkel.be">info@krinkel.be</a>.
 																					</p>
-																					<p><b>Verloop van Krinkel: </b>
+																					<p>
+																						<b>Verloop van Krinkel: </b>
 																						De deelnemer zal de richtlijnen van de organisatie in verband met de veiligheid, het verloop van Krinkel,
-																						het groepsgebeuren dienen te volgen. Bij overtreding van deze richtlijnen, kan een deelnemer uitgesloten worden van verdere deelneming zonder aanspraak te kunnen maken op een schadevergoeding of terugbetaling  van een gedeelte van de deelnameprijs. </p>
+																						het groepsgebeuren dienen te volgen. Bij overtreding van deze richtlijnen, kan een deelnemer uitgesloten worden van verdere deelneming zonder aanspraak te kunnen maken op een schadevergoeding of terugbetaling  van een gedeelte van de deelnameprijs.
+																					</p>
 
-																					<p><b>Bagage: </b>De organisatie is niet aansprakelijk voor verlies,
-																						diefstal of beschadiging van (onderdelen van) bagage.</p>
+																					<p>
+																						<b>Bagage: </b>De organisatie is niet aansprakelijk voor verlies,
+																						diefstal of beschadiging van (onderdelen van) bagage.
+																					</p>
 
-																					<p><b>Informatie vanwege de deelnemer: </b>De deelnemer moet de organisatie (Chirojeugd Vlaanderen vzw) alle nuttige inlichtingen verstrekken die hem uitdrukkelijk gevraagd worden of die redelijkerwijze een invloed kunnen hebben op het goede verloop van Krinkel. Wanneer de deelnemer verkeerde inlichtingen verstrekt en dit tot extra kosten leidt voor de organisatie (Chirojeugd Vlaanderen vzw), mogen die kosten in rekening worden gebracht.</p>
+																					<p>
+																						<b>Informatie vanwege de deelnemer: </b>De deelnemer moet de organisatie (Chirojeugd Vlaanderen vzw) alle nuttige inlichtingen verstrekken die hem uitdrukkelijk gevraagd worden of die redelijkerwijze een invloed kunnen hebben op het goede verloop van Krinkel. Wanneer de deelnemer verkeerde inlichtingen verstrekt en dit tot extra kosten leidt voor de organisatie (Chirojeugd Vlaanderen vzw), mogen die kosten in rekening worden gebracht.
+																					</p>
 
 																					<p>
 																						<b>Herroeping door de deelnemer: </b>De deelnemer kan te allen tijde het contract geheel of gedeeltelijk verbreken/herroepen. Indien de deelnemer het contract wenst te herroepen wegens een aan hem toe te rekenen omstandigheid, vergoedt hij de schade die de organisatie (Chirojeugd Vlaanderen vzw) lijdt ten gevolge van de herroeping.
@@ -579,7 +629,7 @@ a[x-apple-data-detectors] {
 																						Iedere derde partij (inclusief bezoekers) die door een aan hem toerekenbare fout de aansprakelijkheid van de organisatie, in het gedrang brengt, moet de organisatie integraal en op eerste verzoek vrijwaren van iedere eis van derde partijen.
 																						Deze vrijwaringsplicht betekent dat je steeds vrijwillig dient tussen te komen in elk geschil en/of gerechtelijke procedure die tegen de organisatie wordt ingesteld door een derde en de eventuele financiële gevolgen ervan zelf moet dragen.
 																					</p>
-																				</div>
+                                                                                </div>
 																			</td>
 																		</tr>
 																		<!-- END Algemene voorwaarden // -->

@@ -34,6 +34,11 @@ public class EmailBatchService {
 			RegistrationParticipant participant = registrationParticipantRepository.findByAdNumber(r.getAdNumber());
 			emailSenderService.sendMail(participant);
 		});
-		Integer i;
+
+		regComs = registrationCommunicationRepository.findAllSendUpdate();
+		regComs.forEach(r -> {
+			RegistrationParticipant participant = registrationParticipantRepository.findByAdNumber(r.getAdNumber());
+			emailSenderService.sendMail(participant, true);
+		});
 	}
 }

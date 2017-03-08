@@ -13,7 +13,11 @@ public class UserServiceSecurity {
 
     public boolean hasPermissionToGetColleagues() {
         User currentUser = userService.getCurrentUser();
-
+        if(currentUser == null){
+            System.err.println("hasPermissionToGetColleagues(): Current user is null");
+        } else{
+            System.err.println("hasPermissionToGetColleagues(): Current user is not null");
+        }
         return currentUser != null;
     }
 

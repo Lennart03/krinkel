@@ -1,20 +1,50 @@
 class KrinkelGraphController {
     constructor(KrinkelService , $filter) {
-        this.$filter=$filter;
+        this.$filter = $filter;
         var month = $filter('date')(Date.now(), "MM");
         var year = $filter('date')(Date.now(), "yyyy");
         var day = $filter('date')(Date.now(), "dd");
         this.startDate = new Date(year,month,day);
-        month= month-1;
+        month = month - 1;
         this.endDate = new Date(year,month,day);
         this.startDate = new Date(year,month-1,day);
+        year = year +50;
+        this.maxDate = new Date(year,1,1);
+       /* $('#startDate').pickadate({
+            format: 'dd-mm-yyyy',
+            formatSumbit: 'dd-mm-yyyy',
+            selectMonths: true, // Creates a dropdown to control month
+            selectYears: 15 // Creates a dropdown of 15 years to control year
+        });
+        $('#endDate').pickadate({
+            format: 'dd-mm-yyyy',
+            formatSumbit: 'dd-mm-yyyy',
+            selectMonths: true, // Creates a dropdown to control month
+            selectYears: 15 // Creates a dropdown of 15 years to control year
+        });*/
+        /*
+        //this.datePattern = /./;
+        */
         this.KrinkelService = KrinkelService;
+        this.selectedName = null;
+        this.depth = 0;
+        this.getAllGraphData();
+    }
+    //added so all graphs are refreshed
+    getAllGraphData()
+    {
+        //console.log("d3 node " +d3.select(this).node());
         this.getDataForSunBurst();
-        this.getDataForStatus();
+        //console.log("done with getDataForSunBurst");
+        this.getDataForStatus(this.selectedName,this.depth);
+        //console.log("done with getDataForStatus");
         this.getDataForLogin(this.startDate,this.endDate);
+        //console.log("done with getDataForLogin");
+        this.$onInit();
     }
 
     getDataForSunBurst() {
+        //console.log("in getDataForSunBurst");
         this.KrinkelService.getGraphSunInfo().then((results) => {
             this.sunBurstData = [{name: 'Inschrijvingen'}];
             this.sunBurstData[0].children = results.children;
@@ -23,11 +53,14 @@ class KrinkelGraphController {
 
     changeDate()
     {
-        this.getDataForLogin(this.startDate, this.endDate);
+            this.getAllGraphData();
     }
 
-    getDataForStatus() {
-        this.KrinkelService.getGraphStatusInfo().then((results) => {
+    getDataForStatus(name,depth) {
+        //console.log("in getDataForStatus");
+        //console.log("name= " + name);
+        //console.log("depth= " + depth);
+        this.KrinkelService.getGraphStatusInfo(name,depth).then((results) => {
             this.barData = [
                 {
                     key: "Bevestigd deelnemer",
@@ -73,9 +106,8 @@ class KrinkelGraphController {
         });
     }
 
-
-
         getDataForLogin(startDate,endDate) {
+            //console.log("in getDataForLogin");
         this.lineData = [];
         this.lineOptions = {};
         this.KrinkelService.getGraphLoginInfo(startDate,endDate).then((results) => {
@@ -113,8 +145,9 @@ class KrinkelGraphController {
     }
 
     $onInit() {
+        //console.log("onInit executed")//remove
         this.test = "sunburstChart";
-
+        var thiz = this;
         //sunburst------------------
         this.sunBurstOptions = {
             chart: {
@@ -125,12 +158,26 @@ class KrinkelGraphController {
                 duration: 250,
                 sunburst: {
                     mode: 'size',
-                    groupColorByParent: true
+                    groupColorByParent: true,
+                    //dispatch:{
+                    //    chartClick:function(){console.log("chart clicked");},
+                    //    elementClick:function(e){console.log("element clicked " + e.data.name+ e.data);}
+                    //}
+                },callback: function(chart) {
+                    chart.sunburst.dispatch.on('elementClick', function(e){
+                        if (undefined != e.data.name)
+                        {
+                            this.selectedName=e.data.name;
+                            this.depth=e.data.depth;
+                            thiz.getDataForStatus(e.data.name,e.data.depth);
+                        }
+                    });
                 }
             }
-        };
+        }
         //show no data found sunburst
         this.sunBurstData = [];
+
 
         this.lineOptions = {
             chart: {
@@ -177,7 +224,6 @@ class KrinkelGraphController {
                 }
             }
         };
-
 
         this.lineData = [];
         //barchart ------------------- chart.tooltip.valueFormatter(function(d){return d.toFixed(4)});

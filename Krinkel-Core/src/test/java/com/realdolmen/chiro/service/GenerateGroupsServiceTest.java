@@ -438,7 +438,7 @@ public class GenerateGroupsServiceTest{
             generateGroupsService.addParticipantInCorrectGroup(participant);
         }
 
-        List<RegistrationParticipant> tempList = generateGroupsService.assignParticipantsToGroup();
+        List<RegistrationParticipant> tempList = generateGroupsService.assignParticipantsToGroup(unions);
 
         Assert.assertEquals((int)generateGroupsService.getGroupSize(), tempList.size());
 

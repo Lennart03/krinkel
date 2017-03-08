@@ -67,7 +67,7 @@ export function appConfig($routeProvider, $locationProvider) {
         template: '<verbonden></verbonden>'
     });
 
-    $routeProvider.when('/gewesten/:lol/:verbondNaam', {
+    $routeProvider.when('/gewesten/:verbondNr/:verbondNaam', {
         template: '<gewesten></gewesten>'
     });
 
@@ -78,6 +78,10 @@ export function appConfig($routeProvider, $locationProvider) {
     $routeProvider.when('/groep/:groepNr/:groepNaam', {
         template: '<groep></groep>'
     });
+
+    $routeProvider.when('/confirmations', {
+        template: '<confirmations></confirmations>'
+    })
 
     $routeProvider.otherwise({
         redirectTo: '/home'

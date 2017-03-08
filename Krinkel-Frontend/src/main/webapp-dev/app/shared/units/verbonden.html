@@ -5,35 +5,90 @@
         background-color: #EEE;
         cursor: pointer;
     }
+
+    .bevestigd{
+        color : #4caf50;
+    }
+    .betaald{
+        color : #2196f3;
+    }
+    .onbetaald{
+        color : #f44336;
+    }
+    .geannuleerd{
+        color : #ffa500;
+    }
+    .inlineDiv{
+       display:inline;
+    }
 </style>
 
-<a class="btn right" href="/graph" ng-if="$ctrl.AuthService.getUserRole() === 'ADMIN'">Bekijk Grafieken</a>
+<a class="btn right" href="/graph" ng-if="$ctrl.gettingData === false && $ctrl.userRole === 'ADMIN'">Bekijk Grafieken</a>
 
-<table>
-    <thead>
-    <tr>
-        <!--<th data-fiereld="stamNummmer">Stam nummer</th>-->
-        <th data-field="naam">Naam</th>
-        <th data-field="amountParticipants">Aantal deelnemers</th>
-        <!--<th data-field="amountVolunteers">Aantal medewerkers</th>-->
-    </tr>
-    </thead>
+<spinner loading="$ctrl.gettingData"></spinner>
+<div style="font-size: 20px; text-align: center; padding-top: 20px;" ng-if="$ctrl.gettingData">De gegevens worden opgehaald</div>
 
-    <tbody>
 
-    <tr ng-repeat="verbond in $ctrl.verbonden" ng-click="$ctrl.redirectToGewesten(verbond.stamnummer, verbond.name)">
-        <!--<td>-->
-            <!--{{verbond.stamnummer}}-->
-        <!--</td>-->
-        <td>
-            {{verbond.name}}
-        </td>
-        <td>
-            {{verbond.aantal_ingeschreven_deelnemers}}
-        </td>
-        <!--<td>-->
-            <!--{{verbond.aantal_ingeschreven_vrijwilligers}}-->
-        <!--</td>-->
-    </tr>
-    </tbody>
-</table>
+<!--<p style="layout: inline-block">Test voor getUserRole: {{$ctrl.user.role}}</p>-->
+<!--<a class="btn left" ng-click="$ctrl.logVerbonden()">Console log verbonden</a>-->
+<div ng-if="$ctrl.gettingData === false && $ctrl.userRole === 'ADMIN'">
+    <span class="bevestigd">Bevestigd</span> - <span class="betaald">Betaald</span> - <span class="onbetaald">Onbetaald</span> - <span class="geannuleerd">Geannuleerd</span>
+</div>
+
+<div id=tableVerbonden style="display: none">
+    <table>
+        <thead>
+        <tr>
+            <th data-field="stamNummmer" ng-if="$ctrl.userRole === 'ADMIN'">Stam nummer</th>
+            <th data-field="naam">Naam</th>
+            <th data-field="amountParticipants" ng-if="$ctrl.canSeeDeelnemersAantallen">Aantal deelnemers</th>
+            <th data-field="amountVolunteers" ng-if="$ctrl.canSeeMedewerkersAantallen || ctrl.AuthService.getUserRole() === 'ADMIN'">Aantal medewerkers</th>
+            <th data-field="iconSend"></th>
+        </tr>
+        </thead>
+
+        <tbody>
+        <tr ng-repeat="verbond in $ctrl.verbonden" ng-click="$ctrl.redirectToGewesten(verbond.stamnummer, verbond.name)">
+
+            <td ng-if="$ctrl.userRole === 'ADMIN'">
+                {{verbond.stamnummer}}
+            </td>
+            <td>
+                {{verbond.name}}
+                <!-- <p ng-if="$ctrl.canSee(verbond.stamnummer) == true" style="color:green">{{verbond.name}}</p>-->
+                <!-- <p ng-if="$ctrl.canSee(verbond.stamnummer) == false" style="color:red">{{verbond.name}}</p>-->
+
+            </td>
+            <td ng-if="$ctrl.canSeeDeelnemersAantallen">
+                <div class="inlineDiv" ng-if="$ctrl.checkCanSeeAantallen2(verbond.stamnummer) && $ctrl.AuthService.getUserRole() !== 'ADMIN'">
+                    {{verbond.aantal_ingeschreven_deelnemers_bevestigd}}
+                </div>
+                <div class="inlineDiv" ng-if="$ctrl.checkCanSeeAantallen2(verbond.stamnummer) === false && $ctrl.AuthService.getUserRole() !== 'ADMIN'">
+                    x (no rights)
+                </div>
+                <div class="inlineDiv" ng-if="$ctrl.userRole === 'ADMIN'">
+                    <span class="bevestigd">{{verbond.aantal_ingeschreven_deelnemers_bevestigd}}</span> - <span class="betaald">{{verbond.aantal_ingeschreven_deelnemers_betaald}}</span> - <span class="onbetaald">{{verbond.aantal_ingeschreven_deelnemers_onbetaald}}</span> - <span class="geannuleerd">{{verbond.aantal_ingeschreven_deelnemers_geannuleerd}}</span>
+                </div>
+                <!--<i class="material-icons right icon-green" ng-if="$ctrl.canSeeMedewerkersAantallen === false || $ctrl.AuthService.getUserRole() !== 'ADMIN'">send</i>-->
+            </td>
+            <!-- getUserRole geeft admin terug in case of admin of super-admin; anders geeft het groep terug -->
+            <td ng-if="$ctrl.canSeeMedewerkersAantallen || $ctrl.userRole === 'ADMIN'">
+                <div class="inlineDiv" ng-if="$ctrl.checkCanSeeAantallen2(verbond.stamnummer) && $ctrl.AuthService.getUserRole() !== 'ADMIN'">
+                    {{verbond.aantal_ingeschreven_vrijwilligers_bevestigd}}
+                </div>
+                <div class="inlineDiv" ng-if="$ctrl.checkCanSeeAantallen2(verbond.stamnummer) === false && $ctrl.AuthService.getUserRole() !== 'ADMIN'">
+                    x (no rights)
+                </div>
+                <div class="inlineDiv" ng-if="$ctrl.userRole === 'ADMIN'">
+                    <span class="bevestigd">{{verbond.aantal_ingeschreven_vrijwilligers_bevestigd}}</span> - <span class="betaald">{{verbond.aantal_ingeschreven_vrijwilligers_betaald}}</span> - <span class="onbetaald">{{verbond.aantal_ingeschreven_vrijwilligers_onbetaald}}</span> - <span class="geannuleerd">{{verbond.aantal_ingeschreven_vrijwilligers_geannuleerd}}</span>
+                </div>
+                <!--<i class="material-icons right icon-green">send</i>-->
+            </td>
+            <td ng-if="$ctrl.checkForLastVerbond(verbond.stamnummer)">
+                <i class="material-icons right icon-green">send</i>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+

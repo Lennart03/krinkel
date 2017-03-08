@@ -1,37 +1,302 @@
-<h1>Lijst van {{$ctrl.verbondNaam}}</h1>
+<h1 ng-if="!$ctrl.showVolunteers && $ctrl.showGewesten">Gewesten binnen {{$ctrl.verbondNaam}}</h1>
+<h1 ng-if="!$ctrl.showVolunteers && $ctrl.showGewesten === false">Lijst van deelnemers in {{$ctrl.verbondNaam}}</h1>
+<h1 ng-if="$ctrl.showVolunteers">Lijst van vrijwilligers in {{$ctrl.verbondNaam}}</h1>
 
 <style>
     tbody tr:hover {
         background-color: #EEE;
         cursor: pointer;
     }
+    select {
+        display: block;
+        cursor: pointer;
+    }
+    option {
+        cursor: pointer;
+    }
+    .bevestigd{
+        color : #4caf50;
+    }
+    .betaald{
+        color : #2196f3;
+    }
+    .onbetaald{
+        color : #f44336;
+    }
+    .geannuleerd{
+        color : #ffa500;
+    }
+    .inlineDiv{
+        display:inline;
+    }
+
+    .myInput {
+        /*background-image: url('/css/searchicon.png'); !* Add a search icon to input *!*/
+        background-position: 10px 12px; /* Position the search icon */
+        background-repeat: no-repeat; /* Do not repeat the icon image */
+        width: 100%; /* Full-width */
+        font-size: 16px; /* Increase font-size */
+        padding: 12px 20px 12px 40px; /* Add some padding */
+        border: 1px solid #ddd; /* Add a grey border */
+        margin-bottom: 12px; /* Add some space below the input */
+    }
+    #inputLanguageSearch{
+        display: inline-block !important;
+        width: auto !important;
+    }
 </style>
 
-<table>
-    <thead>
-    <tr>
-        <!--<th data-field="stamNummer">Stam nummer</th>-->
-        <th data-field="naam">Naam</th>
-        <th data-field="amountParticipants">Aantal deelnemers</th>
-        <!--<th data-field="amountVolunteers">Aantal medewerkers</th>-->
-    </tr>
-    </thead>
+<spinner loading="$ctrl.gettingData"></spinner>
+<div style="font-size: 20px; text-align: center; padding-top: 20px;" ng-if="$ctrl.gettingData">De gegevens worden opgehaald</div>
 
 
-    <tbody>
-    <tr ng-repeat="gewest in $ctrl.gewesten" ng-click="$ctrl.redirectToGroepen(gewest.stamnummer, gewest.name)">
-        <!--<td>-->
-            <!--{{gewest.stamnummer}}-->
-        <!--</td>-->
-        <td>
-            {{gewest.name}}
-        </td>
-        <td>
-            {{gewest.aantal_ingeschreven_deelnemers}}
-        </td>
-        <!--<td>-->
-            <!--{{gewest.aantal_ingeschreven_vrijwilligers}}-->
-        <!--</td>-->
-    </tr>
-    </tbody>
-</table>
+<div id="tableGewesten" style="display: none">
+
+    <div ng-if="$ctrl.userRole === 'ADMIN' && $ctrl.showGewesten">
+        <span class="bevestigd">Bevestigd</span> - <span class="betaald">Betaald</span> - <span class="onbetaald">Onbetaald</span> - <span class="geannuleerd">Geannuleerd</span>
+    </div>
+
+    <a class="btn right" ng-click="$ctrl.switchShowParticipantsVolunteers()" ng-if="$ctrl.canSeeMedewerkers && !$ctrl.showVolunteers">
+        Medewerkers ({{$ctrl.volunteersLength}})
+    </a>
+
+    <a class="btn right" ng-click="$ctrl.switchShowParticipantsVolunteers()" ng-if="$ctrl.canSeeMedewerkers && $ctrl.showGewesten && $ctrl.showVolunteers">
+        Overzicht gewesten
+    </a>
+
+    <a class="btn right" ng-click="$ctrl.switchShowParticipantsVolunteers()" ng-if="$ctrl.canSeeMedewerkers && $ctrl.showGewesten === false && $ctrl.showVolunteers">
+        Overzicht deelnemers
+    </a>
+
+    <!--show nr of volunteers if nationaal-->
+    <a class="btn right" disabled ng-if="$ctrl.canSeeMedewerkers === false && $ctrl.checkForNationaalToSeeNrOfMedewerkers();">
+        Aantal medewerkers: {{$ctrl.volunteersLength}}
+    </a>
+
+    <span ng-if="!$ctrl.showVolunteers && $ctrl.verbondNr === 'INT'">
+        <i style="vertical-align: middle;" class="material-icons">search</i>
+        <input type="text" id="inputLanguageSearch" ng-keyup="$ctrl.searchFunction()" placeholder="Zoek op taal">
+    </span>
+
+    <!-- BUDDIES -->
+    <h4 ng-if="!$ctrl.showVolunteers && $ctrl.showGewesten === false && $ctrl.verbondNr === 'INT'">Buddies</h4>
+    <table class="responsive-table" id="tableBuddies" ng-if="!$ctrl.showVolunteers && $ctrl.showGewesten === false && $ctrl.verbondNr === 'INT'">
+        <thead>
+        <tr>
+            <th data-field="naam">Naam</th>
+            <th ng-if="$ctrl.verbondNr === 'INT'" data-field="talen">Talen</th>
+            <th ng-if="$ctrl.userRole === 'ADMIN'" data-field="address">Adres</th>
+            <th ng-if="$ctrl.userRole === 'ADMIN'" data-field="city">Gemeente</th>
+            <th ng-if="$ctrl.userRole === 'ADMIN'" data-field="eatinghabit">Eetgewoonte</th>
+            <th ng-if="$ctrl.userRole === 'ADMIN'" data-field="medicalRemarks">Medische info</th>
+            <th ng-if="$ctrl.userRole === 'ADMIN'" style="min-width: 110px;">Status</th>
+            <th ng-if="$ctrl.userRole === 'ADMIN'"><i class="material-icons right icon-green">delete</i></th>
+
+        </tr>
+        </thead>
+
+        <tbody>
+        <tr ng-repeat="participant in $ctrl.participants" ng-if="participant.buddy && (participant.status === 'CONFIRMED' || ($ctrl.userRole === 'ADMIN' && participant.status !== 'CANCELLED'))">
+            <td>
+                {{participant.firstName}} {{participant.lastName}}
+            </td>
+            <td ng-if="participant.buddy && $ctrl.verbondNr === 'INT'">
+                {{$ctrl.getLanguages(participant.language)}}
+            </td>
+            <td ng-if="$ctrl.userRole === 'ADMIN'">
+                {{participant.address.street}}
+            </td>
+            <td ng-if="$ctrl.userRole === 'ADMIN'">
+                {{participant.address.city}}
+            </td>
+            <td ng-if="$ctrl.userRole === 'ADMIN'">
+                {{participant.eatinghabbit}}
+            </td>
+            <td ng-if="$ctrl.userRole === 'ADMIN'">
+                {{participant.medicalRemarks}}
+            </td>
+            <td ng-if="$ctrl.userRole === 'ADMIN'" style="min-width: 110px;">
+                <select ng-model="participant.status" ng-init="participant.status" ng-options="item.value as item.label for item in $ctrl.statusses"  ng-change="$ctrl.saveData(participant.id, participant.status)">
+                </select>
+            </td>
+            <td ng-if="$ctrl.userRole === 'ADMIN'">
+                <a ng-click="$ctrl.initCancelModal(participant.id)">
+                    <i class="material-icons right icon-green">clear</i>
+                </a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+    <!-- INGESCHREVEN DEELNEMERS BIJ INTERNATIONAAL, NATIONAAL of OVERIG -->
+    <h4 ng-if="!$ctrl.showVolunteers && $ctrl.showGewesten === false">Ingeschreven onder {{$ctrl.verbondNaam}}</h4>
+    <table class="responsive-table" ng-if="!$ctrl.showVolunteers && $ctrl.showGewesten === false">
+        <thead>
+        <tr>
+            <th data-field="name">Naam</th>
+            <th ng-if="$ctrl.userRole === 'ADMIN'" data-field="address">Adres</th>
+            <th ng-if="$ctrl.userRole === 'ADMIN'" data-field="city">Gemeente</th>
+            <th ng-if="$ctrl.userRole === 'ADMIN'" data-field="eatinghabit">Eetgewoonte</th>
+            <th ng-if="$ctrl.userRole === 'ADMIN'" data-field="medicalRemarks">Medische info</th>
+            <th ng-if="$ctrl.userRole === 'ADMIN'" style="min-width: 110px;">Status</th>
+            <th ng-if="$ctrl.userRole === 'ADMIN'"><i class="material-icons right icon-green">delete</i></th>
+        </tr>
+        </thead>
+
+
+        <tbody>
+        <tr ng-repeat="participant in $ctrl.participants" id="{{ ::participant.id }}" ng-if="participant.buddy === false && (participant.status === 'CONFIRMED' || ($ctrl.userRole === 'ADMIN' && participant.status !== 'CANCELLED'))">
+            <td>
+                {{participant.firstName}} {{participant.lastName}}
+            </td>
+            <td ng-if="$ctrl.userRole === 'ADMIN'">
+                {{participant.address.street}}
+            </td>
+            <td ng-if="$ctrl.userRole === 'ADMIN'">
+                {{participant.address.city}}
+            </td>
+            <td ng-if="$ctrl.userRole === 'ADMIN'">
+                {{participant.eatinghabbit}}
+            </td>
+            <td ng-if="$ctrl.userRole === 'ADMIN'">
+                {{participant.medicalRemarks}}
+            </td>
+            <td ng-if="$ctrl.userRole === 'ADMIN'" style="min-width: 110px;">
+                <select ng-model="participant.status" ng-init="participant.status" ng-options="item.value as item.label for item in $ctrl.statusses"  ng-change="$ctrl.saveData(participant.id, participant.status)">
+                </select>
+            </td>
+            <td ng-if="$ctrl.userRole === 'ADMIN'">
+                <a ng-click="$ctrl.initCancelModal(participant.id)">
+                    <i class="material-icons right icon-green">clear</i>
+                </a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+    <!-- Modal Structure -->
+    <div id="{{ ::'modal' + participant.id }}" ng-if="$ctrl.showVolunteers === false" ng-repeat="participant in $ctrl.participants track by $index" class="modal">
+        <div class="modal-content">
+            <h4>Wilt u deze bestelling annuleren?</h4>
+        </div>
+        <div class="modal-footer">
+            <a href="" class=" modal-action modal-close btn-flat"
+               ng-click="$ctrl.putParticipantToCancelled(participant.id)">OK</a>
+            <a href="" class="modal-action modal-close btn-flat">Annuleren</a>
+        </div>
+    </div>
+
+    <!-- GEWESTEN -->
+
+    <table class="responsive-table" ng-if="!$ctrl.showVolunteers && $ctrl.showGewesten">
+        <thead>
+        <tr>
+            <th ng-if="true || $ctrl.userRole === 'ADMIN'" data-field="stamNummer">Stam nummer</th>
+            <th data-field="naam">Naam</th>
+            <th ng-if="$ctrl.canSeeDeelnemersAantallen" data-field="amountParticipants">Aantal deelnemers</th>
+            <!--<th data-field="amountVolunteers" ng-if="$ctrl.userRole === 'ADMIN'">Aantal medewerkers</th>-->
+            <th data-field="iconSend"></th>
+        </tr>
+        </thead>
+
+        <tbody>
+        <tr ng-repeat="gewest in $ctrl.gewesten" ng-click="$ctrl.redirectToGroepen(gewest.stamnummer, gewest.name)">
+            <td ng-if="true || $ctrl.userRole === 'ADMIN'">
+                {{gewest.stamnummer}}
+            </td>
+            <td>
+                {{gewest.name}}
+            </td>
+            <td ng-if="$ctrl.canSeeDeelnemersAantallen">
+                <div class="inlineDiv" ng-if="$ctrl.checkCanSeeAantallen2(gewest.stamnummer) && $ctrl.AuthService.getUserRole() !== 'ADMIN'">
+                    {{gewest.aantal_ingeschreven_deelnemers_bevestigd}}
+                </div>
+                <div class="inlineDiv" ng-if="$ctrl.checkCanSeeAantallen2(gewest.stamnummer) === false">
+                    x (no rights)
+                </div>
+                <div class="inlineDiv" ng-if="$ctrl.userRole === 'ADMIN'">
+                    <span class="bevestigd">{{gewest.aantal_ingeschreven_deelnemers_bevestigd}}</span> - <span class="betaald">{{gewest.aantal_ingeschreven_deelnemers_betaald}}</span> - <span class="onbetaald">{{gewest.aantal_ingeschreven_deelnemers_onbetaald}}</span> - <span class="geannuleerd">{{gewest.aantal_ingeschreven_deelnemers_geannuleerd}}</span>
+                </div>
+
+            </td>
+            <td ng-if="$ctrl.checkForLastGewest(gewest.stamnummer)">
+                <i class="material-icons right icon-green">send</i>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+    <!-- MEDEWERKERS -->
+
+    <table class="responsive-table" ng-if="$ctrl.showVolunteers">
+        <thead>
+        <tr>
+            <th data-field="name">Naam</th>
+            <th data-field="address">Adres</th>
+            <th data-field="city">Gemeente</th>
+            <th ng-if="$ctrl.userRole === 'ADMIN'" data-field="eatinghabit">Eetgewoonte</th>
+            <th ng-if="$ctrl.userRole === 'ADMIN'" data-field="medicalRemarks">Medische info</th>
+            <th data-field="function">Functie</th>
+            <th data-field="campground">Kampgrond</th>
+            <th data-field="voorwacht">Voorwacht</th>
+            <th data-field="nawacht">Nawacht</th>
+            <th ng-if="$ctrl.userRole === 'ADMIN'" style="min-width: 110px;">Status</th>
+            <th ng-if="$ctrl.userRole === 'ADMIN'"><i class="material-icons right icon-green">delete</i></th>
+        </tr>
+        </thead>
+        <tbody>
+        <!-- admin can see everyone but cancelled, international can see everyone who is confirmed-->
+        <tr ng-repeat="volunteer in $ctrl.volunteers" id="{{ volunteer.id }}"
+                ng-if="(volunteer.status === 'CONFIRMED' && $ctrl.AuthService.getUserRole() !== 'ADMIN') || (volunteer.status !== 'CANCELLED' && $ctrl.userRole === 'ADMIN')">
+            <td>
+                {{volunteer.firstName}} {{volunteer.lastName}}
+            </td>
+            <td ng-if="$ctrl.userRole === 'ADMIN'">
+                {{volunteer.address.street}}
+            </td>
+            <td ng-if="$ctrl.userRole === 'ADMIN'">
+                {{volunteer.address.city}}
+            </td>
+            <td ng-if="$ctrl.userRole === 'ADMIN'">
+                {{volunteer.eatinghabbit}}
+            </td>
+            <td ng-if="$ctrl.userRole === 'ADMIN'">
+                {{volunteer.medicalRemarks}}
+            </td>
+            <td ng-if="$ctrl.userRole === 'ADMIN'">
+                {{volunteer.function.preset}}
+            </td>
+            <td ng-if="$ctrl.userRole === 'ADMIN'">
+                {{volunteer.campGround}}
+            </td>
+            <td ng-if="$ctrl.userRole === 'ADMIN'">
+                {{$ctrl.getDatesListFromList(volunteer.preCampList)}}
+            </td>
+            <td ng-if="$ctrl.userRole === 'ADMIN'">
+                {{$ctrl.getDatesListFromList(volunteer.postCampList)}}
+            </td>
+            <td ng-if="$ctrl.userRole === 'ADMIN'" style="min-width: 110px;">
+                <select ng-model="volunteer.status" ng-init="volunteer.status" ng-options="item.value as item.label for item in $ctrl.statusses"  ng-change="$ctrl.saveData(volunteer.id, volunteer.status)">
+                </select>
+            </td>
+            <td ng-if="$ctrl.userRole === 'ADMIN'">
+                <a ng-click="$ctrl.initCancelModal(volunteer.id)">
+                    <i class="material-icons right icon-green">clear</i>
+                </a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+    <!-- Modal Structure -->
+    <div id="{{ ::'modal' + volunteer.id }}"ng-if="$ctrl.showVolunteers" ng-repeat="volunteer in $ctrl.volunteers track by $index" class="modal">
+        <div class="modal-content">
+            <h4>Bent u zeker dat u de inschrijving van {{volunteer.firstName}} {{volunteer.lastName}} wilt annuleren?</h4>
+        </div>
+        <div class="modal-footer">
+            <a href="" class=" modal-action modal-close btn-flat"
+               ng-click="$ctrl.putParticipantToCancelled(volunteer.id)">OK</a>
+            <a href="" class="modal-action modal-close  btn-flat">Annuleren</a>
+        </div>
+    </div>
+</div>

@@ -1,4 +1,18 @@
-<div class="row">
+<spinner loading="$ctrl.gettingDataFromChiro"></spinner>
+<div style="font-size: 20px; text-align: center; padding-top: 20px;" ng-if="$ctrl.gettingDataFromChiro">De gegevens worden opgehaald</div>
+
+
+
+<div ng-if="$ctrl.gettingDataFromChiro === false && $ctrl.disableEverything">
+    <h1>Fout bij laden van gegevens</h1>
+    <p class="flow-text"><i class="material-icons">error_outline</i>
+        Er is iets misgelopen bij het inladen van je gegevens uit de databank.
+        Om je toch te kunnen inschrijven kun je contact opnemen via <a
+            href="mailto:inschrijvingen@krinkel.be">inschrijvingen@krinkel.be</a>.</p>
+</div>
+
+
+<div class="row" id="divAroundTopText" style="display:none">
     <h1 ng-if="$ctrl.type === 'volunteer'">Medewerker inschrijven</h1>
     <h1 ng-if="$ctrl.type === 'participant' && !$ctrl.SelectService.getSelectedFlag()">Deelnemer inschrijven</h1>
     <h1 ng-if="$ctrl.SelectService.getSelectedFlag()">Andere deelnemer inschrijven</h1>
@@ -14,13 +28,13 @@
 </div>
 
 
-<div class="row">
+<div class="row" id="divAroundForm" style="display:none">
     <form class="col s12 m12" novalidate name="personForm" ng-submit="personForm.$valid && $ctrl.addToBasket($ctrl.newPerson)">
         <div class="row">
             <div class="input-field col s12 m6">
                 <i class="material-icons prefix">perm_identity</i>
                 <input id="first_name" name="firstName" type="text" class="validate" ng-minlength="1"
-                       ng-model="$ctrl.newPerson.firstName" required>
+                       ng-model="$ctrl.newPerson.firstName" ng-disabled="!$ctrl.newPerson.firstNameIsEmpty" required>
                 <label for="first_name">Voornaam *</label>
                 <p ng-show="(personForm.firstName.$invalid && personForm.$submitted) || (personForm.firstName.$invalid && personForm.firstName.$touched)" class="error"><i
                     class="material-icons">error_outline</i> Voornaam is verplicht</p>
@@ -28,7 +42,7 @@
             <div class="input-field col s12 m6">
                 <i class="material-icons prefix">perm_identity</i>
                 <input id="last_name" name="lastName" type="text" class="validate" ng-model="$ctrl.newPerson.lastName"
-                       required>
+                       ng-disabled="!$ctrl.newPerson.lastNameIsEmpty" required>
                 <label for="last_name">Achternaam *</label>
                 <p ng-show="(personForm.lastName.$invalid && personForm.$submitted) || (personForm.lastName.$invalid && personForm.lastName.$touched)" class="error"><i
                     class="material-icons">error_outline</i> Achternaam is verplicht
@@ -329,7 +343,7 @@
 
                 <p>
                     <input class="with-gap" name="group3" type="radio" id="Krinkelredactie"
-                           ng-model="$ctrl.newPerson.job" value="Krinkelredactie"/>
+                           ng-model="$ctrl.newPerson.job" value="Klinkerredactie"/>
                     <label for="Krinkelredactie">Klinkerredactie</label>
                 </p>
 

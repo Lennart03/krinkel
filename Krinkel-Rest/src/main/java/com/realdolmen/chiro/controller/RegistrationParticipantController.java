@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.List;
 
 @RestController
 @EnableRestErrorHandling
@@ -122,6 +123,26 @@ public class RegistrationParticipantController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
+    @RequestMapping(method = RequestMethod.POST, value = "/api/participantsResendConfirmationEmails")
+    public Boolean resendConfirmationEmails(@RequestParam("participants") List<String> participantsAdNumbers) throws URISyntaxException {
+//        System.err.println("resendConfirmationEmails INIT");
+
+//        System.err.println("resendConfirmationEmails to participants: ");
+        for (String adnr : participantsAdNumbers) {
+//            System.err.println("Participant: " + adnr) ;
+        }
+        return registrationParticipantService.resendConfirmationEmails(participantsAdNumbers);
+    }
+
+    @RequestMapping(method = RequestMethod.GET, value = "/api/participants/all", produces = "application/json")
+    public List<RegistrationParticipant> getAllParticipants() {
+        List<RegistrationParticipant> all = registrationParticipantService.findAll();
+//        System.err.println("Length of findAll() in registrationParticipantController: " + all.size());
+        return all;
+    }
+
+
+
     @RequestMapping(method = RequestMethod.POST, value = "/api/participants/admin", consumes = "application/json")
     public ResponseEntity<?> saveByAdmin(@Valid @RequestBody RegistrationParticipant participant) throws URISyntaxException {
         if (participant == null) {
@@ -131,12 +152,11 @@ public class RegistrationParticipantController {
         //Integer price = registrationParticipantService.getPRICE_IN_EUROCENTS();
         //String paymentUrl = multiSafePayService.getParticipantPaymentUri(resultingParticipant, price, currentUser);
         //admin moet niet betalen dus payment status op betaald zetten
+        participant.setEmailSubscriber(userService.getCurrentUser().getEmail());
         registrationParticipantService.markAsPayed(participant);
 
         HttpHeaders headers = new HttpHeaders();
         logger.info("New registration created.");
         return new ResponseEntity<>(headers, HttpStatus.CREATED);
     }
-
-
 }

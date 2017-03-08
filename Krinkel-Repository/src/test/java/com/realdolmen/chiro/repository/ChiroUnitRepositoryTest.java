@@ -1,11 +1,13 @@
 package com.realdolmen.chiro.repository;
 
+import com.realdolmen.chiro.domain.CampGround;
 import com.realdolmen.chiro.domain.RegistrationParticipant;
 import com.realdolmen.chiro.domain.RegistrationVolunteer;
+import com.realdolmen.chiro.domain.Status;
+import com.realdolmen.chiro.domain.units.ChiroGroepGewestVerbond;
 import com.realdolmen.chiro.domain.units.ChiroUnit;
 import com.realdolmen.chiro.domain.units.RawChiroUnit;
 import com.realdolmen.chiro.spring_test.SpringIntegrationTest;
-import junit.framework.Assert;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -73,7 +75,7 @@ public class ChiroUnitRepositoryTest extends SpringIntegrationTest{
     @Test
     public void testReturnParticipantsByGroepInAList(){
         List<RegistrationParticipant> participants = new ArrayList<>();
-        participants = chiroUnitRepository.returnParticipantsByGroep("AG /0103");
+        participants = chiroUnitRepository.returnParticipantsByGroep("AG /0103",true);
         int size = participants.size();
         assertEquals(3, size);
     }
@@ -89,7 +91,7 @@ public class ChiroUnitRepositoryTest extends SpringIntegrationTest{
     @Test
     public void testIfReturnedParticipantHasCorrectData(){
         List<RegistrationParticipant> participants = new ArrayList<>();
-        participants = chiroUnitRepository.returnParticipantsByGroep("AG /0103");
+        participants = chiroUnitRepository.returnParticipantsByGroep("AG /0103",true);
         RegistrationParticipant participant = participants.get(1);
         assertEquals("Ma", participant.getFirstName());
         assertEquals("Flodder", participant.getLastName());
@@ -119,5 +121,55 @@ public class ChiroUnitRepositoryTest extends SpringIntegrationTest{
         assertNotEquals("87654", participant.getAdNumber());
     }
 
+    @Test
+    public void testGetVerbonden(){
 
+        int aantalInternationaalCONFIRMED = chiroUnitRepository.getCountsVolunteersByCampgroundAndStatus(CampGround.getCamgroundByName("Internationaal"), Status.CONFIRMED);
+        assertEquals(1, aantalInternationaalCONFIRMED);
+        int aantalInternationaalPAID = chiroUnitRepository.getCountsVolunteersByCampgroundAndStatus(CampGround.getCamgroundByName("Internationaal"), Status.PAID);
+        assertEquals(0, aantalInternationaalPAID);
+        int aantalantwerpenCONFIRMEd= chiroUnitRepository.getCountsVolunteersByCampgroundAndStatus(CampGround.getCamgroundByName("Antwerpen"), Status.CONFIRMED);
+        assertEquals(0, aantalantwerpenCONFIRMEd);
+
+        List<RegistrationVolunteer> registrationVolunteers = chiroUnitRepository.returnVolunteersByCampGround(CampGround.INTERNATIONAAL);
+        System.err.println("**************************************************");
+        System.err.println(registrationVolunteers);
+        assertEquals(1, registrationVolunteers.size());
+    }
+
+    @Test
+    public void testcountParticipantsInternationaal(){
+        int countConfirmed = chiroUnitRepository.countParticipantsInternationaal(Status.CONFIRMED);
+        int countPaid = chiroUnitRepository.countParticipantsInternationaal(Status.PAID);
+        int others = chiroUnitRepository.countParticipantsInternationaal(Status.TO_BE_PAID) + chiroUnitRepository.countParticipantsInternationaal(Status.CANCELLED);
+
+        assertEquals(1,countConfirmed);
+        assertEquals(1,countPaid);
+        assertEquals(0,others);
+    }
+    @Test
+    public void testcountParticipantsByGroep(){
+        int i = chiroUnitRepository.countParticipantsByGroep("AG /0103", Status.CONFIRMED, false);
+        assertEquals(2,i);
+        i = chiroUnitRepository.countParticipantsByGroep("AG /0103", Status.PAID, false);
+        assertEquals(0,i);
+        i = chiroUnitRepository.countParticipantsByGroep("AG /0103", Status.TO_BE_PAID, false);
+        assertEquals(1,i);
+        i = chiroUnitRepository.countParticipantsByGroep("AG /0103", Status.CANCELLED, false);
+        assertEquals(0,i);
+
+    }
+
+    @Test
+    public void testgetRawChiroUnitByGroepStamNummer(){
+        ChiroGroepGewestVerbond chiroUnitByGroepStamNummer1 = chiroUnitRepository.getChiroUnitByGroepStamNummer("AJ /0708");
+        System.err.println("Testing to get rawChiroUnitByGroepStamNummer");
+        System.err.println(chiroUnitByGroepStamNummer1.toString());
+        assertEquals(chiroUnitByGroepStamNummer1.getVerbondNaam(),"Antwerpen");
+        assertEquals(chiroUnitByGroepStamNummer1.getGewestNaam(),"GEWEST GLIM");
+        ChiroGroepGewestVerbond chiroUnitByGroepStamNummer2 = chiroUnitRepository.getChiroUnitByGroepStamNummer("AG /0103");
+        System.err.println(chiroUnitByGroepStamNummer2);
+        assertEquals(chiroUnitByGroepStamNummer2.getVerbondNaam(),"Antwerpen");
+        assertEquals(chiroUnitByGroepStamNummer2.getGewestNaam(),"Zac");
+    }
 }
