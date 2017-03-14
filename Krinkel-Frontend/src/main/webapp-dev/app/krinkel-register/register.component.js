@@ -111,9 +111,16 @@ class RegisterController {
     prefillWithAdNumber(adNumber, emailSubscriber){ //second var is optional, as it's only required when subscribing a colleague.
         this.KrinkelService.getContactFromChiro(adNumber).then((resp) => {
             if (resp) {
+                console.log('resp:');
+                console.log(resp);
                 let chiroContact = resp[0];
+                console.log('chiroContact:');
+                console.log(chiroContact);
+                console.log('typeof chiroContact');
+                console.log(typeof chiroContact);
+                console.log('if (chiroContact)' );
                 if (chiroContact) {
-
+                    console.log('person is chirocontact');
                     this.newPerson = {
                         firstNameIsEmpty: chiroContact.first_name == "",
                         lastNameIsEmpty: chiroContact.last_name == "",
@@ -128,13 +135,13 @@ class RegisterController {
                         gender: chiroContact.gender_id || "",
                         rank: chiroContact.afdeling.toUpperCase() || ""
                     };
-                    this.details2.name = chiroContact.postal_code;
+                    this.details2.name = chiroContact.postal_code || "";
 
                     this.details.address_components = [];
                     this.details.address_components.push({
-                        long_name: chiroContact.street_address
+                        long_name: chiroContact.street_address || ""
                     });
-                    this.details3.vicinity = chiroContact.city;
+                    this.details3.vicinity = chiroContact.city || "";
                     this.KrinkelService.getPloegen(adNumber).then((resp) => {
                         this.options = [];
                         resp.forEach((r) => {
@@ -144,30 +151,35 @@ class RegisterController {
                         console.log('OPTIONS inside getploegen call');
                         console.log(this.options);
                         // Als this.options leeg is => geen groep gevonden
-                        if(typeof this.options === 'undefined' || this.options.length == 0){
-                            console.log('undefined or options.length == 0')
+                        if(typeof this.options === 'undefined'){
+                            console.log('options for ploegen is undefined');
                             this.dataCouldNotBeLoaded();
                         } else if(this.options.length == 0){
-                            console.log('options.length == 0')
+                            console.log('options.length == 0 for ploegen');
                             this.dataCouldNotBeLoaded();
                         } else {
-                            console.log('Loading data successful');
-                            this.gettingDataFromChiro = false;
-                            this.disableEverything = false;
-
-                            document.getElementById("divAroundTopText").style.display = "inline";
-                            document.getElementById("divAroundForm").style.display = "inline";
+                            this.dataCoulbBeLoaded();
                         }
                     });
 
 
                 } else {
                     // Geen chiro contact gevonden
-                    console.log('==> Geen chiro contact gevonden');
-                    this.dataCouldNotBeLoaded();
+                   console.log('==> Geen chiro contact gevonden');
+                   // this.dataCoulbBeLoaded();
+                   this.dataCouldNotBeLoaded();
                 }
             }
         });
+    }
+
+    dataCoulbBeLoaded(){
+        console.log('Loading data successful');
+        this.gettingDataFromChiro = false;
+        this.disableEverything = false;
+
+        document.getElementById("divAroundTopText").style.display = "inline";
+        document.getElementById("divAroundForm").style.display = "inline";
     }
 
     dataCouldNotBeLoaded(){

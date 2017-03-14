@@ -47,7 +47,7 @@ public class MultiSafePayService {
     public OrderDto createPayment(RegistrationParticipant participant, Integer amount, User currentUser) throws InvalidPaymentOrderIdException {
         if (!createPaymentParamsAreValid(participant.getAdNumber(), amount))
             throw new InvalidParameterException("cannot create a payment with those params");
-        JSONObject jsonObject = this.createPaymentJsonObject(participant, /*amount todo:prod*/ 1, currentUser);
+        JSONObject jsonObject = this.createPaymentJsonObject(participant, amount, currentUser);
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
         HttpEntity<String> entity = new HttpEntity<>(jsonObject.toString(), headers);
@@ -77,7 +77,7 @@ public class MultiSafePayService {
     public OrderDto createPayment(Integer amount, UserDTO currentUser) throws InvalidPaymentOrderIdException {
         if (!createPaymentParamsAreValid(currentUser.getAdNumber(), amount))
             throw new InvalidParameterException("cannot create a payment with those params");
-        JSONObject jsonObject = this.createPaymentJsonObject(/*amount todo:prod*/ 1, currentUser);
+        JSONObject jsonObject = this.createPaymentJsonObject(amount , currentUser);
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
         HttpEntity<String> entity = new HttpEntity<>(jsonObject.toString(), headers);
