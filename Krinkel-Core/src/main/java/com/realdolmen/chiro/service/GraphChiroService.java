@@ -2,6 +2,7 @@ package com.realdolmen.chiro.service;
 
 import com.realdolmen.chiro.domain.EventRole;
 import com.realdolmen.chiro.domain.LoginLog;
+import com.realdolmen.chiro.domain.RegistrationParticipant;
 import com.realdolmen.chiro.domain.Verbond;
 import com.realdolmen.chiro.domain.units.ChiroUnit;
 import com.realdolmen.chiro.domain.units.GraphChiroUnit;
@@ -41,160 +42,57 @@ public class GraphChiroService {
     @PreAuthorize("@GraphChiroServiceSecurity.hasPermissionToMakeStatusGraph()")
     public StatusChiroUnit getStatusChiro(String name,Integer depth) {
         StatusChiroUnit status = new StatusChiroUnit();
-        System.out.println("name is "+name + "depth = "+depth);
+        //System.out.println("name is "+name + "depth = "+depth);
+        List<RegistrationParticipant> selectedList;
 
-        if(depth==0) {
-            registrationParticipantRepository.findAll().forEach(r -> {
-                if (r.getEventRole().equals(EventRole.VOLUNTEER)) {
-                    switch (r.getStatus()) {
-                        case PAID:
-                            status.setVolunteersNotConfirmed(status.getVolunteersNotConfirmed() + 1);
-                            break;
-                        case CONFIRMED:
-                            status.setVolunteersConfirmed(status.getVolunteersConfirmed() + 1);
-                            break;
-                        case TO_BE_PAID:
-                            status.setVolunteersNotPaid(status.getVolunteersNotPaid() + 1);
-                            break;
-                        case CANCELLED:
-                            status.setVolunteersCancelled(status.getVolunteersCancelled() + 1);
-                            break;
-                    }
-                } else {
-                    switch (r.getStatus()) {
-                        case PAID:
-                            status.setParticipantsNotConfirmed(status.getParticipantsNotConfirmed() + 1);
-                            break;
-                        case CONFIRMED:
-                            status.setParticipantsConfirmed(status.getParticipantsConfirmed() + 1);
-                            break;
-                        case TO_BE_PAID:
-                            status.setParticipantsNotPaid(status.getParticipantsNotPaid() + 1);
-                            break;
-                        case CANCELLED:
-                            status.setParticipantsCancelled(status.getParticipantsCancelled() + 1);
-                            break;
-                    }
-                }
-
-            });
-        }
-        else{
             switch(depth)
             {
                 case 1:
-                    registrationParticipantRepository.findAllParticipantsWithVerbondName(name).forEach(r -> {
-                        if (r.getEventRole().equals(EventRole.VOLUNTEER)) {
-                            switch (r.getStatus()) {
-                                case PAID:
-                                    status.setVolunteersNotConfirmed(status.getVolunteersNotConfirmed() + 1);
-                                    break;
-                                case CONFIRMED:
-                                    status.setVolunteersConfirmed(status.getVolunteersConfirmed() + 1);
-                                    break;
-                                case TO_BE_PAID:
-                                    status.setVolunteersNotPaid(status.getVolunteersNotPaid() + 1);
-                                    break;
-                                case CANCELLED:
-                                    status.setVolunteersCancelled(status.getVolunteersCancelled() + 1);
-                                    break;
-                            }
-                        } else {
-                            switch (r.getStatus()) {
-                                case PAID:
-                                    status.setParticipantsNotConfirmed(status.getParticipantsNotConfirmed() + 1);
-                                    break;
-                                case CONFIRMED:
-                                    status.setParticipantsConfirmed(status.getParticipantsConfirmed() + 1);
-                                    break;
-                                case TO_BE_PAID:
-                                    status.setParticipantsNotPaid(status.getParticipantsNotPaid() + 1);
-                                    break;
-                                case CANCELLED:
-                                    status.setParticipantsCancelled(status.getParticipantsCancelled() + 1);
-                                    break;
-                            }
-                        }
-
-                    });
+                    selectedList=registrationParticipantRepository.findAllParticipantsWithVerbondName(name);
                     break;
                 case 2:
-                    registrationParticipantRepository.findAllParticipantsWithGewestName(name).forEach(r -> {
-                        if (r.getEventRole().equals(EventRole.VOLUNTEER)) {
-                            switch (r.getStatus()) {
-                                case PAID:
-                                    status.setVolunteersNotConfirmed(status.getVolunteersNotConfirmed() + 1);
-                                    break;
-                                case CONFIRMED:
-                                    status.setVolunteersConfirmed(status.getVolunteersConfirmed() + 1);
-                                    break;
-                                case TO_BE_PAID:
-                                    status.setVolunteersNotPaid(status.getVolunteersNotPaid() + 1);
-                                    break;
-                                case CANCELLED:
-                                    status.setVolunteersCancelled(status.getVolunteersCancelled() + 1);
-                                    break;
-                            }
-                        } else {
-                            switch (r.getStatus()) {
-                                case PAID:
-                                    status.setParticipantsNotConfirmed(status.getParticipantsNotConfirmed() + 1);
-                                    break;
-                                case CONFIRMED:
-                                    status.setParticipantsConfirmed(status.getParticipantsConfirmed() + 1);
-                                    break;
-                                case TO_BE_PAID:
-                                    status.setParticipantsNotPaid(status.getParticipantsNotPaid() + 1);
-                                    break;
-                                case CANCELLED:
-                                    status.setParticipantsCancelled(status.getParticipantsCancelled() + 1);
-                                    break;
-                            }
-                        }
-
-                    });
+                    selectedList=registrationParticipantRepository.findAllParticipantsWithGewestName(name);
                     break;
                 case 3:
-                    registrationParticipantRepository.findAllParticipantsWithGroepName(name).forEach(r -> {
-                        if (r.getEventRole().equals(EventRole.VOLUNTEER)) {
-                            switch (r.getStatus()) {
-                                case PAID:
-                                    status.setVolunteersNotConfirmed(status.getVolunteersNotConfirmed() + 1);
-                                    break;
-                                case CONFIRMED:
-                                    status.setVolunteersConfirmed(status.getVolunteersConfirmed() + 1);
-                                    break;
-                                case TO_BE_PAID:
-                                    status.setVolunteersNotPaid(status.getVolunteersNotPaid() + 1);
-                                    break;
-                                case CANCELLED:
-                                    status.setVolunteersCancelled(status.getVolunteersCancelled() + 1);
-                                    break;
-                            }
-                        } else {
-                            switch (r.getStatus()) {
-                                case PAID:
-                                    status.setParticipantsNotConfirmed(status.getParticipantsNotConfirmed() + 1);
-                                    break;
-                                case CONFIRMED:
-                                    status.setParticipantsConfirmed(status.getParticipantsConfirmed() + 1);
-                                    break;
-                                case TO_BE_PAID:
-                                    status.setParticipantsNotPaid(status.getParticipantsNotPaid() + 1);
-                                    break;
-                                case CANCELLED:
-                                    status.setParticipantsCancelled(status.getParticipantsCancelled() + 1);
-                                    break;
-                            }
-                        }
-
-                    });
+                    selectedList=registrationParticipantRepository.findAllParticipantsWithGroepName(name);
+                    break;
+                default:
+                    selectedList=registrationParticipantRepository.findAll();
                     break;
             }
-
-
-        }
-
+        selectedList.forEach(r -> {
+            if (r.getEventRole().equals(EventRole.VOLUNTEER)) {
+                switch (r.getStatus()) {
+                    case PAID:
+                        status.setVolunteersNotConfirmed(status.getVolunteersNotConfirmed() + 1);
+                        break;
+                    case CONFIRMED:
+                        status.setVolunteersConfirmed(status.getVolunteersConfirmed() + 1);
+                        break;
+                    case TO_BE_PAID:
+                        status.setVolunteersNotPaid(status.getVolunteersNotPaid() + 1);
+                        break;
+                    case CANCELLED:
+                        status.setVolunteersCancelled(status.getVolunteersCancelled() + 1);
+                        break;
+                }
+            } else {
+                switch (r.getStatus()) {
+                    case PAID:
+                        status.setParticipantsNotConfirmed(status.getParticipantsNotConfirmed() + 1);
+                        break;
+                    case CONFIRMED:
+                        status.setParticipantsConfirmed(status.getParticipantsConfirmed() + 1);
+                        break;
+                    case TO_BE_PAID:
+                        status.setParticipantsNotPaid(status.getParticipantsNotPaid() + 1);
+                        break;
+                    case CANCELLED:
+                        status.setParticipantsCancelled(status.getParticipantsCancelled() + 1);
+                        break;
+                }
+            }
+        });
         return status;
     }
 
