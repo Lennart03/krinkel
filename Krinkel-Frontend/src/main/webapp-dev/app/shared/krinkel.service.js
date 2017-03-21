@@ -298,8 +298,8 @@ export class KrinkelService {
         );
     }
 
-    getGraphStatusInfo(name,depth) {
-        return this.$http.get(`${this.BASEURL}/api/graph/status?name=`+name+`&depth=`+depth).then((resp) => {
+    getGraphStatusInfo(stamNumber,depth) {
+        return this.$http.get(`${this.BASEURL}/api/graph/status?name=`+stamNumber+`&depth=`+depth).then((resp) => {
                 return resp.data;
             },
             () => {
