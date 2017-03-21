@@ -104,11 +104,6 @@ VALUES('RegistrationVolunteer', '1112', '319658', 'Hasselt', '123', '1000', 'Vel
                               'email@test.be', 'email@test.be', 'Jos', 'MAN', 'Flodder', '', '', '', 'ASPI', false,
                               'OM /1408', 'CONFIRMED', 'SYNCED', 1, 'KEMPEN', '', 'CAMPGROUND', '876543', '2016-12-13');
 
-INSERT INTO registration_participant (dtype,id,ad_number,city, house_number, postal_code, street, birthdate,
-social_promotion, eatinghabbit, email, email_subscriber, first_name, gender, last_name, remarks_food, medical_remarks, remarks,
-event_role, buddy, stamnumber, status, sync_status, phone_number, camp_ground, other, preset, registered_by, last_change)
-VALUES('RegistrationVolunteer', '1113', '319659', 'Hasselt', '123', '1000', 'Veldstraat', '1995-08-21', false, 'FISHANDMEAT',
-                              'email@test.be', 'email@test.be', 'Jos', 'MAN', 'Flodder', '', '', '', 'ASPI', false,
 
 INSERT INTO registration_participant (dtype,id,ad_number,city, house_number, postal_code, street, birthdate,
 social_promotion, eatinghabbit, email, email_subscriber, first_name, gender, last_name, remarks_food, medical_remarks, remarks,
