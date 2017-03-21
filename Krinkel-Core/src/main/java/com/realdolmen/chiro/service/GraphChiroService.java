@@ -210,7 +210,7 @@ public class GraphChiroService {
         for (RawChiroUnit chiroUnit : allChiroUnits) {
             //check if verbond exists
 
-            System.out.println("verbond: " +chiroUnit.getVerbondStamNummer()+"("+chiroUnit.getVerbondNaam()+")"+ " gewest: "+ chiroUnit.getGewestStamNummer()+"("+chiroUnit.getGewestNaam()+")"+" groep: " +chiroUnit.getGroepNaam()+"("+chiroUnit.getGroepStamNummer()+")");
+            //System.out.println("verbond: " +chiroUnit.getVerbondStamNummer()+"("+chiroUnit.getVerbondNaam()+")"+ " gewest: "+ chiroUnit.getGewestStamNummer()+"("+chiroUnit.getGewestNaam()+")"+" groep: " +chiroUnit.getGroepNaam()+"("+chiroUnit.getGroepStamNummer()+")");
             if (getGraphChiroUnitByLowerUnitName(root.getChildren(), chiroUnit.getVerbondNaam()) == null) {
                 GraphChiroUnit verbond = new GraphChiroUnit(chiroUnit.getVerbondNaam(), null, new ArrayList<GraphChiroUnit>(),chiroUnit.getVerbondStamNummer());
                 GraphChiroUnit gewest = new GraphChiroUnit(chiroUnit.getGewestNaam(), null, new ArrayList<GraphChiroUnit>(),chiroUnit.getGewestStamNummer());
@@ -236,19 +236,6 @@ public class GraphChiroService {
                     gewestForGroep.getChildren().add(groep);
                 }
             }
-        }
-
-        for(GraphChiroUnit a : root.getChildren())
-        {   System.out.println("name of a :" +a.getName() + " size " +a.getSize());
-            for(GraphChiroUnit b : a.getChildren())
-            {
-                System.out.println("name of b :" +b.getName() + " size " +b.getSize());
-                for(GraphChiroUnit c : b.getChildren())
-                {
-                    System.out.println("name of c:"+c.getName() + " size " +c.getSize());
-                }
-            }
-
         }
         return root;
     }

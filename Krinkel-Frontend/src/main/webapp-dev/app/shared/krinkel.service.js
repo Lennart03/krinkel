@@ -22,12 +22,12 @@ export class KrinkelService {
     }
 
     postVolunteer(user) {
-        console.log('Starting to post volunteer at camground: ' + user.campGround);
-        console.log('user');
-        console.log(user);
+        //console.log('Starting to post volunteer at camground: ' + user.campGround);
+        //console.log('user');
+        //console.log(user);
         if(user.campGround === 'WEST-VLAANDEREN'){
             user.campGround = 'WESTVLAANDEREN';
-            console.log('New campground = ' + user.campGround);
+            //console.log('New campground = ' + user.campGround);
         }
 
         return this.$http.post(`${this.BASEURL}/api/volunteers`, user).then((resp) => {
@@ -55,12 +55,12 @@ export class KrinkelService {
     }
 
     postVolunteerByAdmin(user) {
-        console.log('Starting to post volunteer at camground: ' + user.campGround);
-        console.log('user');
-        console.log(user);
+        //console.log('Starting to post volunteer at camground: ' + user.campGround);
+        //console.log('user');
+        //console.log(user);
         if(user.campGround === 'WEST-VLAANDEREN'){
             user.campGround = 'WESTVLAANDEREN';
-            console.log('New campground = ' + user.campGround);
+            //console.log('New campground = ' + user.campGround);
         }
         return this.$http.post(`${this.BASEURL}/api/volunteers/admin`, user).then((resp) => {
                 return resp;
@@ -125,8 +125,8 @@ export class KrinkelService {
         return this.$http.post(`${this.BASEURL}/api/participantsResendConfirmationEmails?participants=${participants}`).then((resp) => {
                 return resp.data;
             }, () => {
-                console.log('Fout bij het zenden van mails met bevestiginslinks naar de gebruikers: ');
-                console.log(participants);
+                //console.log('Fout bij het zenden van mails met bevestiginslinks naar de gebruikers: ');
+                //console.log(participants);
                 this.popupMessage('Fout KR08: bij het zenden van mails met bevestiginslinks.',10000,'red');
             }
         );
@@ -500,7 +500,7 @@ export class KrinkelService {
     }
 
     generateGroups(groupSize, option) {
-        console.log("generate groups");
+        //console.log("generate groups");
         return this.$http.get(`${this.BASEURL}/tools/generate-groups/${groupSize}/${option}`).then((resp) => {
             return resp.data;
         }, () => {

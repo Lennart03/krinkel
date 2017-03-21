@@ -33,7 +33,7 @@ class KrinkelGraphController {
         this.KrinkelService.getGraphSunInfo().then((results) => {
             this.sunBurstData = [{name: 'Inschrijvingen'},{stamNumber:'NO'}];
             this.sunBurstData[0].children = results.children;
-            console.log(results);
+            //console.log(results);
         });
     }
 
