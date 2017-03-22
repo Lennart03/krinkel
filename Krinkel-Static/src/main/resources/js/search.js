@@ -1,126 +1,134 @@
-$(document).ready(function (){
-    $('#searchBtn').on('click', function(){
+$(document).ready(function () {
+    $('#searchBtn').on('click', function () {
         findInPage($('#searchBarFaq').val());
     });
-    $('#searchBarFaq').keyup(function(event){
-        if(event.keyCode == 13){
+    $('#searchBarFaq').keyup(function (event) {
+        if (event.keyCode == 13) {
             $('#searchBtn').click();
         }
     });
 });
 
-var keywords=[
+var keywords = [
     {
-	id:"#prijs",
-	keywords:['kost', 'prijs', 'betalen', 'geld']
+        id: "#prijs",
+        keywords: ['kost', 'prijs', 'betalen', 'geld']
     },
     {
-	id:"#toegankelijkheid",
-	keywords:['handicap', 'rolstoel', 'gips', 'beperking']
+        id: "#login",
+        keywords: ['login', 'wachtwoord', 'paswoord', 'geen paswoord', 'geen wachtwoord']
     },
     {
-	id:"#aanwezigheid",
-	keywords:['verplicht', 'naar huis', 'duur', 'lengte', 'logeren', 'kamperen', 'slapen']
+        id: "#oudleiding",
+        keywords: ['oud-leiding', 'oudleiding', 'oud leiding']
     },
     {
-	id:"#dieet",
-	keywords:['halal', 'gluten', 'veganist', 'vegetariër', 'vegetarisch', 'vegetarier']
+        id: "#toegankelijkheid",
+        keywords: ['handicap', 'rolstoel', 'gips', 'beperking']
     },
     {
-	id:"#deadline",
-	keywords:['inschrijving', 'deadline', 'annuleren', 'annulatie', 'terugbetaling']
+        id: "#aanwezigheid",
+        keywords: ['verplicht', 'naar huis', 'duur', 'lengte', 'logeren', 'kamperen', 'slapen']
     },
     {
-	id:"#VB",
-	keywords:['vb', 'volwassen begeleiding']
+        id: "#dieet",
+        keywords: ['halal', 'gluten', 'veganist', 'vegetariër', 'vegetarisch', 'vegetarier']
     },
     {
-	id:"#keti",
-	keywords:['keti', 'kerels', 'tippers', 'kerel', 'tipper', 'leeftijd']
+        id: "#deadline",
+        keywords: ['inschrijving', 'deadline', 'annuleren', 'annulatie', 'terugbetaling']
     },
     {
-	id:"#herexamen",
-	keywords:['herexamens', "herexamen"]
+        id: "#VB",
+        keywords: ['vb', 'volwassen begeleiding']
     },
     {
-	id:"#auto",
-	keywords:['auto', 'vervoer', 'bereikbaarheid']
+        id: "#keti",
+        keywords: ['keti', 'kerels', 'tippers', 'kerel', 'tipper', 'leeftijd']
+    },
+    {
+        id: "#herexamen",
+        keywords: ['herexamens', "herexamen"]
+    },
+    {
+        id: "#auto",
+        keywords: ['auto', 'vervoer', 'bereikbaarheid']
     }
 ];
-function findInPage(seachText){
-	//do search
-    if(!seachText){
+function findInPage(seachText) {
+    //do search
+    if (!seachText) {
         Materialize.toast("Gelieve een zoekterm in te geven.", 5000, 'redToast');
         return;
     }
     console.log("Searching for: " + seachText);
     seachText = seachText.trim().toLowerCase();
-	var result;
-	for(var i = 0; i < keywords.length; i++){
-        if(keywords[i].keywords.indexOf(seachText) != -1){
+    var result;
+    for (var i = 0; i < keywords.length; i++) {
+        if (keywords[i].keywords.indexOf(seachText) != -1) {
             result = keywords[i].id;
             break;
         }
     }
-	//no result? try fallback
-	if(!result) fallback(seachText);
-	else{
-		$('html, body').animate({
-			scrollTop: $(result).offset().top
-		}, 1000); //scroll to correct div
-	}
+    //no result? try fallback
+    if (!result) fallback(seachText);
+    else {
+        $('html, body').animate({
+            scrollTop: $(result).offset().top
+        }, 1000); //scroll to correct div
+    }
 }
 
-function fallback(searchText){
+function fallback(searchText) {
     console.log("No results, running fallback...");
     var searchBar = $("#searchBarFaq");
     searchBar.val(""); //make the value empty, otherwise it will be included in search
-	if(isChrome || isBlink){
+    if (isChrome || isBlink) {
         console.log("Using chrome fallback");
-		if(!window.find(searchText, 0, 1)) showError();
-	}
-	else if(isFirefox){
+        if (!window.find(searchText, 0, 1)) showError();
+    }
+    else if (isFirefox) {
         console.log("Using firefox fallback");
-		if(!find(searchText, 0, 1)) showError();
-	}
-	else{//the rest doesn't support this, so too bad.
-		showError();
-	}
+        if (!find(searchText, 0, 1)) showError();
+    }
+    else {//the rest doesn't support this, so too bad.
+        showError();
+    }
     searchBar.val(searchText);
 }
 
-function showError(){
-	//show an error about using ctrl-F/find in page
-	var OS= getMobileOperatingSystem();
-	var message;
-	switch(OS){
+function showError() {
+    //show an error about using ctrl-F/find in page
+    var OS = getMobileOperatingSystem();
+    var message;
+    switch (OS) {
         case "unknown":
-            message="Geen resultaat gevonden, probeer een andere zoekterm of gebruik de zoekfunctie van je browser (CTRL+F)";
-			//ctrl + f
-			break;
-		case "iOS":
-            message="Geen resultaat gevonden, probeer een andere zoekterm of gebruik " +
+            message = "Geen resultaat gevonden, probeer een andere zoekterm of gebruik de zoekfunctie van je browser (CTRL+F)";
+            //ctrl + f
+            break;
+        case "iOS":
+            message = "Geen resultaat gevonden, probeer een andere zoekterm of gebruik " +
                 "de zoekfunctie van je browser door je zoekterm in te geven in de adresbalk";
-			//use address bar
-			break;
-		case "Android":
-            message='Geen resultaat gevonden, probeer een andere zoekterm of gebruik ' +
+            //use address bar
+            break;
+        case "Android":
+            message = 'Geen resultaat gevonden, probeer een andere zoekterm of gebruik ' +
                 'de zoekfunctie van je browser door op de 3 puntjes te drukken en te tappen op "find in page"';
-			//tap 3 dots => Find in page
-			break;
-		case "WP":
-            message='Geen resultaat gevonden, probeer een andere zoekterm of gebruik de zoekfunctie van je browser.';
-			//found the unicorn!
-			//but srs try again
-			break;
-	}
-	Materialize.toast(message, 5000, 'redToast');
+            //tap 3 dots => Find in page
+            break;
+        case "WP":
+            message = 'Geen resultaat gevonden, probeer een andere zoekterm of gebruik de zoekfunctie van je browser.';
+            //found the unicorn!
+            //but srs try again
+            break;
+    }
+    Materialize.toast(message, 5000, 'redToast');
 }
 
 function getMobileOperatingSystem() {
-  var userAgent = navigator.userAgent || navigator.vendor || window.opera;
+    var userAgent = navigator.userAgent || navigator.vendor || window.opera;
 
-      // Windows Phone must come first because its UA also contains "Android"
+    // Windows Phone must come first because its UA also contains "Android"
     if (/windows phone/i.test(userAgent)) {
         return "WP";
     }
@@ -147,7 +155,9 @@ var isOpera = (!!window.opr && !!opr.addons) || !!window.opera || navigator.user
 var isFirefox = typeof InstallTrigger !== 'undefined';
 
 // Safari 3.0+ "[object HTMLElementConstructor]" 
-var isSafari = Object.prototype.toString.call(window.HTMLElement).indexOf('Constructor') > 0 || (function (p) { return p.toString() === "[object SafariRemoteNotification]"; })(!window['safari'] || safari.pushNotification);
+var isSafari = Object.prototype.toString.call(window.HTMLElement).indexOf('Constructor') > 0 || (function (p) {
+        return p.toString() === "[object SafariRemoteNotification]";
+    })(!window['safari'] || safari.pushNotification);
 
 // Internet Explorer 6-11
 var isIE = /*@cc_on!@*/false || !!document.documentMode;

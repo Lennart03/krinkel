@@ -35,18 +35,19 @@ $( document ).ready(function(){
         //alert("Coming soon!");
         Materialize.toast('Coming soon!', 4000);
     });
-    var src = document.getElementById('promovideo').src;
-    $('#videolink').on('click', function () {
-        $("#darkenback").fadeIn(1000, function () {
-            document.getElementById('promovideo').src +="?autoplay=1";
+    var video = document.getElementById('promovideo');
+    if (video){
+        $('#videolink').on('click', function () {
+            $("#darkenback").fadeIn(1000, function () {
+                document.getElementById('promovideo').src +="?autoplay=1";
+            });
         });
-    });
-    $("#darkenback").on('click', function () {
-        $('#darkenback').fadeOut(1000, function () {
-            document.getElementById('promovideo').src = src;
-        });
-    })
-
+        $("#darkenback").on('click', function () {
+            $('#darkenback').fadeOut(1000, function () {
+                document.getElementById('promovideo').src = src;
+            });
+        })
+    }
 });
 
 function checkBrowser() {
