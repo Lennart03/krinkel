@@ -10,23 +10,8 @@ class KrinkelGraphController {
         this.startDate = new Date(year,month-1,day);
         year = year +50;
         this.maxDate = new Date(year,1,1);
-       /* $('#startDate').pickadate({
-            format: 'dd-mm-yyyy',
-            formatSumbit: 'dd-mm-yyyy',
-            selectMonths: true, // Creates a dropdown to control month
-            selectYears: 15 // Creates a dropdown of 15 years to control year
-        });
-        $('#endDate').pickadate({
-            format: 'dd-mm-yyyy',
-            formatSumbit: 'dd-mm-yyyy',
-            selectMonths: true, // Creates a dropdown to control month
-            selectYears: 15 // Creates a dropdown of 15 years to control year
-        });*/
-        /*
-        //this.datePattern = /./;
-        */
         this.KrinkelService = KrinkelService;
-        this.selectedName = null;
+        this.selectedStamNumber = null;
         this.depth = 0;
         this.getAllGraphData();
     }
@@ -36,7 +21,7 @@ class KrinkelGraphController {
         //console.log("d3 node " +d3.select(this).node());
         this.getDataForSunBurst();
         //console.log("done with getDataForSunBurst");
-        this.getDataForStatus(this.selectedName,this.depth);
+        this.getDataForStatus(this.selectedStamNumber,this.depth);
         //console.log("done with getDataForStatus");
         this.getDataForLogin(this.startDate,this.endDate);
         //console.log("done with getDataForLogin");
@@ -46,8 +31,9 @@ class KrinkelGraphController {
     getDataForSunBurst() {
         //console.log("in getDataForSunBurst");
         this.KrinkelService.getGraphSunInfo().then((results) => {
-            this.sunBurstData = [{name: 'Inschrijvingen'}];
+            this.sunBurstData = [{name: 'Inschrijvingen'},{stamNumber:'NO'}];
             this.sunBurstData[0].children = results.children;
+            //console.log(results);
         });
     }
 
@@ -113,7 +99,7 @@ class KrinkelGraphController {
         this.KrinkelService.getGraphLoginInfo(startDate,endDate).then((results) => {
             this.lineData = this.mapServerJSONToChartJSON(results);
         });
-        this.$onInit();
+        //this.$onInit();
     }
 
     mapServerJSONToChartJSON(results) {
@@ -156,20 +142,35 @@ class KrinkelGraphController {
                 color: d3.scale.category20c(),
                 noData: "Loading data...",
                 duration: 250,
+                groupColorByParent: true,
                 sunburst: {
                     mode: 'size',
                     groupColorByParent: true,
+                    key: function(d){return d.name + d.stamNumber;}
+                    //showLabels: true
                     //dispatch:{
                     //    chartClick:function(){console.log("chart clicked");},
                     //    elementClick:function(e){console.log("element clicked " + e.data.name+ e.data);}
                     //}
-                },callback: function(chart) {
+                },
+                //tooltip: {
+                //    enabled:true,
+                //    data:function(e){return e.data.stamNumber;}
+                //},
+
+                callback: function(chart) {
                     chart.sunburst.dispatch.on('elementClick', function(e){
-                        if (undefined != e.data.name)
+
+                        if (undefined != e.data.stamNumber)
                         {
-                            this.selectedName=e.data.name;
+                            this.selectedStamNumber=e.data.stamNumber;
                             this.depth=e.data.depth;
-                            thiz.getDataForStatus(e.data.name,e.data.depth);
+                            thiz.getDataForStatus(e.data.stamNumber,e.data.depth);
+                        }
+                        else
+                        {
+                            this.selectedStamNumber="NO";
+                            thiz.getDataForStatus("NO",e.data.depth);
                         }
                     });
                 }
@@ -193,6 +194,7 @@ class KrinkelGraphController {
                 },
                 x: function (d) {
                     if (d != undefined) {
+                        //console.log(d[2]);
                         return d[0];
                     }
                 },

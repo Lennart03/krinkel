@@ -67,18 +67,18 @@ public interface RegistrationParticipantRepository extends JpaRepository<Registr
 
     @Query("SELECT a FROM RegistrationParticipant a, RawChiroUnit b " +
             "where a.stamnumber=b.groepStamNummer " +
-            "and b.verbondNaam= :verbondNaam")
-    List<RegistrationParticipant> findAllParticipantsWithVerbondName(@Param("verbondNaam") String verbondNaam);
+            "and b.verbondStamNummer= :verbondStamNumber")
+    List<RegistrationParticipant> findAllParticipantsWithVerbondName(@Param("verbondStamNumber") String verbondNaam);
 
     @Query("SELECT a FROM RegistrationParticipant a, RawChiroUnit b " +
             "where a.stamnumber=b.groepStamNummer " +
-            "and b.gewestNaam= :gewestNaam")
-    List<RegistrationParticipant> findAllParticipantsWithGewestName(@Param("gewestNaam") String gewestNaam);
+            "and b.gewestStamNummer= :gewestStamNumber")
+    List<RegistrationParticipant> findAllParticipantsWithGewestName(@Param("gewestStamNumber") String gewestNaam);
 
     @Query("SELECT a FROM RegistrationParticipant  a, RawChiroUnit b " +
             "where a.stamnumber=b.groepStamNummer " +
-            "and b.groepNaam= :groepNaam")
-    List<RegistrationParticipant> findAllParticipantsWithGroepName(@Param("groepNaam") String groepNaam);
+            "and b.groepStamNummer= :groepStamNumber")
+    List<RegistrationParticipant> findAllParticipantsWithGroepName(@Param("groepStamNumber") String groepNaam);
 
 
 
