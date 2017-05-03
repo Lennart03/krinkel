@@ -23,6 +23,10 @@ var keywords = [
         keywords: ['oud-leiding', 'oudleiding', 'oud leiding']
     },
     {
+        id: "#kinderen",
+        keywords: ['kinderen', 'kleuter', 'peuter']
+    },
+    {
         id: "#toegankelijkheid",
         keywords: ['handicap', 'rolstoel', 'gips', 'beperking']
     },
