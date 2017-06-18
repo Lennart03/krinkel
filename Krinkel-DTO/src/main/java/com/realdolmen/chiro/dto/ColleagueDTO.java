@@ -2,16 +2,12 @@ package com.realdolmen.chiro.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonView;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.realdolmen.chiro.conversion.GenderDeserializer;
 import com.realdolmen.chiro.conversion.GenderSerializer;
-import com.realdolmen.chiro.domain.Address;
 import com.realdolmen.chiro.domain.Gender;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 

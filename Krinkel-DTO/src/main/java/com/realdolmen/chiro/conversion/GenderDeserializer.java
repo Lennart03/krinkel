@@ -19,10 +19,9 @@ public class GenderDeserializer extends StdDeserializer<Gender> {
     @Override
     public Gender deserialize(JsonParser p, DeserializationContext ctxt) throws IOException, JsonProcessingException {
         try {
-
-
             int ordinal = Integer.parseInt(p.getValueAsString());
-            if (ordinal < 0 && ordinal > Gender.values().length) {
+            ordinal--; //chiro API start from 1
+            if (ordinal < 0 || ordinal >= Gender.values().length) {
                 return null;
             } else {
                 return Gender.values()[ordinal];
