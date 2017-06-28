@@ -22,7 +22,7 @@ public class GenderDeserializer extends StdDeserializer<Gender> {
             int ordinal = Integer.parseInt(p.getValueAsString());
             ordinal--; //chiro API start from 1
             if (ordinal < 0 || ordinal >= Gender.values().length) {
-                return null;
+                return Gender.X;
             } else {
                 return Gender.values()[ordinal];
             }
