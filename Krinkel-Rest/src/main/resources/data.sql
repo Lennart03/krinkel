@@ -10,9 +10,12 @@ INSERT INTO admins VALUES ('super-admin', 109318, 'tom@horre.com', 'Tom', 'Horre
 
 -- TODO these records need to be removed because these are the Realdolmen developers
 INSERT INTO admins VALUES ('super-admin',396942, 'jeroen.compagnie@realdolmen.com', 'Jeroen', 'Compagnie');
+
+INSERT INTO admins VALUES ('super-admin', 396940, 'brent.couck@realdolmen.com', 'Brent', 'Couck');
+INSERT INTO admins VALUES ('super-admin', 396943, 'lennart.vandamme@realdolmen.com', 'Lennart', 'Van Damme');
+
 -- Lennart for testing: leider bij chiro dolfijn
 /*
-INSERT INTO admins VALUES ('super-admin' , 396943, 'lennart.vandamme@realdolmen.com', 'Lennart', 'Van Damme');
 INSERT INTO admins VALUES ('admin',396949, 'wesley.vanmalcot@realdolmen.com', 'Wesley', 'Van Malcot');
 INSERT INTO admins VALUES ('admin',396945, 'nicky.fasoel@realdolmen.com', 'Nicky', 'Fasoel');
 -- Melvin for testing: groepsleiding verbond Mechelen
@@ -21,7 +24,6 @@ INSERT INTO admins VALUES ('admin',396945, 'nicky.fasoel@realdolmen.com', 'Nicky
 -- INSERT INTO admins VALUES (396946, 'shenno.willaert@realdolmen.com', 'Shenno', 'Willaert');
 INSERT INTO admins VALUES ('admin',396947, 'thomas.simons@realdolmen.com', 'Thomas', 'Simons');
 INSERT INTO admins VALUES ('admin',396948, 'thomas.vandevyvere@realdolmen.com', 'Thomas', 'Vandevyvere');
-INSERT INTO admins VALUES ('admin',396940, 'brent.couck@realdolmen.com', 'Brent', 'Couck');
 INSERT INTO admins VALUES ('admin',162070, 'frederik.vanherbruggen@realdolmen.com', 'Frederik', 'Van Herbruggen');
 INSERT INTO admins VALUES ('admin',396941, 'hade.Bressinck@realdolmen.com', 'Hade', 'Bressinck');
 INSERT INTO admins VALUES ('admin',396942, 'jeroen.compagnie@realdolmen.com', 'Jeroen', 'Compagnie');
