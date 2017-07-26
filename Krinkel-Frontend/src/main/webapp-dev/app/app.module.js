@@ -9,6 +9,7 @@ import {MapperService} from './shared/mapping.service';
 import {SelectService} from './shared/select.service';
 import {AuthService} from './shared/auth.service';
 import {RegisterOtherMemberService} from './shared/register-other-member.service';
+import {TicketService} from "./shared/ticket.service";
 
 //components
 import {WelcomeMessageComponent} from './shared/welcome-message/welcome-message.component'
@@ -40,6 +41,7 @@ import {KrinkelExportComponent} from './krinkel-admin/krinkel-export/krinkel-exp
 import {AdminToevoegenComponent} from './krinkel-admin/admin-toevoegen/admin-toevoegen.component';
 import {GenerateGroupsComponent} from './krinkel-tools/generate-groups/generate-groups.component';
 import {ConfirmationsComponent} from './krinkel-admin/admin-resending-confirmations/confirmations.component';
+import {KrinkelTicketComponent} from "./krinkel-ticket/ticket.component";
 
 
 
@@ -56,6 +58,7 @@ export default angular
     .service('SelectService', SelectService)
     .service('StorageService', StorageService)
     .service('MapperService', MapperService)
+    .service('TicketService', TicketService)
     //global components
     .component('welcomeMessage', WelcomeMessageComponent)
     .component('sideNav', SideNavComponent)
@@ -84,6 +87,7 @@ export default angular
     .component('gewesten', GewestenComponent)
     .component('groepen', GroepenComponent)
     .component('groep', GroepComponent)
+    .component('tickets', KrinkelTicketComponent)
     .filter('escape', function() { // Filter for escaping special characters in URLs
         return window.encodeURIComponent;
     })
