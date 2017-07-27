@@ -21,16 +21,18 @@ public class Payment {
 
     private String firstNameBuyer;
     private String lastNameBuyer;
+    private String emailBuyer;
     private Address addressBuyer;
 
     public Payment() {
     }
 
-    public Payment(TicketType type, BigDecimal paymentTotal, String firstNameBuyer, String lastNameBuyer, Address addressBuyer) {
+    public Payment(TicketType type, BigDecimal paymentTotal, String firstNameBuyer, String lastNameBuyer, String emailBuyer, Address addressBuyer) {
         this.type = type;
         this.paymentTotal = paymentTotal;
         this.firstNameBuyer = firstNameBuyer;
         this.lastNameBuyer = lastNameBuyer;
+        this.emailBuyer = emailBuyer;
         this.addressBuyer = addressBuyer;
     }
 
@@ -72,6 +74,14 @@ public class Payment {
 
     public void setLastNameBuyer(String lastNameBuyer) {
         this.lastNameBuyer = lastNameBuyer;
+    }
+
+    public String getEmailBuyer() {
+        return emailBuyer;
+    }
+
+    public void setEmailBuyer(String emailBuyer) {
+        this.emailBuyer = emailBuyer;
     }
 
     public Address getAddressBuyer() {

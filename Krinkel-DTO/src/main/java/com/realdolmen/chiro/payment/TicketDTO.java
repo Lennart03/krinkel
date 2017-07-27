@@ -29,6 +29,10 @@ public class TicketDTO {
      */
     private String lastName;
     /**
+     * Email of the person buying the ticket
+     */
+    private String email;
+    /**
      * Address given by the person in the frontend
      */
     private Address address;
@@ -73,11 +77,32 @@ public class TicketDTO {
         this.lastName = lastName;
     }
 
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
     public Address getAddress() {
         return address;
     }
 
     public void setAddress(Address address) {
         this.address = address;
+    }
+
+    @Override
+    public String toString() {
+        return "TicketDTO{" +
+                "type=" + type +
+                ", ticketAmount=" + ticketAmount +
+                ", timesOrdered=" + timesOrdered +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", email='" + email + '\'' +
+                ", address=" + address +
+                '}';
     }
 }

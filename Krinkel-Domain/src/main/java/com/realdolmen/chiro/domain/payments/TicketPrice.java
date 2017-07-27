@@ -19,6 +19,16 @@ public class TicketPrice {
     @Enumerated(EnumType.STRING)
     private TicketType ticketType;
 
+    public TicketPrice() {
+    }
+
+    public TicketPrice(Integer ticketAmount, BigDecimal price, BigDecimal transportationcosts, TicketType ticketType) {
+        this.ticketAmount = ticketAmount;
+        this.price = price;
+        this.transportationcosts = transportationcosts;
+        this.ticketType = ticketType;
+    }
+
     public Integer getId() {
         return id;
     }

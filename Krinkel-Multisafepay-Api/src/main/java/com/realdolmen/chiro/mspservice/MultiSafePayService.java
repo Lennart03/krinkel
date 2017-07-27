@@ -4,6 +4,7 @@ import com.realdolmen.chiro.domain.RegistrationParticipant;
 import com.realdolmen.chiro.domain.RegistrationVolunteer;
 import com.realdolmen.chiro.domain.User;
 import com.realdolmen.chiro.domain.dto.UserDTO;
+import com.realdolmen.chiro.domain.payments.Payment;
 import com.realdolmen.chiro.mspdto.Data;
 import com.realdolmen.chiro.mspdto.OrderDto;
 import com.realdolmen.chiro.mspdto.StatusDto;
@@ -17,6 +18,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 
+import java.math.BigDecimal;
 import java.nio.charset.Charset;
 import java.security.InvalidParameterException;
 import java.util.Date;
@@ -52,18 +54,7 @@ public class MultiSafePayService {
         headers.setContentType(MediaType.APPLICATION_JSON);
         HttpEntity<String> entity = new HttpEntity<>(jsonObject.toString(), headers);
         String url = configuration.getURL() + "?api_key=" + configuration.getApiKey();
-
-
-        try {
-            restTemplate.getMessageConverters()
-                    .add(0, new StringHttpMessageConverter(Charset.forName("UTF-8")));
-            ResponseEntity<OrderDto> response = restTemplate.exchange(url, HttpMethod.POST, entity, OrderDto.class);
-            return response.getBody();
-        } catch (HttpClientErrorException ex) {
-            // Assume failure to be due  to a duplicate OrderID.
-            logger.warn("Request to Payment Site failed with status " + ex.getMessage());
-            throw new InvalidPaymentOrderIdException();
-        }
+        return callMultiSafePayApi(entity, url);
     }
 
     /**
@@ -82,8 +73,14 @@ public class MultiSafePayService {
         headers.setContentType(MediaType.APPLICATION_JSON);
         HttpEntity<String> entity = new HttpEntity<>(jsonObject.toString(), headers);
         String url = configuration.getURL() + "?api_key=" + configuration.getApiKey();
+        return callMultiSafePayApi(entity, url);
+    }
 
+    public OrderDto createPayment(Payment payment) {
+        return null;
+    }
 
+    private OrderDto callMultiSafePayApi(HttpEntity<String> entity, String url) throws InvalidPaymentOrderIdException {
         try {
             restTemplate.getMessageConverters()
                     .add(0, new StringHttpMessageConverter(Charset.forName("UTF-8")));
@@ -109,6 +106,33 @@ public class MultiSafePayService {
             res = false;
         }
         return res;
+    }
+
+    private JSONObject createPaymentJsonObject(Payment payment) {
+        JSONObject paymentOptions = configuration.getPaymentOptions();
+        JSONObject customer = new JSONObject();
+        JSONObject jsonObject = new JSONObject();
+
+        customer.put("local", "nl_BE");
+
+        if(payment.getAddressBuyer() != null) {
+            customer.put("address1", payment.getAddressBuyer().getStreet());
+            customer.put("house_number", payment.getAddressBuyer().getHouseNumber());
+            customer.put("city", payment.getAddressBuyer().getCity());
+            customer.put("zip_code", payment.getAddressBuyer().getPostalCode());
+        }
+        customer.put("country", "BE");
+        customer.put("first_name", payment.getFirstNameBuyer());
+        customer.put("last_name", payment.getLastNameBuyer());
+
+        jsonObject.put("type", "redirect");
+        jsonObject.put("order_id", payment.getId() + getCurrentTimeStamp());
+        jsonObject.put("currency", "EUR");
+        jsonObject.put("amount", payment.getPaymentTotal().multiply(new BigDecimal(100)).intValue()); // Moet in het totaal aantal eurocent
+        jsonObject.put("payment_options", paymentOptions);
+        jsonObject.put("customer", customer);
+
+        return jsonObject;
     }
 
     /**
@@ -237,7 +261,6 @@ public class MultiSafePayService {
 
         return res;
     }
-
 
     public static class InvalidPaymentOrderIdException extends Exception {
     }
