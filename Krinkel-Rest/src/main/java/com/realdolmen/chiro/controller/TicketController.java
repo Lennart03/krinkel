@@ -2,6 +2,8 @@ package com.realdolmen.chiro.controller;
 
 import com.realdolmen.chiro.domain.Address;
 import com.realdolmen.chiro.domain.User;
+import com.realdolmen.chiro.domain.payments.TicketPrice;
+import com.realdolmen.chiro.domain.payments.TicketType;
 import com.realdolmen.chiro.service.TicketService;
 import com.realdolmen.chiro.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,8 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.List;
 
 @RestController
 @RequestMapping("/tickets")
@@ -53,15 +54,13 @@ public class TicketController {
     }
 
     @RequestMapping("/prices/train")
-    public Double getTrainTicketPrice() {
-        return ticketService.getPriceTrainTicket().doubleValue();
+    public List<TicketPrice> getTrainTicketPrice() {
+        return ticketService.getPricesForTickets(TicketType.TREIN);
     }
 
     @RequestMapping("/prices/coupons")
-    public Map<Integer, Double> getCouponPrices() {
-        Map<Integer, Double> prices = new HashMap<>();
-        ticketService.getPriceCoupons().forEach((amount, price) -> prices.put(amount, price.doubleValue()));
-        return prices;
+    public List<TicketPrice> getCouponPrices() {
+        return ticketService.getPricesForTickets(TicketType.BON);
     }
 
     /**

@@ -3708,6 +3708,19 @@ INSERT INTO post_camp VALUES (60, '2017-08-31') ON DUPLICATE KEY UPDATE id = 60;
 INSERT INTO post_camp VALUES (70, '2017-09-01') ON DUPLICATE KEY UPDATE id = 70;
 INSERT INTO post_camp VALUES (80, '2017-09-02') ON DUPLICATE KEY UPDATE id = 80;
 
+/*
+RECORDS FOR TICKET PRICES
+ */
+insert into ticket_price (id, price, ticket_amount, ticket_type, transportationcosts) values (1, '11.50', 1, 'TREIN', '0.5');
+insert into ticket_price (id, price, ticket_amount, ticket_type, transportationcosts) values (2, '5.0', 8, 'BON', '0.0');
+insert into ticket_price (id, price, ticket_amount, ticket_type, transportationcosts) values (3, '10.0', 16, 'BON', '0.0');
+insert into ticket_price (id, price, ticket_amount, ticket_type, transportationcosts) values (4, '15.0', 25, 'BON', '0.0');
+insert into ticket_price (id, price, ticket_amount, ticket_type, transportationcosts) values (5, '20.0', 35, 'BON', '0.0');
+insert into ticket_price (id, price, ticket_amount, ticket_type, transportationcosts) values (6, '25.0', 45, 'BON', '0.0');
+insert into ticket_price (id, price, ticket_amount, ticket_type, transportationcosts) values (7, '50.0', 90, 'BON', '0.0');
+
+
+
 
 update krinkel.groepen
 set groep_naam = concat(groep_naam, ' Gemengd')

@@ -1,6 +1,8 @@
 package com.realdolmen.chiro.domain.payments;
 
 
+import com.realdolmen.chiro.domain.Address;
+
 import javax.persistence.*;
 import java.math.BigDecimal;
 
@@ -16,6 +18,21 @@ public class Payment {
 
     @Column(name = "Totaal")
     private BigDecimal paymentTotal;
+
+    private String firstNameBuyer;
+    private String lastNameBuyer;
+    private Address addressBuyer;
+
+    public Payment() {
+    }
+
+    public Payment(TicketType type, BigDecimal paymentTotal, String firstNameBuyer, String lastNameBuyer, Address addressBuyer) {
+        this.type = type;
+        this.paymentTotal = paymentTotal;
+        this.firstNameBuyer = firstNameBuyer;
+        this.lastNameBuyer = lastNameBuyer;
+        this.addressBuyer = addressBuyer;
+    }
 
     public Integer getId() {
         return id;
@@ -39,5 +56,29 @@ public class Payment {
 
     public void setPaymentTotal(BigDecimal paymentTotal) {
         this.paymentTotal = paymentTotal;
+    }
+
+    public String getFirstNameBuyer() {
+        return firstNameBuyer;
+    }
+
+    public void setFirstNameBuyer(String firstNameBuyer) {
+        this.firstNameBuyer = firstNameBuyer;
+    }
+
+    public String getLastNameBuyer() {
+        return lastNameBuyer;
+    }
+
+    public void setLastNameBuyer(String lastNameBuyer) {
+        this.lastNameBuyer = lastNameBuyer;
+    }
+
+    public Address getAddressBuyer() {
+        return addressBuyer;
+    }
+
+    public void setAddressBuyer(Address addressBuyer) {
+        this.addressBuyer = addressBuyer;
     }
 }
