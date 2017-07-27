@@ -1,7 +1,7 @@
 package com.realdolmen.chiro.service;
 
 import com.realdolmen.chiro.domain.payments.Payment;
-import com.realdolmen.chiro.domain.payments.PaymentType;
+import com.realdolmen.chiro.domain.payments.TicketType;
 import com.realdolmen.chiro.mspservice.MultiSafePayTicketService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -55,7 +55,7 @@ public class TicketService {
         priceCoupons.put(Coupon.NINETEEN.number, new BigDecimal(50));
     }
 
-    public Payment createPayment(PaymentType type, int ticketAmount) {
+    public Payment createPayment(TicketType type, int ticketAmount) {
         return null;
     }
 

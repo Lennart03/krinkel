@@ -1,7 +1,7 @@
 package com.realdolmen.chiro.domain.payments;
 
 
-public enum PaymentType {
+public enum TicketType {
 
     TREIN,
     BON

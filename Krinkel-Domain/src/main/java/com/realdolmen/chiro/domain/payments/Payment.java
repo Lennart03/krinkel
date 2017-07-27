@@ -12,7 +12,7 @@ public class Payment {
     private Integer id;
 
     @Enumerated(EnumType.STRING)
-    private PaymentType type;
+    private TicketType type;
 
     @Column(name = "Totaal")
     private BigDecimal paymentTotal;
@@ -25,11 +25,11 @@ public class Payment {
         this.id = id;
     }
 
-    public PaymentType getType() {
+    public TicketType getType() {
         return type;
     }
 
-    public void setType(PaymentType type) {
+    public void setType(TicketType type) {
         this.type = type;
     }
 
