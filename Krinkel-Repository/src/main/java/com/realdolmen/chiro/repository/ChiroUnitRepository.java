@@ -10,9 +10,11 @@ import com.realdolmen.chiro.domain.units.ChiroUnit;
 import com.realdolmen.chiro.domain.units.RawChiroUnit;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
+@Repository
 public interface ChiroUnitRepository extends JpaRepository<RawChiroUnit, String> {
 
 /*    @Query("SELECT c FROM RawChiroUnit c WHERE " +

@@ -27,13 +27,13 @@ public class ChiroUnitRepositoryTest extends SpringIntegrationTest{
     @Test
     public void findAllGewesten(){
         List<ChiroUnit> allGewesten = chiroUnitRepository.findAllGewesten();
-        assertEquals(72,allGewesten.size());
+        assertEquals(76,allGewesten.size());
     }
 
     @Test
     public void findAllGroups(){
         List<RawChiroUnit> allGroups = chiroUnitRepository.findAll();
-        assertEquals(904,allGroups.size());
+        assertEquals(908,allGroups.size());
     }
 
     @Test
@@ -77,7 +77,7 @@ public class ChiroUnitRepositoryTest extends SpringIntegrationTest{
         List<RegistrationParticipant> participants = new ArrayList<>();
         participants = chiroUnitRepository.returnParticipantsByGroep("AG /0103",true);
         int size = participants.size();
-        assertEquals(3, size);
+        assertEquals(0, size);
     }
 
     @Test

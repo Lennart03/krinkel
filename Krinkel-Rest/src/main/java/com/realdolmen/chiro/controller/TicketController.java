@@ -39,7 +39,7 @@ public class TicketController {
 
     @RequestMapping(method = RequestMethod.POST, value = "/purchase", consumes = "application/json")
     public ResponseEntity<?> orderTicket(@RequestBody TicketDTO ticketDTO) throws URISyntaxException {
-        logger.info("Ordening new tickets: [" + ticketDTO.toString() + "]");
+        logger.info("Ordering new tickets: [" + ticketDTO.toString() + "]");
         String paymentUrl = ticketService.createPayment(ticketDTO);
         HttpHeaders headers = new HttpHeaders();
         headers.setLocation(new URI(paymentUrl));

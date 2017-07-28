@@ -3,6 +3,7 @@ package com.realdolmen.chiro.controller;
 import com.realdolmen.chiro.domain.*;
 import com.realdolmen.chiro.domain.payments.TicketPrice;
 import com.realdolmen.chiro.domain.payments.TicketType;
+import com.realdolmen.chiro.payment.TicketDTO;
 import com.realdolmen.chiro.service.TicketService;
 import com.realdolmen.chiro.service.UserService;
 import com.realdolmen.chiro.spring_test.MockMvcTest;
@@ -16,6 +17,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 import java.math.BigDecimal;
+import java.net.URI;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -157,6 +159,11 @@ public class TicketControllerTest extends MockMvcTest {
 
     @Test
     public void orderTicket() throws Exception {
+        TicketDTO dto = new TicketDTO();
+        Mockito.when(ticketService.createPayment(dto)).thenReturn("http://www.google.com");
+        ResponseEntity<?> entity = ticketController.orderTicket(dto);
+        Assert.assertEquals(new URI("http://www.google.com"), entity.getHeaders().getLocation());
+        Assert.assertEquals(HttpStatus.CREATED, entity.getStatusCode());
     }
 
     @Test
