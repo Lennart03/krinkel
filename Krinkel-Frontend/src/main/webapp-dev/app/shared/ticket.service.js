@@ -1,5 +1,3 @@
-import {TicketType} from "./TicketType"
-
 /**
  * Service for train tickets and drink/meal tickets.
  */
@@ -37,4 +35,4 @@ export class TicketService {
     }
 }
 
-KrinkelService.$inject = ['$http', 'BASEURL', '$window', '$filter', 'AuthService'];
+TicketService.$inject = ['$http', 'BASEURL', '$window', '$filter', 'AuthService'];

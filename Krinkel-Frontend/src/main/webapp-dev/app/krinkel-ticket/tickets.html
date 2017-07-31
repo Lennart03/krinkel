@@ -1,1 +1,37 @@
-<h1>WOW</h1>
+<div class="row" id="divAroundTopText" style="display:none">
+    <h1>Koop tickets aan</h1>
+    <p class="flow-text"><i class="material-icons">info_outline</i> Let op: Als je tickets koopt, word je meteen naar
+        een betaalpagina gestuurd.
+        Hou dus je bankkaart bij de hand. Problemen met online betalen? Laat het dan weten via <a
+            href="mailto:inschrijvingen@krinkel.be">inschrijvingen@krinkel.be</a>.</p>
+    <p class="flow-text"><i class="material-icons">info_outline</i>
+        Velden met een "*"-symbool zijn verplicht.
+    </p>
+</div>
+
+<div class="row" id="divAroundForm" style="display:none">
+
+    <form class="col s12 m12" novalidate name="ticketForm" ng-submit="ticketForm.$valid && $ctrl.prepurchase($ctrl.ticketPurchase)">
+        <div class="row">
+
+        </div>
+
+        <div>
+            <a ng-click="$ctrl.initModal6(ticketForm.$valid)" class="btn">
+                Betalen
+                <i class="material-icons right">send</i>
+            </a>
+        </div>
+
+        <div id="modal6" class="modal">
+            <div class="modal-content">
+                <h4>Zijn deze gegevens correct?</h4>
+            </div>
+            <div class="modal-footer">
+                <button type="submit" class=" modal-action modal-close btn-flat">JA</button>
+                <a href="" class="modal-action modal-close btn-flat">NEE</a>
+            </div>
+        </div>
+    </form>
+</div>
+
