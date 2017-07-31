@@ -169,7 +169,7 @@ public class TicketControllerTest extends MockMvcTest {
     @Test
     public void getTrainTicketPrice() throws Exception {
         Mockito.when(ticketService.getPricesForTickets(TicketType.TREIN)).thenReturn(trainTicketPrices);
-        List<TicketPrice> prices = ticketController.getTrainTicketPrice();
+        List<TicketPrice> prices = ticketController.getTrainTicketPrices();
         Assert.assertEquals(1, prices.size());
         TicketPrice ticketPrice = prices.get(0);
         Assert.assertEquals(ticketAmount, ticketPrice.getTicketAmount());

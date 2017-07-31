@@ -1,5 +1,3 @@
-import {TicketType} from "./TicketType"
-
 /**
  * Service for train tickets and drink/meal tickets.
  */
@@ -34,6 +32,17 @@ export class TicketService {
                 address: resp.data
             };
         });
+    }
+
+    getTrainTicketPrices() {
+        return this.$http.get(`${this.BASEURL}/api/tickets/prices/train`).then((resp) => {
+            console.log(resp);
+            return
+        })
+    }
+
+    getCouponPrices() {
+
     }
 }
 

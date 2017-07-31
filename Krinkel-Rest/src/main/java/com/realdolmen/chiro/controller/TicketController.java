@@ -71,7 +71,7 @@ public class TicketController {
     }
 
     @RequestMapping("/prices/train")
-    public List<TicketPrice> getTrainTicketPrice() {
+    public List<TicketPrice> getTrainTicketPrices() {
         return ticketService.getPricesForTickets(TicketType.TREIN);
     }
 
