@@ -5,6 +5,7 @@ import com.realdolmen.chiro.domain.RegistrationVolunteer;
 import com.realdolmen.chiro.domain.User;
 import com.realdolmen.chiro.domain.dto.UserDTO;
 import com.realdolmen.chiro.domain.payments.Payment;
+import com.realdolmen.chiro.domain.payments.TicketType;
 import com.realdolmen.chiro.mspdto.Data;
 import com.realdolmen.chiro.mspdto.OrderDto;
 import com.realdolmen.chiro.mspdto.StatusDto;
@@ -68,7 +69,7 @@ public class MultiSafePayService {
     public OrderDto createPayment(Integer amount, UserDTO currentUser) throws InvalidPaymentOrderIdException {
         if (!createPaymentParamsAreValid(currentUser.getAdNumber(), amount))
             throw new InvalidParameterException("cannot create a payment with those params");
-        JSONObject jsonObject = this.createPaymentJsonObject(amount , currentUser);
+        JSONObject jsonObject = this.createPaymentJsonObject(amount, currentUser);
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
         HttpEntity<String> entity = new HttpEntity<>(jsonObject.toString(), headers);
@@ -76,8 +77,16 @@ public class MultiSafePayService {
         return callMultiSafePayApi(entity, url);
     }
 
-    public OrderDto createPayment(Payment payment) {
-        return null;
+    public OrderDto createPayment(Payment payment) throws InvalidPaymentOrderIdException {
+        if(!createPaymentParamsAreValid(payment)) {
+            throw new InvalidParameterException("Parameters are invalid");
+        }
+        JSONObject jsonObject = this.createPaymentJsonObject(payment);
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        HttpEntity<String> entity = new HttpEntity<>(jsonObject.toString(), headers);
+        String url = configuration.getURL() + "?api_key=" + configuration.getApiKey();
+        return callMultiSafePayApi(entity, url);
     }
 
     private OrderDto callMultiSafePayApi(HttpEntity<String> entity, String url) throws InvalidPaymentOrderIdException {
@@ -108,6 +117,16 @@ public class MultiSafePayService {
         return res;
     }
 
+    private boolean createPaymentParamsAreValid(Payment payment) {
+        return payment != null
+                && payment.getAddressBuyer() != null && payment.getAddressBuyer().isComplete()
+                && payment.getPhoneNumberBuyer() != null && !payment.getPhoneNumberBuyer().isEmpty()
+                && payment.getFirstNameBuyer() != null && !payment.getFirstNameBuyer().isEmpty()
+                && payment.getLastNameBuyer() != null && !payment.getLastNameBuyer().isEmpty()
+                && payment.getEmailBuyer() != null && !payment.getEmailBuyer().isEmpty()
+                && payment.getType() != null;
+    }
+
     private JSONObject createPaymentJsonObject(Payment payment) {
         JSONObject paymentOptions = configuration.getPaymentOptions();
         JSONObject customer = new JSONObject();
@@ -115,22 +134,34 @@ public class MultiSafePayService {
 
         customer.put("local", "nl_BE");
 
-        if(payment.getAddressBuyer() != null) {
+        if (payment != null && payment.getAddressBuyer() != null) {
             customer.put("address1", payment.getAddressBuyer().getStreet());
             customer.put("house_number", payment.getAddressBuyer().getHouseNumber());
             customer.put("city", payment.getAddressBuyer().getCity());
             customer.put("zip_code", payment.getAddressBuyer().getPostalCode());
-        }
-        customer.put("country", "BE");
-        customer.put("first_name", payment.getFirstNameBuyer());
-        customer.put("last_name", payment.getLastNameBuyer());
+            customer.put("country", "BE");
+            customer.put("phone", payment.getPhoneNumberBuyer());
+            customer.put("first_name", payment.getFirstNameBuyer());
+            customer.put("last_name", payment.getLastNameBuyer());
+            customer.put("email", payment.getEmailBuyer());
 
-        jsonObject.put("type", "redirect");
-        jsonObject.put("order_id", payment.getId() + getCurrentTimeStamp());
-        jsonObject.put("currency", "EUR");
-        jsonObject.put("amount", payment.getPaymentTotal().multiply(new BigDecimal(100)).intValue()); // Moet in het totaal aantal eurocent
-        jsonObject.put("payment_options", paymentOptions);
-        jsonObject.put("customer", customer);
+            jsonObject.put("type", "redirect");
+            jsonObject.put("order_id", payment.getId() + getCurrentTimeStamp());
+            jsonObject.put("currency", "EUR");
+            jsonObject.put("amount", payment.getPaymentTotal().multiply(new BigDecimal(100)).intValue()); // Moet in het totaal aantal eurocent
+            jsonObject.put("payment_options", paymentOptions);
+            jsonObject.put("customer", customer);
+
+            String description = "Betaling voor ";
+            if (payment.getType() == TicketType.TREIN) {
+                description += "treintickets.";
+            } else {
+                description += "drank- en eetbonnen.";
+            }
+
+            jsonObject.put("description", description);
+        }
+
 
         return jsonObject;
     }

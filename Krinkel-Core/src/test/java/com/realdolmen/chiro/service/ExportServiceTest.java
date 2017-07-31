@@ -8,33 +8,20 @@ import jxl.CellType;
 import jxl.write.WritableCell;
 import jxl.write.WritableSheet;
 import jxl.write.WritableWorkbook;
-import org.apache.poi.hssf.usermodel.HSSFSheet;
-import org.apache.poi.hssf.usermodel.HSSFWorkbook;
-import org.apache.poi.hssf.util.CellReference;
-import org.apache.poi.ss.usermodel.Cell;
-import org.apache.poi.ss.usermodel.FormulaEvaluator;
-import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-import org.junit.Assert;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.Mock;
-import org.mockito.Mockito;
-import org.mockito.runners.MockitoJUnitRunner;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Profile;
 import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.test.context.ContextConfiguration;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.*;
-import java.lang.reflect.Array;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.*;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
-import java.util.zip.ZipInputStream;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
@@ -128,9 +115,9 @@ public class ExportServiceTest extends SpringIntegrationTest {
         assertEquals("Aspi", objects[13]);
         assertEquals("", objects[15]);
         assertEquals("Vis en vlees", objects[18]);
-        assertEquals("Te betalen", objects[28]);
+        assertEquals("Te betalen", objects[27]);
+        assertEquals("", objects[28]);
         assertEquals("", objects[29]);
-        assertEquals("", objects[30]);
     }
 
     @Test
@@ -140,7 +127,7 @@ public class ExportServiceTest extends SpringIntegrationTest {
         Object object2 = headerObject[29];
         assertEquals("Id", object);
         assertEquals("Synchstatus", object2);
-        assertEquals(31, headerObject.length);
+        assertEquals(32, headerObject.length);
     }
 
     @Test
@@ -151,8 +138,8 @@ public class ExportServiceTest extends SpringIntegrationTest {
         Map<String, Object[]> stringMap = exportService.createDataForRegistrationParticipantsOnlyVolunteers();
         Object[] objects = stringMap.get("0");
         assertEquals(60L, objects[0]);
-        assertEquals("Gesynchroniseerd", objects[29]);
-        assertEquals("13-12-2016 00:00:00", objects[30]);
+        assertEquals("Gesynchroniseerd", objects[28]);
+        assertEquals("13-12-2016 00:00:00", objects[29]);
     }
 
     @Test
@@ -188,7 +175,7 @@ public class ExportServiceTest extends SpringIntegrationTest {
         assertEquals("60", readLineFromXls(workbook, 0, 6));
         assertEquals("", readLineFromXls(workbook, 14, 1));
         assertEquals("Spaans, Frans", readLineFromXls(workbook, 17, 5));
-        assertEquals("Gesynchroniseerd", readLineFromXls(workbook, 29, 6));
+        assertEquals("Gesynchroniseerd", readLineFromXls(workbook, 28, 6));
         assertEquals("THIS CELL WAS EMPTY", readLineFromXls(workbook, 100, 100));
     }
 
@@ -217,8 +204,8 @@ public class ExportServiceTest extends SpringIntegrationTest {
         assertEquals("60", readLineFromXls(workbook, 0, 1));
         assertEquals("21-08-1995", readLineFromXls(workbook, 6, 1));
         assertEquals("Vrijwilliger", readLineFromXls(workbook, 13, 1));
-        assertEquals("Gesynchroniseerd", readLineFromXls(workbook, 29, 1));
-        assertEquals("13-12-2016 00:00:00", readLineFromXls(workbook, 30, 1));
+        assertEquals("Gesynchroniseerd", readLineFromXls(workbook, 28, 1));
+        assertEquals("13-12-2016 00:00:00", readLineFromXls(workbook, 29, 1));
 
         assertEquals("THIS CELL WAS EMPTY", readLineFromXls(workbook, 100, 3));
     }
@@ -280,17 +267,18 @@ public class ExportServiceTest extends SpringIntegrationTest {
         exportService.createCSVBackups();
         ZipFile zipFile = new ZipFile("backup.zip");
         String fileName = "backupRegistrationParticipants.csv";
-
+        File temp = new File("temp1.csv");
+        temp.delete();
         // Go over every file and get the right file
         InputStream inputStream = searchFile(fileName, zipFile);
-        File temp = new File("temp1.csv");
+
         Path destination = Paths.get(temp.getName());
         Files.copy(inputStream, destination);
         inputStream.close(); // Close inputstream in order to be able to delete the temp file
         List<String> rows = getContentOfCSVFile(temp);
-        assertEquals("id,adNumber,registeredBy,firstName,lastName,email,emailSubscriber,address,birthdate,lastChange,stamnumber,gender,eventRole,buddy,language,eatinghabbit,remarksFood,socialPromotion,medicalRemarks,remarks,status,syncStatus,httpStatus,phoneNumber",
+        assertEquals("id,adNumber,registeredBy,firstName,lastName,email,emailSubscriber,address,birthdate,lastChange,stamnumber,originalStamNumber,gender,eventRole,buddy,language,eatinghabbit,remarksFood,socialPromotion,medicalRemarks,remarks,status,syncStatus,httpStatus,phoneNumber",
                 rows.get(0));
-        assertEquals("50,987654,987654,Frederik,Flodder,email@test.be,email@test.be,Veldstraat 123 1000 Brussel,1995-08-21,null,AG /0202,MAN,ASPI,true,[SPANISH ---  FRENCH],FISHANDMEAT,null,false,null,null,CONFIRMED,null,null,1",
+        assertEquals("50,987654,987654,Frederik,Flodder,email@test.be,email@test.be,Veldstraat 123 1000 Brussel,1995-08-21,null,AG /0202,null,MAN,ASPI,true,[SPANISH ---  FRENCH],FISHANDMEAT,null,false,null,null,CONFIRMED,null,null,1",
                 rows.get(5));
         zipFile.close();
         // Remove temp file
@@ -298,6 +286,7 @@ public class ExportServiceTest extends SpringIntegrationTest {
     }
 
     @Test
+    @Profile("fileaccess")
     public void testBackupZipbackupRegistrationVolunteers() throws IOException {
         exportService.createCSVBackups();
         ZipFile zipFile = new ZipFile("backup.zip");
@@ -306,13 +295,14 @@ public class ExportServiceTest extends SpringIntegrationTest {
         // Go over every file and get the right file
         InputStream inputStream = searchFile(fileName, zipFile);
         File temp = new File("temp2.csv");
+        temp.delete();
         Path destination = Paths.get(temp.getName());
         Files.copy(inputStream, destination);
         inputStream.close(); // Close inputstream in order to be able to delete the temp file
         List<String> rows = getContentOfCSVFile(temp);
-        assertEquals("campGround,function,preCampList,postCampList,id,adNumber,registeredBy,firstName,lastName,email,emailSubscriber,address,birthdate,lastChange,stamnumber,gender,eventRole,buddy,language,eatinghabbit,remarksFood,socialPromotion,medicalRemarks,remarks,status,syncStatus,httpStatus,phoneNumber",
+        assertEquals("campGround,function,preCampList,postCampList,id,adNumber,registeredBy,firstName,lastName,email,emailSubscriber,address,birthdate,lastChange,stamnumber,originalStamNumber,gender,eventRole,buddy,language,eatinghabbit,remarksFood,socialPromotion,medicalRemarks,remarks,status,syncStatus,httpStatus,phoneNumber",
                 rows.get(0));
-        assertEquals("KEMPEN,[preset=Kampgrondtrekker --- other=null],[21/08/2017 ---  22/08/2017 ---  23/08/2017],[31/08/2017 ---  01/09/2017 ---  02/09/2017],60,876543,876543,Jos,Flodder,email@test.be,email@test.be,Veldstraat 123 1000 Brussel,1995-08-21,2016-12-13 00:00:00.0,AG /0103,MAN,VOLUNTEER,false,[],FISHANDMEAT,null,false,null,null,CONFIRMED,SYNCED,null,1",
+        assertEquals("INTERNATIONAAL,[Functie:Kampgrondtrekker ---  Beschrijving andere:null],[21/08/2017 ---  22/08/2017 ---  23/08/2017],[31/08/2017 ---  01/09/2017 ---  02/09/2017],60,876543,876543,Jos,Flodder,email@test.be,email@test.be,Veldstraat 123 1000 Brussel,1995-08-21,2016-12-13 00:00:00.0,AG /0103,null,MAN,VOLUNTEER,false,[],FISHANDMEAT,null,false,null,null,CONFIRMED,SYNCED,null,1",
                 rows.get(1));
         zipFile.close();
         // Remove temp file
@@ -328,6 +318,7 @@ public class ExportServiceTest extends SpringIntegrationTest {
         // Go over every file and get the right file
         InputStream inputStream = searchFile(fileName, zipFile);
         File temp = new File("temp3.csv");
+        temp.delete();
         Path destination = Paths.get(temp.getName());
         Files.copy(inputStream, destination);
         inputStream.close(); // Close inputstream in order to be able to delete the temp file
@@ -352,6 +343,7 @@ public class ExportServiceTest extends SpringIntegrationTest {
         // Go over every file and get the right file
         InputStream inputStream = searchFile(fileName, zipFile);
         File temp = new File("temp5.csv");
+        temp.delete();
         Path destination = Paths.get(temp.getName());
         Files.copy(inputStream, destination);
         inputStream.close(); // Close inputstream in order to be able to delete the temp file
@@ -375,6 +367,7 @@ public class ExportServiceTest extends SpringIntegrationTest {
         // Go over every file and get the right file
         InputStream inputStream = searchFile(fileName, zipFile);
         File temp = new File("temp5.csv");
+        temp.delete();
         Path destination = Paths.get(temp.getName());
         Files.copy(inputStream, destination);
         inputStream.close(); // Close inputstream in order to be able to delete the temp file
@@ -396,6 +389,7 @@ public class ExportServiceTest extends SpringIntegrationTest {
         // Go over every file and get the right file
         InputStream inputStream = searchFile(fileName, zipFile);
         File temp = new File("temp6.csv");
+        temp.delete();
         Path destination = Paths.get(temp.getName());
         Files.copy(inputStream, destination);
         inputStream.close(); // Close inputstream in order to be able to delete the temp file

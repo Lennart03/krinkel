@@ -133,7 +133,7 @@ public interface ChiroUnitRepository extends JpaRepository<RawChiroUnit, String>
      * @return
      */
     @Query("SELECT COUNT(p) FROM RegistrationParticipant p, RawChiroUnit c " +
-            "WHERE c.groepStamNummer = ?1 AND p.stamnumber = c.groepStamNummer AND p.status = ?2")
+            "WHERE c.groepStamNummer = ?1 AND p.stamnumber = c.groepStamNummer")
     int countParticipantsByGroep(String groepStamNummer);
 
     @Query("SELECT COUNT(p) FROM RegistrationParticipant p, RawChiroUnit c " +

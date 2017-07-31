@@ -91,7 +91,7 @@ public class ChiroUnitRepositoryTest extends SpringIntegrationTest{
     @Test
     public void testIfReturnedParticipantHasCorrectData(){
         List<RegistrationParticipant> participants = new ArrayList<>();
-        participants = chiroUnitRepository.returnParticipantsByGroep("AG /0103",true);
+        participants = chiroUnitRepository.returnParticipantsByGroep("AG /0103",false);
         RegistrationParticipant participant = participants.get(1);
         assertEquals("Ma", participant.getFirstName());
         assertEquals("Flodder", participant.getLastName());

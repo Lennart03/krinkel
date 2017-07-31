@@ -33,6 +33,10 @@ public class TicketDTO {
      */
     private String email;
     /**
+     * Phone number of the person buying the ticket
+     */
+    private String phoneNumber;
+    /**
      * Address given by the person in the frontend
      */
     private Address address;
@@ -83,6 +87,14 @@ public class TicketDTO {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
     }
 
     public Address getAddress() {

@@ -8,6 +8,9 @@ import com.realdolmen.chiro.mspservice.MultiSafePayService;
 import com.realdolmen.chiro.payment.TicketDTO;
 import com.realdolmen.chiro.repository.PaymentRepository;
 import com.realdolmen.chiro.repository.TicketPriceRepository;
+import com.realdolmen.chiro.util.TicketPriceCalculator;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,15 +24,19 @@ import java.util.List;
 @Service
 public class TicketService {
 
+    private final static Logger logger = LoggerFactory.getLogger(TicketService.class);
+
     private MultiSafePayService multiSafePayService;
     private TicketPriceRepository ticketPriceRepository;
     private PaymentRepository paymentRepository;
+    private TicketPriceCalculator ticketPriceCalculator;
 
     @Autowired
-    public TicketService(MultiSafePayService multiSafePayService, TicketPriceRepository ticketPriceRepository, PaymentRepository paymentRepository) {
+    public TicketService(MultiSafePayService multiSafePayService, TicketPriceRepository ticketPriceRepository, PaymentRepository paymentRepository, TicketPriceCalculator ticketPriceCalculator) {
         this.multiSafePayService = multiSafePayService;
         this.ticketPriceRepository = ticketPriceRepository;
         this.paymentRepository = paymentRepository;
+        this.ticketPriceCalculator = ticketPriceCalculator;
     }
 
     /**
@@ -38,6 +45,7 @@ public class TicketService {
      * @return Payment url string.
      */
     public String createPayment(TicketDTO ticketDTO) {
+        logger.info("Creating payment for " + ticketDTO);
         TicketPrice price;
         if(ticketDTO.getType() == TicketType.TREIN) {
             price = ticketPriceRepository.findByTicketType(TicketType.TREIN).get(0);
@@ -46,14 +54,20 @@ public class TicketService {
             price = ticketPriceRepository.findByTicketTypeAndTicketAmount(ticketDTO.getType(), ticketDTO.getTicketAmount());
         }
         // This is the price of the ticket times the total times the ticket is ordered
-        BigDecimal totalPrice = price.getPrice().multiply(new BigDecimal(ticketDTO.getTimesOrdered())).add(price.getTransportationcosts());
-        Payment payment = new Payment(ticketDTO.getType(), totalPrice, ticketDTO.getFirstName(), ticketDTO.getLastName(), ticketDTO.getEmail(), ticketDTO.getAddress());
+        BigDecimal totalPrice = ticketPriceCalculator.calculateTotalTicketPrice(price.getPrice(), price.getTicketAmount(), price.getTransportationcosts());
+        Payment payment = new Payment(ticketDTO.getType(), totalPrice, ticketDTO.getFirstName(), ticketDTO.getLastName(), ticketDTO.getEmail(), ticketDTO.getPhoneNumber(), ticketDTO.getAddress());
         payment = paymentRepository.save(payment);
-        OrderDto orderDto = multiSafePayService.createPayment(payment);
-        if(orderDto != null) {
-            return orderDto.getData().getPayment_url();
+        OrderDto orderDto;
+        try {
+            orderDto = multiSafePayService.createPayment(payment);
+            if(orderDto != null) {
+                return orderDto.getData().getPayment_url();
+            }
+            return "";
+        } catch (MultiSafePayService.InvalidPaymentOrderIdException e) {
+            logger.error("Payment error when creating payment url.", e);
+            return "error";
         }
-        return "";
     }
 
     public List<TicketPrice> getPricesForTickets() {
