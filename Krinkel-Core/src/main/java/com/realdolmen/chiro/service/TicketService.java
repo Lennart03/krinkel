@@ -81,6 +81,11 @@ public class TicketService {
         return ticketPriceRepository.findByTicketType(ticketType);
     }
 
+    /**
+     * Update the payment status of an order made by the multisafepay api
+     * @param orderId Id of multisafepay payment.
+     * @param paymentStatus {@link PaymentStatus} to which the status of the {@link Payment} entity will be updated.
+     */
     public void updatePaymentStatus(String orderId, PaymentStatus paymentStatus) {
         if(orderId != null) {
             Integer paymentId = Integer.parseInt(orderId.split("-")[0]);
