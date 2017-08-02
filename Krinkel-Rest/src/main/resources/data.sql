@@ -45,6 +45,12 @@ INSERT INTO post_camp VALUES (80, '2017-09-02') ON DUPLICATE KEY UPDATE id = 80;
 INSERT INTO registration_participant (dtype,id,ad_number,city, house_number, postal_code, street, birthdate,
 social_promotion, eatinghabbit, email, email_subscriber, first_name, gender, last_name, remarks_food, medical_remarks, remarks,
 event_role, buddy, stamnumber, status, phone_number, camp_ground, other, preset, registered_by, sync_status, last_change)
+VALUES('RegistrationParticipant', '3000', '396943', 'Lebbeke', '60', '9280', 'Lange Minnestraat', '1994-10-03', false, 'FISHANDMEAT',
+                              'lennart.vandamme@realdolmen.com', 'lennart.vandamme@realdolmen.com', 'Lennart', 'MAN', 'Van Damme', '', '', '', 'ASPI', false, 'BG /0301', 'CONFIRMED', 1, '', '', '', '234567','SYNCED', '2017-02-14');
+
+INSERT INTO registration_participant (dtype,id,ad_number,city, house_number, postal_code, street, birthdate,
+social_promotion, eatinghabbit, email, email_subscriber, first_name, gender, last_name, remarks_food, medical_remarks, remarks,
+event_role, buddy, stamnumber, status, phone_number, camp_ground, other, preset, registered_by, sync_status, last_change)
 VALUES('RegistrationParticipant', '1010', '123456', 'Brussel', '123', '1000', 'Veldstraat', '1995-08-21', false, 'FISHANDMEAT',
                               'email@test.be', 'email@test.be', 'Johnny', 'MAN', 'Flodder', 'food remarks', 'medical remarks', 'remarks', 'ASPI', false, 'AG /0103', 'TO_BE_PAID', 1, '', '', '', '123456','SYNCED', '2017-02-14');
 

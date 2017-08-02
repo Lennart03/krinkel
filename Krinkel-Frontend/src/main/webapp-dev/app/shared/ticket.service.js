@@ -16,8 +16,8 @@ export class TicketService {
      * @param amount int
      * @return Future chain that receives the post result parsed as a JSON object.
      */
-    submitPurchase(type, amount) {
-        return this.$http.post(`${this.BASEURL}/api/tickets/purchase`, {type: type, amount: amount}).then((resp) => {
+    submitPurchase(ticketdto) {
+        return this.$http.post(`${this.BASEURL}/api/tickets/purchase`, ticketdto).then((resp) => {
             return resp.data;
         });
     }
@@ -27,9 +27,16 @@ export class TicketService {
      */
     getUserAddress() {
         return this.$http.get(`${this.BASEURL}/api/tickets/address`).then((resp) => {
+            console.log(resp.data);
             return {
                 status: resp.status,
-                address: resp.body
+                person: {
+                    address: resp.data.address,
+                    firstName: resp.data.firstName,
+                    lastName: resp.data.lastName,
+                    email: resp.data.email,
+                    phoneNumber: resp.data.phoneNumber
+                }
             };
         });
     }
@@ -37,13 +44,18 @@ export class TicketService {
     getTrainTicketPrices() {
         return this.$http.get(`${this.BASEURL}/api/tickets/prices/train`).then((resp) => {
             console.log(resp);
-            return
+            return resp;
         })
     }
 
     getCouponPrices() {
-
+        return this.$http.get(`${this.BASEURL}/api/tickets/prices/coupons`).then((resp) => {
+            console.log(resp);
+            return resp;
+        })
     }
+
+
 }
 
 TicketService.$inject = ['$http', 'BASEURL', '$window', '$filter', 'AuthService'];

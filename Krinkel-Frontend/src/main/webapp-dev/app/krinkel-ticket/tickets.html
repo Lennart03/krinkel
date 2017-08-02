@@ -1,5 +1,7 @@
 <spinner loading="$ctrl.isLoading"></spinner>
-<div style="font-size: 20px; text-align: center; padding-top: 20px;" ng-if="$ctrl.isLoading">Uw gegevens worden opgehaald</div>
+<div style="font-size: 20px; text-align: center; padding-top: 20px;" ng-if="$ctrl.isLoading">Uw gegevens worden
+    opgehaald
+</div>
 
 <div ng-if="$ctrl.isLoading === false && $ctrl.disableEverything">
     <h1>Fout bij laden van gegevens</h1>
@@ -9,7 +11,7 @@
             href="mailto:inschrijvingen@krinkel.be">inschrijvingen@krinkel.be</a>.</p>
 </div>
 
-<div class="row" id="divAroundTopText" style="display:none">
+<div class="row" id="divAroundTopText">
     <h1>Koop tickets aan</h1>
     <p class="flow-text"><i class="material-icons">info_outline</i> Let op: Als je tickets koopt, word je meteen naar
         een betaalpagina gestuurd.
@@ -20,29 +22,134 @@
     </p>
 </div>
 
-<div class="row" id="divAroundForm" style="display:none">
+<div class="row" id="divAroundForm">
 
-    <form class="col s12 m12" novalidate name="ticketForm" ng-submit="ticketForm.$valid && $ctrl.prepurchase($ctrl.ticketPurchase)">
+    <div class="row">
+        <button class="btn col s5" ng-click="$ctrl.trainTickets()">Trein tickets</button>
+        <button class="btn col s5" ng-click="$ctrl.coupons()">Trein tickets</button>
+    </div>
+
+
+    <div id="trainTicketForm" ng-show="$ctrl.orderingTrainTickets">
+
         <div class="row">
-
+            <h2>Trein tickets kopen</h2>
+            <p class="flow-text">
+                <i class="material-icons">info_outline</i>
+                Bij het bestellen van trein tickets wordt een transportkost van 0,50€ mee aangerekend.
+            </p>
         </div>
 
-        <div>
-            <a ng-click="$ctrl.initModal6(ticketForm.$valid)" class="btn">
-                Betalen
-                <i class="material-icons right">send</i>
-            </a>
-        </div>
+        <form class="col s12 m12" novalidate name="trainTicketForm"
+              ng-submit="trainTicketForm.$valid && $ctrl.purchaseTrainTickets()">
 
-        <div id="modal6" class="modal">
-            <div class="modal-content">
-                <h4>Zijn deze gegevens correct?</h4>
+            <!--TODO: Check if labels are correctly displayed-->
+            <!--TODO: Add input field to add the number of times a ticket is ordered-->
+
+            <div class="row">
+                <div class="input-field col m8 s12">
+                    <i class="material-icons prefix">home</i>
+                    <!--$ctrl.newPerson.street-->
+                    <input id="street" name="street" class="validate" type="text"
+                           ng-model="$ctrl.person.address.street"
+                           required placeholder="..."
+                    />
+                    <label for="street">Straat *</label>
+                    <p ng-show="(trainTicketForm.street.$invalid && trainTicketForm.$submitted) || (trainTicketForm.street.$invalid && trainTicketForm.street.$touched)"
+                       class="error">
+                        <i class="material-icons">error_outline</i>
+                        Straatnaam is verplicht
+                    </p>
+                </div>
+                <div class="input-field col m4 s12">
+                    <i class="material-icons prefix">home</i>
+                    <input id="houseNumber" name="houseNumber" class="validate"
+                           ng-model="$ctrl.person.address.houseNumber" required placeholder="..." ng-minlength="1"/>
+                    <label for="houseNumber">Huisnummer *</label>
+                    <p ng-show="(trainTicketForm.houseNumber.$invalid && trainTicketForm.$submitted) || (trainTicketForm.houseNumber.$invalid && trainTicketForm.houseNumber.$touched)" class="error">
+                        <i class="material-icons">error_outline</i>
+                        Huisnummer verplicht
+                    </p>
+                </div>
             </div>
-            <div class="modal-footer">
-                <button type="submit" class=" modal-action modal-close btn-flat">JA</button>
-                <a href="" class="modal-action modal-close btn-flat">NEE</a>
+
+            <div class="row">
+                <div class="input-field col m4 s12">
+                    <i class="material-icons prefix">home</i>
+                    <!--$ctrl.newPerson.postalCode-->
+                    <input id="postal_code" name="postalCode" ng-minlength="4" ng-maxlength="4"
+                           class="validate"
+                           ng-model="$ctrl.person.address.postalCode"
+                           ng-pattern="$ctrl.postalcodePattern" placeholder="..."
+                           required/>
+                    <label for="postal_code">Postcode *</label>
+                    <p ng-show="(trainTicketForm.postalCode.$invalid && trainTicketForm.$submitted)
+                        || (trainTicketForm.postalCode.$invalid && trainTicketForm.postalCode.$touched)" class="error">
+                        <i class="material-icons">error_outline</i> Postcode is verplicht
+                    </p>
+                </div>
+
+                <div class="input-field col m8 s12">
+                    <i class="material-icons prefix">home</i>
+                    <!--$ctrl.newPerson.city-->
+                    <input id="city" name="city" class="validate" ng-model="$ctrl.person.address.city" required
+                           placeholder="..."/>
+                    <label for="city">Gemeente *</label>
+                    <p ng-show="(trainTicketForm.city.$invalid && trainTicketForm.$submitted) || (trainTicketForm.city.$invalid && trainTicketForm.city.$touched)"
+                       class="error">
+                        <i class="material-icons">error_outline</i>
+                        Gemeente is verplicht
+                    </p>
+                </div>
             </div>
-        </div>
-    </form>
+
+
+            <div>
+                <a ng-click="$ctrl.initModal6(ticketForm.$valid)" class="btn">
+                    Betalen
+                    <i class="material-icons right">send</i>
+                </a>
+            </div>
+
+            <div id="trainModal6" class="modal">
+                <div class="modal-content">
+                    <h4>Zijn deze gegevens correct?</h4>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class=" modal-action modal-close btn-flat">JA</button>
+                    <a href="" class="modal-action modal-close btn-flat">NEE</a>
+                </div>
+            </div>
+        </form>
+    </div>
+
+
+    <!-- TODO: Create the coupon form-->
+    <div id="couponForm" ng-show="!$ctrl.orderingTrainTickets">
+        <form class="col s12 m12" novalidate name="couponForm"
+              ng-submit="couponForm.$valid && $ctrl.prepurchase($ctrl.ticketPurchase)">
+            <div class="row">
+
+            </div>
+
+            <div>
+                <a ng-click="$ctrl.initModal6(ticketForm.$valid)" class="btn">
+                    Betalen
+                    <i class="material-icons right">send</i>
+                </a>
+            </div>
+
+            <div id="couponModal6" class="modal">
+                <div class="modal-content">
+                    <h4>Zijn deze gegevens correct?</h4>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class=" modal-action modal-close btn-flat">JA</button>
+                    <a href="" class="modal-action modal-close btn-flat">NEE</a>
+                </div>
+            </div>
+        </form>
+    </div>
+
 </div>
 
