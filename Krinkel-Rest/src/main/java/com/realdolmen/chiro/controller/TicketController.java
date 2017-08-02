@@ -15,7 +15,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/tickets")
+@RequestMapping("/api/tickets")
 public class TicketController {
 
     private UserService userService;
@@ -41,13 +41,13 @@ public class TicketController {
     public ResponseEntity<?> getUserAddress() {
         User currentUser = userService.getCurrentUser();
         if(invalidUser(currentUser)) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            return ResponseEntity.notFound().build();
         } else {
             Address address = userService.getRegistrationParticipant(currentUser.getAdNumber()).getAddress();
             if(address == null) {
-                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+                return ResponseEntity.notFound().build();
             } else {
-                return new ResponseEntity<>(address, HttpStatus.OK);
+                return ResponseEntity.ok(address);
             }
         }
     }

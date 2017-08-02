@@ -29,7 +29,7 @@ export class TicketService {
         return this.$http.get(`${this.BASEURL}/api/tickets/address`).then((resp) => {
             return {
                 status: resp.status,
-                address: resp.data
+                address: resp.body
             };
         });
     }

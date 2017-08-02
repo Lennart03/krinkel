@@ -1,3 +1,14 @@
+<spinner loading="$ctrl.isLoading"></spinner>
+<div style="font-size: 20px; text-align: center; padding-top: 20px;" ng-if="$ctrl.isLoading">Uw gegevens worden opgehaald</div>
+
+<div ng-if="$ctrl.isLoading === false && $ctrl.disableEverything">
+    <h1>Fout bij laden van gegevens</h1>
+    <p class="flow-text"><i class="material-icons">error_outline</i>
+        Er is iets misgelopen bij het inladen van je gegevens uit de databank.
+        Om je toch te kunnen inschrijven kun je contact opnemen via <a
+            href="mailto:inschrijvingen@krinkel.be">inschrijvingen@krinkel.be</a>.</p>
+</div>
+
 <div class="row" id="divAroundTopText" style="display:none">
     <h1>Koop tickets aan</h1>
     <p class="flow-text"><i class="material-icons">info_outline</i> Let op: Als je tickets koopt, word je meteen naar
