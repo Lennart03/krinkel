@@ -3,6 +3,7 @@ package com.realdolmen.chiro.service;
 import com.realdolmen.chiro.config.TestConfig;
 import com.realdolmen.chiro.domain.Address;
 import com.realdolmen.chiro.domain.payments.Payment;
+import com.realdolmen.chiro.domain.payments.PaymentStatus;
 import com.realdolmen.chiro.domain.payments.TicketPrice;
 import com.realdolmen.chiro.domain.payments.TicketType;
 import com.realdolmen.chiro.mspservice.MultiSafePayService;
@@ -22,10 +23,12 @@ import org.springframework.test.context.ContextConfiguration;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @ContextConfiguration(classes = {TestConfig.class})
 public class TicketServiceTest extends SpringIntegrationTest {
+
 
     private final String street = "Elmstraat";
     private final String housenumber = "666";
@@ -46,20 +49,23 @@ public class TicketServiceTest extends SpringIntegrationTest {
     @Autowired
     private TicketService ticketService;
 
+    @Autowired
+    private PaymentRepository paymentRepository;
+
     @InjectMocks
     private TicketService mockedTicketService;
 
     @Mock
-    private TicketPriceRepository ticketPriceRepository;
+    private TicketPriceRepository mockTicketPriceRepository;
 
     @Mock
-    private PaymentRepository paymentRepository;
+    private PaymentRepository mockPaymentRepository;
 
     @Mock
-    private TicketPriceCalculator ticketPriceCalculator;
+    private TicketPriceCalculator mockTicketPriceCalculator;
 
     @Mock
-    private MultiSafePayService multiSafePayService;
+    private MultiSafePayService mockMultiSafePayService;
 
     @Before
     public void setup() {
@@ -102,10 +108,16 @@ public class TicketServiceTest extends SpringIntegrationTest {
 
     @Test
     public void createPayment() throws Exception {
-        String paymentUrl = ticketService.createPayment(dto);
-        Assert.assertNotNull(paymentUrl);
-        System.err.println(paymentUrl);
-        Assert.assertNotNull(paymentUrl);
+        String paymentURL = ticketService.createPayment(dto);
+        Assert.assertNotNull(paymentURL);
+    }
+
+    @Test
+    public void createPaymentForFoodCoupons() {
+        dto.setType(TicketType.BON);
+        dto.setTicketAmount(8);
+        String paymentURL = ticketService.createPayment(dto);
+        Assert.assertNotNull(paymentURL);
     }
 
     @Test
@@ -113,12 +125,34 @@ public class TicketServiceTest extends SpringIntegrationTest {
         Payment payment = new Payment(dto.getType(), new BigDecimal(12.0), dto.getFirstName(), dto.getLastName(), dto.getEmail(), dto.getPhoneNumber(), dto.getAddress());
         List<TicketPrice> ticketPrices = new ArrayList<>();
         ticketPrices.add(new TicketPrice(1, new BigDecimal(11.50), new BigDecimal(0.50), TicketType.TREIN));
-        Mockito.when(multiSafePayService.createPayment(payment)).thenReturn(null);
-        Mockito.when(ticketPriceRepository.findByTicketType(dto.getType())).thenReturn(ticketPrices);
-        Mockito.when(ticketPriceCalculator.calculateTotalTicketPrice(new BigDecimal(11.50), 1, new BigDecimal(0.50))).thenReturn(new BigDecimal(12.0));
-        Mockito.when(paymentRepository.save(payment)).thenReturn(payment);
+        Mockito.when(mockMultiSafePayService.createPayment(payment)).thenReturn(null);
+        Mockito.when(mockTicketPriceRepository.findByTicketType(dto.getType())).thenReturn(ticketPrices);
+        Mockito.when(mockTicketPriceCalculator.calculateTotalTicketPrice(new BigDecimal(11.50), 1, new BigDecimal(0.50))).thenReturn(new BigDecimal(12.0));
+        Mockito.when(mockPaymentRepository.save(payment)).thenReturn(payment);
         String paymentUrl = mockedTicketService.createPayment(dto);
         Assert.assertNull(paymentUrl);
+    }
+
+    @Test
+    public void createPaymentMultiSafeThrowsError() throws MultiSafePayService.InvalidPaymentOrderIdException {
+        Payment payment = new Payment(dto.getType(), new BigDecimal(12.0), dto.getFirstName(), dto.getLastName(), dto.getEmail(), dto.getPhoneNumber(), dto.getAddress());
+        List<TicketPrice> ticketPrices = new ArrayList<>();
+        ticketPrices.add(new TicketPrice(1, new BigDecimal(11.50), new BigDecimal(0.50), TicketType.TREIN));
+        Mockito.when(mockMultiSafePayService.createPayment(payment)).thenThrow(MultiSafePayService.InvalidPaymentOrderIdException.class);
+        Mockito.when(mockTicketPriceRepository.findByTicketType(dto.getType())).thenReturn(ticketPrices);
+        Mockito.when(mockTicketPriceCalculator.calculateTotalTicketPrice(new BigDecimal(11.50), 1, new BigDecimal(0.50))).thenReturn(new BigDecimal(12.0));
+        Mockito.when(mockPaymentRepository.save(payment)).thenReturn(payment);
+        String paymentUrl = mockedTicketService.createPayment(dto);
+        Assert.assertNull(paymentUrl);
+    }
+
+    @Test
+    public void updatePaymentStatus() throws Exception {
+        Payment payment = new Payment(dto.getType(), new BigDecimal(12.0), dto.getFirstName(), dto.getLastName(), dto.getEmail(), dto.getPhoneNumber(), dto.getAddress());
+        Integer paymentID = paymentRepository.save(payment).getId();
+        ticketService.updatePaymentStatus(paymentID+ "-ticket-" + new Date().getTime(), PaymentStatus.SUCCESS);
+        PaymentStatus status = paymentRepository.findOne(paymentID).getStatus();
+        Assert.assertEquals(PaymentStatus.SUCCESS, status);
     }
 
 }

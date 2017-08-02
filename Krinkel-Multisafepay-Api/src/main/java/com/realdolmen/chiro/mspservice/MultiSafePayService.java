@@ -146,7 +146,7 @@ public class MultiSafePayService {
             customer.put("email", payment.getEmailBuyer());
 
             jsonObject.put("type", "redirect");
-            jsonObject.put("order_id", payment.getId() + getCurrentTimeStamp());
+            jsonObject.put("order_id", payment.getId() + "-ticket" + getCurrentTimeStamp());
             jsonObject.put("currency", "EUR");
             jsonObject.put("amount", payment.getPaymentTotal().multiply(new BigDecimal(100)).intValue()); // Moet in het totaal aantal eurocent
             jsonObject.put("payment_options", paymentOptions);

@@ -2,9 +2,10 @@ package com.realdolmen.chiro.controller;
 
 import com.realdolmen.chiro.domain.RegistrationParticipant;
 import com.realdolmen.chiro.domain.User;
-import com.realdolmen.chiro.domain.payments.TicketPrice;
 import com.realdolmen.chiro.domain.payments.TicketType;
+import com.realdolmen.chiro.payment.PaymentDTO;
 import com.realdolmen.chiro.payment.TicketDTO;
+import com.realdolmen.chiro.payment.TicketPriceDTO;
 import com.realdolmen.chiro.service.TicketService;
 import com.realdolmen.chiro.service.UserService;
 import org.slf4j.Logger;
@@ -20,7 +21,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/tickets")
@@ -37,6 +40,12 @@ public class TicketController {
         this.ticketService = ticketService;
     }
 
+    /**
+     * Rest method to order tickets.
+     * @param ticketDTO DTO with the information about the ticket ordering.
+     * @return {@link ResponseEntity} with the a {@link PaymentDTO} in its body.
+     * @throws URISyntaxException Error in the URI syntax
+     */
     @RequestMapping(method = RequestMethod.POST, value = "/purchase", consumes = "application/json")
     public ResponseEntity<?> orderTicket(@RequestBody TicketDTO ticketDTO) throws URISyntaxException {
         logger.info("Ordering new tickets: [" + ticketDTO.toString() + "]");
@@ -73,14 +82,36 @@ public class TicketController {
         }
     }
 
+    /**
+     * @return Returns a list of prices for train tickets
+     */
     @RequestMapping("/prices/train")
-    public List<TicketPrice> getTrainTicketPrices() {
-        return ticketService.getPricesForTickets(TicketType.TREIN);
+    public List<TicketPriceDTO> getTrainTicketPrices() {
+        return ticketService.getPricesForTickets(TicketType.TREIN)
+                .stream()
+                .map(ticketPrice -> {
+                    TicketPriceDTO dto = new TicketPriceDTO();
+                    dto.setPrice(ticketPrice.getPrice().doubleValue());
+                    dto.setTransportationCost(ticketPrice.getTransportationcosts().doubleValue());
+                    return dto;
+                }).collect(Collectors.toCollection(ArrayList::new));
+
     }
 
+    /**
+     * @return Returns a list of prices for food/drink coupons.
+     */
     @RequestMapping("/prices/coupons")
-    public List<TicketPrice> getCouponPrices() {
-        return ticketService.getPricesForTickets(TicketType.BON);
+    public List<TicketPriceDTO> getCouponPrices() {
+        return ticketService.getPricesForTickets(TicketType.BON)
+                .stream()
+                .map(ticketPrice -> {
+                    TicketPriceDTO dto = new TicketPriceDTO();
+                    dto.setPrice(ticketPrice.getPrice().doubleValue());
+                    dto.setTicketamount(dto.getTicketamount());
+                    return dto;
+                })
+                .collect(Collectors.toCollection(ArrayList::new));
     }
 
     /**

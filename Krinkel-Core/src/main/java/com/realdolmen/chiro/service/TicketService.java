@@ -1,6 +1,7 @@
 package com.realdolmen.chiro.service;
 
 import com.realdolmen.chiro.domain.payments.Payment;
+import com.realdolmen.chiro.domain.payments.PaymentStatus;
 import com.realdolmen.chiro.domain.payments.TicketPrice;
 import com.realdolmen.chiro.domain.payments.TicketType;
 import com.realdolmen.chiro.mspdto.OrderDto;
@@ -60,7 +61,9 @@ public class TicketService {
         OrderDto orderDto;
         try {
             orderDto = multiSafePayService.createPayment(payment);
-            if(orderDto != null) {
+            if(orderDto != null && orderDto.getData().getPayment_url() != null) {
+                payment.setStatus(PaymentStatus.PENDING);
+                paymentRepository.save(payment);
                 return orderDto.getData().getPayment_url();
             }
             return null;
@@ -76,5 +79,14 @@ public class TicketService {
 
     public List<TicketPrice> getPricesForTickets(TicketType ticketType) {
         return ticketPriceRepository.findByTicketType(ticketType);
+    }
+
+    public void updatePaymentStatus(String orderId, PaymentStatus paymentStatus) {
+        if(orderId != null) {
+            Integer paymentId = Integer.parseInt(orderId.split("-")[0]);
+            Payment payment = paymentRepository.findOne(paymentId);
+            payment.setStatus(paymentStatus);
+            paymentRepository.save(payment);
+        }
     }
 }

@@ -19,6 +19,9 @@ public class Payment {
     @Column(name = "Totaal")
     private BigDecimal paymentTotal;
 
+    @Enumerated(EnumType.STRING)
+    private PaymentStatus status= PaymentStatus.INITIATED;
+
     private String firstNameBuyer;
     private String lastNameBuyer;
     private String emailBuyer;
@@ -100,5 +103,13 @@ public class Payment {
 
     public void setAddressBuyer(Address addressBuyer) {
         this.addressBuyer = addressBuyer;
+    }
+
+    public PaymentStatus getStatus() {
+        return status;
+    }
+
+    public void setStatus(PaymentStatus status) {
+        this.status = status;
     }
 }

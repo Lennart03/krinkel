@@ -4,6 +4,7 @@ import com.realdolmen.chiro.domain.*;
 import com.realdolmen.chiro.domain.payments.TicketPrice;
 import com.realdolmen.chiro.domain.payments.TicketType;
 import com.realdolmen.chiro.payment.TicketDTO;
+import com.realdolmen.chiro.payment.TicketPriceDTO;
 import com.realdolmen.chiro.service.TicketService;
 import com.realdolmen.chiro.service.UserService;
 import com.realdolmen.chiro.spring_test.MockMvcTest;
@@ -178,22 +179,20 @@ public class TicketControllerTest extends MockMvcTest {
     @Test
     public void getTrainTicketPrice() throws Exception {
         Mockito.when(ticketService.getPricesForTickets(TicketType.TREIN)).thenReturn(trainTicketPrices);
-        List<TicketPrice> prices = ticketController.getTrainTicketPrices();
+        List<TicketPriceDTO> prices = ticketController.getTrainTicketPrices();
         Assert.assertEquals(1, prices.size());
-        TicketPrice ticketPrice = prices.get(0);
-        Assert.assertEquals(ticketAmount, ticketPrice.getTicketAmount());
-        Assert.assertEquals(price, ticketPrice.getPrice());
-        Assert.assertEquals(ticketTypeTrain, ticketPrice.getTicketType());
-        Assert.assertEquals(transportationcosts, ticketPrice.getTransportationcosts());
+        TicketPriceDTO ticketPrice = prices.get(0);
+        Assert.assertEquals(price, new BigDecimal(ticketPrice.getPrice()));
+        Assert.assertEquals(transportationcosts, new BigDecimal(ticketPrice.getTransportationCost()));
     }
 
     @Test
     public void getCouponPrices() throws Exception {
         Mockito.when(ticketService.getPricesForTickets(ticketTypeBon)).thenReturn(foodTicketPrices);
-        List<TicketPrice> prices = ticketController.getCouponPrices();
+        List<TicketPriceDTO> prices = ticketController.getCouponPrices();
         Assert.assertEquals(3, prices.size());
-        TicketPrice ticketPrice = prices.get(1);
-        Assert.assertEquals(price2, ticketPrice.getPrice());
+        TicketPriceDTO ticketPrice = prices.get(1);
+        Assert.assertEquals(price2, new BigDecimal(ticketPrice.getPrice()));
     }
 
     /**
