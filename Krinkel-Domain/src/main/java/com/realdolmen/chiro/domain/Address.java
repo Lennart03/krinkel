@@ -88,6 +88,10 @@ public class Address implements Serializable {
         this.postalCode = postalCode;
     }
 
+    public boolean isComplete() {
+        return street != null && !street.isEmpty() && houseNumber != null && !houseNumber.isEmpty() && postalCode > 1000 && postalCode < 9999 && city != null && !city.isEmpty();
+    }
+
     @Override
     public String toString(){
         return street + " " + houseNumber + " " + postalCode + " " + city;

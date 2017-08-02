@@ -1,7 +1,9 @@
 package com.realdolmen.chiro.mvccontroller;
 
+import com.realdolmen.chiro.domain.payments.PaymentStatus;
 import com.realdolmen.chiro.service.BasketService;
 import com.realdolmen.chiro.service.RegistrationParticipantService;
+import com.realdolmen.chiro.service.TicketService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,21 +21,29 @@ public class PaymentWebController {
 
     private Logger logger = LoggerFactory.getLogger(PaymentWebController.class);
 
-    @Autowired
     private BasketService basketService;
+    private RegistrationParticipantService registrationParticipantService;
+    private TicketService ticketService;
 
     @Autowired
-    private RegistrationParticipantService registrationParticipantService;
+    public PaymentWebController(BasketService basketService, RegistrationParticipantService registrationParticipantService, TicketService ticketService) {
+        this.basketService = basketService;
+        this.registrationParticipantService = registrationParticipantService;
+        this.ticketService = ticketService;
+    }
 
     /**
-     * when payment completed successful
+     * This is called when a payment from multisafepay is successful.
      *
-     * @param orderId
-     * @return
+     * @param orderId The ID of the order of multisafepay
+     * @return Redirection
      */
     @RequestMapping(method = RequestMethod.GET, value = "/success")
     public String paymentSuccess(@RequestParam(name = "transactionid") String orderId) {
         logger.info("Payment Successful for Transaction " + orderId);
+        if(orderId.contains("ticket")) {
+            ticketService.updatePaymentStatus(orderId, PaymentStatus.SUCCESS);
+        }
         if (!basketService.handleSuccessCallback(orderId))
             registrationParticipantService.updatePaymentStatus(orderId);
 
@@ -41,14 +51,17 @@ public class PaymentWebController {
     }
 
     /**
-     * when payment not completed
+     * This is called when a payment from multisafepay failed.
      *
-     * @param orderId
-     * @return
+     * @param orderId The ID of the order of multisafepay
+     * @return Redirection
      */
     @RequestMapping(method = RequestMethod.GET, value = "/failure")
     public String paymentFailure(@RequestParam(name = "transactionid") String orderId) {
         logger.info("Payment Failure for Transaction " + orderId);
+        if(orderId.contains("ticket")) {
+            ticketService.updatePaymentStatus(orderId, PaymentStatus.FAILED);
+        }
         return "redirect:/site/index.html";
     }
 }

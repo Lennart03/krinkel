@@ -1019,3 +1019,11 @@ INSERT INTO admins VALUES ('admin',1 , 'firstAdmin@krinkel.be', 'first', 'admin'
 INSERT INTO admins VALUES ('admin',2, 'secondAdmin@krinkel.be', 'second', 'admin');
 INSERT INTO admins VALUES ('admin',3, 'thirdAdmin@krinkel.be', 'third', 'admin');
 INSERT INTO admins VALUES ('admin',4, 'fourthAdmin@krinkel.be', 'fourth', 'admin');
+
+insert into ticket_price (id, price, ticket_amount, ticket_type, transportationcosts) values (1, '11.50', 1, 'TREIN', '0.5');
+insert into ticket_price (id, price, ticket_amount, ticket_type, transportationcosts) values (2, '5.0', 8, 'BON', '0.0');
+insert into ticket_price (id, price, ticket_amount, ticket_type, transportationcosts) values (3, '10.0', 16, 'BON', '0.0');
+insert into ticket_price (id, price, ticket_amount, ticket_type, transportationcosts) values (4, '15.0', 25, 'BON', '0.0');
+insert into ticket_price (id, price, ticket_amount, ticket_type, transportationcosts) values (5, '20.0', 35, 'BON', '0.0');
+insert into ticket_price (id, price, ticket_amount, ticket_type, transportationcosts) values (6, '25.0', 45, 'BON', '0.0');
+insert into ticket_price (id, price, ticket_amount, ticket_type, transportationcosts) values (7, '50.0', 90, 'BON', '0.0');

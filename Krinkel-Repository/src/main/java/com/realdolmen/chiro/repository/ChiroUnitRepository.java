@@ -10,9 +10,11 @@ import com.realdolmen.chiro.domain.units.ChiroUnit;
 import com.realdolmen.chiro.domain.units.RawChiroUnit;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
+@Repository
 public interface ChiroUnitRepository extends JpaRepository<RawChiroUnit, String> {
 
 /*    @Query("SELECT c FROM RawChiroUnit c WHERE " +
@@ -131,7 +133,7 @@ public interface ChiroUnitRepository extends JpaRepository<RawChiroUnit, String>
      * @return
      */
     @Query("SELECT COUNT(p) FROM RegistrationParticipant p, RawChiroUnit c " +
-            "WHERE c.groepStamNummer = ?1 AND p.stamnumber = c.groepStamNummer AND p.status = ?2")
+            "WHERE c.groepStamNummer = ?1 AND p.stamnumber = c.groepStamNummer")
     int countParticipantsByGroep(String groepStamNummer);
 
     @Query("SELECT COUNT(p) FROM RegistrationParticipant p, RawChiroUnit c " +

@@ -33,6 +33,17 @@ export class TicketService {
             };
         });
     }
+
+    getTrainTicketPrices() {
+        return this.$http.get(`${this.BASEURL}/api/tickets/prices/train`).then((resp) => {
+            console.log(resp);
+            return
+        })
+    }
+
+    getCouponPrices() {
+
+    }
 }
 
 TicketService.$inject = ['$http', 'BASEURL', '$window', '$filter', 'AuthService'];

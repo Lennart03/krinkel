@@ -10,7 +10,6 @@ import org.junit.Ignore;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -31,7 +30,7 @@ public class RegistrationParticipantRepositoryTest extends SpringIntegrationTest
 		assertNotNull(participant);
 		assertEquals("Jos", participant.getFirstName());
 		RegistrationVolunteer volunteer = (RegistrationVolunteer)participant;
-		assertEquals(CampGround.KEMPEN, volunteer.getCampGround());
+		assertEquals(CampGround.INTERNATIONAAL, volunteer.getCampGround());
 		assertEquals(VolunteerFunction.Preset.CAMPGROUND, volunteer.getFunction().getPreset());
 	}
 	

@@ -1,6 +1,8 @@
 package com.realdolmen.chiro.domain.payments;
 
 
+import com.realdolmen.chiro.domain.Address;
+
 import javax.persistence.*;
 import java.math.BigDecimal;
 
@@ -12,10 +14,32 @@ public class Payment {
     private Integer id;
 
     @Enumerated(EnumType.STRING)
-    private PaymentType type;
+    private TicketType type;
 
     @Column(name = "Totaal")
     private BigDecimal paymentTotal;
+
+    @Enumerated(EnumType.STRING)
+    private PaymentStatus status= PaymentStatus.INITIATED;
+
+    private String firstNameBuyer;
+    private String lastNameBuyer;
+    private String emailBuyer;
+    private String phoneNumberBuyer;
+    private Address addressBuyer;
+
+    public Payment() {
+    }
+
+    public Payment(TicketType type, BigDecimal paymentTotal, String firstNameBuyer, String lastNameBuyer, String emailBuyer, String phoneNumberBuyer, Address addressBuyer) {
+        this.type = type;
+        this.paymentTotal = paymentTotal;
+        this.firstNameBuyer = firstNameBuyer;
+        this.lastNameBuyer = lastNameBuyer;
+        this.emailBuyer = emailBuyer;
+        this.phoneNumberBuyer = phoneNumberBuyer;
+        this.addressBuyer = addressBuyer;
+    }
 
     public Integer getId() {
         return id;
@@ -25,11 +49,11 @@ public class Payment {
         this.id = id;
     }
 
-    public PaymentType getType() {
+    public TicketType getType() {
         return type;
     }
 
-    public void setType(PaymentType type) {
+    public void setType(TicketType type) {
         this.type = type;
     }
 
@@ -39,5 +63,53 @@ public class Payment {
 
     public void setPaymentTotal(BigDecimal paymentTotal) {
         this.paymentTotal = paymentTotal;
+    }
+
+    public String getFirstNameBuyer() {
+        return firstNameBuyer;
+    }
+
+    public void setFirstNameBuyer(String firstNameBuyer) {
+        this.firstNameBuyer = firstNameBuyer;
+    }
+
+    public String getLastNameBuyer() {
+        return lastNameBuyer;
+    }
+
+    public void setLastNameBuyer(String lastNameBuyer) {
+        this.lastNameBuyer = lastNameBuyer;
+    }
+
+    public String getEmailBuyer() {
+        return emailBuyer;
+    }
+
+    public void setEmailBuyer(String emailBuyer) {
+        this.emailBuyer = emailBuyer;
+    }
+
+    public String getPhoneNumberBuyer() {
+        return phoneNumberBuyer;
+    }
+
+    public void setPhoneNumberBuyer(String phoneNumberBuyer) {
+        this.phoneNumberBuyer = phoneNumberBuyer;
+    }
+
+    public Address getAddressBuyer() {
+        return addressBuyer;
+    }
+
+    public void setAddressBuyer(Address addressBuyer) {
+        this.addressBuyer = addressBuyer;
+    }
+
+    public PaymentStatus getStatus() {
+        return status;
+    }
+
+    public void setStatus(PaymentStatus status) {
+        this.status = status;
     }
 }
