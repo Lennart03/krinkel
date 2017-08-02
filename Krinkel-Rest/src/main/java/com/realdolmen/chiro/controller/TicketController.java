@@ -42,8 +42,11 @@ public class TicketController {
         logger.info("Ordering new tickets: [" + ticketDTO.toString() + "]");
         String paymentUrl = ticketService.createPayment(ticketDTO);
         HttpHeaders headers = new HttpHeaders();
-        headers.setLocation(new URI(paymentUrl));
-        return new ResponseEntity<>(headers, HttpStatus.CREATED);
+        HttpStatus status = paymentUrl == null ? HttpStatus.INTERNAL_SERVER_ERROR : HttpStatus.CREATED;
+        if(paymentUrl != null) {
+            headers.setLocation(new URI(paymentUrl));
+        }
+        return new ResponseEntity<>(headers, status);
     }
 
     /**

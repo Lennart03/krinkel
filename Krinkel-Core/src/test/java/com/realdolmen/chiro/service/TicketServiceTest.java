@@ -105,8 +105,7 @@ public class TicketServiceTest extends SpringIntegrationTest {
         String paymentUrl = ticketService.createPayment(dto);
         Assert.assertNotNull(paymentUrl);
         System.err.println(paymentUrl);
-        Assert.assertNotEquals("", paymentUrl);
-        Assert.assertNotEquals("error", paymentUrl);
+        Assert.assertNotNull(paymentUrl);
     }
 
     @Test
@@ -119,7 +118,7 @@ public class TicketServiceTest extends SpringIntegrationTest {
         Mockito.when(ticketPriceCalculator.calculateTotalTicketPrice(new BigDecimal(11.50), 1, new BigDecimal(0.50))).thenReturn(new BigDecimal(12.0));
         Mockito.when(paymentRepository.save(payment)).thenReturn(payment);
         String paymentUrl = mockedTicketService.createPayment(dto);
-        Assert.assertEquals("", paymentUrl);
+        Assert.assertNull(paymentUrl);
     }
 
 }

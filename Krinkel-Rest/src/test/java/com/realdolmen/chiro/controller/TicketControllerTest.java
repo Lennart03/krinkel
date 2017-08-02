@@ -18,6 +18,7 @@ import org.springframework.http.ResponseEntity;
 
 import java.math.BigDecimal;
 import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -164,6 +165,14 @@ public class TicketControllerTest extends MockMvcTest {
         ResponseEntity<?> entity = ticketController.orderTicket(dto);
         Assert.assertEquals(new URI("http://www.google.com"), entity.getHeaders().getLocation());
         Assert.assertEquals(HttpStatus.CREATED, entity.getStatusCode());
+    }
+
+    @Test
+    public void orderTicketPaymentUrlIsNull() throws URISyntaxException {
+        TicketDTO dto = new TicketDTO();
+        Mockito.when(ticketService.createPayment(dto)).thenReturn(null);
+        ResponseEntity<?> entity = ticketController.orderTicket(dto);
+        Assert.assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, entity.getStatusCode());
     }
 
     @Test

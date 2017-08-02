@@ -63,10 +63,10 @@ public class TicketService {
             if(orderDto != null) {
                 return orderDto.getData().getPayment_url();
             }
-            return "";
+            return null;
         } catch (MultiSafePayService.InvalidPaymentOrderIdException e) {
             logger.error("Payment error when creating payment url.", e);
-            return "error";
+            return null;
         }
     }
 
