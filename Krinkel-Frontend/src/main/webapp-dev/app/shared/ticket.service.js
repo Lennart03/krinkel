@@ -11,22 +11,36 @@ export class TicketService {
     }
 
     /**
-     * Submits a new purchase with the given elements.
-     * @param type TicketType
-     * @param amount int
-     * @return Future chain that receives the post result parsed as a JSON object.
+     * Function to POST a new ticket purchase.
+     * @param ticketDTO DTO containing information about the payment. Has following values.
+     * {
+            type: Type of ticket wanted (VALUES: TRAIN of BON)
+            ticketAmount: Amount of tickets wanted(1 for TRAIN and Number of coupons for BON)
+            timesOrdered: The number of times the ticket is ordered,
+            firstName: First name of person ordering tickets,
+            lastName: Last name of person ordering tickets,
+            email: Email address of person ordering tickets,
+            phoneNumber: Phone number of person ordering tickets,
+            address: {
+                street: Street of person ordering tickets,
+                houseNumber: House number of person ordering tickets,
+                postalCode: Postal code of person ordering tickets,
+                city: City of person ordering tickets
+            }
+        }
      */
-    submitPurchase(ticketdto) {
-        return this.$http.post(`${this.BASEURL}/api/tickets/purchase`, ticketdto).then((resp) => {
+    submitPurchase(ticketDTO) {
+        return this.$http.post(`${this.BASEURL}/api/tickets/purchase`, ticketDTO).then((resp) => {
             return resp.data;
         });
     }
 
     /**
-     * Gets user address, if one is not found by the backend, it must be provided by the user before submitting purchase.
+     * Gets user address and some additional information about the registered participant for Krinkel,
+     * if one is not found by the backend, it must be provided by the user before submitting purchase.
      */
-    getUserAddress() {
-        return this.$http.get(`${this.BASEURL}/api/tickets/address`).then((resp) => {
+    getParticipantInfo() {
+        return this.$http.get(`${this.BASEURL}/api/tickets/participantInfo`).then((resp) => {
             console.log(resp.data);
             return {
                 status: resp.status,
@@ -41,18 +55,32 @@ export class TicketService {
         });
     }
 
+    /**
+     * Retrieves the tickets prices for train tickets from backend.
+     */
     getTrainTicketPrices() {
         return this.$http.get(`${this.BASEURL}/api/tickets/prices/train`).then((resp) => {
-            console.log(resp);
-            return resp;
-        })
+            if(resp.status === 200) {
+                console.log(resp.data);
+                return resp.data;
+            } else {
+                return null;
+            }
+        });
     }
 
+    /**
+     * Retrieves the tickets prices for food/drink coupons from backend.
+     */
     getCouponPrices() {
         return this.$http.get(`${this.BASEURL}/api/tickets/prices/coupons`).then((resp) => {
-            console.log(resp);
-            return resp;
-        })
+            if(resp.status === 200) {
+                console.log(resp.data);
+                return resp.data;
+            } else {
+                return null;
+            }
+        });
     }
 
 

@@ -98,7 +98,7 @@ public class TicketControllerTest extends MockMvcTest {
     public void getUserAddress() throws Exception {
         Mockito.when(userService.getCurrentUser()).thenReturn(currentUserRegistered);
         Mockito.when(userService.getRegistrationParticipant(currentUserRegistered.getAdNumber())).thenReturn(participantWithAddress);
-        ResponseEntity<?> entity = ticketController.getUserAddress();
+        ResponseEntity<?> entity = ticketController.getParticipantInfo();
         RegistrationParticipant participant = (RegistrationParticipant) entity.getBody();
         Assert.assertEquals(HttpStatus.OK, entity.getStatusCode());
         Assert.assertEquals(adnumber, participant.getAdNumber());
@@ -120,7 +120,7 @@ public class TicketControllerTest extends MockMvcTest {
     @Test
     public void getUserAddressWithInvalidUser() {
         Mockito.when(userService.getCurrentUser()).thenReturn(null);
-        ResponseEntity<?> entity = ticketController.getUserAddress();
+        ResponseEntity<?> entity = ticketController.getParticipantInfo();
         Assert.assertEquals(HttpStatus.NOT_FOUND, entity.getStatusCode());
     }
 
@@ -128,7 +128,7 @@ public class TicketControllerTest extends MockMvcTest {
     public void getUserAddressWithRegistrationParticipantNoAddress() {
         Mockito.when(userService.getCurrentUser()).thenReturn(currentUserRegistered);
         Mockito.when(userService.getRegistrationParticipant(currentUserRegistered.getAdNumber())).thenReturn(participantWithoutAddress);
-        ResponseEntity<?> entity = ticketController.getUserAddress();
+        ResponseEntity<?> entity = ticketController.getParticipantInfo();
         Assert.assertEquals(HttpStatus.NOT_FOUND, entity.getStatusCode());
     }
 

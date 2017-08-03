@@ -49,6 +49,7 @@ public class TicketController {
     @RequestMapping(method = RequestMethod.POST, value = "/purchase", consumes = "application/json")
     public ResponseEntity<?> orderTicket(@RequestBody TicketDTO ticketDTO) throws URISyntaxException {
         logger.info("Ordering new tickets: [" + ticketDTO.toString() + "]");
+        System.out.println(ticketDTO);
         String paymentUrl = ticketService.createPayment(ticketDTO);
         HttpHeaders headers = new HttpHeaders();
         HttpStatus status = paymentUrl == null ? HttpStatus.INTERNAL_SERVER_ERROR : HttpStatus.CREATED;
@@ -64,10 +65,9 @@ public class TicketController {
      *
      * @return {@link ResponseEntity} with the address of the current logged in user.
      */
-    @RequestMapping(value = "/address", produces = "application/json")
-    public ResponseEntity<?> getUserAddress() {
+    @RequestMapping(value = "/participantInfo", produces = "application/json")
+    public ResponseEntity<?> getParticipantInfo() {
         User currentUser = userService.getCurrentUser();
-
         if (invalidUser(currentUser)) {
             logger.error("No user found");
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -90,13 +90,8 @@ public class TicketController {
     public List<TicketPriceDTO> getTrainTicketPrices() {
         return ticketService.getPricesForTickets(TicketType.TREIN)
                 .stream()
-                .map(ticketPrice -> {
-                    TicketPriceDTO dto = new TicketPriceDTO();
-                    dto.setPrice(ticketPrice.getPrice().doubleValue());
-                    dto.setTransportationCost(ticketPrice.getTransportationcosts().doubleValue());
-                    return dto;
-                }).collect(Collectors.toCollection(ArrayList::new));
-
+                .map(ticketPrice -> new TicketPriceDTO(ticketPrice.getTicketAmount(), ticketPrice.getPrice().doubleValue(), ticketPrice.getTransportationcosts().doubleValue()))
+                .collect(Collectors.toCollection(ArrayList::new));
     }
 
     /**
@@ -106,12 +101,7 @@ public class TicketController {
     public List<TicketPriceDTO> getCouponPrices() {
         return ticketService.getPricesForTickets(TicketType.BON)
                 .stream()
-                .map(ticketPrice -> {
-                    TicketPriceDTO dto = new TicketPriceDTO();
-                    dto.setPrice(ticketPrice.getPrice().doubleValue());
-                    dto.setTicketamount(dto.getTicketamount());
-                    return dto;
-                })
+                .map(ticketPrice -> new TicketPriceDTO(ticketPrice.getTicketAmount(), ticketPrice.getPrice().doubleValue(), ticketPrice.getTransportationcosts().doubleValue()))
                 .collect(Collectors.toCollection(ArrayList::new));
     }
 

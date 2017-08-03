@@ -15,7 +15,7 @@
         <!--Inschrijven-->
         <!--</a>-->
         <!--</li>-->
-        <li class="collection-item" ng-if="$ctrl.getUserDetails().hasPaid == false">
+        <li class="collection-item" ng-if="!$ctrl.getUserDetails().hasPaid">
             <a href="/register-participant">
                 <i class="material-icons">person_add</i> Schrijf je in
             </a>
@@ -25,12 +25,12 @@
                 <i class="material-icons">group_add</i> Schrijf anderen in
             </a>
         </li>
-        <li class="collection-item" ng-if="$ctrl.getUserDetails().hasPaid == false">
+        <li class="collection-item" ng-if="!$ctrl.getUserDetails().hasPaid">
             <a href="/register-volunteer">
                 <i class="material-icons">work</i> Schrijf je in als medewerker
             </a>
         </li>
-        <li class="collection-item">
+        <li class="collection-item" ng-if="$ctrl.getUserDetails().hasPaid">
             <a href="/tickets">
                 <i class="material-icons">shopping_cart</i> Koop tickets
             </a>

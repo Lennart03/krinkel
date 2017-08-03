@@ -51,10 +51,6 @@ public class ChiroUserAdapter {
         RestTemplate restTemplate = new RestTemplate();
 
         restTemplate.postForEntity(uri, null, String.class).getBody();
-
-        //old code todo:remove
-        /*restTemplate.getForEntity(uri, String.class)
-                .getBody()*/;
     }
 
     private URI constructRequestUri(RegistrationParticipant participant) throws URISyntaxException {

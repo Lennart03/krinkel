@@ -13,6 +13,12 @@ class KrinkelTicketController {
         this.postalcodePattern = /^(\d{4})$/;
         this.emailPattern = /^[-a-z0-9~!$%^&*_=+}{\'?]+(\.[-a-z0-9~!$%^&*_=+}{\'?]+)*@([a-z0-9_][-a-z0-9_]*(\.[-a-z0-9_]+)*\.(aero|arpa|biz|com|coop|edu|gov|info|int|mil|museum|name|net|org|pro|travel|mobi|[a-z][a-z])|([0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}))(:[0-9]{1,5})?$/i;
         this.inputPattern = /^(.{0,256})$/;
+
+        // Parameters for ticket ordering
+        this.numberOfTrainTickets = 0;
+        this.totalAmountToPayForTrainTickets = 0;
+        this.trainTicketPrices = [];
+        this.couponPrices = [];
     }
 
     $onInit() {
@@ -26,59 +32,53 @@ class KrinkelTicketController {
 
         let thiz = this;
         this.isLoading = true;
-        this.ticketService.getUserAddress().then(resp => {
-            console.log(resp);
+        this.ticketService.getParticipantInfo().then(resp => {
             thiz.isLoading = false;
             if (resp.status === 404) {
                 //No user details found
                 thiz.person = {
                     test: thiz.AuthService.getUserDetails()
                 };
-
                 thiz.disableEverything = true;
             } else if (resp.status === 200) {
                 thiz.disableEverything = false;
                 thiz.person = resp.person;
-
             }
-
-            console.log(thiz.person);
         });
 
         this.ticketService.getTrainTicketPrices().then((resp) => {
-            // TODO: check content of the response.
-            // TODO: save the ticket prices in the component
+            this.trainTicketPrices = resp;
         });
 
         this.ticketService.getCouponPrices().then((resp) => {
-            // TODO: check content of the response.
-            // TODO: save the ticket prices in the component
+            this.couponPrices = resp;
         });
 
     }
 
     purchaseTrainTickets() {
-        let ticketdto = {
-            type: "TREIN"
-            // TODO: add following properties to the DTO
-            /*
-            ticketAmount
-            timesOrdered
-            firstName
-            lastName
-            email
-            phoneNumber
-            address {
-                street
-                postalCode
-                houseNumber
-                city
-            }
-             */
-        };
-        this.ticketService.submitPurchase(ticketdto).then((resp) => {
+        this.ticketService.submitPurchase({
+            type: "TREIN",
+            ticketAmount: 1,
+            timesOrdered: this.numberOfTrainTickets,
+            firstName: this.person.firstName,
+            lastName: this.person.lastName,
+            email: this.person.email,
+            phoneNumber: this.person.phoneNumber,
+            address: this.person.address
+        }).then((resp) => {
+            console.log(resp);
             // TODO: Do something with this response?
         })
+    }
+
+    updatePriceToPayForTrainTickets() {
+        if(this.numberOfTrainTickets === 0) {
+            this.totalAmountToPayForTrainTickets = 0;
+        } else {
+
+            this.totalAmountToPayForTrainTickets = (this.numberOfTrainTickets * this.trainTicketPrices[0].price) + this.trainTicketPrices[0].transportationCost;
+        }
     }
 
     prepurchase(ticketPurchase) {
@@ -98,6 +98,13 @@ class KrinkelTicketController {
 
     coupons() {
         this.orderingTrainTickets = false;
+    }
+
+    functionCallAfterDOMRender() {
+        try {
+            Materialize.updateTextFields();
+        } catch (exception) {
+        }
     }
 
 

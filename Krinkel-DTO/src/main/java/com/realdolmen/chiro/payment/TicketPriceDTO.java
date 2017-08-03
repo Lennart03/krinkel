@@ -5,15 +5,21 @@ package com.realdolmen.chiro.payment;
  */
 public class TicketPriceDTO {
 
-    private Integer ticketamount;
+    private int ticketamount;
     private double price;
     private double transportationCost;
 
-    public Integer getTicketamount() {
+    public TicketPriceDTO(int ticketamount, double price, double transportationCost) {
+        this.ticketamount = ticketamount;
+        this.price = price;
+        this.transportationCost = transportationCost;
+    }
+
+    public int getTicketamount() {
         return ticketamount;
     }
 
-    public void setTicketamount(Integer ticketamount) {
+    public void setTicketamount(int ticketamount) {
         this.ticketamount = ticketamount;
     }
 
