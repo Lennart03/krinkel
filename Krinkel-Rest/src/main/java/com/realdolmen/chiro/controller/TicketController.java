@@ -49,9 +49,7 @@ public class TicketController {
     @RequestMapping(method = RequestMethod.POST, value = "/purchase", consumes = "application/json")
     public ResponseEntity<?> orderTicket(@RequestBody TicketDTO ticketDTO) throws URISyntaxException {
         logger.info("Ordering new tickets: [" + ticketDTO.toString() + "]");
-        System.out.println(ticketDTO);
         String paymentUrl = ticketService.createPayment(ticketDTO);
-        System.out.println(paymentUrl);
         HttpHeaders headers = new HttpHeaders();
         HttpStatus status = paymentUrl == null ? HttpStatus.INTERNAL_SERVER_ERROR : HttpStatus.CREATED;
         if(paymentUrl != null) {

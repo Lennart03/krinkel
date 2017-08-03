@@ -31,7 +31,7 @@ export class TicketService {
      */
     submitPurchase(ticketDTO) {
         return this.$http.post(`${this.BASEURL}/api/tickets/purchase`, ticketDTO).then((resp) => {
-            return resp.data;
+            return resp;
         });
     }
 
@@ -41,7 +41,6 @@ export class TicketService {
      */
     getParticipantInfo() {
         return this.$http.get(`${this.BASEURL}/api/tickets/participantInfo`).then((resp) => {
-            console.log(resp.data);
             return {
                 status: resp.status,
                 person: {
@@ -61,7 +60,6 @@ export class TicketService {
     getTrainTicketPrices() {
         return this.$http.get(`${this.BASEURL}/api/tickets/prices/train`).then((resp) => {
             if(resp.status === 200) {
-                console.log(resp.data);
                 return resp.data;
             } else {
                 return null;
@@ -75,7 +73,6 @@ export class TicketService {
     getCouponPrices() {
         return this.$http.get(`${this.BASEURL}/api/tickets/prices/coupons`).then((resp) => {
             if(resp.status === 200) {
-                console.log(resp.data);
                 return resp.data;
             } else {
                 return null;

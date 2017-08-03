@@ -1,7 +1,8 @@
 class KrinkelTicketController {
 
-    constructor($location, $log, ticketService, authService) {
+    constructor($location, $window, $log, ticketService, authService) {
         this.$log = $log;
+        this.$window = $window;
         this.$location = $location;
         this.ticketService = ticketService;
         this.AuthService = authService;
@@ -67,10 +68,11 @@ class KrinkelTicketController {
             phoneNumber: this.person.phoneNumber,
             address: this.person.address
         };
-        console.log(trainDTO);
+        var thiz = this;
         this.ticketService.submitPurchase(trainDTO).then((resp) => {
             console.log(resp);
-            // TODO: Do something with this response?
+            thiz.$window.location.href = resp.headers().location;
+            return;
         })
     }
 
@@ -119,4 +121,4 @@ export var KrinkelTicketComponent = {
     controller: KrinkelTicketController
 };
 
-KrinkelTicketComponent.$inject = ['$location', '$log', 'TicketService', 'AuthService'];
+KrinkelTicketComponent.$inject = ['$location', '$window', '$log', 'TicketService', 'AuthService'];
