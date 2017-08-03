@@ -57,7 +57,7 @@ class KrinkelTicketController {
     }
 
     purchaseTrainTickets() {
-        this.ticketService.submitPurchase({
+        let trainDTO = {
             type: "TREIN",
             ticketAmount: 1,
             timesOrdered: this.numberOfTrainTickets,
@@ -66,14 +66,16 @@ class KrinkelTicketController {
             email: this.person.email,
             phoneNumber: this.person.phoneNumber,
             address: this.person.address
-        }).then((resp) => {
+        };
+        console.log(trainDTO);
+        this.ticketService.submitPurchase(trainDTO).then((resp) => {
             console.log(resp);
             // TODO: Do something with this response?
         })
     }
 
     updatePriceToPayForTrainTickets() {
-        if(this.numberOfTrainTickets === 0) {
+        if (this.numberOfTrainTickets == 0) {
             this.totalAmountToPayForTrainTickets = 0;
         } else {
 
@@ -85,10 +87,12 @@ class KrinkelTicketController {
         return true;
     }
 
-    initModal6(valid) {
-        this.validateNow = true;
+    initTrainModal6(valid) {
+        console.log("initModal");
+        console.log(valid);
         if (valid) {
-            $('#modal6').openModal();
+            this.trainModal6Address = this.person.address.street + " " + this.person.address.houseNumber + " - " + this.person.address.postalCode + " " + this.person.address.city;
+            $('#trainModal6').openModal();
         }
     }
 

@@ -37,7 +37,7 @@ public class MultiSafePayServiceTest extends SpringIntegrationTest {
 
         currentUser = new User();
 
-        payment = new Payment(TicketType.TREIN, new BigDecimal(10.50), "Jax", "Teller", "jax.teller@soa.com" , "0457965132", address);
+        payment = new Payment(TicketType.TREIN, new BigDecimal(10.50), 1,"Jax", "Teller", "jax.teller@soa.com" , "0457965132", address);
         payment.setId(1);
     }
 

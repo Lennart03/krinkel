@@ -122,7 +122,7 @@ public class TicketServiceTest extends SpringIntegrationTest {
 
     @Test
     public void createPaymentOrderDTOIsNull() throws MultiSafePayService.InvalidPaymentOrderIdException {
-        Payment payment = new Payment(dto.getType(), new BigDecimal(12.0), dto.getFirstName(), dto.getLastName(), dto.getEmail(), dto.getPhoneNumber(), dto.getAddress());
+        Payment payment = new Payment(dto.getType(), new BigDecimal(12.0), dto.getTimesOrdered(), dto.getFirstName(), dto.getLastName(), dto.getEmail(), dto.getPhoneNumber(), dto.getAddress());
         List<TicketPrice> ticketPrices = new ArrayList<>();
         ticketPrices.add(new TicketPrice(1, new BigDecimal(11.50), new BigDecimal(0.50), TicketType.TREIN));
         Mockito.when(mockMultiSafePayService.createPayment(payment)).thenReturn(null);
@@ -135,7 +135,7 @@ public class TicketServiceTest extends SpringIntegrationTest {
 
     @Test
     public void createPaymentMultiSafeThrowsError() throws MultiSafePayService.InvalidPaymentOrderIdException {
-        Payment payment = new Payment(dto.getType(), new BigDecimal(12.0), dto.getFirstName(), dto.getLastName(), dto.getEmail(), dto.getPhoneNumber(), dto.getAddress());
+        Payment payment = new Payment(dto.getType(), new BigDecimal(12.0), dto.getTimesOrdered(), dto.getFirstName(), dto.getLastName(), dto.getEmail(), dto.getPhoneNumber(), dto.getAddress());
         List<TicketPrice> ticketPrices = new ArrayList<>();
         ticketPrices.add(new TicketPrice(1, new BigDecimal(11.50), new BigDecimal(0.50), TicketType.TREIN));
         Mockito.when(mockMultiSafePayService.createPayment(payment)).thenThrow(MultiSafePayService.InvalidPaymentOrderIdException.class);
@@ -148,7 +148,7 @@ public class TicketServiceTest extends SpringIntegrationTest {
 
     @Test
     public void updatePaymentStatus() throws Exception {
-        Payment payment = new Payment(dto.getType(), new BigDecimal(12.0), dto.getFirstName(), dto.getLastName(), dto.getEmail(), dto.getPhoneNumber(), dto.getAddress());
+        Payment payment = new Payment(dto.getType(), new BigDecimal(12.0), dto.getTimesOrdered(),  dto.getFirstName(), dto.getLastName(), dto.getEmail(), dto.getPhoneNumber(), dto.getAddress());
         Integer paymentID = paymentRepository.save(payment).getId();
         ticketService.updatePaymentStatus(paymentID+ "-ticket-" + new Date().getTime(), PaymentStatus.SUCCESS);
         PaymentStatus status = paymentRepository.findOne(paymentID).getStatus();

@@ -19,6 +19,9 @@ public class Payment {
     @Column(name = "Totaal")
     private BigDecimal paymentTotal;
 
+    @Column(name = "Aantal_tickets")
+    private Integer numberOfTickets;
+
     @Enumerated(EnumType.STRING)
     private PaymentStatus status= PaymentStatus.INITIATED;
 
@@ -31,9 +34,10 @@ public class Payment {
     public Payment() {
     }
 
-    public Payment(TicketType type, BigDecimal paymentTotal, String firstNameBuyer, String lastNameBuyer, String emailBuyer, String phoneNumberBuyer, Address addressBuyer) {
+    public Payment(TicketType type, BigDecimal paymentTotal, Integer numberOfTickets, String firstNameBuyer, String lastNameBuyer, String emailBuyer, String phoneNumberBuyer, Address addressBuyer) {
         this.type = type;
         this.paymentTotal = paymentTotal;
+        this.numberOfTickets = numberOfTickets;
         this.firstNameBuyer = firstNameBuyer;
         this.lastNameBuyer = lastNameBuyer;
         this.emailBuyer = emailBuyer;
@@ -63,6 +67,14 @@ public class Payment {
 
     public void setPaymentTotal(BigDecimal paymentTotal) {
         this.paymentTotal = paymentTotal;
+    }
+
+    public Integer getNumberOfTickets() {
+        return numberOfTickets;
+    }
+
+    public void setNumberOfTickets(Integer numberOfTickets) {
+        this.numberOfTickets = numberOfTickets;
     }
 
     public String getFirstNameBuyer() {

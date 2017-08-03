@@ -26,8 +26,14 @@
 <div class="row" id="divAroundForm">
 
     <div class="row">
-            <button class="btn col s5" ng-click="$ctrl.trainTickets()">Trein Ticketten</button>
-            <button class="btn col s5" ng-click="$ctrl.coupons()">Drank- en Eetbonnen</button>
+            <button class="btn col s5" ng-click="$ctrl.trainTickets()">
+                Trein Ticketten
+                <i class="material-icons right">train</i>
+            </button>
+            <button class="btn col s5" ng-click="$ctrl.coupons()">
+                Drank- en Eetbonnen
+                <i class="material-icons right">local_dining</i>
+            </button>
     </div>
 
 
@@ -62,11 +68,9 @@
                     <label for="totalAmountToPayForTrainTickets">Totaal te betalen</label>
                 </div>
             </div>
-
             <div class="row">
                 <div class="input-field col m8 s12">
                     <i class="material-icons prefix">home</i>
-                    <!--$ctrl.newPerson.street-->
                     <input id="street" name="street" class="validate" type="text"
                            ng-model="$ctrl.person.address.street"
                            required placeholder="..."
@@ -90,11 +94,9 @@
                     </p>
                 </div>
             </div>
-
             <div class="row">
                 <div class="input-field col m4 s12">
                     <i class="material-icons prefix">home</i>
-                    <!--$ctrl.newPerson.postalCode-->
                     <input id="postal_code" name="postalCode" ng-minlength="4" ng-maxlength="4"
                            class="validate"
                            ng-model="$ctrl.person.address.postalCode" type="text"
@@ -109,7 +111,6 @@
 
                 <div class="input-field col m8 s12">
                     <i class="material-icons prefix">home</i>
-                    <!--$ctrl.newPerson.city-->
                     <input id="city" name="city" class="validate" ng-model="$ctrl.person.address.city" required type="text"
                            placeholder="..."/>
                     <label for="city">Gemeente *</label>
@@ -121,9 +122,8 @@
                 </div>
             </div>
 
-
             <div>
-                <a ng-click="$ctrl.initModal6(ticketForm.$valid)" class="btn">
+                <a ng-click="$ctrl.initTrainModal6(trainTicketForm.$valid)" class="btn">
                     Betalen
                     <i class="material-icons right">send</i>
                 </a>
@@ -132,6 +132,8 @@
             <div id="trainModal6" class="modal">
                 <div class="modal-content">
                     <h4>Zijn deze gegevens correct?</h4>
+                    <p>U wenst {{$ctrl.numberOfTrainTickets}} trein ticketten voor €{{$ctrl.totalAmountToPayForTrainTickets}}.</p>
+                    <p>Het adres voor de bestelling is {{$ctrl.trainModal6Address}}</p>
                 </div>
                 <div class="modal-footer">
                     <button type="submit" class=" modal-action modal-close btn-flat">JA</button>
@@ -151,7 +153,7 @@
             </div>
 
             <div>
-                <a ng-click="$ctrl.initModal6(ticketForm.$valid)" class="btn">
+                <a ng-click="$ctrl.initModal6(couponForm.$valid)" class="btn">
                     Betalen
                     <i class="material-icons right">send</i>
                 </a>

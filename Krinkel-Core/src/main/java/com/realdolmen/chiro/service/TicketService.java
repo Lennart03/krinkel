@@ -56,7 +56,7 @@ public class TicketService {
         }
         // This is the price of the ticket times the total times the ticket is ordered
         BigDecimal totalPrice = ticketPriceCalculator.calculateTotalTicketPrice(price.getPrice(), price.getTicketAmount(), price.getTransportationcosts());
-        Payment payment = new Payment(ticketDTO.getType(), totalPrice, ticketDTO.getFirstName(), ticketDTO.getLastName(), ticketDTO.getEmail(), ticketDTO.getPhoneNumber(), ticketDTO.getAddress());
+        Payment payment = new Payment(ticketDTO.getType(), totalPrice, ticketDTO.getTimesOrdered(), ticketDTO.getFirstName(), ticketDTO.getLastName(), ticketDTO.getEmail(), ticketDTO.getPhoneNumber(), ticketDTO.getAddress());
         payment = paymentRepository.save(payment);
         OrderDto orderDto;
         try {
