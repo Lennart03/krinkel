@@ -7,7 +7,7 @@ class KrinkelTicketController {
         this.ticketService = ticketService;
         this.AuthService = authService;
         this.isLoading = true;
-        this.disableEverything = true;
+        this.disableEverything = false;
         this.orderingTrainTickets = true;
         this.phoneNumberPattern = /(\+324|04|00324)([0-9]{8})|(0\d{1,2}([0-9]{6}))$/;
         this.birthdatePattern = /^(?:(?:31(-)(?:0?[13578]|1[02]))\1|(?:(?:29|30)(-)(?:0?[1,3-9]|1[0-2])\2))(?:(?:1[6-9]|[2-9]\d)?\d{2})$|^(?:29(-)0?2\3(?:(?:(?:1[6-9]|[2-9]\d)?(?:0[48]|[2468][048]|[13579][26])|(?:(?:16|[2468][048]|[3579][26])00))))$|^(?:0?[1-9]|1\d|2[0-8])(-)(?:(?:0?[1-9])|(?:1[0-2]))\4(?:(?:1[6-9]|[2-9]\d)?\d{2})$/;
@@ -34,17 +34,16 @@ class KrinkelTicketController {
         let thiz = this;
         this.isLoading = true;
         this.ticketService.getParticipantInfo().then(resp => {
-            thiz.isLoading = false;
             if (resp.status === 404) {
-                //No user details found
-                thiz.person = {
-                    test: thiz.AuthService.getUserDetails()
-                };
-                thiz.disableEverything = true;
+                thiz.person = {};
             } else if (resp.status === 200) {
                 thiz.disableEverything = false;
                 thiz.person = resp.person;
             }
+            thiz.isLoading = false;
+        }, err => {
+            thiz.person = {};
+            thiz.isLoading = false;
         });
 
         this.ticketService.getTrainTicketPrices().then((resp) => {
@@ -76,17 +75,17 @@ class KrinkelTicketController {
         })
     }
 
+    purchaseCoupons() {
+
+    }
+
     updatePriceToPayForTrainTickets() {
-        if (this.numberOfTrainTickets == 0) {
+        if (this.numberOfTrainTickets === 0) {
             this.totalAmountToPayForTrainTickets = 0;
         } else {
 
             this.totalAmountToPayForTrainTickets = (this.numberOfTrainTickets * this.trainTicketPrices[0].price) + this.trainTicketPrices[0].transportationCost;
         }
-    }
-
-    prepurchase(ticketPurchase) {
-        return true;
     }
 
     initTrainModal6(valid) {
@@ -95,6 +94,15 @@ class KrinkelTicketController {
         if (valid) {
             this.trainModal6Address = this.person.address.street + " " + this.person.address.houseNumber + " - " + this.person.address.postalCode + " " + this.person.address.city;
             $('#trainModal6').openModal();
+        }
+    }
+
+    initCouponModal(valid) {
+        console.log("initModal");
+        console.log(valid);
+        if (valid) {
+            this.couponModalAddress = this.person.address.street + " " + this.person.address.houseNumber + " - " + this.person.address.postalCode + " " + this.person.address.city;
+            $('#couponModal').openModal();
         }
     }
 

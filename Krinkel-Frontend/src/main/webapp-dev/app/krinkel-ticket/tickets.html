@@ -26,14 +26,14 @@
 <div class="row" id="divAroundForm">
 
     <div class="row">
-            <button class="btn col s5" ng-click="$ctrl.trainTickets()">
-                Trein Ticketten
-                <i class="material-icons right">train</i>
-            </button>
-            <button class="btn col s5" ng-click="$ctrl.coupons()">
-                Drank- en Eetbonnen
-                <i class="material-icons right">local_dining</i>
-            </button>
+        <button class="btn col s5" ng-click="$ctrl.trainTickets()">
+            Trein Ticketten
+            <i class="material-icons right">train</i>
+        </button>
+        <button class="btn col s5 offset-s2" ng-click="$ctrl.coupons()">
+            Drank- en Eetbonnen
+            <i class="material-icons right">local_dining</i>
+        </button>
     </div>
 
 
@@ -54,8 +54,10 @@
             <div class="row">
                 <div class="input-field col m6 s12">
                     <i class="material-icons prefix">add_shopping_cart</i>
-                    <input id="numberOfTrainTickets" name="numberOfTrainTickets" class="validate" type="text" ng-pattern="[1-9][0-9]*$"
-                           ng-model="$ctrl.numberOfTrainTickets" required ng-minlength="1" placeholder="..." ng-change="$ctrl.updatePriceToPayForTrainTickets()"/>
+                    <input id="numberOfTrainTickets" name="numberOfTrainTickets" class="validate" type="text"
+                           ng-pattern="[1-9][0-9]*$"
+                           ng-model="$ctrl.numberOfTrainTickets" required ng-minlength="1" placeholder="..."
+                           ng-change="$ctrl.updatePriceToPayForTrainTickets()"/>
                     <label for="numberOfTrainTickets">Aantal trein ticketten</label>
                     <p ng-show="(trainTicketForm.numberOfTrainTickets.$invalid && (trainTicketForm.$submitted || trainTicketForm.street.$touched))"
                        class="error">
@@ -64,7 +66,8 @@
                 </div>
                 <div class="input-field col m6 s12">
                     <i class="material-icons prefix">euro_symbol</i>
-                    <input disabled id="totalAmountToPayForTrainTickets" name="totalAmountToPayForTrainTickets" type="text" ng-model="$ctrl.totalAmountToPayForTrainTickets"/>
+                    <input disabled id="totalAmountToPayForTrainTickets" name="totalAmountToPayForTrainTickets"
+                           type="text" ng-model="$ctrl.totalAmountToPayForTrainTickets"/>
                     <label for="totalAmountToPayForTrainTickets">Totaal te betalen</label>
                 </div>
             </div>
@@ -111,7 +114,8 @@
 
                 <div class="input-field col m8 s12">
                     <i class="material-icons prefix">home</i>
-                    <input id="city" name="city" class="validate" ng-model="$ctrl.person.address.city" required type="text"
+                    <input id="city" name="city" class="validate" ng-model="$ctrl.person.address.city" required
+                           type="text"
                            placeholder="..."/>
                     <label for="city">Gemeente *</label>
                     <p ng-show="trainTicketForm.city.$invalid && (trainTicketForm.$submitted || trainTicketForm.city.$touched)"
@@ -132,7 +136,8 @@
             <div id="trainModal6" class="modal">
                 <div class="modal-content">
                     <h4>Zijn deze gegevens correct?</h4>
-                    <p>U wenst {{$ctrl.numberOfTrainTickets}} trein ticketten voor €{{$ctrl.totalAmountToPayForTrainTickets}}.</p>
+                    <p>U wenst {{$ctrl.numberOfTrainTickets}} trein ticketten voor
+                        €{{$ctrl.totalAmountToPayForTrainTickets}}.</p>
                     <p>Het adres voor de bestelling is {{$ctrl.trainModal6Address}}</p>
                 </div>
                 <div class="modal-footer">
@@ -147,21 +152,84 @@
     <!-- TODO: Create the coupon form-->
     <div id="couponForm" ng-show="!$ctrl.orderingTrainTickets">
         <form class="col s12 m12" novalidate name="couponForm"
-              ng-submit="couponForm.$valid && $ctrl.prepurchase($ctrl.ticketPurchase)">
+              ng-submit="couponForm.$valid && $ctrl.purchaseCoupons()">
             <div class="row">
+                <table>
+                    <thead>
+                    <tr>
+                        <th>Prijs</th>
+                        <th>Aantal bonnetjes</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>5&euro;</td>
+                        <td>8 bonnetjes</td>
+                    </tr>
+                    <tr>
+                        <td>10&euro;</td>
+                        <td>16 bonnetjes</td>
+                    </tr>
+                    <tr>
+                        <td>15&euro;</td>
+                        <td>25 bonnetjes</td>
+                    </tr>
+                    <tr>
+                        <td>20&euro;</td>
+                        <td>35 bonnetjes</td>
+                    </tr>
+                    <tr>
+                        <td>25&euro;</td>
+                        <td>45 bonnetjes</td>
+                    </tr>
+                    <tr>
+                        <td>50&euro;</td>
+                        <td>90 bonnetjes</td>
+                    </tr>
+                    <tr>
+                        <td>75&euro;</td>
+                        <td>135 bonnetjes</td>
+                    </tr>
+                    <tr>
+                        <td>100&euro;</td>
+                        <td>180 bonnetjes</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
 
+            <div class="row">
+                <label for="aantalBonnetjes">Aantal bonnetjes</label>
+                <select name="aantalBonnetjes" id="aantalBonnetjes" ng-model="$ctrl.aantalBonnetjes" class="browser-default" required>
+                    <option value="" disabled selected>Kies een bedrag *</option>
+                    <option value="5">5&euro;</option>
+                    <option value="10">10&euro;</option>
+                    <option value="15">15&euro;</option>
+                    <option value="20">20&euro;</option>
+                    <option value="25">25&euro;</option>
+                    <option value="50">50&euro;</option>
+                    <option value="75">75&euro;</option>
+                    <option value="100">100&euro;</option>
+                </select>
+                <p ng-show="couponForm.aantalBonnetjes.$invalid && (couponForm.$submitted || couponForm.aantalBonnetjes.$touched)"
+                   class="error">
+                    <i class="material-icons">error_outline</i> Bedrag is verplicht
+                </p>
             </div>
 
             <div>
-                <a ng-click="$ctrl.initModal6(couponForm.$valid)" class="btn">
+                <a ng-click="$ctrl.initCouponModal(couponForm.$valid)" class="btn">
                     Betalen
                     <i class="material-icons right">send</i>
                 </a>
             </div>
 
-            <div id="couponModal6" class="modal">
+            <div id="couponModal" class="modal">
                 <div class="modal-content">
                     <h4>Zijn deze gegevens correct?</h4>
+                    <p>U wenst {{$ctrl.numberOfCoupons}} bonnetjes voor
+                        €{{$ctrl.couponPriceTotal}}.</p>
+                    <p>Het adres voor de bestelling is {{$ctrl.trainModal6Address}}</p>
                 </div>
                 <div class="modal-footer">
                     <button type="submit" class=" modal-action modal-close btn-flat">JA</button>
