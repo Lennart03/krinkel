@@ -3727,6 +3727,16 @@ insert into ticket_price (id, price, ticket_amount, ticket_type, transportationc
 insert into ticket_price (id, price, ticket_amount, ticket_type, transportationcosts) values (8, '75.0', 135, 'BON', '0.0');
 insert into ticket_price (id, price, ticket_amount, ticket_type, transportationcosts) values (9, '100.0', 180, 'BON', '0.0');
 
+insert into payment (id, city, house_number, postal_code, street, email_buyer, first_name_buyer, last_name_buyer, aantal_tickets, totaal, phone_number_buyer, status, type) values (1, 'city1', '10', 9200, 'street', 'email@test.com', 'Jack', 'Frost', 20, 45.35, 'sfd', 'SUCCESS', 'BON');
+insert into payment (id, city, house_number, postal_code, street, email_buyer, first_name_buyer, last_name_buyer, aantal_tickets, totaal, phone_number_buyer, status, type) values (2, 'city2', '20', 9201, 'street1', 'email@test.com', 'Jack', 'Frost', 20, 45.35, 'sfd', 'SUCCESS', 'TREIN');
+insert into payment (id, city, house_number, postal_code, street, email_buyer, first_name_buyer, last_name_buyer, aantal_tickets, totaal, phone_number_buyer, status, type) values (3, 'city3', '30', 9202, 'street2', 'email@test.com', 'Jack', 'Frost', 20, 45.35, 'sfd', 'SUCCESS', 'BON');
+insert into payment (id, city, house_number, postal_code, street, email_buyer, first_name_buyer, last_name_buyer, aantal_tickets, totaal, phone_number_buyer, status, type) values (4, 'city4', '40', 9203, 'street3', 'email@test.com', 'Jack', 'Frost', 20, 45.35, 'sfd', 'SUCCESS', 'BON');
+insert into payment (id, city, house_number, postal_code, street, email_buyer, first_name_buyer, last_name_buyer, aantal_tickets, totaal, phone_number_buyer, status, type) values (5, 'city5', '50', 9204, 'street4', 'email@test.com', 'Jack', 'Frost', 20, 45.35, 'sfd', 'SUCCESS', 'TREIN');
+insert into payment (id, city, house_number, postal_code, street, email_buyer, first_name_buyer, last_name_buyer, aantal_tickets, totaal, phone_number_buyer, status, type) values (6, 'city6', '60', 9205, 'street5', 'email@test.com', 'Jack', 'Frost', 20, 12.00, 'sfd', 'SUCCESS', 'TREIN');
+insert into payment (id, city, house_number, postal_code, street, email_buyer, first_name_buyer, last_name_buyer, aantal_tickets, totaal, phone_number_buyer, status, type) values (7, 'city7', '70', 9206, 'street6', 'email@test.com', 'Jack', 'Frost', 20, 45.35, 'sfd', 'SUCCESS', 'BON');
+insert into payment (id, city, house_number, postal_code, street, email_buyer, first_name_buyer, last_name_buyer, aantal_tickets, totaal, phone_number_buyer, status, type) values (8, 'city8', '80', 9207, 'street7', 'email@test.com', 'Jack', 'Frost', 20, 45.35, 'sfd', 'SUCCESS', 'BON');
+
+
 
 update krinkel.groepen
 set groep_naam = concat(groep_naam, ' Gemengd')

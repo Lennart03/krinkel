@@ -1,5 +1,6 @@
 package com.realdolmen.chiro.controller;
 
+import com.realdolmen.chiro.domain.payments.TicketType;
 import com.realdolmen.chiro.service.ExcelOutputService;
 import com.realdolmen.chiro.service.ExportService;
 import com.realdolmen.chiro.service.security.UserServiceSecurity;
@@ -98,6 +99,26 @@ public class ExportController {
         return null;
     }
 
+    @RequestMapping(value = "/exportTrainTickets", method = RequestMethod.GET)
+    public ModelAndView exportTrainTickets(HttpServletResponse response, HttpServletRequest request) {
+        if(userServiceSecurity.hasAdminRights()) {
+            exportService.createExcelOutputXlsTickets(response, TicketType.TREIN);
+        } else {
+            return new ModelAndView("redirect:" + getBaseUrl(request) + "/index.html");
+        }
+        return null;
+    }
+
+    @RequestMapping(value = "/exportCoupons", method = RequestMethod.GET)
+    public ModelAndView exportCoupons(HttpServletResponse response, HttpServletRequest request) {
+        if(userServiceSecurity.hasAdminRights()) {
+            exportService.createExcelOutputXlsTickets(response, TicketType.BON);
+        } else {
+            return new ModelAndView("redirect:" + getBaseUrl(request) + "/index.html");
+        }
+        return null;
+    }
+
     /**
      * Downloads a zip with a backup of the complete DB in CSV's
      * @param response
@@ -134,6 +155,8 @@ public class ExportController {
         }
             return null;
     }
+
+
 
     //    @RequestMapping(value="/exportRegistratieLijstAllesCSVTest", method=RequestMethod.GET)
 //    public ModelAndView exportRegistrationParticipantListCompleteCSVTest(HttpServletResponse response){

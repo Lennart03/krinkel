@@ -1,6 +1,8 @@
 package com.realdolmen.chiro.service;
 
 import com.realdolmen.chiro.domain.*;
+import com.realdolmen.chiro.domain.payments.Payment;
+import com.realdolmen.chiro.domain.payments.TicketType;
 import com.realdolmen.chiro.domain.units.Admin;
 import com.realdolmen.chiro.repository.*;
 import jxl.write.WritableWorkbook;
@@ -44,9 +46,14 @@ public class ExportService {
     @Autowired
     private RegistrationCommunicationRepository registrationCommunicationRepository;
 
+    @Autowired
+    private PaymentRepository paymentRepository;
+
+    private Object[] ticketHeader = {"Id", "Type ticket", "Totaalbedrag", "Aantal tickets", "Betalings status", "Voornaam", "Achternaam", "E-mailadres", "Telefoonnummer", "Straat", "Huisnummer", "Postcode", "Gemeente"};
+
     public WritableWorkbook createExcelOutputXlsRegistrationAll(HttpServletResponse response) {
         Object[] header = createHeaderForRegistrationParticipants();
-        Map<String, Object []> data = createDataForRegistrationParticipants();
+        Map<String, Object[]> data = createDataForRegistrationParticipants();
         return excelOutputService.createExcelOutputXls(response, "registratiesLijstAlles.xls", header, data);
     }
 
@@ -58,24 +65,52 @@ public class ExportService {
 
     public WritableWorkbook createExcelOutputXlsRegistrationParticipants(HttpServletResponse response) {
         Object[] header = createHeaderForRegistrationParticipants();
-        Map<String, Object []> data = createDataForRegistrationParticipantsOnlyParticipants();
+        Map<String, Object[]> data = createDataForRegistrationParticipantsOnlyParticipants();
         return excelOutputService.createExcelOutputXls(response, "registratiesLijstDeelnemers.xls", header, data);
     }
 
     public WritableWorkbook createExcelOutputXlsRegistrationVolunteers(HttpServletResponse response) {
         Object[] header = createHeaderForRegistrationParticipants();
-        Map<String, Object []> data = createDataForRegistrationParticipantsOnlyVolunteers();
+        Map<String, Object[]> data = createDataForRegistrationParticipantsOnlyVolunteers();
         return excelOutputService.createExcelOutputXls(response, "registratiesLijstMedewerkers.xls", header, data);
+    }
+
+    public WritableWorkbook createExcelOutputXlsTickets(HttpServletResponse response, TicketType type) {
+        return excelOutputService.createExcelOutputXls(response, "ticketverkoop.xls", ticketHeader, putPaymentsIntoMap(paymentRepository.findAllByType(type)));
+    }
+
+    private Map<String, Object[]> putPaymentsIntoMap(List<Payment> payments) {
+        Map<String, Object[]> paymentData = new HashMap<>();
+        Payment payment;
+        for (int i = 0; i < payments.size(); i++) {
+            payment = payments.get(i);
+            paymentData.put("" + i, new Object[]{
+                    payment.getId().toString(),
+                    payment.getType().toString(),
+                    payment.getPaymentTotal().toPlainString(),
+                    payment.getNumberOfTickets().toString(),
+                    payment.getStatus().toString(),
+                    payment.getFirstNameBuyer(),
+                    payment.getLastNameBuyer(),
+                    payment.getEmailBuyer(),
+                    payment.getPhoneNumberBuyer(),
+                    payment.getAddressBuyer().getStreet(),
+                    payment.getAddressBuyer().getHouseNumber(),
+                    payment.getAddressBuyer().getPostalCode(),
+                    payment.getAddressBuyer().getCity()
+            });
+        }
+        return paymentData;
     }
 
     /**
      * Creates the zip with all backup CSV files
      */
-    public void createCSVBackups(){
+    public void createCSVBackups() {
         // All registration participants (not volunteers)
         List<RegistrationParticipant> participants = getRegistrationParticipantsWithoutVolunteers();
         String backupRegistrationParticipantsFileName = "backupRegistrationParticipants.csv";
-        createExcelOutputCSVBackup(participants.toArray(),backupRegistrationParticipantsFileName);
+        createExcelOutputCSVBackup(participants.toArray(), backupRegistrationParticipantsFileName);
 
         // All registration participants who are volunteers
         List<RegistrationVolunteer> volunteers = registrationVolunteerRepository.findAll();
@@ -103,7 +138,7 @@ public class ExportService {
         createExcelOutputCSVBackup(admins.toArray(), backupAdminsFileName);
 
         // Zip them
-        String [] filenames =
+        String[] filenames =
                 {backupRegistrationParticipantsFileName,
                         backupRegistrationVolunteersFileName,
                         backupLoginLogsFileName,
@@ -117,11 +152,12 @@ public class ExportService {
 
     /**
      * Zips the files from the filenames given in filenames into the zipfile with name zipFilename.
+     *
      * @param filenames
      * @param zipFilename
      */
     private void zip(String[] filenames, String zipFilename) {
-        try{
+        try {
             BufferedInputStream origin = null;
             FileOutputStream dest = null;
             dest = new FileOutputStream(zipFilename);
@@ -130,7 +166,7 @@ public class ExportService {
             int bufferSize = 2048;
             byte data[] = new byte[bufferSize];
 
-            for(int i=0; i < filenames.length; i++) {
+            for (int i = 0; i < filenames.length; i++) {
                 FileInputStream fi = null;
                 fi = new FileInputStream(filenames[i]);
 
@@ -145,32 +181,29 @@ public class ExportService {
                 origin.close();
             }
             out.close();
-        }
-        catch (FileNotFoundException e) {
+        } catch (FileNotFoundException e) {
             System.err.println("File not found exception while zipping");
             e.printStackTrace();
             return;
-        }
-        catch (IOException e) {
+        } catch (IOException e) {
             System.err.println("IOException while zipping");
             e.printStackTrace();
         }
     }
 
-    private void createExcelOutputCSVBackup(Object [] objects,
+    private void createExcelOutputCSVBackup(Object[] objects,
                                             String fileName) {
-        if(objects != null && objects.length > 0) {
+        if (objects != null && objects.length > 0) {
             ArrayList<String> headersForBackupCSV = getHeadersForBackupCSV(objects[0]);
             ArrayList<ArrayList<String>> stringListForBackupCSV = getStringListForBackupCSV(objects);
             //Add the header to the backup CSV
-            stringListForBackupCSV.add(0,headersForBackupCSV);
+            stringListForBackupCSV.add(0, headersForBackupCSV);
 
             //Create the CSV file
             createCSV(stringListForBackupCSV, fileName);
             // Call csv creator with the csv filename
             //excelOutputService.exportCSV(response, fileName);
-        }
-        else{
+        } else {
             // If no data in DB, make a CSV but with one cell filled in with "No data in DB"
             System.err.println("No objects could be found for CSV backup for file: " + fileName);
             ArrayList<ArrayList<String>> stringListForBackupCSV = new ArrayList<ArrayList<String>>();
@@ -182,7 +215,7 @@ public class ExportService {
         }
     }
 
-    public void createCSV(ArrayList<ArrayList<String>> contentsList, String fileName){
+    public void createCSV(ArrayList<ArrayList<String>> contentsList, String fileName) {
         // For checking if right things are being writed
 //        System.err.println("");
 //        System.err.println("Contentslist:");
@@ -208,18 +241,18 @@ public class ExportService {
                 sb.append(string);
                 sb.append(",");
             }
-            sb.deleteCharAt(sb.length()-1);
+            sb.deleteCharAt(sb.length() - 1);
             sb.append("\n");
         }
         pw.write(sb.toString());
         pw.close();
     }
 
-    public List<RegistrationParticipant> getRegistrationParticipantsWithoutVolunteers(){
+    public List<RegistrationParticipant> getRegistrationParticipantsWithoutVolunteers() {
         List<RegistrationParticipant> allParticipants = registrationParticipantRepository.findAll();
         List<RegistrationParticipant> allParticipantsNotVolunteer = new ArrayList<RegistrationParticipant>();
         for (RegistrationParticipant registrationParticipant : allParticipants) {
-            if(registrationParticipant.getEventRole() != EventRole.VOLUNTEER){
+            if (registrationParticipant.getEventRole() != EventRole.VOLUNTEER) {
                 allParticipantsNotVolunteer.add(registrationParticipant);
             }
         }
@@ -228,9 +261,10 @@ public class ExportService {
 
     /**
      * Collects the data needed to create the excel file for all RegistrationParticipants.
+     *
      * @return
      */
-    protected Map<String,Object[]> createDataForRegistrationParticipants() {
+    protected Map<String, Object[]> createDataForRegistrationParticipants() {
         List<RegistrationParticipant> all = registrationParticipantRepository.findAll();
         Map<String, Object[]> dataMap = putRegistrationParticipantsIntoMap(all);
         return dataMap;
@@ -238,9 +272,10 @@ public class ExportService {
 
     /**
      * Collects the data needed to create the excel file for all RegistrationParticipants who are not volunteers.
+     *
      * @return
      */
-    protected Map<String,Object[]> createDataForRegistrationParticipantsOnlyParticipants() {
+    protected Map<String, Object[]> createDataForRegistrationParticipantsOnlyParticipants() {
         List<RegistrationParticipant> participantsWithoutVolunteers = getRegistrationParticipantsWithoutVolunteers();
         Map<String, Object[]> dataMap = putRegistrationParticipantsIntoMap(participantsWithoutVolunteers);
         return dataMap;
@@ -248,9 +283,10 @@ public class ExportService {
 
     /**
      * Collects the data needed to create the excel file for all RegistrationParticipants who are volunteers.
+     *
      * @return
      */
-    protected Map<String,Object[]> createDataForRegistrationParticipantsOnlyVolunteers() {
+    protected Map<String, Object[]> createDataForRegistrationParticipantsOnlyVolunteers() {
         List<RegistrationVolunteer> allVolunteers = registrationVolunteerRepository.findAll();
         List<RegistrationParticipant> allVolunteerParticipants = allVolunteers.stream().collect(Collectors.toList());
         Map<String, Object[]> dataMap = putRegistrationParticipantsIntoMap(allVolunteerParticipants);
@@ -259,10 +295,11 @@ public class ExportService {
 
     /**
      * Creates the header needed to create the excel file for the RegistrationParticipants.
+     *
      * @return
      */
-    protected Object [] createHeaderForRegistrationParticipants(){
-        Object [] header = new Object[] {
+    protected Object[] createHeaderForRegistrationParticipants() {
+        Object[] header = new Object[]{
                 "Id",
                 "Ad-nummer",
                 "Stamnummer",
@@ -302,7 +339,7 @@ public class ExportService {
     public Map<String, Object[]> putRegistrationParticipantsIntoMap(List<RegistrationParticipant> participants) {
         Map<String, Object[]> data = new HashMap<String, Object[]>();
         RegistrationParticipant r = null;
-        for(int i = 0; i < participants.size(); i++){
+        for (int i = 0; i < participants.size(); i++) {
             // Get current participant
             r = participants.get(i);
 
@@ -312,10 +349,10 @@ public class ExportService {
             //Set precamp and postcamp data for volunteers
             String precampDates = "";
             String postcampDates = "";
-            if(r instanceof RegistrationVolunteer) {
+            if (r instanceof RegistrationVolunteer) {
                 RegistrationVolunteer volunteer = (RegistrationVolunteer) r;
                 campGround = volunteer.getCampGround().getDescription();
-                if(volunteer.getFunction() == null){
+                if (volunteer.getFunction() == null) {
                     preset = "GEEN WAARDE GEVONDEN";
                 }
                 preset = volunteer.getFunction().toString();
@@ -325,20 +362,19 @@ public class ExportService {
 
             // Set languages if participant is a buddy
             String languages = "";
-            if(r.isBuddy()){
+            if (r.isBuddy()) {
                 languages = transformLanguageListToString(r.getLanguage());
             }
 
             // Translate booleans to yes or no
             String buddy;
-            if(r.isBuddy()){
+            if (r.isBuddy()) {
                 buddy = "Ja";
-            }
-            else{
+            } else {
                 buddy = "Nee";
             }
             String socialPromotion;
-            if(r.isSocialPromotion()) {
+            if (r.isSocialPromotion()) {
                 socialPromotion = "Ja";
             } else {
                 socialPromotion = "Nee";
@@ -351,11 +387,11 @@ public class ExportService {
 
             // Checking for null
             String syncStatus = "";
-            if(r.getSyncStatus()!=null){
+            if (r.getSyncStatus() != null) {
                 syncStatus = r.getSyncStatus().getDescription();
             }
 
-            data.put(""+i, new Object[] {
+            data.put("" + i, new Object[]{
                     r.getId(),
                     r.getAdNumber(),
                     r.getStamnumber(),
@@ -394,28 +430,28 @@ public class ExportService {
 
     protected String transformPreCampListToString(List<PreCamp> preCampList) {
         String dates = "";
-        for(int i = 0; i < preCampList.size()-1; i++){
+        for (int i = 0; i < preCampList.size() - 1; i++) {
             dates += getDateFormatted(preCampList.get(i).getDate()) + ", ";
         }
-        if(preCampList.size() > 0){
-            dates += getDateFormatted(preCampList.get(preCampList.size()-1).getDate());
+        if (preCampList.size() > 0) {
+            dates += getDateFormatted(preCampList.get(preCampList.size() - 1).getDate());
         }
         return dates;
     }
 
     protected String transformPostCampListToString(List<PostCamp> postCampList) {
         String dates = "";
-        for(int i = 0; i < postCampList.size()-1; i++){
+        for (int i = 0; i < postCampList.size() - 1; i++) {
             dates += getDateFormatted(postCampList.get(i).getDate()) + ", ";
         }
-        if(postCampList.size() > 0){
-            dates += getDateFormatted(postCampList.get(postCampList.size()-1).getDate());
+        if (postCampList.size() > 0) {
+            dates += getDateFormatted(postCampList.get(postCampList.size() - 1).getDate());
         }
         return dates;
     }
 
     protected String getDateFormatted(Date date) {
-        if(date == null){
+        if (date == null) {
             return "";
         }
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
@@ -423,7 +459,7 @@ public class ExportService {
     }
 
     protected String getTimestampFormatted(Date date) {
-        if(date == null){
+        if (date == null) {
             return "";
         }
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
@@ -431,18 +467,17 @@ public class ExportService {
     }
 
 
-
     protected String transformLanguageListToString(List<Language> languagesList) {
         String languages = "";
-        for(int i = 0; i < languagesList.size()-1; i++){
+        for (int i = 0; i < languagesList.size() - 1; i++) {
             languages += languagesList.get(i).getDescription() + ", ";
         }
-        if(languagesList.size() > 0){
-            languages += languagesList.get(languagesList.size()-1).getDescription();
+        if (languagesList.size() > 0) {
+            languages += languagesList.get(languagesList.size() - 1).getDescription();
         }
         return languages;
     }
-    
+
 //    public List<String> getVariableNamesOfObject(Object object){
 //        Field[] fields = object.getClass().getDeclaredFields();
 //        ArrayList<String> fieldNames = new ArrayList<String>();
@@ -461,7 +496,7 @@ public class ExportService {
 //        return fieldNames;
 //    }
 
-    public ArrayList<ArrayList<String>> getStringListForBackupCSV(Object[] objects){
+    public ArrayList<ArrayList<String>> getStringListForBackupCSV(Object[] objects) {
 
         ArrayList<ArrayList<String>> stringListForBackupCSV = new ArrayList<ArrayList<String>>();
 
@@ -476,9 +511,9 @@ public class ExportService {
 
             // Get only the variables list:
             // First split on the first occurence of [
-            String variablesList = variableNamesOfObjectWithBuilder.split("\\[",2)[1];
+            String variablesList = variableNamesOfObjectWithBuilder.split("\\[", 2)[1];
             // Remove the ending ]
-            variablesList = variablesList.substring(0,variablesList.length()-1);
+            variablesList = variablesList.substring(0, variablesList.length() - 1);
 //            System.err.println(variablesList);
 
 //            // Replace all brackets [ and ] with a quote " so it is easier to split
@@ -489,7 +524,7 @@ public class ExportService {
 
             // split on comma unless it is between quotes
 //            String[] variables = variablesList.split(",(?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)", -1);
-            String [] variables = variablesList.split(fieldsSeparatorString);
+            String[] variables = variablesList.split(fieldsSeparatorString);
 
 //            System.err.println("Split on ',' unless it is between '[' and '], in this case unless it is between \" quotes");
             ArrayList<String> variablesNames = new ArrayList<String>();
@@ -497,22 +532,21 @@ public class ExportService {
             for (String variable : variables) {
 //                System.err.println(variable);
                 //Split on the first "=" to separate the name and value
-                String[] split = variable.split("=",2);
+                String[] split = variable.split("=", 2);
                 variablesNames.add(split[0]);
 
                 String value = split[1];
                 //Replace all comma's with semicolon because CSV is comma separated
-                value = value.replaceAll(","," --- ");
+                value = value.replaceAll(",", " --- ");
 
                 // In order to have all null and emptry string values marked with null
-                if(value.equals("<null>") || value.equals("")){
+                if (value.equals("<null>") || value.equals("")) {
                     variablesValues.add("null");
-                }else if(value.startsWith("\"")){
+                } else if (value.startsWith("\"")) {
                     // If value is a list: change the quotes " " back to brackets [ ]
                     String valueWithoutQuotes = value.substring(1, value.length() - 1);
                     variablesValues.add("[" + valueWithoutQuotes + "]");
-                }
-                else{
+                } else {
                     variablesValues.add(value);
                 }
             }
@@ -537,9 +571,9 @@ public class ExportService {
 
         // Get only the variables list:
         // First split on the first occurence of [
-        String variablesList = variableNamesOfObjectWithBuilder.split("\\[",2)[1];
+        String variablesList = variableNamesOfObjectWithBuilder.split("\\[", 2)[1];
         // Remove the ending ]
-        variablesList = variablesList.substring(0,variablesList.length()-1);
+        variablesList = variablesList.substring(0, variablesList.length() - 1);
 //        System.err.println(variablesList);
 
         // Replace all brackets [ and ] with a quote " so it is easier to split
@@ -562,5 +596,6 @@ public class ExportService {
         }
         return variablesNames;
     }
+
 
 }
