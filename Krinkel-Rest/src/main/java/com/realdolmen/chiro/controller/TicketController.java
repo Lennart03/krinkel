@@ -98,10 +98,13 @@ public class TicketController {
      */
     @RequestMapping("/prices/coupons")
     public List<TicketPriceDTO> getCouponPrices() {
-        return ticketService.getPricesForTickets(TicketType.BON)
+        logger.info("Requesting coupon prices");
+        List<TicketPriceDTO> priceDTOS = ticketService.getPricesForTickets(TicketType.BON)
                 .stream()
                 .map(ticketPrice -> new TicketPriceDTO(ticketPrice.getTicketAmount(), ticketPrice.getPrice().doubleValue(), ticketPrice.getTransportationcosts().doubleValue()))
                 .collect(Collectors.toCollection(ArrayList::new));
+        logger.info(priceDTOS.toString());
+        return priceDTOS;
     }
 
     /**

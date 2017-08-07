@@ -148,13 +148,11 @@
         </form>
     </div>
 
-
-    <!-- TODO: Create the coupon form-->
     <div id="couponForm" ng-show="!$ctrl.orderingTrainTickets">
         <form class="col s12 m12" novalidate name="couponForm"
               ng-submit="couponForm.$valid && $ctrl.purchaseCoupons()">
             <div class="row">
-                <table>
+                <table class="striped centered responsive-table">
                     <thead>
                     <tr>
                         <th>Prijs</th>
@@ -197,19 +195,67 @@
                     </tbody>
                 </table>
             </div>
+            <div class="row">
+                <div class="input-field col m8 s12">
+                    <i class="material-icons prefix">home</i>
+                    <input id="streetCoupon" name="streetCoupon" class="validate" type="text"
+                           ng-model="$ctrl.person.address.street"
+                           required placeholder="..."
+                    />
+                    <label for="streetCoupon">Straat *</label>
+                    <p ng-show="couponForm.streetCoupon.$invalid && (couponForm.$submitted || couponForm.streetCoupon.$touched)"
+                       class="error">
+                        <i class="material-icons">error_outline</i>
+                        Straatnaam is verplicht
+                    </p>
+                </div>
+                <div class="input-field col m4 s12">
+                    <i class="material-icons prefix">home</i>
+                    <input id="houseNumberCoupon" name="houseNumberCoupon" class="validate" type="text"
+                           ng-model="$ctrl.person.address.houseNumber" required placeholder="..." ng-minlength="1"/>
+                    <label for="houseNumberCoupon">Huisnummer *</label>
+                    <p ng-show="couponForm.houseNumberCoupon.$invalid && (couponForm.$submitted || couponForm.houseNumberCoupon.$touched)"
+                       class="error">
+                        <i class="material-icons">error_outline</i>
+                        Huisnummer verplicht
+                    </p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="input-field col m4 s12">
+                    <i class="material-icons prefix">home</i>
+                    <input id="postal_codeCoupon" name="postalCodeCoupon" ng-minlength="4" ng-maxlength="4"
+                           class="validate"
+                           ng-model="$ctrl.person.address.postalCode" type="text"
+                           ng-pattern="$ctrl.postalcodePattern" placeholder="..."
+                           required/>
+                    <label for="postal_codeCoupon">Postcode *</label>
+                    <p ng-show="couponForm.postalCodeCoupon.$invalid && (couponForm.$submitted || couponForm.postalCodeCoupon.$touched)"
+                       class="error">
+                        <i class="material-icons">error_outline</i> Postcode is verplicht
+                    </p>
+                </div>
 
+                <div class="input-field col m8 s12">
+                    <i class="material-icons prefix">home</i>
+                    <input id="cityCoupon" name="cityCoupon" class="validate" ng-model="$ctrl.person.address.city" required
+                           type="text"
+                           placeholder="..."/>
+                    <label for="cityCoupon">Gemeente *</label>
+                    <p ng-show="couponForm.cityCoupon.$invalid && (couponForm.$submitted || couponForm.cityCoupon.$touched)"
+                       class="error">
+                        <i class="material-icons">error_outline</i>
+                        Gemeente is verplicht
+                    </p>
+                </div>
+            </div>
             <div class="row">
                 <label for="aantalBonnetjes">Aantal bonnetjes</label>
-                <select name="aantalBonnetjes" id="aantalBonnetjes" ng-model="$ctrl.aantalBonnetjes" class="browser-default" required>
-                    <option value="" disabled selected>Kies een bedrag *</option>
-                    <option value="5">5&euro;</option>
-                    <option value="10">10&euro;</option>
-                    <option value="15">15&euro;</option>
-                    <option value="20">20&euro;</option>
-                    <option value="25">25&euro;</option>
-                    <option value="50">50&euro;</option>
-                    <option value="75">75&euro;</option>
-                    <option value="100">100&euro;</option>
+                <select name="aantalBonnetjes" id="aantalBonnetjes" ng-model="$ctrl.selectedCouponPrice"
+                        class="browser-default" required>
+                    <option ng-repeat="couponPrice in $ctrl.couponPrices" value="{{couponPrice.ticketamount}}">
+                        €{{couponPrice.price}} - {{couponPrice.ticketamount}} bonnetjes
+                    </option>
                 </select>
                 <p ng-show="couponForm.aantalBonnetjes.$invalid && (couponForm.$submitted || couponForm.aantalBonnetjes.$touched)"
                    class="error">
@@ -227,15 +273,15 @@
             <div id="couponModal" class="modal">
                 <div class="modal-content">
                     <h4>Zijn deze gegevens correct?</h4>
-                    <p>U wenst {{$ctrl.numberOfCoupons}} bonnetjes voor
-                        €{{$ctrl.couponPriceTotal}}.</p>
-                    <p>Het adres voor de bestelling is {{$ctrl.trainModal6Address}}</p>
+                    <p>{{$ctrl.couponPriceText}}</p>
+                    <p>Het adres voor de bestelling is {{$ctrl.couponModalAddress}}</p>
                 </div>
                 <div class="modal-footer">
                     <button type="submit" class=" modal-action modal-close btn-flat">JA</button>
                     <a href="" class="modal-action modal-close btn-flat">NEE</a>
                 </div>
             </div>
+
         </form>
     </div>
 

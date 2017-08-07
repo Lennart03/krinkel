@@ -20,6 +20,7 @@ class KrinkelTicketController {
         this.totalAmountToPayForTrainTickets = 0;
         this.trainTicketPrices = [];
         this.couponPrices = [];
+        this.selectedCouponPrice = "";
     }
 
     $onInit() {
@@ -59,8 +60,7 @@ class KrinkelTicketController {
     purchaseTrainTickets() {
         let trainDTO = {
             type: "TREIN",
-            ticketAmount: 1,
-            timesOrdered: this.numberOfTrainTickets,
+            ticketAmount: this.numberOfTrainTickets,
             firstName: this.person.firstName,
             lastName: this.person.lastName,
             email: this.person.email,
@@ -69,13 +69,27 @@ class KrinkelTicketController {
         };
         var thiz = this;
         this.ticketService.submitPurchase(trainDTO).then((resp) => {
-            console.log(resp);
             thiz.$window.location.href = resp.headers().location;
             return;
-        })
+        });
     }
 
     purchaseCoupons() {
+        let couponDTO = {
+            type: "BON",
+            ticketAmount: this.selectedCouponPrice,
+            firstName: this.person.firstName,
+            lastName: this.person.lastName,
+            email: this.person.email,
+            phoneNumber: this.person.phoneNumber,
+            address: this.person.address
+        };
+        console.log(couponDTO);
+        var thiz = this;
+        this.ticketService.submitPurchase(couponDTO).then((resp) => {
+            thiz.$window.location.href = resp.headers().location;
+            return;
+        });
 
     }
 
@@ -89,8 +103,6 @@ class KrinkelTicketController {
     }
 
     initTrainModal6(valid) {
-        console.log("initModal");
-        console.log(valid);
         if (valid) {
             this.trainModal6Address = this.person.address.street + " " + this.person.address.houseNumber + " - " + this.person.address.postalCode + " " + this.person.address.city;
             $('#trainModal6').openModal();
@@ -98,9 +110,15 @@ class KrinkelTicketController {
     }
 
     initCouponModal(valid) {
-        console.log("initModal");
-        console.log(valid);
+        console.log(this.selectedCouponPrice);
         if (valid) {
+            let temp = this.couponPrices.filter(couponPrice => {
+                console.log("filter");
+                console.log(couponPrice);
+                return couponPrice.ticketamount == this.selectedCouponPrice;
+            });
+            console.log(temp);
+            this.couponPriceText = "U wenst " + temp[0].ticketamount + " bonnetjes voor €" + temp[0].price + ".";
             this.couponModalAddress = this.person.address.street + " " + this.person.address.houseNumber + " - " + this.person.address.postalCode + " " + this.person.address.city;
             $('#couponModal').openModal();
         }

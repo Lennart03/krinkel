@@ -48,15 +48,17 @@ public class TicketService {
     public String createPayment(TicketDTO ticketDTO) {
         logger.info("Creating payment for " + ticketDTO);
         TicketPrice price;
+        BigDecimal totalPrice;
         if(ticketDTO.getType() == TicketType.TREIN) {
             price = ticketPriceRepository.findByTicketType(TicketType.TREIN).get(0);
+            totalPrice = ticketPriceCalculator.calculateTotalTicketPrice(price.getPrice(), price.getTicketAmount(), price.getTransportationcosts());
         } else {
             // For food/drink tickets the amount of tickets is important for the price.
             price = ticketPriceRepository.findByTicketTypeAndTicketAmount(ticketDTO.getType(), ticketDTO.getTicketAmount());
+            totalPrice = ticketPriceCalculator.calculateTotalTicketPrice(price.getPrice(), 1, price.getTransportationcosts());
         }
         // This is the price of the ticket times the total times the ticket is ordered
-        BigDecimal totalPrice = ticketPriceCalculator.calculateTotalTicketPrice(price.getPrice(), price.getTicketAmount(), price.getTransportationcosts());
-        Payment payment = new Payment(ticketDTO.getType(), totalPrice, ticketDTO.getTimesOrdered(), ticketDTO.getFirstName(), ticketDTO.getLastName(), ticketDTO.getEmail(), ticketDTO.getPhoneNumber(), ticketDTO.getAddress());
+        Payment payment = new Payment(ticketDTO.getType(), totalPrice, ticketDTO.getTicketAmount(), ticketDTO.getFirstName(), ticketDTO.getLastName(), ticketDTO.getEmail(), ticketDTO.getPhoneNumber(), ticketDTO.getAddress());
         payment = paymentRepository.save(payment);
         OrderDto orderDto;
         try {

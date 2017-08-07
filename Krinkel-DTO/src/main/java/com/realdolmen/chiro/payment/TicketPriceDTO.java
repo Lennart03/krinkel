@@ -38,4 +38,13 @@ public class TicketPriceDTO {
     public void setTransportationCost(double transportationCost) {
         this.transportationCost = transportationCost;
     }
+
+    @Override
+    public String toString() {
+        return "TicketPriceDTO{" +
+                "ticketamount=" + ticketamount +
+                ", price=" + price +
+                ", transportationCost=" + transportationCost +
+                '}';
+    }
 }

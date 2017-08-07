@@ -13,13 +13,9 @@ public class TicketDTO {
      */
     private TicketType type;
     /**
-     * This is the number of tickets requests when food/drink tickets are ordered
+     * This is the number of tickets requested
      */
     private Integer ticketAmount;
-    /**
-     * The number of times the ticket is requested
-     */
-    private Integer timesOrdered;
     /**
      * First name of the person ordering the ticket
      */
@@ -55,14 +51,6 @@ public class TicketDTO {
 
     public void setTicketAmount(Integer ticketAmount) {
         this.ticketAmount = ticketAmount;
-    }
-
-    public Integer getTimesOrdered() {
-        return timesOrdered;
-    }
-
-    public void setTimesOrdered(Integer timesOrdered) {
-        this.timesOrdered = timesOrdered;
     }
 
     public String getFirstName() {
@@ -110,7 +98,6 @@ public class TicketDTO {
         return "TicketDTO{" +
                 "type=" + type +
                 ", ticketAmount=" + ticketAmount +
-                ", timesOrdered=" + timesOrdered +
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", email='" + email + '\'' +

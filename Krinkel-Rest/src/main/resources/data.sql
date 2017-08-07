@@ -3724,8 +3724,8 @@ insert into ticket_price (id, price, ticket_amount, ticket_type, transportationc
 insert into ticket_price (id, price, ticket_amount, ticket_type, transportationcosts) values (5, '20.0', 35, 'BON', '0.0');
 insert into ticket_price (id, price, ticket_amount, ticket_type, transportationcosts) values (6, '25.0', 45, 'BON', '0.0');
 insert into ticket_price (id, price, ticket_amount, ticket_type, transportationcosts) values (7, '50.0', 90, 'BON', '0.0');
-
-
+insert into ticket_price (id, price, ticket_amount, ticket_type, transportationcosts) values (8, '75.0', 135, 'BON', '0.0');
+insert into ticket_price (id, price, ticket_amount, ticket_type, transportationcosts) values (9, '100.0', 180, 'BON', '0.0');
 
 
 update krinkel.groepen
