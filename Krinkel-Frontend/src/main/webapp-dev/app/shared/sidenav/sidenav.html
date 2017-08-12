@@ -15,13 +15,13 @@
         <!--Inschrijven-->
         <!--</a>-->
         <!--</li>-->
-        <li class="collection-item" ng-if="!$ctrl.getUserDetails().hasPaid">
-            <a href="/register-participant">
+        <li class="collection-item" ng-if="$ctrl.getUserDetails().hasPaid == false">
+            <a onclick="alert('Inschrijvingen zijn afgelopen :(')">
                 <i class="material-icons">person_add</i> Schrijf je in
             </a>
         </li>
         <li class="collection-item">
-            <a href="/cart">
+            <a onclick="alert('Inschrijvingen zijn afgelopen :(')">
                 <i class="material-icons">group_add</i> Schrijf anderen in
             </a>
         </li>
